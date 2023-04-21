@@ -5,11 +5,11 @@ Diablo II : Resurrected - Bot
 
 # REQUIREMENTS
 
-  - .Net Framework 4.7.2
-  - Windows 64bit (the game must run in 64x)
-  - Screen size of 1920x1080 preferably for now
-  - Play in fullscreen ONLY for now
-  - Visual Studio 2022 preferably in you want to changes parameters and rebuild the application
+    - .Net Framework 4.7.2
+    - Windows 64bit (the game must run in 64x)
+    - Screen size of 1920x1080 preferably for now
+    - Play in fullscreen ONLY for now
+    - Visual Studio 2022 preferably in you want to changes parameters and rebuild the application
 
 # USAGE
 
