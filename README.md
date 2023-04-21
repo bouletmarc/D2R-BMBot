@@ -19,8 +19,8 @@ Diablo II : Resurrected - Bot
     
 # CONFIGURE
 
-  - Settings for Bot and Char configurations are in file CharConfig.cs
-  - Settings for Items picking configurations are in file ItemsAlert.cs
+    - Settings for Bot and Char configurations are in file CharConfig.cs
+    - Settings for Items picking configurations are in file ItemsAlert.cs
 
 # FEATURES
 
