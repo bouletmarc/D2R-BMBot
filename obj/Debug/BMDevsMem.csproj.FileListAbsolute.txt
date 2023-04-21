@@ -1,0 +1,11 @@
+C:\Users\boule\OneDrive\Documents\Visual Studio 2022\Projects\BMDevsMem\bin\Debug\BMDevsMem.exe.config
+C:\Users\boule\OneDrive\Documents\Visual Studio 2022\Projects\BMDevsMem\bin\Debug\BMDevsMem.exe
+C:\Users\boule\OneDrive\Documents\Visual Studio 2022\Projects\BMDevsMem\bin\Debug\BMDevsMem.pdb
+C:\Users\boule\OneDrive\Documents\Visual Studio 2022\Projects\BMDevsMem\obj\Debug\BMDevsMem.csproj.AssemblyReference.cache
+C:\Users\boule\OneDrive\Documents\Visual Studio 2022\Projects\BMDevsMem\obj\Debug\BMDevsMem.csproj.SuggestedBindingRedirects.cache
+C:\Users\boule\OneDrive\Documents\Visual Studio 2022\Projects\BMDevsMem\obj\Debug\BMDevsMem.Form1.resources
+C:\Users\boule\OneDrive\Documents\Visual Studio 2022\Projects\BMDevsMem\obj\Debug\BMDevsMem.Properties.Resources.resources
+C:\Users\boule\OneDrive\Documents\Visual Studio 2022\Projects\BMDevsMem\obj\Debug\BMDevsMem.csproj.GenerateResource.cache
+C:\Users\boule\OneDrive\Documents\Visual Studio 2022\Projects\BMDevsMem\obj\Debug\BMDevsMem.csproj.CoreCompileInputs.cache
+C:\Users\boule\OneDrive\Documents\Visual Studio 2022\Projects\BMDevsMem\obj\Debug\BMDevsMem.exe
+C:\Users\boule\OneDrive\Documents\Visual Studio 2022\Projects\BMDevsMem\obj\Debug\BMDevsMem.pdb
