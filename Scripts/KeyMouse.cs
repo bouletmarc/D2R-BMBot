@@ -106,6 +106,13 @@ namespace app
             SendMessage((int)Form1_0.hWnd, WM_SYSKEYUP, (ushort)ThisK, (IntPtr)0);
         }
 
+        public void PressKey2(System.Windows.Forms.Keys ThisK)
+        {
+            PostMessage((int)Form1_0.hWnd, WM_SYSKEYDOWN, (ushort)ThisK, (IntPtr)0);
+            Thread.Sleep(1);
+            //PostMessage((int)Form1_0.hWnd, WM_SYSKEYUP, (ushort)ThisK, (IntPtr)0);
+        }
+
         public void PressKeyHold(System.Windows.Forms.Keys ThisK)
         {
             SendMessage((int)Form1_0.hWnd, WM_SYSKEYDOWN, (ushort)ThisK, (IntPtr)0);
@@ -163,6 +170,8 @@ namespace app
 
         public void MouseMoveTo(int ThX, int ThY)
         {
+            ThX = CorrectXPos(ThX);   //here
+            ThY = CorrectYPos(ThY);   //here
             Point position = new Point(ThX, ThY);
             SetCursorPos(position.X, position.Y);
         }
@@ -185,6 +194,19 @@ namespace app
             SendMessage((int)Form1_0.hWnd, WM_LBUTTONUP, 0x00000000, CreateLParam(150, 150));
         }
 
+        public int CorrectXPos(int ThisPoss)
+        {
+            double Percent = ((double) ThisPoss * 100.0) / (double) Form1_0.ScreenX;
+            int PosInGame = (int) ((Percent * (double) Form1_0.D2Widht) / 100.0);
+            return Form1_0.ScreenXOffset + PosInGame;
+        }
+
+        public int CorrectYPos(int ThisPoss)
+        {
+            double Percent = ((double) ThisPoss * 100.0) / (double) Form1_0.ScreenY;
+            int PosInGame = (int) ((Percent * (double) Form1_0.D2Height) / 100.0);
+            return Form1_0.ScreenYOffset + PosInGame;
+        }
 
 
         //######################################

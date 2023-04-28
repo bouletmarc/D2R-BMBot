@@ -65,6 +65,9 @@ namespace app
         public int ItemsInBelt = 0;
 
         public uint dwOwnerId = 0;
+        public uint dwOwnerId_Shared1 = 0;
+        public uint dwOwnerId_Shared2 = 0;
+        public uint dwOwnerId_Shared3 = 0;
         public ushort invPage = 0;
 
         public bool ItemOnCursor = false;
@@ -147,6 +150,7 @@ namespace app
             Form1_0.ItemsFlags_0.calculateFlags(flags);
             //uint uniqueOrSetId = Form1_0.Mem_0.ReadUInt32Raw((IntPtr)(pUnitDataPtr + 0x34));
             equiploc = Form1_0.Mem_0.ReadByteRaw((IntPtr)(pUnitDataPtr + 0x55));
+            itemLoc = Form1_0.Mem_0.ReadByteRaw((IntPtr)(pUnitDataPtr + 0x54));
 
             /*0 = INVPAGE_INVENTORY
               3 = INVPAGE_HORADRIC_CUBE
@@ -264,6 +268,8 @@ namespace app
                 Form1_0.PlayerScan_0.EnergyFromEquippedItems = 0;
                 Form1_0.PlayerScan_0.HPPercentFromEquippedItems = 0;
                 Form1_0.PlayerScan_0.ManaPercentFromEquippedItems = 0;
+                Form1_0.StashStruc_0.ResetStashInventory();
+                Form1_0.Cubing_0.ResetCubeInventory();
                 ItemOnCursor = false;
             }
 
@@ -289,10 +295,8 @@ namespace app
 
                     if (itemdatastruc[0x0C] == 4)
                     {
-                        if (dwOwnerId == Form1_0.PlayerScan_0.unitId) 
-                        {
-                            ItemOnCursor = true;
-                        }
+                        ItemOnCursor = true;
+                        //Form1_0.method_1("cursor: " + ItemNAAME + " - at: " + itemx + "," + itemy, Color.BlueViolet);
                     }
 
                     if (itemdatastruc[0x0C] == 0)
@@ -311,12 +315,29 @@ namespace app
 
                         if (dwOwnerId == Form1_0.PlayerScan_0.unitId && equiploc == 4)
                         {
-                            //here for items in stash inventory
+                            //here for items in stash
                             //Form1_0.method_1("name: " + ItemNAAME + " - at: " + itemx + "," + itemy, Color.DarkGreen);
-                            /*if (ItemNAAME == "Gold")
+                            Form1_0.StashStruc_0.AddStashItem(itemx, itemy, 1);
+                        }
+                        if (dwOwnerId != Form1_0.PlayerScan_0.unitId && equiploc == 4)
+                        {
+                            //here for items in shared stash
+                            //Form1_0.method_1("name: " + ItemNAAME + " - at: " + itemx + "," + itemy + " - " + dwOwnerId, Color.DarkGreen);
+                            SetSharedStashOwner();
+                            if (dwOwnerId_Shared1 != 0 && dwOwnerId_Shared2 != 0 && dwOwnerId_Shared3 != 0)
                             {
-                                Form1_0.method_1("stash gold: " + GetValuesFromStats(Enums.Attribute.Value), Color.DarkGreen);
-                            }*/
+                                int StashNum = 0;
+                                if (dwOwnerId == dwOwnerId_Shared1) StashNum = 2;
+                                if (dwOwnerId == dwOwnerId_Shared2) StashNum = 3;
+                                if (dwOwnerId == dwOwnerId_Shared3) StashNum = 4;
+                                Form1_0.StashStruc_0.AddStashItem(itemx, itemy, StashNum);
+                            }
+                        }
+                        if (dwOwnerId == Form1_0.PlayerScan_0.unitId && equiploc == 3)
+                        {
+                            //here for items in cube
+                            //Form1_0.method_1("name: " + ItemNAAME + " - at: " + itemx + "," + itemy, Color.DarkGreen);
+                            Form1_0.Cubing_0.AddCubeItem(itemx, itemy);
                         }
                     }
                     if (itemdatastruc[0x0C] == 1)
@@ -329,11 +350,6 @@ namespace app
                                 Form1_0.PlayerScan_0.GetHPAndManaOnThisEquippedItem();
                                 Form1_0.Repair_0.GetDurabilityOnThisEquippedItem();
                             }
-                            //Form1_0.method_1("name: " + ItemNAAME + " - at: " + itemx + "," + itemy + " - " + equiploc, Color.DarkGreen);
-                        }
-                        if (equiploc == 0)
-                        {
-                            //here for items in stash shared inventory
                             //Form1_0.method_1("name: " + ItemNAAME + " - at: " + itemx + "," + itemy + " - " + equiploc, Color.DarkGreen);
                         }
                     }
@@ -399,8 +415,24 @@ namespace app
                 }
             }
 
-            //Form1_0.method_1("-----");
+            //Form1_0.method_1("-----", Color.Black);
             return false;
+        }
+
+        public void SetSharedStashOwner()
+        {
+            if (ItemNAAME == CharConfig.DummyItemSharedStash1)
+            {
+                dwOwnerId_Shared1 = dwOwnerId;
+            }
+            if (ItemNAAME == CharConfig.DummyItemSharedStash2)
+            {
+                dwOwnerId_Shared2 = dwOwnerId;
+            }
+            if (ItemNAAME == CharConfig.DummyItemSharedStash3)
+            {
+                dwOwnerId_Shared3 = dwOwnerId;
+            }
         }
 
         public void GrabAllItemsForGold()
@@ -430,7 +462,7 @@ namespace app
                         TryGrabCount = 0;
                         ItemsGrabbed++;
                         if ((!CharConfig.UseTeleport && ItemsGrabbed > 2)
-                            || (CharConfig.UseTeleport && ItemsGrabbed > 5))
+                            || (CharConfig.UseTeleport && ItemsGrabbed > 7))
                         {
                             break;
                         }
@@ -523,10 +555,17 @@ namespace app
 
         public bool ShouldPickPos(Dictionary<string, int> itemScreenPos)
         {
-            if (itemScreenPos["x"] > 0 && itemScreenPos["x"] < CharConfig.ScreenX
-                && itemScreenPos["y"] > 0 && itemScreenPos["y"] < (CharConfig.ScreenY - CharConfig.ScreenYMenu))
+            if (CharConfig.UseTeleport && !Form1_0.Town_0.GetInTown())
             {
                 return true;
+            }
+            else
+            {
+                if (itemScreenPos["x"] > 0 && itemScreenPos["x"] < Form1_0.ScreenX
+                    && itemScreenPos["y"] > 0 && itemScreenPos["y"] < (Form1_0.ScreenY - Form1_0.ScreenYMenu))
+                {
+                    return true;
+                }
             }
             return false;
         }

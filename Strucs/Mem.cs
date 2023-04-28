@@ -198,7 +198,11 @@ namespace app
 
             if (bytesRead > 0)
             {
-                return BitConverter.ToUInt32(Form1_0.bufferRead, 0);
+                try
+                {
+                    return BitConverter.ToUInt32(Form1_0.bufferRead, 0);
+                }
+                catch { }
             }
             return 0;
         }

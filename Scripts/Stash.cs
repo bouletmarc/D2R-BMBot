@@ -53,18 +53,12 @@ namespace app
                             {
                                 break;
                             }
-                            if (Form1_0.ItemsStruc_0.ItemOnCursor)
-                            {
-                                Form1_0.KeyMouse_0.MouseClicc(LastitemScreenPos["x"], LastitemScreenPos["y"]);
-                                Form1_0.WaitDelay(20);
-                                Form1_0.ItemsStruc_0.GetItems(false);   //get inventory again
-                                Form1_0.SetGameStatus("TOWN-STASH-ITEM:" + Form1_0.InventoryStruc_0.InventoryItemNames[i]);
-                            }
                             //CTRL+Clic to send item into stash
                             Form1_0.KeyMouse_0.SendCTRL_CLICK(itemScreenPos["x"], itemScreenPos["y"]);
-                            Form1_0.WaitDelay(30);
+                            Form1_0.WaitDelay(5);
                             Form1_0.ItemsStruc_0.GetItems(false);   //get inventory again
                             Form1_0.SetGameStatus("TOWN-STASH-ITEM:" + Form1_0.InventoryStruc_0.InventoryItemNames[i]);
+                            PlaceItem(itemScreenPos["x"], itemScreenPos["y"]);
 
                             //item still in inventory
                             if (Form1_0.InventoryStruc_0.InventoryHasStashItem[i] >= 1)
@@ -77,13 +71,6 @@ namespace app
                             }
                             else
                             {
-                                if (Form1_0.ItemsStruc_0.ItemOnCursor)
-                                {
-                                    Form1_0.KeyMouse_0.MouseClicc(LastitemScreenPos["x"], LastitemScreenPos["y"]);
-                                    Form1_0.WaitDelay(20);
-                                    Form1_0.ItemsStruc_0.GetItems(false);   //get inventory again
-                                    Form1_0.SetGameStatus("TOWN-STASH-ITEM:" + Form1_0.InventoryStruc_0.InventoryItemNames[i]);
-                                }
                                 break;
                             }
                         }
@@ -139,11 +126,48 @@ namespace app
             //deposit gold
             Form1_0.SetGameStatus("TOWN-STASH-DEPOSIT GOLD");
             Form1_0.KeyMouse_0.MouseClicc(1450, 790);  //clic deposit
-            Form1_0.WaitDelay(100);
+            Form1_0.WaitDelay(25);
             Form1_0.KeyMouse_0.MouseClicc(820, 580);  //clic ok on deposit
-            Form1_0.WaitDelay(40);
+            Form1_0.WaitDelay(25);
 
             //craft/cube item script here ###
+            Form1_0.PlayerScan_0.GetPositions();
+            Form1_0.ItemsStruc_0.GetItems(false);
+            Form1_0.Cubing_0.PerformCubing();
+        }
+
+        public bool PlaceItem(int PosX, int PosY)
+        {
+            int Tryy = 0;
+            while (Form1_0.ItemsStruc_0.ItemOnCursor && Tryy < 5)
+            {
+                Form1_0.KeyMouse_0.MouseClicc(PosX, PosY);
+                Form1_0.WaitDelay(10);
+                Form1_0.ItemsStruc_0.GetItems(false);   //get inventory again
+                Tryy++;
+            }
+            if (Tryy >= 5)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public bool PickItem(int PosX, int PosY)
+        {
+            int Tryy = 0;
+            while (!Form1_0.ItemsStruc_0.ItemOnCursor && Tryy < 5)
+            {
+                Form1_0.KeyMouse_0.MouseClicc(PosX, PosY);
+                Form1_0.WaitDelay(10);
+                Form1_0.ItemsStruc_0.GetItems(false);   //get inventory again
+                Tryy++;
+            }
+            if (Tryy >= 5)
+            {
+                return false;
+            }
+            return true;
         }
     }
 }

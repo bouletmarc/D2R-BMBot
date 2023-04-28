@@ -63,9 +63,9 @@ namespace app
             }
         }
 
-        public void DoBattleScript()
+        public void DoBattleScript(int MaxDistance)
         {
-            if (Form1_0.MobsStruc_0.GetMobs("", "", true, 5, new List<long>()))
+            if (Form1_0.MobsStruc_0.GetMobs("", "", true, MaxDistance, new List<long>()))
             {
                 if (MoveTryCount > 0)
                 {

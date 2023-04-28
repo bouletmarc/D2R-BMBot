@@ -30,7 +30,10 @@ namespace app
         public int[] DontCheckIndexes = new int[0];
 
         public long StartIndexItemLast = long.MaxValue;
-        public int ScanUnitsNumber = 2048;
+        //public int ScanUnitsNumber = 3000;
+        public int ScanUnitsNumber = 2600;
+        //public int ScanUnitsNumber = 2200;
+        public int ScanUnitsNegativeOffset = 128;
 
         public void SetForm1(Form1 form1_1)
         {
@@ -199,16 +202,22 @@ namespace app
 
 
             //; all games datas
-            pattern = "A8 29 F4 67 F6 7F";
+            pattern = "A8 29 52 8E F7 7F 00";
             patternAddress = (IntPtr)(modulePatternScan(pattern) + 16);
+            //patternAddress = modulePatternScan(pattern);
+            //IntPtr GameTable = (IntPtr)Form1_0.Mem_0.ReadInt(patternAddress + 6);
             Form1_0.offsets["AllGamesOffset"] = patternAddress;
             Form1_0.method_1("All games available offset: 0x" + patternAddress.ToString("X"), Color.Black);
 
             //; game selected data
-            pattern = "50 E4 0F 67 F6 7F 00";
-            patternAddress = (IntPtr)(modulePatternScan(pattern) + 64);
-            Form1_0.offsets["GameSelectedOffset"] = patternAddress;
-            Form1_0.method_1("Selected game offset: 0x" + patternAddress.ToString("X"), Color.Black);
+            pattern = "01 8D 14 51 F7 E2 42";
+            patternAddress = modulePatternScan(pattern);
+            IntPtr GameTable = (IntPtr)Form1_0.Mem_0.ReadInt(patternAddress + 7);
+            //pattern = "50 E4 0F 67 F6 7F 00";
+            //patternAddress = (IntPtr)(modulePatternScan(pattern) + 64);
+            //IntPtr unitTable = (IntPtr)Form1_0.Mem_0.ReadInt(patternAddress + 7);
+            Form1_0.offsets["GameSelectedOffset"] = GameTable + 0x113;
+            Form1_0.method_1("Selected game offset: 0x" + (GameTable + 0x113).ToString("X"), Color.Black);
         }
 
 
@@ -339,7 +348,7 @@ namespace app
                     else
                     {
                         StartIndexItem = StartIndexItemLast; //correct the pointer
-                        Form1_0.method_1("BAD Item start diff: 0x" + (DiffVal).ToString("X") + ", scann for: " + ScanUnitsNumber + " +" + UnitNumberDiff, Color.Red);
+                        //Form1_0.method_1("BAD Item start diff: 0x" + (DiffVal).ToString("X") + ", scann for: " + ScanUnitsNumber + " +" + UnitNumberDiff, Color.Red);
                     }
                 }
                 StartIndexItemLast = StartIndexItem;
@@ -353,7 +362,7 @@ namespace app
             long CheckThisN = StartIndexNPC;
             UnitBuffer = new byte[9];
 
-            CheckThisI -= (0x48 + 0x170) * 16;
+            CheckThisI -= (0x48 + 0x170) * ScanUnitsNegativeOffset;  //offseting in negative here
             for (int i = 0; i < ScanUnitsNumber; i++)
             //for (int i = 0; i < 2048; i++)
             //for (int i = 0; i < 2500; i++)

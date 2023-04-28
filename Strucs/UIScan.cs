@@ -32,6 +32,7 @@ namespace app
         public bool loading = false;
         public bool deadMenu = false;
         public bool tradeMenu = false;
+        public bool cubeMenu = false;
 
         public bool leftMenu = false;
         public bool rightMenu = false;
@@ -39,7 +40,7 @@ namespace app
         public bool SetUI = false;
 
         public int MaxTryUIOpen = 5;
-        public int MaxWaitingDelayForMenuInteractions = 250;
+        public int MaxWaitingDelayForMenuInteractions = 175;
 
         public void SetForm1(Form1 form1_1)
         {
@@ -165,6 +166,10 @@ namespace app
             {
                 return System.Windows.Forms.Keys.Escape; //for quiting menu only
             }
+            if (UIName == "cubeMenu")
+            {
+                return System.Windows.Forms.Keys.Escape; //for quiting menu only
+            }
             return System.Windows.Forms.Keys.D0;
         }
 
@@ -216,6 +221,10 @@ namespace app
             {
                 return tradeMenu;
             }
+            if (UIName == "cubeMenu")
+            {
+                return cubeMenu;
+            }
             //####
             return false;
         }
@@ -235,13 +244,14 @@ namespace app
             npcInteract = ByteToBool(buffer[0x08]);
             quitMenu = ByteToBool(buffer[0x09]);
             npcShop = ByteToBool(buffer[0x0B]);
-            //cashMenu = ByteToBool(buffer[0x0c]);
+            //showItemAltMenu = ByteToBool(buffer[0x0c]);
+            //cashMenu = ByteToBool(buffer[0x0d]);
             questsMenu = ByteToBool(buffer[0x0E]);
             waypointMenu = ByteToBool(buffer[0x13]);
             partyMenu = ByteToBool(buffer[0x15]);
             tradeMenu = ByteToBool(buffer[0x16]);
             stash = ByteToBool(buffer[0x18]);
-            //cubeMenu = ByteToBool(buffer[0x19]);
+            cubeMenu = ByteToBool(buffer[0x19]);
             mercMenu = ByteToBool(buffer[0x1E]);
 
             //deadMenu = ByteToBool(buffer[0x12]);

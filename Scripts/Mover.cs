@@ -13,6 +13,7 @@ namespace app
 
         public int MaxMoveTry = 5;
         public int MoveAcceptOffset = 4;
+        public long StartAreaBeforeMoving = 0;
 
         public void SetForm1(Form1 form1_1)
         {
@@ -22,6 +23,7 @@ namespace app
         public bool MoveToLocation(int ThisX, int ThisY)
         {
             Form1_0.PlayerScan_0.GetPositions();
+            StartAreaBeforeMoving = Form1_0.PlayerScan_0.levelNo;
 
             //no need to move we are close already!
             if (Form1_0.PlayerScan_0.xPosFinal >= (ThisX - MoveAcceptOffset)
@@ -60,15 +62,15 @@ namespace app
                 }
 
                 //calculate new Y clicking offset, else it will clic on bottom menu items
-                if (itemScreenPos["y"] >= (CharConfig.ScreenY - CharConfig.ScreenYMenu))
+                if (itemScreenPos["y"] >= (Form1_0.ScreenY - Form1_0.ScreenYMenu))
                 {
                     //int Sx = itemScreenPos["x"];
                     //int Sy = itemScreenPos["y"];
-                    int DiffY = itemScreenPos["y"] - (CharConfig.ScreenY - CharConfig.ScreenYMenu);
+                    int DiffY = itemScreenPos["y"] - (Form1_0.ScreenY - Form1_0.ScreenYMenu);
                     double DiffPercent = (DiffY * 100) / itemScreenPos["y"];
                     //double DiffPercent = (DiffY * 100) / Form1_0.ScreenY;
                     itemScreenPos["x"] = (int) (itemScreenPos["x"] - ((DiffPercent * itemScreenPos["x"]) / 100));
-                    itemScreenPos["y"] = (CharConfig.ScreenY - CharConfig.ScreenYMenu);
+                    itemScreenPos["y"] = (Form1_0.ScreenY - Form1_0.ScreenYMenu);
                     //Console.WriteLine("corrected pos from: " + Sx + "," + Sy + " to: " + itemScreenPos["x"] + "," + itemScreenPos["y"]);
                 }
 
@@ -79,13 +81,22 @@ namespace app
                 if (CharConfig.UseTeleport && !Form1_0.Town_0.GetInTown())
                 {
                     Form1_0.KeyMouse_0.MouseCliccRight(itemScreenPos["x"], itemScreenPos["y"]);
-                    Form1_0.WaitDelay(6);
+                    Form1_0.WaitDelay(10);
                 }
                 //Form1_0.WaitDelay(2);
                 Application.DoEvents();
                 Form1_0.PlayerScan_0.GetPositions();
+                Form1_0.ItemsStruc_0.GetItems(true);
+                Form1_0.Potions_0.CheckIfWeUsePotion();
                 itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, ThisX, ThisY);
                 Application.DoEvents();
+
+                //not in suposed area, may have taken unwanted tp
+                if (Form1_0.PlayerScan_0.levelNo < StartAreaBeforeMoving - 1
+                    || Form1_0.PlayerScan_0.levelNo > StartAreaBeforeMoving + 1)
+                {
+                    return false;
+                }
 
                 //detect is moving
                 if (Form1_0.PlayerScan_0.xPosFinal != LastX
@@ -114,11 +125,11 @@ namespace app
                     }
                     Form1_0.ItemsStruc_0.GetItems(true);
                     Form1_0.Potions_0.CheckIfWeUsePotion();
-                    if (TryMove2 == 0) Form1_0.KeyMouse_0.MouseMoveTo(CharConfig.ScreenX / 2, CharConfig.ScreenY / 2);
-                    if (TryMove2 == 1) Form1_0.KeyMouse_0.MouseMoveTo(CharConfig.ScreenX / 2 - 250, CharConfig.ScreenY / 2);
-                    if (TryMove2 == 2) Form1_0.KeyMouse_0.MouseMoveTo(CharConfig.ScreenX / 2 + 250, CharConfig.ScreenY / 2);
-                    if (TryMove2 == 3) Form1_0.KeyMouse_0.MouseMoveTo(CharConfig.ScreenX / 2, CharConfig.ScreenY / 2 - 250);
-                    if (TryMove2 == 4) Form1_0.KeyMouse_0.MouseMoveTo(CharConfig.ScreenX / 2, CharConfig.ScreenY / 2 + 250);
+                    if (TryMove2 == 0) Form1_0.KeyMouse_0.MouseMoveTo(Form1_0.ScreenX / 2, Form1_0.ScreenY / 2);
+                    if (TryMove2 == 1) Form1_0.KeyMouse_0.MouseMoveTo(Form1_0.ScreenX / 2 - 250, Form1_0.ScreenY / 2);
+                    if (TryMove2 == 2) Form1_0.KeyMouse_0.MouseMoveTo(Form1_0.ScreenX / 2 + 250, Form1_0.ScreenY / 2);
+                    if (TryMove2 == 3) Form1_0.KeyMouse_0.MouseMoveTo(Form1_0.ScreenX / 2, Form1_0.ScreenY / 2 - 250);
+                    if (TryMove2 == 4) Form1_0.KeyMouse_0.MouseMoveTo(Form1_0.ScreenX / 2, Form1_0.ScreenY / 2 + 250);
 
                     if (!CharConfig.UseTeleport || (CharConfig.UseTeleport && Form1_0.Town_0.GetInTown()))
                     {

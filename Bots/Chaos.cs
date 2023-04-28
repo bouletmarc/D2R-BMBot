@@ -56,8 +56,6 @@ namespace app
                         Form1_0.SetGameStatus("SEARCHING:" + Form1_0.GameStruc_0.AllGamesNames[PossibleGamesIndex[i]]);
 
                         Form1_0.GameStruc_0.SelectGame(PossibleGamesIndex[i], false);
-                        Form1_0.GameStruc_0.GetSelectedGameInfo();
-
                         if (Form1_0.GameStruc_0.SelectedGameTime < MaxGameTimeToEnter)
                         {
                             Form1_0.GameStruc_0.SelectGame(PossibleGamesIndex[i], true);
@@ -93,7 +91,7 @@ namespace app
                     if (TimeWaitedForTP >= MaxTimeWaitedForTP)
                     {
                         Form1_0.method_1("Leaving reason: Waited too long for tp", Color.Black);
-                        Form1_0.LeaveGame();
+                        Form1_0.LeaveGame(false);
                     }
                     else
                     {
@@ -141,7 +139,7 @@ namespace app
             //cast sacred shield
             Form1_0.KeyMouse_0.PressKey(CharConfig.KeySkillCastDefense);
             Form1_0.WaitDelay(5);
-            Form1_0.KeyMouse_0.MouseCliccRight(CharConfig.ScreenX / 2, CharConfig.ScreenY / 2);
+            Form1_0.KeyMouse_0.MouseCliccRight(Form1_0.CenterX, Form1_0.CenterY);
             Form1_0.WaitDelay(5);
         }
 
@@ -160,7 +158,7 @@ namespace app
             //LEECHER NOT IN GAME
             if (Form1_0.PlayerScan_0.LeechPlayerPointer == 0 || Form1_0.PlayerScan_0.LeechPlayerUnitID == 0)
             {
-                Form1_0.LeaveGame();
+                Form1_0.LeaveGame(true);
             }
         }
 

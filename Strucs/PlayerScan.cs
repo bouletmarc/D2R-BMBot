@@ -50,6 +50,9 @@ namespace app
         public long pStatsListEx = 0;
         public long statPtr = 0;
         public long statCount = 0;
+
+        public long PlayerGoldInventory = 0;
+        public long PlayerGoldInStash = 0;
         public long PlayerHP = 0;
         public long PlayerMaxHP = 0;
         public long PlayerMana = 0;
@@ -125,6 +128,14 @@ namespace app
                 if (statEnum == (ushort) Enums.Attribute.Mana)
                 {
                     PlayerMana = statValue >> 8;
+                }
+                if (statEnum == (ushort)Enums.Attribute.GoldInPlayer)
+                {
+                    PlayerGoldInventory = statValue;
+                }
+                if (statEnum == (ushort)Enums.Attribute.GoldInStash)
+                {
+                    PlayerGoldInStash = statValue;
                 }
             }
 

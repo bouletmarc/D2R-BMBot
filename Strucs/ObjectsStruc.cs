@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -27,25 +28,27 @@ namespace app
         public int LastDiffY = 999;
         public long NearestObjectPointer = 0;
         public int MaxCheckDistance = 40;
+        public byte interactType = 0;
 
         public void SetForm1(Form1 form1_1)
         {
             Form1_0 = form1_1;
         }
 
-        /*public void GetUnitData()
+        public void GetUnitData()
         {
             pUnitDataPtr = BitConverter.ToInt64(objectdatastruc, 0x10);
-            pUnitData = new byte[144];
-            Form1_0.Mem_0.ReadRawMemory(pUnitDataPtr, ref pUnitData, 144);
+            //pUnitData = new byte[144];
+            //Form1_0.Mem_0.ReadRawMemory(pUnitDataPtr, ref pUnitData, 144);
+            interactType = Form1_0.Mem_0.ReadByteRaw((IntPtr) (pUnitDataPtr + 0x08));
 
-            if (isPortal((int)txtFileNo) == 1)
+            /*if (isPortal((int)txtFileNo) == 1)
             {
                 string SavePathh = Form1_0.ThisEndPath + "DumpObjectUnitDataStruc";
                 File.Create(SavePathh).Dispose();
                 File.WriteAllBytes(SavePathh, pUnitData);
-            }
-        }*/
+            }*/
+        }
 
         /*public string GetPortalOwnerName()
         {
@@ -61,7 +64,7 @@ namespace app
             return name;
         }*/
 
-        public bool GetObjects(string ObjectType, bool Nearest, List<uint> IgnoredIDList = null)
+        public bool GetObjects(string ObjectType, bool Nearest, List<uint> IgnoredIDList = null, int MaxDistance = 999)
         {
             txtFileNo = 0;
             ObjectUnitID = 0;
@@ -82,10 +85,10 @@ namespace app
 
                     txtFileNo = BitConverter.ToUInt32(objectdatastruc, 4);
                     ObjectUnitID = BitConverter.ToUInt32(objectdatastruc, 0x08);
-                    //GetUnitData();
+                    GetUnitData();
                     GetUnitPathData();
 
-                    //Console.WriteLine(getObjectName((int)txtFileNo) + " at: " + itemx + ", " + itemy);
+                    //Form1_0.method_1("Object: " + getObjectName((int)txtFileNo) + " - " + itemx + ", " + itemy, Color.DarkOrchid);
 
                     if (ObjectType == "TownPortal")
                     {
@@ -94,9 +97,11 @@ namespace app
                         //if (isPortal((int)txtFileNo) == 1 && GetPortalOwnerName() == Form1_0.PlayerScan_0.pName)
                         if (isPortal((int)txtFileNo) == 1)
                         {
+                            //Form1_0.method_1("PortalID: 0x" + ObjectUnitID.ToString("X"), System.Drawing.Color.DarkMagenta);
+
                             if (ObjectUnitID != 0 && ObjectUnitID != 4 && !IsIgnoredID(IgnoredIDList))
                             {
-                                //Form1_0.method_1("PortalID: 0x" + ObjectUnitID.ToString("X"));
+                                //Form1_0.method_1("PortalID: 0x" + ObjectUnitID.ToString("X"), System.Drawing.Color.DarkMagenta);
 
                                 //string SavePathh = Form1_0.ThisEndPath + "DumpObjectStruc";
                                 //File.Create(SavePathh).Dispose();
@@ -105,6 +110,21 @@ namespace app
                                 LastPointer = ObjectPointerLocation;
                                 SetNearestObject(Nearest);
                                 //return true;
+                            }
+                        }
+                    }
+                    else if(ObjectType == "AllChests")
+                    {
+                        if (isChest((int)txtFileNo) == 1 && !IsIgnoredID(IgnoredIDList))
+                        {
+                            if (itemx != 0 && itemy != 0)
+                            {
+                                Form1_0.method_1("OBJ POS: " + itemx + ", " + itemy + " - " + getObjectName((int)txtFileNo), Color.DarkTurquoise);
+                                SetNearestObject(Nearest);
+                                if (!Nearest)
+                                {
+                                    return true;
+                                }
                             }
                         }
                     }
@@ -136,7 +156,35 @@ namespace app
                 txtFileNo = BitConverter.ToUInt32(objectdatastruc, 4);
                 ObjectUnitID = BitConverter.ToUInt32(objectdatastruc, 0x08);
                 GetUnitPathData();
-                return true;
+
+                if (MaxDistance != 999)
+                {
+                    if (itemx != 0 && itemy != 0)
+                    {
+                        int DiffXPlayer = itemx - Form1_0.PlayerScan_0.xPosFinal;
+                        int DiffYPlayer = itemy - Form1_0.PlayerScan_0.yPosFinal;
+                        if (DiffXPlayer < 0) DiffXPlayer = -DiffXPlayer;
+                        if (DiffYPlayer < 0) DiffYPlayer = -DiffYPlayer;
+
+                        if (DiffXPlayer <= MaxDistance
+                            && DiffYPlayer <= MaxDistance)
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    return true;
+                }
             }
             if (Nearest && NearestObjectPointer == 0)
             {

@@ -46,6 +46,17 @@ namespace app
             MobsHP = GetHPFromStats();
         }
 
+        public void GetThisMob(long TPointer)
+        {
+            MobsPointerLocation = TPointer;
+            mobsdatastruc = new byte[144];
+            Form1_0.Mem_0.ReadRawMemory(MobsPointerLocation, ref mobsdatastruc, 144);
+            txtFileNo = BitConverter.ToUInt32(mobsdatastruc, 4);
+            GetUnitPathData();
+            GetStatsAddr();
+            MobsHP = GetHPFromStats();
+        }
+
         public bool GetMobs(string MobType, string MobName, bool Nearest, int MaxMobDistance, List<long> IgnoredListPointers)
         {
             txtFileNo = 0;
@@ -88,28 +99,27 @@ namespace app
                         //byte[] RunBuf = BitConverter.GetBytes(709);
                         //Form1_0.Mem_0.WriteRawMemory((IntPtr)(MobsPointerLocation + 0x04), RunBuf, 4);
 
-                        if (MobsHP > 0 || (MobsHP == 0 && MobName != ""))
+                        //Console.WriteLine("found near mob" + txtFileNo + " at: " + itemx + ", " + itemy);
+                        //15089,5012
+                        if ((MobsHP > 0 || (MobsHP == 0 && MobName != ""))
+                            && (xPosFinal != 0 && yPosFinal != 0))
                         {
                             //get nearest mobs in all mobs
                             if (Nearest)
                             {
-                                //Console.WriteLine("found near mob" + txtFileNo + " at: " + itemx + ", " + itemy);
-                                if (xPosFinal != 0 && yPosFinal != 0)
-                                {
-                                    int DiffXPlayer = xPosFinal - Form1_0.PlayerScan_0.xPosFinal;
-                                    int DiffYPlayer = yPosFinal - Form1_0.PlayerScan_0.yPosFinal;
-                                    if (DiffXPlayer < 0) DiffXPlayer = -DiffXPlayer;
-                                    if (DiffYPlayer < 0) DiffYPlayer = -DiffYPlayer;
+                                int DiffXPlayer = xPosFinal - Form1_0.PlayerScan_0.xPosFinal;
+                                int DiffYPlayer = yPosFinal - Form1_0.PlayerScan_0.yPosFinal;
+                                if (DiffXPlayer < 0) DiffXPlayer = -DiffXPlayer;
+                                if (DiffYPlayer < 0) DiffYPlayer = -DiffYPlayer;
 
-                                    if (DiffXPlayer <= LastDiffX
-                                        && DiffYPlayer <= LastDiffY
-                                        && DiffXPlayer <= MaxMobDistance
-                                        && DiffYPlayer <= MaxMobDistance)
-                                    {
-                                        NearestMobPointer = MobsPointerLocation;
-                                        LastDiffX = DiffXPlayer;
-                                        LastDiffY = DiffYPlayer;
-                                    }
+                                if (DiffXPlayer <= LastDiffX
+                                    && DiffYPlayer <= LastDiffY
+                                    && DiffXPlayer <= MaxMobDistance
+                                    && DiffYPlayer <= MaxMobDistance)
+                                {
+                                    NearestMobPointer = MobsPointerLocation;
+                                    LastDiffX = DiffXPlayer;
+                                    LastDiffY = DiffYPlayer;
                                 }
                             }
                             //get the mobs by name and type
@@ -277,6 +287,7 @@ namespace app
                 case 526: return "Nihlathak";
                 case 544: return "Baal";
                 case 570: return "Baalclone";
+                case 702: return "BaalThrone";
                 case 704: return "Uber Mephisto";
                 case 705: return "Uber Diablo";
                 case 706: return "Uber Izual";

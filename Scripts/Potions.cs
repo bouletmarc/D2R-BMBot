@@ -23,6 +23,7 @@ namespace app
         public int MercGainingHPCount = 0;
         public long MercHPLast = 0;
         public int MercSameHPCount = 0;
+        public bool CanUseSkillForRegen = true;
 
         public void SetForm1(Form1 form1_1)
         {
@@ -122,6 +123,7 @@ namespace app
                 }
                 if (!UsedPot)
                 {
+                    Form1_0.Town_0.FastTowning = true;
                     Form1_0.Town_0.GoToTown();
                     return;
                 }
@@ -144,6 +146,7 @@ namespace app
                 }
                 if (!UsedPot)
                 {
+                    Form1_0.Town_0.FastTowning = true;
                     Form1_0.Town_0.GoToTown();
                     return;
                 }
@@ -166,6 +169,7 @@ namespace app
                 }
                 if (!UsedPot)
                 {
+                    Form1_0.Town_0.FastTowning = true;
                     Form1_0.Town_0.GoToTown();
                     return;
                 }
@@ -177,7 +181,7 @@ namespace app
         public void Chicken()
         {
             Form1_0.method_1("Leaving reason: Chicken HP", Color.Red);
-            Form1_0.LeaveGame();
+            Form1_0.LeaveGame(false);
         }
 
         public void PressPotionKey(int i, bool SendToMerc)
@@ -223,7 +227,7 @@ namespace app
                 }
                 if (Form1_0.MercStruc_0.MercHP == MercHPLast)
                 {
-                    if (MercSameHPCount < 55)
+                    if (MercSameHPCount < 45)
                     {
                         MercSameHPCount++;
                     }
@@ -240,7 +244,7 @@ namespace app
                 }
             }
             //Set Lower HP
-            if (Form1_0.MercStruc_0.MercHP == MercHPLast && MercSameHPCount >= 55)
+            if (Form1_0.MercStruc_0.MercHP == MercHPLast && MercSameHPCount >= 45)
             {
                 if (Form1_0.MercStruc_0.MercHP < Form1_0.MercStruc_0.MercMaxHP)
                 {
@@ -257,7 +261,10 @@ namespace app
             //############################
             if (Form1_0.PlayerScan_0.PlayerHP < PlayerHPLast)
             {
-                Form1_0.KeyMouse_0.PressKey(CharConfig.KeySkillLifeAura);
+                if (CanUseSkillForRegen)
+                {
+                    Form1_0.KeyMouse_0.PressKey(CharConfig.KeySkillLifeAura);
+                }
                 GainingHPCount = 0;
                 SameHPCount = 0;
             }
@@ -269,14 +276,17 @@ namespace app
                 }
                 if (Form1_0.PlayerScan_0.PlayerHP == PlayerHPLast)
                 {
-                    if (SameHPCount < 55)
+                    if (SameHPCount < 45)
                     {
                         SameHPCount++;
                     }
                 }
                 else
                 {
-                    Form1_0.KeyMouse_0.PressKey(CharConfig.KeySkillLifeAura);
+                    if (CanUseSkillForRegen)
+                    {
+                        Form1_0.KeyMouse_0.PressKey(CharConfig.KeySkillLifeAura);
+                    }
                     SameHPCount = 0;
                 }
 
@@ -287,7 +297,7 @@ namespace app
                 }
             }
             //Set Lower HP
-            if (Form1_0.PlayerScan_0.PlayerHP == PlayerHPLast && SameHPCount >= 55)
+            if (Form1_0.PlayerScan_0.PlayerHP == PlayerHPLast && SameHPCount >= 45)
             {
                 Form1_0.KeyMouse_0.PressKey(CharConfig.KeySkillDefenseAura);
                 if (Form1_0.PlayerScan_0.PlayerHP < Form1_0.PlayerScan_0.PlayerMaxHP)
@@ -309,7 +319,7 @@ namespace app
                 }
                 if (Form1_0.PlayerScan_0.PlayerMana == PlayerMANALast)
                 {
-                    if (SameMANACount < 80)
+                    if (SameMANACount < 55)
                     {
                         SameMANACount++;
                     }
@@ -326,7 +336,7 @@ namespace app
                 }
             }
             //Set Lower Mana
-            if (Form1_0.PlayerScan_0.PlayerMana == PlayerMANALast && SameMANACount >= 80)
+            if (Form1_0.PlayerScan_0.PlayerMana == PlayerMANALast && SameMANACount >= 55)
             {
                 if (Form1_0.PlayerScan_0.PlayerMana < Form1_0.PlayerScan_0.PlayerMaxMana)
                 {

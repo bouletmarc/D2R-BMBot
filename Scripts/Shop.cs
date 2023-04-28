@@ -46,6 +46,42 @@ namespace app
             return false;
         }
 
+        public bool PlaceItem(int PosX, int PosY)
+        {
+            int Tryy = 0;
+            Form1_0.ItemsStruc_0.GetItems(false);
+            while (Form1_0.ItemsStruc_0.ItemOnCursor && Tryy < 15)
+            {
+                Form1_0.KeyMouse_0.MouseClicc(PosX, PosY);
+                Form1_0.WaitDelay(10);
+                Form1_0.ItemsStruc_0.GetItems(false);   //get inventory again
+                Tryy++;
+            }
+            if (Tryy >= 15)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public bool PickItem(int PosX, int PosY)
+        {
+            int Tryy = 0;
+            Form1_0.ItemsStruc_0.GetItems(false);
+            while (!Form1_0.ItemsStruc_0.ItemOnCursor && Tryy < 5)
+            {
+                Form1_0.KeyMouse_0.MouseClicc(PosX, PosY);
+                Form1_0.WaitDelay(10);
+                Form1_0.ItemsStruc_0.GetItems(false);   //get inventory again
+                Tryy++;
+            }
+            if (Tryy >= 5)
+            {
+                return false;
+            }
+            return true;
+        }
+
         public void RunShopScript()
         {
             if (FirstShopping)
@@ -59,80 +95,75 @@ namespace app
             LastitemScreenPos = new Dictionary<string, int>();
 
             //sell items
-            if (Form1_0.InventoryStruc_0.HasInventoryItems())
+            if (!Form1_0.Town_0.FastTowning)
             {
-                Form1_0.SetGameStatus("TOWN-SHOP-SELL ITEMS");
-                for (int i = 0; i < 40; i++)
+                if (Form1_0.InventoryStruc_0.HasInventoryItems())
                 {
-                    if (CharConfig.InventoryDontCheckItem[i] == 0 && Form1_0.InventoryStruc_0.InventoryHasItem[i] >= 1)
+                    Form1_0.SetGameStatus("TOWN-SHOP-SELL ITEMS");
+                    for (int i = 0; i < 40; i++)
                     {
-                        Dictionary<string, int> itemScreenPos = Form1_0.InventoryStruc_0.ConvertIndexToXY(i);
-                        itemScreenPos = Form1_0.InventoryStruc_0.ConvertInventoryLocToScreenPos(itemScreenPos["x"], itemScreenPos["y"]);
-
-                        int Tries = 0;
-                        int MaxTries = 1;
-                        while (true)
+                        if (CharConfig.InventoryDontCheckItem[i] == 0 && Form1_0.InventoryStruc_0.InventoryHasItem[i] >= 1)
                         {
-                            if (!Form1_0.Running || !Form1_0.GameStruc_0.IsInGame())
-                            {
-                                break;
-                            }
-                            /*if (Form1_0.ItemsStruc_0.ItemOnCursor)
-                            {
-                                Form1_0.KeyMouse_0.MouseClicc(LastitemScreenPos["x"], LastitemScreenPos["y"]);
-                                Form1_0.WaitDelay(20);
-                                Form1_0.ItemsStruc_0.GetItems(false);   //get inventory again
-                                Form1_0.SetGameStatus("TOWN-SHOP-SELL ITEMS");
-                            }*/
-                            Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"]);
-                            Form1_0.WaitDelay(15);
-                            Form1_0.KeyMouse_0.MouseClicc(555, 465);
+                            Dictionary<string, int> itemScreenPos = Form1_0.InventoryStruc_0.ConvertIndexToXY(i);
+                            itemScreenPos = Form1_0.InventoryStruc_0.ConvertInventoryLocToScreenPos(itemScreenPos["x"], itemScreenPos["y"]);
 
-                            Form1_0.WaitDelay(50);
-                            Form1_0.ItemsStruc_0.GetItems(false);   //get inventory again
-                            Form1_0.SetGameStatus("TOWN-SHOP-SELL ITEMS");
-
-                            //item still in inventory
-                            if (Form1_0.InventoryStruc_0.InventoryHasItem[i] >= 1)
+                            int Tries = 0;
+                            int MaxTries = 1;
+                            while (true)
                             {
-                                if (Tries > MaxTries)
+                                if (!Form1_0.Running || !Form1_0.GameStruc_0.IsInGame())
                                 {
                                     break;
                                 }
-                                Tries++;
-                            }
-                            else
-                            {
-                                while (Form1_0.ItemsStruc_0.ItemOnCursor)
+
+                                Form1_0.ItemsStruc_0.GetItems(false);   //get inventory again
+                                PickItem(itemScreenPos["x"], itemScreenPos["y"]);
+                                Form1_0.WaitDelay(10);
+                                if (!PlaceItem(555, 465))
                                 {
-                                    Form1_0.KeyMouse_0.MouseClicc(555, 465);
-                                    Form1_0.WaitDelay(50);
-                                    Form1_0.ItemsStruc_0.GetItems(false);   //get inventory again
-                                    Form1_0.SetGameStatus("TOWN-SHOP-SELL ITEMS");
+                                    Form1_0.WaitDelay(10);
+                                    PlaceItem(itemScreenPos["x"], itemScreenPos["y"]);
                                 }
-                                /*if (Form1_0.ItemsStruc_0.ItemOnCursor)
+
+                                //############## OLD CODE
+                                //Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"]);
+                                //Form1_0.WaitDelay(5);
+                                //Form1_0.KeyMouse_0.MouseClicc(555, 465);
+                                //Form1_0.WaitDelay(5);
+                                //Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"]);
+                                //Form1_0.WaitDelay(10);
+                                //Form1_0.ItemsStruc_0.GetItems(false);   //get inventory again
+                                //Form1_0.SetGameStatus("TOWN-SHOP-SELL ITEMS");
+                                //##############
+
+                                //item still in inventory
+                                if (Form1_0.InventoryStruc_0.InventoryHasItem[i] >= 1)
                                 {
-                                    Form1_0.KeyMouse_0.MouseClicc(LastitemScreenPos["x"], LastitemScreenPos["y"]);
-                                    Form1_0.WaitDelay(20);
-                                    Form1_0.ItemsStruc_0.GetItems(false);   //get inventory again
-                                    Form1_0.SetGameStatus("TOWN-SHOP-SELL ITEMS");
-                                }*/
+                                    if (Tries > MaxTries)
+                                    {
+                                        break;
+                                    }
+                                    Tries++;
+                                }
+                                else
+                                {
+                                    break;
+                                }
+                            }
+
+                            LastitemScreenPos = itemScreenPos;
+
+                            if (Tries > MaxTries)
+                            {
+                                Form1_0.method_1("DIDNT SELL ITEM CORRECTLY!", Color.OrangeRed);
                                 break;
                             }
                         }
 
-                        LastitemScreenPos = itemScreenPos;
-
-                        if (Tries > MaxTries)
+                        if (!Form1_0.Running || !Form1_0.GameStruc_0.IsInGame())
                         {
-                            Form1_0.method_1("DIDNT SELL ITEM CORRECTLY!", Color.OrangeRed);
                             break;
                         }
-                    }
-
-                    if (!Form1_0.Running || !Form1_0.GameStruc_0.IsInGame())
-                    {
-                        break;
                     }
                 }
             }
@@ -282,7 +313,7 @@ namespace app
             //buy key
             tries = 0;
             StartQty = Form1_0.InventoryStruc_0.HUDItems_keys;
-            while (Form1_0.InventoryStruc_0.HUDItems_keys < 12 && tries < 1)
+            while (Form1_0.InventoryStruc_0.HUDItems_keys <= 8 && tries < 1)
             {
                 Form1_0.SetGameStatus("TOWN-SHOP-BUY KEYS");
                 if (!Form1_0.Running || !Form1_0.GameStruc_0.IsInGame())

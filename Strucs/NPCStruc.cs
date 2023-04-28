@@ -115,8 +115,8 @@ namespace app
                 case 405: return "Jamella";
                 case 265: return "DeckardCain";
                 case 520: return "DeckardCain";
-                case 512: return "Drehya";
-                case 527: return "Drehya";
+                case 512: return "Anya";
+                case 527: return "Anya";
                 case 515: return "Qual-Kehk";
                 case 513: return "Malah";
                 case 511: return "Larzuk";

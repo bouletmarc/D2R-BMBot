@@ -15,14 +15,24 @@ namespace app
         Form1 Form1_0;
 
         public int CurrentStep = 0;
-        public int MaxGameTimeToEnter = (4 * 60); //6mins
-        public int MaxTimeWaitedForTP = (2 * 60) * 2; //2mins
+        public int MaxGameTimeToEnter = (3 * 60); //3mins
+        public int MaxTimeWaitedForTP = (2 * 60); //2mins
         public int TimeWaitedForTP = 0;
         public bool PrintedInfos = false;
         public int SameGameRetry = 0;
+        public bool SearchSameGamesAsLastOne = false;
+        public bool KillingManually = false;
+        public bool DetectedBaal = false;
+
+        public long LastWave4Pointer = 0;
+        public long LastWave5Pointer = 0;
 
         public List<uint> IgnoredTPList = new List<uint>();
+        public List<long> IgnoredMobs = new List<long>();
         public uint LastUsedTP_ID = 0;
+        public DateTime StartTimeWhenWaiting = DateTime.Now;
+        public bool SetStartTime = false;
+        public long BaalThronePointer = 0;
 
         public void SetForm1(Form1 form1_1)
         {
@@ -33,7 +43,14 @@ namespace app
         {
             TimeWaitedForTP = 0;
             CurrentStep = 0;
+            LastWave4Pointer = 0;
+            LastWave5Pointer = 0;
+            BaalThronePointer = 0;
             PrintedInfos = false;
+            KillingManually = false;
+            DetectedBaal = false;
+            SetStartTime = false;
+            StartTimeWhenWaiting = DateTime.Now;
             Form1_0.PlayerScan_0.LeechPlayerUnitID = 0;
             Form1_0.PlayerScan_0.LeechPlayerPointer = 0;
             Form1_0.Town_0.ScriptTownAct = 5; //set to town act 5 when running this script
@@ -44,7 +61,7 @@ namespace app
 
             string LastGameName = Form1_0.GameStruc_0.GameName;
             string SearchSameGame = "";
-            if (LastGameName != "" && SameGameRetry < 20)
+            if (LastGameName != "" && SameGameRetry < 20 && SearchSameGamesAsLastOne)
             {
                 SearchSameGame = LastGameName.Substring(0, LastGameName.Length - 2);
             }
@@ -55,6 +72,11 @@ namespace app
 
                 for (int i = 0; i < Form1_0.GameStruc_0.AllGamesNames.Count; i++)
                 {
+                    if (!Form1_0.Running)
+                    {
+                        break;
+                    }
+
                     if (SearchSameGame != "")
                     {
                         if (Form1_0.GameStruc_0.AllGamesNames[i].ToLower().Contains(SearchSameGame.ToLower())
@@ -88,11 +110,14 @@ namespace app
                 {
                     for (int i = 0; i < PossibleGamesIndex.Count; i++)
                     {
+                        if (!Form1_0.Running)
+                        {
+                            break;
+                        }
+
                         Form1_0.SetGameStatus("SEARCHING:" + Form1_0.GameStruc_0.AllGamesNames[PossibleGamesIndex[i]]);
 
                         Form1_0.GameStruc_0.SelectGame(PossibleGamesIndex[i], false);
-                        Form1_0.GameStruc_0.GetSelectedGameInfo();
-
                         if (Form1_0.GameStruc_0.SelectedGameTime < MaxGameTimeToEnter)
                         {
                             Form1_0.GameStruc_0.SelectGame(PossibleGamesIndex[i], true);
@@ -118,6 +143,7 @@ namespace app
 
         public void RunScript()
         {
+            SearchSameGamesAsLastOne = false;
             SameGameRetry = 0;
             Form1_0.Town_0.ScriptTownAct = 5; //set to town act 5 when running this script
             GetLeechInfo();
@@ -127,13 +153,17 @@ namespace app
                 CurrentStep = 0;
                 Form1_0.Mover_0.MoveToLocation(5103, 5029); //move to wp spot
 
+                if (!SetStartTime)
+                {
+                    StartTimeWhenWaiting = DateTime.Now;
+                    SetStartTime = true;
+                }
+
                 //use tp
                 //if (Form1_0.ObjectsStruc_0.GetObjects("TownPortal", Form1_0.PlayerScan_0.LeechPlayerUnitID))
                 if (Form1_0.ObjectsStruc_0.GetObjects("TownPortal", true, IgnoredTPList))
                 {
-                    //CastDefense();
                     Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, Form1_0.ObjectsStruc_0.itemx, Form1_0.ObjectsStruc_0.itemy);
-                    //Console.WriteLine("Clicking: " + itemScreenPos["x"] + "," + itemScreenPos["y"]);
                     Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"] - 15);
                     Form1_0.WaitDelay(100);
                     LastUsedTP_ID = Form1_0.ObjectsStruc_0.ObjectUnitID;
@@ -151,17 +181,24 @@ namespace app
                 }
                 else
                 {
+                    TimeWaitedForTP = 0;
+                    if (SetStartTime)
+                    {
+                        TimeSpan CheckT = DateTime.Now - StartTimeWhenWaiting;
+                        TimeWaitedForTP = (int) CheckT.TotalSeconds;
+                    }
+
                     //Form1_0.method_1("NO TP FOUND NEAR IN TOWN");
                     if (TimeWaitedForTP >= MaxTimeWaitedForTP)
                     {
                         Form1_0.method_1("Leaving reason: Waited too long for tp", Color.Red);
-                        Form1_0.LeaveGame();
+                        Form1_0.LeaveGame(false);
                     }
-                    else
+                    /*else
                     {
                         Form1_0.WaitDelay(450);
-                        TimeWaitedForTP++;
-                    }
+                        //TimeWaitedForTP++;
+                    }*/
 
                     //check if we are about to do baal atleast when waiting
                     if (TimeWaitedForTP >= (MaxTimeWaitedForTP / 3))
@@ -171,7 +208,7 @@ namespace app
                             && !Form1_0.PlayerScan_0.HasAnyPlayerInArea(131))//throne chamber
                         {
                             Form1_0.method_1("Leaving reason: Nobody seem to baal run", Color.Red);
-                            Form1_0.LeaveGame();
+                            Form1_0.LeaveGame(false);
                         }
                     }
                 }
@@ -184,10 +221,16 @@ namespace app
                     CastDefense();
                     CastDefense();
 
-
                     //not correct location check
                     if (Form1_0.PlayerScan_0.levelNo != 131)
                     {
+                        if (Form1_0.ObjectsStruc_0.GetObjects("TownPortal", true, IgnoredTPList))
+                        {
+                            Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, Form1_0.ObjectsStruc_0.itemx, Form1_0.ObjectsStruc_0.itemy);
+                            Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"] - 15);
+                            Form1_0.WaitDelay(100);
+                        }
+
                         IgnoredTPList.Add(LastUsedTP_ID);
                         Form1_0.Town_0.UseLastTP = false;
                         Form1_0.Town_0.GoToTown();
@@ -213,28 +256,61 @@ namespace app
                     }
                     else
                     {
-                        Form1_0.Battle_0.DoBattleScript();
+                        Form1_0.Battle_0.DoBattleScript(10);
                     }
 
                     //detect last wave
-                    if (Form1_0.MobsStruc_0.GetMobs("getSuperUniqueName", "Baal Subject 4", false, 99, new List<long>()))
+                    if (Form1_0.MobsStruc_0.GetMobs("getSuperUniqueName", "Baal Subject 4", false, 99, IgnoredMobs))
                     {
                         if (Form1_0.MobsStruc_0.MobsHP > 0)
+                        {
+                            LastWave4Pointer = Form1_0.MobsStruc_0.MobsPointerLocation;
+                            CurrentStep++;
+                        }
+                    }
+                    if (Form1_0.MobsStruc_0.GetMobs("getSuperUniqueName", "Baal Subject 5", false, 99, IgnoredMobs))
+                    {
+                        if (Form1_0.MobsStruc_0.MobsHP > 0)
+                        {
+                            LastWave5Pointer = Form1_0.MobsStruc_0.MobsPointerLocation;
+                            CurrentStep++;
+                        }
+                    }
+                    //###
+                    if (BaalThronePointer == 0)
+                    {
+                        if (Form1_0.MobsStruc_0.GetMobs("getBossName", "BaalThrone", false, 99, new List<long>()))
+                        {
+                            BaalThronePointer = Form1_0.MobsStruc_0.MobsPointerLocation;
+                        }
+                    }
+                    else
+                    {
+                        Form1_0.MobsStruc_0.GetThisMob(BaalThronePointer);
+
+                        //BaalThrone has moved
+                        if (Form1_0.MobsStruc_0.xPosFinal != 15087 &&
+                            Form1_0.MobsStruc_0.yPosFinal != 5013)
                         {
                             CurrentStep++;
                         }
                     }
-                    if (Form1_0.MobsStruc_0.GetMobs("getSuperUniqueName", "Baal Subject 5", false, 99, new List<long>()))
-                    {
-                        if (Form1_0.MobsStruc_0.MobsHP > 0)
-                        {
-                            CurrentStep++;
-                        }
-                    }
+                    //CurrentStep++;
                 }
                 if (CurrentStep == 2)
                 {
                     Form1_0.SetGameStatus("WAITING PORTAL");
+
+                    //##### detect wave only, not increase script functions
+                    if (Form1_0.MobsStruc_0.GetMobs("getSuperUniqueName", "Baal Subject 5", false, 99, IgnoredMobs))
+                    {
+                        if (Form1_0.MobsStruc_0.MobsHP > 0)
+                        {
+                            LastWave5Pointer = Form1_0.MobsStruc_0.MobsPointerLocation;
+                        }
+                    }
+                    //#####
+
                     //move to baal red portal
                     if (Form1_0.PlayerScan_0.xPosFinal >= 15170 - 40
                         && Form1_0.PlayerScan_0.xPosFinal <= 15170 + 40
@@ -269,12 +345,6 @@ namespace app
                         }
                         else
                         {
-                            /*if (Form1_0.ObjectsStruc_0.GetObjects("BaalsPortal", 0, false))
-                            {
-                                Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, Form1_0.ObjectsStruc_0.itemx, Form1_0.ObjectsStruc_0.itemy);
-                                Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"] - 15);
-                                Form1_0.WaitDelay(10);
-                            }*/
                             Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, 15091, 5005);
                             Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"] - 5, itemScreenPos["y"] - 20);
                             Form1_0.WaitDelay(10);
@@ -295,15 +365,27 @@ namespace app
                 }
                 if (CurrentStep == 4)
                 {
+                    Form1_0.Potions_0.CanUseSkillForRegen = false;
                     Form1_0.SetGameStatus("KILLING BAAL");
                     if (Form1_0.MobsStruc_0.GetMobs("getBossName", "Baal", false, 120, new List<long>()))
                     {
                         if (Form1_0.MobsStruc_0.MobsHP > 0)
                         {
+                            DetectedBaal = true;
                             Form1_0.Battle_0.RunBattleScriptOnThisMob("getBossName", "Baal");
                         }
                         else
                         {
+                            IgnoredMobs = new List<long>();
+                            if (LastWave4Pointer != 0) IgnoredMobs.Add(LastWave4Pointer); //add this killed wave4 to ignoed mob
+                            if (LastWave5Pointer != 0) IgnoredMobs.Add(LastWave5Pointer); //add this killed wave5 to ignoed mob
+                            if (DetectedBaal) IgnoredMobs.Add(Form1_0.MobsStruc_0.MobsPointerLocation); //add this killed baal to ignoed mob
+
+                            if (DetectedBaal && KillingManually)
+                            {
+                                Form1_0.method_1("KILLED BAAL MANUALLY!", Color.DarkMagenta);
+                            }
+
                             Form1_0.ItemsStruc_0.GetItems(true);
                             Form1_0.ItemsStruc_0.GetItems(true);
                             Form1_0.ItemsStruc_0.GetItems(true);
@@ -315,8 +397,19 @@ namespace app
                             Form1_0.ItemsStruc_0.GetItems(true);
                             Form1_0.ItemsStruc_0.GetItems(true);
                             Form1_0.ItemsStruc_0.GrabAllItemsForGold();
-                            Form1_0.LeaveGame();
+                            Form1_0.Potions_0.CanUseSkillForRegen = true;
+                            SearchSameGamesAsLastOne = true;
+                            Form1_0.LeaveGame(true);
                         }
+                    }
+                    else
+                    {
+                        //baal not detected...
+                        Form1_0.ItemsStruc_0.GetItems(true);
+                        Form1_0.ItemsStruc_0.GrabAllItemsForGold();
+                        Form1_0.Potions_0.CanUseSkillForRegen = true;
+                        SearchSameGamesAsLastOne = true;
+                        Form1_0.LeaveGame(true);
                     }
                 }
             }
@@ -327,7 +420,7 @@ namespace app
             //cast sacred shield
             Form1_0.KeyMouse_0.PressKey(CharConfig.KeySkillCastDefense);
             Form1_0.WaitDelay(5);
-            Form1_0.KeyMouse_0.MouseCliccRight(CharConfig.ScreenX / 2, CharConfig.ScreenY / 2);
+            Form1_0.KeyMouse_0.MouseCliccRight(Form1_0.CenterX, Form1_0.CenterY);
             Form1_0.WaitDelay(5);
         }
 
@@ -346,11 +439,31 @@ namespace app
             //LEECHER NOT IN GAME
             if (Form1_0.PlayerScan_0.LeechPlayerPointer == 0 || Form1_0.PlayerScan_0.LeechPlayerUnitID == 0)
             {
-                //if (CurrentStep < 2) //kill baal manually
-                //{
+                if (CurrentStep < 2) //kill baal manually
+                {
                     Form1_0.ItemsStruc_0.GrabAllItemsForGold();
-                    Form1_0.LeaveGame();
-                //}
+                    SearchSameGamesAsLastOne = true;
+                    Form1_0.LeaveGame(true);
+                }
+                else
+                {
+                    if (!KillingManually)
+                    {
+                        //no chance to go alone
+                        if (!Form1_0.MercStruc_0.MercAlive
+                            && Form1_0.BeltStruc_0.HPQuantity < 6
+                            && Form1_0.BeltStruc_0.ManyQuantity < 3)
+                        {
+                            Form1_0.ItemsStruc_0.GrabAllItemsForGold();
+                            SearchSameGamesAsLastOne = true;
+                            Form1_0.LeaveGame(true);
+                        }
+                        else
+                        {
+                            KillingManually = true;
+                        }
+                    }
+                }
             }
         }
     }

@@ -35,7 +35,7 @@ namespace app
     public partial class Form1 : Form
     {
 
-        public string BotVersion = "V1.0";
+        public string BotVersion = "V1.1";
 
         public Process process;
         public string ThisEndPath = Application.StartupPath + @"\Extracted\";
@@ -48,16 +48,29 @@ namespace app
         public bool Running = false;
         public bool HasPointers = false;
         public int UnitStrucOffset = -32;
-        public double centerModeScale = 2.262;
-        public int renderScale = 3;
-        public int CenterX = 0;
-        public int CenterY = 0;
         public int hWnd = 0;
         public DateTime CheckTime = new DateTime();
         public int LoopDone = 0;
         public DateTime GameStartedTime = new DateTime();
         public bool CharDied = false;
         public bool PrintedGameTime = false;
+
+        public Rectangle D2Rect = new Rectangle();
+        public int ScreenX = 1920;
+        public int ScreenY = 1080;
+        public int CenterX = 0;
+        public int CenterY = 0;
+        public int D2Widht = 0;
+        public int D2Height = 0;
+        public int ScreenXOffset = 0;
+        public int ScreenYOffset = 0;
+        public double centerModeScale = 2.262;
+        public int renderScale = 3;
+        public int ScreenYMenu = 180;
+
+        public int CurrentGameNumber = 1;
+        public int CurrentGameNumberFullyDone = 0;
+        public bool SetGameDone = false;
 
         public ItemsStruc ItemsStruc_0;
         public Mem Mem_0;
@@ -87,6 +100,11 @@ namespace app
         public KeyMouse KeyMouse_0;
         public Baal Baal_0;
         public MercStruc MercStruc_0;
+        public StashStruc StashStruc_0;
+        public Cubing Cubing_0;
+        public Gamble Gamble_0;
+        public LowerKurast LowerKurast_0;
+        public SettingsLoader SettingsLoader_0;
 
         // REQUIRED CONSTS
         const int PROCESS_QUERY_INFORMATION = 0x0400;
@@ -105,6 +123,9 @@ namespace app
 
         [DllImport("user32.dll")]
         private static extern int FindWindow(string ClassName, string WindowName);
+
+        [DllImport("user32.dll")]
+        private static extern int GetWindowRect(int hwnd, out Rectangle rect);
 
 
         // REQUIRED STRUCTS
@@ -139,6 +160,7 @@ namespace app
             InitializeComponent();
 
             this.Text = "D2R - BMBot (" + BotVersion + ")";
+            labelGames.Text = CurrentGameNumber.ToString();
             SetGameStatus("STOPPED");
             Form1_0 = this;
             richTextBox1.HideSelection = false;//Hide selection so that AppendText will auto scroll to the end
@@ -148,8 +170,8 @@ namespace app
             LoopTimer = new System.Timers.Timer(1);
             LoopTimer.Elapsed += new ElapsedEventHandler(timer_Elapsed);
 
-            CenterX = CharConfig.ScreenX / 2;
-            CenterY = CharConfig.ScreenY / 2;
+            //CenterX = CharConfig.ScreenX / 2;
+            //CenterY = CharConfig.ScreenY / 2;
 
             ItemsStruc_0 = new ItemsStruc();
             Mem_0 = new Mem();
@@ -178,6 +200,11 @@ namespace app
             KeyMouse_0 = new KeyMouse();
             Baal_0 = new Baal();
             MercStruc_0 = new MercStruc();
+            StashStruc_0 = new StashStruc();
+            Cubing_0 = new Cubing();
+            Gamble_0 = new Gamble();
+            LowerKurast_0 = new LowerKurast();
+            SettingsLoader_0 = new SettingsLoader();
 
             ItemsStruc_0.SetForm1(Form1_0);
             Mem_0.SetForm1(Form1_0);
@@ -205,6 +232,13 @@ namespace app
             KeyMouse_0.SetForm1(Form1_0);
             Baal_0.SetForm1(Form1_0);
             MercStruc_0.SetForm1(Form1_0);
+            StashStruc_0.SetForm1(Form1_0);
+            Cubing_0.SetForm1(Form1_0);
+            Gamble_0.SetForm1(Form1_0);
+            LowerKurast_0.SetForm1(Form1_0);
+            SettingsLoader_0.SetForm1(Form1_0);
+
+            SettingsLoader_0.LoadSettings();
 
             KeyMouse_0.proc = KeyMouse_0.HookCallback;
             KeyMouse_0.hookID = KeyMouse_0.SetHook(KeyMouse_0.proc);
@@ -234,9 +268,16 @@ namespace app
             dataGridView1.Rows.Add("Full Open", "Unknown");
         }
 
-        public void LeaveGame()
+        public void LeaveGame(bool BotCompletlyDone)
         {
             SetGameStatus("LEAVING");
+
+            if (BotCompletlyDone && !SetGameDone)
+            {
+                Form1_0.CurrentGameNumberFullyDone++;
+                SetGameDone = true;
+            }
+
             if (UIScan_0.OpenUIMenu("quitMenu"))
             {
                 KeyMouse_0.MouseClicc(960, 480);
@@ -246,7 +287,7 @@ namespace app
             }
         }
 
-    void RemovePastDump()
+        void RemovePastDump()
         {
             string[] FileList = Directory.GetFiles(ThisEndPath, "Dump*");
             if (FileList.Length > 0)
@@ -260,8 +301,8 @@ namespace app
 
         public void method_1(string string_3, Color ThisColor)
         {
-            try
-            {
+            //try
+            //{
                 if (richTextBox1.InvokeRequired)
                 {
                     // Call this same method but append THREAD2 to the text
@@ -275,14 +316,14 @@ namespace app
                     richTextBox1.AppendText(string_3 + Environment.NewLine);
                     Application.DoEvents();
                 }
-            }
-            catch { }
+            //}
+            //catch { }
         }
 
         public void method_1_Items(string string_3, Color ThisColor)
         {
-            try
-            {
+            //try
+            //{
                 if (richTextBox2.InvokeRequired)
                 {
                     // Call this same method but append THREAD2 to the text
@@ -291,19 +332,20 @@ namespace app
                 }
                 else
                 {
+                    string LogThis = string_3+ " in " + Town_0.getAreaName((int) PlayerScan_0.levelNo) + " " + GameStruc_0.GetTimeNow();
                     richTextBox2.SelectionColor = ThisColor;
-                    richTextBox2.AppendText(string_3 + " " + GameStruc_0.GetTimeNow() + Environment.NewLine);
-                    method_1(string_3 + " " + GameStruc_0.GetTimeNow(), ThisColor);
+                    richTextBox2.AppendText(LogThis + Environment.NewLine);
+                    method_1(LogThis, ThisColor);
                     Application.DoEvents();
                 }
-            }
-            catch { }
+            //}
+            //catch { }
         }
 
         public void SetGameStatus(string string_3)
         {
-            try
-            {
+            //try
+            //{
                 if (labelStatus.InvokeRequired)
                 {
                     // Call this same method but append THREAD2 to the text
@@ -315,14 +357,14 @@ namespace app
                     labelStatus.Text = string_3;
                     Application.DoEvents();
                 }
-            }
-            catch { }
+            //}
+            //catch { }
         }
 
         public void Grid_SetInfos(string RowName, string ThisInfos)
         {
-            try
-            {
+            //try
+            //{
                 if (dataGridView1.InvokeRequired)
                 {
                     // Call this same method but append THREAD2 to the text
@@ -340,8 +382,22 @@ namespace app
                         }
                     }
                 }
+            //}
+            //catch { }
+        }
+
+        public void SetGamesText()
+        {
+            if (labelGames.InvokeRequired)
+            {
+                // Call this same method but append THREAD2 to the text
+                Action safeWrite = delegate { SetGamesText(); };
+                labelGames.Invoke(safeWrite);
             }
-            catch { }
+            else
+            {
+                labelGames.Text = CurrentGameNumber.ToString() + " entered. " + CurrentGameNumberFullyDone.ToString() + " fully done";
+            }
         }
 
         public void Startt()
@@ -365,9 +421,19 @@ namespace app
                 }
                 else
                 {
-                    hWnd = FindWindow(null, "Diablo II: Resurrected");
                     SetGameStatus("LOADING");
                     method_1("D2R is running...", Color.DarkGreen);
+
+                    hWnd = FindWindow(null, "Diablo II: Resurrected");
+                    GetWindowRect(hWnd, out D2Rect);
+                    //ScreenX = Screen.PrimaryScreen.Bounds.Width;
+                    //ScreenY = Screen.PrimaryScreen.Bounds.Height;
+                    CenterX = ScreenX / 2;
+                    CenterY = ScreenY / 2;
+                    D2Widht = D2Rect.Width;
+                    D2Height = D2Rect.Height;
+                    ScreenXOffset = D2Rect.Location.X;
+                    ScreenYOffset = D2Rect.Location.Y;
 
                     process = Process.GetProcessesByName("D2R")[0];
                     processHandle = OpenProcess(PROCESS_QUERY_INFORMATION | PROCESS_VM_READ, false, process.Id);
@@ -406,22 +472,27 @@ namespace app
                     //method_1("Player pos: " + PlayerScan_0.xPosFinal + "," + PlayerScan_0.yPosFinal, Color.Black);
                     //UIScan_0.readUI();
                     //Console.WriteLine(UIScan_0.npcInteract);
-                    //MobsStruc_0.GetMobs("", "", true, 25, new List<long>() { });
+                    //MobsStruc_0.GetMobs("", "", true, 50, new List<long>() { });
                     //Thread.Sleep(3000);
-                    //HoverStruc_0.GetHovering();
-                    //method_1("hover: " + HoverStruc_0.lastHoveredType + ", " + HoverStruc_0.lastHoveredUnitId + ", " + HoverStruc_0.isHovered);
+                    //HoverStruc_0.GetHovering(); //only when item is on ground not on hands
+                    //method_1("hover: " + HoverStruc_0.lastHoveredType + ", " + HoverStruc_0.lastHoveredUnitId + ", " + HoverStruc_0.isHovered, Color.BlueViolet);
                     //ItemsStruc_0.GetItems(false);
                     //ItemsStruc_0.GetItems(true);
                     //BeltStruc_0.CheckForMissingPotions();
                     //Potions_0.CheckIfWeUsePotion();
                     //ObjectsStruc_0.GetObjects("", false);
                     //NPCStruc_0.GetNPC("noname");
+                    /*if (ObjectsStruc_0.GetObjects("Act3TownWaypoint", false))
+                    {
+                        method_1("WP: " + ObjectsStruc_0.itemx + ", " + ObjectsStruc_0.itemy, Color.DarkOrchid);
+                    }
+                    ObjectsStruc_0.GetObjects("", false);*/
+                    //Form1_0.ObjectsStruc_0.GetObjects("AllChests", true, new List<uint>(), 300);
 
                     //##############################
                     //GRAB AND KEEP ITEM SHOULD NOT BE IDENTICAL
                     //ignored tp
                     //baal pos not detected
-                    //cubing script...
                     //BO script
                     //gamble script
                     //merc hp not correct
@@ -441,6 +512,11 @@ namespace app
             }
         }
 
+        public void RunScriptNOTInGame()
+        {
+            Form1_0.GameStruc_0.CreateNewGame();
+        }
+
         public void SetNewGame()
         {
             PatternsScan_0.StartIndexItemLast = long.MaxValue;
@@ -449,10 +525,19 @@ namespace app
             Town_0.TriedToMercCount = 0;
             Town_0.Towning = true;
             Town_0.ForcedTowning = false;
+            Town_0.FastTowning = false;
             PlayerScan_0.GetPositions();
             ItemsStruc_0.GetItems(false);
             PlayerScan_0.SetMaxHPAndMana();
             Shop_0.FirstShopping = true;
+            ItemsStruc_0.dwOwnerId_Shared1 = 0;
+            ItemsStruc_0.dwOwnerId_Shared2 = 0;
+            ItemsStruc_0.dwOwnerId_Shared3 = 0;
+            Potions_0.CanUseSkillForRegen = true;
+            LowerKurast_0.ResetVars();
+            SetGameDone = false;
+            SetGamesText();
+            CurrentGameNumber++;
         }
 
         void timer_Elapsed(object sender, ElapsedEventArgs e)
@@ -508,6 +593,13 @@ namespace app
                                 bool runnn = true;
                                 if (runnn)
                                 {
+                                    //#####
+                                    /*if (CharConfig.RunLowerKurastScript && LowerKurast_0.ScriptDone)
+                                    {
+                                        LeaveGame(true);
+                                    }*/
+                                    //#####
+
                                     if (!ItemsStruc_0.GetItems(true))
                                     {
                                         //BeltStruc_0.CheckForMissingPotions();
@@ -524,13 +616,20 @@ namespace app
                                             }
                                             else
                                             {
-                                                if (CharConfig.RunChaosScript)
+                                                if (CharConfig.RunLowerKurastScript && !LowerKurast_0.ScriptDone)
                                                 {
-                                                    Chaos_0.RunScript();
+                                                    LowerKurast_0.RunScript();
                                                 }
-                                                if (CharConfig.RunBaalLeechScript)
+                                                else
                                                 {
-                                                    Baal_0.RunScript();
+                                                    if (CharConfig.RunChaosScript)
+                                                    {
+                                                        Chaos_0.RunScript();
+                                                    }
+                                                    if (CharConfig.RunBaalLeechScript)
+                                                    {
+                                                        Baal_0.RunScript();
+                                                    }
                                                 }
                                             }
                                         }
@@ -561,15 +660,24 @@ namespace app
                         PrintedGameTime = true;
                     }
                     HasPointers = false;
-                    //Chaos_0.RunScriptNOTInGame();
-                    if(CharConfig.RunBaalSearchGameScript)
+
+                    if (CharConfig.RunGameMakerScript)
                     {
-                        Form1_0.SetGameStatus("SEARCHING GAMES");
-                        Baal_0.RunScriptNOTInGame();
+                        Form1_0.SetGameStatus("CREATING GAME");
+                        RunScriptNOTInGame();
                     }
                     else
                     {
-                        Form1_0.SetGameStatus("IDLE");
+                        //Chaos_0.RunScriptNOTInGame();
+                        if (CharConfig.RunBaalSearchGameScript)
+                        {
+                            Form1_0.SetGameStatus("SEARCHING GAMES");
+                            Baal_0.RunScriptNOTInGame();
+                        }
+                        else
+                        {
+                            Form1_0.SetGameStatus("IDLE");
+                        }
                     }
                 }
             }

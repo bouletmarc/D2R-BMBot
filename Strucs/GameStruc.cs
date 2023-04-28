@@ -33,8 +33,15 @@ namespace app
 
         public List<string> AllGamesTriedNames = new List<string>();
 
-        //[DllImport("user32.dll")]
-        //public static extern long GetWindowRect(int hWnd, ref Rectangle lpRect);
+        [DllImport("user32.dll")] static extern short VkKeyScan(char ch);
+
+        [StructLayout(LayoutKind.Explicit)]
+        struct Helper
+        {
+            [FieldOffset(0)] public short Value;
+            [FieldOffset(0)] public byte Low;
+            [FieldOffset(1)] public byte High;
+        }
 
         public void SetForm1(Form1 form1_1)
         {
@@ -52,6 +59,52 @@ namespace app
             File.WriteAllBytes(SavePathh, unitTableBuffer);
 
             GetAllGamesNames();
+        }
+
+        public void CreateNewGame()
+        {
+            Form1_0.KeyMouse_0.MouseClicc(1190, 990); //clic 'salon' if not in server
+            Form1_0.KeyMouse_0.MouseClicc(1275, 65);  //clic 'create game' if not in game create area
+
+            Form1_0.KeyMouse_0.MouseClicc(1550, 170);  //clic 'gamename'
+            //type game name
+            for (int i = 0; i < 16; i++)
+            {
+                Form1_0.KeyMouse_0.PressKey(Keys.Back);
+                Thread.Sleep(3);
+            }
+            string GameName = CharConfig.GameName + Form1_0.CurrentGameNumber.ToString("000");
+            for (int i = 0; i < GameName.Length; i++)
+            {
+                var helper = new Helper { Value = VkKeyScan(GameName[i]) };
+                byte virtualKeyCode = helper.Low;
+                Form1_0.KeyMouse_0.PressKey2((Keys)virtualKeyCode);
+                Thread.Sleep(3);
+            }
+
+
+            Form1_0.KeyMouse_0.MouseClicc(1550, 240);  //clic 'gamepass'
+            //type game pass
+            for (int i = 0; i < 16; i++)
+            {
+                Form1_0.KeyMouse_0.PressKey(Keys.Back);
+                Thread.Sleep(3);
+            }
+            for (int i = 0; i < CharConfig.GamePass.Length; i++)
+            {
+                var helper = new Helper { Value = VkKeyScan(CharConfig.GamePass[i]) };
+                byte virtualKeyCode = helper.Low;
+                Form1_0.KeyMouse_0.PressKey2((Keys)virtualKeyCode);
+                Thread.Sleep(3);
+            }
+
+            Form1_0.KeyMouse_0.MouseClicc(1470, 670);  //clic 'create game'
+
+
+            //###############
+            /*GetAllGamesNames();
+            SelectGame(0, false);
+            SelectGame(0, true);*/
         }
 
         public void GetAllGamesNames()
@@ -126,6 +179,11 @@ namespace app
 
         public void GetSelectedGameInfo()
         {
+            if ((int) Form1_0.offsets["GameSelectedOffset"] == 64)
+            {
+                Form1_0.PatternsScan_0.PatternScan();
+            }
+
             //0x53F or 0x540 size
             long gameOffset = (long)Form1_0.BaseAddress + (long)Form1_0.offsets["GameSelectedOffset"];
             long PlayersNamesOffset = gameOffset + 0x138; //then 0x78 offset each others names
@@ -207,6 +265,7 @@ namespace app
             }
 
             Form1_0.WaitDelay(40);
+            GetSelectedGameInfo();
         }
 
         public void ClicGameIndex(int ThisIndex)
@@ -239,7 +298,7 @@ namespace app
             if (Checkkt.TotalMinutes > CharConfig.MaxGameTime)
             {
                 Form1_0.method_1("Leaving reason: Chicken time", Color.Red);
-                Form1_0.LeaveGame();
+                Form1_0.LeaveGame(false);
             }
         }
 
@@ -271,7 +330,7 @@ namespace app
         public void LogGameTime()
         {
             TimeSpan ThisTimee = DateTime.Now - Form1_0.GameStartedTime;
-            Form1_0.method_1("Game Time: " + ThisTimee.TotalMinutes.ToString("00") + ":" + ThisTimee.TotalSeconds.ToString("00") + ":" + ThisTimee.TotalMilliseconds.ToString("0"), Color.Black);
+            Form1_0.method_1("Game Time: " + ThisTimee.Minutes.ToString("00") + ":" + ThisTimee.Seconds.ToString("00") + ":" + ThisTimee.Milliseconds.ToString("0"), Color.Black);
         }
 
         public Dictionary<string, int> World2Screen(long playerX, long playerY, long targetx, long targety)
