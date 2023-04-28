@@ -6,25 +6,25 @@ Diablo II : Resurrected - Bot
 # REQUIREMENTS
 
     - .Net Framework 4.7.2
-    - Windows 64bit (the game must run in 64x)
-    - Screen size of 1920x1080 preferably for now
-    - Play in fullscreen ONLY for now
-    - Visual Studio 2022 preferably in you want to changes parameters and rebuild the application
+    - Windows 64bit (the game must run in 64x, UNTESTED ON 32BIT)
 
 # USAGE
 
  Start D2R, then start the bot.
  
+    - Use the application App.exe in '/bin/x64/Debug/' folder
     - Press Numpad5 to Start or Stop the bot alternativly
     
 # CONFIGURE
 
-    - Settings for Bot and Char configurations are in file CharConfig.cs
-    - Settings for Items picking configurations are in file ItemsAlert.cs
+    - Settings for Bots configurations are in file BotSettings.txt
+    - Settings for Char configurations are in file CharSettings.txt
+    - Settings for Items picking configurations are in file ItemsSettings.txt
 
 # FEATURES
 
   - Pick desired Items
+  - Lower Kurast script
   - Baal leech script
   - Baal games searching script
   - Chaos leech script (not finished)
@@ -35,7 +35,10 @@ Diablo II : Resurrected - Bot
   - Shop script (sell unwanted items, buy potions, ID's, TP'S, etc)
   - Repair script (repair gears if durability become low)
   - Battle script
-  - Mover script
+  - Mover script (with or without teleport)
+  - Gambling script
+  - Cubing script (**cubing recipes need to be transfered to a settings file**)
+  - Game Maker script
 
 # IS IT SAFE?
 
