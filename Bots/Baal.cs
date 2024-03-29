@@ -23,6 +23,7 @@ namespace app
         public bool SearchSameGamesAsLastOne = false;
         public bool KillingManually = false;
         public bool DetectedBaal = false;
+        public bool ScriptDone = false;
 
         public long LastWave4Pointer = 0;
         public long LastWave5Pointer = 0;
@@ -33,6 +34,11 @@ namespace app
         public DateTime StartTimeWhenWaiting = DateTime.Now;
         public bool SetStartTime = false;
         public long BaalThronePointer = 0;
+        public DateTime TimeSinceInThrone = DateTime.Now;
+
+        public bool WaitedEnteringPortal = false;
+
+        public bool AddingIgnoredTP_ID = false;
 
         public void SetForm1(Form1 form1_1)
         {
@@ -49,7 +55,10 @@ namespace app
             PrintedInfos = false;
             KillingManually = false;
             DetectedBaal = false;
+            ScriptDone = false;
             SetStartTime = false;
+            AddingIgnoredTP_ID = false;
+            WaitedEnteringPortal = false;
             StartTimeWhenWaiting = DateTime.Now;
             Form1_0.PlayerScan_0.LeechPlayerUnitID = 0;
             Form1_0.PlayerScan_0.LeechPlayerPointer = 0;
@@ -95,6 +104,10 @@ namespace app
                             && !Form1_0.GameStruc_0.AllGamesNames[i].ToLower().Contains("cbaal")
                             && !Form1_0.GameStruc_0.AllGamesNames[i].ToLower().Contains("help")
                             && !Form1_0.GameStruc_0.AllGamesNames[i].ToLower().Contains("walk")
+                            && !Form1_0.GameStruc_0.AllGamesNames[i].ToLower().Contains("quest")
+                            && !Form1_0.GameStruc_0.AllGamesNames[i].ToLower().Contains("4 q")
+                            && !Form1_0.GameStruc_0.AllGamesNames[i].ToLower().Contains("baal4q")
+                            && !Form1_0.GameStruc_0.AllGamesNames[i].ToLower().Contains("ancient")
                             && Form1_0.GameStruc_0.AllGamesNames[i] != LastGameName) //not equal last gamename
                         {
                             if (!Form1_0.GameStruc_0.TriedThisGame(Form1_0.GameStruc_0.AllGamesNames[i]))
@@ -118,9 +131,15 @@ namespace app
                         Form1_0.SetGameStatus("SEARCHING:" + Form1_0.GameStruc_0.AllGamesNames[PossibleGamesIndex[i]]);
 
                         Form1_0.GameStruc_0.SelectGame(PossibleGamesIndex[i], false);
+                        if (!Form1_0.GameStruc_0.SelectedGameName.Contains(Form1_0.GameStruc_0.AllGamesNames[PossibleGamesIndex[i]]))
+                        {
+                            continue;
+                        }
                         if (Form1_0.GameStruc_0.SelectedGameTime < MaxGameTimeToEnter)
                         {
                             Form1_0.GameStruc_0.SelectGame(PossibleGamesIndex[i], true);
+                            Form1_0.SetGameStatus("LOADING GAME");
+                            //Form1_0.WaitDelay(300);
                             EnteredGammme = true;
                             break;
                         }
@@ -153,9 +172,17 @@ namespace app
                 CurrentStep = 0;
                 Form1_0.Mover_0.MoveToLocation(5103, 5029); //move to wp spot
 
+                if (AddingIgnoredTP_ID)
+                {
+                    IgnoredTPList.Add(Form1_0.Town_0.LastUsedTPID);
+                    AddingIgnoredTP_ID = false;
+                }
+
                 if (!SetStartTime)
                 {
+                    Form1_0.Town_0.GetCorpse();
                     StartTimeWhenWaiting = DateTime.Now;
+                    Form1_0.Battle_0.CastDefense();
                     SetStartTime = true;
                 }
 
@@ -163,6 +190,21 @@ namespace app
                 //if (Form1_0.ObjectsStruc_0.GetObjects("TownPortal", Form1_0.PlayerScan_0.LeechPlayerUnitID))
                 if (Form1_0.ObjectsStruc_0.GetObjects("TownPortal", true, IgnoredTPList))
                 {
+                    if (!WaitedEnteringPortal)
+                    {
+                        if (IsPortalAtGoodLocation())
+                        {
+                            Form1_0.Battle_0.CastDefense();
+                            Form1_0.WaitDelay(600);
+                            WaitedEnteringPortal = true;
+                        }
+                        else
+                        {
+                            Form1_0.method_1("Added ignored TP ID(possible wrong area): " + Form1_0.ObjectsStruc_0.ObjectUnitID, Color.Red);
+                            IgnoredTPList.Add(Form1_0.ObjectsStruc_0.ObjectUnitID);
+                        }
+                    }
+
                     Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, Form1_0.ObjectsStruc_0.itemx, Form1_0.ObjectsStruc_0.itemy);
                     Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"] - 15);
                     Form1_0.WaitDelay(100);
@@ -192,7 +234,8 @@ namespace app
                     if (TimeWaitedForTP >= MaxTimeWaitedForTP)
                     {
                         Form1_0.method_1("Leaving reason: Waited too long for tp", Color.Red);
-                        Form1_0.LeaveGame(false);
+                        ScriptDone = true;
+                        //Form1_0.LeaveGame(false);
                     }
                     /*else
                     {
@@ -208,7 +251,8 @@ namespace app
                             && !Form1_0.PlayerScan_0.HasAnyPlayerInArea(131))//throne chamber
                         {
                             Form1_0.method_1("Leaving reason: Nobody seem to baal run", Color.Red);
-                            Form1_0.LeaveGame(false);
+                            ScriptDone = true;
+                            //Form1_0.LeaveGame(false);
                         }
                     }
                 }
@@ -217,13 +261,21 @@ namespace app
             {
                 if (CurrentStep == 0)
                 {
-                    CastDefense();
-                    CastDefense();
-                    CastDefense();
+                    Form1_0.Battle_0.CastDefense();
+                    //CastDefense();
+                    //CastDefense();
+                    //Form1_0.Town_0.GetCorpse();
+
+                    if (Form1_0.ItemsStruc_0.ItemsEquiped <= 2)
+                    {
+                        Form1_0.Town_0.GoToTown();
+                        return;
+                    }
 
                     //not correct location check
                     if (Form1_0.PlayerScan_0.levelNo != 131)
                     {
+
                         if (Form1_0.ObjectsStruc_0.GetObjects("TownPortal", true, IgnoredTPList))
                         {
                             Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, Form1_0.ObjectsStruc_0.itemx, Form1_0.ObjectsStruc_0.itemy);
@@ -231,12 +283,16 @@ namespace app
                             Form1_0.WaitDelay(100);
                         }
 
+                        Form1_0.method_1("Added ignored TP ID: " + LastUsedTP_ID, Color.Red);
+
                         IgnoredTPList.Add(LastUsedTP_ID);
                         Form1_0.Town_0.UseLastTP = false;
+                        AddingIgnoredTP_ID = true;
                         Form1_0.Town_0.GoToTown();
                     }
                     else
                     {
+                        TimeSinceInThrone = DateTime.Now;
                         CurrentStep++;
                     }
                 }
@@ -247,15 +303,17 @@ namespace app
 
                     //Form1_0.Battle_0.DoBattleScript();
 
-                    if (Form1_0.PlayerScan_0.xPosFinal < 15105 - 8
-                        || Form1_0.PlayerScan_0.xPosFinal > 15105 + 8
-                        || Form1_0.PlayerScan_0.yPosFinal < 5026 - 8
-                        || Form1_0.PlayerScan_0.yPosFinal > 5026 + 8)
+                    if (Form1_0.PlayerScan_0.xPosFinal < 15110 - 8
+                        || Form1_0.PlayerScan_0.xPosFinal > 15110 + 8
+                        || Form1_0.PlayerScan_0.yPosFinal < 5030 - 8
+                        || Form1_0.PlayerScan_0.yPosFinal > 5030 + 8)
                     {
-                        Form1_0.Mover_0.MoveToLocation(15105, 5026); //move to safe spot
+                        //Form1_0.Town_0.GetCorpse();
+                        Form1_0.Mover_0.MoveToLocation(15110, 5030); //move to safe spot
                     }
                     else
                     {
+                        //Form1_0.Town_0.GetCorpse();
                         Form1_0.Battle_0.DoBattleScript(10);
                     }
 
@@ -264,6 +322,7 @@ namespace app
                     {
                         if (Form1_0.MobsStruc_0.MobsHP > 0)
                         {
+                            Form1_0.method_1("Wave4 detected, switching to baal script!" + LastUsedTP_ID, Color.Red);
                             LastWave4Pointer = Form1_0.MobsStruc_0.MobsPointerLocation;
                             CurrentStep++;
                         }
@@ -272,6 +331,7 @@ namespace app
                     {
                         if (Form1_0.MobsStruc_0.MobsHP > 0)
                         {
+                            Form1_0.method_1("Wave5 detected, switching to baal script!" + LastUsedTP_ID, Color.Red);
                             LastWave5Pointer = Form1_0.MobsStruc_0.MobsPointerLocation;
                             CurrentStep++;
                         }
@@ -292,10 +352,25 @@ namespace app
                         if (Form1_0.MobsStruc_0.xPosFinal != 15087 &&
                             Form1_0.MobsStruc_0.yPosFinal != 5013)
                         {
+                            Form1_0.method_1("Baal has moved, switching to baal script!" + LastUsedTP_ID, Color.Red);
                             CurrentStep++;
                         }
                     }
+
+                    if (Form1_0.FPS == 0)
+                    {
+                        Form1_0.method_1("Too low FPS, switching to baal script!" + LastUsedTP_ID, Color.Red);
+                        CurrentStep++;
+                    }
                     //CurrentStep++;
+
+                    //Automaticly jump to next step (baal killing) after 2mins in throne
+                    TimeSpan ThisTimeCheckk = DateTime.Now - TimeSinceInThrone;
+                    if (ThisTimeCheckk.TotalMinutes > 2)
+                    {
+                        Form1_0.method_1("More than 2min since in Throne, switching to baal script!" + LastUsedTP_ID, Color.Red);
+                        CurrentStep++;
+                    }
                 }
                 if (CurrentStep == 2)
                 {
@@ -317,7 +392,7 @@ namespace app
                         && Form1_0.PlayerScan_0.yPosFinal >= 5880 - 40
                         && Form1_0.PlayerScan_0.yPosFinal <= 5880 + 40)
                     {
-                        CastDefense();
+                        Form1_0.Battle_0.CastDefense();
                         CurrentStep++;
                     }
                     else
@@ -339,6 +414,7 @@ namespace app
                             {
                                 if (Form1_0.Mover_0.MoveToLocation(15090, 5008))
                                 {
+                                    Form1_0.Battle_0.CastDefense();
                                     Form1_0.Mover_0.MoveAcceptOffset = 4;
                                 }
                             }
@@ -367,7 +443,7 @@ namespace app
                 {
                     Form1_0.Potions_0.CanUseSkillForRegen = false;
                     Form1_0.SetGameStatus("KILLING BAAL");
-                    if (Form1_0.MobsStruc_0.GetMobs("getBossName", "Baal", false, 120, new List<long>()))
+                    if (Form1_0.MobsStruc_0.GetMobs("getBossName", "Baal", false, 200, new List<long>()))
                     {
                         if (Form1_0.MobsStruc_0.MobsHP > 0)
                         {
@@ -400,28 +476,66 @@ namespace app
                             Form1_0.Potions_0.CanUseSkillForRegen = true;
                             SearchSameGamesAsLastOne = true;
                             Form1_0.LeaveGame(true);
+                            ScriptDone = true;
+                            //Form1_0.LeaveGame(false);
                         }
                     }
                     else
                     {
+                        Form1_0.method_1("Baal not detected!", Color.Red);
+
                         //baal not detected...
                         Form1_0.ItemsStruc_0.GetItems(true);
+                        if (Form1_0.MobsStruc_0.GetMobs("getBossName", "Baal", false, 200, new List<long>())) return; //redetect baal?
                         Form1_0.ItemsStruc_0.GrabAllItemsForGold();
+                        if (Form1_0.MobsStruc_0.GetMobs("getBossName", "Baal", false, 200, new List<long>())) return; //redetect baal?
                         Form1_0.Potions_0.CanUseSkillForRegen = true;
                         SearchSameGamesAsLastOne = true;
                         Form1_0.LeaveGame(true);
+                        ScriptDone = true;
+                        //Form1_0.LeaveGame(false);
                     }
                 }
             }
         }
 
-        public void CastDefense()
+        public bool IsPortalAtGoodLocation()
         {
-            //cast sacred shield
-            Form1_0.KeyMouse_0.PressKey(CharConfig.KeySkillCastDefense);
-            Form1_0.WaitDelay(5);
-            Form1_0.KeyMouse_0.MouseCliccRight(Form1_0.CenterX, Form1_0.CenterY);
-            Form1_0.WaitDelay(5);
+            //Check for all roster member (party peoples) and see if they are in worldstone area
+
+            bool IsCorrectLocation = false;
+            string StartLeechName = Form1_0.GameStruc_0.GameOwnerName;
+
+            try
+            {
+                for (int i = 0; i < Form1_0.GameStruc_0.AllPlayersNames.Count; i++)
+                {
+                    Form1_0.GameStruc_0.GameOwnerName = Form1_0.GameStruc_0.AllPlayersNames[i];
+                    GetLeechInfo();
+                    if (Form1_0.PlayerScan_0.LeechPlayerPointer == 0 || Form1_0.PlayerScan_0.LeechPlayerUnitID == 0) continue;
+                    Form1_0.PlayerScan_0.GetLeechPositions();
+
+                    if (!Form1_0.Running || !Form1_0.GameStruc_0.IsInGame())
+                    {
+                        IsCorrectLocation = false;
+                        break;
+                    }
+
+                    if (Form1_0.PlayerScan_0.LeechlevelNo == 131)
+                    {
+                        IsCorrectLocation = true;
+                        break;
+                    }
+                }
+            }
+            catch 
+            {
+                IsCorrectLocation = true;
+            }
+
+            Form1_0.GameStruc_0.GameOwnerName = StartLeechName;
+
+            return IsCorrectLocation;
         }
 
         public void GetLeechInfo()
@@ -444,6 +558,8 @@ namespace app
                     Form1_0.ItemsStruc_0.GrabAllItemsForGold();
                     SearchSameGamesAsLastOne = true;
                     Form1_0.LeaveGame(true);
+                    ScriptDone = true;
+                    //Form1_0.LeaveGame(false);
                 }
                 else
                 {
@@ -457,10 +573,18 @@ namespace app
                             Form1_0.ItemsStruc_0.GrabAllItemsForGold();
                             SearchSameGamesAsLastOne = true;
                             Form1_0.LeaveGame(true);
+                            ScriptDone = true;
+                            //Form1_0.LeaveGame(false);
                         }
                         else
                         {
-                            KillingManually = true;
+                            Form1_0.ItemsStruc_0.GrabAllItemsForGold();
+                            SearchSameGamesAsLastOne = true;
+                            Form1_0.LeaveGame(true);
+                            ScriptDone = true;
+                            //Form1_0.LeaveGame(false);
+
+                            //KillingManually = true;
                         }
                     }
                 }

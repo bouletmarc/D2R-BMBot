@@ -93,6 +93,63 @@ namespace app
             return ContainStashItem;
         }
 
+        public void VerifyKeysInventory()
+        {
+            int thisindex = CharConfig.KeysLocationInInventory.Item1 + (CharConfig.KeysLocationInInventory.Item2 * 10);
+
+            //if its not a key at the key location, relocate the item
+            if (InventoryItemNames[thisindex] != "Key")
+            {
+                int ThisNewIndex = GetNextFreeSpaceInInventory();
+
+                if (ThisNewIndex > -1)
+                {
+                    //remove item from this slot
+                    Dictionary<string, int> itemScreenPos = Form1_0.InventoryStruc_0.ConvertIndexToXY(thisindex);
+                    itemScreenPos = Form1_0.InventoryStruc_0.ConvertInventoryLocToScreenPos(itemScreenPos["x"], itemScreenPos["y"]);
+
+                    //Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"]);
+                    Form1_0.Stash_0.PickItem(itemScreenPos["x"], itemScreenPos["y"]);
+                    Form1_0.WaitDelay(5);
+
+                    //place to next free space
+                    itemScreenPos = Form1_0.InventoryStruc_0.ConvertIndexToXY(ThisNewIndex);
+                    itemScreenPos = Form1_0.InventoryStruc_0.ConvertInventoryLocToScreenPos(itemScreenPos["x"], itemScreenPos["y"]);
+
+                    Form1_0.Stash_0.PlaceItem(itemScreenPos["x"], itemScreenPos["y"]);
+                    Form1_0.Stash_0.PlaceItem(itemScreenPos["x"], itemScreenPos["y"]);
+                }
+            }
+
+            //place all keys together
+            for (int i = 0; i < 40; i++)
+            {
+                if (CharConfig.InventoryDontCheckItem[i] == 0 && InventoryHasItem[i] >= 1 && InventoryItemNames[i] == "Key")
+                {
+                    //pick key item from this slot
+                    Dictionary<string, int> itemScreenPos = Form1_0.InventoryStruc_0.ConvertIndexToXY(i);
+                    itemScreenPos = Form1_0.InventoryStruc_0.ConvertInventoryLocToScreenPos(itemScreenPos["x"], itemScreenPos["y"]);
+
+                    //Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"]);
+                    Form1_0.Stash_0.PickItem(itemScreenPos["x"], itemScreenPos["y"]);
+                    Form1_0.WaitDelay(5);
+
+                    //place with other key
+                    itemScreenPos = Form1_0.InventoryStruc_0.ConvertIndexToXY(thisindex);
+                    itemScreenPos = Form1_0.InventoryStruc_0.ConvertInventoryLocToScreenPos(itemScreenPos["x"], itemScreenPos["y"]);
+
+                    if (!Form1_0.Stash_0.PlaceItem(itemScreenPos["x"], itemScreenPos["y"]))
+                    {
+                        itemScreenPos = Form1_0.InventoryStruc_0.ConvertIndexToXY(i);
+                        itemScreenPos = Form1_0.InventoryStruc_0.ConvertInventoryLocToScreenPos(itemScreenPos["x"], itemScreenPos["y"]);
+                        
+                        Form1_0.Stash_0.PlaceItem(itemScreenPos["x"], itemScreenPos["y"]);
+                        Form1_0.Stash_0.PlaceItem(itemScreenPos["x"], itemScreenPos["y"]);
+                    }
+                }
+            }
+        }
+
         public void SetHUDItem()
         {
             if (Form1_0.ItemsStruc_0.statCount > 0)
@@ -169,19 +226,23 @@ namespace app
 
         public void SetInventoryItem()
         {
-            int FullIndex = ConvertXYToIndex(Form1_0.ItemsStruc_0.itemx, Form1_0.ItemsStruc_0.itemy);
-            InventoryHasItem[FullIndex] = 1;
-            InventoryItemPointers[FullIndex] = Form1_0.ItemsStruc_0.ItemPointerLocation;
-            InventoryItemNames[FullIndex] = Form1_0.ItemsStruc_0.ItemNAAME;
-            if (Form1_0.ItemsAlert_0.ShouldKeepItem())
+            try
             {
-                InventoryHasStashItem[FullIndex] = 1;
-            }
+                int FullIndex = ConvertXYToIndex(Form1_0.ItemsStruc_0.itemx, Form1_0.ItemsStruc_0.itemy);
+                InventoryHasItem[FullIndex] = 1;
+                InventoryItemPointers[FullIndex] = Form1_0.ItemsStruc_0.ItemPointerLocation;
+                InventoryItemNames[FullIndex] = Form1_0.ItemsStruc_0.ItemNAAME;
+                if (Form1_0.ItemsAlert_0.ShouldKeepItem())
+                {
+                    InventoryHasStashItem[FullIndex] = 1;
+                }
 
-            if (!Form1_0.ItemsStruc_0.identified)
-            {
-                InventoryHasUnidItem[FullIndex] = 1;
+                if (!Form1_0.ItemsStruc_0.identified)
+                {
+                    InventoryHasUnidItem[FullIndex] = 1;
+                }
             }
+            catch { }
         }
 
         public bool HasUnidItemInInventory()
@@ -194,6 +255,18 @@ namespace app
                 }
             }
             return false;
+        }
+
+        public int GetNextFreeSpaceInInventory()
+        {
+            for (int i = 0; i < 40; i++)
+            {
+                if (CharConfig.InventoryDontCheckItem[i] == 0 && InventoryHasItem[i] == 0)
+                {
+                    return i;
+                }
+            }
+            return -1;
         }
 
         public bool HasInventoryItems()

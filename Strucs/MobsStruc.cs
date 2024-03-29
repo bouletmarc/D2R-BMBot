@@ -57,6 +57,104 @@ namespace app
             MobsHP = GetHPFromStats();
         }
 
+        public List<Tuple<int, int>> GetAllMobsNearby()
+        {
+            Form1_0.PatternsScan_0.scanForUnitsPointer("NPC");
+
+            List<Tuple<int, int>> monsterPositions2 = new List<Tuple<int, int>>();
+
+            for (int i = 0; i < Form1_0.PatternsScan_0.AllNPCPointers.Count; i++)
+            {
+                MobsPointerLocation = Form1_0.PatternsScan_0.AllNPCPointers[i];
+                if (MobsPointerLocation > 0)
+                {
+                    mobsdatastruc = new byte[144];
+                    Form1_0.Mem_0.ReadRawMemory(MobsPointerLocation, ref mobsdatastruc, 144);
+                    txtFileNo = BitConverter.ToUInt32(mobsdatastruc, 4);
+                    long pStatsListExPtr = BitConverter.ToInt64(mobsdatastruc, 0x88);
+
+                    bool isPlayerMinion = false;
+                    string playerMinion = getPlayerMinion((int)txtFileNo);
+                    if (playerMinion != "")
+                    {
+                        isPlayerMinion = true;
+                    }
+                    else
+                    {
+                        //; is a revive
+                        isPlayerMinion = ((Form1_0.Mem_0.ReadUInt32((IntPtr)(pStatsListExPtr + 0xAC8 + 0xc)) & 31) == 1);
+                    }
+
+                    if (Form1_0.NPCStruc_0.HideNPC((int)txtFileNo) == 0
+                        && Form1_0.NPCStruc_0.getTownNPC((int)txtFileNo) == ""
+                        && !isPlayerMinion)
+                    {
+                        GetUnitPathData();
+                        GetStatsAddr();
+                        MobsHP = GetHPFromStats();
+
+                        //byte[] RunBuf = BitConverter.GetBytes(709);
+                        //Form1_0.Mem_0.WriteRawMemory((IntPtr)(MobsPointerLocation + 0x04), RunBuf, 4);
+
+                        //Console.WriteLine("found near mob" + txtFileNo + " at: " + itemx + ", " + itemy);
+                        //15089,5012
+                        if (xPosFinal != 0 && yPosFinal != 0)
+                        {
+                            if (MobsHP != 0) monsterPositions2.Add(Tuple.Create((int) xPosFinal, (int) yPosFinal));
+
+                            
+                            //get the mobs by name and type
+                            /*if (MobType == "getBossName")
+                            {
+                                if (getBossName((int)txtFileNo) == MobName)
+                                {
+                                    if (!Nearest)
+                                    {
+                                        return true;
+                                    }
+                                }
+                            }
+                            if (MobType == "getPlayerMinion")
+                            {
+                                if (getPlayerMinion((int)txtFileNo) == MobName)
+                                {
+                                    if (!Nearest)
+                                    {
+                                        return true;
+                                    }
+                                }
+                            }
+                            if (MobType == "getSuperUniqueName")
+                            {
+                                if (getSuperUniqueName((int)txtFileNo) == MobName)
+                                {
+                                    if (!Nearest)
+                                    {
+                                        return true;
+                                    }
+                                }
+                            }*/
+                        }
+                    }
+                }
+            }
+
+            //load nearest mobs
+            /*if (Nearest && NearestMobPointer != 0)
+            {
+                MobsPointerLocation = NearestMobPointer;
+                mobsdatastruc = new byte[144];
+                Form1_0.Mem_0.ReadRawMemory(MobsPointerLocation, ref mobsdatastruc, 144);
+                txtFileNo = BitConverter.ToUInt32(mobsdatastruc, 4);
+                GetUnitPathData();
+                GetStatsAddr();
+                MobsHP = GetHPFromStats();
+                return true;
+            }*/
+
+            return monsterPositions2;
+        }
+
         public bool GetMobs(string MobType, string MobName, bool Nearest, int MaxMobDistance, List<long> IgnoredListPointers)
         {
             txtFileNo = 0;

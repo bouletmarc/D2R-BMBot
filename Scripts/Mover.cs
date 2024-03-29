@@ -15,12 +15,17 @@ namespace app
         public int MoveAcceptOffset = 4;
         public long StartAreaBeforeMoving = 0;
 
+        public bool AllowFastMove = false;
+
+        public DateTime LastTimeSinceTeleport = DateTime.Now;
+
         public void SetForm1(Form1 form1_1)
         {
             Form1_0 = form1_1;
         }
 
-        public bool MoveToLocation(int ThisX, int ThisY)
+
+        public bool MoveToLocation(int ThisX, int ThisY, bool AllowPickingItem = false, bool AllowMoveSideWay = true)
         {
             Form1_0.PlayerScan_0.GetPositions();
             StartAreaBeforeMoving = Form1_0.PlayerScan_0.levelNo;
@@ -55,10 +60,12 @@ namespace app
                 if (Form1_0.Town_0.GetInTown())
                 {
                     Form1_0.KeyMouse_0.PressKey(CharConfig.KeySkillfastMoveAtTown);
+                    AllowFastMove = false;
                 }
                 else
                 {
                     Form1_0.KeyMouse_0.PressKey(CharConfig.KeySkillfastMoveOutsideTown);
+                    if (CharConfig.UseTeleport) AllowFastMove = true;
                 }
 
                 //calculate new Y clicking offset, else it will clic on bottom menu items
@@ -81,12 +88,27 @@ namespace app
                 if (CharConfig.UseTeleport && !Form1_0.Town_0.GetInTown())
                 {
                     Form1_0.KeyMouse_0.MouseCliccRight(itemScreenPos["x"], itemScreenPos["y"]);
-                    Form1_0.WaitDelay(10);
+
+                    //#######
+                    if (!AllowFastMove)
+                    {
+                        LastTimeSinceTeleport = DateTime.Now;
+                        TimeSpan ThisTimeCheck = DateTime.Now - LastTimeSinceTeleport;
+                        while (Form1_0.PlayerScan_0.xPosFinal == LastX && Form1_0.PlayerScan_0.yPosFinal == LastY && ThisTimeCheck.TotalMilliseconds < 200)
+                        {
+                            Application.DoEvents();
+                            Form1_0.PlayerScan_0.GetPositions();
+                            ThisTimeCheck = DateTime.Now - LastTimeSinceTeleport;
+                        }
+                    }
+                    //#######
+
+                    //Form1_0.WaitDelay(10);
                 }
                 //Form1_0.WaitDelay(2);
                 Application.DoEvents();
                 Form1_0.PlayerScan_0.GetPositions();
-                Form1_0.ItemsStruc_0.GetItems(true);
+                if (AllowPickingItem) Form1_0.ItemsStruc_0.GetItems(true);      //#############
                 Form1_0.Potions_0.CheckIfWeUsePotion();
                 itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, ThisX, ThisY);
                 Application.DoEvents();
@@ -119,11 +141,13 @@ namespace app
                 }
                 if (TryMove >= MaxMoveTry)
                 {
+                    if (!AllowMoveSideWay) return false;
+
                     if (!Form1_0.GameStruc_0.IsInGame() || !Form1_0.Running)
                     {
                         return false;
                     }
-                    Form1_0.ItemsStruc_0.GetItems(true);
+                    if (AllowPickingItem) Form1_0.ItemsStruc_0.GetItems(true);      //#############
                     Form1_0.Potions_0.CheckIfWeUsePotion();
                     if (TryMove2 == 0) Form1_0.KeyMouse_0.MouseMoveTo(Form1_0.ScreenX / 2, Form1_0.ScreenY / 2);
                     if (TryMove2 == 1) Form1_0.KeyMouse_0.MouseMoveTo(Form1_0.ScreenX / 2 - 250, Form1_0.ScreenY / 2);
@@ -186,6 +210,7 @@ namespace app
             bool IsMoving = true;
             int LastX = Form1_0.PlayerScan_0.xPosFinal;
             int LastY = Form1_0.PlayerScan_0.yPosFinal;
+            int Triess = 0;
 
             while (IsMoving)
             {
@@ -206,6 +231,9 @@ namespace app
 
                 LastX = Form1_0.PlayerScan_0.xPosFinal;
                 LastY = Form1_0.PlayerScan_0.yPosFinal;
+
+                Triess++;
+                if (Triess >= 20) IsMoving = false;
             }
         }
     }

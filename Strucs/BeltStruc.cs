@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Collections.Generic;
 using System.ComponentModel.Design;
 using System.Linq;
@@ -35,6 +36,22 @@ namespace app
 
         public bool ItemGrabPotion()
         {
+            if (CharConfig.RunItemGrabScriptOnly) return false; //item grab only
+
+            //####
+            if (Form1_0.InventoryStruc_0.HasInventoryItemName("Super Healing Potion"))
+            {
+                //Form1_0.method_1("FORCING HP POT QTY: " + Form1_0.BeltStruc_0.HPQuantity, Color.Red);
+                ForceHPPotionQty = HPQuantity; //reset qty in belt
+                MissingHPPot = false;
+            }
+            if (Form1_0.InventoryStruc_0.HasInventoryItemName("Super Mana Potion"))
+            {
+                ForceMANAPotionQty = ManyQuantity; //reset qty in belt
+                MissingManaPot = false;
+            }
+            //####
+
             if (MissingHPPot || MissingManaPot || MissingRVPot)
             {
                 ItemIsPotion();
@@ -77,6 +94,8 @@ namespace app
                     }
                 }
             }
+
+            //Form1_0.method_1("HP POT QTY: " + HPQuantity, Color.Red);
 
             if (MissingHPPot)
             {

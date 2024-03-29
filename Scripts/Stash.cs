@@ -14,6 +14,8 @@ namespace app
         public bool StashFull = false;
         Dictionary<string, int> LastitemScreenPos = new Dictionary<string, int>();
 
+        public int RunningScriptCount = 0;
+
         public void SetForm1(Form1 form1_1)
         {
             Form1_0 = form1_1;
@@ -58,6 +60,7 @@ namespace app
                             Form1_0.WaitDelay(5);
                             Form1_0.ItemsStruc_0.GetItems(false);   //get inventory again
                             Form1_0.SetGameStatus("TOWN-STASH-ITEM:" + Form1_0.InventoryStruc_0.InventoryItemNames[i]);
+                            PlaceItem(itemScreenPos["x"], itemScreenPos["y"]);
                             PlaceItem(itemScreenPos["x"], itemScreenPos["y"]);
 
                             //item still in inventory
@@ -104,6 +107,8 @@ namespace app
                             }
                             if (TryStashCount >= 4)
                             {
+                                RunningScriptCount++;
+                                if (RunningScriptCount >= 15) StashFull = true;
                                 //StashFull = true; //##################################################
                                 i = 40; //stash is full, dont try others items to stash
                                 break;
@@ -124,16 +129,21 @@ namespace app
             }
 
             //deposit gold
+            Form1_0.KeyMouse_0.MouseClicc(200, 200);   //clic stash1
+
             Form1_0.SetGameStatus("TOWN-STASH-DEPOSIT GOLD");
             Form1_0.KeyMouse_0.MouseClicc(1450, 790);  //clic deposit
             Form1_0.WaitDelay(25);
             Form1_0.KeyMouse_0.MouseClicc(820, 580);  //clic ok on deposit
             Form1_0.WaitDelay(25);
+            Form1_0.PlayerScan_0.PlayerGoldInventory = 0;
 
             //craft/cube item script here ###
             Form1_0.PlayerScan_0.GetPositions();
             Form1_0.ItemsStruc_0.GetItems(false);
             Form1_0.Cubing_0.PerformCubing();
+
+            Form1_0.InventoryStruc_0.VerifyKeysInventory();
         }
 
         public bool PlaceItem(int PosX, int PosY)

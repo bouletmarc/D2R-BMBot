@@ -31,6 +31,8 @@ namespace app
         public int SelectedGamePlayerCount = 0;
         public int SelectedGameTime = 0;
 
+        public string SelectedGameName = "";
+
         public List<string> AllGamesTriedNames = new List<string>();
 
         [DllImport("user32.dll")] static extern short VkKeyScan(char ch);
@@ -63,6 +65,7 @@ namespace app
 
         public void CreateNewGame()
         {
+            Form1_0.SetGameStatus("CREATING GAME");
             Form1_0.KeyMouse_0.MouseClicc(1190, 990); //clic 'salon' if not in server
             Form1_0.KeyMouse_0.MouseClicc(1275, 65);  //clic 'create game' if not in game create area
 
@@ -98,7 +101,12 @@ namespace app
                 Thread.Sleep(3);
             }
 
+            //select difficulty
+            Form1_0.KeyMouse_0.MouseClicc(1360 + (100 * CharConfig.GameDifficulty), 375);
+
             Form1_0.KeyMouse_0.MouseClicc(1470, 670);  //clic 'create game'
+
+            Form1_0.SetGameStatus("LOADING GAME");
 
 
             //###############
@@ -134,7 +142,7 @@ namespace app
                     AllGamesNames.Add(TestName);
                     AllGamesPlayersCount.Add((int) Form1_0.Mem_0.ReadByteRaw((IntPtr) CountOffet));
 
-                    //Form1_0.method_1("Game: " + TestName + " - Players: " + ((int)Form1_0.Mem_0.ReadByteRaw((IntPtr)CountOffet)));
+                    //Form1_0.method_1("Game: " + TestName + " - Players: " + ((int)Form1_0.Mem_0.ReadByteRaw((IntPtr)CountOffet)), Color.Red);
                 }
                 else
                 {
@@ -179,10 +187,12 @@ namespace app
 
         public void GetSelectedGameInfo()
         {
-            if ((int) Form1_0.offsets["GameSelectedOffset"] == 64)
+            if ((int) Form1_0.offsets["GameSelectedOffset"] <= 64)
             {
                 Form1_0.PatternsScan_0.PatternScan();
             }
+
+            Form1_0.method_1("------------------------------------------", Color.Black);
 
             //0x53F or 0x540 size
             long gameOffset = (long)Form1_0.BaseAddress + (long)Form1_0.offsets["GameSelectedOffset"];
@@ -191,6 +201,7 @@ namespace app
 
             SelectedGamePlayerCount = (int)Form1_0.Mem_0.ReadByteRaw((IntPtr) (gameOffset + 0x108));
             SelectedGameTime = Form1_0.Mem_0.ReadInt32Raw((IntPtr)(gameOffset + 0xf0));
+            Form1_0.method_1("Player Count: " + SelectedGamePlayerCount, Color.OrangeRed);
             for (int i = 0; i < SelectedGamePlayerCount; i++)
             {
                 long NameOffet = PlayersNamesOffset + (i * 0x78);
@@ -199,7 +210,19 @@ namespace app
                 if (TestName != "")
                 {
                     AllPlayersNames.Add(TestName);
-                    //Form1_0.method_1("Player Name: " + TestName);
+                    Form1_0.method_1("Player Name: " + TestName, Color.OrangeRed);
+                }
+            }
+
+            SelectedGameName = "";
+            byte[] buffer = new byte[16];
+            Form1_0.Mem_0.ReadRawMemory(gameOffset + 0x08, ref buffer, 16);
+
+            for (int i2 = 0; i2 < 16; i2++)
+            {
+                if (buffer[i2] != 0x00)
+                {
+                    SelectedGameName += (char)buffer[i2];
                 }
             }
 
@@ -313,7 +336,7 @@ namespace app
 
         public void SetNewGame()
         {
-            Form1_0.method_1("------------------------------------------", Color.DarkBlue);
+            //Form1_0.method_1("------------------------------------------", Color.DarkBlue);
             Form1_0.method_1("New game started: " + GetTimeNow(), Color.DarkBlue);
 
             Form1_0.GameStartedTime = DateTime.Now;
@@ -322,7 +345,7 @@ namespace app
             long gameNameAddress = (long)Form1_0.BaseAddress + gameNameOffset;
             GameName = Form1_0.Mem_0.ReadMemString(gameNameAddress);
 
-            Form1_0.method_1("Entered game: " + GameName, Color.Black);
+            Form1_0.method_1("Entered game: " + GameName, Color.DarkBlue);
 
             AllGamesTriedNames = new List<string>();
         }
@@ -330,7 +353,7 @@ namespace app
         public void LogGameTime()
         {
             TimeSpan ThisTimee = DateTime.Now - Form1_0.GameStartedTime;
-            Form1_0.method_1("Game Time: " + ThisTimee.Minutes.ToString("00") + ":" + ThisTimee.Seconds.ToString("00") + ":" + ThisTimee.Milliseconds.ToString("0"), Color.Black);
+            Form1_0.method_1("Game Time: " + ThisTimee.Minutes.ToString("00") + ":" + ThisTimee.Seconds.ToString("00") + ":" + ThisTimee.Milliseconds.ToString("0"), Color.DarkBlue);
         }
 
         public Dictionary<string, int> World2Screen(long playerX, long playerY, long targetx, long targety)

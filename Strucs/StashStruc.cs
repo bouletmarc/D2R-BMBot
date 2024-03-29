@@ -73,29 +73,33 @@ namespace app
 
         public void AddStashItem(int PosX, int PosY, int StashNumber)
         {
-            int AtI = ConvertXYToFullIndex(PosX, PosY);
-            if (StashNumber == 1)
+            try
             {
-                Stash1_ItemTxtNoList[AtI] = Form1_0.ItemsStruc_0.txtFileNo;
-            }
-            if (StashNumber == 2)
-            {
-                Stash2_ItemTxtNoList[AtI] = Form1_0.ItemsStruc_0.txtFileNo;
-            }
-            if (StashNumber == 3)
-            {
-                Stash3_ItemTxtNoList[AtI] = Form1_0.ItemsStruc_0.txtFileNo;
-            }
-            if (StashNumber == 4)
-            {
-                Stash4_ItemTxtNoList[AtI] = Form1_0.ItemsStruc_0.txtFileNo;
-            }
+                int AtI = ConvertXYToFullIndex(PosX, PosY);
+                if (StashNumber == 1)
+                {
+                    Stash1_ItemTxtNoList[AtI] = Form1_0.ItemsStruc_0.txtFileNo;
+                }
+                if (StashNumber == 2)
+                {
+                    Stash2_ItemTxtNoList[AtI] = Form1_0.ItemsStruc_0.txtFileNo;
+                }
+                if (StashNumber == 3)
+                {
+                    Stash3_ItemTxtNoList[AtI] = Form1_0.ItemsStruc_0.txtFileNo;
+                }
+                if (StashNumber == 4)
+                {
+                    Stash4_ItemTxtNoList[AtI] = Form1_0.ItemsStruc_0.txtFileNo;
+                }
 
-            if (Form1_0.ItemsStruc_0.ItemNAAME == "Horadric Cube")
-            {
-                CubeIndex = AtI;
-                CubeStashNumber = StashNumber;
+                if (Form1_0.ItemsStruc_0.ItemNAAME == "Horadric Cube")
+                {
+                    CubeIndex = AtI;
+                    CubeStashNumber = StashNumber;
+                }
             }
+            catch { }
         }
     }
 }

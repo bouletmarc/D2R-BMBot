@@ -131,6 +131,8 @@ namespace app
 
             keybd_event(VK_CONTROL, 0, 0, 0);
             Thread.Sleep(1);
+            keybd_event(VK_CONTROL, 0, 0, 0);
+            Thread.Sleep(1);
             PostMessage((int)Form1_0.hWnd, WM_LBUTTONDOWN, 0x00000001, (IntPtr)0);
             Thread.Sleep(1);
             PostMessage((int)Form1_0.hWnd, WM_LBUTTONUP, 0x00000000, (IntPtr)0);
@@ -144,6 +146,8 @@ namespace app
             byte VK_SHIFT = 0x10;
             //byte VK_RBUTTON = 0x02;
 
+            keybd_event(VK_SHIFT, 0, 0, 0);
+            Thread.Sleep(1);
             keybd_event(VK_SHIFT, 0, 0, 0);
             Thread.Sleep(1);
             //keybd_event(VK_RBUTTON, 0, 0, 0);

@@ -103,20 +103,20 @@ namespace app
 
             PickItemsRunesKeyGems = new string[]
             {
-                "El Rune", 
-                "Eld Rune",
-                "Tir Rune",
-                "Nef Rune",
-                "Eth Rune",
-                "Ith Rune",
-                "Tal Rune",
-                "Ral Rune",
-                "Ort Rune",
-                "Thul Rune",
-                "Amn Rune",
-                "Sol Rune",
-                "Shael Rune",
-                "Dol Rune",
+                //"El Rune", 
+                //"Eld Rune",
+                //"Tir Rune",
+                //"Nef Rune",
+                //"Eth Rune",
+                //"Ith Rune",
+                //"Tal Rune",
+                //"Ral Rune",
+                //"Ort Rune",
+                //"Thul Rune",
+                //"Amn Rune",
+                //"Sol Rune",
+                //"Shael Rune",
+                //"Dol Rune",
                 "Hel Rune",
                 "Io Rune",
                 "Lum Rune",
@@ -154,12 +154,12 @@ namespace app
                 "Chipped Emerald",
                 "Chipped Diamond",
 
-                "Flawed Amethyst",
-                "Flawed Topaz",
-                "Flawed Sapphire",
-                "Flawed Ruby",
-                "Flawed Emerald",
-                "Flawed Diamond",
+                //"Flawed Amethyst",
+                //"Flawed Topaz",
+                //"Flawed Sapphire",
+                //"Flawed Ruby",
+                //"Flawed Emerald",
+                //"Flawed Diamond",
 
                 //"Amethyst",
                 //"Topaz",
@@ -211,6 +211,7 @@ namespace app
                 if (Form1_0.ItemsStruc_0.ItemNAAME.ToLower() == PickItemsRunesKeyGems[i].ToLower())
                 {
                     if (Form1_0.ItemsStruc_0.ItemNAAME.Contains("Chipped") || Form1_0.ItemsStruc_0.ItemNAAME.Contains("Flawed"))
+                    //if (Form1_0.ItemsStruc_0.ItemNAAME.Contains("Chipped"))
                     {
                         //pick only chipped and flawed gems if count are bellow 2x
                         if (Form1_0.StashStruc_0.GetStashItemCount(Form1_0.ItemsStruc_0.ItemNAAME) < 2)
@@ -225,6 +226,7 @@ namespace app
                 }
             }
 
+            //[Name] == GrandCharm && [Quality] == Magic # [ItemAddSkillTab] == 1
             if (Form1_0.ItemsStruc_0.ItemNAAME.ToLower() == "Small Charm".ToLower()
                 //|| Form1_0.ItemsStruc_0.ItemNAAME.ToLower() == "Large Charm".ToLower()
                 || Form1_0.ItemsStruc_0.ItemNAAME.ToLower() == "Grand Charm".ToLower())
@@ -237,7 +239,15 @@ namespace app
                 {
                     if (Keeping)
                     {
-                        return true;
+                        if ((Form1_0.ItemsStruc_0.ItemNAAME.ToLower() == "Grand Charm".ToLower() && Form1_0.ItemsStruc_0.IsItemHaveSameStat("AddSkillTab", 1, "=="))
+                            || (Form1_0.ItemsStruc_0.ItemNAAME.ToLower() == "Small Charm".ToLower() && Form1_0.ItemsStruc_0.IsItemHaveSameStat("LifeMax", 19, ">="))
+                            || (Form1_0.ItemsStruc_0.ItemNAAME.ToLower() == "Small Charm".ToLower() && Form1_0.ItemsStruc_0.IsItemHaveSameStat("PoisonMaxDamage", 50, ">="))
+                            || (Form1_0.ItemsStruc_0.ItemNAAME.ToLower() == "Small Charm".ToLower() && Form1_0.ItemsStruc_0.IsItemHaveSameStat("MagicFind", 6, ">=")))
+                        {
+                            //Console.WriteLine("Keep charm!");
+                            return true;
+                        }
+                        //return true;
                     }
                 }
             }

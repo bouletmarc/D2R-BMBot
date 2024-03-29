@@ -29,6 +29,21 @@ namespace app
             Form1_0 = form1_1;
         }
 
+        public void CastDefense()
+        {
+            //cast sacred shield
+            Form1_0.KeyMouse_0.PressKey(CharConfig.KeySkillCastDefense);
+            Form1_0.WaitDelay(5);
+            Form1_0.KeyMouse_0.MouseCliccRight(Form1_0.CenterX, Form1_0.CenterY);
+            Form1_0.WaitDelay(35);
+
+            //cast sacred shield
+            Form1_0.KeyMouse_0.PressKey(CharConfig.KeySkillLifeAura);
+            Form1_0.WaitDelay(5);
+            Form1_0.KeyMouse_0.MouseCliccRight(Form1_0.CenterX, Form1_0.CenterY);
+            Form1_0.WaitDelay(5);
+        }
+
         public void ClearAreaOfMobs(int ThisX, int ThisY, int ClearSize)
         {
             AreaX = ThisX;
@@ -159,13 +174,20 @@ namespace app
         public void SetSkills()
         {
             Form1_0.KeyMouse_0.PressKey(CharConfig.KeySkillAttack);
-            Form1_0.KeyMouse_0.PressKey(CharConfig.KeySkillAura);
+            if (CharConfig.PlayerAttackWithRightHand) Form1_0.KeyMouse_0.PressKey(CharConfig.KeySkillAura);
         }
 
         public void CastSkills()
         {
             Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, Form1_0.MobsStruc_0.xPosFinal, Form1_0.MobsStruc_0.yPosFinal);
-            Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"]);
+            if (!CharConfig.PlayerAttackWithRightHand)
+            {
+                Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"]);
+            }
+            else
+            {
+                Form1_0.KeyMouse_0.MouseCliccRight(itemScreenPos["x"], itemScreenPos["y"]);
+            }
         }
     }
 }

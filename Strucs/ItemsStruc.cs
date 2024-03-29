@@ -187,9 +187,9 @@ namespace app
             itemx = Form1_0.Mem_0.ReadUInt16Raw((IntPtr)(pPathPtr + 0x10));
             itemy = Form1_0.Mem_0.ReadUInt16Raw((IntPtr)(pPathPtr + 0x14));
 
-            //string SavePathh = Form1_0.ThisEndPath + "DumpItempPathStruc";
-            //File.Create(SavePathh).Dispose();
-            //File.WriteAllBytes(SavePathh, pPath);
+            /*string SavePathh = Form1_0.ThisEndPath + "DumpItempPathStruc";
+            File.Create(SavePathh).Dispose();
+            File.WriteAllBytes(SavePathh, pPath);*/
         }
 
         public void GetItemAtPointer(long AtPointerr)
@@ -248,6 +248,17 @@ namespace app
 
         public bool GetItems(bool IsPickingItem)
         {
+            if (!Form1_0.GameStruc_0.IsInGame()) return false;
+
+            //dead leave game
+            if (Form1_0.PlayerScan_0.PlayerDead || Form1_0.Potions_0.ForceLeave)
+            {
+                Form1_0.Potions_0.ForceLeave = true;
+                Form1_0.Baal_0.SearchSameGamesAsLastOne = false;
+                Form1_0.LeaveGame(false);
+                return false;
+            }
+
             //Form1_0.SetGameStatus("SCANING ITEMS");
             ItemsScanned = 0;
             ItemsOnGround = 0;
@@ -374,21 +385,42 @@ namespace app
                             && (!Form1_0.UIScan_0.leftMenu && !Form1_0.UIScan_0.rightMenu && !Form1_0.UIScan_0.fullMenu)
                             && IsPickingItem)
                         {
-                            //Form1_0.method_1("Name: " + ItemNAAME);
+                            if (ItemNAAME == "Perfect Diamond" && (Form1_0.PlayerScan_0.levelNo >= 106 && Form1_0.PlayerScan_0.levelNo < 109)) continue;
+
+                            //Form1_0.method_1("Name: " + ItemNAAME, Color.DarkViolet);
+
+
+                            //Console.WriteLine("Pointer Addr: " + ItemPointerLocation.ToString("X"));
+                            //Console.WriteLine("Path Addr: " + pPathPtr.ToString("X"));
+
+                            /*Console.WriteLine("Path Addr: " + Form1_0.Mem_0.ReadByteRaw((IntPtr)(pPathPtr + 0x20)).ToString("X"));
+
+                            string SavePathh = Form1_0.ThisEndPath + "DumpItempPathStruc";
+                            File.Create(SavePathh).Dispose();
+                            File.WriteAllBytes(SavePathh, itemdatastruc);
+
+                            SavePathh = Form1_0.ThisEndPath + "DumpItempPathStruc2";
+                            File.Create(SavePathh).Dispose();
+                            File.WriteAllBytes(SavePathh, pPath);*/
 
                             Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, itemx, itemy);
                             if (ShouldPickPos(itemScreenPos))
                             {
+                                int DiffXPlayer = itemx - Form1_0.PlayerScan_0.xPosFinal;
+                                int DiffYPlayer = itemy - Form1_0.PlayerScan_0.yPosFinal;
+                                if (DiffXPlayer < 0) DiffXPlayer = -DiffXPlayer;
+                                if (DiffYPlayer < 0) DiffYPlayer = -DiffYPlayer;
+
+                                if (DiffXPlayer > 1000 || DiffYPlayer > 1000)
+                                {
+                                    continue;
+                                }
+
                                 //####
                                 if (CharConfig.UseTeleport)
                                 {
-                                    int DiffXPlayer = itemx - Form1_0.PlayerScan_0.xPosFinal;
-                                    int DiffYPlayer = itemy - Form1_0.PlayerScan_0.yPosFinal;
-                                    if (DiffXPlayer < 0) DiffXPlayer = -DiffXPlayer;
-                                    if (DiffYPlayer < 0) DiffYPlayer = -DiffYPlayer;
 
-                                    if (DiffXPlayer > 5
-                                        || DiffYPlayer > 5)
+                                    if (DiffXPlayer > 4 || DiffYPlayer > 4)
                                     {
                                         Form1_0.Mover_0.MoveToLocation(itemx, itemy);
                                         Form1_0.PlayerScan_0.GetPositions();
@@ -398,11 +430,21 @@ namespace app
                                 }
                                 //####
                                 Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"]);
+                                Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"]);
 
                                 if (ItemNAAME != LastPick)
                                 {
                                     LastPick = ItemNAAME;
                                     Form1_0.method_1_Items("Picked: " + ItemNAAME, GetColorFromQuality((int) itemQuality));
+
+                                    Form1_0.BeltStruc_0.ItemIsPotion();
+                                    if (Form1_0.BeltStruc_0.IsItemHPPotion
+                                        || Form1_0.BeltStruc_0.IsItemManaPotion
+                                        || Form1_0.BeltStruc_0.IsItemRVPotion
+                                        || Form1_0.BeltStruc_0.IsItemFullRVPotion)
+                                    {
+                                        Form1_0.BeltStruc_0.CheckForMissingPotions();
+                                    }
 
                                     //string SavePathh = Form1_0.ThisEndPath + "DumpItemDataStruc";
                                     //File.Create(SavePathh).Dispose();
@@ -440,6 +482,11 @@ namespace app
             string LastGrabbedItem = "";
             int TryGrabCount = 0;
             int ItemsGrabbed = 0;
+
+            if (Form1_0.ItemsStruc_0.ItemsEquiped <= 2) return;
+
+            Form1_0.method_1("Grabbing all items for gold", Color.BlueViolet);
+
             while (true)
             {
                 Form1_0.PlayerScan_0.GetPositions();
@@ -487,18 +534,30 @@ namespace app
                     itemdatastruc = new byte[144];
                     Form1_0.Mem_0.ReadRawMemory(ItemPointerLocation, ref itemdatastruc, 144);
                     GetStatsAddr();
+                    GetUnitPathData();
                     int ItemValue = GetValuesFromStats(Enums.Attribute.Value);
 
                     //; on ground, dropping
                     if (itemdatastruc[0x0C] == 3 || itemdatastruc[0x0C] == 5)
                     {
-                        Form1_0.UIScan_0.readUI();
-                        if (!Form1_0.UIScan_0.leftMenu && !Form1_0.UIScan_0.rightMenu && !Form1_0.UIScan_0.fullMenu)
+                        if (itemx > 0 && itemy > 0)
                         {
-                            if (ItemValue >= ItemHighestValue)
+                            if (itemx - Form1_0.PlayerScan_0.xPosFinal > 50
+                                || itemx - Form1_0.PlayerScan_0.xPosFinal < -50
+                                || itemy - Form1_0.PlayerScan_0.yPosFinal > 50
+                                || itemy - Form1_0.PlayerScan_0.yPosFinal < -50)
                             {
-                                ItemHighestValue = ItemValue;
-                                ItemPointMaxValue = ItemPointerLocation;
+                                continue;
+                            }
+
+                            Form1_0.UIScan_0.readUI();
+                            if (!Form1_0.UIScan_0.leftMenu && !Form1_0.UIScan_0.rightMenu && !Form1_0.UIScan_0.fullMenu)
+                            {
+                                if (ItemValue >= ItemHighestValue)
+                                {
+                                    ItemHighestValue = ItemValue;
+                                    ItemPointMaxValue = ItemPointerLocation;
+                                }
                             }
                         }
                     }
@@ -528,8 +587,8 @@ namespace app
                             if (DiffXPlayer < 0) DiffXPlayer = -DiffXPlayer;
                             if (DiffYPlayer < 0) DiffYPlayer = -DiffYPlayer;
 
-                            if (DiffXPlayer > 5
-                                || DiffYPlayer > 5)
+                            if (DiffXPlayer > 4
+                                || DiffYPlayer > 4)
                             {
                                 Form1_0.Mover_0.MoveToLocation(itemx, itemy);
                                 Form1_0.PlayerScan_0.GetPositions();
@@ -557,7 +616,9 @@ namespace app
         {
             if (CharConfig.UseTeleport && !Form1_0.Town_0.GetInTown())
             {
-                return true;
+                if (itemScreenPos["x"] > 0 && itemScreenPos["y"] > 0) return true;
+                return false;
+
             }
             else
             {
@@ -762,7 +823,7 @@ namespace app
                 }
             }
 
-            return true; //no identical stats found, return true by default
+            return false; //no identical stats found, return true by default
         }
 
         public int GetStatEnumIndex(string StatNammm)

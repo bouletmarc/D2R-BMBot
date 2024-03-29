@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 using static app.Enums;
 
 namespace app
@@ -33,6 +34,7 @@ namespace app
         //public int ScanUnitsNumber = 3000;
         public int ScanUnitsNumber = 2600;
         //public int ScanUnitsNumber = 2200;
+        //public int ScanUnitsNumber = 6000;
         public int ScanUnitsNegativeOffset = 128;
 
         public void SetForm1(Form1 form1_1)
@@ -200,9 +202,20 @@ namespace app
             Form1_0.offsets["rosterOffset"] = rosterOffset;
             Form1_0.method_1("Roster offset: 0x" + rosterOffset.ToString("X"), Color.Black);
 
+            //#################################################################################################
+            /*All games available offset: 0x2A31EF0
+            Selected game offset: 0x2A40400
+            Selected Char offset: 0x2A2DAD0*/
+            Form1_0.offsets["AllGamesOffset"] = ((IntPtr) 0x2A31EF0);
+            Form1_0.method_1("All games available offset: 0x" + 0x2A31EF0.ToString("X"), Color.Black);
+            Form1_0.offsets["GameSelectedOffset"] = ((IntPtr)0x2A40400);
+            Form1_0.method_1("Selected game offset: 0x" + 0x2A40400.ToString("X"), Color.Black);
+            Form1_0.offsets["SelectedChar"] = ((IntPtr)0x2A2DAD0);
+            Form1_0.method_1("Selected Char offset: 0x" + 0x2A2DAD0.ToString("X"), Color.Black);
 
+            /*
             //; all games datas
-            pattern = "A8 29 52 8E F7 7F 00";
+            pattern = "F8 1E 8B 9F F7 7F 00";
             patternAddress = (IntPtr)(modulePatternScan(pattern) + 16);
             //patternAddress = modulePatternScan(pattern);
             //IntPtr GameTable = (IntPtr)Form1_0.Mem_0.ReadInt(patternAddress + 6);
@@ -210,14 +223,27 @@ namespace app
             Form1_0.method_1("All games available offset: 0x" + patternAddress.ToString("X"), Color.Black);
 
             //; game selected data
-            pattern = "01 8D 14 51 F7 E2 42";
-            patternAddress = modulePatternScan(pattern);
-            IntPtr GameTable = (IntPtr)Form1_0.Mem_0.ReadInt(patternAddress + 7);
+            //pattern = "01 8D 14 51 F7 E2 42";
+            pattern = "08 04 8C 9F F7 7F 00";
+            patternAddress = (IntPtr)(modulePatternScan(pattern) + 16);
+            //patternAddress = modulePatternScan(pattern);
+            //IntPtr GameTable = (IntPtr)Form1_0.Mem_0.ReadInt(patternAddress + 7);
             //pattern = "50 E4 0F 67 F6 7F 00";
             //patternAddress = (IntPtr)(modulePatternScan(pattern) + 64);
             //IntPtr unitTable = (IntPtr)Form1_0.Mem_0.ReadInt(patternAddress + 7);
-            Form1_0.offsets["GameSelectedOffset"] = GameTable + 0x113;
-            Form1_0.method_1("Selected game offset: 0x" + (GameTable + 0x113).ToString("X"), Color.Black);
+            IntPtr GameTable = patternAddress;
+            //Form1_0.offsets["GameSelectedOffset"] = GameTable + 0x113;
+            //Form1_0.method_1("Selected game offset: 0x" + (GameTable + 0x113).ToString("X"), Color.Black);
+            Form1_0.offsets["GameSelectedOffset"] = GameTable;
+            Form1_0.method_1("Selected game offset: 0x" + (GameTable).ToString("X"), Color.Black);
+
+            //; selected char
+            pattern = "D0 DA 8A 9F F7 7F 00";
+            patternAddress = (IntPtr)(modulePatternScan(pattern) + 0x18);
+            //patternAddress = modulePatternScan(pattern);
+            //IntPtr GameTable = (IntPtr)Form1_0.Mem_0.ReadInt(patternAddress + 6);
+            Form1_0.offsets["SelectedChar"] = patternAddress;
+            Form1_0.method_1("Selected Char offset: 0x" + patternAddress.ToString("X"), Color.Black);*/
         }
 
 
@@ -551,5 +577,5 @@ namespace app
             if (bytes >= OneTB) return $"{bytes / OneTB}";
             return "TOO BIG";
         }*/
+        }
     }
-}

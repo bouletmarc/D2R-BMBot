@@ -25,6 +25,11 @@ namespace app
         public int MercSameHPCount = 0;
         public bool CanUseSkillForRegen = true;
 
+        public bool ForceLeave = false;
+
+        public DateTime LastTimeSinceUsedHPPot = DateTime.Now;
+        public DateTime LastTimeSinceUsedManaPot = DateTime.Now;
+
         public void SetForm1(Form1 form1_1)
         {
             Form1_0 = form1_1;
@@ -37,13 +42,26 @@ namespace app
                 return;
             }
 
-            if (Form1_0.Town_0.Towning)
+            if (Form1_0.Town_0.Towning && Form1_0.Town_0.IsInTown)
             {
                 return;
             }
 
+            if (!Form1_0.GameStruc_0.IsInGame()) return;
+
             Form1_0.PlayerScan_0.GetPositions();
             CheckHPAndManaMax();
+
+
+            //dead leave game
+            if (Form1_0.PlayerScan_0.PlayerDead || ForceLeave || Form1_0.PlayerScan_0.PlayerHP == 0)
+            {
+                ForceLeave = true;
+                Form1_0.Baal_0.SearchSameGamesAsLastOne = false;
+                Form1_0.LeaveGame(false);
+                return;
+                //Chicken();
+            }
 
             //take hp
             if (((Form1_0.PlayerScan_0.PlayerHP * 100) / Form1_0.PlayerScan_0.PlayerMaxHP) <= CharConfig.TakeHPPotUnder)
@@ -59,10 +77,21 @@ namespace app
                     {
                         TakePotion(0);
                     }
+                    //TakePotion(0);
                 }
             }
 
             Form1_0.PlayerScan_0.GetPositions();
+
+            //dead leave game
+            if (Form1_0.PlayerScan_0.PlayerDead || ForceLeave)
+            {
+                ForceLeave = true;
+                Form1_0.Baal_0.SearchSameGamesAsLastOne = false;
+                Form1_0.LeaveGame(false);
+                return;
+                //Chicken();
+            }
 
             //chicken
             if (((Form1_0.PlayerScan_0.PlayerHP * 100) / Form1_0.PlayerScan_0.PlayerMaxHP) < CharConfig.ChickenHP)
@@ -82,6 +111,7 @@ namespace app
                 {
                     TakePotion(1);
                 }
+                //TakePotion(1);
             }
 
             //Check Merc
@@ -109,17 +139,28 @@ namespace app
             if (PotToTake == 0)
             {
                 bool UsedPot = false;
-                for (int i = 0; i < CharConfig.BeltPotTypeToHave.Length; i++)
+                TimeSpan ThisTimeCheck = DateTime.Now - LastTimeSinceUsedHPPot;
+                if (ThisTimeCheck.TotalMilliseconds > 2000) 
                 {
-                    if (CharConfig.BeltPotTypeToHave[i] == 0) //Type equal 0
+                    for (int i = 0; i < CharConfig.BeltPotTypeToHave.Length; i++)
                     {
-                        if (Form1_0.BeltStruc_0.BeltHaveItems[i] == 1)
+                        if (CharConfig.BeltPotTypeToHave[i] == 0) //Type equal 0
                         {
-                            PressPotionKey(i, SendToMerc);
-                            UsedPot = true;
-                            i = CharConfig.BeltPotTypeToHave.Length;
+                            if (Form1_0.BeltStruc_0.BeltHaveItems[i] == 1)
+                            {
+                                PressPotionKey(i, SendToMerc);
+                                UsedPot = true;
+                                LastTimeSinceUsedHPPot = DateTime.Now;
+                                Form1_0.BeltStruc_0.CheckForMissingPotions();
+                                Form1_0.PlayerScan_0.GetPositions();
+                                i = CharConfig.BeltPotTypeToHave.Length;
+                            }
                         }
                     }
+                }
+                else
+                {
+                    UsedPot = true;
                 }
                 if (!UsedPot)
                 {
@@ -132,17 +173,28 @@ namespace app
             if (PotToTake == 1)
             {
                 bool UsedPot = false;
-                for (int i = 0; i < CharConfig.BeltPotTypeToHave.Length; i++)
+                TimeSpan ThisTimeCheck = DateTime.Now - LastTimeSinceUsedManaPot;
+                if (ThisTimeCheck.TotalMilliseconds > 1200)
                 {
-                    if (CharConfig.BeltPotTypeToHave[i] == 1) //Type equal 1
+                    for (int i = 0; i < CharConfig.BeltPotTypeToHave.Length; i++)
                     {
-                        if (Form1_0.BeltStruc_0.BeltHaveItems[i] == 1)
+                        if (CharConfig.BeltPotTypeToHave[i] == 1) //Type equal 1
                         {
-                            PressPotionKey(i, SendToMerc);
-                            UsedPot = true;
-                            i = CharConfig.BeltPotTypeToHave.Length;
+                            if (Form1_0.BeltStruc_0.BeltHaveItems[i] == 1)
+                            {
+                                PressPotionKey(i, SendToMerc);
+                                UsedPot = true;
+                                LastTimeSinceUsedManaPot = DateTime.Now;
+                                Form1_0.BeltStruc_0.CheckForMissingPotions();
+                                Form1_0.PlayerScan_0.GetPositions();
+                                i = CharConfig.BeltPotTypeToHave.Length;
+                            }
                         }
                     }
+                }
+                else
+                {
+                    UsedPot = true;
                 }
                 if (!UsedPot)
                 {
@@ -163,6 +215,8 @@ namespace app
                         {
                             PressPotionKey(i, SendToMerc);
                             UsedPot = true;
+                            Form1_0.BeltStruc_0.CheckForMissingPotions();
+                            Form1_0.PlayerScan_0.GetPositions();
                             i = CharConfig.BeltPotTypeToHave.Length;
                         }
                     }
@@ -261,7 +315,7 @@ namespace app
             //############################
             if (Form1_0.PlayerScan_0.PlayerHP < PlayerHPLast)
             {
-                if (CanUseSkillForRegen)
+                if (CanUseSkillForRegen && !CharConfig.RunItemGrabScriptOnly)
                 {
                     Form1_0.KeyMouse_0.PressKey(CharConfig.KeySkillLifeAura);
                 }
@@ -283,7 +337,7 @@ namespace app
                 }
                 else
                 {
-                    if (CanUseSkillForRegen)
+                    if (CanUseSkillForRegen && !CharConfig.RunItemGrabScriptOnly)
                     {
                         Form1_0.KeyMouse_0.PressKey(CharConfig.KeySkillLifeAura);
                     }
@@ -299,7 +353,7 @@ namespace app
             //Set Lower HP
             if (Form1_0.PlayerScan_0.PlayerHP == PlayerHPLast && SameHPCount >= 45)
             {
-                Form1_0.KeyMouse_0.PressKey(CharConfig.KeySkillDefenseAura);
+                if (!CharConfig.RunItemGrabScriptOnly) Form1_0.KeyMouse_0.PressKey(CharConfig.KeySkillDefenseAura);
                 if (Form1_0.PlayerScan_0.PlayerHP < Form1_0.PlayerScan_0.PlayerMaxHP)
                 {
                     Form1_0.PlayerScan_0.PlayerMaxHP = Form1_0.PlayerScan_0.PlayerHP;

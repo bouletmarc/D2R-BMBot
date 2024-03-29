@@ -16,6 +16,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Linq;
+using static app.Enums;
 using static System.Runtime.InteropServices.ComTypes.IStream;
 using static System.Windows.Forms.AxHost;
 
@@ -31,9 +32,10 @@ namespace app
         public long mapSeedAddress = 0;
         public Int64 pathAddress = 0;
         public bool FoundPlayer = false;
+        public bool PlayerDead = false;
 
         public long pAct = 0;
-        public uint mapSeed = 0;
+        public uint mapSeedValue = 0;
         public ushort xPos = 0;
         public ushort yPos = 0;
         public ushort xPosOffset = 0;
@@ -85,6 +87,13 @@ namespace app
         public int HPPercentFromEquippedItems = 0;
         public int ManaPercentFromEquippedItems = 0;
 
+        public long HPFromPlayer = 0;
+        public long ManaFromPlayer = 0;
+        public long VitalityFromPlayer = 0;
+        public long EnergyFromPlayer = 0;
+        public long HPPercentFromPlayer = 0;
+        public long ManaPercentFromPlayer = 0;
+
         public int[] RoomExit = new int[2];
 
         // REQUIRED METHODS
@@ -115,6 +124,20 @@ namespace app
             byte[] buffer = new byte[statCount * 8];
             Form1_0.Mem_0.ReadRawMemory(statPtr + 0x2, ref buffer, (int) (statCount * 8));
 
+            if (Form1_0.Town_0.IsInTown)
+            {
+                PlayerHP = PlayerMaxHP;
+                if (PlayerHP == 0) PlayerHP = 100;
+            }
+            else
+            {
+                //reset player hp
+                PlayerHP = 0;
+
+            }
+
+            if (!Form1_0.GameStruc_0.IsInGame()) PlayerHP = PlayerMaxHP;
+
             for (int i = 0; i < statCount; i++) 
             {
                 int offset = i * 8;
@@ -137,7 +160,40 @@ namespace app
                 {
                     PlayerGoldInStash = statValue;
                 }
+                //#####
+                /*if (statEnum == (ushort)Enums.Attribute.Vitality)
+                {
+                    VitalityFromPlayer = statValue;
+                    HPFromPlayer = statValue;
+                }
+                if (statEnum == (ushort)Enums.Attribute.LifeMax)
+                {
+                    HPFromPlayer = (statValue >> 8);
+                }
+                if (statEnum == (ushort)Enums.Attribute.MaxHPPercent)
+                {
+                    HPPercentFromPlayer = statValue;
+                }
+                if (statEnum == (ushort)Enums.Attribute.Energy)
+                {
+                    EnergyFromPlayer = statValue;
+                    ManaFromPlayer = statValue;
+                }
+                if (statEnum == (ushort)Enums.Attribute.ManaMax)
+                {
+                    ManaFromPlayer = (statValue >> 8);
+                }
+                if (statEnum == (ushort)Enums.Attribute.MaxManaPercent)
+                {
+                    ManaPercentFromPlayer = statValue;
+                }*/
+                //#####
             }
+
+            //Console.WriteLine("gold: " + PlayerGoldInventory);
+
+            if (PlayerHP == 0) PlayerDead = true;
+            else PlayerDead = false;
 
             //; get the level number
             pRoom1Address = Form1_0.Mem_0.ReadInt64Raw((IntPtr)(pathAddress + 0x20));
@@ -154,31 +210,48 @@ namespace app
                 Form1_0.HasPointers = false;
             }
 
+            //#####################################################################################################
+            //#####################################################################################################
+            //#####################################################################################################
             //; get the difficulty
             actAddress = Form1_0.Mem_0.ReadInt64Raw((IntPtr)(PlayerPointer + 0x20));
-            //mapSeedAddress = actAddress + 0x1C;
-            //mapSeed = Form1_0.Mem_0.ReadUInt32Raw((IntPtr)mapSeedAddress);
             long aActUnk2 = Form1_0.Mem_0.ReadInt64Raw((IntPtr)(actAddress + 0x78));
             difficulty = Form1_0.Mem_0.ReadUInt16Raw((IntPtr)(aActUnk2 + 0x830));
 
             //; get the map seed
-            /*long actMiscAddress = Form1_0.Mem_0.ReadInt64Raw((IntPtr)(actAddress + 0x78)); //0x0000023a64ed4780; 2449824630656
-            uint dwInitSeedHash1 = Form1_0.Mem_0.ReadUInt32((IntPtr)(actMiscAddress + 0x840));
-            uint dwInitSeedHash2 = Form1_0.Mem_0.ReadUInt32((IntPtr)(actMiscAddress + 0x844));
-            uint dwEndSeedHash1 = Form1_0.Mem_0.ReadUInt32((IntPtr)(actMiscAddress + 0x868));
+            long actMiscAddress = Form1_0.Mem_0.ReadInt64Raw((IntPtr)(actAddress + 0x78)); //0x0000023a64ed4780; 2449824630656
+            uint dwInitSeedHash1 = Form1_0.Mem_0.ReadUInt32Raw((IntPtr)(actMiscAddress + 0x840));
+            uint dwInitSeedHash2 = Form1_0.Mem_0.ReadUInt32Raw((IntPtr)(actMiscAddress + 0x844));
+            uint dwEndSeedHash1 = Form1_0.Mem_0.ReadUInt32Raw((IntPtr)(actMiscAddress + 0x868));
 
-            if (dwInitSeedHash1 != lastdwInitSeedHash1 || dwInitSeedHash2 != lastdwInitSeedHash2 || mapSeed == 0)
+            /*byte[] buffData = new byte[0x100];
+            Form1_0.Mem_0.ReadRawMemory(actMiscAddress + 0x800, ref buffData, buffData.Length);
+            string SavePathh = Form1_0.ThisEndPath + "DumpHashStruc";
+            File.Create(SavePathh).Dispose();
+            File.WriteAllBytes(SavePathh, buffData);*/
+
+            var mapSeed = GetMapSeed((uint)dwInitSeedHash1, (uint)dwEndSeedHash1);
+            if (!mapSeed.Item2)
             {
-                mapSeed = calculateMapSeed(dwInitSeedHash1, dwInitSeedHash2, dwEndSeedHash1);
-                lastdwInitSeedHash1 = dwInitSeedHash1;
-                lastdwInitSeedHash2 = dwInitSeedHash2;
-            }*/
-            //; mapSeed = d2rprocess.read(actMiscAddress + 0x840, "UInt")
+                throw new Exception("Error calculating map seed");
+            }
+
+
+            mapSeedValue = mapSeed.Item1;
+
+            //Form1_0.method_1("SEED: " + mapSeed.Item1.ToString(), Color.Red);
+            //Form1_0.method_1("Difficulty: " + ((Difficulty) difficulty).ToString(), Color.Red);
+            //Form1_0.GetMapData(mapSeed.Item1.ToString(), (Difficulty) difficulty);
+            //#####################################################################################################
+            //#####################################################################################################
+            //#####################################################################################################
 
             //get player name
             PlayerNamePointer = Form1_0.Mem_0.ReadInt64Raw((IntPtr)(PlayerPointer + 0x10));
             pName = Form1_0.Mem_0.ReadMemString(PlayerNamePointer);
             //Form1_0.Potions_0.CheckHPAndManaMax(); //not used here
+
+            SetMaxHPAndMana();
 
             Form1_0.Grid_SetInfos("Cords", xPosFinal + "," + yPosFinal);
             Form1_0.Grid_SetInfos("Life", PlayerHP + "/" + PlayerMaxHP);
@@ -190,6 +263,57 @@ namespace app
 
             //Form1_0.method_1("URL: " + GetImageURL());
             //DownloadImage(GetImageURL());
+        }
+
+        private const int MapHashDivisor = 1 << 16;
+
+        // Logic stolen from MapAssist, credits to them
+        public static (uint, bool) GetMapSeed(uint initHashSeed, uint endHashSeed)
+        {
+            uint gameSeedXor = 0;
+            var (seed, found) = ReverseMapSeedHash(endHashSeed);
+            if (found)
+            {
+                gameSeedXor = initHashSeed ^ seed;
+            }
+
+            if (gameSeedXor == 0)
+            {
+                return (0, false);
+            }
+
+            return (seed, true);
+        }
+
+        private static (uint, bool) ReverseMapSeedHash(uint hash)
+        {
+            uint incrementalValue = 1;
+
+            for (uint startValue = 0; startValue < uint.MaxValue; startValue += incrementalValue)
+            {
+                uint seedResult = (startValue * 0x6AC690C5 + 666) & 0xFFFFFFFF;
+
+                if (seedResult == hash)
+                {
+                    return (startValue, true);
+                }
+
+                if (incrementalValue == 1 && (seedResult % MapHashDivisor) == (hash % MapHashDivisor))
+                {
+                    incrementalValue = (uint)MapHashDivisor;
+                }
+            }
+
+            return (0, false);
+        }
+
+        public bool ShouldSeeShopForHP()
+        {
+            if (((Form1_0.PlayerScan_0.PlayerHP * 100) / Form1_0.PlayerScan_0.PlayerMaxHP) <= 80)
+            {
+                return true;
+            }
+            return false;
         }
 
         public void SetMaxHPAndMana()
@@ -219,6 +343,13 @@ namespace app
             PlayerMaxHP = PlayerMaxHP + HPFromEquippedItems + (VitalityFromEquippedItems * 2) + (int)PercentHPAdd;         //might be only for paladin
             PlayerMaxMana = PlayerMaxMana + ManaFromEquippedItems + (EnergyFromEquippedItems / 2) + (int)PercentManaAdd;   //might be only for paladin
 
+
+            /*double PercentHPAdd2 = Math.Ceiling(((double)HPPercentFromPlayer * (double)PlayerMaxHP) / 100);
+            PlayerMaxHP = PlayerMaxHP + (int)PercentHPAdd2;
+
+            double PercentManaAdd2 = Math.Ceiling(((double)ManaPercentFromPlayer * (double)PlayerMaxMana) / 100);
+            PlayerMaxMana = PlayerMaxMana + (int)PercentManaAdd2;*/
+
             if (PlayerHP > PlayerMaxHP) PlayerMaxHP = PlayerHP;
             if (PlayerMana > PlayerMaxMana) PlayerMaxMana = PlayerMana;
         }
@@ -247,6 +378,9 @@ namespace app
             LeechPosX = (int) Form1_0.Mem_0.ReadUInt32Raw((IntPtr) (LeechPlayerPointer + 0x60));
             LeechPosY = (int) Form1_0.Mem_0.ReadUInt32Raw((IntPtr) (LeechPlayerPointer + 0x64));
             LeechlevelNo = Form1_0.Mem_0.ReadUInt16Raw((IntPtr)(LeechPlayerPointer + 0x5C));
+
+            Form1_0.Grid_SetInfos("LeechCords", LeechPosX + "," + LeechPosY);
+
             //plevel = d2rprocess.read(partyStruct + 0x58, "UShort");
             //partyId = d2rprocess.read(partyStruct + 0x5A, "UShort");
             //hostilePtr = d2rprocess.read(partyStruct + 0x70, "Int64");
@@ -262,7 +396,7 @@ namespace app
             for (int i = 0; i < 8; i++)
             {
                 string name = Form1_0.Mem_0.ReadMemString(partyStruct);
-                if (name == Form1_0.GameStruc_0.GameOwnerName)
+                if (name.ToLower() == Form1_0.GameStruc_0.GameOwnerName.ToLower())
                 {
                     LeechPlayerUnitID = Form1_0.Mem_0.ReadUInt32Raw((IntPtr)(partyStruct + 0x48));
                     LeechPlayerPointer = partyStruct;
@@ -317,7 +451,8 @@ namespace app
                     Form1_0.Mem_0.ReadRawMemory(UnitPointerLocation, ref itemdatastruc, 144);
 
                     // Do ONLY UnitType:0 && TxtFileNo:3
-                    if (BitConverter.ToUInt32(itemdatastruc, 0) == 0 && BitConverter.ToUInt32(itemdatastruc, 4) == 3)
+                    //if (BitConverter.ToUInt32(itemdatastruc, 0) == 0 && BitConverter.ToUInt32(itemdatastruc, 4) == 3)
+                    if (BitConverter.ToUInt32(itemdatastruc, 0) == 0)
                     {
                         PlayerStrucCount++;
                         //Form1_0.method_1("PPointerLocation: 0x" + (UnitPointerLocation).ToString("X"));
@@ -335,7 +470,10 @@ namespace app
                             }
                         }
                         //name = name.Replace("?", "");
-                        //Form1_0.method_1("PNAME: " + name);
+                        //Form1_0.method_1("PNAME: " + name, Color.Red);
+
+                        //Console.WriteLine(BitConverter.ToUInt32(itemdatastruc, 0));
+                        //Console.WriteLine(BitConverter.ToUInt32(itemdatastruc, 4));
 
                         long ppath = BitConverter.ToInt64(itemdatastruc, 0x38);
                         byte[] ppathData = new byte[144];
@@ -344,11 +482,12 @@ namespace app
                         //if posX equal not zero
                         if (BitConverter.ToInt16(ppathData, 2) != 0 && name == CharConfig.PlayerCharName)
                         {
+                            Form1_0.method_1("------------------------------------------", Color.DarkBlue);
                             PlayerPointer = UnitPointerLocation;
                             Form1_0.Grid_SetInfos("Pointer", "0x" + PlayerPointer.ToString("X"));
                             FoundPlayer = true;
                             unitId = BitConverter.ToUInt32(itemdatastruc, 0x08);
-                            Form1_0.method_1("Player ID: 0x" + unitId.ToString("X"), Color.Black);
+                            Form1_0.method_1("Player ID: 0x" + unitId.ToString("X"), Color.DarkBlue);
 
                             /*string SavePathh = Form1_0.ThisEndPath + "DumpPlayerStruc";
                             File.Create(SavePathh).Dispose();
@@ -413,6 +552,7 @@ namespace app
                             }
                         }
                         pNameOther = name;
+
                         IsCorpse = false;
                         if (Form1_0.Mem_0.ReadByteRaw((IntPtr)(PlayerPointer + 0x1A6)) == 1)
                         {
@@ -432,6 +572,8 @@ namespace app
                             }
                             if (ThisPlayerName != "")
                             {
+                                //Form1_0.method_1("TEST player corpse scan name: " + ThisPlayerName + "|" + IsCorpse, Color.OrangeRed);
+
                                 if (pNameOther == ThisPlayerName)
                                 {
                                     if (!GetCorpseOnly || (GetCorpseOnly && IsCorpse))
@@ -456,6 +598,8 @@ namespace app
             int AddedEnergy = 0;
             int AddedHPPercent = 0;
             int AddedManaPercent = 0;
+
+            //item_maxmana_percent	ln34	item_maxhp_percent	ln34	skill_staminapercent
 
             if (Form1_0.ItemsStruc_0.statCount > 0)
             {
@@ -541,107 +685,5 @@ namespace app
             ManaPercentFromEquippedItems += AddedManaPercent;
         }
 
-
-
-        //#####################################################################
-        //#####################################################################
-        //#####################################################################
-
-        /*public void SetPlayerPos(ushort atX, ushort atY)
-        {
-            byte[] bytesposx = BitConverter.GetBytes(atX);
-            byte[] bytesposy = BitConverter.GetBytes(atY);
-            Form1_0.Mem_0.WriteRawMemory((IntPtr)(pathAddress + 0x02), bytesposx, 2);
-            Form1_0.Mem_0.WriteRawMemory((IntPtr)(pathAddress + 0x06), bytesposy, 2);
-            Thread.Sleep(1);
-        }
-
-        public uint calculateMapSeed(uint InitSeedHash1, uint InitSeedHash2, uint EndSeedHash1)
-        {
-            uint mapSeedTest = get_seed(InitSeedHash1, InitSeedHash2, EndSeedHash1);
-            if (mapSeedTest == 0)
-            {
-                Form1_0.method_1("ERRROR: YOU HAVE AN ERROR DEECRYPTING THE MAP SEED, YOUR MAPS WILL EITHER NOT APPEAR OR NOT LINE UP", Color.Red);
-            }
-            return mapSeedTest;
-        }*/
-
-        public string GetImageURL()
-        {
-            string baseUrl = "http://localhost:3002";
-            double wallThickness = 1.2;
-            int serverScale = 3;
-            string imageUrl = baseUrl + "/v1/map/" + mapSeed + "/" + difficulty + "/" + levelNo + "/image?wallthickness=" + wallThickness;
-            imageUrl = imageUrl + "&rotate=true&showTextLabels=false";
-            imageUrl = imageUrl + "&padding=0";  //+ settings["padding"];
-            imageUrl = imageUrl + "&noStitch=true";  //+ settings["padding"];
-            imageUrl = imageUrl + "&edge=true";
-            /*if (settings["showPathFinding"])
-            {
-                if (pathStart && pathEnd)
-                {
-                    imageUrl = imageUrl + "&pathFinding=true";
-                    imageUrl = imageUrl + "&pathStart=" + pathStart;
-                    imageUrl = imageUrl + "&pathEnd=" + pathEnd;
-                    imageUrl = imageUrl + "&pathColour=" + settings["pathFindingColour"];
-                }
-            }*/
-            imageUrl = imageUrl + "&serverScale=" + serverScale;
-            imageUrl = imageUrl.Replace(",", ".");
-            return imageUrl;
-        }
-
-        public string getFileName()
-        {
-            return Form1_0.ThisEndPath + "\\maps\\" + this.mapSeed + "_" + this.difficulty + "_" + this.levelNo + ".png";
-        }
-
-        //delegate int ReadDelegate(IntPtr pIStream, IntPtr buffer, uint cb, out IntPtr pcbRead);
-        //ReadDelegate Read = (ReadDelegate)Marshal.GetDelegateForFunctionPointer(Marshal.ReadIntPtr(Marshal.GetComInterfaceForObject(pIStream, typeof(IStream)), 0), typeof(ReadDelegate));
-        //IntPtr pcbRead;
-
-        public void DownloadImage(string imageUrl)
-        {
-            int tries = 0;
-            while (tries < 5)
-            {
-                tries++;
-                try
-                {
-                    dynamic whr = Activator.CreateInstance(Type.GetTypeFromProgID("WinHttp.WinHttpRequest.5.1"));
-                    whr.SetTimeouts(45000, 45000, 45000, 45000);
-                    whr.Open("GET", imageUrl, true);
-                    whr.Send();
-                    whr.WaitForResponse();
-                    dynamic vStream = whr.ResponseStream;
-                    Console.WriteLine("PASSED");
-                    string sFile2 = getFileName();
-                    if (vStream.GetType().Equals(typeof(System.Runtime.InteropServices.UnknownWrapper)))
-                    {
-                        Stream pIStream = vStream.QueryInterface(Type.GetTypeFromCLSID(new Guid("0000000c-0000-0000-C000-000000000046")));
-                        using (FileStream oFile = new FileStream(sFile, FileMode.Create))
-                        {
-                            byte[] buffer = new byte[8192];
-                            var br = new BinaryReader(pIStream);
-                            buffer = br.ReadBytes((int)br.BaseStream.Length);
-                            //buffer = br.ReadBytes((int)buffer.Length);
-                            oFile.Write(buffer, 0, buffer.Length);
-                        }
-                        Marshal.ReleaseComObject(pIStream);
-                    }
-                    this.sFile = sFile2;
-                    //this.ParseHeaders(whr.GetAllResponseHeaders());
-
-                    if (!string.IsNullOrEmpty(whr.GetAllResponseHeaders()))
-                    {
-                        break; // don't retry if headers found
-                    }
-                }
-                catch (Exception e)
-                {
-                    Form1_0.method_1("ERRROR:" + e.Message, Color.Red);
-                }
-            }
-        }
     }
 }

@@ -39,7 +39,9 @@ namespace app
             if (Form1_0.InventoryStruc_0.HasInventoryItems()
                 || Form1_0.BeltStruc_0.MissingHPPot
                 || Form1_0.BeltStruc_0.MissingManaPot
-                || Form1_0.InventoryStruc_0.HUDItems_tpscrolls <= 2)
+                || Form1_0.InventoryStruc_0.HUDItems_tpscrolls <= 2
+                || Form1_0.InventoryStruc_0.HUDItems_keys <= 3
+                || Form1_0.PlayerScan_0.ShouldSeeShopForHP())
             {
                 return true;
             }
@@ -117,13 +119,20 @@ namespace app
                                 }
 
                                 Form1_0.ItemsStruc_0.GetItems(false);   //get inventory again
-                                PickItem(itemScreenPos["x"], itemScreenPos["y"]);
+                                /*PickItem(itemScreenPos["x"], itemScreenPos["y"]);
                                 Form1_0.WaitDelay(10);
                                 if (!PlaceItem(555, 465))
                                 {
                                     Form1_0.WaitDelay(10);
                                     PlaceItem(itemScreenPos["x"], itemScreenPos["y"]);
-                                }
+                                }*/
+
+
+                                //CTRL+Clic to send item into stash
+                                Form1_0.KeyMouse_0.SendCTRL_CLICK(itemScreenPos["x"], itemScreenPos["y"]);
+                                Form1_0.WaitDelay(5);
+                                Form1_0.ItemsStruc_0.GetItems(false);   //get inventory again
+                                PlaceItem(itemScreenPos["x"], itemScreenPos["y"]);
 
                                 //############## OLD CODE
                                 //Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"]);
@@ -192,11 +201,43 @@ namespace app
                 {
                     Dictionary<string, int> itemScreenPos = ConvertShopLocToScreenPos(Form1_0.ItemsStruc_0.itemx, Form1_0.ItemsStruc_0.itemy);
 
-                    //Form1_0.SendSHIFT_RIGHTCLICK(itemScreenPos["x"], itemScreenPos["y"]);
-                    Form1_0.KeyMouse_0.MouseCliccRight(itemScreenPos["x"], itemScreenPos["y"]);
-                    Form1_0.WaitDelay(40);
+                    int ShopCount = 4;
+                    if (Form1_0.BeltStruc_0.ForceHPPotionQty > 0)
+                    {
+                        ShopCount = Form1_0.BeltStruc_0.ForceHPPotionQty - Form1_0.BeltStruc_0.HPQuantity;
+                    } 
+                    else
+                    {
+                        ShopCount = 8 - Form1_0.BeltStruc_0.HPQuantity;
+                    }
+
+                    for (int i = 0; i < ShopCount; i++)
+                    {
+                        //Form1_0.SendSHIFT_RIGHTCLICK(itemScreenPos["x"], itemScreenPos["y"]);
+                        Form1_0.KeyMouse_0.MouseCliccRight(itemScreenPos["x"], itemScreenPos["y"]);
+                        Form1_0.WaitDelay(10);
+                    }
+
                     Form1_0.ItemsStruc_0.UsePotionNotInRightSpot = false; //dont use pot if not in correct spot
                     Form1_0.ItemsStruc_0.GetItems(false);   //get inventory
+
+                    //####
+                    if (Form1_0.InventoryStruc_0.HasInventoryItemName("Super Healing Potion") || Form1_0.BeltStruc_0.HasPotInBadSpot)
+                    {
+                        //Form1_0.method_1("FORCING HP POT QTY: " + Form1_0.BeltStruc_0.HPQuantity, Color.Red);
+                        Form1_0.BeltStruc_0.ForceHPPotionQty = Form1_0.BeltStruc_0.HPQuantity; //reset qty in belt
+                        if (Form1_0.BeltStruc_0.HasPotInBadSpot)
+                        {
+                            Form1_0.BeltStruc_0.ForceHPPotionQty -= 1;
+                            Form1_0.ItemsStruc_0.UsePotionNotInRightSpot = true;
+                            Form1_0.ItemsStruc_0.GetItems(false);   //get inventory to use pot in bad spot
+                            Form1_0.ItemsStruc_0.GetItems(false);   //get inventory to use pot in bad spot
+                        }
+                        //Form1_0.method_1("FORCING HP POT QTY: " + Form1_0.BeltStruc_0.ForceHPPotionQty, Color.Red);
+                        break;
+                    }
+                    //####
+
                     Form1_0.ItemsStruc_0.UsePotionNotInRightSpot = true;
                     Form1_0.BeltStruc_0.CheckForMissingPotions();
                 }
@@ -207,15 +248,7 @@ namespace app
                 }
                 StartQty = Form1_0.BeltStruc_0.HPQuantity;
             }
-
-            if (Form1_0.InventoryStruc_0.HasInventoryItemName("Super Healing Potion") || Form1_0.BeltStruc_0.HasPotInBadSpot)
-            {
-                Form1_0.BeltStruc_0.ForceHPPotionQty = Form1_0.BeltStruc_0.HPQuantity; //reset qty in belt
-                if (Form1_0.BeltStruc_0.HasPotInBadSpot)
-                {
-                    Form1_0.ItemsStruc_0.GetItems(false);   //get inventory to use pot in bad spot
-                }
-            }
+            
 
             //buy mana
             tries = 0;
@@ -231,11 +264,41 @@ namespace app
                 {
                     Dictionary<string, int> itemScreenPos = ConvertShopLocToScreenPos(Form1_0.ItemsStruc_0.itemx, Form1_0.ItemsStruc_0.itemy);
 
-                    //Form1_0.SendSHIFT_RIGHTCLICK(itemScreenPos["x"], itemScreenPos["y"]);
-                    Form1_0.KeyMouse_0.MouseCliccRight(itemScreenPos["x"], itemScreenPos["y"]);
-                    Form1_0.WaitDelay(40);
+                    int ShopCount = 4;
+                    if (Form1_0.BeltStruc_0.ForceHPPotionQty > 0)
+                    {
+                        ShopCount = Form1_0.BeltStruc_0.ForceMANAPotionQty - Form1_0.BeltStruc_0.ManyQuantity;
+                    }
+                    else
+                    {
+                        ShopCount = 8 - Form1_0.BeltStruc_0.ManyQuantity;
+                    }
+
+                    for (int i = 0; i < ShopCount; i++)
+                    {
+                        //Form1_0.SendSHIFT_RIGHTCLICK(itemScreenPos["x"], itemScreenPos["y"]);
+                        Form1_0.KeyMouse_0.MouseCliccRight(itemScreenPos["x"], itemScreenPos["y"]);
+                        Form1_0.WaitDelay(10);
+                    }
+
                     Form1_0.ItemsStruc_0.UsePotionNotInRightSpot = false; //dont use pot if not in correct spot
                     Form1_0.ItemsStruc_0.GetItems(false);   //get inventory
+
+                    //####
+                    if (Form1_0.InventoryStruc_0.HasInventoryItemName("Super Mana Potion") || Form1_0.BeltStruc_0.HasPotInBadSpot)
+                    {
+                        Form1_0.BeltStruc_0.ForceMANAPotionQty = Form1_0.BeltStruc_0.ManyQuantity; //reset qty in belt
+                        if (Form1_0.BeltStruc_0.HasPotInBadSpot)
+                        {
+                            Form1_0.BeltStruc_0.ForceMANAPotionQty -= 1;
+                            Form1_0.ItemsStruc_0.UsePotionNotInRightSpot = true;
+                            Form1_0.ItemsStruc_0.GetItems(false);   //get inventory to use pot in bad spot
+                            Form1_0.ItemsStruc_0.GetItems(false);   //get inventory to use pot in bad spot
+                        }
+                        break;
+                    }
+                    //####
+
                     Form1_0.ItemsStruc_0.UsePotionNotInRightSpot = true;
                     Form1_0.BeltStruc_0.CheckForMissingPotions();
                 }
@@ -247,14 +310,6 @@ namespace app
                 StartQty = Form1_0.BeltStruc_0.ManyQuantity;
             }
 
-            if (Form1_0.InventoryStruc_0.HasInventoryItemName("Super Mana Potion") || Form1_0.BeltStruc_0.HasPotInBadSpot)
-            {
-                Form1_0.BeltStruc_0.ForceMANAPotionQty = Form1_0.BeltStruc_0.ManyQuantity; //reset qty in belt
-                if (Form1_0.BeltStruc_0.HasPotInBadSpot)
-                {
-                    Form1_0.ItemsStruc_0.GetItems(false);   //get inventory to use pot in bad spot
-                }
-            }
 
             //buy tp
             tries = 0;
@@ -270,9 +325,13 @@ namespace app
                 {
                     Dictionary<string, int> itemScreenPos = ConvertShopLocToScreenPos(Form1_0.ItemsStruc_0.itemx, Form1_0.ItemsStruc_0.itemy);
 
-                    //Form1_0.SendSHIFT_RIGHTCLICK(itemScreenPos["x"], itemScreenPos["y"]);
-                    Form1_0.KeyMouse_0.MouseCliccRight(itemScreenPos["x"], itemScreenPos["y"]);
-                    Form1_0.WaitDelay(40);
+                    int ShopCount = 20 - Form1_0.InventoryStruc_0.HUDItems_tpscrolls;
+                    for (int i = 0; i < ShopCount; i++)
+                    {
+                        //Form1_0.SendSHIFT_RIGHTCLICK(itemScreenPos["x"], itemScreenPos["y"]);
+                        Form1_0.KeyMouse_0.MouseCliccRight(itemScreenPos["x"], itemScreenPos["y"]);
+                        Form1_0.WaitDelay(10);
+                    }
                     Form1_0.ItemsStruc_0.GetItems(false);   //get inventory
                 }
 
@@ -297,9 +356,13 @@ namespace app
                 {
                     Dictionary<string, int> itemScreenPos = ConvertShopLocToScreenPos(Form1_0.ItemsStruc_0.itemx, Form1_0.ItemsStruc_0.itemy);
 
-                    //Form1_0.SendSHIFT_RIGHTCLICK(itemScreenPos["x"], itemScreenPos["y"]);
-                    Form1_0.KeyMouse_0.MouseCliccRight(itemScreenPos["x"], itemScreenPos["y"]);
-                    Form1_0.WaitDelay(40);
+                    int ShopCount = 20 - Form1_0.InventoryStruc_0.HUDItems_idscrolls;
+                    for (int i = 0; i < ShopCount; i++)
+                    {
+                        //Form1_0.SendSHIFT_RIGHTCLICK(itemScreenPos["x"], itemScreenPos["y"]);
+                        Form1_0.KeyMouse_0.MouseCliccRight(itemScreenPos["x"], itemScreenPos["y"]);
+                        Form1_0.WaitDelay(10);
+                    }
                     Form1_0.ItemsStruc_0.GetItems(false);   //get inventory
                 }
 
@@ -311,6 +374,7 @@ namespace app
             }
 
             //buy key
+            Form1_0.InventoryStruc_0.VerifyKeysInventory();
             tries = 0;
             StartQty = Form1_0.InventoryStruc_0.HUDItems_keys;
             while (Form1_0.InventoryStruc_0.HUDItems_keys <= 8 && tries < 1)
@@ -324,9 +388,9 @@ namespace app
                 {
                     Dictionary<string, int> itemScreenPos = ConvertShopLocToScreenPos(Form1_0.ItemsStruc_0.itemx, Form1_0.ItemsStruc_0.itemy);
 
-                    //Form1_0.SendSHIFT_RIGHTCLICK(itemScreenPos["x"], itemScreenPos["y"]);
-                    Form1_0.KeyMouse_0.MouseCliccRight(itemScreenPos["x"], itemScreenPos["y"]);
-                    Form1_0.WaitDelay(40);
+                    Form1_0.KeyMouse_0.SendSHIFT_RIGHTCLICK(itemScreenPos["x"], itemScreenPos["y"]);
+                    //Form1_0.KeyMouse_0.MouseCliccRight(itemScreenPos["x"], itemScreenPos["y"]);
+                    Form1_0.WaitDelay(20);
                     Form1_0.ItemsStruc_0.GetItems(false);   //get inventory
                 }
 

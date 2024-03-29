@@ -132,9 +132,11 @@ namespace app
                     {
                         if (getObjectName((int)txtFileNo) == ObjectType && !IsIgnoredID(IgnoredIDList))
                         {
-                            //Form1_0.method_1("OBJ POS: " + itemx + ", " + itemy + " - " + getObjectName((int)txtFileNo));
+                            Form1_0.method_1("OBJ POS: " + itemx + ", " + itemy + " - " + getObjectName((int)txtFileNo), Color.DarkOrchid);
                             if (itemx != 0 && itemy != 0)
                             {
+                                //Form1_0.method_1("OBJ POS: " + itemx + ", " + itemy + " - " + getObjectName((int)txtFileNo), Color.DarkOrchid);
+
                                 SetNearestObject(Nearest);
                                 if (!Nearest)
                                 {

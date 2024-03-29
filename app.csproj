@@ -53,8 +53,13 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Text.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -66,15 +71,27 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Bots\Duriel.cs" />
+    <Compile Include="Bots\Summoner.cs" />
+    <Compile Include="Bots\Mephisto.cs" />
     <Compile Include="Bots\Baal.cs" />
     <Compile Include="Bots\Chaos.cs" />
-    <Compile Include="Bots\CharConfig.cs" />
+    <Compile Include="CharConfig.cs" />
+    <Compile Include="Bots\Andariel.cs" />
+    <Compile Include="Bots\Countess.cs" />
     <Compile Include="Bots\LowerKurast.cs" />
-    <Compile Include="Bots\SettingsLoader.cs" />
+    <Compile Include="SettingsLoader.cs" />
+    <Compile Include="FormSettings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormSettings.Designer.cs">
+      <DependentUpon>FormSettings.cs</DependentUpon>
+    </Compile>
     <Compile Include="Scripts\Battle.cs" />
     <Compile Include="Scripts\Cubing.cs" />
     <Compile Include="Scripts\Gamble.cs" />
     <Compile Include="Scripts\KeyMouse.cs" />
+    <Compile Include="Scripts\MoveToPath.cs" />
     <Compile Include="Scripts\Mover.cs" />
     <Compile Include="Scripts\Potions.cs" />
     <Compile Include="Scripts\Repair.cs" />
@@ -105,11 +122,15 @@
     <Compile Include="Strucs\PlayerScan.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Strucs\MapAreaStruc.cs" />
     <Compile Include="Strucs\SkillsStruc.cs" />
     <Compile Include="Strucs\StashStruc.cs" />
     <Compile Include="Strucs\UIScan.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormSettings.resx">
+      <DependentUpon>FormSettings.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -141,15 +162,10 @@
     <Content Include="CharSettings.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="ItemsPicker\craft.txt" />
-    <Content Include="ItemsPicker\key.txt" />
-    <Content Include="ItemsPicker\magic_rare.txt" />
-    <Content Include="ItemsPicker\normal.txt" />
-    <Content Include="ItemsPicker\set.txt" />
-    <Content Include="ItemsPicker\unique.txt" />
     <Content Include="ItemsSettings.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\Application.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
