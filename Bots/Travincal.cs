@@ -61,7 +61,7 @@ namespace app
 
                 if (CurrentStep == 1)
                 {
-                    OrbPos = Form1_0.MapAreaStruc_0.GetPositionOfObject("object", "CompellingOrb", (int)Enums.Area.HallsOfTheDeadLevel3, new List<int>());
+                    OrbPos = Form1_0.MapAreaStruc_0.GetPositionOfObject("object", "CompellingOrb", (int)Enums.Area.Travincal, new List<int>());
                     if (OrbPos.X != 0 && OrbPos.Y != 0)
                     {
                         Form1_0.MoveToPath_0.MoveToThisPos(OrbPos);
