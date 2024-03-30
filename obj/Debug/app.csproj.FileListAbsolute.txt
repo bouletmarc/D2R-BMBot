@@ -1,6 +1,3 @@
-C:\Users\boule\OneDrive\Documents\Visual Studio 2022\Projects\D2R-BMBot-main\bin\Debug\BotSettings.txt
-C:\Users\boule\OneDrive\Documents\Visual Studio 2022\Projects\D2R-BMBot-main\bin\Debug\CharSettings.txt
-C:\Users\boule\OneDrive\Documents\Visual Studio 2022\Projects\D2R-BMBot-main\bin\Debug\ItemsSettings.txt
 C:\Users\boule\OneDrive\Documents\Visual Studio 2022\Projects\D2R-BMBot-main\bin\Debug\app.exe.config
 C:\Users\boule\OneDrive\Documents\Visual Studio 2022\Projects\D2R-BMBot-main\bin\Debug\app.exe
 C:\Users\boule\OneDrive\Documents\Visual Studio 2022\Projects\D2R-BMBot-main\bin\Debug\app.pdb
@@ -27,3 +24,10 @@ C:\Users\boule\OneDrive\Documents\Visual Studio 2022\Projects\D2R-BMBot-main\obj
 C:\Users\boule\OneDrive\Documents\Visual Studio 2022\Projects\D2R-BMBot-main\obj\Debug\app.exe.config
 C:\Users\boule\OneDrive\Documents\Visual Studio 2022\Projects\D2R-BMBot-main\obj\Debug\app.csproj.Up2Date
 C:\Users\boule\OneDrive\Documents\Visual Studio 2022\Projects\D2R-BMBot-main\obj\Debug\app.FormSettings.resources
+C:\Users\boule\OneDrive\Documents\Visual Studio 2022\Projects\D2R-BMBot-main\bin\Debug\Settings\CubingRecipes.txt
+C:\Users\boule\OneDrive\Documents\Visual Studio 2022\Projects\D2R-BMBot-main\bin\Debug\Settings\BotSettings.txt
+C:\Users\boule\OneDrive\Documents\Visual Studio 2022\Projects\D2R-BMBot-main\bin\Debug\Settings\CharSettings.txt
+C:\Users\boule\OneDrive\Documents\Visual Studio 2022\Projects\D2R-BMBot-main\bin\Debug\Settings\ItemsSettings.txt
+C:\Users\boule\OneDrive\Documents\Visual Studio 2022\Projects\D2R-BMBot-main\bin\Debug\Settings\Char\PaladinHammer.txt
+C:\Users\boule\OneDrive\Documents\Visual Studio 2022\Projects\D2R-BMBot-main\bin\Debug\Settings\Char\SorceressBlizzard.txt
+C:\Users\boule\OneDrive\Documents\Visual Studio 2022\Projects\D2R-BMBot-main\obj\Debug\app.FormCharSettings.resources

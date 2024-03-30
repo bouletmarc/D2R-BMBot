@@ -32,6 +32,7 @@ namespace app
         public uint LastUsedTPID = 0;
         public int LastUsedTPCount = 0;
         public List<uint> IgnoredTPList = new List<uint>();
+        public List<uint> IgnoredWPList = new List<uint>();
         public bool FirstTown = true;
 
         public void SetForm1(Form1 form1_1)
@@ -259,10 +260,10 @@ namespace app
                         if ((Form1_0.InventoryStruc_0.ContainStashItemInInventory() || (Form1_0.PlayerScan_0.PlayerGoldInventory >= 35000))
                                 && TriedToStashCount < 6 && !FastTowning)
                         {
-                            //Console.WriteLine(Form1_0.InventoryStruc_0.ContainStashItemInInventory() + "|" + (Form1_0.PlayerScan_0.PlayerGoldInventory >= 35000));
-
-                            Form1_0.method_1("Stash: item(" + Form1_0.InventoryStruc_0.ContainStashItemInInventory() + ") | Gold(" + (Form1_0.PlayerScan_0.PlayerGoldInventory >= 35000) + ")", Color.Red);
-                            Form1_0.SetGameStatus("TOWN-STASH");
+                            string DescTxt = "";
+                            if (Form1_0.InventoryStruc_0.ContainStashItemInInventory()) DescTxt += " (ITEM)";
+                            if ((Form1_0.PlayerScan_0.PlayerGoldInventory >= 35000)) DescTxt += " (GOLD)";
+                            Form1_0.SetGameStatus("TOWN-STASH" + DescTxt);
                             MoveToStash(true);
                             TriedToStashCount++;
                         }
@@ -312,7 +313,15 @@ namespace app
                         {
                             if (Form1_0.Shop_0.ShouldShop() && TriedToShopCount < 6)
                             {
-                                Form1_0.SetGameStatus("TOWN-SHOP");
+                                string DescTxt = "";
+                                if (Form1_0.Shop_0.ShopForSellingitem) DescTxt += " (SELL)";
+                                if (Form1_0.Shop_0.ShopForHP) DescTxt += " (HP)";
+                                if (Form1_0.Shop_0.ShopForMana) DescTxt += " (MANA)";
+                                if (Form1_0.Shop_0.ShopForTP) DescTxt += " (TP)";
+                                if (Form1_0.Shop_0.ShopForKey) DescTxt += " (KEYS)";
+                                if (Form1_0.Shop_0.ShopForRegainHP) DescTxt += " (REGEN HP)";
+
+                                Form1_0.SetGameStatus("TOWN-SHOP" + DescTxt);
                                 //Console.WriteLine("town moving to shop");
                                 MoveToStore();
                                 TriedToShopCount++;
@@ -387,65 +396,14 @@ namespace app
                 //if (Form1_0.Mover_0.MoveToLocation(4681, 4541))
                 //{
                     //use wp
-                    /*if (Form1_0.ObjectsStruc_0.GetObjects("WaypointPortal", false))
+                    if (Form1_0.ObjectsStruc_0.GetObjects("WaypointPortal", false, IgnoredWPList))
                     {
+                        if (Form1_0.ObjectsStruc_0.itemx == 0 && Form1_0.ObjectsStruc_0.itemy == 0)
+                        {
+                            IgnoredWPList.Add(Form1_0.ObjectsStruc_0.ObjectUnitID);
+                            return;
+                        }
                         if (Form1_0.Mover_0.MoveToLocation(Form1_0.ObjectsStruc_0.itemx, Form1_0.ObjectsStruc_0.itemy))
-                        {
-                            if (Form1_0.ObjectsStruc_0.GetObjects("WaypointPortal", false))
-                            {
-                                Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, Form1_0.ObjectsStruc_0.itemx, Form1_0.ObjectsStruc_0.itemy);
-                                Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"] - 15);
-                                Form1_0.Mover_0.FinishMoving();
-                                if (Form1_0.UIScan_0.WaitTilUIOpen("waypointMenu"))
-                                {
-                                    if (SelectWPIndex == -1)
-                                    {
-                                        SelectTownWP();
-                                    }
-                                    else
-                                    {
-                                        SelectThisWPIndex(SelectActWPIndex, SelectWPIndex);
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    else
-                    {*/
-                        //"id":119, "type":"object", "x":84, "y":69, "name":"Waypoint",
-                        Position ThisFinalPosition = Form1_0.MapAreaStruc_0.GetPositionOfObject("object", "WaypointPortal", 1 - 1, new List<int>() { });
-                        if (Form1_0.Mover_0.MoveToLocation(ThisFinalPosition.X, ThisFinalPosition.Y))
-                        {
-                            Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, ThisFinalPosition.X, ThisFinalPosition.Y);
-                            Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"] - 15);
-                            Form1_0.Mover_0.FinishMoving();
-                            if (Form1_0.UIScan_0.WaitTilUIOpen("waypointMenu"))
-                            {
-                                if (SelectWPIndex == -1)
-                                {
-                                    SelectTownWP();
-                                }
-                                else
-                                {
-                                    SelectThisWPIndex(SelectActWPIndex, SelectWPIndex);
-                                }
-                            }
-                        }
-                        //Form1_0.method_1("NO WP FOUND NEAR IN TOWN", Color.OrangeRed);
-                    //}
-                //}
-            }
-            /*if (TownAct == 2)
-            {
-            }*/
-            if (TownAct == 3)
-            {
-                if (Form1_0.Mover_0.MoveToLocation(5134, 5107))
-                {
-                    if (Form1_0.Mover_0.MoveToLocation(5154, 5056))
-                    {
-                        //use wp
-                        /*if (Form1_0.ObjectsStruc_0.GetObjects("Act3TownWaypoint", false))
                         {
                             Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, Form1_0.ObjectsStruc_0.itemx, Form1_0.ObjectsStruc_0.itemy);
                             Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"] - 15);
@@ -462,9 +420,13 @@ namespace app
                                 }
                             }
                         }
-                        else
-                        {*/
-                            Position ThisFinalPosition = Form1_0.MapAreaStruc_0.GetPositionOfObject("object", "Act3TownWaypoint", 75 - 1, new List<int>() { });
+                    }
+                    else
+                    {
+                        //"id":119, "type":"object", "x":84, "y":69, "name":"Waypoint",
+                        Position ThisFinalPosition = Form1_0.MapAreaStruc_0.GetPositionOfObject("object", "WaypointPortal", 1, new List<int>() { });
+                        if (ThisFinalPosition.X != 0 && ThisFinalPosition.Y != 0)
+                        {
                             if (Form1_0.Mover_0.MoveToLocation(ThisFinalPosition.X, ThisFinalPosition.Y))
                             {
                                 Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, ThisFinalPosition.X, ThisFinalPosition.Y);
@@ -482,8 +444,129 @@ namespace app
                                     }
                                 }
                             }
-                            //Form1_0.method_1("NO WP FOUND NEAR IN TOWN", Color.OrangeRed);
-                        //}
+                        }
+                        else
+                        {
+                            Form1_0.method_1("NO WP FOUND NEAR IN TOWN", Color.OrangeRed);
+                        }
+                    }
+                //}
+            }
+            if (TownAct == 2)
+            {
+                //use wp
+                if (Form1_0.ObjectsStruc_0.GetObjects("Act2Waypoint", false, IgnoredWPList))
+                {
+                    if (Form1_0.ObjectsStruc_0.itemx == 0 && Form1_0.ObjectsStruc_0.itemy == 0)
+                    {
+                        IgnoredWPList.Add(Form1_0.ObjectsStruc_0.ObjectUnitID);
+                        return;
+                    }
+                    if (Form1_0.Mover_0.MoveToLocation(Form1_0.ObjectsStruc_0.itemx, Form1_0.ObjectsStruc_0.itemy))
+                    {
+                        Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, Form1_0.ObjectsStruc_0.itemx, Form1_0.ObjectsStruc_0.itemy);
+                        Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"] - 15);
+                        Form1_0.Mover_0.FinishMoving();
+                        if (Form1_0.UIScan_0.WaitTilUIOpen("waypointMenu"))
+                        {
+                            if (SelectWPIndex == -1)
+                            {
+                                SelectTownWP();
+                            }
+                            else
+                            {
+                                SelectThisWPIndex(SelectActWPIndex, SelectWPIndex);
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    //"id":119, "type":"object", "x":84, "y":69, "name":"Waypoint",
+                    Position ThisFinalPosition = Form1_0.MapAreaStruc_0.GetPositionOfObject("object", "Act2Waypoint", 40, new List<int>() { });
+                    if (ThisFinalPosition.X != 0 && ThisFinalPosition.Y != 0)
+                    {
+                        if (Form1_0.Mover_0.MoveToLocation(ThisFinalPosition.X, ThisFinalPosition.Y))
+                        {
+                            Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, ThisFinalPosition.X, ThisFinalPosition.Y);
+                            Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"] - 15);
+                            Form1_0.Mover_0.FinishMoving();
+                            if (Form1_0.UIScan_0.WaitTilUIOpen("waypointMenu"))
+                            {
+                                if (SelectWPIndex == -1)
+                                {
+                                    SelectTownWP();
+                                }
+                                else
+                                {
+                                    SelectThisWPIndex(SelectActWPIndex, SelectWPIndex);
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        Form1_0.method_1("NO WP FOUND NEAR IN TOWN", Color.OrangeRed);
+                    }
+                }
+            }
+            if (TownAct == 3)
+            {
+                if (Form1_0.Mover_0.MoveToLocation(5134, 5107))
+                {
+                    if (Form1_0.Mover_0.MoveToLocation(5154, 5056))
+                    {
+                        //use wp
+                        if (Form1_0.ObjectsStruc_0.GetObjects("Act3TownWaypoint", false, IgnoredWPList))
+                        {
+                            if (Form1_0.ObjectsStruc_0.itemx == 0 && Form1_0.ObjectsStruc_0.itemy == 0)
+                            {
+                                IgnoredWPList.Add(Form1_0.ObjectsStruc_0.ObjectUnitID);
+                                return;
+                            }
+                            Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, Form1_0.ObjectsStruc_0.itemx, Form1_0.ObjectsStruc_0.itemy);
+                            Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"] - 15);
+                            Form1_0.Mover_0.FinishMoving();
+                            if (Form1_0.UIScan_0.WaitTilUIOpen("waypointMenu"))
+                            {
+                                if (SelectWPIndex == -1)
+                                {
+                                    SelectTownWP();
+                                }
+                                else
+                                {
+                                    SelectThisWPIndex(SelectActWPIndex, SelectWPIndex);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            Position ThisFinalPosition = Form1_0.MapAreaStruc_0.GetPositionOfObject("object", "Act3TownWaypoint", 75, new List<int>() { });
+                            if (ThisFinalPosition.X != 0 && ThisFinalPosition.Y != 0)
+                            {
+                                if (Form1_0.Mover_0.MoveToLocation(ThisFinalPosition.X, ThisFinalPosition.Y))
+                                {
+                                    Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, ThisFinalPosition.X, ThisFinalPosition.Y);
+                                    Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"] - 15);
+                                    Form1_0.Mover_0.FinishMoving();
+                                    if (Form1_0.UIScan_0.WaitTilUIOpen("waypointMenu"))
+                                    {
+                                        if (SelectWPIndex == -1)
+                                        {
+                                            SelectTownWP();
+                                        }
+                                        else
+                                        {
+                                            SelectThisWPIndex(SelectActWPIndex, SelectWPIndex);
+                                        }
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                Form1_0.method_1("NO WP FOUND NEAR IN TOWN", Color.OrangeRed);
+                            }
+                        }
                     }
                 }
             }
@@ -492,8 +575,13 @@ namespace app
                 if (Form1_0.Mover_0.MoveToLocation(5055, 5039))
                 {
                     //use wp
-                    /*if (Form1_0.ObjectsStruc_0.GetObjects("PandamoniumFortressWaypoint", false))
+                    if (Form1_0.ObjectsStruc_0.GetObjects("PandamoniumFortressWaypoint", false, IgnoredWPList))
                     {
+                        if (Form1_0.ObjectsStruc_0.itemx == 0 && Form1_0.ObjectsStruc_0.itemy == 0)
+                        {
+                            IgnoredWPList.Add(Form1_0.ObjectsStruc_0.ObjectUnitID);
+                            return;
+                        }
                         Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, Form1_0.ObjectsStruc_0.itemx, Form1_0.ObjectsStruc_0.itemy);
                         Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"] - 15);
                         Form1_0.Mover_0.FinishMoving();
@@ -510,27 +598,33 @@ namespace app
                         }
                     }
                     else
-                    {*/
-                        Position ThisFinalPosition = Form1_0.MapAreaStruc_0.GetPositionOfObject("object", "PandamoniumFortressWaypoint", 103 - 1, new List<int>() { });
-                        if (Form1_0.Mover_0.MoveToLocation(ThisFinalPosition.X, ThisFinalPosition.Y))
+                    {
+                        Position ThisFinalPosition = Form1_0.MapAreaStruc_0.GetPositionOfObject("object", "PandamoniumFortressWaypoint", 103, new List<int>() { });
+                        if (ThisFinalPosition.X != 0 && ThisFinalPosition.Y != 0)
                         {
-                            Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, ThisFinalPosition.X, ThisFinalPosition.Y);
-                            Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"] - 15);
-                            Form1_0.Mover_0.FinishMoving();
-                            if (Form1_0.UIScan_0.WaitTilUIOpen("waypointMenu"))
+                            if (Form1_0.Mover_0.MoveToLocation(ThisFinalPosition.X, ThisFinalPosition.Y))
                             {
-                                if (SelectWPIndex == -1)
+                                Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, ThisFinalPosition.X, ThisFinalPosition.Y);
+                                Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"] - 15);
+                                Form1_0.Mover_0.FinishMoving();
+                                if (Form1_0.UIScan_0.WaitTilUIOpen("waypointMenu"))
                                 {
-                                    SelectTownWP();
-                                }
-                                else
-                                {
-                                    SelectThisWPIndex(SelectActWPIndex, SelectWPIndex);
+                                    if (SelectWPIndex == -1)
+                                    {
+                                        SelectTownWP();
+                                    }
+                                    else
+                                    {
+                                        SelectThisWPIndex(SelectActWPIndex, SelectWPIndex);
+                                    }
                                 }
                             }
                         }
-                        //Form1_0.method_1("NO WP FOUND NEAR IN TOWN", Color.OrangeRed);
-                    //}
+                        else
+                        {
+                            Form1_0.method_1("NO WP FOUND NEAR IN TOWN", Color.OrangeRed);
+                        }
+                    }
                 }
             }
             if (TownAct == 5)
@@ -539,8 +633,13 @@ namespace app
                 if (Form1_0.Mover_0.MoveToLocation(5117, 5065))
                 {
                     //use wp
-                    /*if (Form1_0.ObjectsStruc_0.GetObjects("ExpansionWaypoint", false))
+                    if (Form1_0.ObjectsStruc_0.GetObjects("ExpansionWaypoint", false, IgnoredWPList))
                     {
+                        if (Form1_0.ObjectsStruc_0.itemx == 0 && Form1_0.ObjectsStruc_0.itemy == 0)
+                        {
+                            IgnoredWPList.Add(Form1_0.ObjectsStruc_0.ObjectUnitID);
+                            return;
+                        }
                         Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, Form1_0.ObjectsStruc_0.itemx, Form1_0.ObjectsStruc_0.itemy);
                         Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"] - 15);
                         Form1_0.Mover_0.FinishMoving();
@@ -557,27 +656,33 @@ namespace app
                         }
                     }
                     else
-                    {*/
-                        Position ThisFinalPosition = Form1_0.MapAreaStruc_0.GetPositionOfObject("object", "ExpansionWaypoint", 109 - 1, new List<int>() { });
-                        if (Form1_0.Mover_0.MoveToLocation(ThisFinalPosition.X, ThisFinalPosition.Y))
+                    {
+                        Position ThisFinalPosition = Form1_0.MapAreaStruc_0.GetPositionOfObject("object", "ExpansionWaypoint", 109, new List<int>() { });
+                        if (ThisFinalPosition.X != 0 && ThisFinalPosition.Y != 0)
                         {
-                            Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, ThisFinalPosition.X, ThisFinalPosition.Y);
-                            Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"] - 15);
-                            Form1_0.Mover_0.FinishMoving();
-                            if (Form1_0.UIScan_0.WaitTilUIOpen("waypointMenu"))
+                            if (Form1_0.Mover_0.MoveToLocation(ThisFinalPosition.X, ThisFinalPosition.Y))
                             {
-                                if (SelectWPIndex == -1)
+                                Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, ThisFinalPosition.X, ThisFinalPosition.Y);
+                                Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"] - 15);
+                                Form1_0.Mover_0.FinishMoving();
+                                if (Form1_0.UIScan_0.WaitTilUIOpen("waypointMenu"))
                                 {
-                                    SelectTownWP();
-                                }
-                                else
-                                {
-                                    SelectThisWPIndex(SelectActWPIndex, SelectWPIndex);
+                                    if (SelectWPIndex == -1)
+                                    {
+                                        SelectTownWP();
+                                    }
+                                    else
+                                    {
+                                        SelectThisWPIndex(SelectActWPIndex, SelectWPIndex);
+                                    }
                                 }
                             }
                         }
-                        //Form1_0.method_1("NO WP FOUND NEAR IN TOWN", Color.OrangeRed);
-                    //}
+                        else
+                        {
+                            Form1_0.method_1("NO WP FOUND NEAR IN TOWN", Color.OrangeRed);
+                        }
+                    }
                 }
             }
         }
@@ -1374,6 +1479,32 @@ namespace app
                 Form1_0.WaitDelay(50); //100 default
                 Towning = true;
                 ForcedTowning = true;
+            }
+        }
+
+        public void SpawnTPButNotUseIT()
+        {
+            //fix when close to RedPortal in Baal
+            if (Form1_0.PlayerScan_0.xPosFinal >= (15090 - 4)
+                && Form1_0.PlayerScan_0.xPosFinal <= (15090 + 4)
+                && Form1_0.PlayerScan_0.yPosFinal >= (5008 - 4)
+                && Form1_0.PlayerScan_0.yPosFinal <= (5008 + 4)
+                && Form1_0.PlayerScan_0.levelNo == 131)
+            {
+                Form1_0.Mover_0.MoveToLocation(15090, 5008 + 15);
+            }
+
+            //has tp
+            if (Form1_0.InventoryStruc_0.HUDItems_tpscrolls > 0)
+            {
+                // open inv
+                Form1_0.UIScan_0.OpenUIMenu("invMenu");
+                //use tp in inventory
+                Form1_0.InventoryStruc_0.UseTP();
+                TPSpawned = true;
+                //close inv
+                Form1_0.UIScan_0.CloseUIMenu("invMenu");
+                Form1_0.WaitDelay(50); //100 default
             }
         }
 

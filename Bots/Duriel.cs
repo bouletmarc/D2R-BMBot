@@ -66,7 +66,7 @@ namespace app
                     {
                         //"id":71, "type":"exit", "x":214, "y":25, "isGoodExit":true}
                         //Form1_0.method_1("Moving to: " + ((Enums.Area)(Form1_0.MapAreaStruc_0.CurrentObjectAreaIndex + 1)), Color.Red);
-                        Position ThisFinalPosition = Form1_0.MapAreaStruc_0.GetPositionOfObject("exit", Form1_0.Town_0.getAreaName((int)Form1_0.MapAreaStruc_0.CurrentObjectAreaIndex + 1), (int) (Form1_0.PlayerScan_0.levelNo - 1), new List<int>() { });
+                        Position ThisFinalPosition = Form1_0.MapAreaStruc_0.GetPositionOfObject("exit", Form1_0.Town_0.getAreaName((int)Form1_0.MapAreaStruc_0.CurrentObjectAreaIndex + 1), (int) Form1_0.PlayerScan_0.levelNo, new List<int>() { });
                         if (Form1_0.Mover_0.MoveToLocation(ThisFinalPosition.X, ThisFinalPosition.Y))
                         {
                             int Tryyyy = 0;
@@ -106,12 +106,12 @@ namespace app
                     else
                     {
                         Form1_0.method_1("Duriel location not detected!", Color.Red);
-                        //ScriptDone = true;
+                        ScriptDone = true;
                         return;
                     }
                 }
 
-                if (CurrentStep == 3)
+                if (CurrentStep == 2)
                 {
                     int Tryyyy = 0;
                     int StartLevel = (int) Form1_0.PlayerScan_0.levelNo;
@@ -129,7 +129,7 @@ namespace app
                     }
                 }
 
-                if (CurrentStep == 4)
+                if (CurrentStep == 3)
                 {
                     Form1_0.Potions_0.CanUseSkillForRegen = false;
                     Form1_0.SetGameStatus("KILLING DURIEL");

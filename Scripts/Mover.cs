@@ -101,6 +101,10 @@ namespace app
                             ThisTimeCheck = DateTime.Now - LastTimeSinceTeleport;
                         }
                     }
+                    else
+                    {
+                        Form1_0.SetProcessingTime();
+                    }
                     //#######
 
                     //Form1_0.WaitDelay(10);

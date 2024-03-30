@@ -36,38 +36,38 @@ namespace app
             Form1_0 = form1_1;
         }
 
-        public void MoveToArea(Area ThisID)
+        public void MoveToArea(Area ThisID, int AcceptOffset = -1)
         {
             if (Form1_0.PlayerScan_0.levelNo == 0) Form1_0.PlayerScan_0.GetPositions();
 
             ThisPlayerAreaID = (int)Form1_0.PlayerScan_0.levelNo;
-            ThisFinalPosition = Form1_0.MapAreaStruc_0.GetPositionOfObject("exit", Form1_0.Town_0.getAreaName((int) ThisID), ThisPlayerAreaID - 1, new List<int>() { });
+            ThisFinalPosition = Form1_0.MapAreaStruc_0.GetPositionOfObject("exit", Form1_0.Town_0.getAreaName((int) ThisID), ThisPlayerAreaID, new List<int>() { });
 
             //Console.WriteLine("Going to Pos: " + ThisFinalPosition.X + ", " + ThisFinalPosition.Y);
-            MoveToArea((int) ThisID);
+            MoveToArea((int) ThisID, AcceptOffset);
         }
 
-        public void MoveToNPC(string NPCName)
+        public void MoveToNPC(string NPCName, int AcceptOffset = -1)
         {
             if (Form1_0.PlayerScan_0.levelNo == 0) Form1_0.PlayerScan_0.GetPositions();
 
             ThisPlayerAreaID = (int)Form1_0.PlayerScan_0.levelNo;
-            ThisFinalPosition = Form1_0.MapAreaStruc_0.GetPositionOfObject("npc", NPCName, ThisPlayerAreaID - 1, new List<int>() { });
+            ThisFinalPosition = Form1_0.MapAreaStruc_0.GetPositionOfObject("npc", NPCName, ThisPlayerAreaID, new List<int>() { });
 
-            MoveToArea((int)ThisPlayerAreaID);
+            MoveToArea((int)ThisPlayerAreaID, AcceptOffset);
         }
 
-        public void MoveToThisPos(Position ThisPositionn)
+        public void MoveToThisPos(Position ThisPositionn, int AcceptOffset = -1)
         {
             if (Form1_0.PlayerScan_0.levelNo == 0) Form1_0.PlayerScan_0.GetPositions();
 
             ThisPlayerAreaID = (int)Form1_0.PlayerScan_0.levelNo;
             ThisFinalPosition = ThisPositionn;
 
-            MoveToArea((int)ThisPlayerAreaID);
+            MoveToArea((int)ThisPlayerAreaID, AcceptOffset);
         }
 
-        public void MoveToArea(int ThisID)
+        public void MoveToArea(int ThisID, int AcceptOffset = -1)
         {
             ThisPlayerAreaID = (int)Form1_0.PlayerScan_0.levelNo;
             //Console.WriteLine("Going to Pos: " + ThisFinalPosition.X + ", " + ThisFinalPosition.Y);
@@ -80,6 +80,15 @@ namespace app
                 IsMovingThruPath = true;
                 while (IsMovingThruPath)
                 {
+                    if (AcceptOffset > -1)
+                    {
+                        if (IsCloseToLocation(ThisFinalPosition, AcceptOffset))
+                        {
+                            IsMovingThruPath = false;
+                            break;
+                        }
+                    }
+
                     //Console.WriteLine("Pos test: " + path[CurrentPathIndex].X + ", " + path[CurrentPathIndex].Y);
                     if (Form1_0.Mover_0.MoveToLocation(path[CurrentPathIndex].X + (path[CurrentPathIndex].Width / 2), path[CurrentPathIndex].Y + (path[CurrentPathIndex].Height / 2), false, false))
                     {
@@ -112,7 +121,7 @@ namespace app
                     }
                 }
 
-                Form1_0.Mover_0.MoveToLocation(ThisFinalPosition.X, ThisFinalPosition.Y);
+                if (AcceptOffset == -1) Form1_0.Mover_0.MoveToLocation(ThisFinalPosition.X, ThisFinalPosition.Y);
 
                 int tryyy = 0;
                 while (Form1_0.PlayerScan_0.levelNo == ThisPlayerAreaID && tryyy <= 25)
@@ -133,6 +142,19 @@ namespace app
             {
                 Form1_0.method_1("No path found.", Color.Red);
             }
+        }
+
+        public bool IsCloseToLocation(Position ThissP, int AcceptOffset)
+        {
+            bool MovedCorrectly = false;
+            if (Form1_0.PlayerScan_0.xPosFinal >= (ThissP.X - AcceptOffset)
+                    && Form1_0.PlayerScan_0.xPosFinal <= (ThissP.X + AcceptOffset)
+                    && Form1_0.PlayerScan_0.yPosFinal >= (ThissP.Y - AcceptOffset)
+                    && Form1_0.PlayerScan_0.yPosFinal <= (ThissP.Y + AcceptOffset))
+            {
+                MovedCorrectly = true;
+            }
+            return MovedCorrectly;
         }
 
 
@@ -183,7 +205,7 @@ namespace app
                     return path;
                 }
 
-                foreach (Room neighbor in GetNeighbors(currentRoom, rooms, roomsOut))
+                foreach (Room neighbor in GetNeighbors(currentRoom, rooms))
                 {
                     if (!visited.Contains(neighbor))
                     {
@@ -192,42 +214,48 @@ namespace app
                         parent[neighbor] = currentRoom;
                     }
                 }
+
+                if (roomsOut != rooms)
+                {
+                    foreach (Room neighbor in GetNeighbors2(currentRoom, roomsOut))
+                    {
+                        if (!visited.Contains(neighbor))
+                        {
+                            queue.Enqueue(neighbor);
+                            visited.Add(neighbor);
+                            parent[neighbor] = currentRoom;
+                        }
+                    }
+                }
             }
 
             return null; // No path found
         }
 
-        public static IEnumerable<Room> GetNeighbors(Room room, List<Room> rooms, List<Room> roomsOut)
+        public static IEnumerable<Room> GetNeighbors(Room room, List<Room> rooms)
         {
-            if (rooms != roomsOut)
+            foreach (Room otherRoom in rooms)
             {
-                foreach (Room otherRoom in roomsOut)
-                {
-                    if (room != otherRoom && IsNeighbor(room, otherRoom))
-                    {
-                        yield return otherRoom;
-                    }
-                }
+                //Console.WriteLine("Neighbor test: " + otherRoom.X + ", " + otherRoom.Y + " neighbor of: " + room.X + ", " + room.Y + " | " + IsNeighbor(room, otherRoom));
 
-                foreach (Room otherRoom in rooms)
+                if (room != otherRoom && IsNeighbor(room, otherRoom))
                 {
-                    if (room != otherRoom && IsNeighbor(room, otherRoom))
-                    {
-                        yield return otherRoom;
-                    }
+                    //Console.WriteLine("Room: " + otherRoom.X + ", " + otherRoom.Y + " neighbor of: " + room.X + ", " + room.Y);
+                    yield return otherRoom;
                 }
             }
-            else
-            {
-                foreach (Room otherRoom in rooms)
-                {
-                    //Console.WriteLine("Neighbor test: " + otherRoom.X + ", " + otherRoom.Y + " neighbor of: " + room.X + ", " + room.Y + " | " + IsNeighbor(room, otherRoom));
+        }
 
-                    if (room != otherRoom && IsNeighbor(room, otherRoom))
-                    {
-                        //Console.WriteLine("Room: " + otherRoom.X + ", " + otherRoom.Y + " neighbor of: " + room.X + ", " + room.Y);
-                        yield return otherRoom;
-                    }
+        public static IEnumerable<Room> GetNeighbors2(Room room, List<Room> rooms)
+        {
+            foreach (Room otherRoom in rooms)
+            {
+                //Console.WriteLine("Neighbor test: " + otherRoom.X + ", " + otherRoom.Y + " neighbor of: " + room.X + ", " + room.Y + " | " + IsNeighbor(room, otherRoom));
+
+                if (room != otherRoom && IsNeighbor(room, otherRoom))
+                {
+                    //Console.WriteLine("Room: " + otherRoom.X + ", " + otherRoom.Y + " neighbor of: " + room.X + ", " + room.Y);
+                    yield return otherRoom;
                 }
             }
         }

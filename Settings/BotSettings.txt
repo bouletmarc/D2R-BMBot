@@ -1,0 +1,45 @@
+//#######################################
+//SHORTCUT KEY TO START/STOP BOT
+//#######################################
+StartStopKey=101
+
+//#######################################
+//BOT SETTINGS (USE ONLY CHAOS OR BAAL, NOT BOTH AT SAME TIME)
+//#######################################
+MaxGameTime=7
+IsRushing=false
+RushLeecherName=
+RunDarkWoodRush=false
+RunTristramRush=false
+RunAndarielRush=false
+RunRadamentRush=false
+RunHallOfDeadRush=false
+RunFarOasisRush=false
+RunLostCityRush=false
+RunSummonerRush=false
+RunDurielRush=false
+RunKahlimEyeRush=false
+RunKahlimBrainRush=false
+RunKahlimHeartRush=false
+RunTravincalRush=false
+RunMephistoRush=false
+RunPindleskinScript=false
+RunMephistoScript=false
+RunAndarielScript=false
+RunCountessScript=false
+RunSummonerScript=false
+RunDurielScript=false
+RunChaosScript=false
+RunLowerKurastScript=true
+RunBaalLeechScript=false
+RunItemGrabScriptOnly=false
+
+//#######################################
+//NOT IN GAME SCRIPT (SEARCH GAMES OR CREATE A NEW GAME)
+//#######################################
+RunChaosSearchGameScript=false
+RunBaalSearchGameScript=false
+RunGameMakerScript=true
+GameName=GAMENAMEHERE
+GamePass=33
+GameDifficulty=2

@@ -135,6 +135,7 @@ namespace app
                 case 156: return "Andariel";
                 case 211: return "Duriel";
                 case 229: return "Radament";
+                case 744: return "Radament2";
                 case 242: return "Mephisto";
                 case 243: return "Diablo";
                 case 250: return "Summoner";
@@ -152,6 +153,7 @@ namespace app
                 case 707: return "Uber Andariel";
                 case 708: return "Uber Duriel";
                 case 709: return "Uber Baal";
+                case 745: return "CubeNPC";
 
                 case 271: return "roguehire";
                 //case 338: return "act2hire";

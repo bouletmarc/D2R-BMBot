@@ -71,16 +71,38 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Bots\Rush\MephistoRush.cs" />
+    <Compile Include="Bots\Rush\AndarielRush.cs" />
+    <Compile Include="Bots\Rush\DurielRush.cs" />
+    <Compile Include="Bots\Rush\KahlimHeartRush.cs" />
+    <Compile Include="Bots\Rush\KahlimBrainRush.cs" />
+    <Compile Include="Bots\Rush\KahlimEyeRush.cs" />
+    <Compile Include="Bots\Rush\LostCityRush.cs" />
+    <Compile Include="Bots\Rush\FarOasisRush.cs" />
+    <Compile Include="Bots\Rush\HallOfDeadRushCube.cs" />
+    <Compile Include="Bots\Rush\RadamentRush.cs" />
+    <Compile Include="Bots\Rush\SummonerRush.cs" />
+    <Compile Include="Bots\Rush\TristramRush.cs" />
+    <Compile Include="Bots\Rush\DarkWoodRush.cs" />
     <Compile Include="Bots\Duriel.cs" />
+    <Compile Include="Bots\Pindleskin.cs" />
+    <Compile Include="Bots\Rush\TravincalRush.cs" />
+    <Compile Include="Bots\Travincal.cs" />
     <Compile Include="Bots\Summoner.cs" />
     <Compile Include="Bots\Mephisto.cs" />
     <Compile Include="Bots\Baal.cs" />
     <Compile Include="Bots\Chaos.cs" />
-    <Compile Include="CharConfig.cs" />
+    <Compile Include="Config\CharConfig.cs" />
     <Compile Include="Bots\Andariel.cs" />
     <Compile Include="Bots\Countess.cs" />
     <Compile Include="Bots\LowerKurast.cs" />
-    <Compile Include="SettingsLoader.cs" />
+    <Compile Include="Config\SettingsLoader.cs" />
+    <Compile Include="FormCharSettings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormCharSettings.Designer.cs">
+      <DependentUpon>FormCharSettings.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormSettings.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -129,6 +151,9 @@
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormCharSettings.resx">
+      <DependentUpon>FormCharSettings.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormSettings.resx">
       <DependentUpon>FormSettings.cs</DependentUpon>
     </EmbeddedResource>
@@ -156,16 +181,26 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="BotSettings.txt">
+    <Content Include="Settings\Char\PaladinHammer.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="CharSettings.txt">
+    <Content Include="Settings\Char\SorceressBlizzard.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="ItemsSettings.txt">
+    <Content Include="Settings\CubingRecipes.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Settings\BotSettings.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Settings\CharSettings.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Settings\ItemsSettings.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="Resources\Application.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

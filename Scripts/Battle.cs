@@ -63,7 +63,7 @@ namespace app
                 {
                     MoveAway();
                 }
-                if (Form1_0.Mover_0.MoveToLocation(Form1_0.MobsStruc_0.xPosFinal - 2, Form1_0.MobsStruc_0.yPosFinal - 2))
+                if (Form1_0.Mover_0.MoveToLocation(Form1_0.MobsStruc_0.xPosFinal + 2, Form1_0.MobsStruc_0.yPosFinal + 2))
                 {
                     SetSkills();
                 }
@@ -78,7 +78,7 @@ namespace app
             }
         }
 
-        public void DoBattleScript(int MaxDistance)
+        public bool DoBattleScript(int MaxDistance)
         {
             if (Form1_0.MobsStruc_0.GetMobs("", "", true, MaxDistance, new List<long>()))
             {
@@ -86,14 +86,16 @@ namespace app
                 {
                     MoveAway();
                 }
-                if (Form1_0.Mover_0.MoveToLocation(Form1_0.MobsStruc_0.xPosFinal - 2, Form1_0.MobsStruc_0.yPosFinal - 2))
+                if (Form1_0.Mover_0.MoveToLocation(Form1_0.MobsStruc_0.xPosFinal + 2, Form1_0.MobsStruc_0.yPosFinal + 2))
                 {
                     SetSkills();
                 }
                 Form1_0.MobsStruc_0.GetLastMobs();
                 CastSkills();
                 AttackTryCheck();
+                return true;
             }
+            return false;
         }
 
         public void RunBattleScriptOnThisMob(string MobType, string MobName)
@@ -104,7 +106,7 @@ namespace app
                 {
                     MoveAway();
                 }
-                if (Form1_0.Mover_0.MoveToLocation(Form1_0.MobsStruc_0.xPosFinal - 2, Form1_0.MobsStruc_0.yPosFinal - 2))
+                if (Form1_0.Mover_0.MoveToLocation(Form1_0.MobsStruc_0.xPosFinal + 2, Form1_0.MobsStruc_0.yPosFinal + 2))
                 {
                     SetSkills();
                 }

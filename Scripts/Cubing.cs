@@ -24,7 +24,7 @@ namespace app
         {
             Form1_0 = form1_1;
 
-            CubingRecipes.Add("Flawless Emerald+Flawless Emerald+Flawless Emerald=Perfect Emerald");    //Perfect emerald
+            /*CubingRecipes.Add("Flawless Emerald+Flawless Emerald+Flawless Emerald=Perfect Emerald");    //Perfect emerald
             CubingRecipes.Add("Flawless Sapphire+Flawless Sapphire+Flawless Sapphire=Perfect Sapphire"); //Perfect Sapphire
             CubingRecipes.Add("Flawless Amethyst+Flawless Amethyst+Flawless Amethyst=Perfect Amethyst"); //Perfect Amethyst
             CubingRecipes.Add("Flawless Topaz+Flawless Topaz+Flawless Topaz=Perfect Topaz");          //Perfect Topaz
@@ -56,7 +56,7 @@ namespace app
             CubingRecipes.Add("Pul Rune+Pul Rune+Flawed Diamond=Um Rune");               //Um
 
             //Token
-            CubingRecipes.Add("Twisted Essence of Suffering+Charged Essense of Hatred+Burning Essence of Terror+Festering Essence of Destruction=Token of Absolution");
+            CubingRecipes.Add("Twisted Essence of Suffering+Charged Essense of Hatred+Burning Essence of Terror+Festering Essence of Destruction=Token of Absolution");*/
         }
 
         public void ResetCubeInventory()
@@ -303,11 +303,11 @@ namespace app
             {
                 //clic transmute button
                 Form1_0.KeyMouse_0.MouseClicc(405, 615);
-                Form1_0.WaitDelay(20);
+                Form1_0.WaitDelay(35);
                 Form1_0.KeyMouse_0.MouseClicc(405, 615);
-                Form1_0.WaitDelay(20);
+                Form1_0.WaitDelay(35);
                 Form1_0.KeyMouse_0.MouseClicc(405, 615);
-                Form1_0.WaitDelay(20);
+                Form1_0.WaitDelay(35);
                 Form1_0.ItemsStruc_0.GetItems(false);   //get inventory again
 
                 //send item to inventory

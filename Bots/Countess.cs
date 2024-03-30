@@ -99,7 +99,7 @@ namespace app
 
                 if (CurrentStep == 2)
                 {
-                    MapAreaStruc.Position ThisChestPos = Form1_0.MapAreaStruc_0.GetPositionOfObject("object", "GoodChest", 78, new List<int>());
+                    MapAreaStruc.Position ThisChestPos = Form1_0.MapAreaStruc_0.GetPositionOfObject("object", "GoodChest", (int) Enums.Area.TowerCellarLevel5, new List<int>());
 
                     //Form1_0.ItemsStruc_0.GrabAllItemsForGold();
                     if (Form1_0.Mover_0.MoveToLocation(ThisChestPos.X, ThisChestPos.Y))

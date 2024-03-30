@@ -94,6 +94,8 @@ namespace app
         public long HPPercentFromPlayer = 0;
         public long ManaPercentFromPlayer = 0;
 
+        public bool PrintedLeechFoundInfo = false;
+
         public int[] RoomExit = new int[2];
 
         // REQUIRED METHODS
@@ -393,11 +395,24 @@ namespace app
             LeechPlayerPointer = 0;
             LeechPlayerUnitID = 0;
 
+            string LeeeechName = Form1_0.GameStruc_0.GameOwnerName;
+            if (CharConfig.IsRushing) LeeeechName = CharConfig.RushLeecherName;
+
+            if (LeeeechName == "")
+            {
+                Form1_0.method_1("Leecher name is empty!", Color.Red);
+            }
+
             for (int i = 0; i < 8; i++)
             {
                 string name = Form1_0.Mem_0.ReadMemString(partyStruct);
-                if (name.ToLower() == Form1_0.GameStruc_0.GameOwnerName.ToLower())
+                if (name.ToLower() == LeeeechName.ToLower())
                 {
+                    if (!PrintedLeechFoundInfo)
+                    {
+                        Form1_0.method_1("Leecher pointer found!", Color.DarkViolet);
+                        PrintedLeechFoundInfo = true;
+                    }
                     LeechPlayerUnitID = Form1_0.Mem_0.ReadUInt32Raw((IntPtr)(partyStruct + 0x48));
                     LeechPlayerPointer = partyStruct;
                     break;

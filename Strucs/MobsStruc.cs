@@ -456,9 +456,9 @@ namespace app
                 case 306: return "Grand Vizier of Chaos";
                 case 308: return "Riftwraith the Cannibal";
                 case 312: return "Lord De Seis";
-                // case 345: return "Council Member";
-                // case 346: return "Council Member";
-                // case 347: return "Council Member";
+                case 345: return "Council Member";
+                case 346: return "Council Member";
+                case 347: return "Council Member";
                 case 362: return "Winged Death";
                 case 402: return "The Smith";
                 case 409: return "The Feature Creep";

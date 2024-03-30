@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
@@ -26,7 +27,6 @@ namespace app
             Form1_0 = form1_1;
 
             _kooloMapPath = Application.StartupPath + @"\map.exe";
-            _d2LoDPath = Form1_0.D2_LOD_113C_Path;
         }
 
         public Position GetAreaOfObject(string ObjectType, string ObjectName, List<int> IgnoreTheseIndex, int StartAreaIndexToSearch = 0, int EndAreaIndexToSearch = 1)
@@ -121,7 +121,7 @@ namespace app
 
                 //for (int i = 0; i < AllMapData.Count; i++)
                 //{
-                int i = AreaID;
+                int i = AreaID - 1;
                 if (AllMapData[i].Objects.Count == 0) ScanMapStruc();
                 for (int k = 0; k < AllMapData[i].Objects.Count; k++)
                 {
@@ -247,6 +247,8 @@ namespace app
 
         public void ScanMapStruc()
         {
+            _d2LoDPath = Form1_0.D2_LOD_113C_Path;
+
             Form1_0.method_1("Seed: " + Form1_0.PlayerScan_0.mapSeedValue.ToString(), Color.DarkBlue);
             Form1_0.method_1("Difficulty: " + ((Difficulty)Form1_0.PlayerScan_0.difficulty).ToString(), Color.DarkBlue);
 
@@ -258,6 +260,8 @@ namespace app
 
         public void GetMapData(string seed, Difficulty difficulty)
         {
+            Console.WriteLine(_d2LoDPath);
+
             var procStartInfo = new ProcessStartInfo
             {
                 FileName = _kooloMapPath,
@@ -294,6 +298,11 @@ namespace app
                 //#########
 
                 process.WaitForExit();
+
+
+                string SavePathh = Form1_0.ThisEndPath + "DumpMap.txt";
+                File.Create(SavePathh).Dispose();
+                File.WriteAllLines(SavePathh, stdoutLines);
 
                 /*if (process.ExitCode != 0)
                 {

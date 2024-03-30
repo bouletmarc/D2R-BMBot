@@ -1,0 +1,155 @@
+//#######################################
+//UNIQUE ITEMS
+//#######################################
+//HELMS
+Grim Helm// Vampire Gaze
+Shako// Harlequin Crest
+Demonhead// Andariel's Visage
+Bone Visage// Giant Skull
+Spired Helm// Nightwing's Veil
+Corona// Crown of ages
+
+//ARMORS
+Serpentskin Armor// Skin of the Vipermagi
+Mesh Armor// Shaftstop
+Sacred Armor// Tyrael's Might
+Dusk Shroud// Ormus' Robes
+
+//Gloves
+Chain Gloves// Chance Guards
+Vampirebone Gloves// Dracul's Grasp
+Ogre Gauntlets// Steelrend
+
+//Boots
+Scarabshell Boots// Sandstorm Trek
+Boneweave Boots// Marrowwalk
+War Boots// Gore Rider
+Myrmidon Greaves// Gore Rider or Shadow Dancer
+
+//Belts
+War Belt// Thundergod's Vigor
+Spiderweb Sash// Arachnid Mesh
+Vampirefang Belt// Nosferatu's Coil
+Mithril Coil// Verdungo's Hearty Cord
+
+//Paladin Shields
+Gilded Shield// Herald Of Zakarum
+Zakarum Shield// Herald Of Zakarum
+
+//Sorceress Orbs
+Swirling Crystal// The Oculus
+Eldritch Orb// Eschuta's Temper
+Dimensional Shard// Death's Fathom
+
+//Circlets
+Tiara// Kira's Guardian
+Diadem// Griffon's Eye
+
+//Necromancer Shrunken Heads
+Hierophant Trophy// Homunculus
+
+//Druid Pelts
+Totemic Mask// Jalal's Mane
+
+//Barbarian Helms
+Slayer Guard// Arreat's Face
+Guardian Crown// Arreat's Face
+
+//Others
+Grand Charm// Possible GHEED
+Ring// #### ID LATER ####
+Amulet// #### ID LATER ####
+Jewel// #### ID LATER #### -> Rainbow Facet
+
+//#######################################
+//KEYS/GEMS/RUNES ITEMS
+//#######################################
+//El Rune 
+Eld Rune
+Tir Rune
+Nef Rune
+Eth Rune
+Ith Rune
+Tal Rune
+Ral Rune
+Ort Rune
+Thul Rune
+Amn Rune
+Sol Rune
+Shael Rune
+Dol Rune
+Hel Rune
+Io Rune
+Lum Rune
+Ko Rune
+Fal Rune
+Lem Rune
+Pul Rune
+Um Rune
+Mal Rune
+Ist Rune
+Gul Rune
+Vex Rune
+Ohm Rune
+Lo Rune
+Sur Rune
+Ber Rune
+Jah Rune
+Cham Rune
+Zod Rune
+// ##### Keys ######################
+Key of Terror
+Key of Hate
+Key of Destruction
+// ##### Essences ######################
+Twisted Essence Of Suffering
+Charged Essence Of Hatred
+Burning Essence Of Terror
+Festering Essence Of Destruction
+Token Of Absolution
+// ##### Gems ######################
+Chipped Amethyst
+Chipped Topaz
+Chipped Sapphire
+Chipped Ruby
+Chipped Emerald
+Chipped Diamond
+
+Flawed Amethyst
+Flawed Topaz
+Flawed Sapphire
+Flawed Ruby
+Flawed Emerald
+Flawed Diamond
+
+//Amethyst
+//Topaz
+//Sapphire
+//Ruby
+//Emerald
+//Diamond
+
+Flawless Amethyst
+Flawless Topaz
+Flawless Sapphire
+Flawless Ruby
+Flawless Emerald
+Flawless Diamond
+
+Perfect Amethyst
+Perfect Topaz
+Perfect Sapphire
+Perfect Ruby
+Perfect Emerald
+Perfect Diamond
+
+//#######################################
+//SET ITEMS
+//#######################################
+Lacquered Plate// Tal Rasha's Guardianship
+Death Mask// Tal Rasha's Horadric Crest
+Mesh Belt// Tal Rasha's Fine Spun Cloth
+Sacred Armor// Immortal King
+Heavy Bracers// Trang-Oul's Claws
+Winged Helm// Guillaume's Face
+Russet Armor// Aldur's Advance

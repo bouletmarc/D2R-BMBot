@@ -14,6 +14,13 @@ namespace app
         public bool FirstShopping = true;
         Dictionary<string, int> LastitemScreenPos = new Dictionary<string, int>();
 
+        public bool ShopForSellingitem = false;
+        public bool ShopForHP = false;
+        public bool ShopForMana = false;
+        public bool ShopForTP = false;
+        public bool ShopForKey = false;
+        public bool ShopForRegainHP = false;
+
         public void SetForm1(Form1 form1_1)
         {
             Form1_0 = form1_1;
@@ -35,6 +42,13 @@ namespace app
         {
             Form1_0.ItemsStruc_0.GetItems(false);   //get inventory
             Form1_0.BeltStruc_0.CheckForMissingPotions();
+
+            ShopForSellingitem = Form1_0.InventoryStruc_0.HasInventoryItems();
+            ShopForHP = Form1_0.BeltStruc_0.MissingHPPot;
+            ShopForMana = Form1_0.BeltStruc_0.MissingManaPot;
+            ShopForTP = (Form1_0.InventoryStruc_0.HUDItems_tpscrolls <= 2);
+            ShopForKey = (Form1_0.InventoryStruc_0.HUDItems_keys <= 3);
+            ShopForRegainHP = Form1_0.PlayerScan_0.ShouldSeeShopForHP();
 
             if (Form1_0.InventoryStruc_0.HasInventoryItems()
                 || Form1_0.BeltStruc_0.MissingHPPot
