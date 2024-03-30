@@ -4,7 +4,8 @@ Diablo II : Resurrected - Bot
 
 # USE AT YOUR OWN RISK ONLY
 
-https://github.com/bouletmarc/D2R-BMBot/blob/main/App.png?raw=true
+![alt text]([http://url/to/img.png](https://github.com/bouletmarc/D2R-BMBot/blob/main/App.png?raw=true))
+
 
 # REQUIREMENTS
 
