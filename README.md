@@ -4,6 +4,8 @@ Diablo II : Resurrected - Bot
 
 # USE AT YOUR OWN RISK ONLY
 
+https://github.com/bouletmarc/D2R-BMBot/blob/main/App.png?raw=true
+
 # REQUIREMENTS
 
     - Diablo2 Lord of Destruction 1.13C MUST BE INSTALLED for bot path finding (set the path in Settings.txt)
