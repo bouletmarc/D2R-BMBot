@@ -26,9 +26,19 @@ namespace app
             ScriptDone = false;
         }
 
+        public void DetectCurrentStep()
+        {
+            if ((Enums.Area)Form1_0.PlayerScan_0.levelNo == Enums.Area.ForgottenTower) CurrentStep = 1;
+            if ((Enums.Area)Form1_0.PlayerScan_0.levelNo == Enums.Area.TowerCellarLevel1) CurrentStep = 2;
+            if ((Enums.Area)Form1_0.PlayerScan_0.levelNo == Enums.Area.TowerCellarLevel2) CurrentStep = 3;
+            if ((Enums.Area)Form1_0.PlayerScan_0.levelNo == Enums.Area.TowerCellarLevel3) CurrentStep = 4;
+            if ((Enums.Area)Form1_0.PlayerScan_0.levelNo == Enums.Area.TowerCellarLevel4) CurrentStep = 5;
+            if ((Enums.Area)Form1_0.PlayerScan_0.levelNo == Enums.Area.TowerCellarLevel5) CurrentStep = 6;
+        }
+
         public void RunScript()
         {
-            Form1_0.Town_0.ScriptTownAct = 5; //set to town act 5 when running this script
+            Form1_0.Town_0.ScriptTownAct = 1; //set to town act 5 when running this script
 
             if (Form1_0.Town_0.GetInTown())
             {
@@ -36,37 +46,6 @@ namespace app
                 CurrentStep = 0;
 
                 Form1_0.Town_0.GoToWPArea(1, 4);
-
-                //close to store spot 5078, 5026
-                /*if (Form1_0.Town_0.IsPosCloseTo(5084, 5037, 7))
-                {
-                    //move close to tp location
-                    Form1_0.Mover_0.MoveToLocation(5103, 5029);
-                }
-                else
-                {
-                    //move close to wp location
-                    if (Form1_0.Mover_0.MoveToLocation(5119, 5067))
-                    {
-                        //use wp
-                        //if (Form1_0.ObjectsStruc_0.GetObjects("ExpansionWaypoint", false))
-                        //{
-                        //Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, Form1_0.ObjectsStruc_0.itemx, Form1_0.ObjectsStruc_0.itemy);
-                        Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, 5114, 5069);
-                        Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"] - 15);
-                        Form1_0.Mover_0.FinishMoving();
-                        if (Form1_0.UIScan_0.WaitTilUIOpen("waypointMenu"))
-                        {
-                            Form1_0.KeyMouse_0.MouseClicc(415, 220); //select act3
-                            Form1_0.WaitDelay(50);
-                            Form1_0.KeyMouse_0.MouseClicc(400, 515); //select kurast wp
-                            Form1_0.UIScan_0.WaitTilUIClose("waypointMenu");
-                            Form1_0.UIScan_0.WaitTilUIClose("loading");
-                            Form1_0.WaitDelay(350);
-                        }
-                        //}
-                    }
-                }*/
             }
             else
             {
@@ -82,23 +61,86 @@ namespace app
                     }
                     else
                     {
-                        Form1_0.Town_0.GoToTown();
+                        DetectCurrentStep();
+                        if (CurrentStep == 0) Form1_0.Town_0.GoToTown();
                     }
                 }
 
                 if (CurrentStep == 1)
                 {
-                    Form1_0.MoveToPath_0.MoveToArea(Enums.Area.ForgottenTower);
-                    Form1_0.MoveToPath_0.MoveToArea(Enums.Area.TowerCellarLevel1);
-                    Form1_0.MoveToPath_0.MoveToArea(Enums.Area.TowerCellarLevel2);
-                    Form1_0.MoveToPath_0.MoveToArea(Enums.Area.TowerCellarLevel3);
-                    Form1_0.MoveToPath_0.MoveToArea(Enums.Area.TowerCellarLevel4);
-                    Form1_0.MoveToPath_0.MoveToArea(Enums.Area.TowerCellarLevel5);
+
+                    Form1_0.PathFinding_0.MoveToExit(Enums.Area.ForgottenTower);
                     CurrentStep++;
                 }
 
                 if (CurrentStep == 2)
                 {
+                    if ((Enums.Area)Form1_0.PlayerScan_0.levelNo == Enums.Area.BlackMarsh)
+                    {
+                        CurrentStep--;
+                        return;
+                    }
+
+                    Form1_0.PathFinding_0.MoveToExit(Enums.Area.TowerCellarLevel1);
+                    CurrentStep++;
+                }
+
+                if (CurrentStep == 3)
+                {
+                    if ((Enums.Area)Form1_0.PlayerScan_0.levelNo == Enums.Area.ForgottenTower)
+                    {
+                        CurrentStep--;
+                        return;
+                    }
+
+                    Form1_0.PathFinding_0.MoveToExit(Enums.Area.TowerCellarLevel2);
+                    CurrentStep++;
+                }
+
+                if (CurrentStep == 4)
+                {
+                    if ((Enums.Area)Form1_0.PlayerScan_0.levelNo == Enums.Area.TowerCellarLevel1)
+                    {
+                        CurrentStep--;
+                        return;
+                    }
+
+                    Form1_0.PathFinding_0.MoveToExit(Enums.Area.TowerCellarLevel3);
+                    CurrentStep++;
+                }
+
+                if (CurrentStep == 5)
+                {
+                    if ((Enums.Area)Form1_0.PlayerScan_0.levelNo == Enums.Area.TowerCellarLevel2)
+                    {
+                        CurrentStep--;
+                        return;
+                    }
+
+                    Form1_0.PathFinding_0.MoveToExit(Enums.Area.TowerCellarLevel4);
+                    CurrentStep++;
+                }
+
+                if (CurrentStep == 6)
+                {
+                    if ((Enums.Area)Form1_0.PlayerScan_0.levelNo == Enums.Area.TowerCellarLevel3)
+                    {
+                        CurrentStep--;
+                        return;
+                    }
+
+                    Form1_0.PathFinding_0.MoveToExit(Enums.Area.TowerCellarLevel5);
+                    CurrentStep++;
+                }
+
+                if (CurrentStep == 7)
+                {
+                    if ((Enums.Area)Form1_0.PlayerScan_0.levelNo == Enums.Area.TowerCellarLevel4)
+                    {
+                        CurrentStep--;
+                        return;
+                    }
+
                     MapAreaStruc.Position ThisChestPos = Form1_0.MapAreaStruc_0.GetPositionOfObject("object", "GoodChest", (int) Enums.Area.TowerCellarLevel5, new List<int>());
 
                     //Form1_0.ItemsStruc_0.GrabAllItemsForGold();
@@ -108,7 +150,7 @@ namespace app
                     }
                 }
 
-                if (CurrentStep == 3)
+                if (CurrentStep == 8)
                 {
                     Form1_0.Potions_0.CanUseSkillForRegen = false;
                     Form1_0.SetGameStatus("KILLING COUNTESS");
@@ -133,6 +175,7 @@ namespace app
                             Form1_0.ItemsStruc_0.GrabAllItemsForGold();
                             Form1_0.Potions_0.CanUseSkillForRegen = true;
 
+                            Form1_0.Town_0.UseLastTP = false;
                             ScriptDone = true;
                             return;
                             //Form1_0.LeaveGame(true);
@@ -149,6 +192,7 @@ namespace app
                         if (Form1_0.MobsStruc_0.GetMobs("getSuperUniqueName", "The Countess", false, 200, new List<long>())) return; //redetect baal?
                         Form1_0.Potions_0.CanUseSkillForRegen = true;
 
+                        Form1_0.Town_0.UseLastTP = false;
                         ScriptDone = true;
                         return;
                         //Form1_0.LeaveGame(true);

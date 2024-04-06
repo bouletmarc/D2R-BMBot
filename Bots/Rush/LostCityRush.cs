@@ -28,9 +28,17 @@ namespace app
             ScriptDone = false;
         }
 
+        public void DetectCurrentStep()
+        {
+            if ((Enums.Area)Form1_0.PlayerScan_0.levelNo == Enums.Area.LostCity) CurrentStep = 1;
+            if ((Enums.Area)Form1_0.PlayerScan_0.levelNo == Enums.Area.ValleyOfSnakes) CurrentStep = 2;
+            if ((Enums.Area)Form1_0.PlayerScan_0.levelNo == Enums.Area.ClawViperTempleLevel1) CurrentStep = 3;
+            if ((Enums.Area)Form1_0.PlayerScan_0.levelNo == Enums.Area.ClawViperTempleLevel2) CurrentStep = 4;
+        }
+
         public void RunScript()
         {
-            Form1_0.Town_0.ScriptTownAct = 5; //set to town act 5 when running this script
+            Form1_0.Town_0.ScriptTownAct = 2; //set to town act 5 when running this script
 
             if (Form1_0.Town_0.GetInTown())
             {
@@ -49,18 +57,19 @@ namespace app
 
                     if ((Enums.Area) Form1_0.PlayerScan_0.levelNo == Enums.Area.LostCity)
                     {
-                        Form1_0.Town_0.SpawnTPButNotUseIT();
+                        Form1_0.Town_0.SpawnTP();
                         CurrentStep++;
                     }
                     else
                     {
-                        Form1_0.Town_0.GoToTown();
+                        DetectCurrentStep();
+                        if (CurrentStep == 0) Form1_0.Town_0.GoToTown();
                     }
                 }
 
                 if (CurrentStep == 1)
                 {
-                    /*Form1_0.MoveToPath_0.MoveToArea(Enums.Area.ValleyOfSnakes);
+                    Form1_0.PathFinding_0.MoveToNextArea(Enums.Area.ValleyOfSnakes);
                     CurrentStep++;
                 }
 
@@ -70,13 +79,13 @@ namespace app
                     {
                         CurrentStep--;
                         return;
-                    }*/
+                    }
 
-                    Form1_0.MoveToPath_0.MoveToArea(Enums.Area.ClawViperTempleLevel1);
+                    Form1_0.PathFinding_0.MoveToExit(Enums.Area.ClawViperTempleLevel1);
                     CurrentStep++;
                 }
 
-                if (CurrentStep == 2)
+                if (CurrentStep == 3)
                 {
                     if (Form1_0.PlayerScan_0.levelNo != (int)Enums.Area.ClawViperTempleLevel1)
                     {
@@ -84,11 +93,11 @@ namespace app
                         return;
                     }
 
-                    Form1_0.MoveToPath_0.MoveToArea(Enums.Area.ClawViperTempleLevel2);
+                    Form1_0.PathFinding_0.MoveToExit(Enums.Area.ClawViperTempleLevel2);
                     CurrentStep++;
                 }
 
-                if (CurrentStep == 3)
+                if (CurrentStep == 4)
                 {
                     if (Form1_0.PlayerScan_0.levelNo != (int)Enums.Area.ClawViperTempleLevel2)
                     {
@@ -96,10 +105,10 @@ namespace app
                         return;
                     }
 
-                    ChestPos = Form1_0.MapAreaStruc_0.GetPositionOfObject("object", "TaintedSunAltar", (int) Enums.Area.HallsOfTheDeadLevel3, new List<int>());
+                    ChestPos = Form1_0.MapAreaStruc_0.GetPositionOfObject("object", "TaintedSunAltar", (int) Enums.Area.ClawViperTempleLevel2, new List<int>());
                     if (ChestPos.X != 0 &&  ChestPos.Y != 0)
                     {
-                        Form1_0.MoveToPath_0.MoveToThisPos(ChestPos);
+                        Form1_0.PathFinding_0.MoveToThisPos(ChestPos);
 
                         //repeat clic on chest
                         /*int tryyy = 0;
@@ -126,14 +135,14 @@ namespace app
                     }
                 }
 
-                if (CurrentStep == 4)
+                if (CurrentStep == 5)
                 {
-                    if (!Form1_0.Town_0.TPSpawned) Form1_0.Town_0.SpawnTPButNotUseIT();
+                    if (!Form1_0.Town_0.TPSpawned) Form1_0.Town_0.SpawnTP();
 
                     CurrentStep++;
                 }
 
-                if (CurrentStep == 5)
+                if (CurrentStep == 6)
                 {
                     Form1_0.SetGameStatus("Ammy waiting on leecher");
 
@@ -148,7 +157,7 @@ namespace app
                     }
                 }
 
-                if (CurrentStep == 6)
+                if (CurrentStep == 7)
                 {
                     Form1_0.SetGameStatus("Ammy waiting on leecher #2");
 
@@ -159,6 +168,7 @@ namespace app
 
                     if (Form1_0.PlayerScan_0.LeechlevelNo == (int)Enums.Area.LutGholein)
                     {
+                        Form1_0.Town_0.UseLastTP = false;
                         ScriptDone = true;
                     }
                 }

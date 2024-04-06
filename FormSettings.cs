@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Button;
 
 namespace app
 {
@@ -14,7 +15,7 @@ namespace app
 
             InitializeComponent();
 
-            listViewRush.Location = new Point(listViewRunScripts.Location.X, listViewRunScripts.Location.Y);
+            listViewRush.Location = new System.Drawing.Point(listViewRunScripts.Location.X, listViewRunScripts.Location.Y);
             listViewRush.Visible = false;
 
             LoadSettings();
@@ -22,22 +23,31 @@ namespace app
 
         public void LoadSettings()
         {
+            checkBoxShowOverlay.Checked = CharConfig.ShowOverlay;
+
             textBoxD2Path.Text = Form1_0.D2_LOD_113C_Path;
             numericUpDownMaxTime.Value = CharConfig.MaxGameTime;
             checkBoxRush.Checked = CharConfig.IsRushing;
             textBox1LeechName.Text = CharConfig.RushLeecherName;
 
             listViewRunScripts.Items[0].Checked = CharConfig.RunItemGrabScriptOnly;
-            listViewRunScripts.Items[1].Checked = CharConfig.RunCountessScript;
-            listViewRunScripts.Items[2].Checked = CharConfig.RunAndarielScript;
-            listViewRunScripts.Items[3].Checked = CharConfig.RunSummonerScript;
-            listViewRunScripts.Items[4].Checked = CharConfig.RunDurielScript;
-            listViewRunScripts.Items[5].Checked = CharConfig.RunLowerKurastScript;
-            listViewRunScripts.Items[6].Checked = CharConfig.RunTravincalScript;
-            listViewRunScripts.Items[7].Checked = CharConfig.RunMephistoScript;
-            listViewRunScripts.Items[8].Checked = CharConfig.RunChaosScript;
-            listViewRunScripts.Items[9].Checked = CharConfig.RunPindleskinScript;
-            listViewRunScripts.Items[10].Checked = CharConfig.RunBaalLeechScript;
+            listViewRunScripts.Items[1].Checked = CharConfig.RunCowsScript;
+            listViewRunScripts.Items[2].Checked = CharConfig.RunCountessScript;
+            listViewRunScripts.Items[3].Checked = CharConfig.RunAndarielScript;
+            listViewRunScripts.Items[4].Checked = CharConfig.RunSummonerScript;
+            listViewRunScripts.Items[5].Checked = CharConfig.RunDurielScript;
+            listViewRunScripts.Items[6].Checked = CharConfig.RunLowerKurastScript;
+            listViewRunScripts.Items[7].Checked = CharConfig.RunTravincalScript;
+            listViewRunScripts.Items[8].Checked = CharConfig.RunMephistoScript;
+            listViewRunScripts.Items[9].Checked = CharConfig.RunChaosScript;
+            listViewRunScripts.Items[10].Checked = CharConfig.RunChaosLeechScript;
+            listViewRunScripts.Items[11].Checked = CharConfig.RunEldritchScript;
+            listViewRunScripts.Items[12].Checked = CharConfig.RunShenkScript;
+            listViewRunScripts.Items[13].Checked = CharConfig.RunPindleskinScript;
+            listViewRunScripts.Items[14].Checked = CharConfig.RunNihlatakScript;
+            listViewRunScripts.Items[15].Checked = CharConfig.RunBaalScript;
+            listViewRunScripts.Items[16].Checked = CharConfig.RunBaalLeechScript;
+            listViewRunScripts.Items[17].Checked = CharConfig.RunWPTaker;
 
             listViewRush.Items[0].Checked = CharConfig.RunDarkWoodRush;
             listViewRush.Items[1].Checked = CharConfig.RunTristramRush;
@@ -53,6 +63,9 @@ namespace app
             listViewRush.Items[11].Checked = CharConfig.RunKahlimHeartRush;
             listViewRush.Items[12].Checked = CharConfig.RunTravincalRush;
             listViewRush.Items[13].Checked = CharConfig.RunMephistoRush;
+            listViewRush.Items[14].Checked = CharConfig.RunChaosRush;
+            listViewRush.Items[15].Checked = CharConfig.RunAncientsRush;
+            listViewRush.Items[16].Checked = CharConfig.RunBaalRush;
 
             if (CharConfig.RunGameMakerScript) comboBoxLobby.SelectedIndex = 0;
             if (CharConfig.RunChaosSearchGameScript) comboBoxLobby.SelectedIndex = 1;
@@ -73,6 +86,7 @@ namespace app
         {
             if (checkBoxRush.Checked)
             {
+                groupBox1.Enabled = false;
                 comboBoxLobby.Enabled = false;
                 listViewRunScripts.Visible = false;
 
@@ -88,6 +102,7 @@ namespace app
             }
             else
             {
+                groupBox1.Enabled = true;
                 comboBoxLobby.Enabled = true;
                 listViewRunScripts.Visible = true;
 
@@ -111,22 +126,31 @@ namespace app
 
         public void SaveSettings()
         {
+            CharConfig.ShowOverlay = checkBoxShowOverlay.Checked;
+
             Form1_0.D2_LOD_113C_Path = textBoxD2Path.Text;
             CharConfig.MaxGameTime = (int) numericUpDownMaxTime.Value;
             CharConfig.IsRushing = checkBoxRush.Checked;
             CharConfig.RushLeecherName = textBox1LeechName.Text;
 
             CharConfig.RunItemGrabScriptOnly = listViewRunScripts.Items[0].Checked;
-            CharConfig.RunCountessScript = listViewRunScripts.Items[1].Checked;
+            CharConfig.RunCowsScript = listViewRunScripts.Items[1].Checked;
+            CharConfig.RunCountessScript = listViewRunScripts.Items[2].Checked;
             CharConfig.RunAndarielScript = listViewRunScripts.Items[2].Checked;
             CharConfig.RunSummonerScript = listViewRunScripts.Items[3].Checked;
-            CharConfig.RunDurielScript = listViewRunScripts.Items[4].Checked;
-            CharConfig.RunLowerKurastScript = listViewRunScripts.Items[5].Checked;
-            CharConfig.RunTravincalScript = listViewRunScripts.Items[6].Checked;
-            CharConfig.RunMephistoScript = listViewRunScripts.Items[7].Checked;
-            CharConfig.RunChaosScript = listViewRunScripts.Items[8].Checked;
-            CharConfig.RunPindleskinScript = listViewRunScripts.Items[9].Checked;
-            CharConfig.RunBaalLeechScript = listViewRunScripts.Items[10].Checked;
+            CharConfig.RunDurielScript = listViewRunScripts.Items[5].Checked;
+            CharConfig.RunLowerKurastScript = listViewRunScripts.Items[6].Checked;
+            CharConfig.RunTravincalScript = listViewRunScripts.Items[7].Checked;
+            CharConfig.RunMephistoScript = listViewRunScripts.Items[8].Checked;
+            CharConfig.RunChaosScript = listViewRunScripts.Items[9].Checked;
+            CharConfig.RunChaosLeechScript = listViewRunScripts.Items[10].Checked;
+            CharConfig.RunEldritchScript = listViewRunScripts.Items[11].Checked;
+            CharConfig.RunShenkScript = listViewRunScripts.Items[12].Checked;
+            CharConfig.RunPindleskinScript = listViewRunScripts.Items[13].Checked;
+            CharConfig.RunNihlatakScript = listViewRunScripts.Items[14].Checked;
+            CharConfig.RunBaalScript = listViewRunScripts.Items[15].Checked;
+            CharConfig.RunBaalLeechScript = listViewRunScripts.Items[16].Checked;
+            CharConfig.RunWPTaker = listViewRunScripts.Items[17].Checked;
 
             CharConfig.RunDarkWoodRush = listViewRush.Items[0].Checked;
             CharConfig.RunTristramRush = listViewRush.Items[1].Checked;
@@ -142,6 +166,9 @@ namespace app
             CharConfig.RunKahlimHeartRush = listViewRush.Items[11].Checked;
             CharConfig.RunTravincalRush = listViewRush.Items[12].Checked;
             CharConfig.RunMephistoRush = listViewRush.Items[13].Checked;
+            CharConfig.RunChaosRush = listViewRush.Items[14].Checked;
+            CharConfig.RunAncientsRush = listViewRush.Items[15].Checked;
+            CharConfig.RunBaalRush = listViewRush.Items[16].Checked;
 
             CharConfig.RunGameMakerScript = (comboBoxLobby.SelectedIndex == 0);
             CharConfig.RunChaosSearchGameScript = (comboBoxLobby.SelectedIndex == 1);

@@ -26,9 +26,15 @@ namespace app
             ScriptDone = false;
         }
 
+        public void DetectCurrentStep()
+        {
+            if ((Enums.Area)Form1_0.PlayerScan_0.levelNo == Enums.Area.DuranceOfHateLevel2) CurrentStep = 1;
+            if ((Enums.Area)Form1_0.PlayerScan_0.levelNo == Enums.Area.DuranceOfHateLevel3) CurrentStep = 2;
+        }
+
         public void RunScript()
         {
-            Form1_0.Town_0.ScriptTownAct = 5; //set to town act 5 when running this script
+            Form1_0.Town_0.ScriptTownAct = 3; //set to town act 5 when running this script
 
             if (Form1_0.Town_0.GetInTown())
             {
@@ -47,18 +53,19 @@ namespace app
 
                     if ((Enums.Area) Form1_0.PlayerScan_0.levelNo == Enums.Area.DuranceOfHateLevel2)
                     {
-                        Form1_0.Town_0.SpawnTPButNotUseIT();
+                        Form1_0.Town_0.SpawnTP();
                         CurrentStep++;
                     }
                     else
                     {
-                        Form1_0.Town_0.GoToTown();
+                        DetectCurrentStep();
+                        if (CurrentStep == 0) Form1_0.Town_0.GoToTown();
                     }
                 }
 
                 if (CurrentStep == 1)
                 {
-                    Form1_0.MoveToPath_0.MoveToArea(Enums.Area.DuranceOfHateLevel3);
+                    Form1_0.PathFinding_0.MoveToExit(Enums.Area.DuranceOfHateLevel3);
                     CurrentStep++;
                 }
 
@@ -66,12 +73,11 @@ namespace app
                 {
                     if ((Enums.Area)Form1_0.PlayerScan_0.levelNo == Enums.Area.DuranceOfHateLevel2)
                     {
-                        CurrentStep = 1;
+                        CurrentStep--;
                         return;
                     }
-                    /*X: 22561,
-	                Y: 9553,*/
-                    if (Form1_0.Mover_0.MoveToLocation(17568, 8069))
+                    //17568, 8069
+                    if (Form1_0.Mover_0.MoveToLocation(17574, 8096))
                     {
                         Form1_0.Town_0.TPSpawned = false;
                         CurrentStep++;
@@ -82,20 +88,23 @@ namespace app
                 {
                     if ((Enums.Area)Form1_0.PlayerScan_0.levelNo == Enums.Area.DuranceOfHateLevel2)
                     {
-                        CurrentStep = 1;
+                        CurrentStep--;
                         return;
                     }
 
-                    if (!Form1_0.Town_0.TPSpawned) Form1_0.Town_0.SpawnTPButNotUseIT();
+                    if (!Form1_0.Town_0.TPSpawned) Form1_0.Town_0.SpawnTP();
 
-                    Form1_0.Battle_0.DoBattleScript(25);
+                    Form1_0.Battle_0.DoBattleScript(10);
 
                     //get leecher infos
                     Form1_0.PlayerScan_0.GetLeechPositions();
 
                     if (Form1_0.PlayerScan_0.LeechlevelNo == (int)Enums.Area.DuranceOfHateLevel3)
                     {
-                        CurrentStep++;
+                        if (Form1_0.Mover_0.MoveToLocation(17568, 8069))
+                        {
+                            CurrentStep++;
+                        }
                     }
                 }
 
@@ -103,11 +112,11 @@ namespace app
                 {
                     if ((Enums.Area)Form1_0.PlayerScan_0.levelNo == Enums.Area.DuranceOfHateLevel2)
                     {
-                        CurrentStep = 1;
+                        CurrentStep--;
                         return;
                     }
 
-                    if (!Form1_0.Town_0.TPSpawned) Form1_0.Town_0.SpawnTPButNotUseIT();
+                    if (!Form1_0.Town_0.TPSpawned) Form1_0.Town_0.SpawnTP();
 
                     Form1_0.Potions_0.CanUseSkillForRegen = false;
                     Form1_0.SetGameStatus("KILLING MEPHISTO");
@@ -147,6 +156,9 @@ namespace app
                                 }
                             }
 
+                            Form1_0.WaitDelay(700);
+
+                            Form1_0.Town_0.UseLastTP = false;
                             ScriptDone = true;
                             return;
                             //Form1_0.LeaveGame(true);
@@ -163,6 +175,7 @@ namespace app
                         if (Form1_0.MobsStruc_0.GetMobs("getBossName", "Mephisto", false, 200, new List<long>())) return; //redetect baal?
                         Form1_0.Potions_0.CanUseSkillForRegen = true;
 
+                        Form1_0.Town_0.UseLastTP = false;
                         ScriptDone = true;
                         return;
                         //Form1_0.LeaveGame(true);

@@ -28,31 +28,41 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.ListViewItem listViewItem76 = new System.Windows.Forms.ListViewItem("Item Grab ONLY");
-            System.Windows.Forms.ListViewItem listViewItem77 = new System.Windows.Forms.ListViewItem("Countess");
-            System.Windows.Forms.ListViewItem listViewItem78 = new System.Windows.Forms.ListViewItem("Andariel");
-            System.Windows.Forms.ListViewItem listViewItem79 = new System.Windows.Forms.ListViewItem("Summoner");
-            System.Windows.Forms.ListViewItem listViewItem80 = new System.Windows.Forms.ListViewItem("Duriel");
-            System.Windows.Forms.ListViewItem listViewItem81 = new System.Windows.Forms.ListViewItem("Lower Kurast");
-            System.Windows.Forms.ListViewItem listViewItem82 = new System.Windows.Forms.ListViewItem("Travincal");
-            System.Windows.Forms.ListViewItem listViewItem83 = new System.Windows.Forms.ListViewItem("Mephisto");
-            System.Windows.Forms.ListViewItem listViewItem84 = new System.Windows.Forms.ListViewItem("Chaos Leech");
-            System.Windows.Forms.ListViewItem listViewItem85 = new System.Windows.Forms.ListViewItem("Pindleskin");
-            System.Windows.Forms.ListViewItem listViewItem86 = new System.Windows.Forms.ListViewItem("Baal Leech");
-            System.Windows.Forms.ListViewItem listViewItem87 = new System.Windows.Forms.ListViewItem("Dark Wood");
-            System.Windows.Forms.ListViewItem listViewItem88 = new System.Windows.Forms.ListViewItem("Tristram");
-            System.Windows.Forms.ListViewItem listViewItem89 = new System.Windows.Forms.ListViewItem("Andariel");
-            System.Windows.Forms.ListViewItem listViewItem90 = new System.Windows.Forms.ListViewItem("Radament");
-            System.Windows.Forms.ListViewItem listViewItem91 = new System.Windows.Forms.ListViewItem("Hall of the Dead (Cube)");
-            System.Windows.Forms.ListViewItem listViewItem92 = new System.Windows.Forms.ListViewItem("Far Oasis (Staff)");
-            System.Windows.Forms.ListViewItem listViewItem93 = new System.Windows.Forms.ListViewItem("Lost City (Ammy)");
-            System.Windows.Forms.ListViewItem listViewItem94 = new System.Windows.Forms.ListViewItem("Summoner");
-            System.Windows.Forms.ListViewItem listViewItem95 = new System.Windows.Forms.ListViewItem("Duriel");
-            System.Windows.Forms.ListViewItem listViewItem96 = new System.Windows.Forms.ListViewItem("Kahlim Eye");
-            System.Windows.Forms.ListViewItem listViewItem97 = new System.Windows.Forms.ListViewItem("Kahlim Brain");
-            System.Windows.Forms.ListViewItem listViewItem98 = new System.Windows.Forms.ListViewItem("Kahlim Heart");
-            System.Windows.Forms.ListViewItem listViewItem99 = new System.Windows.Forms.ListViewItem("Travincal");
-            System.Windows.Forms.ListViewItem listViewItem100 = new System.Windows.Forms.ListViewItem("Mephisto");
+            System.Windows.Forms.ListViewItem listViewItem36 = new System.Windows.Forms.ListViewItem("Item Grab ONLY");
+            System.Windows.Forms.ListViewItem listViewItem37 = new System.Windows.Forms.ListViewItem("Cows");
+            System.Windows.Forms.ListViewItem listViewItem38 = new System.Windows.Forms.ListViewItem("Countess");
+            System.Windows.Forms.ListViewItem listViewItem39 = new System.Windows.Forms.ListViewItem("Andariel");
+            System.Windows.Forms.ListViewItem listViewItem40 = new System.Windows.Forms.ListViewItem("Summoner");
+            System.Windows.Forms.ListViewItem listViewItem41 = new System.Windows.Forms.ListViewItem("Duriel");
+            System.Windows.Forms.ListViewItem listViewItem42 = new System.Windows.Forms.ListViewItem("Lower Kurast");
+            System.Windows.Forms.ListViewItem listViewItem43 = new System.Windows.Forms.ListViewItem("Travincal");
+            System.Windows.Forms.ListViewItem listViewItem44 = new System.Windows.Forms.ListViewItem("Mephisto");
+            System.Windows.Forms.ListViewItem listViewItem45 = new System.Windows.Forms.ListViewItem("Chaos");
+            System.Windows.Forms.ListViewItem listViewItem46 = new System.Windows.Forms.ListViewItem("Chaos Leech");
+            System.Windows.Forms.ListViewItem listViewItem47 = new System.Windows.Forms.ListViewItem("Eldritch");
+            System.Windows.Forms.ListViewItem listViewItem48 = new System.Windows.Forms.ListViewItem("Shenk");
+            System.Windows.Forms.ListViewItem listViewItem49 = new System.Windows.Forms.ListViewItem("Pindleskin");
+            System.Windows.Forms.ListViewItem listViewItem50 = new System.Windows.Forms.ListViewItem("Nihlatak");
+            System.Windows.Forms.ListViewItem listViewItem51 = new System.Windows.Forms.ListViewItem("Baal");
+            System.Windows.Forms.ListViewItem listViewItem52 = new System.Windows.Forms.ListViewItem("Baal Leech");
+            System.Windows.Forms.ListViewItem listViewItem53 = new System.Windows.Forms.ListViewItem("Waypoint Taker");
+            System.Windows.Forms.ListViewItem listViewItem54 = new System.Windows.Forms.ListViewItem("Dark Wood");
+            System.Windows.Forms.ListViewItem listViewItem55 = new System.Windows.Forms.ListViewItem("Tristram");
+            System.Windows.Forms.ListViewItem listViewItem56 = new System.Windows.Forms.ListViewItem("Andariel");
+            System.Windows.Forms.ListViewItem listViewItem57 = new System.Windows.Forms.ListViewItem("Radament");
+            System.Windows.Forms.ListViewItem listViewItem58 = new System.Windows.Forms.ListViewItem("Hall of the Dead (Cube)");
+            System.Windows.Forms.ListViewItem listViewItem59 = new System.Windows.Forms.ListViewItem("Far Oasis (Staff)");
+            System.Windows.Forms.ListViewItem listViewItem60 = new System.Windows.Forms.ListViewItem("Lost City (Ammy)");
+            System.Windows.Forms.ListViewItem listViewItem61 = new System.Windows.Forms.ListViewItem("Summoner");
+            System.Windows.Forms.ListViewItem listViewItem62 = new System.Windows.Forms.ListViewItem("Duriel");
+            System.Windows.Forms.ListViewItem listViewItem63 = new System.Windows.Forms.ListViewItem("Kahlim Eye");
+            System.Windows.Forms.ListViewItem listViewItem64 = new System.Windows.Forms.ListViewItem("Kahlim Brain");
+            System.Windows.Forms.ListViewItem listViewItem65 = new System.Windows.Forms.ListViewItem("Kahlim Heart");
+            System.Windows.Forms.ListViewItem listViewItem66 = new System.Windows.Forms.ListViewItem("Travincal");
+            System.Windows.Forms.ListViewItem listViewItem67 = new System.Windows.Forms.ListViewItem("Mephisto");
+            System.Windows.Forms.ListViewItem listViewItem68 = new System.Windows.Forms.ListViewItem("Chaos");
+            System.Windows.Forms.ListViewItem listViewItem69 = new System.Windows.Forms.ListViewItem("Ancients");
+            System.Windows.Forms.ListViewItem listViewItem70 = new System.Windows.Forms.ListViewItem("Baal");
             this.listViewRunScripts = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.label1Run = new System.Windows.Forms.Label();
@@ -78,6 +88,7 @@
             this.label1LeechName = new System.Windows.Forms.Label();
             this.textBox1LeechName = new System.Windows.Forms.TextBox();
             this.button2 = new System.Windows.Forms.Button();
+            this.checkBoxShowOverlay = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownRunNumber)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMaxTime)).BeginInit();
@@ -91,34 +102,48 @@
             this.listViewRunScripts.FullRowSelect = true;
             this.listViewRunScripts.GridLines = true;
             this.listViewRunScripts.HideSelection = false;
-            listViewItem76.StateImageIndex = 0;
-            listViewItem77.Checked = true;
-            listViewItem77.StateImageIndex = 1;
-            listViewItem78.StateImageIndex = 0;
-            listViewItem79.StateImageIndex = 0;
-            listViewItem80.StateImageIndex = 0;
-            listViewItem81.StateImageIndex = 0;
-            listViewItem82.StateImageIndex = 0;
-            listViewItem83.StateImageIndex = 0;
-            listViewItem84.StateImageIndex = 0;
-            listViewItem85.StateImageIndex = 0;
-            listViewItem86.StateImageIndex = 0;
+            listViewItem36.StateImageIndex = 0;
+            listViewItem37.StateImageIndex = 0;
+            listViewItem38.Checked = true;
+            listViewItem38.StateImageIndex = 1;
+            listViewItem39.StateImageIndex = 0;
+            listViewItem40.StateImageIndex = 0;
+            listViewItem41.StateImageIndex = 0;
+            listViewItem42.StateImageIndex = 0;
+            listViewItem43.StateImageIndex = 0;
+            listViewItem44.StateImageIndex = 0;
+            listViewItem45.StateImageIndex = 0;
+            listViewItem46.StateImageIndex = 0;
+            listViewItem47.StateImageIndex = 0;
+            listViewItem48.StateImageIndex = 0;
+            listViewItem49.StateImageIndex = 0;
+            listViewItem50.StateImageIndex = 0;
+            listViewItem51.StateImageIndex = 0;
+            listViewItem52.StateImageIndex = 0;
+            listViewItem53.StateImageIndex = 0;
             this.listViewRunScripts.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem76,
-            listViewItem77,
-            listViewItem78,
-            listViewItem79,
-            listViewItem80,
-            listViewItem81,
-            listViewItem82,
-            listViewItem83,
-            listViewItem84,
-            listViewItem85,
-            listViewItem86});
-            this.listViewRunScripts.Location = new System.Drawing.Point(12, 179);
+            listViewItem36,
+            listViewItem37,
+            listViewItem38,
+            listViewItem39,
+            listViewItem40,
+            listViewItem41,
+            listViewItem42,
+            listViewItem43,
+            listViewItem44,
+            listViewItem45,
+            listViewItem46,
+            listViewItem47,
+            listViewItem48,
+            listViewItem49,
+            listViewItem50,
+            listViewItem51,
+            listViewItem52,
+            listViewItem53});
+            this.listViewRunScripts.Location = new System.Drawing.Point(12, 168);
             this.listViewRunScripts.Name = "listViewRunScripts";
             this.listViewRunScripts.Scrollable = false;
-            this.listViewRunScripts.Size = new System.Drawing.Size(225, 232);
+            this.listViewRunScripts.Size = new System.Drawing.Size(225, 276);
             this.listViewRunScripts.TabIndex = 0;
             this.listViewRunScripts.UseCompatibleStateImageBehavior = false;
             this.listViewRunScripts.View = System.Windows.Forms.View.List;
@@ -133,7 +158,7 @@
             this.label1Run.AutoSize = true;
             this.label1Run.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1Run.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
-            this.label1Run.Location = new System.Drawing.Point(47, 135);
+            this.label1Run.Location = new System.Drawing.Point(47, 129);
             this.label1Run.Name = "label1Run";
             this.label1Run.Size = new System.Drawing.Size(134, 16);
             this.label1Run.TabIndex = 1;
@@ -144,7 +169,7 @@
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
-            this.label2.Location = new System.Drawing.Point(50, 83);
+            this.label2.Location = new System.Drawing.Point(50, 86);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(142, 16);
             this.label2.TabIndex = 3;
@@ -161,7 +186,7 @@
             this.groupBox1.Controls.Add(this.textBoxGamePass);
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.textBoxGameName);
-            this.groupBox1.Location = new System.Drawing.Point(3, 450);
+            this.groupBox1.Location = new System.Drawing.Point(3, 481);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(244, 122);
             this.groupBox1.TabIndex = 4;
@@ -264,7 +289,7 @@
             // 
             // numericUpDownMaxTime
             // 
-            this.numericUpDownMaxTime.Location = new System.Drawing.Point(162, 421);
+            this.numericUpDownMaxTime.Location = new System.Drawing.Point(162, 452);
             this.numericUpDownMaxTime.Maximum = new decimal(new int[] {
             99999,
             0,
@@ -282,7 +307,7 @@
             // label7MaxTime
             // 
             this.label7MaxTime.AutoSize = true;
-            this.label7MaxTime.Location = new System.Drawing.Point(27, 423);
+            this.label7MaxTime.Location = new System.Drawing.Point(27, 454);
             this.label7MaxTime.Name = "label7MaxTime";
             this.label7MaxTime.Size = new System.Drawing.Size(132, 13);
             this.label7MaxTime.TabIndex = 9;
@@ -295,7 +320,7 @@
             "Game Create/Maker",
             "Chaos Search (Leech)",
             "Baal Search (Leech)"});
-            this.comboBoxLobby.Location = new System.Drawing.Point(12, 102);
+            this.comboBoxLobby.Location = new System.Drawing.Point(12, 105);
             this.comboBoxLobby.Name = "comboBoxLobby";
             this.comboBoxLobby.Size = new System.Drawing.Size(226, 21);
             this.comboBoxLobby.TabIndex = 9;
@@ -306,7 +331,7 @@
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label8.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
-            this.label8.Location = new System.Drawing.Point(50, 40);
+            this.label8.Location = new System.Drawing.Point(50, 38);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(137, 16);
             this.label8.TabIndex = 10;
@@ -314,7 +339,7 @@
             // 
             // textBoxD2Path
             // 
-            this.textBoxD2Path.Location = new System.Drawing.Point(12, 59);
+            this.textBoxD2Path.Location = new System.Drawing.Point(12, 57);
             this.textBoxD2Path.Name = "textBoxD2Path";
             this.textBoxD2Path.Size = new System.Drawing.Size(225, 20);
             this.textBoxD2Path.TabIndex = 9;
@@ -327,39 +352,45 @@
             this.listViewRush.FullRowSelect = true;
             this.listViewRush.GridLines = true;
             this.listViewRush.HideSelection = false;
-            listViewItem87.StateImageIndex = 0;
-            listViewItem88.StateImageIndex = 0;
-            listViewItem89.StateImageIndex = 0;
-            listViewItem90.StateImageIndex = 0;
-            listViewItem91.StateImageIndex = 0;
-            listViewItem92.StateImageIndex = 0;
-            listViewItem93.StateImageIndex = 0;
-            listViewItem94.StateImageIndex = 0;
-            listViewItem95.StateImageIndex = 0;
-            listViewItem96.StateImageIndex = 0;
-            listViewItem97.StateImageIndex = 0;
-            listViewItem98.StateImageIndex = 0;
-            listViewItem99.StateImageIndex = 0;
-            listViewItem100.StateImageIndex = 0;
+            listViewItem54.StateImageIndex = 0;
+            listViewItem55.StateImageIndex = 0;
+            listViewItem56.StateImageIndex = 0;
+            listViewItem57.StateImageIndex = 0;
+            listViewItem58.StateImageIndex = 0;
+            listViewItem59.StateImageIndex = 0;
+            listViewItem60.StateImageIndex = 0;
+            listViewItem61.StateImageIndex = 0;
+            listViewItem62.StateImageIndex = 0;
+            listViewItem63.StateImageIndex = 0;
+            listViewItem64.StateImageIndex = 0;
+            listViewItem65.StateImageIndex = 0;
+            listViewItem66.StateImageIndex = 0;
+            listViewItem67.StateImageIndex = 0;
+            listViewItem68.StateImageIndex = 0;
+            listViewItem69.StateImageIndex = 0;
+            listViewItem70.StateImageIndex = 0;
             this.listViewRush.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem87,
-            listViewItem88,
-            listViewItem89,
-            listViewItem90,
-            listViewItem91,
-            listViewItem92,
-            listViewItem93,
-            listViewItem94,
-            listViewItem95,
-            listViewItem96,
-            listViewItem97,
-            listViewItem98,
-            listViewItem99,
-            listViewItem100});
-            this.listViewRush.Location = new System.Drawing.Point(252, 179);
+            listViewItem54,
+            listViewItem55,
+            listViewItem56,
+            listViewItem57,
+            listViewItem58,
+            listViewItem59,
+            listViewItem60,
+            listViewItem61,
+            listViewItem62,
+            listViewItem63,
+            listViewItem64,
+            listViewItem65,
+            listViewItem66,
+            listViewItem67,
+            listViewItem68,
+            listViewItem69,
+            listViewItem70});
+            this.listViewRush.Location = new System.Drawing.Point(279, 168);
             this.listViewRush.Name = "listViewRush";
             this.listViewRush.Scrollable = false;
-            this.listViewRush.Size = new System.Drawing.Size(225, 232);
+            this.listViewRush.Size = new System.Drawing.Size(225, 270);
             this.listViewRush.TabIndex = 11;
             this.listViewRush.UseCompatibleStateImageBehavior = false;
             this.listViewRush.View = System.Windows.Forms.View.List;
@@ -372,7 +403,7 @@
             // 
             this.checkBoxRush.AutoSize = true;
             this.checkBoxRush.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBoxRush.Location = new System.Drawing.Point(23, 157);
+            this.checkBoxRush.Location = new System.Drawing.Point(23, 151);
             this.checkBoxRush.Name = "checkBoxRush";
             this.checkBoxRush.Size = new System.Drawing.Size(203, 17);
             this.checkBoxRush.TabIndex = 12;
@@ -383,7 +414,7 @@
             // label1LeechName
             // 
             this.label1LeechName.AutoSize = true;
-            this.label1LeechName.Location = new System.Drawing.Point(9, 424);
+            this.label1LeechName.Location = new System.Drawing.Point(9, 455);
             this.label1LeechName.Name = "label1LeechName";
             this.label1LeechName.Size = new System.Drawing.Size(80, 13);
             this.label1LeechName.TabIndex = 9;
@@ -392,7 +423,7 @@
             // 
             // textBox1LeechName
             // 
-            this.textBox1LeechName.Location = new System.Drawing.Point(88, 421);
+            this.textBox1LeechName.Location = new System.Drawing.Point(88, 452);
             this.textBox1LeechName.Name = "textBox1LeechName";
             this.textBox1LeechName.Size = new System.Drawing.Size(149, 20);
             this.textBox1LeechName.TabIndex = 9;
@@ -410,12 +441,25 @@
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
+            // checkBoxShowOverlay
+            // 
+            this.checkBoxShowOverlay.AutoSize = true;
+            this.checkBoxShowOverlay.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.checkBoxShowOverlay.ForeColor = System.Drawing.Color.Red;
+            this.checkBoxShowOverlay.Location = new System.Drawing.Point(67, 609);
+            this.checkBoxShowOverlay.Name = "checkBoxShowOverlay";
+            this.checkBoxShowOverlay.Size = new System.Drawing.Size(110, 17);
+            this.checkBoxShowOverlay.TabIndex = 14;
+            this.checkBoxShowOverlay.Text = "Show Overlays";
+            this.checkBoxShowOverlay.UseVisualStyleBackColor = true;
+            // 
             // FormSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.ClientSize = new System.Drawing.Size(252, 574);
+            this.ClientSize = new System.Drawing.Size(251, 630);
+            this.Controls.Add(this.checkBoxShowOverlay);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.textBox1LeechName);
             this.Controls.Add(this.label1LeechName);
@@ -473,5 +517,6 @@
         private System.Windows.Forms.Label label1LeechName;
         private System.Windows.Forms.TextBox textBox1LeechName;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.CheckBox checkBoxShowOverlay;
     }
 }

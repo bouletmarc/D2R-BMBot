@@ -30,7 +30,7 @@ namespace app
 
         public void RunScript()
         {
-            Form1_0.Town_0.ScriptTownAct = 5; //set to town act 5 when running this script
+            Form1_0.Town_0.ScriptTownAct = 1; //set to town act 5 when running this script
 
             if (Form1_0.Town_0.GetInTown())
             {
@@ -49,7 +49,7 @@ namespace app
 
                     if ((Enums.Area) Form1_0.PlayerScan_0.levelNo == Enums.Area.DarkWood)
                     {
-                        Form1_0.Town_0.SpawnTPButNotUseIT();
+                        Form1_0.Town_0.SpawnTP();
                         CurrentStep++;
                     }
                     else
@@ -63,7 +63,7 @@ namespace app
                     InifussTree = Form1_0.MapAreaStruc_0.GetPositionOfObject("object", "InifussTree", (int) Enums.Area.DarkWood, new List<int>());
                     if (InifussTree.X != 0 &&  InifussTree.Y != 0)
                     {
-                        Form1_0.MoveToPath_0.MoveToThisPos(InifussTree);
+                        Form1_0.PathFinding_0.MoveToThisPos(InifussTree);
 
                         //repeat clic on tree
                         int tryyy = 0;
@@ -80,6 +80,7 @@ namespace app
                     else
                     {
                         Form1_0.method_1("Inifuss Tree location not detected!", Color.Red);
+                        Form1_0.Town_0.UseLastTP = false;
                         ScriptDone = true;
                         return;
                     }
@@ -90,7 +91,7 @@ namespace app
                     if (!Form1_0.Battle_0.DoBattleScript(25))
                     {
                         Position ThisTPPos = new Position { X = InifussTree.X - 10, Y = InifussTree.Y + 5 };
-                        Form1_0.MoveToPath_0.MoveToThisPos(ThisTPPos);
+                        Form1_0.PathFinding_0.MoveToThisPos(ThisTPPos);
 
                         Form1_0.Town_0.TPSpawned = false;
 
@@ -102,7 +103,7 @@ namespace app
                 {
                     Form1_0.SetGameStatus("DarkWood waiting on leecher");
 
-                    if (!Form1_0.Town_0.TPSpawned) Form1_0.Town_0.SpawnTPButNotUseIT();
+                    if (!Form1_0.Town_0.TPSpawned) Form1_0.Town_0.SpawnTP();
 
                     Form1_0.Battle_0.DoBattleScript(25);
 
@@ -126,6 +127,7 @@ namespace app
 
                     if (Form1_0.PlayerScan_0.LeechlevelNo == (int)Enums.Area.RogueEncampment)
                     {
+                        Form1_0.Town_0.UseLastTP = false;
                         ScriptDone = true;
                     }
                 }

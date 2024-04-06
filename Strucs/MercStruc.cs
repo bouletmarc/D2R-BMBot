@@ -4,7 +4,11 @@ using System.Drawing;
 using System.Linq;
 using System.Security.Principal;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using static app.EnumsMobsNPC;
+using static app.EnumsStates;
+using static app.MapAreaStruc;
 using static System.Windows.Forms.AxHost;
 
 namespace app
@@ -42,6 +46,10 @@ namespace app
 
         }
 
+        public bool IsMerc(int MobNameID)
+        {
+            return MobNameID == (int) EnumsMobsNPC.MobsNPC.Guard || MobNameID == (int) EnumsMobsNPC.MobsNPC.Act5Hireling1Hand || MobNameID == (int) EnumsMobsNPC.MobsNPC.Act5Hireling2Hand || MobNameID == (int) EnumsMobsNPC.MobsNPC.IronWolf || MobNameID == (int) EnumsMobsNPC.MobsNPC.Rogue2;
+        }
 
         public bool GetMercInfos()
         {
@@ -66,16 +74,11 @@ namespace app
 
                     bool isPlayerMinion = false;
                     string playerMinion = Form1_0.MobsStruc_0.getPlayerMinion((int)txtFileNo);
-                    if (playerMinion != "")
-                    {
-                        isPlayerMinion = true;
-                    }
-                    /*else
-                    {
-                        //; is a revive
-                        isPlayerMinion = ((Form1_0.Mem_0.ReadUInt32((IntPtr)(pStatsListExPtr + 0xAC8 + 0xc)) & 31) == 1);
-                    }*/
+                    if (playerMinion != "") isPlayerMinion = true;
 
+                    //Console.WriteLine((EnumsMobsNPC.MobsNPC)txtFileNo);
+
+                    //if (IsMerc((int) txtFileNo))
                     if (isUnique == 0 && isPlayerMinion && mode != 0 && mode != 12)
                     {
                         if (xPosFinal != 0 && yPosFinal != 0)
@@ -100,8 +103,9 @@ namespace app
                 MercHP = 100;
                 MercMaxHP = 100;
 
+                int ThisHPStat = 0;
                 Form1_0.Mem_0.ReadRawMemory(this.statPtr, ref statBuffer, (int)(this.statCount * 10));
-                for (int i = 0; i < this.statCount; i++)
+                for (int i = (int) this.statCount - 1; i  >= 0; i--)
                 {
                     int offset = i * 8;
                     //short statLayer = BitConverter.ToInt16(statBuffer, offset);
@@ -109,7 +113,8 @@ namespace app
                     int statValue = BitConverter.ToInt32(statBuffer, offset + 0x4);
                     if (statEnum == (ushort)Enums.Attribute.Life)
                     {
-                        MercHP = statValue >> 8;
+                        ThisHPStat = statValue;
+                        
                     }
                     if (statEnum == (ushort)Enums.Attribute.LifeMax)
                     {
@@ -117,7 +122,16 @@ namespace app
                     }
                 }
 
-                Form1_0.Mem_0.ReadRawMemory(this.statExPtr, ref statBuffer, (int)(this.statExCount * 10));
+                if (ThisHPStat <= 32768)
+                {
+                    MercHP = ThisHPStat / 32768 * MercMaxHP;
+                }
+                else
+                {
+                    MercHP = ThisHPStat >> 8;
+                }
+
+                /*Form1_0.Mem_0.ReadRawMemory(this.statExPtr, ref statBuffer, (int)(this.statExCount * 10));
                 for (int i = 0; i < this.statExCount; i++)
                 {
                     int offset = i * 8;
@@ -132,7 +146,7 @@ namespace app
                     {
                         if (MercMaxHP == 100) MercMaxHP = statValue >> 8;
                     }
-                }
+                }*/
             }
             catch { }
         }

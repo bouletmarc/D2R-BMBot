@@ -73,6 +73,7 @@ namespace app
         public bool ItemOnCursor = false;
         public bool UsePotionNotInRightSpot = true;
 
+        public int TriesToPickItemCount = 0;
 
         public void SetForm1(Form1 Form1_1)
         {
@@ -99,7 +100,7 @@ namespace app
             if (statCount > 50) statCount = 0;
             if (statExCount > 50) statExCount = 0;
 
-            if (this.statCount > 0)
+            if (this.statCount > 0 && this.statCount < 100)
             {
                 statBuffer = new byte[this.statCount * 10];
                 Form1_0.Mem_0.ReadRawMemory(this.statPtr, ref statBuffer, (int)(this.statCount * 10));
@@ -108,7 +109,7 @@ namespace app
             {
                 statBuffer = new byte[] { };
             }
-            if (this.statExCount > 0)
+            if (this.statExCount > 0 && this.statExCount < 100)
             {
                 statBufferEx = new byte[this.statExCount * 10];
                 Form1_0.Mem_0.ReadRawMemory(this.statExPtr, ref statBufferEx, (int)(this.statExCount * 10));
@@ -254,7 +255,7 @@ namespace app
             if (Form1_0.PlayerScan_0.PlayerDead || Form1_0.Potions_0.ForceLeave)
             {
                 Form1_0.Potions_0.ForceLeave = true;
-                Form1_0.Baal_0.SearchSameGamesAsLastOne = false;
+                Form1_0.BaalLeech_0.SearchSameGamesAsLastOne = false;
                 Form1_0.LeaveGame(false);
                 return false;
             }
@@ -385,33 +386,33 @@ namespace app
                             && (!Form1_0.UIScan_0.leftMenu && !Form1_0.UIScan_0.rightMenu && !Form1_0.UIScan_0.fullMenu)
                             && IsPickingItem)
                         {
+                            //###########
+                            //Bugged items
                             if (ItemNAAME == "Perfect Diamond" && (Form1_0.PlayerScan_0.levelNo >= 106 && Form1_0.PlayerScan_0.levelNo < 109)) continue;
+                            if (ItemNAAME == "Large Axe") continue;
+                            if (ItemNAAME == "Hand Axe") continue;
+                            //###########
 
-                            //Form1_0.method_1("Name: " + ItemNAAME, Color.DarkViolet);
-
-
-                            //Console.WriteLine("Pointer Addr: " + ItemPointerLocation.ToString("X"));
-                            //Console.WriteLine("Path Addr: " + pPathPtr.ToString("X"));
-
-                            /*Console.WriteLine("Path Addr: " + Form1_0.Mem_0.ReadByteRaw((IntPtr)(pPathPtr + 0x20)).ToString("X"));
-
-                            string SavePathh = Form1_0.ThisEndPath + "DumpItempPathStruc";
+                            /*string SavePathh = Form1_0.ThisEndPath + "DumpItempPathStruc";
                             File.Create(SavePathh).Dispose();
-                            File.WriteAllBytes(SavePathh, itemdatastruc);
-
-                            SavePathh = Form1_0.ThisEndPath + "DumpItempPathStruc2";
-                            File.Create(SavePathh).Dispose();
-                            File.WriteAllBytes(SavePathh, pPath);*/
+                            File.WriteAllBytes(SavePathh, itemdatastruc);*/
 
                             Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, itemx, itemy);
                             if (ShouldPickPos(itemScreenPos))
                             {
+                                //###########
+                                //Bugged items
+                                if (ItemNAAME == "Perfect Diamond" && (Form1_0.PlayerScan_0.levelNo >= 106 && Form1_0.PlayerScan_0.levelNo < 109)) continue;
+                                if (ItemNAAME == "Large Axe") continue;
+                                if (ItemNAAME == "Hand Axe") continue;
+                                //###########
+
                                 int DiffXPlayer = itemx - Form1_0.PlayerScan_0.xPosFinal;
                                 int DiffYPlayer = itemy - Form1_0.PlayerScan_0.yPosFinal;
                                 if (DiffXPlayer < 0) DiffXPlayer = -DiffXPlayer;
                                 if (DiffYPlayer < 0) DiffYPlayer = -DiffYPlayer;
 
-                                if (DiffXPlayer > 1000 || DiffYPlayer > 1000)
+                                if (DiffXPlayer > 100 || DiffYPlayer > 100)
                                 {
                                     continue;
                                 }
@@ -429,6 +430,7 @@ namespace app
                                     }
                                 }
                                 //####
+                                TriesToPickItemCount++;
                                 Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"]);
                                 Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"]);
 
@@ -445,19 +447,118 @@ namespace app
                                     {
                                         Form1_0.BeltStruc_0.CheckForMissingPotions();
                                     }
+                                }
 
-                                    //string SavePathh = Form1_0.ThisEndPath + "DumpItemDataStruc";
-                                    //File.Create(SavePathh).Dispose();
-                                    //File.WriteAllBytes(SavePathh, itemdatastruc);
+                                //after a lot of try picking item, inventory might be full, go to town
+                                if (TriesToPickItemCount >= 45)
+                                {
+                                    TriesToPickItemCount = 0;
+                                    Form1_0.Town_0.GoToTown();
+                                    return false;
                                 }
                                 return true;
                             }
+                        }
+                        else
+                        {
+                            TriesToPickItemCount = 0; //nothing to pick!
                         }
                     }
                 }
             }
 
             //Form1_0.method_1("-----", Color.Black);
+            return false;
+        }
+
+        public bool PickThisItem(string ThisItemName)
+        {
+            if (!Form1_0.GameStruc_0.IsInGame()) return false;
+
+            //dead leave game
+            if (Form1_0.PlayerScan_0.PlayerDead || Form1_0.Potions_0.ForceLeave)
+            {
+                Form1_0.Potions_0.ForceLeave = true;
+                Form1_0.BaalLeech_0.SearchSameGamesAsLastOne = false;
+                Form1_0.LeaveGame(false);
+                return false;
+            }
+
+            Form1_0.PatternsScan_0.scanForUnitsPointer("item");
+            for (int i = 0; i < Form1_0.PatternsScan_0.AllItemsPointers.Count; i++)
+            {
+                ItemPointerLocation = Form1_0.PatternsScan_0.AllItemsPointers[i];
+                if (ItemPointerLocation > 0)
+                {
+                    itemdatastruc = new byte[144];
+                    Form1_0.Mem_0.ReadRawMemory(ItemPointerLocation, ref itemdatastruc, 144);
+
+                    ItemNAAME = Form1_0.ItemsNames_0.getItemBaseName(BitConverter.ToUInt32(itemdatastruc, 4));
+                    txtFileNo = BitConverter.ToUInt32(itemdatastruc, 4);
+                    GetUnitData();
+                    GetUnitPathData();
+                    GetStatsAddr();
+
+                    //; on ground, dropping
+                    if (itemdatastruc[0x0C] == 3 || itemdatastruc[0x0C] == 5)
+                    {
+                        Form1_0.UIScan_0.readUI();
+                        if (ItemNAAME == ThisItemName && (!Form1_0.UIScan_0.leftMenu && !Form1_0.UIScan_0.rightMenu && !Form1_0.UIScan_0.fullMenu))
+                        {
+                            Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, itemx, itemy);
+                            if (ShouldPickPos(itemScreenPos))
+                            {
+                                int DiffXPlayer = itemx - Form1_0.PlayerScan_0.xPosFinal;
+                                int DiffYPlayer = itemy - Form1_0.PlayerScan_0.yPosFinal;
+                                if (DiffXPlayer < 0) DiffXPlayer = -DiffXPlayer;
+                                if (DiffYPlayer < 0) DiffYPlayer = -DiffYPlayer;
+
+                                if (DiffXPlayer > 100 || DiffYPlayer > 100)
+                                {
+                                    continue;
+                                }
+
+                                //####
+                                if (CharConfig.UseTeleport)
+                                {
+
+                                    if (DiffXPlayer > 4 || DiffYPlayer > 4)
+                                    {
+                                        Form1_0.Mover_0.MoveToLocation(itemx, itemy);
+                                        Form1_0.PlayerScan_0.GetPositions();
+                                        GetUnitPathData();
+                                        itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, itemx, itemy);
+                                    }
+                                }
+                                //####
+                                TriesToPickItemCount++;
+                                Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"]);
+                                Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"]);
+
+                                if (ItemNAAME != LastPick)
+                                {
+                                    LastPick = ItemNAAME;
+                                    Form1_0.method_1_Items("Picked: " + ItemNAAME, GetColorFromQuality((int)itemQuality));
+                                }
+
+                                //after a lot of try picking item, inventory might be full, go to town
+                                if (TriesToPickItemCount >= 45)
+                                {
+                                    TriesToPickItemCount = 0;
+                                    Form1_0.Town_0.GoToTown();
+                                    return false;
+                                }
+                                return true;
+                            }
+                        }
+                        else
+                        {
+                            TriesToPickItemCount = 0; //nothing to pick!
+                        }
+                    }
+                }
+            }
+
             return false;
         }
 
@@ -542,12 +643,14 @@ namespace app
                     {
                         if (itemx > 0 && itemy > 0)
                         {
-                            if (itemx - Form1_0.PlayerScan_0.xPosFinal > 50
-                                || itemx - Form1_0.PlayerScan_0.xPosFinal < -50
-                                || itemy - Form1_0.PlayerScan_0.yPosFinal > 50
-                                || itemy - Form1_0.PlayerScan_0.yPosFinal < -50)
+                            int DiffXPlayer = itemx - Form1_0.PlayerScan_0.xPosFinal;
+                            int DiffYPlayer = itemy - Form1_0.PlayerScan_0.yPosFinal;
+                            if (DiffXPlayer < 0) DiffXPlayer = -DiffXPlayer;
+                            if (DiffYPlayer < 0) DiffYPlayer = -DiffYPlayer;
+
+                            if (DiffXPlayer > 100 || DiffYPlayer > 100)
                             {
-                                continue;
+                                return false;
                             }
 
                             Form1_0.UIScan_0.readUI();
@@ -586,6 +689,11 @@ namespace app
                             int DiffYPlayer = itemy - Form1_0.PlayerScan_0.yPosFinal;
                             if (DiffXPlayer < 0) DiffXPlayer = -DiffXPlayer;
                             if (DiffYPlayer < 0) DiffYPlayer = -DiffYPlayer;
+
+                            if (DiffXPlayer > 100 || DiffYPlayer > 100)
+                            {
+                                return false;
+                            }
 
                             if (DiffXPlayer > 4
                                 || DiffYPlayer > 4)
@@ -653,11 +761,11 @@ namespace app
 
                     if (statEnum == (ushort)CheckTStat)
                     {
-                        if (statEnum == 6 || statEnum == 7 || statEnum == 8 || statEnum == 9 || statEnum == 10 || statEnum == 11
+                        /*if (statEnum == 6 || statEnum == 7 || statEnum == 8 || statEnum == 9 || statEnum == 10 || statEnum == 11
                             || statEnum == 216 || statEnum == 217)
                         {
                             return statValue >> 8;
-                        }
+                        }*/
                         if (statEnum == 56 || statEnum == 59)
                         {
                             return statValue / 25;
@@ -678,11 +786,11 @@ namespace app
 
                     if (statEnum == (ushort)CheckTStat)
                     {
-                        if (statEnum == 6 || statEnum == 7 || statEnum == 8 || statEnum == 9 || statEnum == 10 || statEnum == 11
+                        /*if (statEnum == 6 || statEnum == 7 || statEnum == 8 || statEnum == 9 || statEnum == 10 || statEnum == 11
                             || statEnum == 216 || statEnum == 217)
                         {
                             return statValue >> 8;
-                        }
+                        }*/
                         if (statEnum == 56 || statEnum == 59)
                         {
                             return statValue / 25;

@@ -39,12 +39,15 @@
             this.label2 = new System.Windows.Forms.Label();
             this.labelGames = new System.Windows.Forms.Label();
             this.button3 = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.labelGameTime = new System.Windows.Forms.Label();
+            this.labelGameName = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(5, 6);
+            this.button1.Location = new System.Drawing.Point(5, 2);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(55, 23);
             this.button1.TabIndex = 0;
@@ -63,6 +66,7 @@
             this.Column2});
             this.dataGridView1.Location = new System.Drawing.Point(342, 12);
             this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.ReadOnly = true;
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             this.dataGridView1.Size = new System.Drawing.Size(207, 376);
@@ -83,17 +87,17 @@
             // richTextBox1
             // 
             this.richTextBox1.DetectUrls = false;
-            this.richTextBox1.Location = new System.Drawing.Point(5, 35);
+            this.richTextBox1.Location = new System.Drawing.Point(5, 51);
             this.richTextBox1.Name = "richTextBox1";
             this.richTextBox1.ReadOnly = true;
             this.richTextBox1.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedVertical;
-            this.richTextBox1.Size = new System.Drawing.Size(331, 353);
+            this.richTextBox1.Size = new System.Drawing.Size(331, 337);
             this.richTextBox1.TabIndex = 5;
             this.richTextBox1.Text = "";
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(281, 6);
+            this.button2.Location = new System.Drawing.Point(5, 26);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(55, 23);
             this.button2.TabIndex = 6;
@@ -104,18 +108,18 @@
             // richTextBox2
             // 
             this.richTextBox2.DetectUrls = false;
-            this.richTextBox2.Location = new System.Drawing.Point(5, 35);
+            this.richTextBox2.Location = new System.Drawing.Point(5, 51);
             this.richTextBox2.Name = "richTextBox2";
             this.richTextBox2.ReadOnly = true;
             this.richTextBox2.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedVertical;
-            this.richTextBox2.Size = new System.Drawing.Size(331, 353);
+            this.richTextBox2.Size = new System.Drawing.Size(331, 337);
             this.richTextBox2.TabIndex = 7;
             this.richTextBox2.Text = "";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(66, 11);
+            this.label2.Location = new System.Drawing.Point(95, 31);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(43, 13);
             this.label2.TabIndex = 8;
@@ -124,7 +128,7 @@
             // labelGames
             // 
             this.labelGames.AutoSize = true;
-            this.labelGames.Location = new System.Drawing.Point(112, 11);
+            this.labelGames.Location = new System.Drawing.Point(144, 31);
             this.labelGames.Name = "labelGames";
             this.labelGames.Size = new System.Drawing.Size(28, 13);
             this.labelGames.TabIndex = 9;
@@ -133,12 +137,40 @@
             // button3
             // 
             this.button3.Image = global::app.Properties.Resources.Application;
-            this.button3.Location = new System.Drawing.Point(254, 6);
+            this.button3.Location = new System.Drawing.Point(63, 2);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(26, 23);
             this.button3.TabIndex = 10;
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(95, 7);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(69, 13);
+            this.label1.TabIndex = 11;
+            this.label1.Text = "Game Name:";
+            // 
+            // labelGameTime
+            // 
+            this.labelGameTime.AutoSize = true;
+            this.labelGameTime.Location = new System.Drawing.Point(281, 7);
+            this.labelGameTime.Name = "labelGameTime";
+            this.labelGameTime.Size = new System.Drawing.Size(55, 13);
+            this.labelGameTime.TabIndex = 12;
+            this.labelGameTime.Text = "00:00.000";
+            this.labelGameTime.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // labelGameName
+            // 
+            this.labelGameName.AutoSize = true;
+            this.labelGameName.Location = new System.Drawing.Point(170, 7);
+            this.labelGameName.Name = "labelGameName";
+            this.labelGameName.Size = new System.Drawing.Size(35, 13);
+            this.labelGameName.TabIndex = 13;
+            this.labelGameName.Text = "label4";
             // 
             // Form1
             // 
@@ -146,6 +178,9 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlDark;
             this.ClientSize = new System.Drawing.Size(556, 394);
+            this.Controls.Add(this.labelGameName);
+            this.Controls.Add(this.labelGameTime);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.labelGames);
             this.Controls.Add(this.label2);
@@ -179,6 +214,9 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label labelGames;
         private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Label label1;
+        public System.Windows.Forms.Label labelGameName;
+        internal System.Windows.Forms.Label labelGameTime;
     }
 }
 

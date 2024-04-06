@@ -28,9 +28,16 @@ namespace app
             ScriptDone = false;
         }
 
+        public void DetectCurrentStep()
+        {
+            if ((Enums.Area)Form1_0.PlayerScan_0.levelNo == Enums.Area.KurastBazaar) CurrentStep = 1;
+            if ((Enums.Area)Form1_0.PlayerScan_0.levelNo == Enums.Area.SewersLevel1Act3) CurrentStep = 2;
+            if ((Enums.Area)Form1_0.PlayerScan_0.levelNo == Enums.Area.SewersLevel2Act3) CurrentStep = 3;
+        }
+
         public void RunScript()
         {
-            Form1_0.Town_0.ScriptTownAct = 5; //set to town act 5 when running this script
+            Form1_0.Town_0.ScriptTownAct = 3; //set to town act 5 when running this script
 
             if (Form1_0.Town_0.GetInTown())
             {
@@ -49,19 +56,20 @@ namespace app
 
                     if ((Enums.Area) Form1_0.PlayerScan_0.levelNo == Enums.Area.KurastBazaar)
                     {
-                        Form1_0.Town_0.SpawnTPButNotUseIT();
+                        Form1_0.Town_0.SpawnTP();
                         CurrentStep++;
                     }
                     else
                     {
-                        Form1_0.Town_0.GoToTown();
+                        DetectCurrentStep();
+                        if (CurrentStep == 0) Form1_0.Town_0.GoToTown();
                     }
                 }
 
                 if (CurrentStep == 1)
                 {
 
-                    Form1_0.MoveToPath_0.MoveToArea(Enums.Area.SewersLevel1Act3);
+                    Form1_0.PathFinding_0.MoveToExit(Enums.Area.SewersLevel1Act3);
                     CurrentStep++;
                 }
 
@@ -73,14 +81,17 @@ namespace app
                         return;
                     }
 
-                    Form1_0.MoveToPath_0.MoveToArea(Enums.Area.SewersLevel2Act3);
+                    Form1_0.PathFinding_0.MoveToExit(Enums.Area.SewersLevel2Act3);
 
                     ChestPos = Form1_0.MapAreaStruc_0.GetPositionOfObject("object", "Act3SewerStairsToLevel3", (int)Enums.Area.SewersLevel1Act3, new List<int>());
                     if (ChestPos.X != 0 && ChestPos.Y != 0)
                     {
-                        Form1_0.MoveToPath_0.MoveToThisPos(ChestPos);
+                        Form1_0.PathFinding_0.MoveToThisPos(ChestPos);
 
-                        //repeat clic on chest
+                        Form1_0.Battle_0.SetSkills();
+                        Form1_0.Battle_0.CastSkills();
+
+                        //repeat clic on leverfor stair
                         int tryyy = 0;
                         while (tryyy <= 25)
                         {
@@ -96,11 +107,12 @@ namespace app
                     else
                     {
                         Form1_0.method_1("Lever location not detected!", Color.Red);
+                        Form1_0.Town_0.UseLastTP = false;
                         ScriptDone = true;
                         return;
                     }
 
-                    Form1_0.MoveToPath_0.MoveToArea(Enums.Area.SewersLevel2Act3);
+                    Form1_0.PathFinding_0.MoveToExit(Enums.Area.SewersLevel2Act3);
 
                     CurrentStep++;
                 }
@@ -116,7 +128,7 @@ namespace app
                     ChestPos = Form1_0.MapAreaStruc_0.GetPositionOfObject("object", "KhalimChest1", (int) Enums.Area.SewersLevel2Act3, new List<int>());
                     if (ChestPos.X != 0 &&  ChestPos.Y != 0)
                     {
-                        Form1_0.MoveToPath_0.MoveToThisPos(ChestPos);
+                        Form1_0.PathFinding_0.MoveToThisPos(ChestPos);
 
                         //repeat clic on chest
                         int tryyy = 0;
@@ -133,6 +145,7 @@ namespace app
                     else
                     {
                         Form1_0.method_1("Kahlim Heart Chest location not detected!", Color.Red);
+                        Form1_0.Town_0.UseLastTP = false;
                         ScriptDone = true;
                         return;
                     }
@@ -140,10 +153,10 @@ namespace app
 
                 if (CurrentStep == 4)
                 {
-                    if (!Form1_0.Battle_0.DoBattleScript(15))
+                    if (!Form1_0.Battle_0.DoBattleScript(10))
                     {
                         Position ThisTPPos = new Position { X = ChestPos.X - 10, Y = ChestPos.Y + 5 };
-                        Form1_0.MoveToPath_0.MoveToThisPos(ThisTPPos);
+                        Form1_0.PathFinding_0.MoveToThisPos(ThisTPPos);
 
                         Form1_0.Town_0.TPSpawned = false;
 
@@ -155,9 +168,9 @@ namespace app
                 {
                     Form1_0.SetGameStatus("Kahlim Heart waiting on leecher");
 
-                    if (!Form1_0.Town_0.TPSpawned) Form1_0.Town_0.SpawnTPButNotUseIT();
+                    if (!Form1_0.Town_0.TPSpawned) Form1_0.Town_0.SpawnTP();
 
-                    Form1_0.Battle_0.DoBattleScript(15);
+                    Form1_0.Battle_0.DoBattleScript(10);
 
                     //get leecher infos
                     Form1_0.PlayerScan_0.GetLeechPositions();
@@ -172,13 +185,14 @@ namespace app
                 {
                     Form1_0.SetGameStatus("Kahlim Heart waiting on leecher #2");
 
-                    Form1_0.Battle_0.DoBattleScript(15);
+                    Form1_0.Battle_0.DoBattleScript(10);
 
                     //get leecher infos
                     Form1_0.PlayerScan_0.GetLeechPositions();
 
                     if (Form1_0.PlayerScan_0.LeechlevelNo == (int)Enums.Area.KurastDocks)
                     {
+                        Form1_0.Town_0.UseLastTP = false;
                         ScriptDone = true;
                     }
                 }

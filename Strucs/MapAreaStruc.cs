@@ -22,6 +22,10 @@ namespace app
         public int CurrentObjectIndex = 0;
         public int CurrentObjectAreaIndex = 0;
 
+        public bool[,] CurrentAreaCollisionGrid = new bool[0,0];
+
+        public string[] MapDataLines = new string[0];
+
         public void SetForm1(Form1 form1_1)
         {
             Form1_0 = form1_1;
@@ -34,6 +38,8 @@ namespace app
             Position ThisPos = new Position();
             ThisPos.X = 0;
             ThisPos.Y = 0;
+
+            if (AllMapData.Count == 0) return ThisPos;
 
             if (StartAreaIndexToSearch == 0 && EndAreaIndexToSearch == 1)
             {
@@ -49,7 +55,9 @@ namespace app
 
                 for (int i = StartAreaIndexToSearch; i < EndAreaIndexToSearch; i++)
                 {
-                    //if (AllMapData[i].Objects.Count == 0) ScanMapStruc();
+                    if (i > AllMapData.Count - 1) ScanMapStruc();
+                    if (AllMapData[i].Objects.Count == 0) ScanMapStruc();
+
                     for (int k = 0; k < AllMapData[i].Objects.Count; k++)
                     {
                         if (!AvoidThisIndex(k, IgnoreTheseIndex))
@@ -106,11 +114,13 @@ namespace app
             return ThisPos;
         }
 
-        public Position GetPositionOfObject(string ObjectType, string ObjectName, int AreaID, List<int> IgnoreTheseIndex)
+        public Position GetPositionOfObject(string ObjectType, string ObjectName, int AreaID, List<int> IgnoreTheseIndex, bool IgnoreName = false)
         {
             Position ThisPos = new Position();
             ThisPos.X = 0;
             ThisPos.Y = 0;
+
+            if (AllMapData.Count == 0) return ThisPos;
 
             try
             {
@@ -122,14 +132,19 @@ namespace app
                 //for (int i = 0; i < AllMapData.Count; i++)
                 //{
                 int i = AreaID - 1;
-                if (AllMapData[i].Objects.Count == 0) ScanMapStruc();
+
+                if (i > AllMapData.Count - 1) ScanMapStruc();
+                else if (AllMapData[i].Objects.Count == 0) ScanMapStruc();
+
                 for (int k = 0; k < AllMapData[i].Objects.Count; k++)
                 {
                     if (!AvoidThisIndex(k, IgnoreTheseIndex))
                     {
                         if (AllMapData[i].Objects[k].Type == "exit" && ObjectType == "exit")
                         {
-                            if (Form1_0.Town_0.getAreaName(int.Parse(AllMapData[i].Objects[k].ID)) == ObjectName)
+                            //Console.WriteLine(Form1_0.Town_0.getAreaName(int.Parse(AllMapData[i].Objects[k].ID)));
+                            if ((Form1_0.Town_0.getAreaName(int.Parse(AllMapData[i].Objects[k].ID)) == ObjectName && !IgnoreName)
+                                || IgnoreName)
                             {
                                 ThisPos.X = AllMapData[i].Offset.X + AllMapData[i].Objects[k].X;
                                 ThisPos.Y = AllMapData[i].Offset.Y + AllMapData[i].Objects[k].Y;
@@ -139,7 +154,8 @@ namespace app
                         }
                         if (AllMapData[i].Objects[k].Type == "exit_area" && ObjectType == "exit_area")
                         {
-                            if (Form1_0.Town_0.getAreaName(int.Parse(AllMapData[i].Objects[k].ID)) == ObjectName)
+                            if ((Form1_0.Town_0.getAreaName(int.Parse(AllMapData[i].Objects[k].ID)) == ObjectName && !IgnoreName)
+                                || IgnoreName)
                             {
                                 ThisPos.X = AllMapData[i].Offset.X + AllMapData[i].Objects[k].X;
                                 ThisPos.Y = AllMapData[i].Offset.Y + AllMapData[i].Objects[k].Y;
@@ -149,18 +165,34 @@ namespace app
                         }
                         if (AllMapData[i].Objects[k].Type == "object" && ObjectType == "object")
                         {
-                            //Console.WriteLine(Form1_0.ObjectsStruc_0.getObjectName(int.Parse(AllMapData[i].Objects[k].ID)));
-                            if (Form1_0.ObjectsStruc_0.getObjectName(int.Parse(AllMapData[i].Objects[k].ID)) == ObjectName)
+                            //Console.WriteLine("Object: " + Form1_0.ObjectsStruc_0.getObjectName(int.Parse(AllMapData[i].Objects[k].ID)));
+                            if (ObjectName == "WaypointPortal")
                             {
-                                ThisPos.X = AllMapData[i].Offset.X + AllMapData[i].Objects[k].X;
-                                ThisPos.Y = AllMapData[i].Offset.Y + AllMapData[i].Objects[k].Y;
-                                CurrentObjectIndex = k;
-                                CurrentObjectAreaIndex = i;
+                                if (Form1_0.ObjectsStruc_0.IsWaypoint(int.Parse(AllMapData[i].Objects[k].ID)))
+                                {
+                                    ThisPos.X = AllMapData[i].Offset.X + AllMapData[i].Objects[k].X;
+                                    ThisPos.Y = AllMapData[i].Offset.Y + AllMapData[i].Objects[k].Y;
+                                    CurrentObjectIndex = k;
+                                    CurrentObjectAreaIndex = i;
+                                }
+                            }
+                            else
+                            {
+                                if ((Form1_0.ObjectsStruc_0.getObjectName(int.Parse(AllMapData[i].Objects[k].ID)) == ObjectName && !IgnoreName)
+                                || IgnoreName)
+                                {
+                                    ThisPos.X = AllMapData[i].Offset.X + AllMapData[i].Objects[k].X;
+                                    ThisPos.Y = AllMapData[i].Offset.Y + AllMapData[i].Objects[k].Y;
+                                    CurrentObjectIndex = k;
+                                    CurrentObjectAreaIndex = i;
+                                }
                             }
                         }
                         if (AllMapData[i].Objects[k].Type == "npc" && ObjectType == "npc")
                         {
-                            if (Form1_0.NPCStruc_0.getNPC_ID(int.Parse(AllMapData[i].Objects[k].ID)) == ObjectName)
+                            //Console.WriteLine("NPC: " + Form1_0.NPCStruc_0.getNPC_ID(int.Parse(AllMapData[i].Objects[k].ID)));
+                            if ((Form1_0.NPCStruc_0.getNPC_ID(int.Parse(AllMapData[i].Objects[k].ID)) == ObjectName && !IgnoreName)
+                                || IgnoreName)
                             {
                                 ThisPos.X = AllMapData[i].Offset.X + AllMapData[i].Objects[k].X;
                                 ThisPos.Y = AllMapData[i].Offset.Y + AllMapData[i].Objects[k].Y;
@@ -171,6 +203,80 @@ namespace app
                     }
                 }
                 //}
+
+                //Form1_0.method_1("Object: " + ExitName + " found at: "+ ThisPos.X + ", " + ThisPos.Y, Color.Red);
+
+            }
+            catch { }
+            return ThisPos;
+        }
+
+        public List<Position> GetPositionOfAllObject(string ObjectType, string ObjectName, int AreaID, List<int> IgnoreTheseIndex, bool IgnoreName = false)
+        {
+            List<Position> ThisPos = new List<Position>();
+
+            if (AllMapData.Count == 0) return ThisPos;
+
+            try
+            {
+                //ExitType = "exit" or "exit_area"
+
+                int i = AreaID - 1;
+
+                if (i > AllMapData.Count - 1) ScanMapStruc();
+                else if (AllMapData[i].Objects.Count == 0) ScanMapStruc();
+
+                for (int k = 0; k < AllMapData[i].Objects.Count; k++)
+                {
+                    if (!AvoidThisIndex(k, IgnoreTheseIndex))
+                    {
+                        if (AllMapData[i].Objects[k].Type == "exit" && ObjectType == "exit")
+                        {
+                            //Console.WriteLine(Form1_0.Town_0.getAreaName(int.Parse(AllMapData[i].Objects[k].ID)));
+                            if ((Form1_0.Town_0.getAreaName(int.Parse(AllMapData[i].Objects[k].ID)) == ObjectName && !IgnoreName)
+                                || IgnoreName)
+                            {
+                                ThisPos.Add(new Position { X = AllMapData[i].Offset.X + AllMapData[i].Objects[k].X, Y = AllMapData[i].Offset.Y + AllMapData[i].Objects[k].Y });
+                            }
+                        }
+                        if (AllMapData[i].Objects[k].Type == "exit_area" && ObjectType == "exit_area")
+                        {
+                            if ((Form1_0.Town_0.getAreaName(int.Parse(AllMapData[i].Objects[k].ID)) == ObjectName && !IgnoreName)
+                                || IgnoreName)
+                            {
+                                ThisPos.Add(new Position { X = AllMapData[i].Offset.X + AllMapData[i].Objects[k].X, Y = AllMapData[i].Offset.Y + AllMapData[i].Objects[k].Y });
+                            }
+                        }
+                        if (AllMapData[i].Objects[k].Type == "object" && ObjectType == "object")
+                        {
+                            //Console.WriteLine("Object: " + Form1_0.ObjectsStruc_0.getObjectName(int.Parse(AllMapData[i].Objects[k].ID)));
+                            if (ObjectName == "WaypointPortal")
+                            {
+                                if (Form1_0.ObjectsStruc_0.IsWaypoint(int.Parse(AllMapData[i].Objects[k].ID)))
+                                {
+                                    ThisPos.Add(new Position { X = AllMapData[i].Offset.X + AllMapData[i].Objects[k].X, Y = AllMapData[i].Offset.Y + AllMapData[i].Objects[k].Y });
+                                }
+                            }
+                            else
+                            {
+                                if ((Form1_0.ObjectsStruc_0.getObjectName(int.Parse(AllMapData[i].Objects[k].ID)) == ObjectName && !IgnoreName)
+                                || IgnoreName)
+                                {
+                                    ThisPos.Add(new Position { X = AllMapData[i].Offset.X + AllMapData[i].Objects[k].X, Y = AllMapData[i].Offset.Y + AllMapData[i].Objects[k].Y });
+                                }
+                            }
+                        }
+                        if (AllMapData[i].Objects[k].Type == "npc" && ObjectType == "npc")
+                        {
+                            //Console.WriteLine("NPC: " + Form1_0.NPCStruc_0.getNPC_ID(int.Parse(AllMapData[i].Objects[k].ID)));
+                            if ((Form1_0.NPCStruc_0.getNPC_ID(int.Parse(AllMapData[i].Objects[k].ID)) == ObjectName && !IgnoreName)
+                                || IgnoreName)
+                            {
+                                ThisPos.Add(new Position { X = AllMapData[i].Offset.X + AllMapData[i].Objects[k].X, Y = AllMapData[i].Offset.Y + AllMapData[i].Objects[k].Y });
+                            }
+                        }
+                    }
+                }
 
                 //Form1_0.method_1("Object: " + ExitName + " found at: "+ ThisPos.X + ", " + ThisPos.Y, Color.Red);
 
@@ -252,7 +358,16 @@ namespace app
             Form1_0.method_1("Seed: " + Form1_0.PlayerScan_0.mapSeedValue.ToString(), Color.DarkBlue);
             Form1_0.method_1("Difficulty: " + ((Difficulty)Form1_0.PlayerScan_0.difficulty).ToString(), Color.DarkBlue);
 
-            GetMapData(Form1_0.PlayerScan_0.mapSeedValue.ToString(), (Difficulty)Form1_0.PlayerScan_0.difficulty);
+            int tryes = 0;
+            while (tryes < 3)
+            {
+                GetMapData(Form1_0.PlayerScan_0.mapSeedValue.ToString(), (Difficulty)Form1_0.PlayerScan_0.difficulty);
+                if (AllMapData.Count != 0)
+                {
+                    tryes = 15;
+                    break;
+                }
+            }
         }
 
         public string _kooloMapPath;
@@ -260,8 +375,6 @@ namespace app
 
         public void GetMapData(string seed, Difficulty difficulty)
         {
-            Console.WriteLine(_d2LoDPath);
-
             var procStartInfo = new ProcessStartInfo
             {
                 FileName = _kooloMapPath,
@@ -303,54 +416,20 @@ namespace app
                 string SavePathh = Form1_0.ThisEndPath + "DumpMap.txt";
                 File.Create(SavePathh).Dispose();
                 File.WriteAllLines(SavePathh, stdoutLines);
+                MapDataLines = stdoutLines;
+
+
+                if (lvls.Count == 0)
+                {
+                    Form1_0.method_1("Couldn't get the map data from D2 LOD 1.13C!", Color.Red);
+                    Form1_0.method_1("Check the file 'DumpMap.txt' for more infos", Color.Red);
+                    Form1_0.method_1("Retrying...", Color.Red);
+                }
 
                 /*if (process.ExitCode != 0)
                 {
                     throw new Exception($"Error detected fetching Map Data from Diablo II: LoD 1.13c game, please make sure you have the classic expansion game installed AND config.yaml D2LoDPath is pointing to the correct game path. Error code: {process.ExitCode}");
                 }*/
-
-                //Form1_0.method_1("Count: " + lvls.Count, Color.Red);
-                for (int i = 0; i < lvls.Count; i++)
-                {
-                    /*Form1_0.method_1("Name: " + lvls[i].Name + " (ID: " + lvls[i].ID + ")", Color.Red);
-                    Form1_0.method_1("Size: " + lvls[i].Size.Width + ", " + lvls[i].Size.Height, Color.Red);
-                    Form1_0.method_1("Offset: " + lvls[i].Offset.X + ", " + lvls[i].Offset.Y, Color.Red);
-
-                    Form1_0.method_1("Map: " + lvls[i].Map.Count.ToString(), Color.Red);
-                    Form1_0.method_1("Rooms: " + lvls[i].Rooms.Count.ToString(), Color.Red);*/
-
-                    for (int k = 0; k < lvls[i].Map.Count; k++)
-                    {
-                        /*for (int m = 0; m < lvls[i].Map[k].Count; m++)
-                        {
-                            Form1_0.method_1("Map: " + lvls[i].Map[k][m].ToString(), Color.Red);
-                        }*/
-                        //Form1_0.method_1("Map: " + lvls[i].Map[k].Count.ToString(), Color.Red);
-                    }
-                    //for (int k = 0; k < lvls[i].Objects.Count; k++) Form1_0.method_1("Objects: " + lvls[i].Objects[k].Name + "(" + lvls[i].Objects[k].X + ", " + lvls[i].Objects[k].Y + ")", Color.Red);
-                    for (int k = 0; k < lvls[i].Objects.Count; k++)
-                    {
-                        /*if (lvls[i].Objects[k].Type == "exit")
-                        {
-                            Form1_0.method_1("Exit: " + Form1_0.Town_0.getAreaName(int.Parse(lvls[i].Objects[k].ID)) + "(" + lvls[i].Objects[k].X + ", " + lvls[i].Objects[k].Y + ")", Color.Red);
-                        }*/
-                        /*if (lvls[i].Objects[k].Type == "exit_area")
-                        {
-                            Form1_0.method_1("Exit_area: " + Form1_0.Town_0.getAreaName(int.Parse(lvls[i].Objects[k].ID)) + "(" + lvls[i].Objects[k].X + ", " + lvls[i].Objects[k].Y + ")", Color.Red);
-                        }*/
-                        /*if (lvls[i].Objects[k].Type == "object")
-                        {
-                            Form1_0.method_1("Object: " + Form1_0.ObjectsStruc_0.getObjectName(int.Parse(lvls[i].Objects[k].ID)) + "(" + lvls[i].Objects[k].X + ", " + lvls[i].Objects[k].Y + ")", Color.Red);
-                        }*/
-                        /*if (lvls[i].Objects[k].Type == "npc")
-                        {
-                            Form1_0.method_1("NPC: " + Form1_0.Town_0.getAreaName(int.Parse(lvls[i].Objects[k].ID)) + "(" + lvls[i].Objects[k].X + ", " + lvls[i].Objects[k].Y + ")", Color.Red);
-                        }*/
-                    }
-                    //for (int k = 0; k < lvls[i].Rooms.Count; k++) Form1_0.method_1("Rooms: " + lvls[i].Rooms[k].X + ", " + lvls[i].Rooms[k].Y + "(Size: " + lvls[i].Rooms[k].Width + ", " + lvls[i].Rooms[k].Height + ")", Color.Red);
-
-                    //Form1_0.method_1("--------------------------", Color.Red);
-                }
 
                 AllMapData = lvls;
             }
@@ -477,18 +556,36 @@ namespace app
             }
         }
 
-        public List<List<bool>> CollisionGrid(Area area)
+        public bool[,] CollisionGrid(Area area)
         {
             ServerLevel level = GetLevel(area);
 
-            List<List<bool>> cg = new List<List<bool>>();
+            int Tryess = 0;
+            while (level == null && Tryess < 5)
+            {
+                Form1_0.MapAreaStruc_0.GetMapData(Form1_0.PlayerScan_0.mapSeedValue.ToString(), (Difficulty)Form1_0.PlayerScan_0.difficulty);
+                level = GetLevel(area);
+                Tryess++;
+            }
+
+            if (level == null)
+            {
+                Form1_0.method_1("ERROR Trying to get collision grid!", Color.Red);
+                return new bool[0, 0];
+            }
+            if (level.Size == null)
+            {
+                Form1_0.method_1("ERROR Trying to get collision grid!", Color.Red);
+                return new bool[0, 0];
+            }
+
+            bool[,] cg = new bool[level.Size.Width, level.Size.Height];
 
             for (int y = 0; y < level.Size.Height; y++)
             {
-                List<bool> row = new List<bool>();
                 for (int x = 0; x < level.Size.Width; x++)
                 {
-                    row.Add(false);
+                    cg[x, y] = false;
                 }
 
                 // Documentation about how this works: https://github.com/blacha/diablo2/tree/master/packages/map
@@ -503,24 +600,110 @@ namespace app
                         {
                             for (int xOffset = 0; xOffset < xs; xOffset++)
                             {
-                                row[xPos + xOffset] = isWalkable;
+                                cg[xPos + xOffset, y] = isWalkable;
                             }
                         }
                         isWalkable = !isWalkable;
                         xPos += xs;
                     }
-                    while (xPos < row.Count)
+                    while (xPos < level.Size.Width)
                     {
-                        row[xPos] = isWalkable;
+                        cg[xPos, y] = isWalkable;
                         xPos++;
                     }
                 }
-
-                cg.Add(row);
             }
+
+            // Lut Gholein map is a bit bugged, we should close this fake path to avoid pathing issues
+            if (area == Enums.Area.LutGholein) cg[13, 210] = false;
+
+            // Fix for Summonner map (when the summoner is located in the area that have tons of teleportation pads)
+            //XX-----XXXXXXXXXXXXXXXXXXXX-----XX
+            if (area == Enums.Area.ArcaneSanctuary)
+            {
+                for (int x = 0; x < cg.GetLength(0) - 35; x++)
+                {
+                    for (int y = 0; y < cg.GetLength(0); y++)
+                    {
+                        if (!cg[x, y] && !cg[x + 1, y]
+                            && cg[x + 2, y] && cg[x + 3, y] && cg[x + 4, y] && cg[x + 5, y] && cg[x + 6, y]
+                            && !cg[x + 7, y] && !cg[x + 8, y] && !cg[x + 9, y] && !cg[x + 10, y] && !cg[x + 11, y] && !cg[x + 12, y] && !cg[x + 13, y] && !cg[x + 14, y] && !cg[x + 15, y] && !cg[x + 16, y]
+                            && !cg[x + 17, y] && !cg[x + 18, y] && !cg[x + 19, y] && !cg[x + 20, y] && !cg[x + 21, y] && !cg[x + 22, y] && !cg[x + 23, y] && !cg[x + 24, y] && !cg[x + 25, y] && !cg[x + 26, y]
+                            && cg[x + 27, y] && cg[x + 28, y] && cg[x + 29, y] && cg[x + 30, y] && cg[x + 31, y]
+                            && !cg[x + 32, y] && !cg[x + 33, y])
+                        {
+                            //Console.WriteLine("CorrectPath1!");
+                            cg[x + 7, y] = true;
+                            cg[x + 26, y] = true;
+                        }
+                    }
+                }
+                for (int x = 0; x < cg.GetLength(0); x++)
+                {
+                    for (int y = 0; y < cg.GetLength(0) - 35; y++)
+                    {
+                        if (!cg[x, y] && !cg[x, y + 1]
+                            && cg[x, y + 2] && cg[x, y + 3] && cg[x, y + 4] && cg[x, y + 5] && cg[x, y + 6]
+                            && !cg[x, y + 7] && !cg[x, y + 8] && !cg[x, y + 9] && !cg[x, y + 10] && !cg[x, y + 11] && !cg[x, y + 12] && !cg[x, y + 13] && !cg[x, y + 14] && !cg[x, y + 15] && !cg[x, y + 16]
+                            && !cg[x, y + 17] && !cg[x, y + 18] && !cg[x, y + 19] && !cg[x, y + 20] && !cg[x, y + 21] && !cg[x, y + 22] && !cg[x, y + 23] && !cg[x, y + 24] && !cg[x, y + 25] && !cg[x, y + 26]
+                            && cg[x, y + 27] && cg[x, y + 28] && cg[x, y + 29] && cg[x, y + 30] && cg[x, y + 31]
+                            && !cg[x, y + 32] && !cg[x, y + 33])
+                        {
+                            //Console.WriteLine("CorrectPath2!");
+                            cg[x, y + 7] = true;
+                            cg[x, y + 26] = true;
+                        }
+                    }
+                }
+            }
+
+            //dump data to txt file
+            /*string ColisionMapTxt = "";
+            for (int i = 0; i < cg.GetLength(0); i++)
+            {
+                for (int k = 0; k < cg.GetLength(1); k++)
+                {
+                    if (cg[i, k]) ColisionMapTxt += "-";
+                    if (!cg[i, k]) ColisionMapTxt += "X";
+                }
+                ColisionMapTxt += Environment.NewLine;
+            }
+            File.Create(Form1_0.ThisEndPath + "CollisionMap.txt").Dispose();
+            File.WriteAllText(Form1_0.ThisEndPath + "CollisionMap.txt", ColisionMapTxt);*/
 
             return cg;
             //return cg.Select(r => r.ToArray()).ToArray();
+        }
+
+        public void DumpMap()
+        {
+            string AddedTxt = "";
+            if ((CharConfig.RunSummonerRush && !Form1_0.Summoner_0.ScriptDone)
+                || (CharConfig.RunSummonerScript && !Form1_0.SummonerRush_0.ScriptDone))
+            {
+                AddedTxt = "NoPathSummoner";
+
+                //dump data to txt file
+                string ColisionMapTxt = "";
+                bool[,] cgrid = CollisionGrid(Area.ArcaneSanctuary);
+                for (int i = 0; i < cgrid.GetLength(0); i++)
+                {
+                    for (int k = 0; k < cgrid.GetLength(1); k++)
+                    {
+                        if (cgrid[k, i]) ColisionMapTxt += "-";
+                        if (!cgrid[k, i]) ColisionMapTxt += "X";
+                    }
+                    ColisionMapTxt += Environment.NewLine;
+                }
+                File.Create(Form1_0.ThisEndPath + "CollisionMapSummoner.txt").Dispose();
+                File.WriteAllText(Form1_0.ThisEndPath + "CollisionMapSummoner.txt", ColisionMapTxt);
+            }
+            else AddedTxt += Form1_0.PreviousStatus.Replace("(", "").Replace(")", "").Replace("/", "").Replace("\\", "");
+
+            string SavePathh = Form1_0.ThisEndPath + "MapTest" + AddedTxt + ".txt";
+
+            File.Create(SavePathh).Dispose();
+            File.WriteAllLines(SavePathh, MapDataLines);
         }
 
         public Position Origin(Area area)
@@ -562,7 +745,7 @@ namespace app
             return (new LevelData(), false);
         }
 
-        private ServerLevel GetLevel(Area area)
+        public ServerLevel GetLevel(Area area)
         {
             foreach (var level in AllMapData)
             {
@@ -633,7 +816,7 @@ namespace app
             public string Name { get; set; }
             public Position Offset { get; set; }
             public Position Size { get; set; }
-            public List<List<bool>> CollisionGrid { get; set; }
+            public bool[,] CollisionGrid { get; set; }
         }
 
         public class Level

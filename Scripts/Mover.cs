@@ -24,11 +24,28 @@ namespace app
             Form1_0 = form1_1;
         }
 
-
+        //This will move to a direct location -> no pathfinding
         public bool MoveToLocation(int ThisX, int ThisY, bool AllowPickingItem = false, bool AllowMoveSideWay = true)
         {
+            Form1_0.UIScan_0.readUI();
+            if (Form1_0.UIScan_0.leftMenu || Form1_0.UIScan_0.rightMenu) Form1_0.UIScan_0.CloseAllUIMenu();
+
             Form1_0.PlayerScan_0.GetPositions();
+            Form1_0.overlayForm.SetMoveToPoint(new System.Drawing.Point(ThisX, ThisY));
             StartAreaBeforeMoving = Form1_0.PlayerScan_0.levelNo;
+            //Form1_0.GameStruc_0.CheckChickenGameTime();
+
+            //######
+            //moving location is way to far away something might be wrong!
+            if (Form1_0.PlayerScan_0.xPosFinal < (ThisX - 300)
+                || Form1_0.PlayerScan_0.xPosFinal > (ThisX + 300)
+                || Form1_0.PlayerScan_0.yPosFinal < (ThisY - 300)
+                || Form1_0.PlayerScan_0.yPosFinal > (ThisY + 300))
+            {
+                return false;
+            }
+            if (ThisX == 0 && ThisY == 0) return false;
+            //######
 
             //no need to move we are close already!
             if (Form1_0.PlayerScan_0.xPosFinal >= (ThisX - MoveAcceptOffset)
@@ -36,11 +53,13 @@ namespace app
                 && Form1_0.PlayerScan_0.yPosFinal >= (ThisY - MoveAcceptOffset)
                 && Form1_0.PlayerScan_0.yPosFinal <= (ThisY + MoveAcceptOffset))
             {
+                Form1_0.overlayForm.ResetMoveToLocation();
                 return true;
             }
 
             if (!Form1_0.GameStruc_0.IsInGame() || !Form1_0.Running)
             {
+                Form1_0.overlayForm.ResetMoveToLocation();
                 return false;
             }
 
@@ -66,13 +85,25 @@ namespace app
                 {
                     Form1_0.KeyMouse_0.PressKey(CharConfig.KeySkillfastMoveOutsideTown);
                     if (CharConfig.UseTeleport) AllowFastMove = true;
+                    if (CharConfig.RunBaalLeechScript && !Form1_0.BaalLeech_0.ScriptDone) AllowFastMove = false;
+                    if (CharConfig.RunLowerKurastScript && !Form1_0.LowerKurast_0.ScriptDone) AllowFastMove = true;
+
+                    //Check if we are in close range from target destination, if we are, desactivate fast moving (eles it teleport twice)
+                    if (AllowFastMove)
+                    {
+                        if (Form1_0.PlayerScan_0.xPosFinal >= (ThisX - 21)
+                            && Form1_0.PlayerScan_0.xPosFinal <= (ThisX + 21)
+                            && Form1_0.PlayerScan_0.yPosFinal >= (ThisY - 21)
+                            && Form1_0.PlayerScan_0.yPosFinal <= (ThisY + 21))
+                        {
+                            AllowFastMove = false;
+                        }
+                    }
                 }
 
                 //calculate new Y clicking offset, else it will clic on bottom menu items
                 if (itemScreenPos["y"] >= (Form1_0.ScreenY - Form1_0.ScreenYMenu))
                 {
-                    //int Sx = itemScreenPos["x"];
-                    //int Sy = itemScreenPos["y"];
                     int DiffY = itemScreenPos["y"] - (Form1_0.ScreenY - Form1_0.ScreenYMenu);
                     double DiffPercent = (DiffY * 100) / itemScreenPos["y"];
                     //double DiffPercent = (DiffY * 100) / Form1_0.ScreenY;
@@ -98,6 +129,9 @@ namespace app
                         {
                             Application.DoEvents();
                             Form1_0.PlayerScan_0.GetPositions();
+                            Form1_0.overlayForm.UpdateOverlay();
+                            Form1_0.Potions_0.CheckIfWeUsePotion();
+                            Form1_0.ItemsStruc_0.GetItems(false);
                             ThisTimeCheck = DateTime.Now - LastTimeSinceTeleport;
                         }
                     }
@@ -106,27 +140,38 @@ namespace app
                         Form1_0.SetProcessingTime();
                     }
                     //#######
-
-                    //Form1_0.WaitDelay(10);
                 }
-                //Form1_0.WaitDelay(2);
-                Application.DoEvents();
                 Form1_0.PlayerScan_0.GetPositions();
+                Form1_0.overlayForm.UpdateOverlay();
+                Form1_0.GameStruc_0.CheckChickenGameTime();
                 if (AllowPickingItem) Form1_0.ItemsStruc_0.GetItems(true);      //#############
                 Form1_0.Potions_0.CheckIfWeUsePotion();
                 itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, ThisX, ThisY);
                 Application.DoEvents();
 
+                //######
+                //moving location is way to far away something might be wrong!
+                if (Form1_0.PlayerScan_0.xPosFinal < (ThisX - 300)
+                    || Form1_0.PlayerScan_0.xPosFinal > (ThisX + 300)
+                    || Form1_0.PlayerScan_0.yPosFinal < (ThisY - 300)
+                    || Form1_0.PlayerScan_0.yPosFinal > (ThisY + 300))
+                {
+                    return false;
+                }
+                if (ThisX == 0 && ThisY == 0) return false;
+                //######
+
                 //not in suposed area, may have taken unwanted tp
                 if (Form1_0.PlayerScan_0.levelNo < StartAreaBeforeMoving - 1
                     || Form1_0.PlayerScan_0.levelNo > StartAreaBeforeMoving + 1)
                 {
+                    Form1_0.overlayForm.ResetMoveToLocation();
                     return false;
                 }
 
                 //detect is moving
                 if (Form1_0.PlayerScan_0.xPosFinal != LastX
-                    || Form1_0.PlayerScan_0.yPosFinal != LastY)
+                || Form1_0.PlayerScan_0.yPosFinal != LastY)
                 {
                     TryMove = 0;
                 }
@@ -143,12 +188,34 @@ namespace app
                 {
                     break;
                 }
+
+                //teleport again
+                if (AllowFastMove)
+                {
+                    if (Form1_0.Town_0.GetInTown())
+                    {
+                        Form1_0.KeyMouse_0.PressKey(CharConfig.KeySkillfastMoveAtTown);
+                        AllowFastMove = false;
+                    }
+                    else
+                    {
+                        Form1_0.KeyMouse_0.PressKey(CharConfig.KeySkillfastMoveOutsideTown);
+                        if (CharConfig.UseTeleport) AllowFastMove = true;
+                    }
+                    Form1_0.KeyMouse_0.MouseCliccRight(itemScreenPos["x"], itemScreenPos["y"]);
+                }
+
                 if (TryMove >= MaxMoveTry)
                 {
-                    if (!AllowMoveSideWay) return false;
+                    if (!AllowMoveSideWay)
+                    {
+                        Form1_0.overlayForm.ResetMoveToLocation();
+                        return false;
+                    }
 
                     if (!Form1_0.GameStruc_0.IsInGame() || !Form1_0.Running)
                     {
+                        Form1_0.overlayForm.ResetMoveToLocation();
                         return false;
                     }
                     if (AllowPickingItem) Form1_0.ItemsStruc_0.GetItems(true);      //#############
@@ -198,22 +265,24 @@ namespace app
 
             //#######
             //finish moving
-            if (MovedCorrectly)
+            if (MovedCorrectly && !AllowFastMove)
             {
                 FinishMoving();
             }
             //#######
 
+            Form1_0.overlayForm.ResetMoveToLocation();
             return MovedCorrectly;
         }
 
         public void FinishMoving()
         {
-            //Form1_0.WaitDelay(5);
-            Form1_0.PlayerScan_0.GetPositions();
-            bool IsMoving = true;
             int LastX = Form1_0.PlayerScan_0.xPosFinal;
             int LastY = Form1_0.PlayerScan_0.yPosFinal;
+
+            Form1_0.PlayerScan_0.GetPositions();
+            Form1_0.overlayForm.UpdateOverlay();
+            bool IsMoving = true;
             int Triess = 0;
 
             while (IsMoving)
@@ -230,8 +299,10 @@ namespace app
                 }
 
                 Application.DoEvents();
-                //Form1_0.WaitDelay(5);
                 Form1_0.PlayerScan_0.GetPositions();
+                Form1_0.Potions_0.CheckIfWeUsePotion();
+                Form1_0.ItemsStruc_0.GetItems(false);
+                Form1_0.overlayForm.UpdateOverlay();
 
                 LastX = Form1_0.PlayerScan_0.xPosFinal;
                 LastY = Form1_0.PlayerScan_0.yPosFinal;

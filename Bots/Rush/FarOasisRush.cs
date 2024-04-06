@@ -28,9 +28,17 @@ namespace app
             ScriptDone = false;
         }
 
+        public void DetectCurrentStep()
+        {
+            if ((Enums.Area)Form1_0.PlayerScan_0.levelNo == Enums.Area.FarOasis) CurrentStep = 1;
+            if ((Enums.Area)Form1_0.PlayerScan_0.levelNo == Enums.Area.MaggotLairLevel1) CurrentStep = 2;
+            if ((Enums.Area)Form1_0.PlayerScan_0.levelNo == Enums.Area.MaggotLairLevel2) CurrentStep = 3;
+            if ((Enums.Area)Form1_0.PlayerScan_0.levelNo == Enums.Area.MaggotLairLevel3) CurrentStep = 4;
+        }
+
         public void RunScript()
         {
-            Form1_0.Town_0.ScriptTownAct = 5; //set to town act 5 when running this script
+            Form1_0.Town_0.ScriptTownAct = 2; //set to town act 5 when running this script
 
             if (Form1_0.Town_0.GetInTown())
             {
@@ -49,18 +57,19 @@ namespace app
 
                     if ((Enums.Area) Form1_0.PlayerScan_0.levelNo == Enums.Area.FarOasis)
                     {
-                        Form1_0.Town_0.SpawnTPButNotUseIT();
+                        Form1_0.Town_0.SpawnTP();
                         CurrentStep++;
                     }
                     else
                     {
-                        Form1_0.Town_0.GoToTown();
+                        DetectCurrentStep();
+                        if (CurrentStep == 0) Form1_0.Town_0.GoToTown();
                     }
                 }
 
                 if (CurrentStep == 1)
                 {
-                    Form1_0.MoveToPath_0.MoveToArea(Enums.Area.MaggotLairLevel1);
+                    Form1_0.PathFinding_0.MoveToExit(Enums.Area.MaggotLairLevel1);
                     CurrentStep++;
                 }
 
@@ -72,7 +81,7 @@ namespace app
                         return;
                     }
 
-                    Form1_0.MoveToPath_0.MoveToArea(Enums.Area.MaggotLairLevel2);
+                    Form1_0.PathFinding_0.MoveToExit(Enums.Area.MaggotLairLevel2);
                     CurrentStep++;
                 }
 
@@ -84,7 +93,7 @@ namespace app
                         return;
                     }
 
-                    Form1_0.MoveToPath_0.MoveToArea(Enums.Area.MaggotLairLevel3);
+                    Form1_0.PathFinding_0.MoveToExit(Enums.Area.MaggotLairLevel3);
                     CurrentStep++;
                 }
 
@@ -99,7 +108,7 @@ namespace app
                     ChestPos = Form1_0.MapAreaStruc_0.GetPositionOfObject("object", "StaffOfKingsChest", (int) Enums.Area.MaggotLairLevel3, new List<int>());
                     if (ChestPos.X != 0 &&  ChestPos.Y != 0)
                     {
-                        Form1_0.MoveToPath_0.MoveToThisPos(ChestPos);
+                        Form1_0.PathFinding_0.MoveToThisPos(ChestPos);
 
                         //repeat clic on chest
                         int tryyy = 0;
@@ -116,6 +125,7 @@ namespace app
                     else
                     {
                         Form1_0.method_1("Staff Chest location not detected!", Color.Red);
+                        Form1_0.Town_0.UseLastTP = false;
                         ScriptDone = true;
                         return;
                     }
@@ -123,10 +133,10 @@ namespace app
 
                 if (CurrentStep == 5)
                 {
-                    if (!Form1_0.Battle_0.DoBattleScript(25))
+                    if (!Form1_0.Battle_0.DoBattleScript(10))
                     {
                         Position ThisTPPos = new Position { X = ChestPos.X - 10, Y = ChestPos.Y + 5 };
-                        Form1_0.MoveToPath_0.MoveToThisPos(ThisTPPos);
+                        Form1_0.PathFinding_0.MoveToThisPos(ThisTPPos);
 
                         Form1_0.Town_0.TPSpawned = false;
 
@@ -138,9 +148,9 @@ namespace app
                 {
                     Form1_0.SetGameStatus("Staff Chest waiting on leecher");
 
-                    if (!Form1_0.Town_0.TPSpawned) Form1_0.Town_0.SpawnTPButNotUseIT();
+                    if (!Form1_0.Town_0.TPSpawned) Form1_0.Town_0.SpawnTP();
 
-                    Form1_0.Battle_0.DoBattleScript(25);
+                    Form1_0.Battle_0.DoBattleScript(10);
 
                     //get leecher infos
                     Form1_0.PlayerScan_0.GetLeechPositions();
@@ -155,13 +165,14 @@ namespace app
                 {
                     Form1_0.SetGameStatus("Staff Chest waiting on leecher #2");
 
-                    Form1_0.Battle_0.DoBattleScript(25);
+                    Form1_0.Battle_0.DoBattleScript(10);
 
                     //get leecher infos
                     Form1_0.PlayerScan_0.GetLeechPositions();
 
                     if (Form1_0.PlayerScan_0.LeechlevelNo == (int)Enums.Area.LutGholein)
                     {
+                        Form1_0.Town_0.UseLastTP = false;
                         ScriptDone = true;
                     }
                 }

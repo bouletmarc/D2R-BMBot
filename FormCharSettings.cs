@@ -54,7 +54,7 @@ namespace app
                     ThixYPos = 20 + (18 * 3);
                 }
 
-                AvailableSlotList[i].Location = new Point(ThisXPos, ThixYPos);
+                AvailableSlotList[i].Location = new System.Drawing.Point(ThisXPos, ThixYPos);
             }
 
             LoadSettings();

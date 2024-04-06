@@ -23,40 +23,6 @@ namespace app
         public void SetForm1(Form1 form1_1)
         {
             Form1_0 = form1_1;
-
-            /*CubingRecipes.Add("Flawless Emerald+Flawless Emerald+Flawless Emerald=Perfect Emerald");    //Perfect emerald
-            CubingRecipes.Add("Flawless Sapphire+Flawless Sapphire+Flawless Sapphire=Perfect Sapphire"); //Perfect Sapphire
-            CubingRecipes.Add("Flawless Amethyst+Flawless Amethyst+Flawless Amethyst=Perfect Amethyst"); //Perfect Amethyst
-            CubingRecipes.Add("Flawless Topaz+Flawless Topaz+Flawless Topaz=Perfect Topaz");          //Perfect Topaz
-            CubingRecipes.Add("Flawless Ruby+Flawless Ruby+Flawless Ruby=Perfect Ruby");             //Perfect Ruby
-            CubingRecipes.Add("Flawless Diamond+Flawless Diamond+Flawless Diamond=Perfect Diamond");    //Perfect Diamond
-
-            CubingRecipes.Add("El Rune+El Rune+El Rune=Eld Rune");      //Eld
-            CubingRecipes.Add("Eld Rune+Eld Rune+Eld Rune=Tir Rune");   //Tir
-            CubingRecipes.Add("Tir Rune+Tir Rune+Tir Rune=Nef Rune");   //Nef
-            CubingRecipes.Add("Nef Rune+Nef Rune+Nef Rune=Eth Rune");   //Eth
-            CubingRecipes.Add("Eth Rune+Eth Rune+Eth Rune=Ith Rune");   //Ith
-            CubingRecipes.Add("Ith Rune+Ith Rune+Ith Rune=Tal Rune");   //Tal
-            CubingRecipes.Add("Tal Rune+Tal Rune+Tal Rune=Ral Rune");   //Ral
-            CubingRecipes.Add("Ral Rune+Ral Rune+Ral Rune=Ort Rune");   //Ort
-            CubingRecipes.Add("Ort Rune+Ort Rune+Ort Rune=Thul Rune");   //Thul
-
-            CubingRecipes.Add("Thul Rune+Thul Rune+Thul Rune+Chipped Topaz=Amn Rune");   //amn
-            CubingRecipes.Add("Amn Rune+Amn Rune+Amn Rune+Chipped Amethyst=Sol Rune");   //sol
-            CubingRecipes.Add("Sol Rune+Sol Rune+Sol Rune+Chipped Sapphire=Shael Rune"); //shael
-            CubingRecipes.Add("Shael Rune+Shael Rune+Shael Rune+Chipped Ruby=Dol Rune"); //dol
-            CubingRecipes.Add("Dol Rune+Dol Rune+Dol Rune+Chipped Emerald=Hel Rune");    //hel
-            CubingRecipes.Add("Hel Rune+Hel Rune+Hel Rune+Chipped Diamond=Io Rune");     //Io
-
-            CubingRecipes.Add("Io Rune+Io Rune+Io Rune+Flawed Topaz=Lum Rune");          //Lum
-            CubingRecipes.Add("Lum Rune+Lum Rune+Lum Rune+Flawed Amethyst=Ko Rune");     //Ko
-            CubingRecipes.Add("Ko Rune+Ko Rune+Ko Rune+Flawed Sapphire=Fal Rune");       //Fal
-            CubingRecipes.Add("Fal Rune+Fal Rune+Fal Rune+Flawed Ruby=Lem Rune");        //Lem
-            CubingRecipes.Add("Lem Rune+Lem Rune+Lem Rune+Flawed Emerald=Pul Rune");     //Pul
-            CubingRecipes.Add("Pul Rune+Pul Rune+Flawed Diamond=Um Rune");               //Um
-
-            //Token
-            CubingRecipes.Add("Twisted Essence of Suffering+Charged Essense of Hatred+Burning Essence of Terror+Festering Essence of Destruction=Token of Absolution");*/
         }
 
         public void ResetCubeInventory()
@@ -178,6 +144,9 @@ namespace app
 
         public void PerformCubing()
         {
+            Form1_0.UIScan_0.readUI();
+            if (!Form1_0.UIScan_0.leftMenu && !Form1_0.UIScan_0.rightMenu) return;
+
             //get stash item
             if (Form1_0.ItemsStruc_0.dwOwnerId_Shared1 == 0 || Form1_0.ItemsStruc_0.dwOwnerId_Shared2 == 0 || Form1_0.ItemsStruc_0.dwOwnerId_Shared3 == 0)
             {
@@ -198,6 +167,8 @@ namespace app
                 {
                     break;
                 }
+                Form1_0.UIScan_0.readUI();
+                if (!Form1_0.UIScan_0.leftMenu && !Form1_0.UIScan_0.rightMenu) return;
 
                 GetRecipeAt(i);
 
@@ -228,6 +199,8 @@ namespace app
                 {
                     break;
                 }
+                Form1_0.UIScan_0.readUI();
+                if (!Form1_0.UIScan_0.leftMenu && !Form1_0.UIScan_0.rightMenu) return;
 
                 //select the stash where the item is located
                 if (CurrentRecipeItemInStashNumber[i] == 1)
@@ -278,7 +251,7 @@ namespace app
                 itemScreenPos = ConvertIndexToXY(Form1_0.StashStruc_0.CubeIndex);
                 itemScreenPos = ConvertInventoryLocToScreenPos(itemScreenPos["x"], itemScreenPos["y"]);
                 Form1_0.Stash_0.PlaceItem(itemScreenPos["x"], itemScreenPos["y"]);
-                Form1_0.Stash_0.PlaceItem(itemScreenPos["x"], itemScreenPos["y"]);
+                //Form1_0.Stash_0.PlaceItem(itemScreenPos["x"], itemScreenPos["y"]);
                 //Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"]);
                 //Form1_0.WaitDelay(40);
             }
@@ -291,6 +264,12 @@ namespace app
             int tryyyy = 0;
             while (!Form1_0.UIScan_0.cubeMenu && tryyyy < 7)
             {
+                if (!Form1_0.Running || !Form1_0.GameStruc_0.IsInGame())
+                {
+                    break;
+                }
+                if (!Form1_0.UIScan_0.leftMenu && !Form1_0.UIScan_0.rightMenu) return;
+
                 Form1_0.KeyMouse_0.MouseCliccRight(itemScreenPos2["x"], itemScreenPos2["y"]);
                 Form1_0.WaitDelay(25);
                 Form1_0.ItemsStruc_0.GetItems(false);
@@ -303,12 +282,13 @@ namespace app
             {
                 //clic transmute button
                 Form1_0.KeyMouse_0.MouseClicc(405, 615);
-                Form1_0.WaitDelay(35);
+                Form1_0.WaitDelay(15);
                 Form1_0.KeyMouse_0.MouseClicc(405, 615);
-                Form1_0.WaitDelay(35);
+                Form1_0.WaitDelay(15);
                 Form1_0.KeyMouse_0.MouseClicc(405, 615);
-                Form1_0.WaitDelay(35);
+                Form1_0.WaitDelay(15);
                 Form1_0.ItemsStruc_0.GetItems(false);   //get inventory again
+                Form1_0.WaitDelay(100);
 
                 //send item to inventory
                 Form1_0.UIScan_0.readUI();
@@ -318,6 +298,8 @@ namespace app
                     {
                         break;
                     }
+                    if (!Form1_0.UIScan_0.leftMenu && !Form1_0.UIScan_0.rightMenu) return;
+
                     if (Cube_ItemTxtNoList[i] != 0)
                     {
                         if (Form1_0.ItemsNames_0.getItemBaseName(Cube_ItemTxtNoList[i]) == CurrentRecipeResult)
@@ -333,6 +315,8 @@ namespace app
                         {
                             break;
                         }
+                        Form1_0.UIScan_0.readUI();
+                        if (!Form1_0.UIScan_0.leftMenu && !Form1_0.UIScan_0.rightMenu) return;
 
                         itemScreenPos2 = ConvertIndexToCubeXY(i);
                         itemScreenPos2 = ConvertCubeLocToScreenPos(itemScreenPos2["x"], itemScreenPos2["y"]);

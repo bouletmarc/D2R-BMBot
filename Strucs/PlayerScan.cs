@@ -17,6 +17,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Linq;
 using static app.Enums;
+using static app.EnumsStates;
 using static System.Runtime.InteropServices.ComTypes.IStream;
 using static System.Windows.Forms.AxHost;
 
@@ -95,6 +96,9 @@ namespace app
         public long ManaPercentFromPlayer = 0;
 
         public bool PrintedLeechFoundInfo = false;
+        public bool HasBattleOrderState = false;
+        public long MaxHPValueWithBO = 0;
+        List<EnumsStates.State> PlayerStates = new List<EnumsStates.State>();
 
         public int[] RoomExit = new int[2];
 
@@ -109,6 +113,8 @@ namespace app
 
         public void GetPositions()
         {
+            Form1_0.SetProcessingTime();
+
             pathAddress = Form1_0.Mem_0.ReadInt64Raw((IntPtr) (PlayerPointer + 0x38));
             xPos = Form1_0.Mem_0.ReadUInt16Raw((IntPtr) (pathAddress + 0x02));
             yPos = Form1_0.Mem_0.ReadUInt16Raw((IntPtr) (pathAddress + 0x06));
@@ -122,6 +128,9 @@ namespace app
             pStatsListEx = Form1_0.Mem_0.ReadInt64Raw((IntPtr)(PlayerPointer + 0x88));
             statPtr = Form1_0.Mem_0.ReadInt64Raw((IntPtr)(pStatsListEx + 0x30));
             statCount = Form1_0.Mem_0.ReadInt32Raw((IntPtr)(pStatsListEx + 0x38));
+
+            PlayerStates = GetStates(pStatsListEx);
+            HasBattleOrderState = HasState(EnumsStates.State.Battleorders);
 
             byte[] buffer = new byte[statCount * 8];
             Form1_0.Mem_0.ReadRawMemory(statPtr + 0x2, ref buffer, (int) (statCount * 8));
@@ -258,7 +267,7 @@ namespace app
             Form1_0.Grid_SetInfos("Cords", xPosFinal + "," + yPosFinal);
             Form1_0.Grid_SetInfos("Life", PlayerHP + "/" + PlayerMaxHP);
             Form1_0.Grid_SetInfos("Mana", PlayerMana + "/" + PlayerMaxMana);
-            Form1_0.Grid_SetInfos("Map Level", levelNo.ToString());
+            Form1_0.Grid_SetInfos("Map Level", levelNo.ToString() + " " + (Enums.Area) levelNo);
             //Form1_0.Grid_SetInfos("Room Exit", RoomExit[0].ToString() + ", " + RoomExit[1].ToString());
             //Form1_0.Grid_SetInfos("Seed", mapSeed.ToString());
             //Form1_0.Grid_SetInfos("Difficulty", difficulty.ToString());
@@ -354,6 +363,23 @@ namespace app
 
             if (PlayerHP > PlayerMaxHP) PlayerMaxHP = PlayerHP;
             if (PlayerMana > PlayerMaxMana) PlayerMaxMana = PlayerMana;
+
+            //Set Max HP With BattleOrder State
+            if (HasBattleOrderState)
+            {
+                if (MaxHPValueWithBO < PlayerMaxHP)
+                {
+                    MaxHPValueWithBO = PlayerMaxHP;
+                }
+                else
+                {
+                    PlayerMaxHP = MaxHPValueWithBO;
+                }
+            }
+            else
+            {
+                MaxHPValueWithBO = 0;
+            }
         }
 
         public bool HasAnyPlayerInArea(int ThisArea)
@@ -698,6 +724,49 @@ namespace app
             EnergyFromEquippedItems += AddedEnergy;
             HPPercentFromEquippedItems += AddedHPPercent;
             ManaPercentFromEquippedItems += AddedManaPercent;
+        }
+
+        public bool HasState(EnumsStates.State state)
+        {
+            foreach (EnumsStates.State st in PlayerStates)
+            {
+                if (st == state)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public List<EnumsStates.State> GetStates(long statsListExPtr)
+        {
+            List<EnumsStates.State> states = new List<EnumsStates.State>();
+            for (int i = 0; i < 6; i++)
+            {
+                int offset = i * 4;
+                byte stateByte = Form1_0.Mem_0.ReadByteRaw((IntPtr)(statsListExPtr + 0xAD0 + (uint)offset));
+
+                offset = (32 * i) - 1;
+                states.AddRange(CalculateStates(stateByte, (uint)offset));
+            }
+
+            return states;
+        }
+
+        // Assuming you have a Process class with a ReadUInt method
+        private Process Process = new Process();
+
+        private List<EnumsStates.State> CalculateStates(byte stateByte, uint offset)
+        {
+            List<EnumsStates.State> states = new List<EnumsStates.State>();
+            for (int i = 0; i < 8; i++)
+            {
+                if ((stateByte & (1 << i)) != 0)
+                {
+                    states.Add((EnumsStates.State)(offset + i + 1));
+                }
+            }
+            return states;
         }
 
     }

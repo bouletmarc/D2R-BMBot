@@ -71,6 +71,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Bots\Rush\ChaosRush.cs" />
+    <Compile Include="Bots\Rush\BaalRush.cs" />
+    <Compile Include="Bots\Baal.cs" />
+    <Compile Include="Bots\Chaos.cs" />
+    <Compile Include="Bots\Nihlatak.cs" />
+    <Compile Include="Bots\Cows.cs" />
+    <Compile Include="Bots\Rush\AncienstRush.cs" />
+    <Compile Include="Bots\Shenk.cs" />
+    <Compile Include="Bots\Eldritch.cs" />
+    <Compile Include="Bots\WPTaker.cs" />
     <Compile Include="Bots\Rush\MephistoRush.cs" />
     <Compile Include="Bots\Rush\AndarielRush.cs" />
     <Compile Include="Bots\Rush\DurielRush.cs" />
@@ -90,8 +100,8 @@
     <Compile Include="Bots\Travincal.cs" />
     <Compile Include="Bots\Summoner.cs" />
     <Compile Include="Bots\Mephisto.cs" />
-    <Compile Include="Bots\Baal.cs" />
-    <Compile Include="Bots\Chaos.cs" />
+    <Compile Include="Bots\BaalLeech.cs" />
+    <Compile Include="Bots\ChaosLeech.cs" />
     <Compile Include="Config\CharConfig.cs" />
     <Compile Include="Bots\Andariel.cs" />
     <Compile Include="Bots\Countess.cs" />
@@ -109,11 +119,17 @@
     <Compile Include="FormSettings.Designer.cs">
       <DependentUpon>FormSettings.cs</DependentUpon>
     </Compile>
+    <Compile Include="OverlayForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="OverlayForm.Designer.cs">
+      <DependentUpon>OverlayForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PathFinding.cs" />
     <Compile Include="Scripts\Battle.cs" />
     <Compile Include="Scripts\Cubing.cs" />
     <Compile Include="Scripts\Gamble.cs" />
     <Compile Include="Scripts\KeyMouse.cs" />
-    <Compile Include="Scripts\MoveToPath.cs" />
     <Compile Include="Scripts\Mover.cs" />
     <Compile Include="Scripts\Potions.cs" />
     <Compile Include="Scripts\Repair.cs" />
@@ -121,6 +137,8 @@
     <Compile Include="Scripts\Stash.cs" />
     <Compile Include="Scripts\Town.cs" />
     <Compile Include="Strucs\BeltStruc.cs" />
+    <Compile Include="Strucs\EnumsStates.cs" />
+    <Compile Include="Strucs\EnumsMobsNPC.cs" />
     <Compile Include="Strucs\Enums.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>

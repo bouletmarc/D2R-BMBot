@@ -30,7 +30,7 @@ namespace app
 
         public void RunScript()
         {
-            Form1_0.Town_0.ScriptTownAct = 5; //set to town act 5 when running this script
+            Form1_0.Town_0.ScriptTownAct = 2; //set to town act 5 when running this script
 
             if (Form1_0.Town_0.GetInTown())
             {
@@ -49,7 +49,7 @@ namespace app
 
                     if ((Enums.Area) Form1_0.PlayerScan_0.levelNo == Enums.Area.ArcaneSanctuary)
                     {
-                        Form1_0.Town_0.SpawnTPButNotUseIT();
+                        Form1_0.Town_0.SpawnTP();
                         CurrentStep++;
                     }
                     else
@@ -60,7 +60,7 @@ namespace app
 
                 if (CurrentStep == 1)
                 {
-                    Form1_0.MoveToPath_0.MoveToNPC("Summoner", 45);
+                    Form1_0.PathFinding_0.MoveToNPC("Summoner", 25);
 
                     Form1_0.PlayerScan_0.GetPositions();
                     WaitPos.X = Form1_0.PlayerScan_0.xPos;
@@ -72,7 +72,7 @@ namespace app
                 {
                     if (!Form1_0.Battle_0.DoBattleScript(25))
                     {
-                        Form1_0.MoveToPath_0.MoveToThisPos(WaitPos);
+                        Form1_0.PathFinding_0.MoveToThisPos(WaitPos);
 
                         Form1_0.Town_0.TPSpawned = false;
                         CurrentStep++;
@@ -86,7 +86,7 @@ namespace app
                 {
                     Form1_0.SetGameStatus("Summoner waiting on leecher");
 
-                    if (!Form1_0.Town_0.TPSpawned) Form1_0.Town_0.SpawnTPButNotUseIT();
+                    if (!Form1_0.Town_0.TPSpawned) Form1_0.Town_0.SpawnTP();
 
                     Form1_0.Battle_0.DoBattleScript(25);
 
@@ -111,7 +111,10 @@ namespace app
                         }
                         else
                         {
-                            Form1_0.ItemsStruc_0.GetItems(true);
+                            Form1_0.Potions_0.CanUseSkillForRegen = true;
+                            CurrentStep++;
+
+                            /*Form1_0.ItemsStruc_0.GetItems(true);
                             Form1_0.ItemsStruc_0.GetItems(true);
                             Form1_0.ItemsStruc_0.GetItems(true);
                             Form1_0.ItemsStruc_0.GetItems(true);
@@ -126,7 +129,7 @@ namespace app
 
                             ScriptDone = true;
                             return;
-                            //Form1_0.LeaveGame(true);
+                            //Form1_0.LeaveGame(true);*/
                         }
                     }
                     else
@@ -140,9 +143,27 @@ namespace app
                         if (Form1_0.MobsStruc_0.GetMobs("getBossName", "Summoner", false, 200, new List<long>())) return; //redetect baal?
                         Form1_0.Potions_0.CanUseSkillForRegen = true;
 
+                        Form1_0.Town_0.UseLastTP = false;
                         ScriptDone = true;
                         return;
                         //Form1_0.LeaveGame(true);
+                    }
+                }
+
+                if (CurrentStep == 5)
+                {
+                    Form1_0.SetGameStatus("Summoner waiting on leecher #2");
+
+                    Form1_0.Battle_0.DoBattleScript(50);
+
+                    //get leecher infos
+                    Form1_0.PlayerScan_0.GetLeechPositions();
+
+                    if (Form1_0.PlayerScan_0.LeechlevelNo != (int)Enums.Area.ArcaneSanctuary)
+                    {
+                        Form1_0.Town_0.UseLastTP = false;
+                        ScriptDone = true;
+                        return;
                     }
                 }
             }

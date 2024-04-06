@@ -18,6 +18,7 @@ namespace app
         public int[] InventoryHasStashItem = new int[40];
         public long[] InventoryItemPointers = new long[40];
         public string[] InventoryItemNames = new string[40];
+        public int[] InventoryItemQuality = new int[40];
 
         public int HUDItems_idscrolls = 0;
         public int HUDItems_tpscrolls = 0;
@@ -218,6 +219,7 @@ namespace app
             InventoryHasUnidItem = new int[40];
             InventoryItemPointers = new long[40];
             InventoryItemNames = new string[40];
+            InventoryItemQuality = new int[40];
             InventoryHasStashItem = new int[40];
             HUDItems_idscrolls = 0;
             HUDItems_tpscrolls = 0;
@@ -232,6 +234,7 @@ namespace app
                 InventoryHasItem[FullIndex] = 1;
                 InventoryItemPointers[FullIndex] = Form1_0.ItemsStruc_0.ItemPointerLocation;
                 InventoryItemNames[FullIndex] = Form1_0.ItemsStruc_0.ItemNAAME;
+                InventoryItemQuality[FullIndex] = (int) Form1_0.ItemsStruc_0.itemQuality;
                 if (Form1_0.ItemsAlert_0.ShouldKeepItem())
                 {
                     InventoryHasStashItem[FullIndex] = 1;

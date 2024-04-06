@@ -30,6 +30,8 @@ namespace app
         public int MaxCheckDistance = 40;
         public byte interactType = 0;
 
+        public string ObjectOwnerName = "";
+
         public void SetForm1(Form1 form1_1)
         {
             Form1_0 = form1_1;
@@ -38,33 +40,61 @@ namespace app
         public void GetUnitData()
         {
             pUnitDataPtr = BitConverter.ToInt64(objectdatastruc, 0x10);
-            //pUnitData = new byte[144];
-            //Form1_0.Mem_0.ReadRawMemory(pUnitDataPtr, ref pUnitData, 144);
+            pUnitData = new byte[144];
+            Form1_0.Mem_0.ReadRawMemory(pUnitDataPtr, ref pUnitData, pUnitData.Length);
             interactType = Form1_0.Mem_0.ReadByteRaw((IntPtr) (pUnitDataPtr + 0x08));
 
-            /*if (isPortal((int)txtFileNo) == 1)
+            //########
+            byte[] pUnitNameData = new byte[16];
+            Form1_0.Mem_0.ReadRawMemory(pUnitDataPtr + 0x34, ref pUnitNameData, pUnitNameData.Length);
+            ObjectOwnerName = "";
+            for (int i2 = 0; i2 < 16; i2++)
             {
-                string SavePathh = Form1_0.ThisEndPath + "DumpObjectUnitDataStruc";
-                File.Create(SavePathh).Dispose();
-                File.WriteAllBytes(SavePathh, pUnitData);
-            }*/
-        }
-
-        /*public string GetPortalOwnerName()
-        {
-            string name = "";
-            int NameOffset = 0x34;
-            for (int i2 = NameOffset; i2 < 16; i2++)
-            {
-                if (pUnitData[i2] != 0x00)
+                if (pUnitNameData[i2] != 0x00)
                 {
-                    name += (char)pUnitData[i2];
+                    ObjectOwnerName += (char)pUnitNameData[i2];
                 }
             }
-            return name;
-        }*/
+            //########
+        }
 
-        public bool GetObjects(string ObjectType, bool Nearest, List<uint> IgnoredIDList = null, int MaxDistance = 999)
+        public List<int[]> GetAllObjectsNearby(string ObjectType)
+        {
+            //"object", "GoodChest"
+            Form1_0.PatternsScan_0.scanForUnitsPointer("objects");
+
+            List<int[]> objectsPositions2 = new List<int[]>();
+
+            for (int i = 0; i < Form1_0.PatternsScan_0.AllObjectsPointers.Count; i++)
+            {
+                ObjectPointerLocation = Form1_0.PatternsScan_0.AllObjectsPointers[i];
+                if (ObjectPointerLocation > 0)
+                {
+                    //objectdatastruc = new byte[144];
+                    objectdatastruc = new byte[64];
+                    Form1_0.Mem_0.ReadRawMemory(ObjectPointerLocation, ref objectdatastruc, objectdatastruc.Length);
+
+                    txtFileNo = BitConverter.ToUInt32(objectdatastruc, 4);
+                    //ObjectUnitID = BitConverter.ToUInt32(objectdatastruc, 0x08);
+                    //GetUnitData();
+                    GetUnitPathData();
+
+                    //Form1_0.method_1("Object: " + getObjectName((int)txtFileNo) + " - " + itemx + ", " + itemy, Color.DarkOrchid);
+                    if (itemx != 0 && itemy != 0)
+                    {
+                        if (getObjectName((int)txtFileNo) == ObjectType)
+                        {
+                            //objectsPositions2.Add(Tuple.Create((int)itemx, (int)itemy));
+                            objectsPositions2.Add(new int[2] { (int)itemx, (int)itemy });
+                        }
+                    }
+                }
+            }
+
+            return objectsPositions2;
+        }
+
+        public bool GetObjects(string ObjectType, bool Nearest, List<uint> IgnoredIDList = null, int MaxDistance = 999, string PortalOwner = "", int PortalArea = 0)
         {
             txtFileNo = 0;
             ObjectUnitID = 0;
@@ -92,24 +122,28 @@ namespace app
 
                     if (ObjectType == "TownPortal")
                     {
-                        //Console.WriteLine(GetPortalOwnerName());
-                        //Console.WriteLine(Form1_0.PlayerScan_0.pName);
-                        //if (isPortal((int)txtFileNo) == 1 && GetPortalOwnerName() == Form1_0.PlayerScan_0.pName)
                         if (isPortal((int)txtFileNo) == 1)
                         {
-                            //Form1_0.method_1("PortalID: 0x" + ObjectUnitID.ToString("X"), System.Drawing.Color.DarkMagenta);
-
-                            if (ObjectUnitID != 0 && ObjectUnitID != 4 && !IsIgnoredID(IgnoredIDList))
+                            if (ObjectUnitID != 0 && ObjectUnitID != 4 && !IsIgnoredID(IgnoredIDList) && itemx != 0 && itemy != 0)
                             {
-                                //Form1_0.method_1("PortalID: 0x" + ObjectUnitID.ToString("X"), System.Drawing.Color.DarkMagenta);
+                                //Form1_0.method_1("PortalID: 0x" + ObjectUnitID.ToString("X") + " to Area: " + interactType + " (" + ((Enums.Area)interactType) + ")", System.Drawing.Color.DarkMagenta);
+                                //Form1_0.method_1("Object: " + itemx + ", " + itemy + " - " + getObjectName((int)txtFileNo), Color.DarkOrchid);
 
-                                //string SavePathh = Form1_0.ThisEndPath + "DumpObjectStruc";
+                                //string SavePathh = Form1_0.ThisEndPath + "PortalStrucpPath";
                                 //File.Create(SavePathh).Dispose();
-                                //File.WriteAllBytes(SavePathh, objectdatastruc);
+                                //File.WriteAllBytes(SavePathh, pPath);
 
-                                LastPointer = ObjectPointerLocation;
-                                SetNearestObject(Nearest);
-                                //return true;
+                                if ((PortalOwner != "" && ObjectOwnerName == PortalOwner)
+                                    || PortalOwner == "")
+                                {
+                                    if ((PortalArea != 0 && interactType == PortalArea)
+                                        || PortalArea == 0)
+                                    {
+                                        LastPointer = ObjectPointerLocation;
+                                        SetNearestObject(Nearest);
+                                        //return true;
+                                    }
+                                }
                             }
                         }
                     }
@@ -119,7 +153,7 @@ namespace app
                         {
                             if (itemx != 0 && itemy != 0)
                             {
-                                Form1_0.method_1("OBJ POS: " + itemx + ", " + itemy + " - " + getObjectName((int)txtFileNo), Color.DarkTurquoise);
+                                Form1_0.method_1("Object: " + itemx + ", " + itemy + " - " + getObjectName((int)txtFileNo), Color.DarkOrchid);
                                 SetNearestObject(Nearest);
                                 if (!Nearest)
                                 {
@@ -132,10 +166,10 @@ namespace app
                     {
                         if (getObjectName((int)txtFileNo) == ObjectType && !IsIgnoredID(IgnoredIDList))
                         {
-                            Form1_0.method_1("OBJ POS: " + itemx + ", " + itemy + " - " + getObjectName((int)txtFileNo), Color.DarkOrchid);
+                            Form1_0.method_1("Object: " + itemx + ", " + itemy + " - " + getObjectName((int)txtFileNo), Color.DarkOrchid);
                             if (itemx != 0 && itemy != 0)
                             {
-                                //Form1_0.method_1("OBJ POS: " + itemx + ", " + itemy + " - " + getObjectName((int)txtFileNo), Color.DarkOrchid);
+                                //Form1_0.method_1("Object: " + itemx + ", " + itemy + " - " + getObjectName((int)txtFileNo), Color.DarkOrchid);
 
                                 SetNearestObject(Nearest);
                                 if (!Nearest)
@@ -255,7 +289,7 @@ namespace app
         public void GetUnitPathData()
         {
             pPathPtr = BitConverter.ToInt64(objectdatastruc, 0x38);
-            //pPath = new byte[0x16];
+            //pPath = new byte[0x32];
             //Form1_0.Mem_0.ReadRawMemory(pPathPtr, ref pPath, pPath.Length);
             //itemx = BitConverter.ToUInt16(pPath, 0x10);
             //itemy = BitConverter.ToUInt16(pPath, 0x14);
@@ -266,7 +300,7 @@ namespace app
             //File.Create(SavePathh).Dispose();
             //File.WriteAllBytes(SavePathh, pPath);
 
-            //Form1_0.method_1("OBJ POS: " + itemx + ", " + itemy + " - " + NormalType + " - " + getObjectName((int)txtFileNo));
+            //Form1_0.method_1("Object: " + itemx + ", " + itemy + " - " + NormalType + " - " + getObjectName((int)txtFileNo));
         }
 
         public int isShrine(int txtFileNo)
@@ -980,6 +1014,30 @@ namespace app
             return "";
         }
 
+        public bool IsWaypoint(int txtFileNo)
+        {
+            switch (txtFileNo)
+            {
+                case 539: return true;
+                case 511: return true;
+                case 496: return true;
+                case 494: return true;
+                case 429: return true;
+                case 402: return true;
+                case 398: return true;
+                case 323: return true;
+                case 324: return true;
+                case 288: return true;
+                case 237: return true;
+                case 238: return true;
+                case 156: return true;
+                case 157: return true;
+                case 145: return true;
+                case 119: return true;
+                default: return false;
+            }
+        }
+
         public int isChest(int txtFileNo)
         {
             switch (txtFileNo)
@@ -1167,5 +1225,5 @@ namespace app
             }
             return "";
         }*/
-    }
-}
+                        }
+                    }

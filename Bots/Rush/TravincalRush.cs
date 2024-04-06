@@ -34,7 +34,7 @@ namespace app
 
         public void RunScript()
         {
-            Form1_0.Town_0.ScriptTownAct = 5; //set to town act 5 when running this script
+            Form1_0.Town_0.ScriptTownAct = 3; //set to town act 5 when running this script
 
             if (Form1_0.Town_0.GetInTown())
             {
@@ -53,7 +53,7 @@ namespace app
 
                     if ((Enums.Area) Form1_0.PlayerScan_0.levelNo == Enums.Area.Travincal)
                     {
-                        Form1_0.Town_0.SpawnTPButNotUseIT();
+                        Form1_0.Town_0.SpawnTP();
                         PortalPosition.X = Form1_0.PlayerScan_0.xPos + 85;
                         PortalPosition.Y = Form1_0.PlayerScan_0.yPos - 139;
                         CurrentStep++;
@@ -66,7 +66,7 @@ namespace app
 
                 if (CurrentStep == 1)
                 {
-                    Form1_0.MoveToPath_0.MoveToThisPos(PortalPosition);
+                    Form1_0.PathFinding_0.MoveToThisPos(PortalPosition);
                     CurrentStep++;
                 }
 
@@ -76,7 +76,7 @@ namespace app
 
                     if (!Form1_0.Battle_0.DoBattleScript(25))
                     {
-                        Form1_0.MoveToPath_0.MoveToThisPos(PortalPosition);
+                        Form1_0.PathFinding_0.MoveToThisPos(PortalPosition);
 
                         Form1_0.Town_0.TPSpawned = false;
                         CurrentStep++;
@@ -87,7 +87,7 @@ namespace app
                 {
                     Form1_0.SetGameStatus("Travincal waiting on leecher");
 
-                    if (!Form1_0.Town_0.TPSpawned) Form1_0.Town_0.SpawnTPButNotUseIT();
+                    if (!Form1_0.Town_0.TPSpawned) Form1_0.Town_0.SpawnTP();
 
                     Form1_0.Battle_0.DoBattleScript(25);
 
@@ -105,7 +105,7 @@ namespace app
                     OrbPos = Form1_0.MapAreaStruc_0.GetPositionOfObject("object", "CompellingOrb", (int)Enums.Area.Travincal, new List<int>());
                     if (OrbPos.X != 0 && OrbPos.Y != 0)
                     {
-                        Form1_0.MoveToPath_0.MoveToThisPos(OrbPos);
+                        Form1_0.PathFinding_0.MoveToThisPos(OrbPos);
 
                         CurrentStep++;
                     }
@@ -113,6 +113,7 @@ namespace app
                     {
                         Form1_0.method_1("Kahlim Orb location not detected!", Color.Red);
                         ScriptDone = true;
+                        Form1_0.Town_0.UseLastTP = false;
                         return;
                     }
                 }
@@ -147,11 +148,12 @@ namespace app
                             Form1_0.Potions_0.CanUseSkillForRegen = true;
 
                             ScriptDone = true;
+                            Form1_0.Town_0.UseLastTP = false;
                             return;
                         }
                         else
                         {
-                            Form1_0.Town_0.SpawnTPButNotUseIT();
+                            Form1_0.Town_0.SpawnTP();
                             CurrentStep++;
                         }
 
@@ -182,6 +184,7 @@ namespace app
                         Form1_0.ItemsStruc_0.GrabAllItemsForGold();
                         Form1_0.Potions_0.CanUseSkillForRegen = true;
 
+                        Form1_0.Town_0.UseLastTP = false;
                         ScriptDone = true;
                     }
                 }

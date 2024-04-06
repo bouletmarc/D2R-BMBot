@@ -33,3 +33,5 @@ Lem Rune+Lem Rune+Lem Rune+Flawed Emerald=Pul Rune
 Pul Rune+Pul Rune+Flawed Diamond=Um Rune
 
 Twisted Essence of Suffering+Charged Essense of Hatred+Burning Essence of Terror+Festering Essence of Destruction=Token of Absolution
+
+Tome of Town Portal+Wirt's Leg=Cow Portal

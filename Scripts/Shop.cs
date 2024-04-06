@@ -21,6 +21,8 @@ namespace app
         public bool ShopForKey = false;
         public bool ShopForRegainHP = false;
 
+        public bool ShopForTomeOfPortal = false; //cows level portal making
+
         public void SetForm1(Form1 form1_1)
         {
             Form1_0 = form1_1;
@@ -413,6 +415,34 @@ namespace app
                     tries++;
                 }
                 StartQty = Form1_0.InventoryStruc_0.HUDItems_keys;
+            }
+
+            //buy tome of portal for cows level
+            if (ShopForTomeOfPortal)
+            {
+                bool HasTownPortal = Form1_0.InventoryStruc_0.HasInventoryItemName("Tome of Town Portal");
+                tries = 0;
+                while (!HasTownPortal && tries < 1)
+                {
+                    Form1_0.SetGameStatus("TOWN-SHOP-BUY TOME PORTAL");
+                    if (!Form1_0.Running || !Form1_0.GameStruc_0.IsInGame())
+                    {
+                        break;
+                    }
+                    if (Form1_0.ItemsStruc_0.GetShopItem("Tome of Town Portal"))
+                    {
+                        Dictionary<string, int> itemScreenPos = ConvertShopLocToScreenPos(Form1_0.ItemsStruc_0.itemx, Form1_0.ItemsStruc_0.itemy);
+
+                        Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"]);
+                        Form1_0.WaitDelay(20);
+                        Form1_0.ItemsStruc_0.GetItems(false);   //get inventory
+                    }
+
+                    HasTownPortal = Form1_0.InventoryStruc_0.HasInventoryItemName("Tome of Town Portal");
+                    if (!HasTownPortal) tries++;
+                }
+
+                if (HasTownPortal) ShopForTomeOfPortal = false;
             }
         }
     }

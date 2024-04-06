@@ -13,7 +13,7 @@ using System.Windows.Forms;
 using static System.Collections.Specialized.BitVector32;
 using static System.Windows.Forms.AxHost;
 using System.Threading;
-using static System.Net.Mime.MediaTypeNames;
+using static app.Enums;
 
 namespace app
 {
@@ -34,6 +34,7 @@ namespace app
         public string SelectedGameName = "";
 
         public List<string> AllGamesTriedNames = new List<string>();
+        public bool AlreadyChickening = false;
 
         [DllImport("user32.dll")] static extern short VkKeyScan(char ch);
 
@@ -105,6 +106,8 @@ namespace app
             Form1_0.KeyMouse_0.MouseClicc(1360 + (100 * CharConfig.GameDifficulty), 375);
 
             Form1_0.KeyMouse_0.MouseClicc(1470, 670);  //clic 'create game'
+
+            Form1_0.TriedToCreateNewGameCount++;
 
             Form1_0.SetGameStatus("LOADING GAME");
 
@@ -262,7 +265,8 @@ namespace app
                     ClicGameIndex(ThisIndex);
                 }
             }
-            if (ThisIndex >= 14 && ThisIndex <= 26)
+            //dont select any game greater than this index as 'refreshing' the search can make a bug where there no more games listed
+            /*if (ThisIndex >= 14 && ThisIndex <= 26)
             {
                 if (!EnterGame) ClicMidRow();
                 ClicGameIndex(ThisIndex - 13);
@@ -285,7 +289,7 @@ namespace app
                     Thread.Sleep(10);
                     ClicGameIndex(ThisIndex);
                 }
-            }
+            }*/
 
             Form1_0.WaitDelay(40);
             GetSelectedGameInfo();
@@ -317,18 +321,30 @@ namespace app
 
         public void CheckChickenGameTime()
         {
-            TimeSpan Checkkt = (DateTime.Now - Form1_0.GameStartedTime);
-            if (Checkkt.TotalMinutes > CharConfig.MaxGameTime)
+            if (!CharConfig.RunItemGrabScriptOnly)
             {
-                Form1_0.method_1("Leaving reason: Chicken time", Color.Red);
-                Form1_0.LeaveGame(false);
+                if (!CharConfig.IsRushing)
+                {
+                    if (!AlreadyChickening)
+                    {
+                        TimeSpan Checkkt = (DateTime.Now - Form1_0.GameStartedTime);
+
+                        Form1_0.method_GameTimeLabel(Checkkt.Minutes.ToString("00") + ":" + Checkkt.Seconds.ToString("00") + ":" + Checkkt.Milliseconds.ToString("0"));
+                        if (Checkkt.TotalMinutes > CharConfig.MaxGameTime)
+                        {
+                            Form1_0.method_1("Leaving reason: Chicken time", Color.Red);
+                            Form1_0.LeaveGame(false);
+                            AlreadyChickening = true;
+                        }
+                    }
+                }
             }
         }
 
         public string GetTimeNow()
         {
             DateTime ThisTimee = DateTime.Now;
-            string HourTime = ThisTimee.Hour.ToString("00") + ":" + ThisTimee.Minute.ToString("00");
+            string HourTime = ThisTimee.Minute.ToString("00") + ":" + ThisTimee.Second.ToString("00");
             string MonthTime = ThisTimee.Day + "-" + ThisTimee.Month + "-" + ThisTimee.Year;
 
             return HourTime + " (" + MonthTime + ")";
@@ -345,9 +361,30 @@ namespace app
             long gameNameAddress = (long)Form1_0.BaseAddress + gameNameOffset;
             GameName = Form1_0.Mem_0.ReadMemString(gameNameAddress);
 
+            method_GameLabel(GameName);
+
             Form1_0.method_1("Entered game: " + GameName, Color.DarkBlue);
 
             AllGamesTriedNames = new List<string>();
+        }
+
+        public void method_GameLabel(string string_3)
+        {
+            //try
+            //{
+            if (Form1_0.labelGameName.InvokeRequired)
+            {
+                // Call this same method but append THREAD2 to the text
+                Action safeWrite = delegate { method_GameLabel(string_3); };
+                Form1_0.labelGameName.Invoke(safeWrite);
+            }
+            else
+            {
+                Form1_0.labelGameName.Text = string_3;
+                Application.DoEvents();
+            }
+            //}
+            //catch { }
         }
 
         public void LogGameTime()
@@ -400,6 +437,21 @@ namespace app
             }
 
             return false;
+        }
+
+        public List<Area> GetTerrorZones()
+        {
+            List<Area> areas = new List<Area>();
+            for (int i = 0; i < 7; i++)
+            {
+                uint tzArea = Form1_0.Mem_0.ReadUInt32((IntPtr) (0x299E2D8 + (i * 4)));
+                if (tzArea != 0)
+                {
+                    areas.Add((Area)tzArea);
+                }
+            }
+
+            return areas;
         }
     }
 }

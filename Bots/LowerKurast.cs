@@ -16,6 +16,7 @@ namespace app
         public int WP_Y = 0;
         public List<int> IgnoredChestList = new List<int>();
         public bool ScriptDone = false;
+        public bool HasTakenAnyChest = false;
 
         public void SetForm1(Form1 form1_1)
         {
@@ -41,36 +42,6 @@ namespace app
                 CurrentStep = 0;
 
                 Form1_0.Town_0.GoToWPArea(3, 4);
-                //close to store spot 5078, 5026
-                /*if (Form1_0.Town_0.IsPosCloseTo(5084, 5037, 7))
-                {
-                    //move close to tp location
-                    Form1_0.Mover_0.MoveToLocation(5103, 5029);
-                }
-                else
-                {
-                    //move close to wp location
-                    if (Form1_0.Mover_0.MoveToLocation(5119, 5067))
-                    {
-                        //use wp
-                        //if (Form1_0.ObjectsStruc_0.GetObjects("ExpansionWaypoint", false))
-                        //{
-                        //Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, Form1_0.ObjectsStruc_0.itemx, Form1_0.ObjectsStruc_0.itemy);
-                        Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, 5114, 5069);
-                        Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"] - 15);
-                        Form1_0.Mover_0.FinishMoving();
-                        if (Form1_0.UIScan_0.WaitTilUIOpen("waypointMenu"))
-                        {
-                            Form1_0.KeyMouse_0.MouseClicc(415, 220); //select act3
-                            Form1_0.WaitDelay(50);
-                            Form1_0.KeyMouse_0.MouseClicc(400, 515); //select kurast wp
-                            Form1_0.UIScan_0.WaitTilUIClose("waypointMenu");
-                            Form1_0.UIScan_0.WaitTilUIClose("loading");
-                            Form1_0.WaitDelay(350);
-                        }
-                        //}
-                    }
-                }*/
             }
             else
             {
@@ -117,10 +88,11 @@ namespace app
                             if (Form1_0.UIScan_0.WaitTilUIOpen("waypointMenu"))
                             {
                                 Form1_0.Town_0.SelectTownWP();
-                                //Form1_0.Town_0.Towning = true;
+                                Form1_0.Town_0.Towning = true;
+                                Form1_0.Town_0.UseLastTP = false;
                                 ScriptDone = true;
 
-                                Form1_0.LeaveGame(true); //#####
+                                //Form1_0.LeaveGame(true); //#####
                             }
                         //}
                     }
@@ -147,6 +119,8 @@ namespace app
             {
                 if (Form1_0.Mover_0.MoveToLocation(ThisChestPos.X, ThisChestPos.Y))
                 {
+                    HasTakenAnyChest = true;
+
                     Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, ThisChestPos.X, ThisChestPos.Y);
                     Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"] - 15);
                     Form1_0.WaitDelay(10);
@@ -171,66 +145,68 @@ namespace app
                 Tryy++;
             }
 
+            if (!HasTakenAnyChest) Form1_0.MapAreaStruc_0.DumpMap();
+
             //##############
-            /*ThisChestPos = Form1_0.MapAreaStruc_0.GetPositionOfObject("object", "JungleStashObject2", 78, IgnoredChestList);
-            Tryy = 0;
-            while (ThisChestPos.X != 0 && ThisChestPos.Y != 0 && Tryy < 30)
-            {
-                if (Form1_0.Mover_0.MoveToLocation(ThisChestPos.X, ThisChestPos.Y))
+                /*ThisChestPos = Form1_0.MapAreaStruc_0.GetPositionOfObject("object", "JungleStashObject2", 78, IgnoredChestList);
+                Tryy = 0;
+                while (ThisChestPos.X != 0 && ThisChestPos.Y != 0 && Tryy < 30)
                 {
-                    Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, ThisChestPos.X, ThisChestPos.Y);
-                    Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"] - 15);
-                    Form1_0.WaitDelay(10);
-                    Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"] - 15);
-                    Form1_0.WaitDelay(10);
-                    Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"] - 15);
-                    Form1_0.WaitDelay(10);
-
-                    int tryy2 = 0;
-                    while (Form1_0.ItemsStruc_0.GetItems(true) && tryy2 < 20)
+                    if (Form1_0.Mover_0.MoveToLocation(ThisChestPos.X, ThisChestPos.Y))
                     {
-                        Form1_0.PlayerScan_0.GetPositions();
-                        Form1_0.ItemsStruc_0.GetItems(false);
-                        Form1_0.Potions_0.CheckIfWeUsePotion();
-                        tryy2++;
+                        Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, ThisChestPos.X, ThisChestPos.Y);
+                        Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"] - 15);
+                        Form1_0.WaitDelay(10);
+                        Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"] - 15);
+                        Form1_0.WaitDelay(10);
+                        Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"] - 15);
+                        Form1_0.WaitDelay(10);
+
+                        int tryy2 = 0;
+                        while (Form1_0.ItemsStruc_0.GetItems(true) && tryy2 < 20)
+                        {
+                            Form1_0.PlayerScan_0.GetPositions();
+                            Form1_0.ItemsStruc_0.GetItems(false);
+                            Form1_0.Potions_0.CheckIfWeUsePotion();
+                            tryy2++;
+                        }
+                        IgnoredChestList.Add(Form1_0.MapAreaStruc_0.CurrentObjectIndex);
                     }
-                    IgnoredChestList.Add(Form1_0.MapAreaStruc_0.CurrentObjectIndex);
+
+                    ThisChestPos = Form1_0.MapAreaStruc_0.GetPositionOfObject("object", "JungleStashObject2", 78, IgnoredChestList);
+
+                    Tryy++;
                 }
-
-                ThisChestPos = Form1_0.MapAreaStruc_0.GetPositionOfObject("object", "JungleStashObject2", 78, IgnoredChestList);
-
-                Tryy++;
-            }
-            //##############
-            ThisChestPos = Form1_0.MapAreaStruc_0.GetPositionOfObject("object", "JungleStashObject3", 78, IgnoredChestList);
-            Tryy = 0;
-            while (ThisChestPos.X != 0 && ThisChestPos.Y != 0 && Tryy < 30)
-            {
-                if (Form1_0.Mover_0.MoveToLocation(ThisChestPos.X, ThisChestPos.Y))
-                {
-                    Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, ThisChestPos.X, ThisChestPos.Y);
-                    Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"] - 15);
-                    Form1_0.WaitDelay(10);
-                    Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"] - 15);
-                    Form1_0.WaitDelay(10);
-                    Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"] - 15);
-                    Form1_0.WaitDelay(10);
-
-                    int tryy2 = 0;
-                    while (Form1_0.ItemsStruc_0.GetItems(true) && tryy2 < 20)
-                    {
-                        Form1_0.PlayerScan_0.GetPositions();
-                        Form1_0.ItemsStruc_0.GetItems(false);
-                        Form1_0.Potions_0.CheckIfWeUsePotion();
-                        tryy2++;
-                    }
-                    IgnoredChestList.Add(Form1_0.MapAreaStruc_0.CurrentObjectIndex);
-                }
-
+                //##############
                 ThisChestPos = Form1_0.MapAreaStruc_0.GetPositionOfObject("object", "JungleStashObject3", 78, IgnoredChestList);
+                Tryy = 0;
+                while (ThisChestPos.X != 0 && ThisChestPos.Y != 0 && Tryy < 30)
+                {
+                    if (Form1_0.Mover_0.MoveToLocation(ThisChestPos.X, ThisChestPos.Y))
+                    {
+                        Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, ThisChestPos.X, ThisChestPos.Y);
+                        Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"] - 15);
+                        Form1_0.WaitDelay(10);
+                        Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"] - 15);
+                        Form1_0.WaitDelay(10);
+                        Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"] - 15);
+                        Form1_0.WaitDelay(10);
 
-                Tryy++;
-            }*/
+                        int tryy2 = 0;
+                        while (Form1_0.ItemsStruc_0.GetItems(true) && tryy2 < 20)
+                        {
+                            Form1_0.PlayerScan_0.GetPositions();
+                            Form1_0.ItemsStruc_0.GetItems(false);
+                            Form1_0.Potions_0.CheckIfWeUsePotion();
+                            tryy2++;
+                        }
+                        IgnoredChestList.Add(Form1_0.MapAreaStruc_0.CurrentObjectIndex);
+                    }
+
+                    ThisChestPos = Form1_0.MapAreaStruc_0.GetPositionOfObject("object", "JungleStashObject3", 78, IgnoredChestList);
+
+                    Tryy++;
+                }*/
         }
 
     }

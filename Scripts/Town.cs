@@ -19,7 +19,7 @@ namespace app
         public bool FastTowning = false;
         public bool IsInTown = false;
         public bool TPSpawned = false;
-        public bool UseLastTP = true;
+        public bool UseLastTP = false;
         public int ScriptTownAct = 5;       //default should be 0
         public int TriedToStashCount = 0;
         public int TriedToGambleCount = 0;
@@ -34,10 +34,45 @@ namespace app
         public List<uint> IgnoredTPList = new List<uint>();
         public List<uint> IgnoredWPList = new List<uint>();
         public bool FirstTown = true;
+        public bool CainNotFoundAct1 = false;
 
         public void SetForm1(Form1 form1_1)
         {
             Form1_0 = form1_1;
+        }
+
+        public void StopTowningReturn()
+        {
+            CurrentScript = 0;
+            TriedToStashCount = 0;
+            TriedToGambleCount = 0;
+            TriedToShopCount = 0;
+            TriedToShopCount2 = 0;
+            TriedToMercCount = 0;
+            TriedToUseTPCount = 0;
+            Towning = false;
+            FastTowning = false;
+            ForcedTowning = false;
+            //UseLastTP = true;
+
+            if (Form1_0.PublicGame)
+            {
+                DateTime StartWaitingChangeArea = DateTime.Now;
+                while (GetInTown() && (DateTime.Now - StartWaitingChangeArea).TotalSeconds < 2) 
+                {
+                    Form1_0.PlayerScan_0.GetPositions();
+                    Form1_0.overlayForm.UpdateOverlay();
+                    Form1_0.GameStruc_0.CheckChickenGameTime();
+                    Form1_0.ItemsStruc_0.GetItems(false);
+                }
+
+                if ((DateTime.Now - StartWaitingChangeArea).TotalSeconds < 2)
+                {
+                    Form1_0.WaitDelay(300);
+                    Form1_0.Town_0.SpawnTP();
+                }
+
+            }
         }
 
         public void RunTownScript()
@@ -53,25 +88,17 @@ namespace app
             if (Form1_0.PlayerScan_0.PlayerDead || Form1_0.Potions_0.ForceLeave)
             {
                 Form1_0.Potions_0.ForceLeave = true;
-                Form1_0.Baal_0.SearchSameGamesAsLastOne = false;
+                Form1_0.BaalLeech_0.SearchSameGamesAsLastOne = false;
                 Form1_0.LeaveGame(false);
                 return;
             }
 
+            Form1_0.GameStruc_0.CheckChickenGameTime();
+
             //item grab only -> no town
             if (Towning && CharConfig.RunItemGrabScriptOnly)
             {
-                CurrentScript = 0;
-                TriedToStashCount = 0;
-                TriedToGambleCount = 0;
-                TriedToShopCount = 0;
-                TriedToShopCount2 = 0;
-                TriedToMercCount = 0;
-                TriedToUseTPCount = 0;
-                Towning = false;
-                FastTowning = false;
-                ForcedTowning = false;
-                UseLastTP = true;
+                StopTowningReturn();
                 return;
             }
 
@@ -80,19 +107,11 @@ namespace app
                 Form1_0.SetGameStatus("TOWN-TP TO TOWN");
                 Form1_0.Potions_0.CheckIfWeUsePotion();
 
+                if (FastTowning) UseLastTP = true;
+
                 if (FastTowning && !Form1_0.Shop_0.ShouldShop())
                 {
-                    CurrentScript = 0;
-                    TriedToStashCount = 0;
-                    TriedToGambleCount = 0;
-                    TriedToShopCount = 0;
-                    TriedToShopCount2 = 0;
-                    TriedToMercCount = 0;
-                    TriedToUseTPCount = 0;
-                    Towning = false;
-                    FastTowning = false;
-                    ForcedTowning = false;
-                    UseLastTP = true;
+                    StopTowningReturn();
                     return;
                 }
 
@@ -106,51 +125,59 @@ namespace app
                 if (TPSpawned)
                 {
                     //select the spawned TP
-                    if (Form1_0.ObjectsStruc_0.GetObjects("TownPortal", true, IgnoredTPList))
+                    if (Form1_0.ObjectsStruc_0.GetObjects("TownPortal", true, IgnoredTPList, 999, CharConfig.PlayerCharName))
                     //if (Form1_0.ObjectsStruc_0.GetObjects("TownPortal", Form1_0.PlayerScan_0.unitId))
                     {
                         if (Form1_0.ObjectsStruc_0.itemx != 0 && Form1_0.ObjectsStruc_0.itemy != 0)
                         {
-                            Form1_0.method_1("Trying to use TP ID: " + Form1_0.ObjectsStruc_0.ObjectUnitID, Color.Red);
+                            //if (Form1_0.Mover_0.MoveToLocation(Form1_0.ObjectsStruc_0.itemx, Form1_0.ObjectsStruc_0.itemy))
+                            //{
+                                Form1_0.method_1("Trying to use TP ID: " + Form1_0.ObjectsStruc_0.ObjectUnitID, Color.Red);
 
-                            if (LastUsedTPID != Form1_0.ObjectsStruc_0.ObjectUnitID)
-                            {
-                                LastUsedTPID = Form1_0.ObjectsStruc_0.ObjectUnitID;
-                                LastUsedTPCount = 0;
-                            }
-                            else
-                            {
-                                LastUsedTPCount++;
-                                if (LastUsedTPCount >= 4)
+                                if (LastUsedTPID != Form1_0.ObjectsStruc_0.ObjectUnitID)
                                 {
-                                    IgnoredTPList.Add(LastUsedTPID);
+                                    LastUsedTPID = Form1_0.ObjectsStruc_0.ObjectUnitID;
+                                    LastUsedTPCount = 0;
                                 }
-                            }
+                                else
+                                {
+                                    Form1_0.Mover_0.MoveToLocation(Form1_0.ObjectsStruc_0.itemx + (LastUsedTPCount * 2), Form1_0.ObjectsStruc_0.itemy + (LastUsedTPCount * 2));
 
-                            GetCorpse();
-                            CurrentScript = 0;
-                            Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, Form1_0.ObjectsStruc_0.itemx, Form1_0.ObjectsStruc_0.itemy);
-                            Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"] - 15);
-                            Form1_0.WaitDelay(50);
-                            Form1_0.Mover_0.FinishMoving();
+                                    LastUsedTPCount++;
+                                    if (LastUsedTPCount >= 4)
+                                    {
+                                        IgnoredTPList.Add(LastUsedTPID);
+                                    }
+                                }
 
-                            //Form1_0.Mover_0.MoveToLocation(5055, 5039); //act4 only
+                                GetCorpse();
+                                CurrentScript = 0;
+                                Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, Form1_0.ObjectsStruc_0.itemx, Form1_0.ObjectsStruc_0.itemy);
+                                Form1_0.KeyMouse_0.PressKeyHold(System.Windows.Forms.Keys.E);
+                                Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"] - 15);
+                                Form1_0.KeyMouse_0.ReleaseKey(System.Windows.Forms.Keys.E);
+                                Form1_0.WaitDelay(50);
+                                Form1_0.Mover_0.FinishMoving();
+                            //}
                         }
                         else
                         {
                             TPSpawned = false;
                             TriedToUseTPCount++;
+                            if (TriedToUseTPCount >= 3) IgnoredTPList.Clear(); //try to clear again the ignored tp list!
                         }
                     }
                     else
                     {
                         TPSpawned = false;
                         TriedToUseTPCount++;
+                        if (TriedToUseTPCount >= 3) IgnoredTPList.Clear(); //try to clear again the ignored tp list!
                     }
                 }
                 else
                 {
-                    SpawnTP();
+                    SpawnTP(true);
+                    Form1_0.WaitDelay(20);
                 }
             }
             else
@@ -233,6 +260,7 @@ namespace app
                         && (Form1_0.PlayerScan_0.PlayerGoldInventory + Form1_0.PlayerScan_0.PlayerGoldInStash) >= 75000
                         && !FastTowning)
                         {
+                            Form1_0.SetGameStatus("TOWN-MERC");
                             MoveToMerc();
                             TriedToMercCount++;
                         }
@@ -263,7 +291,7 @@ namespace app
                             string DescTxt = "";
                             if (Form1_0.InventoryStruc_0.ContainStashItemInInventory()) DescTxt += " (ITEM)";
                             if ((Form1_0.PlayerScan_0.PlayerGoldInventory >= 35000)) DescTxt += " (GOLD)";
-                            Form1_0.SetGameStatus("TOWN-STASH" + DescTxt);
+                            Form1_0.SetGameStatus("TOWN-STASH" + DescTxt + " (" + (TriedToStashCount + 1) + "/" + 6 + ")");
                             MoveToStash(true);
                             TriedToStashCount++;
                         }
@@ -283,7 +311,7 @@ namespace app
                         if (Form1_0.Gamble_0.CanGamble() && TriedToGambleCount < 3 && !FastTowning)
                         {
                             TriedToStashCount = 0;
-                            Form1_0.SetGameStatus("TOWN-GAMBLE");
+                            Form1_0.SetGameStatus("TOWN-GAMBLE" + " (" + (TriedToGambleCount + 1) + "/" + 3 + ")");
                             MoveToGamble();
                             TriedToGambleCount++;
                         }
@@ -321,7 +349,7 @@ namespace app
                                 if (Form1_0.Shop_0.ShopForKey) DescTxt += " (KEYS)";
                                 if (Form1_0.Shop_0.ShopForRegainHP) DescTxt += " (REGEN HP)";
 
-                                Form1_0.SetGameStatus("TOWN-SHOP" + DescTxt);
+                                Form1_0.SetGameStatus("TOWN-SHOP" + DescTxt + " (" + (TriedToShopCount + 1) + "/" + 6 + ")");
                                 //Console.WriteLine("town moving to shop");
                                 MoveToStore();
                                 TriedToShopCount++;
@@ -344,7 +372,7 @@ namespace app
                     {
                         if (Form1_0.Repair_0.GetShouldRepair() && TriedToShopCount < 12 && !FastTowning)
                         {
-                            Form1_0.SetGameStatus("TOWN-REPAIR");
+                            Form1_0.SetGameStatus("TOWN-REPAIR" + " (" + (TriedToShopCount + 1) + "/" + 12 + ")");
                             MoveToRepair();
                             TriedToShopCount++;
                         }
@@ -356,24 +384,29 @@ namespace app
                 {
                     Form1_0.SetGameStatus("TOWN-END");
 
-                    if (MoveToTPOrWPSpot())
+                    if (FastTowning)
+                    {
+                        if (MoveToTPOrWPSpot())
+                        {
+                            GetCorpse();
+                            Form1_0.Stash_0.RunningScriptCount = 0;
+                            StopTowningReturn();
+                        }
+                    }
+                    else
                     {
                         GetCorpse();
                         Form1_0.Stash_0.RunningScriptCount = 0;
-                        CurrentScript = 0;
-                        TriedToStashCount = 0;
-                        TriedToGambleCount = 0;
-                        TriedToShopCount = 0;
-                        TriedToShopCount2 = 0;
-                        TriedToMercCount = 0;
-                        TriedToUseTPCount = 0;
-                        Towning = false;
-                        FastTowning = false;
-                        ForcedTowning = false;
-                        UseLastTP = true;
+                        StopTowningReturn();
                     }
                 }
             }
+        }
+
+        public void LoadFirstTownAct()
+        {
+            GetInTown();
+            ScriptTownAct = TownAct;
         }
 
         public bool IsInRightTown()
@@ -393,296 +426,137 @@ namespace app
         {
             if (TownAct == 1)
             {
-                //if (Form1_0.Mover_0.MoveToLocation(4681, 4541))
-                //{
-                    //use wp
-                    if (Form1_0.ObjectsStruc_0.GetObjects("WaypointPortal", false, IgnoredWPList))
+                Form1_0.PathFinding_0.MoveToObject("WaypointPortal");
+                Position ThisFinalPosition = Form1_0.MapAreaStruc_0.GetPositionOfObject("object", "WaypointPortal", (int)Enums.Area.RogueEncampment, new List<int>() { });
+                if (ThisFinalPosition.X != 0 && ThisFinalPosition.Y != 0)
+                {
+                    Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, ThisFinalPosition.X, ThisFinalPosition.Y);
+                    Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"] - 15);
+                    Form1_0.Mover_0.FinishMoving();
+                    if (Form1_0.UIScan_0.WaitTilUIOpen("waypointMenu"))
                     {
-                        if (Form1_0.ObjectsStruc_0.itemx == 0 && Form1_0.ObjectsStruc_0.itemy == 0)
+                        if (SelectWPIndex == -1)
                         {
-                            IgnoredWPList.Add(Form1_0.ObjectsStruc_0.ObjectUnitID);
-                            return;
-                        }
-                        if (Form1_0.Mover_0.MoveToLocation(Form1_0.ObjectsStruc_0.itemx, Form1_0.ObjectsStruc_0.itemy))
-                        {
-                            Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, Form1_0.ObjectsStruc_0.itemx, Form1_0.ObjectsStruc_0.itemy);
-                            Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"] - 15);
-                            Form1_0.Mover_0.FinishMoving();
-                            if (Form1_0.UIScan_0.WaitTilUIOpen("waypointMenu"))
-                            {
-                                if (SelectWPIndex == -1)
-                                {
-                                    SelectTownWP();
-                                }
-                                else
-                                {
-                                    SelectThisWPIndex(SelectActWPIndex, SelectWPIndex);
-                                }
-                            }
-                        }
-                    }
-                    else
-                    {
-                        //"id":119, "type":"object", "x":84, "y":69, "name":"Waypoint",
-                        Position ThisFinalPosition = Form1_0.MapAreaStruc_0.GetPositionOfObject("object", "WaypointPortal", 1, new List<int>() { });
-                        if (ThisFinalPosition.X != 0 && ThisFinalPosition.Y != 0)
-                        {
-                            if (Form1_0.Mover_0.MoveToLocation(ThisFinalPosition.X, ThisFinalPosition.Y))
-                            {
-                                Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, ThisFinalPosition.X, ThisFinalPosition.Y);
-                                Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"] - 15);
-                                Form1_0.Mover_0.FinishMoving();
-                                if (Form1_0.UIScan_0.WaitTilUIOpen("waypointMenu"))
-                                {
-                                    if (SelectWPIndex == -1)
-                                    {
-                                        SelectTownWP();
-                                    }
-                                    else
-                                    {
-                                        SelectThisWPIndex(SelectActWPIndex, SelectWPIndex);
-                                    }
-                                }
-                            }
+                            SelectTownWP();
                         }
                         else
                         {
-                            Form1_0.method_1("NO WP FOUND NEAR IN TOWN", Color.OrangeRed);
-                        }
-                    }
-                //}
-            }
-            if (TownAct == 2)
-            {
-                //use wp
-                if (Form1_0.ObjectsStruc_0.GetObjects("Act2Waypoint", false, IgnoredWPList))
-                {
-                    if (Form1_0.ObjectsStruc_0.itemx == 0 && Form1_0.ObjectsStruc_0.itemy == 0)
-                    {
-                        IgnoredWPList.Add(Form1_0.ObjectsStruc_0.ObjectUnitID);
-                        return;
-                    }
-                    if (Form1_0.Mover_0.MoveToLocation(Form1_0.ObjectsStruc_0.itemx, Form1_0.ObjectsStruc_0.itemy))
-                    {
-                        Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, Form1_0.ObjectsStruc_0.itemx, Form1_0.ObjectsStruc_0.itemy);
-                        Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"] - 15);
-                        Form1_0.Mover_0.FinishMoving();
-                        if (Form1_0.UIScan_0.WaitTilUIOpen("waypointMenu"))
-                        {
-                            if (SelectWPIndex == -1)
-                            {
-                                SelectTownWP();
-                            }
-                            else
-                            {
-                                SelectThisWPIndex(SelectActWPIndex, SelectWPIndex);
-                            }
+                            SelectThisWPIndex(SelectActWPIndex, SelectWPIndex);
                         }
                     }
                 }
                 else
                 {
-                    //"id":119, "type":"object", "x":84, "y":69, "name":"Waypoint",
-                    Position ThisFinalPosition = Form1_0.MapAreaStruc_0.GetPositionOfObject("object", "Act2Waypoint", 40, new List<int>() { });
-                    if (ThisFinalPosition.X != 0 && ThisFinalPosition.Y != 0)
+                    Form1_0.method_1("NO WP FOUND NEAR IN TOWN", Color.OrangeRed);
+                    IgnoredWPList.Clear();
+                }
+            }
+            if (TownAct == 2)
+            {
+                Form1_0.PathFinding_0.MoveToObject("Act2Waypoint");
+                Position ThisFinalPosition = Form1_0.MapAreaStruc_0.GetPositionOfObject("object", "Act2Waypoint", (int)Enums.Area.LutGholein, new List<int>() { });
+                if (ThisFinalPosition.X != 0 && ThisFinalPosition.Y != 0)
+                {
+                    Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, ThisFinalPosition.X, ThisFinalPosition.Y);
+                    Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"] - 15);
+                    Form1_0.Mover_0.FinishMoving();
+                    if (Form1_0.UIScan_0.WaitTilUIOpen("waypointMenu"))
                     {
-                        if (Form1_0.Mover_0.MoveToLocation(ThisFinalPosition.X, ThisFinalPosition.Y))
+                        if (SelectWPIndex == -1)
                         {
-                            Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, ThisFinalPosition.X, ThisFinalPosition.Y);
-                            Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"] - 15);
-                            Form1_0.Mover_0.FinishMoving();
-                            if (Form1_0.UIScan_0.WaitTilUIOpen("waypointMenu"))
-                            {
-                                if (SelectWPIndex == -1)
-                                {
-                                    SelectTownWP();
-                                }
-                                else
-                                {
-                                    SelectThisWPIndex(SelectActWPIndex, SelectWPIndex);
-                                }
-                            }
+                            SelectTownWP();
+                        }
+                        else
+                        {
+                            SelectThisWPIndex(SelectActWPIndex, SelectWPIndex);
                         }
                     }
-                    else
-                    {
-                        Form1_0.method_1("NO WP FOUND NEAR IN TOWN", Color.OrangeRed);
-                    }
+                }
+                else
+                {
+                    Form1_0.method_1("NO WP FOUND NEAR IN TOWN", Color.OrangeRed);
+                    IgnoredWPList.Clear();
                 }
             }
             if (TownAct == 3)
             {
-                if (Form1_0.Mover_0.MoveToLocation(5134, 5107))
+                Form1_0.PathFinding_0.MoveToObject("Act3TownWaypoint");
+                Position ThisFinalPosition = Form1_0.MapAreaStruc_0.GetPositionOfObject("object", "Act3TownWaypoint", (int)Enums.Area.KurastDocks, new List<int>() { });
+                if (ThisFinalPosition.X != 0 && ThisFinalPosition.Y != 0)
                 {
-                    if (Form1_0.Mover_0.MoveToLocation(5154, 5056))
+                    Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, ThisFinalPosition.X, ThisFinalPosition.Y);
+                    Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"] - 15);
+                    Form1_0.Mover_0.FinishMoving();
+                    if (Form1_0.UIScan_0.WaitTilUIOpen("waypointMenu"))
                     {
-                        //use wp
-                        if (Form1_0.ObjectsStruc_0.GetObjects("Act3TownWaypoint", false, IgnoredWPList))
+                        if (SelectWPIndex == -1)
                         {
-                            if (Form1_0.ObjectsStruc_0.itemx == 0 && Form1_0.ObjectsStruc_0.itemy == 0)
-                            {
-                                IgnoredWPList.Add(Form1_0.ObjectsStruc_0.ObjectUnitID);
-                                return;
-                            }
-                            Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, Form1_0.ObjectsStruc_0.itemx, Form1_0.ObjectsStruc_0.itemy);
-                            Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"] - 15);
-                            Form1_0.Mover_0.FinishMoving();
-                            if (Form1_0.UIScan_0.WaitTilUIOpen("waypointMenu"))
-                            {
-                                if (SelectWPIndex == -1)
-                                {
-                                    SelectTownWP();
-                                }
-                                else
-                                {
-                                    SelectThisWPIndex(SelectActWPIndex, SelectWPIndex);
-                                }
-                            }
+                            SelectTownWP();
                         }
                         else
                         {
-                            Position ThisFinalPosition = Form1_0.MapAreaStruc_0.GetPositionOfObject("object", "Act3TownWaypoint", 75, new List<int>() { });
-                            if (ThisFinalPosition.X != 0 && ThisFinalPosition.Y != 0)
-                            {
-                                if (Form1_0.Mover_0.MoveToLocation(ThisFinalPosition.X, ThisFinalPosition.Y))
-                                {
-                                    Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, ThisFinalPosition.X, ThisFinalPosition.Y);
-                                    Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"] - 15);
-                                    Form1_0.Mover_0.FinishMoving();
-                                    if (Form1_0.UIScan_0.WaitTilUIOpen("waypointMenu"))
-                                    {
-                                        if (SelectWPIndex == -1)
-                                        {
-                                            SelectTownWP();
-                                        }
-                                        else
-                                        {
-                                            SelectThisWPIndex(SelectActWPIndex, SelectWPIndex);
-                                        }
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                Form1_0.method_1("NO WP FOUND NEAR IN TOWN", Color.OrangeRed);
-                            }
+                            SelectThisWPIndex(SelectActWPIndex, SelectWPIndex);
                         }
                     }
                 }
+                else
+                {
+                    Form1_0.method_1("NO WP FOUND NEAR IN TOWN", Color.OrangeRed);
+                    IgnoredWPList.Clear();
+                }
             }
             if (TownAct == 4)
-            {
-                if (Form1_0.Mover_0.MoveToLocation(5055, 5039))
+            {                        
+                Form1_0.PathFinding_0.MoveToObject("PandamoniumFortressWaypoint");
+                Position ThisFinalPosition = Form1_0.MapAreaStruc_0.GetPositionOfObject("object", "PandamoniumFortressWaypoint", (int)Enums.Area.ThePandemoniumFortress, new List<int>() { });
+                if (ThisFinalPosition.X != 0 && ThisFinalPosition.Y != 0)
                 {
-                    //use wp
-                    if (Form1_0.ObjectsStruc_0.GetObjects("PandamoniumFortressWaypoint", false, IgnoredWPList))
+                    Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, ThisFinalPosition.X, ThisFinalPosition.Y);
+                    Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"] - 15);
+                    Form1_0.Mover_0.FinishMoving();
+                    if (Form1_0.UIScan_0.WaitTilUIOpen("waypointMenu"))
                     {
-                        if (Form1_0.ObjectsStruc_0.itemx == 0 && Form1_0.ObjectsStruc_0.itemy == 0)
+                        if (SelectWPIndex == -1)
                         {
-                            IgnoredWPList.Add(Form1_0.ObjectsStruc_0.ObjectUnitID);
-                            return;
-                        }
-                        Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, Form1_0.ObjectsStruc_0.itemx, Form1_0.ObjectsStruc_0.itemy);
-                        Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"] - 15);
-                        Form1_0.Mover_0.FinishMoving();
-                        if (Form1_0.UIScan_0.WaitTilUIOpen("waypointMenu"))
-                        {
-                            if (SelectWPIndex == -1)
-                            {
-                                SelectTownWP();
-                            }
-                            else
-                            {
-                                SelectThisWPIndex(SelectActWPIndex, SelectWPIndex);
-                            }
-                        }
-                    }
-                    else
-                    {
-                        Position ThisFinalPosition = Form1_0.MapAreaStruc_0.GetPositionOfObject("object", "PandamoniumFortressWaypoint", 103, new List<int>() { });
-                        if (ThisFinalPosition.X != 0 && ThisFinalPosition.Y != 0)
-                        {
-                            if (Form1_0.Mover_0.MoveToLocation(ThisFinalPosition.X, ThisFinalPosition.Y))
-                            {
-                                Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, ThisFinalPosition.X, ThisFinalPosition.Y);
-                                Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"] - 15);
-                                Form1_0.Mover_0.FinishMoving();
-                                if (Form1_0.UIScan_0.WaitTilUIOpen("waypointMenu"))
-                                {
-                                    if (SelectWPIndex == -1)
-                                    {
-                                        SelectTownWP();
-                                    }
-                                    else
-                                    {
-                                        SelectThisWPIndex(SelectActWPIndex, SelectWPIndex);
-                                    }
-                                }
-                            }
+                            SelectTownWP();
                         }
                         else
                         {
-                            Form1_0.method_1("NO WP FOUND NEAR IN TOWN", Color.OrangeRed);
+                            SelectThisWPIndex(SelectActWPIndex, SelectWPIndex);
                         }
                     }
+                }
+                else
+                {
+                    Form1_0.method_1("NO WP FOUND NEAR IN TOWN", Color.OrangeRed);
+                    IgnoredWPList.Clear();
                 }
             }
             if (TownAct == 5)
             {
-                //move close to stash location
-                if (Form1_0.Mover_0.MoveToLocation(5117, 5065))
+                Form1_0.PathFinding_0.MoveToObject("ExpansionWaypoint");
+                Position ThisFinalPosition = Form1_0.MapAreaStruc_0.GetPositionOfObject("object", "ExpansionWaypoint", (int) Enums.Area.Harrogath, new List<int>() { });
+                if (ThisFinalPosition.X != 0 && ThisFinalPosition.Y != 0)
                 {
-                    //use wp
-                    if (Form1_0.ObjectsStruc_0.GetObjects("ExpansionWaypoint", false, IgnoredWPList))
+                    Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, ThisFinalPosition.X, ThisFinalPosition.Y);
+                    Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"] - 15);
+                    Form1_0.Mover_0.FinishMoving();
+                    if (Form1_0.UIScan_0.WaitTilUIOpen("waypointMenu"))
                     {
-                        if (Form1_0.ObjectsStruc_0.itemx == 0 && Form1_0.ObjectsStruc_0.itemy == 0)
+                        if (SelectWPIndex == -1)
                         {
-                            IgnoredWPList.Add(Form1_0.ObjectsStruc_0.ObjectUnitID);
-                            return;
-                        }
-                        Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, Form1_0.ObjectsStruc_0.itemx, Form1_0.ObjectsStruc_0.itemy);
-                        Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"] - 15);
-                        Form1_0.Mover_0.FinishMoving();
-                        if (Form1_0.UIScan_0.WaitTilUIOpen("waypointMenu"))
-                        {
-                            if (SelectWPIndex == -1)
-                            {
-                                SelectTownWP();
-                            }
-                            else
-                            {
-                                SelectThisWPIndex(SelectActWPIndex, SelectWPIndex);
-                            }
-                        }
-                    }
-                    else
-                    {
-                        Position ThisFinalPosition = Form1_0.MapAreaStruc_0.GetPositionOfObject("object", "ExpansionWaypoint", 109, new List<int>() { });
-                        if (ThisFinalPosition.X != 0 && ThisFinalPosition.Y != 0)
-                        {
-                            if (Form1_0.Mover_0.MoveToLocation(ThisFinalPosition.X, ThisFinalPosition.Y))
-                            {
-                                Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, ThisFinalPosition.X, ThisFinalPosition.Y);
-                                Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"] - 15);
-                                Form1_0.Mover_0.FinishMoving();
-                                if (Form1_0.UIScan_0.WaitTilUIOpen("waypointMenu"))
-                                {
-                                    if (SelectWPIndex == -1)
-                                    {
-                                        SelectTownWP();
-                                    }
-                                    else
-                                    {
-                                        SelectThisWPIndex(SelectActWPIndex, SelectWPIndex);
-                                    }
-                                }
-                            }
+                            SelectTownWP();
                         }
                         else
                         {
-                            Form1_0.method_1("NO WP FOUND NEAR IN TOWN", Color.OrangeRed);
+                            SelectThisWPIndex(SelectActWPIndex, SelectWPIndex);
                         }
                     }
+                }
+                else
+                {
+                    Form1_0.method_1("NO WP FOUND NEAR IN TOWN", Color.OrangeRed);
+                    IgnoredWPList.Clear();
                 }
             }
         }
@@ -780,13 +654,17 @@ namespace app
             {
                 Form1_0.method_1(ThisNPC.ToUpper() + " NOT FOUND NEAR", Color.OrangeRed);
 
+                if (ThisNPC == "DeckardCain" && TownAct == 1)
+                {
+                    Form1_0.PathFinding_0.MoveToNPC("Akara");
+                }
                 if (ThisNPC == "DeckardCain" && TownAct == 4)
                 {
-                    Form1_0.Mover_0.MoveToLocation(5092, 5044);
+                    Form1_0.PathFinding_0.MoveToThisPos(new Position { X = 5092, Y = 5044 });
                 }
-                if (ThisNPC == "Anya" && TownAct == 4)
+                if (ThisNPC == "Anya" && TownAct == 5)
                 {
-                    Form1_0.Mover_0.MoveToLocation(5114, 5059);
+                    Form1_0.PathFinding_0.MoveToThisPos(new Position { X = 5114, Y = 5059 });
                 }
                 else
                 {
@@ -807,51 +685,59 @@ namespace app
         public bool MoveToTPOrWPSpot()
         {
             bool MovedCorrectly = false;
+
+            if (TownAct == 1)
+            {
+                Position ThisFinalPosition = Form1_0.MapAreaStruc_0.GetPositionOfObject("object", "RogueBonfire", (int) Enums.Area.RogueEncampment, new List<int>() { });
+                if (ThisFinalPosition.X != 0 && ThisFinalPosition.Y != 0)
+                {
+                    ThisFinalPosition.X = ThisFinalPosition.X + 5;
+                    ThisFinalPosition.Y = ThisFinalPosition.Y - 5;
+                    Form1_0.PathFinding_0.MoveToThisPos(ThisFinalPosition);
+                    MovedCorrectly = true;
+                }
+                else
+                {
+                    Form1_0.method_1("NO BONFIRE FOUND NEAR IN TOWN", Color.OrangeRed);
+                }
+            }
+            if (TownAct == 2)
+            {
+                Form1_0.PathFinding_0.MoveToThisPos(new Position { X = 5150, Y = 5056 });
+                MovedCorrectly = true;
+            }
+            if (TownAct == 3)
+            {
+                Position ThisFinalPosition = Form1_0.MapAreaStruc_0.GetPositionOfObject("object", "Bank", (int)Enums.Area.KurastDocks, new List<int>() { });
+                if (ThisFinalPosition.X != 0 && ThisFinalPosition.Y != 0)
+                {
+                    Form1_0.PathFinding_0.MoveToThisPos(ThisFinalPosition);
+                    MovedCorrectly = true;
+                }
+                else
+                {
+                    Form1_0.method_1("NO TP/WP SPOT (STASH) FOUND NEAR IN TOWN", Color.OrangeRed);
+                }
+            }
+
             if (TownAct == 4)
             {
-                if (IsPosCloseTo(5082, 5043, 12))
+                Position ThisFinalPosition = Form1_0.MapAreaStruc_0.GetPositionOfObject("object", "Bank", (int)Enums.Area.ThePandemoniumFortress, new List<int>() { });
+                if (ThisFinalPosition.X != 0 && ThisFinalPosition.Y != 0)
                 {
-                    Form1_0.Mover_0.MoveToLocation(5082, 5043);
+                    Form1_0.PathFinding_0.MoveToThisPos(ThisFinalPosition);
+                    MovedCorrectly = true;
                 }
-
-                //if (Form1_0.Mover_0.MoveToLocation(5082, 5043))
-                //{
-                    if (Form1_0.Mover_0.MoveToLocation(5055, 5039))
-                    {
-                        MovedCorrectly = true;
-                    }
-                //}
+                else
+                {
+                    Form1_0.method_1("NO TP/WP SPOT (STASH) FOUND NEAR IN TOWN", Color.OrangeRed);
+                }
             }
             if (TownAct == 5)
             {
-                //stuck between cain and malah
-                if (IsPosCloseTo(5080, 5054, 10))
-                {
-                    //move close to malah location
-                    Form1_0.Mover_0.MoveToLocation(5078, 5026);
-                }
-
-                //stuck above stash
-                if (IsPosCloseTo(5097, 5042, 4))
-                {
-                    //move back to TP
-                    Form1_0.Mover_0.MoveToLocation(5104, 5030);
-                }
-
-                //stuck near stash
-                if (IsPosCloseTo(5021, 5056, 4))
-                {
-                    //move back to TP
-                    Form1_0.Mover_0.MoveToLocation(5108, 5060);
-                }
-
-                if (Form1_0.Mover_0.MoveToLocation(5103, 5029))
-                {
-                    MovedCorrectly = true;
-                }
+                Form1_0.PathFinding_0.MoveToThisPos(new Position { X = 5103, Y = 5029 });
+                MovedCorrectly = true;
             }
-
-            // DO OTHER ACT SCRIPT HERE ###
 
             if (MovedCorrectly)
             {
@@ -860,10 +746,19 @@ namespace app
                     if (TPSpawned)
                     {
                         //use tp
-                        if (Form1_0.ObjectsStruc_0.GetObjects("TownPortal", true))
+                        if (Form1_0.ObjectsStruc_0.GetObjects("TownPortal", true, new List<uint>(), 999, CharConfig.PlayerCharName))
                         {
-                            Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, Form1_0.ObjectsStruc_0.itemx, Form1_0.ObjectsStruc_0.itemy);
-                            Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"] - 15);
+                            Form1_0.PathFinding_0.MoveToThisPos(new Position { X = Form1_0.ObjectsStruc_0.itemx, Y = Form1_0.ObjectsStruc_0.itemy });
+                            
+                            int tries = 0;
+                            while(tries < 5) 
+                            {
+                                Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, Form1_0.ObjectsStruc_0.itemx, Form1_0.ObjectsStruc_0.itemy);
+                                Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"] - 15);
+                                Form1_0.WaitDelay(5);
+                                tries++;
+                            }
+                            Form1_0.WaitDelay(10);
                         }
                         else
                         {
@@ -906,41 +801,21 @@ namespace app
         {
             bool MovedCorrectly = false;
 
+            //MISSING TOWN ACT HERE -> DONT GAMBLE IN OTHER TOWN ACT
+            if (TownAct != 5)
+            {
+                TriedToGambleCount = 15;
+                return;
+            }
+
             if (TownAct == 5)
             {
                 CheckForNPCValidPos("Anya");
-
-                //close to store spot 5078, 5026
-                if (IsPosCloseTo(5078, 5026, 10))
-                {
-                    //move close to tp location
-                    Form1_0.Mover_0.MoveToLocation(5103, 5029);
-                    Form1_0.Mover_0.MoveToLocation(5114, 5059);
-                }
-
-                //stuck above stash
-                if (IsPosCloseTo(5116, 5046, 4))
-                {
-                    //move back inbetween TP and WP location
-                    Form1_0.Mover_0.MoveToLocation(5104, 5047);
-                }
-
-                //move close to store location
-                //5094,5113 corner2
-                if (Form1_0.Mover_0.MoveToLocation(5128, 5112)) //corner1
-                {
-                    //get store location
-                    if (Form1_0.NPCStruc_0.GetNPC("Anya"))
-                    {
-                        if (Form1_0.Mover_0.MoveToLocation(Form1_0.NPCStruc_0.xPosFinal, Form1_0.NPCStruc_0.yPosFinal))
-                        {
-                            MovedCorrectly = true;
-                        }
-                    }
-                }
+                //Form1_0.PathFinding_0.MoveToNPC("Anya");  //not found
+                Form1_0.PathFinding_0.MoveToThisPos(new Position { X = 5103, Y = 5115 });
+                Form1_0.NPCStruc_0.GetNPC("Anya");
+                MovedCorrectly = true;
             }
-
-            // DO OTHER ACT SCRIPT HERE ###
 
             if (MovedCorrectly)
             {
@@ -967,73 +842,52 @@ namespace app
         public void MoveToRepair()
         {
             bool MovedCorrectly = false;
+
+            if (TownAct == 1)
+            {
+                //4985,6108 stash
+                //4954,6095 charsi
+                Position ThisFinalPosition = Form1_0.MapAreaStruc_0.GetPositionOfObject("object", "Bank", (int) Form1_0.PlayerScan_0.levelNo, new List<int>() { });
+                CheckForNPCValidPos("Charsi");
+                //Form1_0.PathFinding_0.MoveToNPC("Charsi");  //not found
+                Form1_0.PathFinding_0.MoveToThisPos(new Position { X = ThisFinalPosition.X - 31, Y = ThisFinalPosition.Y - 13 });
+                Form1_0.NPCStruc_0.GetNPC("Charsi");
+                MovedCorrectly = true;
+            }
+            if (TownAct == 2)
+            {
+                CheckForNPCValidPos("Fara");
+                //Form1_0.PathFinding_0.MoveToNPC("Fara");  //not found
+                Form1_0.PathFinding_0.MoveToThisPos(new Position { X = 5115, Y = 5080 });
+                Form1_0.NPCStruc_0.GetNPC("Fara");
+                MovedCorrectly = true;
+            }
+            if (TownAct == 3)
+            {
+                CheckForNPCValidPos("Hratli");
+                //Form1_0.PathFinding_0.MoveToNPC("Hratli");  //not found
+                Form1_0.PathFinding_0.MoveToThisPos(new Position { X = 5219, Y = 5035 });
+                Form1_0.NPCStruc_0.GetNPC("Hratli");
+                MovedCorrectly = true;
+            }
+
             if (TownAct == 4)
             {
                 CheckForNPCValidPos("Halbu");
-
-                //move close to store location
-                if (Form1_0.Mover_0.MoveToLocation(5082, 5043))
-                {
-                    //get store location
-                    if (Form1_0.NPCStruc_0.GetNPC("Halbu"))
-                    {
-                        if (Form1_0.Mover_0.MoveToLocation(Form1_0.NPCStruc_0.xPosFinal, Form1_0.NPCStruc_0.yPosFinal))
-                        {
-                            MovedCorrectly = true;
-                        }
-                    }
-                }
-                else
-                {
-                    //Form1_0.method_1("NOT MOVED CORRECTLY TO REPAIR SHOP LOCATION", Color.OrangeRed);
-                }
+                //Form1_0.PathFinding_0.MoveToNPC("Halbu");  //not found
+                Form1_0.PathFinding_0.MoveToThisPos(new Position { X = 5085, Y = 5022 });
+                Form1_0.NPCStruc_0.GetNPC("Halbu");
+                MovedCorrectly = true;
             }
 
             if (TownAct == 5)
             {
                 CheckForNPCValidPos("Larzuk");
-
-                //close to store spot 5078, 5026
-                if (IsPosCloseTo(5128, 5112, 20))
-                {
-                    //move close to corner location
-                    Form1_0.Mover_0.MoveToLocation(5128, 5112);
-                }
-
-                //stuck between cain and malah
-                if (IsPosCloseTo(5080, 5054, 10))
-                {
-                    //move close to malah location
-                    Form1_0.Mover_0.MoveToLocation(5078, 5026);
-                }
-
-                //close to store spot 5078, 5026
-                if (IsPosCloseTo(5078, 5026, 10))
-                {
-                    //move close to tp location
-                    Form1_0.Mover_0.MoveToLocation(5103, 5029);
-                    Form1_0.Mover_0.MoveToLocation(5114, 5059);
-                }
-
-                //move close to store location
-                if (Form1_0.Mover_0.MoveToLocation(5139, 5043))
-                {
-                    //get store location
-                    if (Form1_0.NPCStruc_0.GetNPC("Larzuk"))
-                    {
-                        if (Form1_0.Mover_0.MoveToLocation(Form1_0.NPCStruc_0.xPosFinal, Form1_0.NPCStruc_0.yPosFinal))
-                        {
-                            MovedCorrectly = true;
-                        }
-                    }
-                }
-                else
-                {
-                    //Form1_0.method_1("NOT MOVED CORRECTLY TO REPAIR SHOP LOCATION", Color.OrangeRed);
-                }
+                //Form1_0.PathFinding_0.MoveToNPC("Larzuk");  //not found
+                Form1_0.PathFinding_0.MoveToThisPos(new Position { X = 5146, Y = 5139 });
+                Form1_0.NPCStruc_0.GetNPC("Larzuk");
+                MovedCorrectly = true;
             }
-
-            // DO OTHER ACT SCRIPT HERE ###
 
             if (MovedCorrectly)
             {
@@ -1043,7 +897,7 @@ namespace app
                 Form1_0.Mover_0.FinishMoving();
                 if (Form1_0.UIScan_0.WaitTilUIOpen("npcInteract"))  //npcShop
                 {
-                    if (TownAct == 5)
+                    if (TownAct != 4)
                     {
                         Form1_0.KeyMouse_0.PressKey(System.Windows.Forms.Keys.Down); //Larzuk press down
                     }
@@ -1052,11 +906,6 @@ namespace app
                     Form1_0.Repair_0.RunRepairScript();
                     Form1_0.UIScan_0.CloseUIMenu("npcInteract");
                     Form1_0.UIScan_0.CloseUIMenu("npcShop");
-                    //Form1_0.Mover_0.MoveToLocation(5082, 5043); //#############################################
-                }
-                else
-                {
-                    //Form1_0.method_1("NPC INTERACT MENU NOT OPENED FOR REPAIR SHOP", Color.OrangeRed);
                 }
             }
         }
@@ -1064,106 +913,61 @@ namespace app
         public void MoveToStore()
         {
             bool MovedCorrectly = false;
-            if (TownAct == 4)
-            {
-                CheckForNPCValidPos("Jamella");
 
-                //move close to store location
-                if (Form1_0.Mover_0.MoveToLocation(5082, 5043))
+            if (TownAct == 1)
+            {
+                CheckForNPCValidPos("Akara");
+                Form1_0.PathFinding_0.MoveToNPC("Akara");
+                Form1_0.NPCStruc_0.GetNPC("Akara");
+                MovedCorrectly = true;
+            }
+            if (TownAct == 2)
+            {
+                if (!Form1_0.Shop_0.ShopForSellingitem
+                    && !Form1_0.Shop_0.ShopForHP
+                    && !Form1_0.Shop_0.ShopForMana
+                    && !Form1_0.Shop_0.ShopForTP
+                    && !Form1_0.Shop_0.ShopForKey
+                    && Form1_0.Shop_0.ShopForRegainHP)
                 {
-                    //get store location
-                    if (Form1_0.NPCStruc_0.GetNPC("Jamella"))
-                    {
-                        if (Form1_0.Mover_0.MoveToLocation(Form1_0.NPCStruc_0.xPosFinal, Form1_0.NPCStruc_0.yPosFinal))
-                        {
-                            MovedCorrectly = true;
-                        }
-                    }
+                    //Act2 Drognan doesn't regen HP, if we are going to shop only for regen HP, then go see Atma in Act2
+                    CheckForNPCValidPos("Atma");
+                    Form1_0.PathFinding_0.MoveToNPC("Atma");
+                    Form1_0.NPCStruc_0.GetNPC("Atma");
+                    MovedCorrectly = true;
                 }
                 else
                 {
-                    //Form1_0.method_1("NOT MOVED CORRECTLY TO SHOP LOCATION", Color.OrangeRed);
+                    CheckForNPCValidPos("Drognan");
+                    Form1_0.PathFinding_0.MoveToNPC("Drognan");
+                    Form1_0.NPCStruc_0.GetNPC("Drognan");
+                    MovedCorrectly = true;
                 }
+
+            }
+            if (TownAct == 3)
+            {
+                CheckForNPCValidPos("Ormus");
+                Form1_0.PathFinding_0.MoveToNPC("Ormus");
+                Form1_0.NPCStruc_0.GetNPC("Ormus");
+                MovedCorrectly = true;
+            }
+
+            if (TownAct == 4)
+            {
+                CheckForNPCValidPos("Jamella");
+                Form1_0.PathFinding_0.MoveToNPC("Jamella");
+                Form1_0.NPCStruc_0.GetNPC("Jamella");
+                MovedCorrectly = true;
             }
 
             if (TownAct == 5)
             {
-                //CheckForNPCValidPos("Malah");
-
-                //close to store spot 5078, 5026
-                if (IsPosCloseTo(5128, 5112, 20))
-                {
-                    //move close to corner location
-                    Form1_0.Mover_0.MoveToLocation(5128, 5112);
-                }
-
-                //close to stash spot 5123, 5065
-                if (IsPosCloseTo(5123, 5065, 10))
-                {
-                    //move close to wp location
-                    Form1_0.Mover_0.MoveToLocation(5114, 5059);
-                    Form1_0.Mover_0.MoveToLocation(5103, 5029);
-                    GetCorpse();
-                }
-
-                //stuck above stash
-                if (IsPosCloseTo(5097, 5042, 6))
-                {
-                    //move back to TP
-                    Form1_0.Mover_0.MoveToLocation(5104, 5030);
-                }
-
-                //stuck near stash
-                if (IsPosCloseTo(5021, 5056, 6))
-                {
-                    //move back to TP
-                    Form1_0.Mover_0.MoveToLocation(5108, 5060);
-                }
-
-                //move close to store location
-                if (Form1_0.Mover_0.MoveToLocation(5078, 5026))
-                {
-                    //get store location
-                    if (Form1_0.NPCStruc_0.GetNPC("Malah"))
-                    {
-                        if (Form1_0.NPCStruc_0.xPosFinal != 0 && Form1_0.NPCStruc_0.yPosFinal != 0)
-                        {
-                            if (Form1_0.Mover_0.MoveToLocation(Form1_0.NPCStruc_0.xPosFinal, Form1_0.NPCStruc_0.yPosFinal))
-                            {
-                                MovedCorrectly = true;
-                            }
-                        }
-                        else
-                        {
-                            TriedToShopCount2++;
-                            TriedToShopCount--;
-
-                            if (TriedToShopCount2 > 50)
-                            {
-                                CheckForNPCValidPos("Malah");
-                                TriedToShopCount++;
-                            }
-                        }
-                    }
-                    else
-                    {
-                        TriedToShopCount2++;
-                        TriedToShopCount--;
-
-                        if (TriedToShopCount2 > 50)
-                        {
-                            CheckForNPCValidPos("Malah");
-                            TriedToShopCount++;
-                        }
-                    }
-                }
-                else
-                {
-                    //Form1_0.method_1("NOT MOVED CORRECTLY TO SHOP LOCATION", Color.OrangeRed);
-                }
+                CheckForNPCValidPos("Malah");
+                Form1_0.PathFinding_0.MoveToNPC("Malah");
+                //Form1_0.NPCStruc_0.GetNPC("Malah");
+                MovedCorrectly = true;
             }
-
-            // DO OTHER ACT SCRIPT HERE ###
 
             if (MovedCorrectly)
             {
@@ -1173,20 +977,15 @@ namespace app
                 Form1_0.Mover_0.FinishMoving();
                 if (Form1_0.UIScan_0.WaitTilUIOpen("npcInteract"))  //npcShop
                 {
-                    if (TownAct == 5)
+                    if (TownAct != 4)
                     {
-                        Form1_0.KeyMouse_0.PressKey(System.Windows.Forms.Keys.Down);    //press down with Malah
+                        Form1_0.KeyMouse_0.PressKey(System.Windows.Forms.Keys.Down);    //press down if not in Act4
                     }
                     Form1_0.KeyMouse_0.PressKey(System.Windows.Forms.Keys.Enter);
                     Form1_0.WaitDelay(50);
                     Form1_0.Shop_0.RunShopScript();
                     Form1_0.UIScan_0.CloseUIMenu("npcInteract");
                     Form1_0.UIScan_0.CloseUIMenu("npcShop");
-                    //Form1_0.Mover_0.MoveToLocation(5082, 5043); //#############################################
-                }
-                else
-                {
-                    //Form1_0.method_1("NPC INTERACT MENU NOT OPENED FOR SHOP", Color.OrangeRed);
                 }
             }
         }
@@ -1194,60 +993,38 @@ namespace app
         public void MoveToStash(bool RunScript)
         {
             bool MovedCorrectly = false;
+            //MISSING TOWN ACT HERE
+            if (TownAct == 1)
+            {
+                Form1_0.PathFinding_0.MoveToObject("Bank");
+                MovedCorrectly = true;
+            }
+            if (TownAct == 2)
+            {
+                Form1_0.PathFinding_0.MoveToObject("Bank");
+                MovedCorrectly = true;
+            }
+            if (TownAct == 3)
+            {
+                Form1_0.PathFinding_0.MoveToObject("Bank");
+                MovedCorrectly = true;
+            }
+
             if (TownAct == 4)
             {
-                //move close to stash location
-                if (Form1_0.Mover_0.MoveToLocation(5021, 5034))
-                {
-                    MovedCorrectly = true;
-                }
-                else
-                {
-                    //Form1_0.method_1("NOT MOVED CORRECTLY TO STASH LOCATION", Color.OrangeRed);
-                }
+                Form1_0.PathFinding_0.MoveToObject("Bank");
+                MovedCorrectly = true;
             }
 
             if (TownAct == 5)
             {
-                //close to store spot 5078, 5026
-                if (IsPosCloseTo(5078, 5026, 10))
-                {
-                    //move close to tp location
-                    Form1_0.Mover_0.MoveToLocation(5103, 5029);
-                    Form1_0.Mover_0.MoveToLocation(5114, 5059);
-                }
-
-                //close to store spot 5078, 5026
-                if (IsPosCloseTo(5128, 5112, 20))
-                {
-                    //move close to corner location
-                    Form1_0.Mover_0.MoveToLocation(5128, 5112);
-                }
-
-                //stuck above stash
-                if (IsPosCloseTo(5116, 5046, 6))
-                {
-                    //move back inbetween TP and WP location
-                    Form1_0.Mover_0.MoveToLocation(5104, 5047);
-                }
-
-                //move close to stash location
-                if (Form1_0.Mover_0.MoveToLocation(5123, 5065))
-                {
-                    MovedCorrectly = true;
-                }
-                else
-                {
-                    //Form1_0.method_1("NOT MOVED CORRECTLY TO STASH LOCATION", Color.OrangeRed);
-                }
+                Form1_0.PathFinding_0.MoveToObject("Bank");
+                MovedCorrectly = true;
             }
-
-            // DO OTHER ACT SCRIPT HERE ###
 
             if (MovedCorrectly)
             {
                 //get stash location
-
                 Dictionary<string, int> itemScreenPos = new Dictionary<string, int>();
                 bool HasPosForStash = false;
                 if (TownAct == 5)
@@ -1266,9 +1043,21 @@ namespace app
                     else
                     {
                         Form1_0.method_1("STASH NOT FOUND NEAR", Color.OrangeRed);
+                        if (TownAct == 1)
+                        {
+                            Form1_0.PathFinding_0.MoveToNPC("Akara");
+                        }
+                        if (TownAct == 2)
+                        {
+                            Form1_0.PathFinding_0.MoveToNPC("Greiz");
+                        }
+                        if (TownAct == 3)
+                        {
+                            Form1_0.PathFinding_0.MoveToNPC("Asheara");
+                        }
                         if (TownAct == 4)
                         {
-                            Form1_0.Mover_0.MoveToLocation(5092, 5044);
+                            Form1_0.PathFinding_0.MoveToThisPos(new Position { X = 5092, Y = 5044 });
                         }
                     }
 
@@ -1286,10 +1075,6 @@ namespace app
                         }
                         Form1_0.UIScan_0.CloseUIMenu("stash");
                     }
-                    else
-                    {
-                        //Form1_0.method_1("STASH MENU NOT OPENED", Color.OrangeRed);
-                    }
                 }
             }
         }
@@ -1299,57 +1084,55 @@ namespace app
             CheckForNPCValidPos("DeckardCain");
             bool MovedCorrectly = false;
 
-            if (TownAct == 4)
+            if (TownAct == 1)
             {
-                //move close to cain location
-                if (Form1_0.Mover_0.MoveToLocation(5029, 5037))
+                if (!CainNotFoundAct1)
                 {
-                    //get cain location
-                    if (Form1_0.NPCStruc_0.GetNPC("DeckardCain"))
-                    {
-                        if (Form1_0.Mover_0.MoveToLocation(Form1_0.NPCStruc_0.xPosFinal, Form1_0.NPCStruc_0.yPosFinal))
-                        {
-                            MovedCorrectly = true;
-                        }
-                    }
+                    Form1_0.PathFinding_0.MoveToNPC("DeckardCain");
+                    MovedCorrectly = true;
                 }
                 else
                 {
-                    //Form1_0.method_1("NOT MOVED CORRECTLY TO CAIN LOCATION", Color.OrangeRed);
+                    //go to town act5 for cain
+                    ScriptTownAct = 5;
                 }
+            }
+            if (TownAct == 2)
+            {
+                Form1_0.PathFinding_0.MoveToNPC("DeckardCain");
+                MovedCorrectly = true;
+            }
+            if (TownAct == 3)
+            {
+                Form1_0.PathFinding_0.MoveToNPC("DeckardCain");
+                MovedCorrectly = true;
+            }
+
+            if (TownAct == 4)
+            {
+                Form1_0.PathFinding_0.MoveToNPC("DeckardCain");
+                MovedCorrectly = true;
             }
 
             if (TownAct == 5)
             {
-                //close to wp spot 5103, 5029
-                if (IsPosCloseTo(5103, 5029, 10))
-                {
-                    //move close to stash location
-                    Form1_0.Mover_0.MoveToLocation(5114, 5059);
-                }
-
-                //move close to cain location
-                if (Form1_0.Mover_0.MoveToLocation(5086, 5082))
-                {
-                    //get cain location
-                    if (Form1_0.NPCStruc_0.GetNPC("DeckardCain"))
-                    {
-                        if (Form1_0.Mover_0.MoveToLocation(Form1_0.NPCStruc_0.xPosFinal, Form1_0.NPCStruc_0.yPosFinal))
-                        {
-                            MovedCorrectly = true;
-                        }
-                    }
-                }
-                else
-                {
-                    //Form1_0.method_1("NOT MOVED CORRECTLY TO CAIN LOCATION", Color.OrangeRed);
-                }
+                Form1_0.PathFinding_0.MoveToNPC("DeckardCain");
+                MovedCorrectly = true;
             }
-
-            // DO OTHER ACT SCRIPT HERE ###
 
             if (MovedCorrectly)
             {
+                if (!Form1_0.NPCStruc_0.GetNPC("DeckardCain"))
+                {
+                    if (TownAct == 1 && !CainNotFoundAct1)
+                    {
+                        CainNotFoundAct1 = true;
+
+                        //go to town act5 for cain
+                        ScriptTownAct = 5;
+                    }
+                }
+
                 //Clic cain
                 Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, Form1_0.NPCStruc_0.xPosFinal, Form1_0.NPCStruc_0.yPosFinal);
                 Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"]);
@@ -1368,69 +1151,50 @@ namespace app
                     }
                     Form1_0.ItemsStruc_0.GetItems(false);
                 }
-                else
-                {
-                    //Form1_0.method_1("NPC INTERACT MENU NOT OPENED FOR CAIN", Color.OrangeRed);
-                }
-            }
+        }
         }
 
         public void MoveToMerc()
         {
             bool MovedCorrectly = false;
 
+            if (TownAct == 1)
+            {
+                CheckForNPCValidPos("Kashya");
+                Form1_0.PathFinding_0.MoveToNPC("Kashya");
+                Form1_0.NPCStruc_0.GetNPC("Kashya");
+                MovedCorrectly = true;
+            }
+            if (TownAct == 2)
+            {
+                CheckForNPCValidPos("Greiz");
+                Form1_0.PathFinding_0.MoveToNPC("Greiz");
+                Form1_0.NPCStruc_0.GetNPC("Greiz");
+                MovedCorrectly = true;
+            }
+            if (TownAct == 3)
+            {
+                CheckForNPCValidPos("Asheara");
+                Form1_0.PathFinding_0.MoveToNPC("Asheara");
+                Form1_0.NPCStruc_0.GetNPC("Asheara");
+                MovedCorrectly = true;
+            }
+
             if (TownAct == 4)
             {
                 CheckForNPCValidPos("Tyrael");
-
-                //move close to cain location
-                if (Form1_0.Mover_0.MoveToLocation(5029, 5037))
-                {
-                    //get cain location
-                    if (Form1_0.NPCStruc_0.GetNPC("Tyrael"))
-                    {
-                        if (Form1_0.Mover_0.MoveToLocation(Form1_0.NPCStruc_0.xPosFinal, Form1_0.NPCStruc_0.yPosFinal))
-                        {
-                            MovedCorrectly = true;
-                        }
-                    }
-                }
-                else
-                {
-                    //Form1_0.method_1("NOT MOVED CORRECTLY TO TYRAEL LOCATION", Color.OrangeRed);
-                }
+                Form1_0.PathFinding_0.MoveToNPC("Tyrael");
+                Form1_0.NPCStruc_0.GetNPC("Tyrael");
+                MovedCorrectly = true;
             }
 
             if (TownAct == 5)
             {
                 CheckForNPCValidPos("Qual-Kehk");
-
-                //close to wp spot 5103, 5029
-                if (IsPosCloseTo(5103, 5029, 10))
-                {
-                    //move close to stash location
-                    Form1_0.Mover_0.MoveToLocation(5114, 5059);
-                }
-
-                //move close to cain location
-                if (Form1_0.Mover_0.MoveToLocation(5086, 5082))
-                {
-                    //get cain location
-                    if (Form1_0.NPCStruc_0.GetNPC("Qual-Kehk"))
-                    {
-                        if (Form1_0.Mover_0.MoveToLocation(Form1_0.NPCStruc_0.xPosFinal, Form1_0.NPCStruc_0.yPosFinal))
-                        {
-                            MovedCorrectly = true;
-                        }
-                    }
-                }
-                else
-                {
-                    //Form1_0.method_1("NOT MOVED CORRECTLY TO QUAL-KEHK LOCATION", Color.OrangeRed);
-                }
+                Form1_0.PathFinding_0.MoveToNPC("Qual-Kehk");
+                Form1_0.NPCStruc_0.GetNPC("Qual-Kehk");
+                MovedCorrectly = true;
             }
-
-            // DO OTHER ACT SCRIPT HERE ###
 
             if (MovedCorrectly)
             {
@@ -1441,70 +1205,53 @@ namespace app
                 if (Form1_0.UIScan_0.WaitTilUIOpen("npcInteract"))
                 {
                     Form1_0.KeyMouse_0.PressKey(System.Windows.Forms.Keys.Down);
+                    if (TownAct == 4)
+                    {
+                        Form1_0.KeyMouse_0.PressKey(System.Windows.Forms.Keys.Down); //Tyrael press down
+                    }
                     Form1_0.KeyMouse_0.PressKey(System.Windows.Forms.Keys.Enter);
 
                     //wait til its done
                     Form1_0.UIScan_0.WaitTilUIClose("npcInteract");
                     Form1_0.UIScan_0.CloseUIMenu("npcInteract");
                 }
-                else
+            }
+        }
+
+        public void FixBaalNearRedPortal()
+        {
+            //fix when close to RedPortal in Baal
+            if (Form1_0.PlayerScan_0.xPosFinal >= (15090 - 4)
+                && Form1_0.PlayerScan_0.xPosFinal <= (15090 + 4)
+                && Form1_0.PlayerScan_0.yPosFinal >= (5008 - 4)
+                && Form1_0.PlayerScan_0.yPosFinal <= (5008 + 4)
+                && Form1_0.PlayerScan_0.levelNo == 131)
+            {
+                Form1_0.PathFinding_0.MoveToThisPos(new Position { X = 15090 + 5, Y = 5008 + 15 });
+            }
+        }
+
+        public void SpawnTP(bool EnterTP = false)
+        {
+            FixBaalNearRedPortal();
+
+            //has tp
+            if (Form1_0.InventoryStruc_0.HUDItems_tpscrolls > 0)
+            {
+                // open inv
+                Form1_0.UIScan_0.OpenUIMenu("invMenu");
+                //use tp in inventory
+                Form1_0.InventoryStruc_0.UseTP();
+                TPSpawned = true;
+                //close inv
+                Form1_0.UIScan_0.CloseUIMenu("invMenu");
+                Form1_0.WaitDelay(50); //100 default
+
+                if (EnterTP)
                 {
-                    //Form1_0.method_1("NPC INTERACT MENU NOT OPENED FOR CAIN", Color.OrangeRed);
+                    Towning = true;
+                    ForcedTowning = true;
                 }
-            }
-        }
-
-        public void SpawnTP()
-        {
-            //fix when close to RedPortal in Baal
-            if (Form1_0.PlayerScan_0.xPosFinal >= (15090 - 4)
-                && Form1_0.PlayerScan_0.xPosFinal <= (15090 + 4)
-                && Form1_0.PlayerScan_0.yPosFinal >= (5008 - 4)
-                && Form1_0.PlayerScan_0.yPosFinal <= (5008 + 4)
-                && Form1_0.PlayerScan_0.levelNo == 131)
-            {
-                Form1_0.Mover_0.MoveToLocation(15090, 5008 + 15);
-            }
-
-            //has tp
-            if (Form1_0.InventoryStruc_0.HUDItems_tpscrolls > 0)
-            {
-                // open inv
-                Form1_0.UIScan_0.OpenUIMenu("invMenu");
-                //use tp in inventory
-                Form1_0.InventoryStruc_0.UseTP();
-                TPSpawned = true;
-                //close inv
-                Form1_0.UIScan_0.CloseUIMenu("invMenu");
-                Form1_0.WaitDelay(50); //100 default
-                Towning = true;
-                ForcedTowning = true;
-            }
-        }
-
-        public void SpawnTPButNotUseIT()
-        {
-            //fix when close to RedPortal in Baal
-            if (Form1_0.PlayerScan_0.xPosFinal >= (15090 - 4)
-                && Form1_0.PlayerScan_0.xPosFinal <= (15090 + 4)
-                && Form1_0.PlayerScan_0.yPosFinal >= (5008 - 4)
-                && Form1_0.PlayerScan_0.yPosFinal <= (5008 + 4)
-                && Form1_0.PlayerScan_0.levelNo == 131)
-            {
-                Form1_0.Mover_0.MoveToLocation(15090, 5008 + 15);
-            }
-
-            //has tp
-            if (Form1_0.InventoryStruc_0.HUDItems_tpscrolls > 0)
-            {
-                // open inv
-                Form1_0.UIScan_0.OpenUIMenu("invMenu");
-                //use tp in inventory
-                Form1_0.InventoryStruc_0.UseTP();
-                TPSpawned = true;
-                //close inv
-                Form1_0.UIScan_0.CloseUIMenu("invMenu");
-                Form1_0.WaitDelay(50); //100 default
             }
         }
 
@@ -1541,7 +1288,7 @@ namespace app
             //script to spawn tp and move to town quickly (no potion and no hp)
             if (!GetInTown())
             {
-                SpawnTP();
+                SpawnTP(true);
             }
         }
 

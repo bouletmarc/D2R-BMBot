@@ -64,13 +64,14 @@ namespace app
                     OrbPos = Form1_0.MapAreaStruc_0.GetPositionOfObject("object", "CompellingOrb", (int)Enums.Area.Travincal, new List<int>());
                     if (OrbPos.X != 0 && OrbPos.Y != 0)
                     {
-                        Form1_0.MoveToPath_0.MoveToThisPos(OrbPos);
+                        Form1_0.PathFinding_0.MoveToThisPos(OrbPos);
 
                         CurrentStep++;
                     }
                     else
                     {
                         Form1_0.method_1("Kahlim Orb location not detected!", Color.Red);
+                        Form1_0.Town_0.UseLastTP = false;
                         ScriptDone = true;
                         return;
                     }
@@ -105,6 +106,7 @@ namespace app
                             if (Form1_0.MobsStruc_0.GetMobs("getSuperUniqueName", "Council Member", false, 200, new List<long>())) return; //redetect baal?
                             Form1_0.Potions_0.CanUseSkillForRegen = true;
 
+                            Form1_0.Town_0.UseLastTP = false;
                             ScriptDone = true;
                             return;
                         }
@@ -123,6 +125,7 @@ namespace app
                             Form1_0.ItemsStruc_0.GrabAllItemsForGold();
                             Form1_0.Potions_0.CanUseSkillForRegen = true;
 
+                            Form1_0.Town_0.UseLastTP = false;
                             ScriptDone = true;
                             return;
                             //Form1_0.LeaveGame(true);

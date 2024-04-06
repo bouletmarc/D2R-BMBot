@@ -209,6 +209,11 @@ namespace app
                     if (Splitted[0] == "MercTakeHPPotUnder") AllLines[i] = "MercTakeHPPotUnder=" + CharConfig.MercTakeHPPotUnder;
                 }
             }
+
+            File.Create(ThisFilePath).Dispose();
+            File.WriteAllLines(ThisFilePath, AllLines);
+
+            SaveCurrentCharSettings();
         }
 
         public void SaveCurrentSettings()
@@ -239,7 +244,14 @@ namespace app
                     if (Splitted[0] == "RunKahlimHeartRush") AllLines[i] = "RunKahlimHeartRush=" + CharConfig.RunKahlimHeartRush;
                     if (Splitted[0] == "RunTravincalRush") AllLines[i] = "RunTravincalRush=" + CharConfig.RunTravincalRush;
                     if (Splitted[0] == "RunMephistoRush") AllLines[i] = "RunMephistoRush=" + CharConfig.RunMephistoRush;
+                    if (Splitted[0] == "RunChaosRush") AllLines[i] = "RunChaosRush=" + CharConfig.RunChaosRush;
+                    if (Splitted[0] == "RunAncientsRush") AllLines[i] = "RunAncientsRush=" + CharConfig.RunAncientsRush;
+                    if (Splitted[0] == "RunBaalRush") AllLines[i] = "RunBaalRush=" + CharConfig.RunBaalRush;
 
+                    if (Splitted[0] == "ShowOverlay") AllLines[i] = "ShowOverlay=" + CharConfig.ShowOverlay;
+
+                    if (Splitted[0] == "RunWPTaker") AllLines[i] = "RunWPTaker=" + CharConfig.RunWPTaker;
+                    if (Splitted[0] == "RunTravincalScript") AllLines[i] = "RunTravincalScript=" + CharConfig.RunTravincalScript;
                     if (Splitted[0] == "RunPindleskinScript") AllLines[i] = "RunPindleskinScript=" + CharConfig.RunPindleskinScript;
                     if (Splitted[0] == "RunDurielScript") AllLines[i] = "RunDurielScript=" + CharConfig.RunDurielScript;
                     if (Splitted[0] == "RunSummonerScript") AllLines[i] = "RunSummonerScript=" + CharConfig.RunSummonerScript;
@@ -247,9 +259,15 @@ namespace app
                     if (Splitted[0] == "RunAndarielScript") AllLines[i] = "RunAndarielScript=" + CharConfig.RunAndarielScript;
                     if (Splitted[0] == "RunCountessScript") AllLines[i] = "RunCountessScript=" + CharConfig.RunCountessScript;
                     if (Splitted[0] == "RunChaosScript") AllLines[i] = "RunChaosScript=" + CharConfig.RunChaosScript;
+                    if (Splitted[0] == "RunChaosLeechScript") AllLines[i] = "RunChaosLeechScript=" + CharConfig.RunChaosLeechScript;
                     if (Splitted[0] == "RunLowerKurastScript") AllLines[i] = "RunLowerKurastScript=" + CharConfig.RunLowerKurastScript;
+                    if (Splitted[0] == "RunBaalScript") AllLines[i] = "RunBaalScript=" + CharConfig.RunBaalScript;
                     if (Splitted[0] == "RunBaalLeechScript") AllLines[i] = "RunBaalLeechScript=" + CharConfig.RunBaalLeechScript;
                     if (Splitted[0] == "RunItemGrabScriptOnly") AllLines[i] = "RunItemGrabScriptOnly=" + CharConfig.RunItemGrabScriptOnly;
+                    if (Splitted[0] == "RunCowsScript") AllLines[i] = "RunCowsScript=" + CharConfig.RunCowsScript;
+                    if (Splitted[0] == "RunEldritchScript") AllLines[i] = "RunEldritchScript=" + CharConfig.RunEldritchScript;
+                    if (Splitted[0] == "RunShenkScript") AllLines[i] = "RunShenkScript=" + CharConfig.RunShenkScript;
+                    if (Splitted[0] == "RunNihlatakScript") AllLines[i] = "RunNihlatakScript=" + CharConfig.RunNihlatakScript;
 
                     if (Splitted[0] == "RunChaosSearchGameScript") AllLines[i] = "RunChaosSearchGameScript=" + CharConfig.RunChaosSearchGameScript;
                     if (Splitted[0] == "RunBaalSearchGameScript") AllLines[i] = "RunBaalSearchGameScript=" + CharConfig.RunBaalSearchGameScript;
@@ -440,7 +458,30 @@ namespace app
                                 {
                                     CharConfig.RunMephistoRush = bool.Parse(Params[1].ToLower());
                                 }
+                                if (Params[0].Contains("RunChaosRush"))
+                                {
+                                    CharConfig.RunChaosRush = bool.Parse(Params[1].ToLower());
+                                }
+                                if (Params[0].Contains("RunAncientsRush"))
+                                {
+                                    CharConfig.RunAncientsRush = bool.Parse(Params[1].ToLower());
+                                }
+                                if (Params[0].Contains("RunBaalRush"))
+                                {
+                                    CharConfig.RunBaalRush = bool.Parse(Params[1].ToLower());
+                                }
 
+                                //##########
+                                if (Params[0].Contains("ShowOverlay"))
+                                {
+                                    CharConfig.ShowOverlay = bool.Parse(Params[1].ToLower());
+                                }
+                                //##########
+
+                                if (Params[0].Contains("RunWPTaker"))
+                                {
+                                    CharConfig.RunWPTaker = bool.Parse(Params[1].ToLower());
+                                }
                                 if (Params[0].Contains("RunPindleskinScript"))
                                 {
                                     CharConfig.RunPindleskinScript = bool.Parse(Params[1].ToLower());
@@ -465,6 +506,10 @@ namespace app
                                 {
                                     CharConfig.RunChaosScript = bool.Parse(Params[1].ToLower());
                                 }
+                                if (Params[0].Contains("RunChaosLeechScript"))
+                                {
+                                    CharConfig.RunChaosLeechScript = bool.Parse(Params[1].ToLower());
+                                }
                                 if (Params[0].Contains("RunCountessScript"))
                                 {
                                     CharConfig.RunCountessScript = bool.Parse(Params[1].ToLower());
@@ -473,10 +518,32 @@ namespace app
                                 {
                                     CharConfig.RunLowerKurastScript = bool.Parse(Params[1].ToLower());
                                 }
+                                if (Params[0].Contains("RunBaalScript"))
+                                {
+                                    CharConfig.RunBaalScript = bool.Parse(Params[1].ToLower());
+                                }
                                 if (Params[0].Contains("RunBaalLeechScript"))
                                 {
                                     CharConfig.RunBaalLeechScript = bool.Parse(Params[1].ToLower());
                                 }
+                                if (Params[0].Contains("RunCowsScript"))
+                                {
+                                    CharConfig.RunCowsScript = bool.Parse(Params[1].ToLower());
+                                }
+                                if (Params[0].Contains("RunEldritchScript"))
+                                {
+                                    CharConfig.RunEldritchScript = bool.Parse(Params[1].ToLower());
+                                }
+                                if (Params[0].Contains("RunShenkScript"))
+                                {
+                                    CharConfig.RunShenkScript = bool.Parse(Params[1].ToLower());
+                                }
+                                if (Params[0].Contains("RunNihlatakScript"))
+                                {
+                                    CharConfig.RunNihlatakScript = bool.Parse(Params[1].ToLower());
+                                }
+                                //########
+
                                 if (Params[0].Contains("RunItemGrabScriptOnly"))
                                 {
                                     CharConfig.RunItemGrabScriptOnly = bool.Parse(Params[1].ToLower());
@@ -543,6 +610,23 @@ namespace app
             {
                 Form1_0.method_1("UNABLE TO LOAD 'CubingRecipes.txt' FILE!", Color.Red);
             }
+        }
+
+        public void SaveCurrentCharSettings()
+        {
+            string[] AllLines = File.ReadAllLines(File_CharSettings);
+
+            for (int i = 0; i < AllLines.Length; i++)
+            {
+                if (AllLines[i].Contains("="))
+                {
+                    string[] Splitted = AllLines[i].Split('=');
+                    if (Splitted[0] == "RunOnChar") AllLines[i] = "RunOnChar=" + CharConfig.RunningOnChar;
+                }
+            }
+
+            File.Create(File_CharSettings).Dispose();
+            File.WriteAllLines(File_CharSettings, AllLines);
         }
 
         public void LoadCharSettings()

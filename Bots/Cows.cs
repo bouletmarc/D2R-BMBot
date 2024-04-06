@@ -8,13 +8,15 @@ using static app.MapAreaStruc;
 
 namespace app
 {
-    public class TristramRush
+    public class Cows
     {
         Form1 Form1_0;
 
         public int CurrentStep = 0;
         public bool ScriptDone = false;
         public Position TristramPos = new Position { X = 0, Y = 0 };
+
+        public bool HasWirtsLeg = false;
 
 
         public void SetForm1(Form1 form1_1)
@@ -26,18 +28,24 @@ namespace app
         {
             CurrentStep = 0;
             ScriptDone = false;
+            HasWirtsLeg = false;
         }
 
         public void DetectCurrentStep()
         {
-            if ((Enums.Area)Form1_0.PlayerScan_0.levelNo == Enums.Area.StonyField) CurrentStep = 1;
-            if ((Enums.Area)Form1_0.PlayerScan_0.levelNo == Enums.Area.Tristram) CurrentStep = 5;
+            if (HasWirtsLeg)
+            {
+                if ((Enums.Area)Form1_0.PlayerScan_0.levelNo == Enums.Area.MooMooFarm) CurrentStep = 1;
+            }
+            else
+            {
+                if ((Enums.Area)Form1_0.PlayerScan_0.levelNo == Enums.Area.StonyField) CurrentStep = 1;
+                if ((Enums.Area)Form1_0.PlayerScan_0.levelNo == Enums.Area.Tristram) CurrentStep = 3;
+            }
         }
 
-        public void RunScript()
+        public void RunScriptTristam()
         {
-            Form1_0.Town_0.ScriptTownAct = 1; //set to town act 5 when running this script
-
             if (Form1_0.Town_0.GetInTown())
             {
                 Form1_0.SetGameStatus("GO TO WP");
@@ -55,7 +63,6 @@ namespace app
 
                     if ((Enums.Area)Form1_0.PlayerScan_0.levelNo == Enums.Area.StonyField)
                     {
-                        Form1_0.Town_0.SpawnTP();
                         CurrentStep++;
                     }
                     else
@@ -85,36 +92,6 @@ namespace app
 
                 if (CurrentStep == 2)
                 {
-                    Form1_0.SetGameStatus("Tristram clearing stones");
-                    if (!Form1_0.Battle_0.DoBattleScript(25))
-                    {
-                        Position ThisTPPos = new Position { X = TristramPos.X - 10, Y = TristramPos.Y + 5 };
-                        Form1_0.PathFinding_0.MoveToThisPos(TristramPos);
-
-                        Form1_0.Town_0.TPSpawned = false;
-                        CurrentStep++;
-                    }
-                }
-
-                if (CurrentStep == 3)
-                {
-                    Form1_0.SetGameStatus("Tristram waiting on leecher");
-
-                    if (!Form1_0.Town_0.TPSpawned) Form1_0.Town_0.SpawnTP();
-
-                    Form1_0.Battle_0.DoBattleScript(25);
-
-                    //get leecher infos
-                    Form1_0.PlayerScan_0.GetLeechPositions();
-
-                    if (Form1_0.PlayerScan_0.LeechlevelNo == (int)Enums.Area.StonyField)
-                    {
-                        CurrentStep++;
-                    }
-                }
-
-                if (CurrentStep == 4)
-                {
                     Form1_0.SetGameStatus("Tristram waiting for Tristram portal");
 
                     if (Form1_0.ObjectsStruc_0.GetObjects("PermanentTownPortal", true, new List<uint>(), 60))
@@ -132,7 +109,7 @@ namespace app
                     }
                 }
 
-                if (CurrentStep == 5)
+                if (CurrentStep == 3)
                 {
                     if ((Enums.Area)Form1_0.PlayerScan_0.levelNo == Enums.Area.StonyField)
                     {
@@ -142,11 +119,11 @@ namespace app
 
                     Form1_0.SetGameStatus("Doing Tristram");
 
-                    if (Form1_0.ObjectsStruc_0.GetObjects("CainGibbet", true, new List<uint>()))
+                    if (Form1_0.ObjectsStruc_0.GetObjects("WirtCorpse", true, new List<uint>()))
                     {
                         if (Form1_0.Mover_0.MoveToLocation(Form1_0.ObjectsStruc_0.itemx, Form1_0.ObjectsStruc_0.itemy))
                         {
-                            //repeat clic on tree
+                            //repeat clic on WirtCorpse
                             int tryyy = 0;
                             while (tryyy <= 15)
                             {
@@ -159,18 +136,112 @@ namespace app
                             CurrentStep++;
                         }
                     }
+                    else
+                    {
+                        Form1_0.PathFinding_0.MoveToNPC("WirtCorpse");
+                    }
                 }
 
-                if (CurrentStep == 6)
+                if (CurrentStep == 4)
                 {
-                    Form1_0.SetGameStatus("Clearing Tristram");
+                    //take leg
+                    HasWirtsLeg = Form1_0.InventoryStruc_0.HasInventoryItemName("Wirt's Leg");
+                    DateTime TimeSinceTakingLeg = DateTime.Now;
+                    while (!HasWirtsLeg && (DateTime.Now - TimeSinceTakingLeg).TotalSeconds < 2)
+                    {
+                        Form1_0.ItemsStruc_0.PickThisItem("Wirt's Leg");
+                        Form1_0.ItemsStruc_0.GetItems(false); //get inventory
+                        HasWirtsLeg = Form1_0.InventoryStruc_0.HasInventoryItemName("Wirt's Leg");
+                    }
 
-                    if (!Form1_0.Battle_0.DoBattleScript(25))
+                    if (HasWirtsLeg)
+                    {
+                        CurrentStep = 0; //go to next script for cow
+                        Form1_0.Town_0.GoToTown();
+                    }
+                    else
+                    {
+                        CurrentStep--; //return clicking on corpse
+                    }
+                }
+            }
+        }
+
+        public void RunScriptCow()
+        {
+            if (Form1_0.Town_0.GetInTown())
+            {
+                Form1_0.SetGameStatus("GO TO WP");
+                CurrentStep = 0;
+
+                bool HasTownPortal = Form1_0.InventoryStruc_0.HasInventoryItemName("Tome of Town Portal");
+                if (!HasTownPortal)
+                {
+                    //buy tome of portal in store
+                    Form1_0.Shop_0.ShopForTomeOfPortal = true;
+                    Form1_0.Town_0.MoveToStore();
+                }
+                else
+                {
+                    if (Form1_0.ObjectsStruc_0.GetObjects("PermanentTownPortal", true, new List<uint>()))
+                    {
+                        Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, Form1_0.ObjectsStruc_0.itemx, Form1_0.ObjectsStruc_0.itemy);
+                        Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"] - 15);
+                        Form1_0.WaitDelay(100);
+                    }
+                    else
+                    {
+                        //move to stash to create portal by cubing it
+                        Form1_0.Town_0.MoveToStash(true);
+                    }
+                }
+            }
+            else
+            {
+                if (CurrentStep == 0)
+                {
+                    Form1_0.SetGameStatus("DOING COWS");
+                    Form1_0.Battle_0.CastDefense();
+                    Form1_0.WaitDelay(15);
+
+                    if ((Enums.Area)Form1_0.PlayerScan_0.levelNo == Enums.Area.MooMooFarm)
+                    {
+                        CurrentStep++;
+                    }
+                    else
+                    {
+                        DetectCurrentStep();
+                        if (CurrentStep == 0) Form1_0.Town_0.GoToTown();
+                    }
+                }
+
+                if (CurrentStep == 1)
+                {
+                    Form1_0.Battle_0.ClearFullAreaOfMobs();
+
+                    if (!Form1_0.Battle_0.ClearingArea)
                     {
                         Form1_0.Town_0.UseLastTP = false;
                         ScriptDone = true;
                     }
                 }
+            }
+        }
+
+        public void RunScript()
+        {
+            Form1_0.Town_0.ScriptTownAct = 1; //set to town act 5 when running this script
+
+            Form1_0.ItemsStruc_0.GetItems(false); //get inventory
+            HasWirtsLeg = Form1_0.InventoryStruc_0.HasInventoryItemName("Wirt's Leg");
+
+            if (HasWirtsLeg)
+            {
+                RunScriptCow();
+            }
+            else
+            {
+                RunScriptTristam();
             }
         }
     }

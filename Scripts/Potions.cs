@@ -57,7 +57,7 @@ namespace app
             if (Form1_0.PlayerScan_0.PlayerDead || ForceLeave || Form1_0.PlayerScan_0.PlayerHP == 0)
             {
                 ForceLeave = true;
-                Form1_0.Baal_0.SearchSameGamesAsLastOne = false;
+                Form1_0.BaalLeech_0.SearchSameGamesAsLastOne = false;
                 Form1_0.LeaveGame(false);
                 return;
                 //Chicken();
@@ -87,7 +87,7 @@ namespace app
             if (Form1_0.PlayerScan_0.PlayerDead || ForceLeave)
             {
                 ForceLeave = true;
-                Form1_0.Baal_0.SearchSameGamesAsLastOne = false;
+                Form1_0.BaalLeech_0.SearchSameGamesAsLastOne = false;
                 Form1_0.LeaveGame(false);
                 return;
                 //Chicken();
@@ -115,22 +115,22 @@ namespace app
             }
 
             //Check Merc
-            /*if (Form1_0.UsingMerc)
+            if (CharConfig.UsingMerc)
             {
                 Form1_0.MercStruc_0.GetMercInfos();
                 if (Form1_0.MercStruc_0.MercAlive)
                 {
                     CheckHPMerc();
-                    if (((Form1_0.MercStruc_0.MercHP * 100) / Form1_0.MercStruc_0.MercMaxHP) <= MercTakeHPPotUnder)
+                    /*if (((Form1_0.MercStruc_0.MercHP * 100) / Form1_0.MercStruc_0.MercMaxHP) <= CharConfig.MercTakeHPPotUnder)
                     {
                         //take hp pot only if we are not gaining hp already/haven't taken potion yet
                         if (MercGainingHPCount == 0)
                         {
                             TakePotion(1, true);  //merc send potion
                         }
-                    }
+                    }*/
                 }
-            }*/
+            }
         }
 
         public void TakePotion(int PotToTake, bool SendToMerc = false)
@@ -140,7 +140,7 @@ namespace app
             {
                 bool UsedPot = false;
                 TimeSpan ThisTimeCheck = DateTime.Now - LastTimeSinceUsedHPPot;
-                if (ThisTimeCheck.TotalMilliseconds > 2000) 
+                if (ThisTimeCheck.TotalMilliseconds > 3000) 
                 {
                     for (int i = 0; i < CharConfig.BeltPotTypeToHave.Length; i++)
                     {
@@ -174,7 +174,7 @@ namespace app
             {
                 bool UsedPot = false;
                 TimeSpan ThisTimeCheck = DateTime.Now - LastTimeSinceUsedManaPot;
-                if (ThisTimeCheck.TotalMilliseconds > 1200)
+                if (ThisTimeCheck.TotalMilliseconds > 2200)
                 {
                     for (int i = 0; i < CharConfig.BeltPotTypeToHave.Length; i++)
                     {
@@ -242,27 +242,23 @@ namespace app
         {
             if (i == 0)
             {
-                if (SendToMerc) Form1_0.KeyMouse_0.PressSHIFT();
-                Form1_0.KeyMouse_0.PressKey(System.Windows.Forms.Keys.D1);
-                if (SendToMerc) Form1_0.KeyMouse_0.ReleaseSHIFT();
+                if (SendToMerc) Form1_0.KeyMouse_0.PressPotionKeyMerc(System.Windows.Forms.Keys.D1);
+                else Form1_0.KeyMouse_0.PressPotionKey(System.Windows.Forms.Keys.D1);
             }
             if (i == 1)
             {
-                if (SendToMerc) Form1_0.KeyMouse_0.PressSHIFT();
-                Form1_0.KeyMouse_0.PressKey(System.Windows.Forms.Keys.D2);
-                if (SendToMerc) Form1_0.KeyMouse_0.ReleaseSHIFT();
+                if (SendToMerc) Form1_0.KeyMouse_0.PressPotionKeyMerc(System.Windows.Forms.Keys.D2);
+                else Form1_0.KeyMouse_0.PressPotionKey(System.Windows.Forms.Keys.D2);
             }
             if (i == 2)
             {
-                if (SendToMerc) Form1_0.KeyMouse_0.PressSHIFT();
-                Form1_0.KeyMouse_0.PressKey(System.Windows.Forms.Keys.D3);
-                if (SendToMerc) Form1_0.KeyMouse_0.ReleaseSHIFT();
+                if (SendToMerc) Form1_0.KeyMouse_0.PressPotionKeyMerc(System.Windows.Forms.Keys.D3);
+                else Form1_0.KeyMouse_0.PressPotionKey(System.Windows.Forms.Keys.D3);
             }
             if (i == 3)
             {
-                if (SendToMerc) Form1_0.KeyMouse_0.PressSHIFT();
-                Form1_0.KeyMouse_0.PressKey(System.Windows.Forms.Keys.D4);
-                if (SendToMerc) Form1_0.KeyMouse_0.ReleaseSHIFT();
+                if (SendToMerc) Form1_0.KeyMouse_0.PressPotionKeyMerc(System.Windows.Forms.Keys.D4);
+                else Form1_0.KeyMouse_0.PressPotionKey(System.Windows.Forms.Keys.D4);
             }
         }
 
@@ -353,7 +349,7 @@ namespace app
             //Set Lower HP
             if (Form1_0.PlayerScan_0.PlayerHP == PlayerHPLast && SameHPCount >= 45)
             {
-                if (!CharConfig.RunItemGrabScriptOnly) Form1_0.KeyMouse_0.PressKey(CharConfig.KeySkillDefenseAura);
+                if (!CharConfig.RunItemGrabScriptOnly && !Form1_0.Battle_0.DoingBattle) Form1_0.KeyMouse_0.PressKey(CharConfig.KeySkillDefenseAura);
                 if (Form1_0.PlayerScan_0.PlayerHP < Form1_0.PlayerScan_0.PlayerMaxHP)
                 {
                     Form1_0.PlayerScan_0.PlayerMaxHP = Form1_0.PlayerScan_0.PlayerHP;

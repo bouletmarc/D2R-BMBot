@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static app.MapAreaStruc;
 
 namespace app
 {
@@ -13,157 +14,44 @@ namespace app
         Form1 Form1_0;
 
         public int CurrentStep = 0;
-        public int MaxGameTimeToEnter = (4 * 60); //6mins
-        public int MaxTimeWaitedForTP = (2 * 60) * 2; //2mins
-        public int TimeWaitedForTP = 0;
-        public bool PrintedInfos = false;
         public bool ScriptDone = false;
+        public bool DetectedBoss = false;
 
-        public bool SearchSameGamesAsLastOne = false;
-        public int SameGameRetry = 0;
+        public Position EntrancePos = new Position { X = 7796, Y = 5561 };
+        public Position DiabloSpawnPos = new Position { X = 7800, Y = 5286 };
 
-        public List<uint> IgnoredTPList = new List<uint>();
-        public uint LastUsedTP_ID = 0;
-        public bool AddingIgnoredTP_ID = false;
+        public Position CurrentSealPos = new Position { X = 0, Y = 0 };
 
-        public bool LeechDetectedCorrectly = false;
+        public DateTime StartTimeUniqueBossWaiting = DateTime.Now;
+        public bool TimeSetForWaitingUniqueBoss = false;
+        public int TryCountWaitingUniqueBoss = 0;
 
-        //List<Tuple<int, int>> GoodPositions = new List<Tuple<int, int>>();
-
-        public int LastLeechPosX = 0;
-        public int LastLeechPosY = 0;
-
-        List<Tuple<int, int>> LastLeechPositions = new List<Tuple<int, int>>();
-        public int LastLeechPosXNEW = 0;
-        public int LastLeechPosYNEW = 0;
-
-        public bool CastedDefense = false;
+        public int BufferPathFindingMoveSize = 0;
 
         public void SetForm1(Form1 form1_1)
         {
             Form1_0 = form1_1;
         }
 
-        public void RunScriptNOTInGame()
+        public void ResetVars()
         {
-            TimeWaitedForTP = 0;
             CurrentStep = 0;
-            LastLeechPosX = 0;
-            LastLeechPosY = 0;
-            LastLeechPosXNEW = 0;
-            LastLeechPosYNEW = 0;
-            PrintedInfos = false;
-            CastedDefense = false;
-            //GoodPositions = new List<Tuple<int, int>>();
-            LastLeechPositions = new List<Tuple<int, int>>();
-            Form1_0.PlayerScan_0.LeechPlayerUnitID = 0;
-            Form1_0.PlayerScan_0.LeechPlayerPointer = 0;
-            Form1_0.GameStruc_0.GetAllGamesNames();
-            IgnoredTPList = new List<uint>();
-            LastUsedTP_ID = 0;
-            bool EnteredGammme = false;
-            LeechDetectedCorrectly = false;
             ScriptDone = false;
+            DetectedBoss = false;
+            TimeSetForWaitingUniqueBoss = false;
+            TryCountWaitingUniqueBoss = 0;
+            StartTimeUniqueBossWaiting = DateTime.Now;
+        }
 
-            string LastGameName = Form1_0.GameStruc_0.GameName;
-            string SearchSameGame = "";
-            if (LastGameName != "" && SameGameRetry < 20 && SearchSameGamesAsLastOne)
-            {
-                SearchSameGame = LastGameName.Substring(0, LastGameName.Length - 2);
-            }
-
-            if (Form1_0.GameStruc_0.AllGamesNames.Count > 0)
-            {
-                List<int> PossibleGamesIndex = new List<int>();
-
-                for (int i = 0; i < Form1_0.GameStruc_0.AllGamesNames.Count; i++)
-                {
-                    if (!Form1_0.Running)
-                    {
-                        break;
-                    }
-
-                    if (SearchSameGame != "")
-                    {
-                        if (Form1_0.GameStruc_0.AllGamesNames[i].ToLower().Contains(SearchSameGame.ToLower())
-                            && Form1_0.GameStruc_0.AllGamesNames[i] != LastGameName)
-                        {
-                            PossibleGamesIndex.Add(i);
-                        }
-                    }
-                    else
-                    {
-                        if (Form1_0.GameStruc_0.AllGamesNames[i].ToLower().Contains("chaos")
-                            && !Form1_0.GameStruc_0.AllGamesNames[i].ToLower().Contains("umf")
-                            && !Form1_0.GameStruc_0.AllGamesNames[i].ToLower().Contains("u-mf")
-                            && !Form1_0.GameStruc_0.AllGamesNames[i].ToLower().Contains("u mf")
-                            && !Form1_0.GameStruc_0.AllGamesNames[i].ToLower().Contains("baal")
-                            && !Form1_0.GameStruc_0.AllGamesNames[i].ToLower().Contains("umf")
-                            && !Form1_0.GameStruc_0.AllGamesNames[i].ToLower().Contains("u-mf")
-                            && !Form1_0.GameStruc_0.AllGamesNames[i].ToLower().Contains("u mf")
-                            && !Form1_0.GameStruc_0.AllGamesNames[i].ToLower().Contains("help")
-                            && !Form1_0.GameStruc_0.AllGamesNames[i].ToLower().Contains("walk")
-                            && Form1_0.GameStruc_0.AllGamesNames[i] != LastGameName) //not equal last gamename
-                        {
-                            if (!Form1_0.GameStruc_0.TriedThisGame(Form1_0.GameStruc_0.AllGamesNames[i]))
-                            {
-                                PossibleGamesIndex.Add(i);
-                            }
-                        }
-                    }
-                }
-
-                //##
-                if (PossibleGamesIndex.Count > 0)
-                {
-                    for (int i = 0; i < PossibleGamesIndex.Count; i++)
-                    {
-                        if (!Form1_0.Running)
-                        {
-                            break;
-                        }
-
-                        Form1_0.SetGameStatus("SEARCHING:" + Form1_0.GameStruc_0.AllGamesNames[PossibleGamesIndex[i]]);
-
-                        Form1_0.GameStruc_0.SelectGame(PossibleGamesIndex[i], false);
-                        if (!Form1_0.GameStruc_0.SelectedGameName.Contains(Form1_0.GameStruc_0.AllGamesNames[PossibleGamesIndex[i]]))
-                        {
-                            continue;
-                        }
-                        if (Form1_0.GameStruc_0.SelectedGameTime < MaxGameTimeToEnter)
-                        {
-                            Form1_0.GameStruc_0.SelectGame(PossibleGamesIndex[i], true);
-                            Form1_0.WaitDelay(300);
-                            EnteredGammme = true;
-                            break;
-                        }
-                        else
-                        {
-                            Form1_0.GameStruc_0.AllGamesTriedNames.Add(Form1_0.GameStruc_0.AllGamesNames[PossibleGamesIndex[i]]);
-                        }
-                    }
-                }
-
-                if (!EnteredGammme)
-                {
-                    if (SearchSameGame != "")
-                    {
-                        SameGameRetry++;
-                    }
-                }
-            }
+        public void DetectCurrentStep()
+        {
+            if ((Enums.Area)Form1_0.PlayerScan_0.levelNo == Enums.Area.RiverOfFlame) CurrentStep = 1;
+            if ((Enums.Area)Form1_0.PlayerScan_0.levelNo == Enums.Area.ChaosSanctuary) CurrentStep = 3;
         }
 
         public void RunScript()
         {
             Form1_0.Town_0.ScriptTownAct = 4; //set to town act 4 when running this script
-            SameGameRetry = 0;
-            GetLeechInfo();
-            if (Form1_0.PlayerScan_0.LeechPlayerPointer == 0 || Form1_0.PlayerScan_0.LeechPlayerUnitID == 0)
-            {
-                ScriptDone = true;
-                return;
-            }
 
             if (!Form1_0.Running || !Form1_0.GameStruc_0.IsInGame())
             {
@@ -173,267 +61,466 @@ namespace app
 
             if (Form1_0.Town_0.GetInTown())
             {
-                Form1_0.SetGameStatus("WAITING TP");
+                Form1_0.SetGameStatus("GO TO WP");
                 CurrentStep = 0;
-                Form1_0.Mover_0.MoveToLocation(5055, 5039); //move to wp spot
 
-                //use tp
-                //if (Form1_0.ObjectsStruc_0.GetObjects("TownPortal", Form1_0.PlayerScan_0.LeechPlayerUnitID))
-                if (Form1_0.ObjectsStruc_0.GetObjects("TownPortal", true))
-                {
-                    if (!CastedDefense)
-                    {
-                        Form1_0.Battle_0.CastDefense();
-                        CastedDefense = true;
-                        Form1_0.WaitDelay(30);
-                    }
-
-                    Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, Form1_0.ObjectsStruc_0.itemx, Form1_0.ObjectsStruc_0.itemy);
-                    Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"] - 15);
-                    Form1_0.WaitDelay(100);
-                    //Form1_0.Mover_0.FinishMoving();
-                }
-                else
-                {
-                    //Form1_0.method_1("NO TP FOUND NEAR IN TOWN");
-                    if (TimeWaitedForTP >= MaxTimeWaitedForTP)
-                    {
-                        Form1_0.method_1("Leaving reason: Waited too long for tp", Color.Black);
-                        Form1_0.LeaveGame(false);
-                    }
-                    else
-                    {
-                        Form1_0.WaitDelay(450);
-                        TimeWaitedForTP++;
-                    }
-                }
+                Form1_0.Town_0.GoToWPArea(4, 2);
             }
             else
             {
                 if (CurrentStep == 0)
                 {
+                    Form1_0.SetGameStatus("DOING CHAOS");
                     Form1_0.Battle_0.CastDefense();
-                    CurrentStep++;
-                }
-                else
-                {
-                    Form1_0.SetGameStatus("LEECHING");
+                    Form1_0.WaitDelay(15);
 
-                    //not correct location check
-                    if (Form1_0.PlayerScan_0.levelNo != 108)
+                    if (Form1_0.PlayerScan_0.levelNo == (int)Enums.Area.RiverOfFlame)
                     {
+                        CurrentStep++;
+                    }
+                    else if (Form1_0.PlayerScan_0.levelNo == (int)Enums.Area.ChaosSanctuary)
+                    {
+                        CurrentStep = 3;
+                    }
+                    else
+                    {
+                        DetectCurrentStep();
+                        if (CurrentStep == 0) Form1_0.Town_0.GoToTown();
+                    }
+                }
 
-                        if (Form1_0.ObjectsStruc_0.GetObjects("TownPortal", true, IgnoredTPList))
-                        {
-                            Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, Form1_0.ObjectsStruc_0.itemx, Form1_0.ObjectsStruc_0.itemy);
-                            Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"] - 15);
-                            Form1_0.WaitDelay(100);
-                        }
+                if (CurrentStep == 1)
+                {
+                    //Form1_0.PathFinding_0.MoveToNextArea(Enums.Area.ChaosSanctuary);
+                    //Form1_0.PathFinding_0.MoveToThisPos(EntrancePos);
+                    //CurrentStep++;
 
-                        Form1_0.method_1("Added ignored TP ID: " + LastUsedTP_ID, Color.Red);
+                    Position MidPos = new Position { X = 7800, Y = 5761 };
+                    if (Form1_0.Mover_0.MoveToLocation(MidPos.X, MidPos.Y))
+                    {
+                        CurrentStep++;
+                    }
+                }
 
-                        IgnoredTPList.Add(LastUsedTP_ID);
-                        Form1_0.Town_0.UseLastTP = false;
-                        AddingIgnoredTP_ID = true;
-                        Form1_0.Town_0.GoToTown();
+                if (CurrentStep == 2)
+                {
+                    if (Form1_0.Mover_0.MoveToLocation(EntrancePos.X, EntrancePos.Y))
+                    {
+                        BufferPathFindingMoveSize = Form1_0.PathFinding_0.AcceptMoveOffset;
+                        Form1_0.PathFinding_0.AcceptMoveOffset = 15;
+
+                        CurrentStep++;
+                    }
+                }
+
+                if (CurrentStep == 3)
+                {
+                    if (Form1_0.PlayerScan_0.levelNo != (int)Enums.Area.ChaosSanctuary)
+                    {
+                        CurrentStep--;
                         return;
                     }
 
-                    Form1_0.PlayerScan_0.GetLeechPositions();
+                    CurrentSealPos = Form1_0.MapAreaStruc_0.GetPositionOfObject("object", "DiabloSeal5", (int) Enums.Area.ChaosSanctuary, new List<int>());
 
-                    while (Form1_0.PlayerScan_0.LeechlevelNo != 108 && !LeechDetectedCorrectly)
+                    if (Form1_0.PlayerScan_0.xPosFinal >= (CurrentSealPos.X - 5)
+                        && Form1_0.PlayerScan_0.xPosFinal <= (CurrentSealPos.X + 5)
+                        && Form1_0.PlayerScan_0.yPosFinal >= (CurrentSealPos.Y - 5)
+                        && Form1_0.PlayerScan_0.yPosFinal <= (CurrentSealPos.Y + 5))
                     {
-                        if (!Form1_0.Running || !Form1_0.GameStruc_0.IsInGame())
+                        int InteractCount = 0;
+                        while (InteractCount < 3) 
                         {
-                            ScriptDone = true;
-                            return;
+                            Form1_0.PathFinding_0.MoveToObject("DiabloSeal5");
+                            Form1_0.WaitDelay(10);
+                            InteractCount++;
                         }
 
-                        int PlayerLeechIndex = 1;
-
-                        while(true)
+                        //######
+                        //KILL VIZIER
+                        if (!TimeSetForWaitingUniqueBoss)
                         {
-                            Form1_0.GameStruc_0.GameOwnerName = Form1_0.GameStruc_0.AllPlayersNames[PlayerLeechIndex];
-                            GetLeechInfo();
-                            if (Form1_0.PlayerScan_0.LeechPlayerPointer == 0 || Form1_0.PlayerScan_0.LeechPlayerUnitID == 0) return;
-                            Form1_0.PlayerScan_0.GetLeechPositions();
+                            StartTimeUniqueBossWaiting = DateTime.Now;
+                            TimeSetForWaitingUniqueBoss = true;
+                        }
+                        else
+                        {
+                            Form1_0.SetGameStatus("WAITING VIZIER " + (TryCountWaitingUniqueBoss + 1) + "/3");
 
-                            if (!Form1_0.Running || !Form1_0.GameStruc_0.IsInGame())
+                            bool UniqueDetected = Form1_0.MobsStruc_0.GetMobs("getSuperUniqueName", "Grand Vizier of Chaos", false, 200, new List<long>());
+
+                            while (!UniqueDetected && (DateTime.Now - StartTimeUniqueBossWaiting).TotalSeconds < 5)
                             {
-                                ScriptDone = true;
-                                return;
+                                UniqueDetected = Form1_0.MobsStruc_0.GetMobs("getSuperUniqueName", "Grand Vizier of Chaos", false, 200, new List<long>());
+
+                                Form1_0.PlayerScan_0.GetPositions();
+                                Form1_0.overlayForm.UpdateOverlay();
+                                Form1_0.GameStruc_0.CheckChickenGameTime();
+                                Form1_0.ItemsStruc_0.GetItems(true);
+                                Form1_0.Potions_0.CheckIfWeUsePotion();
+                                Form1_0.Battle_0.DoBattleScript(10);
+                                Application.DoEvents();
                             }
 
-                            if (Form1_0.PlayerScan_0.LeechlevelNo != 108)
+                            if (!UniqueDetected)
                             {
-                                PlayerLeechIndex++;
-                                if (PlayerLeechIndex > Form1_0.GameStruc_0.AllPlayersNames.Count - 1)
+                                if (TryCountWaitingUniqueBoss < 3)
                                 {
-                                    Form1_0.Town_0.GoToTown();
-                                    break;
+                                    TryCountWaitingUniqueBoss++;
+                                    StartTimeUniqueBossWaiting = DateTime.Now;
+                                }
+                                else
+                                {
+                                    TimeSetForWaitingUniqueBoss = false;
+                                    CurrentStep++;
                                 }
                             }
                             else
                             {
-                                Form1_0.method_1("Leecher Changed to: " + Form1_0.GameStruc_0.GameOwnerName, Color.DarkGreen);
-                                break;
-                            }
-                        }
-                    }
+                                Form1_0.SetGameStatus("KILLING VIZIER");
 
-                    LeechDetectedCorrectly = true;
-                    SearchSameGamesAsLastOne = false;
-
-                    //Form1_0.method_1("Leecher: " + Form1_0.PlayerScan_0.LeechPosX + ", " + Form1_0.PlayerScan_0.LeechPosY);
-                    /*if (Form1_0.PlayerScan_0.LeechPosX == 0 && Form1_0.PlayerScan_0.LeechPosY == 0)
-                    {
-                        //Form1_0.LeaveGame();
-                        return;
-                    }*/
-
-                    List<Tuple<int, int>> monsterPositions = Form1_0.MobsStruc_0.GetAllMobsNearby();
-
-                    if (IsMonsterPosition(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, monsterPositions))
-                    {
-                        int IndexToCheck = LastLeechPositions.Count - 2;
-                        if (IndexToCheck >= 0)
-                        {
-
-                            bool MonsterNearby = IsMonsterPosition(LastLeechPositions[IndexToCheck].Item1, LastLeechPositions[IndexToCheck].Item2, monsterPositions);
-                            while (MonsterNearby)
-                            {
-                                if (!Form1_0.Running || !Form1_0.GameStruc_0.IsInGame())
+                                if (Form1_0.MobsStruc_0.GetMobs("getSuperUniqueName", "Grand Vizier of Chaos", false, 200, new List<long>()))
                                 {
-                                    ScriptDone = true;
-                                    return;
-                                }
-
-                                IndexToCheck--;
-
-                                if (IndexToCheck >= 0)
-                                {
-                                    //monsterPositions = Form1_0.MobsStruc_0.GetAllMobsNearby();
-                                    MonsterNearby = IsMonsterPosition(LastLeechPositions[IndexToCheck].Item1, LastLeechPositions[IndexToCheck].Item2, monsterPositions);
-                                }
-                                else
-                                {
-                                    break;
-                                }
-                            }
-
-                            if (!MonsterNearby)
-                            {
-                                Form1_0.method_1("Move to Safe Pos: " + LastLeechPositions[IndexToCheck].Item1 + ", " + LastLeechPositions[IndexToCheck].Item2, Color.DarkGreen);
-                                Form1_0.Mover_0.MoveToLocation(LastLeechPositions[IndexToCheck].Item1, LastLeechPositions[IndexToCheck].Item2, true);
-                            }
-                        }
-                    }
-
-                    Form1_0.PlayerScan_0.GetLeechPositions();
-                    if (Form1_0.PlayerScan_0.LeechlevelNo != 108) return;
-                    if (Form1_0.PlayerScan_0.LeechPosX == 0 && Form1_0.PlayerScan_0.LeechPosY == 0)
-                    {
-                        //Form1_0.LeaveGame();
-                        return;
-                    }
-
-                    //Move to leecher
-                    if (LastLeechPosXNEW != Form1_0.PlayerScan_0.LeechPosX && LastLeechPosYNEW != Form1_0.PlayerScan_0.LeechPosY)
-                    {
-                        LastLeechPositions.Add(Tuple.Create(Form1_0.PlayerScan_0.LeechPosX, Form1_0.PlayerScan_0.LeechPosY));
-
-                        LastLeechPosXNEW = Form1_0.PlayerScan_0.LeechPosX;
-                        LastLeechPosYNEW = Form1_0.PlayerScan_0.LeechPosY;
-                    }
-
-                    /*Tuple<int, int> bestPosition = FindBestPosition(Form1_0.PlayerScan_0.LeechPosX, Form1_0.PlayerScan_0.LeechPosY, monsterPositions, 5);
-
-                    if (bestPosition.Item1 != 0 && bestPosition.Item2 != 0)
-                    {
-                        if (bestPosition.Item1 != LastLeechPosX && bestPosition.Item2 != LastLeechPosY)
-                        {
-                            if (Form1_0.PlayerScan_0.LeechlevelNo != 108) return;
-
-                            GoodPositions.Add(Tuple.Create(bestPosition.Item1, bestPosition.Item2));
-                            Form1_0.method_1("Move to Leecher Pos: " + bestPosition.Item1 + ", " + bestPosition.Item2, Color.DarkGreen);
-                            Form1_0.Mover_0.MoveToLocation(bestPosition.Item1, bestPosition.Item2);
-
-                            LastLeechPosX = bestPosition.Item1;
-                            LastLeechPosY = bestPosition.Item2;
-                        }
-                        else
-                        {*/
-                            int ThisCheckIndex = LastLeechPositions.Count - 1;
-                            while (true)
-                            {
-                                if (!Form1_0.Running || !Form1_0.GameStruc_0.IsInGame())
-                                {
-                                    ScriptDone = true;
-                                    return;
-                                }
-
-                                Tuple<int, int> bestPosition = FindBestPosition(LastLeechPositions[ThisCheckIndex].Item1, LastLeechPositions[ThisCheckIndex].Item2, monsterPositions, 4);
-                                if (bestPosition.Item1 != 0 && bestPosition.Item2 != 0)
-                                {
-                                    if (bestPosition.Item1 != LastLeechPosX && bestPosition.Item2 != LastLeechPosY)
+                                    if (Form1_0.MobsStruc_0.MobsHP > 0)
                                     {
-                                        if (IsMonsterPosition(bestPosition.Item1, bestPosition.Item2, monsterPositions))
-                                        {
-                                            ThisCheckIndex--;
-                                            if (ThisCheckIndex < 0)
-                                            {
-                                                break;
-                                            }
-                                            continue;
-                                        }
-                                        if (bestPosition.Item1 - Form1_0.PlayerScan_0.xPosFinal > 300
-                                            || bestPosition.Item1 - Form1_0.PlayerScan_0.xPosFinal < -300
-                                            || bestPosition.Item2 - Form1_0.PlayerScan_0.yPosFinal > 300
-                                            || bestPosition.Item2 - Form1_0.PlayerScan_0.yPosFinal < -300)
-                                        {
-                                            break;
-                                        }
-
-                                        if (Form1_0.PlayerScan_0.LeechlevelNo != 108) return;
-
-                                        //GoodPositions.Add(Tuple.Create(bestPosition.Item1, bestPosition.Item2));
-                                        Form1_0.method_1("Move to Leecher Pos #2: " + bestPosition.Item1 + ", " + bestPosition.Item2, Color.DarkGreen);
-                                        Form1_0.Mover_0.MoveToLocation(bestPosition.Item1, bestPosition.Item2, true);
-
-                                        LastLeechPosX = bestPosition.Item1;
-                                        LastLeechPosY = bestPosition.Item2;
-                                        break;
+                                        Form1_0.Battle_0.RunBattleScriptOnThisMob("getSuperUniqueName", "Grand Vizier of Chaos");
                                     }
                                     else
                                     {
-                                        if (IsMonsterPosition(LastLeechPosX, LastLeechPosY, monsterPositions))
-                                        {
-                                            ThisCheckIndex--;
-                                            if (ThisCheckIndex < 0)
-                                            {
-                                                break;
-                                            }
-                                        }
-                                        else
-                                        {
-                                            break;
-                                        }
+                                        TimeSetForWaitingUniqueBoss = false;
+                                        CurrentStep++;
                                     }
                                 }
                             }
-                    //    }
-                    //}
-                    
-
+                        }
+                    }
+                    else
+                    {
+                        Form1_0.PathFinding_0.MoveToObject("DiabloSeal5", 4, true);
+                    }
                 }
+
+                if (CurrentStep == 4)
+                {
+                    CurrentSealPos = Form1_0.MapAreaStruc_0.GetPositionOfObject("object", "DiabloSeal4", (int)Enums.Area.ChaosSanctuary, new List<int>());
+
+                    if (Form1_0.PlayerScan_0.xPosFinal >= (CurrentSealPos.X - 5)
+                        && Form1_0.PlayerScan_0.xPosFinal <= (CurrentSealPos.X + 5)
+                        && Form1_0.PlayerScan_0.yPosFinal >= (CurrentSealPos.Y - 5)
+                        && Form1_0.PlayerScan_0.yPosFinal <= (CurrentSealPos.Y + 5))
+                    {
+                        int InteractCount = 0;
+                        while (InteractCount < 3)
+                        {
+                            Form1_0.PathFinding_0.MoveToObject("DiabloSeal4");
+                            Form1_0.WaitDelay(10);
+                            InteractCount++;
+                        }
+
+                        CurrentStep++;
+                    }
+                    else
+                    {
+                        Form1_0.PathFinding_0.MoveToObject("DiabloSeal4", 4, true);
+                    }
+                }
+
+                if (CurrentStep == 5)
+                {
+                    CurrentSealPos = Form1_0.MapAreaStruc_0.GetPositionOfObject("object", "DiabloSeal3", (int)Enums.Area.ChaosSanctuary, new List<int>());
+
+                    if (Form1_0.PlayerScan_0.xPosFinal >= (CurrentSealPos.X - 5)
+                        && Form1_0.PlayerScan_0.xPosFinal <= (CurrentSealPos.X + 5)
+                        && Form1_0.PlayerScan_0.yPosFinal >= (CurrentSealPos.Y - 5)
+                        && Form1_0.PlayerScan_0.yPosFinal <= (CurrentSealPos.Y + 5))
+                    {
+                        int InteractCount = 0;
+                        while (InteractCount < 3)
+                        {
+                            Form1_0.PathFinding_0.MoveToObject("DiabloSeal3");
+                            Form1_0.WaitDelay(10);
+                            InteractCount++;
+                        }
+
+                        //######
+                        //KILL LORD DE SEIS
+                        if (!TimeSetForWaitingUniqueBoss)
+                        {
+                            StartTimeUniqueBossWaiting = DateTime.Now;
+                            TimeSetForWaitingUniqueBoss = true;
+                        }
+                        else
+                        {
+                            Form1_0.SetGameStatus("WAITING LORD DE SEIS " + (TryCountWaitingUniqueBoss + 1) + "/3");
+
+                            bool UniqueDetected = Form1_0.MobsStruc_0.GetMobs("getSuperUniqueName", "Lord De Seis", false, 200, new List<long>());
+
+                            while (!UniqueDetected && (DateTime.Now - StartTimeUniqueBossWaiting).TotalSeconds < 5)
+                            {
+                                UniqueDetected = Form1_0.MobsStruc_0.GetMobs("getSuperUniqueName", "Lord De Seis", false, 200, new List<long>());
+
+                                Form1_0.PlayerScan_0.GetPositions();
+                                Form1_0.overlayForm.UpdateOverlay();
+                                Form1_0.GameStruc_0.CheckChickenGameTime();
+                                Form1_0.ItemsStruc_0.GetItems(true);
+                                Form1_0.Potions_0.CheckIfWeUsePotion();
+                                Form1_0.Battle_0.DoBattleScript(10);
+                                Application.DoEvents();
+                            }
+
+                            if (!UniqueDetected)
+                            {
+                                if (TryCountWaitingUniqueBoss < 3)
+                                {
+                                    TryCountWaitingUniqueBoss++;
+                                    StartTimeUniqueBossWaiting = DateTime.Now;
+                                }
+                                else
+                                {
+                                    TimeSetForWaitingUniqueBoss = false;
+                                    CurrentStep++;
+                                }
+                            }
+                            else
+                            {
+                                Form1_0.SetGameStatus("KILLING LORD DE SEIS");
+
+                                if (Form1_0.MobsStruc_0.GetMobs("getSuperUniqueName", "Lord De Seis", false, 200, new List<long>()))
+                                {
+                                    if (Form1_0.MobsStruc_0.MobsHP > 0)
+                                    {
+                                        Form1_0.Battle_0.RunBattleScriptOnThisMob("getSuperUniqueName", "Lord De Seis");
+                                    }
+                                    else
+                                    {
+                                        TimeSetForWaitingUniqueBoss = false;
+                                        CurrentStep++;
+                                    }
+                                }
+                            }
+                        }
+                        //######
+                    }
+                    else
+                    {
+                        Form1_0.PathFinding_0.MoveToObject("DiabloSeal3", 4, true);
+                    }
+                }
+
+                if (CurrentStep == 6)
+                {
+                    CurrentSealPos = Form1_0.MapAreaStruc_0.GetPositionOfObject("object", "DiabloSeal2", (int)Enums.Area.ChaosSanctuary, new List<int>());
+
+                    if (Form1_0.PlayerScan_0.xPosFinal >= (CurrentSealPos.X - 5)
+                        && Form1_0.PlayerScan_0.xPosFinal <= (CurrentSealPos.X + 5)
+                        && Form1_0.PlayerScan_0.yPosFinal >= (CurrentSealPos.Y - 5)
+                        && Form1_0.PlayerScan_0.yPosFinal <= (CurrentSealPos.Y + 5))
+                    {
+                        int InteractCount = 0;
+                        while (InteractCount < 3)
+                        {
+                            Form1_0.PathFinding_0.MoveToObject("DiabloSeal2");
+                            Form1_0.WaitDelay(10);
+                            InteractCount++;
+                        }
+
+                        CurrentStep++;
+                    }
+                    else
+                    {
+                        Form1_0.PathFinding_0.MoveToObject("DiabloSeal2", 4, true);
+                    }
+                }
+
+                if (CurrentStep == 7)
+                {
+                    CurrentSealPos = Form1_0.MapAreaStruc_0.GetPositionOfObject("object", "DiabloSeal1", (int)Enums.Area.ChaosSanctuary, new List<int>());
+
+                    if (Form1_0.PlayerScan_0.xPosFinal >= (CurrentSealPos.X - 5)
+                        && Form1_0.PlayerScan_0.xPosFinal <= (CurrentSealPos.X + 5)
+                        && Form1_0.PlayerScan_0.yPosFinal >= (CurrentSealPos.Y - 5)
+                        && Form1_0.PlayerScan_0.yPosFinal <= (CurrentSealPos.Y + 5))
+                    {
+                        int InteractCount = 0;
+                        while (InteractCount < 3)
+                        {
+                            Form1_0.PathFinding_0.MoveToObject("DiabloSeal1");
+                            Form1_0.WaitDelay(10);
+                            InteractCount++;
+                        }
+
+                        //######
+                        //KILL INFECTOR
+                        if (!TimeSetForWaitingUniqueBoss)
+                        {
+                            StartTimeUniqueBossWaiting = DateTime.Now;
+                            TimeSetForWaitingUniqueBoss = true;
+                        }
+                        else
+                        {
+                            Form1_0.SetGameStatus("WAITING INFECTOR " + (TryCountWaitingUniqueBoss + 1) + "/3");
+
+                            bool UniqueDetected = Form1_0.MobsStruc_0.GetMobs("getSuperUniqueName", "Infector of Souls", false, 200, new List<long>());
+
+                            while (!UniqueDetected && (DateTime.Now - StartTimeUniqueBossWaiting).TotalSeconds < 5)
+                            {
+                                UniqueDetected = Form1_0.MobsStruc_0.GetMobs("getSuperUniqueName", "Infector of Souls", false, 200, new List<long>());
+
+                                Form1_0.PlayerScan_0.GetPositions();
+                                Form1_0.overlayForm.UpdateOverlay();
+                                Form1_0.GameStruc_0.CheckChickenGameTime();
+                                Form1_0.ItemsStruc_0.GetItems(true);
+                                Form1_0.Potions_0.CheckIfWeUsePotion();
+                                Form1_0.Battle_0.DoBattleScript(10);
+                                Application.DoEvents();
+                            }
+
+                            if (!UniqueDetected)
+                            {
+                                if (TryCountWaitingUniqueBoss < 3)
+                                {
+                                    TryCountWaitingUniqueBoss++;
+                                    StartTimeUniqueBossWaiting = DateTime.Now;
+                                }
+                                else
+                                {
+                                    TimeSetForWaitingUniqueBoss = false;
+                                    CurrentStep++;
+                                }
+                            }
+                            else
+                            {
+                                Form1_0.SetGameStatus("KILLING INFECTOR");
+
+                                if (Form1_0.MobsStruc_0.GetMobs("getSuperUniqueName", "Infector of Souls", false, 200, new List<long>()))
+                                {
+                                    if (Form1_0.MobsStruc_0.MobsHP > 0)
+                                    {
+                                        Form1_0.Battle_0.RunBattleScriptOnThisMob("getSuperUniqueName", "Infector of Souls");
+                                    }
+                                    else
+                                    {
+                                        TimeSetForWaitingUniqueBoss = false;
+                                        CurrentStep++;
+                                    }
+                                }
+                            }
+                        }
+                        //######
+                    }
+                    else
+                    {
+                        Form1_0.PathFinding_0.MoveToObject("DiabloSeal1", 4, true);
+                    }
+                }
+
+                if (CurrentStep == 8)
+                {
+                    Form1_0.PathFinding_0.MoveToThisPos(DiabloSpawnPos);
+                    CurrentStep++;
+                }
+
+                if (CurrentStep == 9)
+                {
+                    Form1_0.Potions_0.CanUseSkillForRegen = false;
+                    Form1_0.SetGameStatus("KILLING DIABLO");
+
+                    //#############
+                    bool DetectedDiablo = Form1_0.MobsStruc_0.GetMobs("getBossName", "Diablo", false, 200, new List<long>());
+                    DateTime StartTime = DateTime.Now;
+                    TimeSpan TimeSinceDetecting = DateTime.Now - StartTime;
+                    while (!DetectedDiablo && TimeSinceDetecting.TotalSeconds < 12)
+                    {
+                        Form1_0.SetGameStatus("WAITING DETECTING DIABLO");
+                        DetectedDiablo = Form1_0.MobsStruc_0.GetMobs("getBossName", "Diablo", false, 200, new List<long>());
+                        TimeSinceDetecting = DateTime.Now - StartTime;
+
+                        //cast attack during this waiting time
+                        /*Form1_0.Battle_0.SetSkills();
+                        Form1_0.Battle_0.CastSkills();*/
+                        Form1_0.ItemsStruc_0.GetItems(true);      //#############
+                        Form1_0.Potions_0.CheckIfWeUsePotion();
+
+                        if (!Form1_0.GameStruc_0.IsInGame() || !Form1_0.Running)
+                        {
+                            Form1_0.overlayForm.ResetMoveToLocation();
+                            return;
+                        }
+                    }
+
+                    if (TimeSinceDetecting.TotalSeconds >= 12)
+                    {
+                        Form1_0.method_1("Waited too long for Diablo repoping the seals!", Color.Red);
+                        CurrentStep = 3;
+                        return;
+                    }
+                    //#############
+
+                    if (Form1_0.MobsStruc_0.GetMobs("getBossName", "Diablo", false, 200, new List<long>()))
+                    {
+                        Form1_0.SetGameStatus("KILLING DIABLO");
+                        if (Form1_0.MobsStruc_0.MobsHP > 0)
+                        {
+                            DetectedBoss = true;
+                            Form1_0.Battle_0.RunBattleScriptOnThisMob("getBossName", "Diablo");
+                        }
+                        else
+                        {
+                            if (!DetectedBoss)
+                            {
+                                Form1_0.method_1("Diablo not detected!", Color.Red);
+                                Form1_0.Battle_0.DoBattleScript(15);
+                            }
+
+                            Form1_0.ItemsStruc_0.GetItems(true);
+                            Form1_0.ItemsStruc_0.GetItems(true);
+                            Form1_0.ItemsStruc_0.GetItems(true);
+                            Form1_0.ItemsStruc_0.GetItems(true);
+                            Form1_0.ItemsStruc_0.GetItems(true);
+                            Form1_0.ItemsStruc_0.GetItems(true);
+                            Form1_0.ItemsStruc_0.GetItems(true);
+                            Form1_0.ItemsStruc_0.GetItems(true);
+                            Form1_0.ItemsStruc_0.GetItems(true);
+                            Form1_0.ItemsStruc_0.GetItems(true);
+                            Form1_0.ItemsStruc_0.GrabAllItemsForGold();
+                            Form1_0.Potions_0.CanUseSkillForRegen = true;
+
+                            Form1_0.PathFinding_0.AcceptMoveOffset = BufferPathFindingMoveSize;
+                            Form1_0.Town_0.UseLastTP = false;
+                            ScriptDone = true;
+                            return;
+                            //Form1_0.LeaveGame(true);
+                        }
+                    }
+                    else
+                    {
+                        Form1_0.method_1("Diablo not detected!", Color.Red);
+
+                        Form1_0.Battle_0.DoBattleScript(15);
+
+                        //baal not detected...
+                        Form1_0.ItemsStruc_0.GetItems(true);
+                        if (Form1_0.MobsStruc_0.GetMobs("getBossName", "Diablo", false, 200, new List<long>())) return; //redetect baal?
+                        Form1_0.ItemsStruc_0.GrabAllItemsForGold();
+                        if (Form1_0.MobsStruc_0.GetMobs("getBossName", "Diablo", false, 200, new List<long>())) return; //redetect baal?
+                        Form1_0.Potions_0.CanUseSkillForRegen = true;
+
+                        Form1_0.PathFinding_0.AcceptMoveOffset = BufferPathFindingMoveSize;
+                        Form1_0.Town_0.UseLastTP = false;
+                        ScriptDone = true;
+                        return;
+                        //Form1_0.LeaveGame(true);
+                    }
+                }
+
             }
         }
 
         
-        static Tuple<int, int> FindBestPosition(int playerX, int playerY, List<Tuple<int, int>> monsterPositions, int maxDisplacement)
+        static int[] FindBestPosition(int playerX, int playerY, List<int[]> monsterPositions, int maxDisplacement)
         {
             // Create a list to store all possible positions around the player
-            List<Tuple<int, int>> possiblePositions = new List<Tuple<int, int>>();
+            List<int[]> possiblePositions = new List<int[]>();
 
             // Generate all possible positions within the maximum displacement range
             for (int x = playerX - maxDisplacement; x <= playerX + maxDisplacement; x++)
@@ -446,17 +533,19 @@ namespace app
                     // Check if the distance is within the maximum displacement and the position is not occupied by a monster
                     if (distance <= maxDisplacement && !IsMonsterPosition(x, y, monsterPositions))
                     {
-                        possiblePositions.Add(Tuple.Create(x, y));
+                        //possiblePositions.Add(Tuple.Create(x, y));
+                        possiblePositions.Add(new int[2] { x, y });
                     }
                 }
             }
 
             // Find the closest position among the possible positions
-            Tuple<int, int> bestPosition = Tuple.Create(playerX, playerY);
+            //int[] bestPosition = Tuple.Create(playerX, playerY);
+            int[] bestPosition = new int[2] { playerX, playerY };
             double closestDistance = double.MaxValue;
             foreach (var position in possiblePositions)
             {
-                double distance = Math.Sqrt(Math.Pow(playerX - position.Item1, 2) + Math.Pow(playerY - position.Item2, 2));
+                double distance = Math.Sqrt(Math.Pow(playerX - position[0], 2) + Math.Pow(playerY - position[1], 2));
                 if (distance < closestDistance)
                 {
                     closestDistance = distance;
@@ -467,233 +556,20 @@ namespace app
             return bestPosition;
         }
 
-        static bool IsMonsterPosition(int x, int y, List<Tuple<int, int>> monsterPositions)
+        static bool IsMonsterPosition(int x, int y, List<int[]> monsterPositions)
         {
             foreach (var monsterPosition in monsterPositions)
             {
-                if (monsterPosition.Item1 >= x - 8 
-                    && monsterPosition.Item1 <= x + 8
-                    && monsterPosition.Item2 >= y - 8
-                    && monsterPosition.Item2 <= y + 8)
+                if (monsterPosition[0] >= x - 8 
+                    && monsterPosition[0] <= x + 8
+                    && monsterPosition[1] >= y - 8
+                    && monsterPosition[1] <= y + 8)
                 {
                     return true;
                 }
             }
             return false;
         }
-
-        public void GetLeechInfo()
-        {
-            Form1_0.PlayerScan_0.ScanForLeecher();
-
-            if (!PrintedInfos)
-            {
-                Form1_0.method_1("Leecher name: " + Form1_0.GameStruc_0.GameOwnerName, Color.DarkTurquoise);
-                Form1_0.method_1("Leecher pointer: 0x" + Form1_0.PlayerScan_0.LeechPlayerPointer.ToString("X"), Color.DarkTurquoise);
-                Form1_0.method_1("Leecher unitID: 0x" + Form1_0.PlayerScan_0.LeechPlayerUnitID.ToString("X"), Color.DarkTurquoise);
-                PrintedInfos = true;
-            }
-
-            //LEECHER NOT IN GAME
-            if (Form1_0.PlayerScan_0.LeechPlayerPointer == 0 || Form1_0.PlayerScan_0.LeechPlayerUnitID == 0)
-            {
-                if (Form1_0.Running && Form1_0.GameStruc_0.IsInGame())
-                {
-                    Form1_0.ItemsStruc_0.GrabAllItemsForGold();
-                    SearchSameGamesAsLastOne = true;
-                    Form1_0.LeaveGame(true);
-                }
-            }
-        }
-
-        /*public void RunScript()
-        {
-            if (Form1_0.Town_0.GetInTown())
-            {
-                Form1_0.Mover_0.MoveToLocation(5055, 5039); //move to wp spot
-
-                //use wp
-                if (Form1_0.ObjectsStruc_0.GetObjects("PandamoniumFortressWaypoint"))
-                {
-                    Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, Form1_0.ObjectsStruc_0.itemx, Form1_0.ObjectsStruc_0.itemy);
-                    Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"] - 15);
-                    Form1_0.Mover_0.FinishMoving();
-                    if (Form1_0.UIScan_0.WaitTilUIOpen("waypointMenu"))
-                    {
-                        Form1_0.KeyMouse_0.MouseClicc(450, 390);
-                        Form1_0.WaitDelay(50);
-                        Form1_0.UIScan_0.WaitTilUIClose("waypointMenu");
-                        Form1_0.UIScan_0.WaitTilUIClose("loading");
-                    }
-                    else
-                    {
-                        Form1_0.method_1("WP MENU NOT OPENED");
-                    }
-                }
-                else
-                {
-                    Form1_0.method_1("NO WP FOUND NEAR IN TOWN");
-                }
-            }
-            else
-            {
-                if (CurrentStep == 0)
-                {
-                    //cast sacred shield
-                    Form1_0.KeyMouse_0.PressKey(KeySkillCastDefense);
-                    Form1_0.WaitDelay(5);
-                    Form1_0.KeyMouse_0.MouseCliccRight(Form1_0.ScreenX / 2, Form1_0.ScreenY / 2);
-                    //start moving to chaos
-                    if (Form1_0.Mover_0.MoveToLocation(7794, 5868))
-                    {
-                        CurrentStep++;
-                        Form1_0.PlayerScan_0.GetPositions();
-                    }
-                }
-                else if (CurrentStep == 1)
-                {
-                    if (Form1_0.Mover_0.MoveToLocation(7800, 5826))
-                    {
-                        CurrentStep++;
-                        Form1_0.PlayerScan_0.GetPositions();
-                    }
-                }
-                else if (CurrentStep == 2)
-                {
-                    Form1_0.Battle_0.ClearAreaOfMobs(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, 15);
-                    CurrentStep++;
-                }
-                else if (CurrentStep == 3)
-                {
-                    //7800,5815 - spot1
-                    if (Form1_0.Mover_0.MoveToLocation(7800, 5815))
-                    {
-                        CurrentStep++;
-                        Form1_0.PlayerScan_0.GetPositions();
-                    }
-                }
-                if (CurrentStep == 4)
-                {
-                    //try right
-                    bool TryingLeft = false;
-                    if (Form1_0.Mover_0.MoveToLocation(7820, 5815))
-                    {
-                        Form1_0.PlayerScan_0.GetPositions();
-                        Form1_0.Battle_0.ClearAreaOfMobs(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, 15);
-
-                        if (Form1_0.Mover_0.MoveToLocation(7840, 5810))
-                        {
-                            Form1_0.PlayerScan_0.GetPositions();
-                            Form1_0.Battle_0.ClearAreaOfMobs(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, 15);
-
-                            if (Form1_0.Mover_0.MoveToLocation(7840, 5775))
-                            {
-                                Form1_0.PlayerScan_0.GetPositions();
-                                Form1_0.Battle_0.ClearAreaOfMobs(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, 15);
-
-                                if (Form1_0.Mover_0.MoveToLocation(7840, 5740))
-                                {
-                                    Form1_0.PlayerScan_0.GetPositions();
-                                    Form1_0.Battle_0.ClearAreaOfMobs(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, 15);
-
-                                    if (Form1_0.Mover_0.MoveToLocation(7840, 5730))
-                                    {
-                                        Form1_0.PlayerScan_0.GetPositions();
-                                        Form1_0.Battle_0.ClearAreaOfMobs(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, 15);
-
-                                        CurrentStep++;
-                                    }
-                                    else
-                                    {
-                                        Form1_0.Mover_0.MoveToLocation(7840, 5810); //go back
-                                        Form1_0.Mover_0.MoveToLocation(7820, 5815); //go back
-                                        TryingLeft = true;
-                                    }
-                                }
-                                else
-                                {
-                                    Form1_0.Mover_0.MoveToLocation(7840, 5810); //go back
-                                    Form1_0.Mover_0.MoveToLocation(7820, 5815); //go back
-                                    TryingLeft = true;
-                                }
-                            }
-                            else
-                            {
-                                Form1_0.Mover_0.MoveToLocation(7840, 5810); //go back
-                                Form1_0.Mover_0.MoveToLocation(7820, 5815); //go back
-                                TryingLeft = true;
-                            } 
-                        }
-                        else
-                        {
-                            Form1_0.Mover_0.MoveToLocation(7820, 5815); //go back
-                            TryingLeft = true;
-                        }
-                    }
-
-                    if (TryingLeft)
-                    {
-                        if (Form1_0.Mover_0.MoveToLocation(7780, 5815))
-                        {
-                            Form1_0.PlayerScan_0.GetPositions();
-                            Form1_0.Battle_0.ClearAreaOfMobs(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, 15);
-
-                            if (Form1_0.Mover_0.MoveToLocation(7780, 5790))
-                            {
-                                Form1_0.PlayerScan_0.GetPositions();
-                                Form1_0.Battle_0.ClearAreaOfMobs(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, 15);
-
-                                if (Form1_0.Mover_0.MoveToLocation(7760, 5790))
-                                {
-                                    Form1_0.PlayerScan_0.GetPositions();
-                                    Form1_0.Battle_0.ClearAreaOfMobs(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, 15);
-
-                                    if (Form1_0.Mover_0.MoveToLocation(7760, 5760))
-                                    {
-                                        Form1_0.PlayerScan_0.GetPositions();
-                                        Form1_0.Battle_0.ClearAreaOfMobs(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, 15);
-
-                                        if (Form1_0.Mover_0.MoveToLocation(7760, 5740))
-                                        {
-                                            Form1_0.PlayerScan_0.GetPositions();
-                                            Form1_0.Battle_0.ClearAreaOfMobs(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, 15);
-
-                                            if (Form1_0.Mover_0.MoveToLocation(7780, 5735))
-                                            {
-                                                Form1_0.PlayerScan_0.GetPositions();
-                                                Form1_0.Battle_0.ClearAreaOfMobs(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, 15);
-                                                Form1_0.Mover_0.MoveToLocation(7780, 5730); //###
-
-                                                if (Form1_0.Mover_0.MoveToLocation(7800, 5730))
-                                                {
-                                                    Form1_0.PlayerScan_0.GetPositions();
-                                                    Form1_0.Battle_0.ClearAreaOfMobs(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, 15);
-
-                                                    if (Form1_0.Mover_0.MoveToLocation(7800, 5705))
-                                                    {
-                                                        Form1_0.PlayerScan_0.GetPositions();
-                                                        Form1_0.Battle_0.ClearAreaOfMobs(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, 15);
-                                                        CurrentStep++;
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-                if (CurrentStep == 5)
-                {
-
-                }
-            }
-        }*/
-
-
-
-
 
 
     }

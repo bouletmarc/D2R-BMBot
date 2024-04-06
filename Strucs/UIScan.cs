@@ -47,6 +47,35 @@ namespace app
             Form1_0 = form1_1;
         }
 
+        public void CloseAllUIMenu()
+        {
+            if (GetMenuActive("invMenu")) CloseThisMenu("invMenu");
+            if (GetMenuActive("questsMenu")) CloseThisMenu("questsMenu");
+            if (GetMenuActive("partyMenu")) CloseThisMenu("partyMenu");
+            if (GetMenuActive("mercMenu")) CloseThisMenu("mercMenu");
+            if (GetMenuActive("quitMenu")) CloseThisMenu("quitMenu");
+            if (GetMenuActive("stash")) CloseThisMenu("stash");
+            if (GetMenuActive("npcInteract")) CloseThisMenu("npcInteract");
+            if (GetMenuActive("npcShop")) CloseThisMenu("npcShop");
+            if (GetMenuActive("tradeMenu")) CloseThisMenu("tradeMenu");
+            if (GetMenuActive("cubeMenu")) CloseThisMenu("cubeMenu");
+        }
+
+        public void CloseThisMenu(string UIName)
+        {
+            int TryClic = 0;
+            System.Windows.Forms.Keys ThisKey = GetMenuKey(UIName);
+            bool ThisMenuClose = !GetMenuActive(UIName);
+            while (!ThisMenuClose && TryClic < MaxTryUIOpen)
+            {
+                Form1_0.KeyMouse_0.PressKey(ThisKey);
+                Form1_0.WaitDelay(5);
+                ThisMenuClose = !GetMenuActive(UIName);
+                Application.DoEvents();
+                TryClic++;
+            }
+        }
+
         public bool OpenUIMenu(string UIName)
         {
             int TryClic = 0;

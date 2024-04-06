@@ -134,9 +134,15 @@ namespace app
         public void AddBeltItem(bool UsePotNotInSpot)
         {
             int BufferPotType = GetPotType();
-            BeltHaveItems[Form1_0.ItemsStruc_0.itemx] = 1;
-            BeltItemsTypes[Form1_0.ItemsStruc_0.itemx] = BufferPotType;
-
+            try
+            {
+                BeltHaveItems[Form1_0.ItemsStruc_0.itemx] = 1;
+                BeltItemsTypes[Form1_0.ItemsStruc_0.itemx] = BufferPotType;
+            }
+            catch
+            {
+                return;
+            }
 
             bool UsedPotion = false;
             HasPotInBadSpot = false;

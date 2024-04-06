@@ -258,7 +258,7 @@ namespace app
             if (SearchUnitsType == "objects") AllPossibleObjectsPointers = new List<long>();
             if (SearchUnitsType == "NPC") AllPossibleNPCPointers = new List<long>();
 
-            for (int i = 0; i < ((128 + 516) * 8); i += 8)
+            for (int i = 0; i < ((128 + 516) * 10); i += 8)
             {
                 long UnitPointerLocation = Form1_0.Mem_0.ReadInt64Raw((IntPtr) (UnitOffset + i));
                 if (UnitPointerLocation > 0)
@@ -369,7 +369,7 @@ namespace app
                     if (DiffVal < 0xFFFFF)  //here
                     {
                         ScanUnitsNumber += UnitNumberDiff;
-                        Form1_0.method_1("Item start diff: 0x" + (DiffVal).ToString("X") + ", scann for: " + ScanUnitsNumber + " +" + UnitNumberDiff, Color.Black);
+                        Form1_0.method_1("Item start diff: 0x" + (DiffVal).ToString("X") + ", scann for: " + ScanUnitsNumber + " +" + UnitNumberDiff, Color.DarkOrchid);
                     }
                     else
                     {

@@ -28,9 +28,19 @@ namespace app
             ScriptDone = false;
         }
 
+        public void DetectCurrentStep()
+        {
+            if ((Enums.Area)Form1_0.PlayerScan_0.levelNo == Enums.Area.CanyonOfTheMagi) CurrentStep = 1;
+            if ((int) Form1_0.PlayerScan_0.levelNo >= (int)Enums.Area.TalRashasTomb1 && Form1_0.PlayerScan_0.levelNo <= (int)Enums.Area.TalRashasTomb7)
+            {
+                CurrentStep = 1; //return to step1 anyway!
+            }
+            if ((Enums.Area)Form1_0.PlayerScan_0.levelNo == Enums.Area.DurielsLair) CurrentStep = 3;
+        }
+
         public void RunScript()
         {
-            Form1_0.Town_0.ScriptTownAct = 5; //set to town act 5 when running this script
+            Form1_0.Town_0.ScriptTownAct = 2; //set to town act 5 when running this script
 
             if (Form1_0.Town_0.GetInTown())
             {
@@ -53,7 +63,8 @@ namespace app
                     }
                     else
                     {
-                        Form1_0.Town_0.GoToTown();
+                        DetectCurrentStep();
+                        if (CurrentStep == 0) Form1_0.Town_0.GoToTown();
                     }
                 }
 
@@ -96,7 +107,7 @@ namespace app
                                 Tryyyy++;
                             }
 
-                            Form1_0.MoveToPath_0.MoveToThisPos(OrificePos); //Move to Orifice
+                            Form1_0.PathFinding_0.MoveToThisPos(OrificePos); //Move to Orifice
 
                             CurrentStep++;
                         }
@@ -106,6 +117,7 @@ namespace app
                     else
                     {
                         Form1_0.method_1("Duriel location not detected!", Color.Red);
+                        Form1_0.Town_0.UseLastTP = false;
                         ScriptDone = true;
                         return;
                     }
@@ -131,6 +143,27 @@ namespace app
 
                 if (CurrentStep == 3)
                 {
+                    if ((Enums.Area)Form1_0.PlayerScan_0.levelNo != Enums.Area.DurielsLair)
+                    {
+                        CurrentStep--;
+                        return;
+                    }
+
+                    Form1_0.WaitDelay(50);  //wait a little bit so duriel can be detected
+
+                    if (Form1_0.Mover_0.MoveToLocation(Form1_0.PlayerScan_0.xPos - 7, Form1_0.PlayerScan_0.yPos + 7))
+                    {
+                        CurrentStep++;
+                    }
+                }
+
+                if (CurrentStep == 4)
+                {
+                    if (Form1_0.PlayerScan_0.levelNo >= (int)Enums.Area.TalRashasTomb1 && Form1_0.PlayerScan_0.levelNo <= (int)Enums.Area.TalRashasTomb7)
+                    {
+                        CurrentStep--;
+                    }
+
                     Form1_0.Potions_0.CanUseSkillForRegen = false;
                     Form1_0.SetGameStatus("KILLING DURIEL");
                     if (Form1_0.MobsStruc_0.GetMobs("getBossName", "Duriel", false, 200, new List<long>()))
@@ -154,6 +187,7 @@ namespace app
                             Form1_0.ItemsStruc_0.GrabAllItemsForGold();
                             Form1_0.Potions_0.CanUseSkillForRegen = true;
 
+                            Form1_0.Town_0.UseLastTP = false;
                             ScriptDone = true;
                             return;
                             //Form1_0.LeaveGame(true);
@@ -170,6 +204,7 @@ namespace app
                         if (Form1_0.MobsStruc_0.GetMobs("getBossName", "Duriel", false, 200, new List<long>())) return; //redetect baal?
                         Form1_0.Potions_0.CanUseSkillForRegen = true;
 
+                        Form1_0.Town_0.UseLastTP = false;
                         ScriptDone = true;
                         return;
                         //Form1_0.LeaveGame(true);

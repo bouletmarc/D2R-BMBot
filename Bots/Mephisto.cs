@@ -26,6 +26,12 @@ namespace app
             ScriptDone = false;
         }
 
+        public void DetectCurrentStep()
+        {
+            if ((Enums.Area)Form1_0.PlayerScan_0.levelNo == Enums.Area.DuranceOfHateLevel2) CurrentStep = 1;
+            if ((Enums.Area)Form1_0.PlayerScan_0.levelNo == Enums.Area.DuranceOfHateLevel3) CurrentStep = 2;
+        }
+
         public void RunScript()
         {
             Form1_0.Town_0.ScriptTownAct = 5; //set to town act 5 when running this script
@@ -51,13 +57,14 @@ namespace app
                     }
                     else
                     {
-                        Form1_0.Town_0.GoToTown();
+                        DetectCurrentStep();
+                        if (CurrentStep == 0) Form1_0.Town_0.GoToTown();
                     }
                 }
 
                 if (CurrentStep == 1)
                 {
-                    Form1_0.MoveToPath_0.MoveToArea(Enums.Area.DuranceOfHateLevel3);
+                    Form1_0.PathFinding_0.MoveToExit(Enums.Area.DuranceOfHateLevel3);
                     CurrentStep++;
                 }
 
@@ -121,6 +128,9 @@ namespace app
                                 }
                             }
 
+                            Form1_0.WaitDelay(700);
+
+                            Form1_0.Town_0.UseLastTP = false;
                             ScriptDone = true;
                             return;
                             //Form1_0.LeaveGame(true);
@@ -137,6 +147,7 @@ namespace app
                         if (Form1_0.MobsStruc_0.GetMobs("getBossName", "Mephisto", false, 200, new List<long>())) return; //redetect baal?
                         Form1_0.Potions_0.CanUseSkillForRegen = true;
 
+                        Form1_0.Town_0.UseLastTP = false;
                         ScriptDone = true;
                         return;
                         //Form1_0.LeaveGame(true);

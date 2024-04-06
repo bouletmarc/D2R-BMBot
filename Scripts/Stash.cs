@@ -16,6 +16,8 @@ namespace app
 
         public int RunningScriptCount = 0;
 
+        public bool MakingCowPortal = false;
+
         public void SetForm1(Form1 form1_1)
         {
             Form1_0 = form1_1;
@@ -24,6 +26,10 @@ namespace app
         public void RunStashScript()
         {
             if (StashFull) return;
+
+            Form1_0.UIScan_0.readUI();
+            if (Form1_0.UIScan_0.GetMenuActive("npcInteract")) Form1_0.UIScan_0.CloseThisMenu("npcInteract");
+            //if (!Form1_0.UIScan_0.leftMenu && !Form1_0.UIScan_0.rightMenu) return;
 
             Form1_0.WaitDelay(35);
             LastitemScreenPos = new Dictionary<string, int>();
@@ -36,10 +42,11 @@ namespace app
                     break;
                 }
 
-                if (CharConfig.InventoryDontCheckItem[i] == 0 && Form1_0.InventoryStruc_0.InventoryHasStashItem[i] >= 1)
+                if ((CharConfig.InventoryDontCheckItem[i] == 0 && Form1_0.InventoryStruc_0.InventoryHasStashItem[i] >= 1)
+                    || (MakingCowPortal && Form1_0.InventoryStruc_0.InventoryItemNames[i] == "Tome of Town Portal"))
                 {
                     Form1_0.SetGameStatus("TOWN-STASH-ITEM:" + Form1_0.InventoryStruc_0.InventoryItemNames[i]);
-                    Form1_0.method_1_Items("Stashed: " + Form1_0.InventoryStruc_0.InventoryItemNames[i], Color.DarkTurquoise);
+                    Form1_0.method_1_Items("Stashed: " + Form1_0.InventoryStruc_0.InventoryItemNames[i], Form1_0.ItemsStruc_0.GetColorFromQuality(Form1_0.InventoryStruc_0.InventoryItemQuality[i]));
 
                     Dictionary<string, int> itemScreenPos = Form1_0.InventoryStruc_0.ConvertIndexToXY(i);
                     itemScreenPos = Form1_0.InventoryStruc_0.ConvertInventoryLocToScreenPos(itemScreenPos["x"], itemScreenPos["y"]);
@@ -55,13 +62,16 @@ namespace app
                             {
                                 break;
                             }
+                            Form1_0.UIScan_0.readUI();
+                            if (!Form1_0.UIScan_0.leftMenu && !Form1_0.UIScan_0.rightMenu) return;
+
                             //CTRL+Clic to send item into stash
                             Form1_0.KeyMouse_0.SendCTRL_CLICK(itemScreenPos["x"], itemScreenPos["y"]);
                             Form1_0.WaitDelay(5);
                             Form1_0.ItemsStruc_0.GetItems(false);   //get inventory again
-                            Form1_0.SetGameStatus("TOWN-STASH-ITEM:" + Form1_0.InventoryStruc_0.InventoryItemNames[i]);
+                            Form1_0.SetGameStatus("TOWN-STASH-ITEM:" + Form1_0.InventoryStruc_0.InventoryItemNames[i] + " (" + (Tries + 1) + "/" + MaxTries + ")");
                             PlaceItem(itemScreenPos["x"], itemScreenPos["y"]);
-                            PlaceItem(itemScreenPos["x"], itemScreenPos["y"]);
+                            //PlaceItem(itemScreenPos["x"], itemScreenPos["y"]);
 
                             //item still in inventory
                             if (Form1_0.InventoryStruc_0.InventoryHasStashItem[i] >= 1)
@@ -84,10 +94,14 @@ namespace app
                         {
                             break;
                         }
+                        Form1_0.UIScan_0.readUI();
+                        if (!Form1_0.UIScan_0.leftMenu && !Form1_0.UIScan_0.rightMenu) return;
 
                         //swap stash
                         if (Tries > MaxTries)
                         {
+                            PlaceItem(itemScreenPos["x"], itemScreenPos["y"]);
+
                             //200-340-450-600
                             if (TryStashCount == 0)
                             {
@@ -114,12 +128,16 @@ namespace app
                                 break;
                             }
                             TryStashCount++;
+                            Tries = 0;
                         }
                         else
                         {
                             break;
                         }
                     }
+
+
+                    PlaceItem(itemScreenPos["x"], itemScreenPos["y"]);
                 }
             }
 
@@ -127,16 +145,21 @@ namespace app
             {
                 return;
             }
+            Form1_0.UIScan_0.readUI();
+            if (!Form1_0.UIScan_0.leftMenu && !Form1_0.UIScan_0.rightMenu) return;
 
             //deposit gold
             Form1_0.KeyMouse_0.MouseClicc(200, 200);   //clic stash1
 
-            Form1_0.SetGameStatus("TOWN-STASH-DEPOSIT GOLD");
-            Form1_0.KeyMouse_0.MouseClicc(1450, 790);  //clic deposit
-            Form1_0.WaitDelay(25);
-            Form1_0.KeyMouse_0.MouseClicc(820, 580);  //clic ok on deposit
-            Form1_0.WaitDelay(25);
-            Form1_0.PlayerScan_0.PlayerGoldInventory = 0;
+            if (Form1_0.PlayerScan_0.PlayerGoldInventory > 0)
+            {
+                Form1_0.SetGameStatus("TOWN-STASH-DEPOSIT GOLD");
+                Form1_0.KeyMouse_0.MouseClicc(1450, 790);  //clic deposit
+                Form1_0.WaitDelay(25);
+                Form1_0.KeyMouse_0.MouseClicc(820, 580);  //clic ok on deposit
+                Form1_0.WaitDelay(25);
+                Form1_0.PlayerScan_0.PlayerGoldInventory = 0;
+            }
 
             //craft/cube item script here ###
             Form1_0.PlayerScan_0.GetPositions();
@@ -144,6 +167,7 @@ namespace app
             Form1_0.Cubing_0.PerformCubing();
 
             Form1_0.InventoryStruc_0.VerifyKeysInventory();
+
         }
 
         public bool PlaceItem(int PosX, int PosY)

@@ -99,14 +99,18 @@ namespace app
 
         public UInt32 ReadUInt32(IntPtr ThisAd)
         {
-            int bytesRead = 0;
-            Form1_0.bufferRead = new byte[aTypeSize["Int"]];
-            ReadProcessMemory((int)Form1_0.processHandle, (IntPtr)((long)Form1_0.BaseAddress + (long)ThisAd), Form1_0.bufferRead, aTypeSize["Int"], ref bytesRead);
-
-            if (bytesRead > 0)
+            try
             {
-                return BitConverter.ToUInt32(Form1_0.bufferRead, 0);
+                int bytesRead = 0;
+                Form1_0.bufferRead = new byte[aTypeSize["Int"]];
+                ReadProcessMemory((int)Form1_0.processHandle, (IntPtr)((long)Form1_0.BaseAddress + (long)ThisAd), Form1_0.bufferRead, aTypeSize["Int"], ref bytesRead);
+
+                if (bytesRead > 0)
+                {
+                    return BitConverter.ToUInt32(Form1_0.bufferRead, 0);
+                }
             }
+            catch { }
             return 0;
         }
 

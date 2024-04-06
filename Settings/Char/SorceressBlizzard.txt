@@ -1,7 +1,7 @@
 //#######################################
 //#######################################
 //#######	SKILL ARE REPRESENTED AS BELLOW: (IF YOU DONT WANT TO USE THE SKILL SET THE SHORTCUT KEY TO SOMETHING UNAVAILABLE!)
-//#######	KeySkillAttack=Ice Bolt
+//#######	KeySkillAttack=Static
 //#######	KeySkillAura=Blizzard
 //#######	KeySkillfastMoveAtTown=**NOTHING (NO SKILL IS SET TO THIS SHORTCUT KEY)**
 //#######	KeySkillfastMoveOutsideTown=Teleport

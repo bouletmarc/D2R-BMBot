@@ -68,6 +68,8 @@ namespace app
         public static bool IsRushing = false;
         public static string RunningOnChar = "";
         public static string RushLeecherName = "";
+        public static bool ShowOverlay = true;
+        public static bool RunWPTaker = false;
         public static bool RunDarkWoodRush = false;
         public static bool RunTristramRush = false;
         public static bool RunAndarielRush = false;
@@ -82,7 +84,14 @@ namespace app
         public static bool RunKahlimHeartRush = false;
         public static bool RunTravincalRush = false;
         public static bool RunMephistoRush = false;
+        public static bool RunChaosRush = false;
+        public static bool RunAncientsRush = false;
+        public static bool RunBaalRush = false;
         //public static bool RunRush = false;
+        public static bool RunCowsScript = false;
+        public static bool RunEldritchScript = false;
+        public static bool RunShenkScript = false;
+        public static bool RunNihlatakScript = false;
         public static bool RunPindleskinScript = false;
         public static bool RunTravincalScript = false;
         public static bool RunMephistoScript = false;
@@ -90,8 +99,10 @@ namespace app
         public static bool RunCountessScript = false;
         public static bool RunSummonerScript = false;
         public static bool RunDurielScript = false;
-        public static bool RunChaosScript = false;          //CHAOS LEECH SCRIPT **NOT FINISHED**
+        public static bool RunChaosScript = false;
+        public static bool RunChaosLeechScript = false;          //CHAOS LEECH SCRIPT **NOT FINISHED**
         public static bool RunLowerKurastScript = false;     //LOWER KURAST SCRIPT
+        public static bool RunBaalScript = true;
         public static bool RunBaalLeechScript = true;       //BAAL LEECH SCRIPT
         public static bool RunItemGrabScriptOnly = false;
         //NOT IN GAME SCRIPT (SEARCH GAMES OR CREATE A NEW GAME)
