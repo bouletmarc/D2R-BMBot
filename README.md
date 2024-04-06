@@ -32,6 +32,7 @@ Diablo II : Resurrected - Bot
 # BOT RUNS SCRIPTS AVAILABLE
 
   - Item grab Only script (this script can be used to move arround manually but let the bot pick items)
+  - Cows script (untested)
   - Countess script
   - Andariel script
   - Summoner script
@@ -39,8 +40,15 @@ Diablo II : Resurrected - Bot
   - Lower Kurast script
   - Travincal script
   - Mephisto script
-  - Chaos leech script
-  - Baal leech script
+  - Chaos script
+  - Eldritch script (untested)
+  - Shenk script (untested)
+  - Pindleskin script (untested)
+  - Nihlatak script (untested)
+  - Baal script
+  - Chaos leech script (follow leader of the game, get exp)
+  - Baal leech script (follow leader of the game, get exp)
+  - WP Taker script (untested)
 
 # LOBBY GAME SCRIPTS AVAILABLE
 
@@ -64,21 +72,25 @@ Diablo II : Resurrected - Bot
   - Kahlim Heart script
   - Travincal script
   - Mephisto script
-  - **OTHERS ARE MISSING FOR NOW!**
+  - Chaos script
+  - Ancients script (untested)
+  - Baal script
 
 # FEATURES
 
+  - Overlay Display for the Path Finding, Monster's, WP's, Exit's
   - Pick desired Items
   - Use Potions/Chicken
-  - Use Merc, Merc reliving in town
-  - Town script (ONLY for Act4 or Act5 right now)
+  - Use Merc, Merc reliving in town (**Merc giving potion not work**)
+  - Towns script
   - Stash script (send items to stash, stash gold)
   - Shop script (sell unwanted items, buy potions, ID's, TP'S, etc)
   - Repair script (repair gears if durability become low)
   - Battle script
   - Mover script (with or without teleport)
+  - Path Finding script (**missing teleport function for pathfinding**)
   - Gambling script
-  - Cubing script (**cubing recipes need to be transfered to a settings file**)
+  - Cubing script
 
 # IS IT SAFE?
 
