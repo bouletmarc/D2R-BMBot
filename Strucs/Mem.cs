@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -51,7 +52,14 @@ namespace app
                 address = this.GetAddressFromOffsets(address, aOffsets);
             }*/
 
-            ReadProcessMemory((int) Form1_0.processHandle, (IntPtr)address, buffer, bytes, ref pBytesRead);
+            try
+            {
+                ReadProcessMemory((int)Form1_0.processHandle, (IntPtr)address, buffer, bytes, ref pBytesRead);
+            }
+            catch
+            {
+                Form1_0.method_1("Couldn't read D2R process memory!", Color.Red);
+            }
         }
 
         public string ReadMemString(long TPoint)
@@ -176,7 +184,11 @@ namespace app
 
             if (bytesRead > 0)
             {
-                return BitConverter.ToInt32(Form1_0.bufferRead, 0);
+                try
+                {
+                    return BitConverter.ToInt32(Form1_0.bufferRead, 0);
+                }
+                catch { }
             }
             return 0;
         }
@@ -189,7 +201,11 @@ namespace app
 
             if (bytesRead > 0)
             {
-                return BitConverter.ToUInt16(Form1_0.bufferRead, 0);
+                try
+                {
+                    return BitConverter.ToUInt16(Form1_0.bufferRead, 0);
+                }
+                catch { }
             }
             return 0;
         }
@@ -219,7 +235,11 @@ namespace app
 
             if (bytesRead > 0)
             {
-                return BitConverter.ToInt32(Form1_0.bufferRead, 0);
+                try
+                {
+                    return BitConverter.ToInt32(Form1_0.bufferRead, 0);
+                }
+                catch { }
             }
             return 0;
         }

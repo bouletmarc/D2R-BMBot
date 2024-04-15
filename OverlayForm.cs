@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static app.MapAreaStruc;
+using static System.Diagnostics.DebuggableAttribute;
 
 namespace app
 {
@@ -30,6 +31,11 @@ namespace app
         public List<System.Drawing.Point> WPPoints = new List<System.Drawing.Point>();
         public List<System.Drawing.Point> ExitPoints = new List<System.Drawing.Point>();
         public System.Drawing.Point MoveToPoint = new System.Drawing.Point(0, 0);
+
+        Font drawFont = new Font("Arial", 10);
+        SolidBrush drawBrush = new SolidBrush(Color.FromArgb(150, 255, 255, 0));
+
+        public List<int> MobsIDs = new List<int>();
 
         public bool ScanningOverlayItems = true;
 
@@ -82,7 +88,8 @@ namespace app
             {
                 DateTime StartScanTime = DateTime.Now;
                 SetAllGoodChestNearby();
-                SetAllMonsterNearby();
+                if (!Form1_0.MobsStruc_0.DebuggingMobs) SetAllMonsterNearby();
+                if (Form1_0.MobsStruc_0.DebuggingMobs) SetAllMonsterNearbyDebug();
                 SetAllWPNearby();
                 SetAllExitNearby();
 
@@ -145,6 +152,20 @@ namespace app
             foreach (var monsterPosition in monsterPositions)
             {
                 MobsPoints.Add(new System.Drawing.Point(monsterPosition[0], monsterPosition[1]));
+            }
+        }
+
+        public void SetAllMonsterNearbyDebug()
+        {
+            Form1_0.ClearDebugMobs();
+            MobsPoints = new List<System.Drawing.Point>();
+            MobsIDs = new List<int>();
+
+            List<int[]> monsterPositions = Form1_0.MobsStruc_0.GetAllMobsNearby();
+            for (int i = 0; i < monsterPositions.Count; i++)
+            {
+                MobsPoints.Add(new System.Drawing.Point(monsterPositions[i][0], monsterPositions[i][1]));
+                MobsIDs.Add(Form1_0.MobsStruc_0.monsterIDs[i]);
             }
         }
 
@@ -240,6 +261,12 @@ namespace app
                     System.Drawing.Point StartPoint = new System.Drawing.Point(itemScreenPosStart["x"], itemScreenPosStart["y"]);
                     StartPoint = RescaleThisPoint(StartPoint);
                     DrawCrossAtPoint(e, StartPoint, yellowPen);
+
+                    if (Form1_0.MobsStruc_0.DebuggingMobs)
+                    {
+                        string ThisTxt = "ID:" + MobsIDs[i].ToString();
+                        e.Graphics.DrawString(ThisTxt, drawFont, drawBrush, StartPoint.X - (ThisTxt.Length * 3), StartPoint.Y + 10);
+                    }
                 }
 
                 for (int i = 0; i < GoodChestsPoints.Count; i++)

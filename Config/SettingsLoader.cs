@@ -195,6 +195,7 @@ namespace app
 
                     if (Splitted[0] == "PlayerCharName") AllLines[i] = "PlayerCharName=" + CharConfig.PlayerCharName;
                     if (Splitted[0] == "UseTeleport") AllLines[i] = "UseTeleport=" + CharConfig.UseTeleport;
+                    if (Splitted[0] == "UseBO") AllLines[i] = "UseBO=" + CharConfig.UseBO;
                     if (Splitted[0] == "ChickenHP") AllLines[i] = "ChickenHP=" + CharConfig.ChickenHP;
                     if (Splitted[0] == "TakeHPPotUnder" && !Splitted[0].Contains("MercTakeHPPotUnder")) AllLines[i] = "TakeHPPotUnder=" + CharConfig.TakeHPPotUnder;
                     if (Splitted[0] == "TakeRVPotUnder") AllLines[i] = "TakeRVPotUnder=" + CharConfig.TakeRVPotUnder;
@@ -761,6 +762,10 @@ namespace app
                                 if (Params[0].Contains("UseTeleport"))
                                 {
                                     CharConfig.UseTeleport = bool.Parse(Params[1].ToLower());
+                                }
+                                if (Params[0].Contains("UseBO"))
+                                {
+                                    CharConfig.UseBO = bool.Parse(Params[1].ToLower());
                                 }
                                 if (Params[0].Contains("ChickenHP"))
                                 {

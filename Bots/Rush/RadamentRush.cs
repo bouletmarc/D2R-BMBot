@@ -67,17 +67,27 @@ namespace app
 
                 if (CurrentStep == 1)
                 {
+                    //####
+                    if (Form1_0.PlayerScan_0.levelNo == (int)Enums.Area.SewersLevel3Act2)
+                    {
+                        CurrentStep++;
+                        return;
+                    }
+                    //####
+
                     Form1_0.PathFinding_0.MoveToExit(Enums.Area.SewersLevel3Act2);
                     CurrentStep++;
                 }
 
                 if (CurrentStep == 2)
                 {
+                    //####
                     if ((Enums.Area)Form1_0.PlayerScan_0.levelNo == Enums.Area.SewersLevel2Act2)
                     {
                         CurrentStep--;
                         return;
                     }
+                    //####
 
                     RadamentPosition = Form1_0.MapAreaStruc_0.GetPositionOfObject("npc", "Radament2", (int) Enums.Area.SewersLevel3Act2, new List<int>());
                     if (RadamentPosition.X != 0 &&  RadamentPosition.Y != 0)

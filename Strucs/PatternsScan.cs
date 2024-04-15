@@ -251,7 +251,15 @@ namespace app
 
         public void scanForUnitsPointer(string SearchUnitsType)
         {
-            long UnitOffset = (long)Form1_0.BaseAddress + (long)Form1_0.offsets["unitTable"] + Form1_0.UnitStrucOffset;
+            long UnitOffset = 0;
+            try
+            {
+                UnitOffset = (long)Form1_0.BaseAddress + (long)Form1_0.offsets["unitTable"] + Form1_0.UnitStrucOffset;
+            }
+            catch 
+            {
+                return;
+            }
 
             if (SearchUnitsType == "item") AllPossibleItemsPointers = new List<long>();
             if (SearchUnitsType == "player") AllPossiblePlayerPointers = new List<long>();

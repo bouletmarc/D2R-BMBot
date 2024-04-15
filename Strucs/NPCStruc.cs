@@ -374,9 +374,11 @@ namespace app
                 // case 424: return 1; //OakSage
                 // case 428: return 1; //DruidBear
                 case 543: return 1; //BaalThrone
+                case 565: return 1; //BaalThrone Something...
                 case 567: return 1; //InjuredBarbarian
                 case 568: return 1; //InjuredBarbarian2
                 case 569: return 1; //InjuredBarbarian3
+                case 574: return 1; //BaalThrone Something...
                 case 711: return 1; //DemonHole
             }
             return 0;

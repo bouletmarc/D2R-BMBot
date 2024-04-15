@@ -64,17 +64,28 @@ namespace app
 
                 if (CurrentStep == 1)
                 {
+                    //####
+                    if (Form1_0.PlayerScan_0.levelNo == (int)Enums.Area.DuranceOfHateLevel3)
+                    {
+                        CurrentStep++;
+                        return;
+                    }
+                    //####
+
                     Form1_0.PathFinding_0.MoveToExit(Enums.Area.DuranceOfHateLevel3);
                     CurrentStep++;
                 }
 
                 if (CurrentStep == 2)
                 {
+                    //####
                     if ((Enums.Area)Form1_0.PlayerScan_0.levelNo == Enums.Area.DuranceOfHateLevel2)
                     {
                         CurrentStep = 1;
                         return;
                     }
+                    //####
+
                     /*X: 22561,
 	                Y: 9553,*/
                     if (Form1_0.Mover_0.MoveToLocation(17568, 8069))
@@ -85,11 +96,13 @@ namespace app
 
                 if (CurrentStep == 3)
                 {
+                    //####
                     if ((Enums.Area)Form1_0.PlayerScan_0.levelNo == Enums.Area.DuranceOfHateLevel2)
                     {
                         CurrentStep = 1;
                         return;
                     }
+                    //####
 
                     Form1_0.Potions_0.CanUseSkillForRegen = false;
                     Form1_0.SetGameStatus("KILLING MEPHISTO");
@@ -101,16 +114,16 @@ namespace app
                         }
                         else
                         {
-                            Form1_0.ItemsStruc_0.GetItems(true);
-                            Form1_0.ItemsStruc_0.GetItems(true);
-                            Form1_0.ItemsStruc_0.GetItems(true);
-                            Form1_0.ItemsStruc_0.GetItems(true);
-                            Form1_0.ItemsStruc_0.GetItems(true);
-                            Form1_0.ItemsStruc_0.GetItems(true);
-                            Form1_0.ItemsStruc_0.GetItems(true);
-                            Form1_0.ItemsStruc_0.GetItems(true);
-                            Form1_0.ItemsStruc_0.GetItems(true);
-                            Form1_0.ItemsStruc_0.GetItems(true);
+                            if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
+                            if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
+                            if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
+                            if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
+                            if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
+                            if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
+                            if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
+                            if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
+                            if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
+                            if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
                             Form1_0.ItemsStruc_0.GrabAllItemsForGold();
                             Form1_0.Potions_0.CanUseSkillForRegen = true;
 
@@ -118,6 +131,7 @@ namespace app
                             //if (Form1_0.Mover_0.MoveToLocation(ThisFinalPosition.X, ThisFinalPosition.Y))
                             while (Form1_0.PlayerScan_0.levelNo == (int)Enums.Area.DuranceOfHateLevel3)
                             {
+                                Form1_0.ItemsStruc_0.GetItems(true);
                                 if (Form1_0.Mover_0.MoveToLocation(17601, 8070))
                                 {
                                     Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, 17601, 8070);

@@ -89,6 +89,7 @@ namespace app
             numericUpDownGambleUntil.Value = CharConfig.GambleUntilGoldAmount;
 
             checkBoxUseTeleport.Checked = CharConfig.UseTeleport;
+            checkBoxUseBO.Checked = CharConfig.UseBO;
 
             comboBoxBelt1.SelectedIndex = CharConfig.BeltPotTypeToHave[0];
             comboBoxBelt2.SelectedIndex = CharConfig.BeltPotTypeToHave[1];
@@ -134,6 +135,7 @@ namespace app
             CharConfig.GambleUntilGoldAmount = (int)numericUpDownGambleUntil.Value;
 
             CharConfig.UseTeleport = checkBoxUseTeleport.Checked;
+            CharConfig.UseBO = checkBoxUseBO.Checked;
 
             CharConfig.BeltPotTypeToHave[0] = comboBoxBelt1.SelectedIndex;
             CharConfig.BeltPotTypeToHave[1] = comboBoxBelt2.SelectedIndex;

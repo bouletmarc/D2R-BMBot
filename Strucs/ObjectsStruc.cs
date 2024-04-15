@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Diagnostics.DebuggableAttribute;
 
 namespace app
 {
@@ -94,6 +95,16 @@ namespace app
             return objectsPositions2;
         }
 
+        public void DebugObjects()
+        {
+            Form1_0.ClearDebugobjects();
+            DebuggingObjects = true;
+            GetObjects("", false);
+            DebuggingObjects = false;
+        }
+
+        public bool DebuggingObjects = false;
+
         public bool GetObjects(string ObjectType, bool Nearest, List<uint> IgnoredIDList = null, int MaxDistance = 999, string PortalOwner = "", int PortalArea = 0)
         {
             txtFileNo = 0;
@@ -119,6 +130,11 @@ namespace app
                     GetUnitPathData();
 
                     //Form1_0.method_1("Object: " + getObjectName((int)txtFileNo) + " - " + itemx + ", " + itemy, Color.DarkOrchid);
+
+                    if (DebuggingObjects)
+                    {
+                        Form1_0.AppendTextDebugObjects("ID:" + txtFileNo + "(" + getObjectName((int)txtFileNo) + ") at:" + itemx + ", " + itemy + Environment.NewLine);
+                    }
 
                     if (ObjectType == "TownPortal")
                     {

@@ -211,6 +211,18 @@ namespace app
             return ThisPos;
         }
 
+        public void DebugMapData()
+        {
+            Form1_0.ClearDebugMapData();
+            DebuggingMapData = true; 
+            GetPositionOfAllObject("object", "", (int)Form1_0.PlayerScan_0.levelNo, new List<int>(), true);
+            GetPositionOfAllObject("exit", "", (int)Form1_0.PlayerScan_0.levelNo, new List<int>(), true);
+            GetPositionOfAllObject("npc", "", (int)Form1_0.PlayerScan_0.levelNo, new List<int>(), true);
+            DebuggingMapData = false;
+        }
+
+        public bool DebuggingMapData = false;
+
         public List<Position> GetPositionOfAllObject(string ObjectType, string ObjectName, int AreaID, List<int> IgnoreTheseIndex, bool IgnoreName = false)
         {
             List<Position> ThisPos = new List<Position>();
@@ -237,6 +249,11 @@ namespace app
                                 || IgnoreName)
                             {
                                 ThisPos.Add(new Position { X = AllMapData[i].Offset.X + AllMapData[i].Objects[k].X, Y = AllMapData[i].Offset.Y + AllMapData[i].Objects[k].Y });
+
+                                if (DebuggingMapData)
+                                {
+                                    Form1_0.AppendTextDebugMapData("ID:" + AllMapData[i].Objects[k].ID + "(" + AllMapData[i].Objects[k].Name + ") at:" + (AllMapData[i].Offset.X + AllMapData[i].Objects[k].X) + ", " + (AllMapData[i].Offset.Y + AllMapData[i].Objects[k].Y) + Environment.NewLine);
+                                }
                             }
                         }
                         if (AllMapData[i].Objects[k].Type == "exit_area" && ObjectType == "exit_area")
@@ -245,6 +262,11 @@ namespace app
                                 || IgnoreName)
                             {
                                 ThisPos.Add(new Position { X = AllMapData[i].Offset.X + AllMapData[i].Objects[k].X, Y = AllMapData[i].Offset.Y + AllMapData[i].Objects[k].Y });
+
+                                if (DebuggingMapData)
+                                {
+                                    Form1_0.AppendTextDebugMapData("ID:" + AllMapData[i].Objects[k].ID + "(" + AllMapData[i].Objects[k].Name + ") at:" + (AllMapData[i].Offset.X + AllMapData[i].Objects[k].X) + ", " + (AllMapData[i].Offset.Y + AllMapData[i].Objects[k].Y) + Environment.NewLine);
+                                }
                             }
                         }
                         if (AllMapData[i].Objects[k].Type == "object" && ObjectType == "object")
@@ -255,6 +277,11 @@ namespace app
                                 if (Form1_0.ObjectsStruc_0.IsWaypoint(int.Parse(AllMapData[i].Objects[k].ID)))
                                 {
                                     ThisPos.Add(new Position { X = AllMapData[i].Offset.X + AllMapData[i].Objects[k].X, Y = AllMapData[i].Offset.Y + AllMapData[i].Objects[k].Y });
+
+                                    if (DebuggingMapData)
+                                    {
+                                        Form1_0.AppendTextDebugMapData("ID:" + AllMapData[i].Objects[k].ID + "(" + AllMapData[i].Objects[k].Name + ") at:" + (AllMapData[i].Offset.X + AllMapData[i].Objects[k].X) + ", " + (AllMapData[i].Offset.Y + AllMapData[i].Objects[k].Y) + Environment.NewLine);
+                                    }
                                 }
                             }
                             else
@@ -263,6 +290,11 @@ namespace app
                                 || IgnoreName)
                                 {
                                     ThisPos.Add(new Position { X = AllMapData[i].Offset.X + AllMapData[i].Objects[k].X, Y = AllMapData[i].Offset.Y + AllMapData[i].Objects[k].Y });
+
+                                    if (DebuggingMapData)
+                                    {
+                                        Form1_0.AppendTextDebugMapData("ID:" + AllMapData[i].Objects[k].ID + "(" + AllMapData[i].Objects[k].Name + ") at:" + (AllMapData[i].Offset.X + AllMapData[i].Objects[k].X) + ", " + (AllMapData[i].Offset.Y + AllMapData[i].Objects[k].Y) + Environment.NewLine);
+                                    }
                                 }
                             }
                         }
@@ -273,6 +305,11 @@ namespace app
                                 || IgnoreName)
                             {
                                 ThisPos.Add(new Position { X = AllMapData[i].Offset.X + AllMapData[i].Objects[k].X, Y = AllMapData[i].Offset.Y + AllMapData[i].Objects[k].Y });
+
+                                if (DebuggingMapData)
+                                {
+                                    Form1_0.AppendTextDebugMapData("ID:" + AllMapData[i].Objects[k].ID + "(" + AllMapData[i].Objects[k].Name + ") at:" + (AllMapData[i].Offset.X + AllMapData[i].Objects[k].X) + ", " + (AllMapData[i].Offset.Y + AllMapData[i].Objects[k].Y) + Environment.NewLine);
+                                }
                             }
                         }
                     }

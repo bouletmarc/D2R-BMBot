@@ -413,7 +413,7 @@ namespace app
                         && Form1_0.PlayerScan_0.yPosFinal >= 5880 - 40
                         && Form1_0.PlayerScan_0.yPosFinal <= 5880 + 40)
                     {
-                        Form1_0.Battle_0.CastDefense();
+                        //Form1_0.Battle_0.CastDefense();
                         CurrentStep++;
                     }
                     else
@@ -488,16 +488,16 @@ namespace app
                                 Form1_0.method_1("KILLED BAAL MANUALLY!", Color.DarkMagenta);
                             }
 
-                            Form1_0.ItemsStruc_0.GetItems(true);
-                            Form1_0.ItemsStruc_0.GetItems(true);
-                            Form1_0.ItemsStruc_0.GetItems(true);
-                            Form1_0.ItemsStruc_0.GetItems(true);
-                            Form1_0.ItemsStruc_0.GetItems(true);
-                            Form1_0.ItemsStruc_0.GetItems(true);
-                            Form1_0.ItemsStruc_0.GetItems(true);
-                            Form1_0.ItemsStruc_0.GetItems(true);
-                            Form1_0.ItemsStruc_0.GetItems(true);
-                            Form1_0.ItemsStruc_0.GetItems(true);
+                            if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
+                            if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
+                            if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
+                            if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
+                            if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
+                            if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
+                            if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
+                            if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
+                            if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
+                            if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
                             Form1_0.ItemsStruc_0.GrabAllItemsForGold();
                             Form1_0.Potions_0.CanUseSkillForRegen = true;
                             SearchSameGamesAsLastOne = true;
@@ -510,6 +510,21 @@ namespace app
                     else
                     {
                         Form1_0.method_1("Baal not detected!", Color.Red);
+
+                        for (int i = 0; i < 60; i++)
+                        {
+                            Form1_0.PlayerScan_0.GetPositions();
+
+                            Form1_0.Battle_0.SetSkills();
+                            Form1_0.Battle_0.CastSkills();
+
+                            Form1_0.ItemsStruc_0.GetItems(true);
+                            Form1_0.Potions_0.CheckIfWeUsePotion();
+                            Form1_0.ItemsStruc_0.GetItems(false);
+                            Form1_0.overlayForm.UpdateOverlay();
+
+                            if (Form1_0.MobsStruc_0.GetMobs("getBossName", "Baal", false, 200, new List<long>())) return; //redetect baal?
+                        }
 
                         //baal not detected...
                         Form1_0.ItemsStruc_0.GetItems(true);

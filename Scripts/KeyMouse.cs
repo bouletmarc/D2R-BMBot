@@ -15,6 +15,8 @@ namespace app
     {
         Form1 Form1_0;
 
+        public int ProcessingDelay = 1;
+
         private const int WH_KEYBOARD_LL = 13;
         public LowLevelKeyboardProc proc;
         public IntPtr hookID = IntPtr.Zero;
@@ -34,7 +36,7 @@ namespace app
         //###############################################
 
         [DllImport("User32.dll")]
-        public static extern Int32 SendMessage(int hWnd, int Msg, int wParam, IntPtr lParam);
+        static extern Int32 SendMessage(int hWnd, int Msg, int wParam, IntPtr lParam);
 
         [return: MarshalAs(UnmanagedType.Bool)]
         [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
@@ -81,11 +83,13 @@ namespace app
 
         public void MouseClicc(int ThX, int ThY)
         {
+            //Thread.Sleep(ProcessingDelay);
+
             MouseMoveTo(ThX, ThY);
             SendMessage((int)Form1_0.hWnd, WM_LBUTTONUP, 0x00000000, CreateLParam(150, 150));
-            Thread.Sleep(2);
+            Thread.Sleep(1);
             SendMessage((int)Form1_0.hWnd, WM_LBUTTONDOWN, 0x00000001, CreateLParam(150, 150));
-            Thread.Sleep(2);
+            Thread.Sleep(ProcessingDelay);
             SendMessage((int)Form1_0.hWnd, WM_LBUTTONUP, 0x00000000, CreateLParam(150, 150));
         }
 
@@ -93,35 +97,51 @@ namespace app
         {
             MouseMoveTo(ThX, ThY);
             SendMessage((int)Form1_0.hWnd, WM_RBUTTONUP, 0x00000000, CreateLParam(150, 150));
-            Thread.Sleep(2);
+            Thread.Sleep(1);
             SendMessage((int)Form1_0.hWnd, WM_RBUTTONDOWN, 0x00000001, CreateLParam(150, 150));
-            Thread.Sleep(2);
+            Thread.Sleep(ProcessingDelay);
             SendMessage((int)Form1_0.hWnd, WM_RBUTTONUP, 0x00000000, CreateLParam(150, 150));
+        }
+
+        public void MouseCliccAttackMove(int ThX, int ThY)
+        {
+            MouseMoveTo(ThX, ThY);
+            //PostMessage((int)Form1_0.hWnd, WM_LBUTTONUP, 0x00000000, CreateLParam(150, 150));
+            PostMessage((int)Form1_0.hWnd, WM_LBUTTONDOWN, 0x00000001, CreateLParam(150, 150));
+            PostMessage((int)Form1_0.hWnd, WM_LBUTTONUP, 0x00000000, CreateLParam(150, 150));
+        }
+
+        public void MouseCliccRightAttackMove(int ThX, int ThY)
+        {
+            MouseMoveTo(ThX, ThY);
+            //PostMessage((int)Form1_0.hWnd, WM_RBUTTONUP, 0x00000000, CreateLParam(150, 150));
+            PostMessage((int)Form1_0.hWnd, WM_RBUTTONDOWN, 0x00000001, CreateLParam(150, 150));
+            PostMessage((int)Form1_0.hWnd, WM_RBUTTONUP, 0x00000000, CreateLParam(150, 150));
         }
 
         public void PressKey(System.Windows.Forms.Keys ThisK)
         {
-            SendMessage((int)Form1_0.hWnd, WM_SYSKEYDOWN, (ushort)ThisK, (IntPtr)0);
-            Thread.Sleep(2);
-            SendMessage((int)Form1_0.hWnd, WM_SYSKEYUP, (ushort)ThisK, (IntPtr)0);
+            PostMessage((int)Form1_0.hWnd, WM_SYSKEYDOWN, (ushort)ThisK, (IntPtr)0);
+            PostMessage((int)Form1_0.hWnd, WM_SYSKEYUP, (ushort)ThisK, (IntPtr)0);
         }
 
         public void PressKey2(System.Windows.Forms.Keys ThisK)
         {
             PostMessage((int)Form1_0.hWnd, WM_SYSKEYDOWN, (ushort)ThisK, (IntPtr)0);
-            Thread.Sleep(2);
+            Thread.Sleep(1);
+            //PostMessage((int)Form1_0.hWnd, WM_SYSKEYUP, (ushort)ThisK, (IntPtr)0);
         }
 
         public void PressKeyHold(System.Windows.Forms.Keys ThisK)
         {
             SendMessage((int)Form1_0.hWnd, WM_SYSKEYDOWN, (ushort)ThisK, (IntPtr)0);
-            Thread.Sleep(2);
+            PostMessage((int)Form1_0.hWnd, WM_SYSKEYDOWN, (ushort)ThisK, (IntPtr)0);
         }
 
         public void ReleaseKey(System.Windows.Forms.Keys ThisK)
         {
+            PostMessage((int)Form1_0.hWnd, WM_SYSKEYUP, (ushort)ThisK, (IntPtr)0);
             SendMessage((int)Form1_0.hWnd, WM_SYSKEYUP, (ushort)ThisK, (IntPtr)0);
-            Thread.Sleep(2);
         }
 
         public void SendCTRL_CLICK(int ThX, int ThY)
@@ -130,12 +150,18 @@ namespace app
             byte KEYEVENTF_KEYUP = 0x02;
             byte VK_CONTROL = 0x11;
 
+            //press CTRL
             keybd_event(VK_CONTROL, 0, 0, 0);
+            //PressKeyHold(Keys.LControlKey);
+            SendMessage((int)Form1_0.hWnd, WM_SYSKEYDOWN, (ushort)Keys.LControlKey, (IntPtr)0);
+
             PostMessage((int)Form1_0.hWnd, WM_LBUTTONDOWN, 0x00000001, (IntPtr)0);
-            Thread.Sleep(2);
             PostMessage((int)Form1_0.hWnd, WM_LBUTTONUP, 0x00000000, (IntPtr)0);
-            Thread.Sleep(2);
+
+            //release CTRL
             keybd_event(VK_CONTROL, 0, KEYEVENTF_KEYUP, 0);
+            //ReleaseKey(Keys.LControlKey);
+            SendMessage((int)Form1_0.hWnd, WM_SYSKEYUP, (ushort)Keys.LControlKey, (IntPtr)0);
         }
 
         public void SendSHIFT_RIGHTCLICK(int ThX, int ThY)
@@ -144,9 +170,7 @@ namespace app
 
             PressKeyHold(Keys.LShiftKey);
             PostMessage((int)Form1_0.hWnd, WM_RBUTTONDOWN, 0x00000001, (IntPtr)0);
-            Thread.Sleep(2);
             PostMessage((int)Form1_0.hWnd, WM_RBUTTONUP, 0x00000000, (IntPtr)0);
-            Thread.Sleep(2);
             ReleaseKey(Keys.LShiftKey);
         }
 
@@ -156,27 +180,21 @@ namespace app
 
             PressKeyHold(Keys.LShiftKey);
             PostMessage((int)Form1_0.hWnd, WM_LBUTTONDOWN, 0x00000001, (IntPtr)0);
-            Thread.Sleep(2);
             PostMessage((int)Form1_0.hWnd, WM_LBUTTONDOWN, 0x00000000, (IntPtr)0);
-            Thread.Sleep(2);
             ReleaseKey(Keys.LShiftKey);
         }
 
         public void PressPotionKey(System.Windows.Forms.Keys ThisK)
         {
-            SendMessage((int)Form1_0.hWnd, WM_SYSKEYDOWN, (ushort)ThisK, (IntPtr)0);
-            Thread.Sleep(2);
-            SendMessage((int)Form1_0.hWnd, WM_SYSKEYUP, (ushort)ThisK, (IntPtr)0);
-            Thread.Sleep(2);
+            PostMessage((int)Form1_0.hWnd, WM_SYSKEYDOWN, (ushort)ThisK, (IntPtr)0);
+            PostMessage((int)Form1_0.hWnd, WM_SYSKEYUP, (ushort)ThisK, (IntPtr)0);
         }
 
         public void PressPotionKeyMerc(System.Windows.Forms.Keys ThisK)
         {
             PressKeyHold(Keys.LShiftKey);
-            SendMessage((int)Form1_0.hWnd, WM_SYSKEYDOWN, (ushort)ThisK, (IntPtr)0);
-            Thread.Sleep(2);
-            SendMessage((int)Form1_0.hWnd, WM_SYSKEYUP, (ushort)ThisK, (IntPtr)0);
-            Thread.Sleep(2);
+            PostMessage((int)Form1_0.hWnd, WM_SYSKEYDOWN, (ushort)ThisK, (IntPtr)0);
+            PostMessage((int)Form1_0.hWnd, WM_SYSKEYUP, (ushort)ThisK, (IntPtr)0);
             ReleaseKey(Keys.LShiftKey);
         }
 
@@ -191,22 +209,18 @@ namespace app
 
         public void MouseClicHoldWithoutRelease()
         {
-            SendMessage((int)Form1_0.hWnd, WM_LBUTTONDOWN, 0x00000001, CreateLParam(150, 150));
-            Thread.Sleep(2);
+            PostMessage((int)Form1_0.hWnd, WM_LBUTTONDOWN, 0x00000001, CreateLParam(150, 150));
         }
 
         public void MouseClicHold()
         {
-            SendMessage((int)Form1_0.hWnd, WM_LBUTTONUP, 0x00000000, CreateLParam(150, 150));
-            Thread.Sleep(2);
-            SendMessage((int)Form1_0.hWnd, WM_LBUTTONDOWN, 0x00000001, CreateLParam(150, 150));
-            Thread.Sleep(2);
+            PostMessage((int)Form1_0.hWnd, WM_LBUTTONUP, 0x00000000, CreateLParam(150, 150));
+            PostMessage((int)Form1_0.hWnd, WM_LBUTTONDOWN, 0x00000001, CreateLParam(150, 150));
         }
 
         public void MouseClicRelease()
         {
-            SendMessage((int)Form1_0.hWnd, WM_LBUTTONUP, 0x00000000, CreateLParam(150, 150));
-            Thread.Sleep(2);
+            PostMessage((int)Form1_0.hWnd, WM_LBUTTONUP, 0x00000000, CreateLParam(150, 150));
         }
 
         public int CorrectXPos(int ThisPoss)

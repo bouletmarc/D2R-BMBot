@@ -40,7 +40,7 @@ namespace app
     public partial class Form1 : Form
     {
 
-        public string BotVersion = "V1.4";
+        public string BotVersion = "V1.5";
 
         public string D2_LOD_113C_Path = "";
 
@@ -89,8 +89,12 @@ namespace app
         public bool BadPlayerPointerFound = false;
 
         public bool PublicGame = false;
+        public int DebugMenuStyle = 0;
 
         public double FPS = 0;
+
+        public int TotalChickenCount = 0;
+        public int TotalDeadCount = 0;
 
         public ItemsStruc ItemsStruc_0;
         public Mem Mem_0;
@@ -221,7 +225,12 @@ namespace app
             Form1_0 = this;
             richTextBox1.HideSelection = false;//Hide selection so that AppendText will auto scroll to the end
             richTextBox2.HideSelection = false;//Hide selection so that AppendText will auto scroll to the end
-            richTextBox2.Visible = false;
+            //richTextBox2.Visible = false;
+
+            LabelChickenCount.Text = TotalChickenCount.ToString();
+            LabelDeadCount.Text = TotalDeadCount.ToString();
+
+            SetDebugMenu();
 
             labelGameName.Text = "";
             labelGameTime.Text = "";
@@ -461,6 +470,9 @@ namespace app
                     Console.WriteLine(string_3);
                     richTextBox1.SelectionColor = ThisColor;
                     richTextBox1.AppendText(string_3 + Environment.NewLine);
+
+                    if (ThisColor == Color.Red || ThisColor == Color.Orange || ThisColor == Color.DarkOrange || ThisColor == Color.OrangeRed) AppendTextErrorLogs(string_3, ThisColor);
+                    if (ThisColor == Color.DarkBlue) AppendTextGameLogs(string_3, ThisColor);
                     Application.DoEvents();
                 }
             //}
@@ -542,7 +554,7 @@ namespace app
 
         public void SetGamesText()
         {
-            if (labelGames.InvokeRequired)
+            /*if (labelGames.InvokeRequired)
             {
                 // Call this same method but append THREAD2 to the text
                 Action safeWrite = delegate { SetGamesText(); };
@@ -551,7 +563,8 @@ namespace app
             else
             {
                 labelGames.Text = CurrentGameNumberSinceStart.ToString() + " entered. " + CurrentGameNumberFullyDone.ToString() + " fully done";
-            }
+            }*/
+            labelGames.Text = CurrentGameNumberSinceStart.ToString() + " entered. " + CurrentGameNumberFullyDone.ToString() + " fully done";
         }
 
         public void Startt()
@@ -639,9 +652,14 @@ namespace app
 
             PublicGame = (CharConfig.GamePass == "");
             if (!PublicGame && CharConfig.IsRushing) PublicGame = true;
+            if (!PublicGame && !CharConfig.RunGameMakerScript) PublicGame = true;
+            if (PublicGame) KeyMouse_0.ProcessingDelay = 5;
+            else KeyMouse_0.ProcessingDelay = 2;
             GameStruc_0.AlreadyChickening = false;
             PatternsScan_0.StartIndexItemLast = long.MaxValue;
-            PatternsScan_0.ScanUnitsNumber = 2600;
+            //PatternsScan_0.ScanUnitsNumber = 2600;
+            PatternsScan_0.ScanUnitsNumber = 2400;
+            //PatternsScan_0.ScanUnitsNumber = 2048;
             Town_0.TriedToShopCount = 0;
             Town_0.TriedToShopCount2 = 0;
             Town_0.TriedToMercCount = 0;
@@ -698,6 +716,10 @@ namespace app
             ChaosRush_0.ResetVars();
             BaalRush_0.ResetVars();
 
+            Battle_0.DoingBattle = false;
+            Battle_0.ClearingArea = false;
+            Battle_0.MoveTryCount = 0;
+
             Town_0.IgnoredTPList.Clear();
             Town_0.IgnoredWPList.Clear();
             BaalLeech_0.IgnoredTPList.Clear();
@@ -709,7 +731,7 @@ namespace app
             BeltStruc_0.ForceMANAPotionQty = 0;
             BeltStruc_0.ForceHPPotionQty = 0;
             SetGamesText();
-            CurrentGameNumber++;
+            if (CharConfig.RunGameMakerScript) CurrentGameNumber++;
             CurrentGameNumberSinceStart++;
             SettingsLoader_0.SaveOthersSettings();
 
@@ -802,11 +824,11 @@ namespace app
                                 if (runnn)
                                 {
                                     //MobsStruc_0.GetMobs("", "", true, 200, new List<long>());
-                                    //ObjectsStruc_0.GetObjects("TownPortal", true, new List<uint>());
                                     //MercStruc_0.GetMercInfos();
+                                    //PlayerScan_0.ScanForLeecher();
                                     //Battle_0.SetSkills();
                                     //Battle_0.CastSkills();
-                                    //SetProcessingTime();
+                                    //ItemsStruc_0.GetItems(false);
                                     //if (Running) LoopTimer.Start();
                                     //return;
 
@@ -821,6 +843,8 @@ namespace app
                                             }
                                             else
                                             {
+                                                Town_0.FastTowning = false;
+
                                                 if (!Town_0.GetInTown() && Form1_0.ItemsStruc_0.ItemsEquiped <= 2)
                                                 {
                                                     method_1("Going to town, body not grabbed!", Color.Red);
@@ -830,7 +854,7 @@ namespace app
                                                 {
                                                     if (!CharConfig.IsRushing)
                                                     {
-                                                        if (Battle_0.ClearingArea)
+                                                        if (Battle_0.ClearingArea || Battle_0.DoingBattle)
                                                         {
                                                             Battle_0.RunBattleScript();
                                                         }
@@ -1199,7 +1223,7 @@ namespace app
 
         public void GoToNextScript()
         {
-            if (!CharConfig.IsRushing)
+            if (!CharConfig.IsRushing && !Town_0.GetInTown())
             {
                 if (CharConfig.RunWPTaker && !WPTaker_0.ScriptDone) WPTaker_0.ScriptDone = true;
                 else if (CharConfig.RunCowsScript && !Cows_0.ScriptDone) Cows_0.ScriptDone = true;
@@ -1339,7 +1363,7 @@ namespace app
         {
             //try
             //{
-            if (Form1_0.labelGameTime.InvokeRequired)
+            /*if (Form1_0.labelGameTime.InvokeRequired)
             {
                 // Call this same method but append THREAD2 to the text
                 Action safeWrite = delegate { method_GameTimeLabel(string_3); };
@@ -1349,9 +1373,12 @@ namespace app
             {
                 Form1_0.labelGameTime.Text = string_3;
                 Application.DoEvents();
+            }*/
+            try 
+            {
+                Form1_0.labelGameTime.Text = string_3;
             }
-            //}
-            //catch { }
+            catch { }
         }
 
         public void WaitDelay(int DelayTime)
@@ -1390,6 +1417,25 @@ namespace app
             //catch { }
         }
 
+        public void SetSettingButton(bool Enabledd)
+        {
+            //try
+            //{
+            if (button3.InvokeRequired)
+            {
+                // Call this same method but append THREAD2 to the text
+                Action safeWrite = delegate { SetSettingButton(Enabledd); };
+                button3.Invoke(safeWrite);
+            }
+            else
+            {
+                button3.Enabled = Enabledd;
+                Application.DoEvents();
+            }
+            //}
+            //catch { }
+        }
+
         public void StopBot()
         {
             SetPlayButtonText("START");
@@ -1398,7 +1444,7 @@ namespace app
             PlayerScan_0.FoundPlayer = false;
             LoopDone = 0;
             Stash_0.StashFull = false;
-            button3.Enabled = true;
+            SetSettingButton(true);
             LoopTimer.Stop();
             MapAreaStruc_0.AllMapData.Clear();
             overlayForm.ClearAllOverlay();
@@ -1409,7 +1455,7 @@ namespace app
         {
             if (!Running)
             {
-                button3.Enabled = false;
+                SetSettingButton(false);
                 SetPlayButtonText("STOP");
                 Running = true;
                 Startt();
@@ -1427,25 +1473,240 @@ namespace app
             KeyMouse.UnhookWindowsHookEx(KeyMouse_0.hookID);
         }
 
-        private void button2_Click(object sender, EventArgs e)
-        {
-            if (!richTextBox2.Visible)
-            {
-                richTextBox2.Visible = true;
-                richTextBox1.Visible = false;
-            }
-            else
-            {
-                richTextBox2.Visible = false;
-                richTextBox1.Visible = true;
-            }
-            Application.DoEvents();
-        }
-
         private void button3_Click(object sender, EventArgs e)
         {
             FormSettings FormSettings_0 = new FormSettings(Form1_0);
             FormSettings_0.ShowDialog();
+        }
+
+        private void charSettingsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FormCharSettings FormCharSettings_0 = new FormCharSettings(Form1_0);
+            FormCharSettings_0.ShowDialog();
+        }
+
+        private void tabControl2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (tabControl2.SelectedIndex == 0) ItemsStruc_0.DebugItems();
+            if (tabControl2.SelectedIndex == 1) Form1_0.MobsStruc_0.DebuggingMobs = true;
+            if (tabControl2.SelectedIndex == 2) ObjectsStruc_0.DebugObjects();
+            if (tabControl2.SelectedIndex == 3) MapAreaStruc_0.DebugMapData();
+            if (tabControl2.SelectedIndex == 4) PathFinding_0.DebugMapCollision();
+
+            if (tabControl2.SelectedIndex != 1) Form1_0.MobsStruc_0.DebuggingMobs = false;
+        }
+
+        public void SetDebugMenu()
+        {
+            if (DebugMenuStyle == 0)
+            {
+                this.Size = new System.Drawing.Size(357, 446);
+            }
+            else if (DebugMenuStyle == 1)
+            {
+                this.Size = new System.Drawing.Size(570, 446);
+            }
+            else if(DebugMenuStyle == 2)
+            {
+                this.Size = new System.Drawing.Size(570, 678);
+            }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if (DebugMenuStyle < 2) DebugMenuStyle++;
+            else DebugMenuStyle = 0;
+            SetDebugMenu();
+
+            if (DebugMenuStyle == 2) tabControl2_SelectedIndexChanged(null, null);
+        }
+
+
+        public void AppendTextDebugItems(string ThisT)
+        {
+            if (richTextBoxDebugItems.InvokeRequired)
+            {
+                // Call this same method but append THREAD2 to the text
+                Action safeWrite = delegate { AppendTextDebugItems(ThisT); };
+                richTextBoxDebugItems.Invoke(safeWrite);
+            }
+            else
+            {
+                richTextBoxDebugItems.AppendText(ThisT);
+                Application.DoEvents();
+            }
+        }
+
+        public void ClearDebugItems()
+        {
+            if (richTextBoxDebugItems.InvokeRequired)
+            {
+                // Call this same method but append THREAD2 to the text
+                Action safeWrite = delegate { ClearDebugItems(); };
+                richTextBoxDebugItems.Invoke(safeWrite);
+            }
+            else
+            {
+                richTextBoxDebugItems.Text = "";
+                Application.DoEvents();
+            }
+        }
+
+        public void AppendTextDebugObjects(string ThisT)
+        {
+            if (richTextBoxDebugObjects.InvokeRequired)
+            {
+                // Call this same method but append THREAD2 to the text
+                Action safeWrite = delegate { AppendTextDebugObjects(ThisT); };
+                richTextBoxDebugObjects.Invoke(safeWrite);
+            }
+            else
+            {
+                richTextBoxDebugObjects.AppendText(ThisT);
+                Application.DoEvents();
+            }
+        }
+
+        public void ClearDebugobjects()
+        {
+            if (richTextBoxDebugObjects.InvokeRequired)
+            {
+                // Call this same method but append THREAD2 to the text
+                Action safeWrite = delegate { ClearDebugobjects(); };
+                richTextBoxDebugObjects.Invoke(safeWrite);
+            }
+            else
+            {
+                richTextBoxDebugObjects.Text = "";
+                Application.DoEvents();
+            }
+        }
+
+        public void AppendTextDebugMobs(string ThisT)
+        {
+            if (richTextBoxDebugMobs.InvokeRequired)
+            {
+                // Call this same method but append THREAD2 to the text
+                Action safeWrite = delegate { AppendTextDebugMobs(ThisT); };
+                richTextBoxDebugMobs.Invoke(safeWrite);
+            }
+            else
+            {
+                richTextBoxDebugMobs.AppendText(ThisT);
+                Application.DoEvents();
+            }
+        }
+
+        public void ClearDebugMobs()
+        {
+            if (richTextBoxDebugMobs.InvokeRequired)
+            {
+                // Call this same method but append THREAD2 to the text
+                Action safeWrite = delegate { ClearDebugMobs(); };
+                richTextBoxDebugMobs.Invoke(safeWrite);
+            }
+            else
+            {
+                richTextBoxDebugMobs.Text = "";
+                Application.DoEvents();
+            }
+        }
+
+        public void AppendTextDebugMapData(string ThisT)
+        {
+            if (richTextBoxDebugMapData.InvokeRequired)
+            {
+                // Call this same method but append THREAD2 to the text
+                Action safeWrite = delegate { AppendTextDebugMapData(ThisT); };
+                richTextBoxDebugMapData.Invoke(safeWrite);
+            }
+            else
+            {
+                richTextBoxDebugMapData.AppendText(ThisT);
+                Application.DoEvents();
+            }
+        }
+
+        public void ClearDebugMapData()
+        {
+            if (richTextBoxDebugMapData.InvokeRequired)
+            {
+                // Call this same method but append THREAD2 to the text
+                Action safeWrite = delegate { ClearDebugMapData(); };
+                richTextBoxDebugMapData.Invoke(safeWrite);
+            }
+            else
+            {
+                richTextBoxDebugMapData.Text = "";
+                Application.DoEvents();
+            }
+        }
+
+        public void AppendTextDebugCollision(string ThisT)
+        {
+            if (richTextBoxDebugMapCollision.InvokeRequired)
+            {
+                // Call this same method but append THREAD2 to the text
+                Action safeWrite = delegate { AppendTextDebugCollision(ThisT); };
+                richTextBoxDebugMapCollision.Invoke(safeWrite);
+            }
+            else
+            {
+                richTextBoxDebugMapCollision.AppendText(ThisT);
+                Application.DoEvents();
+            }
+        }
+
+        public void ClearDebugCollision()
+        {
+            if (richTextBoxDebugMapCollision.InvokeRequired)
+            {
+                // Call this same method but append THREAD2 to the text
+                Action safeWrite = delegate { ClearDebugCollision(); };
+                richTextBoxDebugMapCollision.Invoke(safeWrite);
+            }
+            else
+            {
+                richTextBoxDebugMapCollision.Text = "";
+                Application.DoEvents();
+            }
+        }
+
+        private void button3_Click_1(object sender, EventArgs e)
+        {
+            FormSettings FormSettings_0 = new FormSettings(Form1_0);
+            FormSettings_0.ShowDialog();
+        }
+
+        public void AppendTextErrorLogs(string ThisT, Color ThisColor)
+        {
+            if (richTextBoxErrorLogs.InvokeRequired)
+            {
+                // Call this same method but append THREAD2 to the text
+                Action safeWrite = delegate { AppendTextErrorLogs(ThisT, ThisColor); };
+                richTextBoxErrorLogs.Invoke(safeWrite);
+            }
+            else
+            {
+                richTextBoxErrorLogs.SelectionColor = ThisColor;
+                richTextBoxErrorLogs.AppendText(ThisT + Environment.NewLine);
+                Application.DoEvents();
+            }
+        }
+        public void AppendTextGameLogs(string ThisT, Color ThisColor)
+        {
+            if (richTextBoxGamesLogs.InvokeRequired)
+            {
+                // Call this same method but append THREAD2 to the text
+                Action safeWrite = delegate { AppendTextGameLogs(ThisT, ThisColor); };
+                richTextBoxGamesLogs.Invoke(safeWrite);
+            }
+            else
+            {
+                richTextBoxGamesLogs.SelectionColor = ThisColor;
+                richTextBoxGamesLogs.AppendText(ThisT + Environment.NewLine);
+                Application.DoEvents();
+            }
         }
     }
 }

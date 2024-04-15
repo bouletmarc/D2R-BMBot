@@ -46,6 +46,7 @@ namespace app
         //#######################################
         public static string PlayerCharName = ""; //CHAR NAME
         public static bool UseTeleport = true;
+        public static bool UseBO = true;
         public static int ChickenHP = 22;           //VALUE IN PERCENT
         public static int TakeHPPotUnder = 85;      //VALUE IN PERCENT
         public static int TakeRVPotUnder = 35;      //VALUE IN PERCENT

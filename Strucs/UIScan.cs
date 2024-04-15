@@ -71,7 +71,7 @@ namespace app
                 Form1_0.KeyMouse_0.PressKey(ThisKey);
                 Form1_0.WaitDelay(5);
                 ThisMenuClose = !GetMenuActive(UIName);
-                Application.DoEvents();
+                //Application.DoEvents();
                 TryClic++;
             }
         }
@@ -87,7 +87,7 @@ namespace app
                 Form1_0.KeyMouse_0.PressKey(ThisKey);
                 Form1_0.WaitDelay(5);
                 ThisMenuOpen = GetMenuActive(UIName);
-                Application.DoEvents();
+                //Application.DoEvents();
                 TryClic++;
             }
 
@@ -105,7 +105,7 @@ namespace app
                 Form1_0.KeyMouse_0.PressKey(ThisKey);
                 Form1_0.WaitDelay(5);
                 ThisMenuClose = !GetMenuActive(UIName);
-                Application.DoEvents();
+                //Application.DoEvents();
                 TryClic++;
             }
 

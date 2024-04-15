@@ -69,17 +69,32 @@ namespace app
 
                 if (CurrentStep == 1)
                 {
+                    //####
+                    if (Form1_0.PlayerScan_0.levelNo == (int)Enums.Area.ValleyOfSnakes)
+                    {
+                        CurrentStep++;
+                        return;
+                    }
+                    //####
+
                     Form1_0.PathFinding_0.MoveToNextArea(Enums.Area.ValleyOfSnakes);
                     CurrentStep++;
                 }
 
                 if (CurrentStep == 2)
                 {
+                    //####
+                    if (Form1_0.PlayerScan_0.levelNo == (int)Enums.Area.ClawViperTempleLevel1)
+                    {
+                        CurrentStep++;
+                        return;
+                    }
                     if (Form1_0.PlayerScan_0.levelNo != (int)Enums.Area.ValleyOfSnakes)
                     {
                         CurrentStep--;
                         return;
                     }
+                    //####
 
                     Form1_0.PathFinding_0.MoveToExit(Enums.Area.ClawViperTempleLevel1);
                     CurrentStep++;
@@ -87,11 +102,18 @@ namespace app
 
                 if (CurrentStep == 3)
                 {
+                    //####
+                    if (Form1_0.PlayerScan_0.levelNo == (int)Enums.Area.ClawViperTempleLevel2)
+                    {
+                        CurrentStep++;
+                        return;
+                    }
                     if (Form1_0.PlayerScan_0.levelNo != (int)Enums.Area.ClawViperTempleLevel1)
                     {
                         CurrentStep--;
                         return;
                     }
+                    //####
 
                     Form1_0.PathFinding_0.MoveToExit(Enums.Area.ClawViperTempleLevel2);
                     CurrentStep++;
@@ -99,11 +121,13 @@ namespace app
 
                 if (CurrentStep == 4)
                 {
+                    //####
                     if (Form1_0.PlayerScan_0.levelNo != (int)Enums.Area.ClawViperTempleLevel2)
                     {
                         CurrentStep--;
                         return;
                     }
+                    //####
 
                     ChestPos = Form1_0.MapAreaStruc_0.GetPositionOfObject("object", "TaintedSunAltar", (int) Enums.Area.ClawViperTempleLevel2, new List<int>());
                     if (ChestPos.X != 0 &&  ChestPos.Y != 0)

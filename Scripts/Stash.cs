@@ -176,7 +176,7 @@ namespace app
             while (Form1_0.ItemsStruc_0.ItemOnCursor && Tryy < 5)
             {
                 Form1_0.KeyMouse_0.MouseClicc(PosX, PosY);
-                Form1_0.WaitDelay(10);
+                Form1_0.WaitDelay(5);
                 Form1_0.ItemsStruc_0.GetItems(false);   //get inventory again
                 Tryy++;
             }
@@ -193,7 +193,7 @@ namespace app
             while (!Form1_0.ItemsStruc_0.ItemOnCursor && Tryy < 5)
             {
                 Form1_0.KeyMouse_0.MouseClicc(PosX, PosY);
-                Form1_0.WaitDelay(10);
+                Form1_0.WaitDelay(5);
                 Form1_0.ItemsStruc_0.GetItems(false);   //get inventory again
                 Tryy++;
             }

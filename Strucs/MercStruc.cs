@@ -76,7 +76,8 @@ namespace app
                     string playerMinion = Form1_0.MobsStruc_0.getPlayerMinion((int)txtFileNo);
                     if (playerMinion != "") isPlayerMinion = true;
 
-                    //Console.WriteLine((EnumsMobsNPC.MobsNPC)txtFileNo);
+                    //Console.WriteLine(Form1_0.NPCStruc_0.getNPC_ID((int) txtFileNo));
+                    //Console.WriteLine(txtFileNo.ToString() + ", isUnique:" + isUnique + ", isPlayerMinion:" + isPlayerMinion + ", mode:" + mode + ", pos:" + xPosFinal + ", " + yPosFinal);
 
                     //if (IsMerc((int) txtFileNo))
                     if (isUnique == 0 && isPlayerMinion && mode != 0 && mode != 12)
@@ -130,6 +131,8 @@ namespace app
                 {
                     MercHP = ThisHPStat >> 8;
                 }
+
+                //Console.WriteLine("HP:" + MercHP);
 
                 /*Form1_0.Mem_0.ReadRawMemory(this.statExPtr, ref statBuffer, (int)(this.statExCount * 10));
                 for (int i = 0; i < this.statExCount; i++)

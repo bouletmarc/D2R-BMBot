@@ -37,6 +37,8 @@ namespace app
         public Position PlayerOffsetInCollisiongrid = new Position { X = 0, Y = 0 };
         public Position TargetOffsetInCollisiongrid = new Position { X = 0, Y = 0 };
 
+        public bool CheckingForCloseToTargetPos = true;
+
         public void SetForm1(Form1 form1_1)
         {
             Form1_0 = form1_1;
@@ -50,6 +52,22 @@ namespace app
             }
         }
 
+        public void DebugMapCollision()
+        {
+            Form1_0.ClearDebugCollision();
+
+            ThisCollisionGrid = Form1_0.MapAreaStruc_0.CollisionGrid((Enums.Area)Form1_0.PlayerScan_0.levelNo);
+            for (int i = 0; i < ThisCollisionGrid.GetLength(1); i++)
+            {
+                for (int k = 0; k < ThisCollisionGrid.GetLength(0); k++)
+                {
+                    if (ThisCollisionGrid[k, i]) Form1_0.AppendTextDebugCollision("-");
+                    if (!ThisCollisionGrid[k, i]) Form1_0.AppendTextDebugCollision("X");
+                }
+                Form1_0.AppendTextDebugCollision(Environment.NewLine);
+            }
+        }
+
         public void MoveToNextArea(Area ThisID, int AcceptOffset = 4, bool ClearAreaOnMoving = false)
         {
             Form1_0.PlayerScan_0.GetPositions();
@@ -57,6 +75,7 @@ namespace app
             ThisNextAreaID = (int)ThisID;
             ThisPlayerAreaID = (int)Form1_0.PlayerScan_0.levelNo;
             ThisCollisionGrid = ExpandGrid(ThisID);
+            CheckingForCloseToTargetPos = true;
 
             try
             {
@@ -79,8 +98,9 @@ namespace app
         {
             Form1_0.PlayerScan_0.GetPositions();
             IsMovingToNextArea = false;
+            CheckingForCloseToTargetPos = false;
 
-            Form1_0.method_1("ToExit " + Form1_0.Town_0.getAreaName((int)ThisID), Color.Red);
+            //Form1_0.method_1("ToExit " + Form1_0.Town_0.getAreaName((int)ThisID), Color.Red);
             try
             {
                 ThisPlayerAreaID = (int)Form1_0.PlayerScan_0.levelNo;
@@ -89,6 +109,12 @@ namespace app
                 ThisFinalPosition = Form1_0.MapAreaStruc_0.GetPositionOfObject("exit", Form1_0.Town_0.getAreaName((int)ThisID), ThisPlayerAreaID, new List<int>() { });
                 ThisOffsetPosition = new Position { X = Form1_0.MapAreaStruc_0.AllMapData[ThisPlayerAreaID - 1].Offset.X, Y = Form1_0.MapAreaStruc_0.AllMapData[ThisPlayerAreaID - 1].Offset.Y };
                 ThisCollisionGrid = Form1_0.MapAreaStruc_0.CollisionGrid((Enums.Area)Form1_0.PlayerScan_0.levelNo);
+
+                try
+                {
+                    ThisCollisionGrid[ThisFinalPosition.X - ThisOffsetPosition.X, ThisFinalPosition.Y - ThisOffsetPosition.Y] = true; //make sure the exit is walkable
+                }
+                catch { }
 
                 PlayerOffsetInCollisiongrid = new Position { X = 0, Y = 0 };
                 TargetOffsetInCollisiongrid = new Position { X = 0, Y = 0 };
@@ -103,6 +129,7 @@ namespace app
         {
             Form1_0.PlayerScan_0.GetPositions();
             IsMovingToNextArea = false;
+            CheckingForCloseToTargetPos = false;
 
             //Form1_0.method_1("ToNPC " + NPCName, Color.Red);
 
@@ -127,6 +154,7 @@ namespace app
         {
             Form1_0.PlayerScan_0.GetPositions();
             IsMovingToNextArea = false;
+            CheckingForCloseToTargetPos = false;
 
             //Form1_0.method_1("ToObject " + ObjectName, Color.Red);
 
@@ -151,6 +179,7 @@ namespace app
         {
             if (Form1_0.PlayerScan_0.levelNo == 0) Form1_0.PlayerScan_0.GetPositions();
             IsMovingToNextArea = false;
+            CheckingForCloseToTargetPos = true;
 
             //Form1_0.method_1("ToThisPos", Color.Red);
 
@@ -184,20 +213,23 @@ namespace app
             targetPos.X += TargetOffsetInCollisiongrid.X;
             targetPos.Y += TargetOffsetInCollisiongrid.Y;
 
-            if (targetPos.X < 0 || targetPos.Y < 0)
+            /*if (targetPos.X < 0 || targetPos.Y < 0)
             {
                 Form1_0.method_1("ERROR Target pos: " + targetPos.X + ", " + targetPos.Y, Color.Red);
                 ThisFinalPosition = new Position { X = ThisFinalPosition.X + ThisOffsetPosition.X, Y = ThisFinalPosition.Y + ThisOffsetPosition.Y };
                 targetPos = new Point(ThisFinalPosition.X - ThisOffsetPosition.X, ThisFinalPosition.Y - ThisOffsetPosition.Y);
-            }
+            }*/
 
             //no need to move we are close already!
-            if (startPos.X >= (targetPos.X - Form1_0.Mover_0.MoveAcceptOffset)
-                && startPos.X <= (targetPos.X + Form1_0.Mover_0.MoveAcceptOffset)
-                && startPos.Y >= (targetPos.Y - Form1_0.Mover_0.MoveAcceptOffset)
-                && startPos.Y <= (targetPos.Y + Form1_0.Mover_0.MoveAcceptOffset))
+            if (CheckingForCloseToTargetPos)
             {
-                return;
+                if (startPos.X >= (targetPos.X - Form1_0.Mover_0.MoveAcceptOffset)
+                    && startPos.X <= (targetPos.X + Form1_0.Mover_0.MoveAcceptOffset)
+                    && startPos.Y >= (targetPos.Y - Form1_0.Mover_0.MoveAcceptOffset)
+                    && startPos.Y <= (targetPos.Y + Form1_0.Mover_0.MoveAcceptOffset))
+                {
+                    return;
+                }
             }
 
             //Form1_0.method_1("Start pos: " + startPos.X + ", " + startPos.Y, Color.Red);
@@ -207,15 +239,29 @@ namespace app
             {
                 Form1_0.method_1("Offsets are bad!", Color.Red);
             }*/
-            if (targetPos.X == 0 && targetPos.Y == 0)
+            if (targetPos.X <= 0 || targetPos.Y <= 0)
             {
-                Form1_0.method_1("Target pos are bad!", Color.Red);
+                Form1_0.method_1("Target pos are bad: " + targetPos.X + ", " + targetPos.Y, Color.Red);
                 return;
             }
 
             path = FindPath(startPos, targetPos);
             if (path == null)
             {
+                //dump data to txt file
+                /*string ColisionMapTxt = "";
+                for (int i = 0; i < ThisCollisionGrid.GetLength(1); i++)
+                {
+                    for (int k = 0; k < ThisCollisionGrid.GetLength(0); k++)
+                    {
+                        if (ThisCollisionGrid[k, i]) ColisionMapTxt += "-";
+                        if (!ThisCollisionGrid[k, i]) ColisionMapTxt += "X";
+                    }
+                    ColisionMapTxt += Environment.NewLine;
+                }
+                File.Create(Form1_0.ThisEndPath + "CollisionMap.txt").Dispose();
+                File.WriteAllText(Form1_0.ThisEndPath + "CollisionMap.txt", ColisionMapTxt);*/
+
                 Form1_0.method_1("No path found.", Color.Red);
                 //Form1_0.MapAreaStruc_0.DumpMap();
                 Form1_0.GoToNextScript();
@@ -301,7 +347,7 @@ namespace app
                             if (ClearAreaOnMoving)
                             {
                                 //Form1_0.method_1("Clearing area of mobs...", Color.Red);
-                                Form1_0.Battle_0.ClearAreaOfMobs(path[CurrentPathIndex].X + ThisOffsetPosition.X - PlayerOffsetInCollisiongrid.X, path[CurrentPathIndex].Y + ThisOffsetPosition.Y - PlayerOffsetInCollisiongrid.Y, (AcceptMoveOffset / 2) + 1);
+                                Form1_0.Battle_0.ClearAreaOfMobs(path[CurrentPathIndex].X + ThisOffsetPosition.X - PlayerOffsetInCollisiongrid.X, path[CurrentPathIndex].Y + ThisOffsetPosition.Y - PlayerOffsetInCollisiongrid.Y, AcceptMoveOffset + 2);
 
                                 //stop moving thru the pathfinding, we are clearing the area of mobs
                                 if (Form1_0.Battle_0.ClearingArea)
@@ -655,91 +701,99 @@ namespace app
 
             openSet.Add(new Node(startPos, null, 0, Heuristic(startPos, targetPos)));
 
-            while (openSet.Any())
+            try
             {
-                Node current = openSet.OrderBy(node => node.F).First();
-
-                if (current.Position.Equals(targetPos)) return ReconstructPath(current);
-
-                openSet.Remove(current);
-                closedSet[current.Position.X, current.Position.Y] = true;
-
-                for (int p = 0; p < 8; p++) // Assuming 4-direction movement
+                while (openSet.Any())
                 {
-                    int nx = current.Position.X + dx[p];
-                    int ny = current.Position.Y + dy[p];
+                    Node current = openSet.OrderBy(node => node.F).First();
 
-                    if (nx >= 0 && nx < width && ny >= 0 && ny < height)
+                    if (current.Position.Equals(targetPos)) return ReconstructPath(current);
+
+                    openSet.Remove(current);
+                    closedSet[current.Position.X, current.Position.Y] = true;
+
+                    for (int p = 0; p < 8; p++) // Assuming 4-direction movement
                     {
-                        if (nx < ThisCollisionGrid.GetLength(0) && ny < ThisCollisionGrid.GetLength(1)
-                            && nx < closedSet.GetLength(0) && ny < closedSet.GetLength(1))
+                        int nx = current.Position.X + dx[p];
+                        int ny = current.Position.Y + dy[p];
+
+                        if (nx >= 0 && nx < width && ny >= 0 && ny < height)
                         {
-                            // Check if teleportation is possible
-                            /*bool canTeleport = CanTeleport(current.Position, new Point(nx, ny));
-                            if (canTeleport)
+                            if (nx < ThisCollisionGrid.GetLength(0) && ny < ThisCollisionGrid.GetLength(1)
+                                && nx < closedSet.GetLength(0) && ny < closedSet.GetLength(1))
                             {
-                                Point teleportTarget = new Point(nx, ny);
-                                double teleportCost = Heuristic(current.Position, teleportTarget);
-                                double tentativeG = current.G + teleportCost;
-
-                                Node teleportNode = new Node(teleportTarget, current, tentativeG, Heuristic(teleportTarget, targetPos));
-                                openSet.Add(teleportNode);
-                                continue; // Skip regular movement check
-                            }*/
-
-                            /*if (!ThisCollisionGrid[nx, ny])
-                            {
-                                bool canTeleportTo = CanTeleport(new Point(nx, ny));
-                                if (canTeleportTo)
+                                // Check if teleportation is possible
+                                /*bool canTeleport = CanTeleport(current.Position, new Point(nx, ny));
+                                if (canTeleport)
                                 {
-                                    ThisCollisionGrid[nx,ny] = true;
-                                    nx = TeleportPoint.X;
-                                    ny = TeleportPoint.Y;
-                                    
-                                    //#########################################
-                                    /*Point teleportTarget = new Point(nx, ny);
-                                    //if (closedSet[nx, ny]) continue; //#####
-
+                                    Point teleportTarget = new Point(nx, ny);
                                     double teleportCost = Heuristic(current.Position, teleportTarget);
                                     double tentativeG = current.G + teleportCost;
 
                                     Node teleportNode = new Node(teleportTarget, current, tentativeG, Heuristic(teleportTarget, targetPos));
                                     openSet.Add(teleportNode);
-                                    continue; // Skip regular movement check*/
-                                    //#########################################
-                            /*
-                                    //if (ny >= 338 && ny <= 348) Console.WriteLine("Can tel from: " + current.Position.X + ", " + current.Position.Y + " to: " + nx + ", " + ny);
-                                }
-                            }*/
+                                    continue; // Skip regular movement check
+                                }*/
 
-                            //if (ThisCollisionGrid[nx, ny] && !closedSet[nx, ny])
-                            if (ThisCollisionGrid[nx, ny])
-                            {
-                                Point neighborPos = new Point(nx, ny);
-                                //Point neighborPos = new Point(nxTeleport, nyTeleport);
-
-                                if (closedSet[nx, ny]) continue;
-                                //if (closedSet[nxTeleport, nyTeleport]) continue;
-
-                                double tentativeG = current.G + 1;
-
-                                Node neighbor = openSet.FirstOrDefault(node => node.Position.Equals(neighborPos));
-                                if (neighbor == null || tentativeG < neighbor.G)
+                                /*if (!ThisCollisionGrid[nx, ny])
                                 {
-                                    if (neighbor == null)
+                                    bool canTeleportTo = CanTeleport(new Point(nx, ny));
+                                    if (canTeleportTo)
                                     {
-                                        neighbor = new Node(neighborPos);
-                                        openSet.Add(neighbor);
-                                    }
+                                        ThisCollisionGrid[nx,ny] = true;
+                                        nx = TeleportPoint.X;
+                                        ny = TeleportPoint.Y;
 
-                                    neighbor.Parent = current;
-                                    neighbor.G = tentativeG;
-                                    neighbor.H = Heuristic(neighborPos, targetPos);
+                                        //#########################################
+                                        /*Point teleportTarget = new Point(nx, ny);
+                                        //if (closedSet[nx, ny]) continue; //#####
+
+                                        double teleportCost = Heuristic(current.Position, teleportTarget);
+                                        double tentativeG = current.G + teleportCost;
+
+                                        Node teleportNode = new Node(teleportTarget, current, tentativeG, Heuristic(teleportTarget, targetPos));
+                                        openSet.Add(teleportNode);
+                                        continue; // Skip regular movement check*/
+                                //#########################################
+                                /*
+                                        //if (ny >= 338 && ny <= 348) Console.WriteLine("Can tel from: " + current.Position.X + ", " + current.Position.Y + " to: " + nx + ", " + ny);
+                                    }
+                                }*/
+
+                                //if (ThisCollisionGrid[nx, ny] && !closedSet[nx, ny])
+                                if (ThisCollisionGrid[nx, ny])
+                                {
+                                    Point neighborPos = new Point(nx, ny);
+                                    //Point neighborPos = new Point(nxTeleport, nyTeleport);
+
+                                    if (closedSet[nx, ny]) continue;
+                                    //if (closedSet[nxTeleport, nyTeleport]) continue;
+
+                                    double tentativeG = current.G + 1;
+                                    if (p > 3) tentativeG += 1;
+
+                                    Node neighbor = openSet.FirstOrDefault(node => node.Position.Equals(neighborPos));
+                                    if (neighbor == null || tentativeG < neighbor.G)
+                                    {
+                                        if (neighbor == null)
+                                        {
+                                            neighbor = new Node(neighborPos);
+                                            openSet.Add(neighbor);
+                                        }
+
+                                        neighbor.Parent = current;
+                                        neighbor.G = tentativeG;
+                                        neighbor.H = Heuristic(neighborPos, targetPos);
+                                    }
                                 }
                             }
                         }
                     }
                 }
+            }
+            catch
+            {
+                Form1_0.method_1("Issue with PathFinding CollisionGrid 'Indexes'!", Color.Red);
             }
 
             // No path found

@@ -51,7 +51,7 @@ namespace app
             TriedToMercCount = 0;
             TriedToUseTPCount = 0;
             Towning = false;
-            FastTowning = false;
+            //FastTowning = false;
             ForcedTowning = false;
             //UseLastTP = true;
 
@@ -90,6 +90,9 @@ namespace app
                 Form1_0.Potions_0.ForceLeave = true;
                 Form1_0.BaalLeech_0.SearchSameGamesAsLastOne = false;
                 Form1_0.LeaveGame(false);
+
+                Form1_0.TotalDeadCount++;
+                Form1_0.LabelDeadCount.Text = Form1_0.TotalDeadCount.ToString();
                 return;
             }
 
@@ -182,6 +185,10 @@ namespace app
             }
             else
             {
+                Form1_0.Battle_0.DoingBattle = false;
+                Form1_0.Battle_0.ClearingArea = false;
+                Form1_0.Battle_0.MoveTryCount = 0;
+
                 //switch town
                 if (CurrentScript == 0)
                 {
@@ -600,11 +607,11 @@ namespace app
             if (GetInTown() && Towning) return true;
 
             bool ShouldBe = false;
-            if (Form1_0.InventoryStruc_0.HasUnidItemInInventory())
+            if (Form1_0.InventoryStruc_0.HasUnidItemInInventory() && !FastTowning)
             {
                 ShouldBe = true;
             }
-            if (Form1_0.InventoryStruc_0.ContainStashItemInInventory())
+            if (Form1_0.InventoryStruc_0.ContainStashItemInInventory() && !FastTowning)
             {
                 ShouldBe = true;
             }
@@ -616,7 +623,7 @@ namespace app
             {
                 ShouldBe = true;
             }
-            if (Form1_0.Gamble_0.CanGamble())
+            if (Form1_0.Gamble_0.CanGamble() && !FastTowning)
             {
                 ShouldBe = true;
             }
@@ -884,7 +891,7 @@ namespace app
             {
                 CheckForNPCValidPos("Larzuk");
                 //Form1_0.PathFinding_0.MoveToNPC("Larzuk");  //not found
-                Form1_0.PathFinding_0.MoveToThisPos(new Position { X = 5146, Y = 5139 });
+                Form1_0.PathFinding_0.MoveToThisPos(new Position { X = 5145, Y = 5141 });
                 Form1_0.NPCStruc_0.GetNPC("Larzuk");
                 MovedCorrectly = true;
             }

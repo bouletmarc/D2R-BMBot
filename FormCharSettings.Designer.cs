@@ -31,67 +31,68 @@
             this.label1 = new System.Windows.Forms.Label();
             this.comboBoxType = new System.Windows.Forms.ComboBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.textBoxLeftSkill = new System.Windows.Forms.TextBox();
-            this.textBoxRightSkill = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.textBoxFastMoveTown = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.textBoxFastMoveTeleport = new System.Windows.Forms.TextBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.textBoxDefenseSkill = new System.Windows.Forms.TextBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.textBoxCastDefenseSkill = new System.Windows.Forms.TextBox();
-            this.label7 = new System.Windows.Forms.Label();
+            this.checkBoxAttachRightHand = new System.Windows.Forms.CheckBox();
             this.textBoxLifeSkill = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
-            this.checkBoxAttachRightHand = new System.Windows.Forms.CheckBox();
+            this.textBoxCastDefenseSkill = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.textBoxDefenseSkill = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.textBoxFastMoveTeleport = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.textBoxFastMoveTown = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.textBoxRightSkill = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.textBoxLeftSkill = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.comboBoxBelt1 = new System.Windows.Forms.ComboBox();
-            this.comboBoxBelt2 = new System.Windows.Forms.ComboBox();
-            this.comboBoxBelt3 = new System.Windows.Forms.ComboBox();
-            this.comboBoxBelt4 = new System.Windows.Forms.ComboBox();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.comboBoxBelt4 = new System.Windows.Forms.ComboBox();
+            this.comboBoxBelt3 = new System.Windows.Forms.ComboBox();
+            this.comboBoxBelt2 = new System.Windows.Forms.ComboBox();
+            this.comboBoxBelt1 = new System.Windows.Forms.ComboBox();
             this.groupBoxInventory = new System.Windows.Forms.GroupBox();
             this.label13 = new System.Windows.Forms.Label();
             this.textBoxCharName = new System.Windows.Forms.TextBox();
             this.label14 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.checkBoxUseTeleport = new System.Windows.Forms.CheckBox();
-            this.label15 = new System.Windows.Forms.Label();
-            this.numericUpDownChickenHP = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDownTakeHP = new System.Windows.Forms.NumericUpDown();
-            this.label16 = new System.Windows.Forms.Label();
-            this.numericUpDownTakeMana = new System.Windows.Forms.NumericUpDown();
-            this.label17 = new System.Windows.Forms.Label();
-            this.numericUpDownTakeRV = new System.Windows.Forms.NumericUpDown();
-            this.label18 = new System.Windows.Forms.Label();
-            this.numericUpDownGambleAbove = new System.Windows.Forms.NumericUpDown();
-            this.label19 = new System.Windows.Forms.Label();
-            this.numericUpDownGambleUntil = new System.Windows.Forms.NumericUpDown();
-            this.label20 = new System.Windows.Forms.Label();
+            this.numericUpDownKeyYPos = new System.Windows.Forms.NumericUpDown();
             this.numericUpDownKeyXPos = new System.Windows.Forms.NumericUpDown();
             this.label21 = new System.Windows.Forms.Label();
-            this.numericUpDownKeyYPos = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDownGambleUntil = new System.Windows.Forms.NumericUpDown();
+            this.label20 = new System.Windows.Forms.Label();
+            this.numericUpDownGambleAbove = new System.Windows.Forms.NumericUpDown();
+            this.label19 = new System.Windows.Forms.Label();
+            this.numericUpDownTakeRV = new System.Windows.Forms.NumericUpDown();
+            this.checkBoxUseTeleport = new System.Windows.Forms.CheckBox();
+            this.label18 = new System.Windows.Forms.Label();
+            this.numericUpDownTakeMana = new System.Windows.Forms.NumericUpDown();
+            this.label17 = new System.Windows.Forms.Label();
+            this.numericUpDownTakeHP = new System.Windows.Forms.NumericUpDown();
+            this.label16 = new System.Windows.Forms.Label();
+            this.numericUpDownChickenHP = new System.Windows.Forms.NumericUpDown();
+            this.label15 = new System.Windows.Forms.Label();
             this.checkBoxUseMerc = new System.Windows.Forms.CheckBox();
             this.numericUpDownMercTakeHPUnder = new System.Windows.Forms.NumericUpDown();
             this.label22 = new System.Windows.Forms.Label();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.button1 = new System.Windows.Forms.Button();
+            this.checkBoxUseBO = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownChickenHP)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTakeHP)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTakeMana)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTakeRV)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownGambleAbove)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownGambleUntil)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownKeyXPos)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownKeyYPos)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownKeyXPos)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownGambleUntil)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownGambleAbove)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTakeRV)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTakeMana)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTakeHP)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownChickenHP)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMercTakeHPUnder)).BeginInit();
             this.groupBox4.SuspendLayout();
             this.SuspendLayout();
@@ -141,101 +142,15 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Skills Shortcuts Keys";
             // 
-            // label2
+            // checkBoxAttachRightHand
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(10, 49);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(84, 13);
-            this.label2.TabIndex = 3;
-            this.label2.Text = "Attack Left Skill:";
-            // 
-            // textBoxLeftSkill
-            // 
-            this.textBoxLeftSkill.Location = new System.Drawing.Point(123, 46);
-            this.textBoxLeftSkill.Name = "textBoxLeftSkill";
-            this.textBoxLeftSkill.Size = new System.Drawing.Size(37, 20);
-            this.textBoxLeftSkill.TabIndex = 4;
-            // 
-            // textBoxRightSkill
-            // 
-            this.textBoxRightSkill.Location = new System.Drawing.Point(123, 68);
-            this.textBoxRightSkill.Name = "textBoxRightSkill";
-            this.textBoxRightSkill.Size = new System.Drawing.Size(37, 20);
-            this.textBoxRightSkill.TabIndex = 6;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(10, 71);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(91, 13);
-            this.label3.TabIndex = 5;
-            this.label3.Text = "Attack Right Skill:";
-            // 
-            // textBoxFastMoveTown
-            // 
-            this.textBoxFastMoveTown.Location = new System.Drawing.Point(123, 90);
-            this.textBoxFastMoveTown.Name = "textBoxFastMoveTown";
-            this.textBoxFastMoveTown.Size = new System.Drawing.Size(37, 20);
-            this.textBoxFastMoveTown.TabIndex = 8;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(10, 93);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(108, 13);
-            this.label4.TabIndex = 7;
-            this.label4.Text = "Fast Move (In Town):";
-            // 
-            // textBoxFastMoveTeleport
-            // 
-            this.textBoxFastMoveTeleport.Location = new System.Drawing.Point(123, 112);
-            this.textBoxFastMoveTeleport.Name = "textBoxFastMoveTeleport";
-            this.textBoxFastMoveTeleport.Size = new System.Drawing.Size(37, 20);
-            this.textBoxFastMoveTeleport.TabIndex = 10;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(10, 115);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(108, 13);
-            this.label5.TabIndex = 9;
-            this.label5.Text = "Fast Move (Teleport):";
-            // 
-            // textBoxDefenseSkill
-            // 
-            this.textBoxDefenseSkill.Location = new System.Drawing.Point(123, 134);
-            this.textBoxDefenseSkill.Name = "textBoxDefenseSkill";
-            this.textBoxDefenseSkill.Size = new System.Drawing.Size(37, 20);
-            this.textBoxDefenseSkill.TabIndex = 12;
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(10, 137);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(72, 13);
-            this.label6.TabIndex = 11;
-            this.label6.Text = "Defense Skill:";
-            // 
-            // textBoxCastDefenseSkill
-            // 
-            this.textBoxCastDefenseSkill.Location = new System.Drawing.Point(123, 156);
-            this.textBoxCastDefenseSkill.Name = "textBoxCastDefenseSkill";
-            this.textBoxCastDefenseSkill.Size = new System.Drawing.Size(37, 20);
-            this.textBoxCastDefenseSkill.TabIndex = 14;
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(10, 159);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(96, 13);
-            this.label7.TabIndex = 13;
-            this.label7.Text = "Cast Defense Skill:";
+            this.checkBoxAttachRightHand.AutoSize = true;
+            this.checkBoxAttachRightHand.Location = new System.Drawing.Point(20, 22);
+            this.checkBoxAttachRightHand.Name = "checkBoxAttachRightHand";
+            this.checkBoxAttachRightHand.Size = new System.Drawing.Size(136, 17);
+            this.checkBoxAttachRightHand.TabIndex = 17;
+            this.checkBoxAttachRightHand.Text = "Attack with Right Hand";
+            this.checkBoxAttachRightHand.UseVisualStyleBackColor = true;
             // 
             // textBoxLifeSkill
             // 
@@ -253,15 +168,101 @@
             this.label8.TabIndex = 15;
             this.label8.Text = "Life Skill:";
             // 
-            // checkBoxAttachRightHand
+            // textBoxCastDefenseSkill
             // 
-            this.checkBoxAttachRightHand.AutoSize = true;
-            this.checkBoxAttachRightHand.Location = new System.Drawing.Point(20, 22);
-            this.checkBoxAttachRightHand.Name = "checkBoxAttachRightHand";
-            this.checkBoxAttachRightHand.Size = new System.Drawing.Size(136, 17);
-            this.checkBoxAttachRightHand.TabIndex = 17;
-            this.checkBoxAttachRightHand.Text = "Attack with Right Hand";
-            this.checkBoxAttachRightHand.UseVisualStyleBackColor = true;
+            this.textBoxCastDefenseSkill.Location = new System.Drawing.Point(123, 156);
+            this.textBoxCastDefenseSkill.Name = "textBoxCastDefenseSkill";
+            this.textBoxCastDefenseSkill.Size = new System.Drawing.Size(37, 20);
+            this.textBoxCastDefenseSkill.TabIndex = 14;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(10, 159);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(96, 13);
+            this.label7.TabIndex = 13;
+            this.label7.Text = "Cast Defense Skill:";
+            // 
+            // textBoxDefenseSkill
+            // 
+            this.textBoxDefenseSkill.Location = new System.Drawing.Point(123, 134);
+            this.textBoxDefenseSkill.Name = "textBoxDefenseSkill";
+            this.textBoxDefenseSkill.Size = new System.Drawing.Size(37, 20);
+            this.textBoxDefenseSkill.TabIndex = 12;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(10, 137);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(72, 13);
+            this.label6.TabIndex = 11;
+            this.label6.Text = "Defense Skill:";
+            // 
+            // textBoxFastMoveTeleport
+            // 
+            this.textBoxFastMoveTeleport.Location = new System.Drawing.Point(123, 112);
+            this.textBoxFastMoveTeleport.Name = "textBoxFastMoveTeleport";
+            this.textBoxFastMoveTeleport.Size = new System.Drawing.Size(37, 20);
+            this.textBoxFastMoveTeleport.TabIndex = 10;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(10, 115);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(108, 13);
+            this.label5.TabIndex = 9;
+            this.label5.Text = "Fast Move (Teleport):";
+            // 
+            // textBoxFastMoveTown
+            // 
+            this.textBoxFastMoveTown.Location = new System.Drawing.Point(123, 90);
+            this.textBoxFastMoveTown.Name = "textBoxFastMoveTown";
+            this.textBoxFastMoveTown.Size = new System.Drawing.Size(37, 20);
+            this.textBoxFastMoveTown.TabIndex = 8;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(10, 93);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(108, 13);
+            this.label4.TabIndex = 7;
+            this.label4.Text = "Fast Move (In Town):";
+            // 
+            // textBoxRightSkill
+            // 
+            this.textBoxRightSkill.Location = new System.Drawing.Point(123, 68);
+            this.textBoxRightSkill.Name = "textBoxRightSkill";
+            this.textBoxRightSkill.Size = new System.Drawing.Size(37, 20);
+            this.textBoxRightSkill.TabIndex = 6;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(10, 71);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(91, 13);
+            this.label3.TabIndex = 5;
+            this.label3.Text = "Attack Right Skill:";
+            // 
+            // textBoxLeftSkill
+            // 
+            this.textBoxLeftSkill.Location = new System.Drawing.Point(123, 46);
+            this.textBoxLeftSkill.Name = "textBoxLeftSkill";
+            this.textBoxLeftSkill.Size = new System.Drawing.Size(37, 20);
+            this.textBoxLeftSkill.TabIndex = 4;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(10, 49);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(84, 13);
+            this.label2.TabIndex = 3;
+            this.label2.Text = "Attack Left Skill:";
             // 
             // groupBox2
             // 
@@ -280,44 +281,41 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Belt Potions Type";
             // 
-            // comboBoxBelt1
+            // label12
             // 
-            this.comboBoxBelt1.FormattingEnabled = true;
-            this.comboBoxBelt1.Items.AddRange(new object[] {
-            "HP",
-            "Mana",
-            "RV",
-            "Full RV"});
-            this.comboBoxBelt1.Location = new System.Drawing.Point(6, 38);
-            this.comboBoxBelt1.Name = "comboBoxBelt1";
-            this.comboBoxBelt1.Size = new System.Drawing.Size(58, 21);
-            this.comboBoxBelt1.TabIndex = 0;
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(193, 22);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(34, 13);
+            this.label12.TabIndex = 7;
+            this.label12.Text = "Slot4:";
             // 
-            // comboBoxBelt2
+            // label11
             // 
-            this.comboBoxBelt2.FormattingEnabled = true;
-            this.comboBoxBelt2.Items.AddRange(new object[] {
-            "HP",
-            "Mana",
-            "RV",
-            "Full RV"});
-            this.comboBoxBelt2.Location = new System.Drawing.Point(64, 38);
-            this.comboBoxBelt2.Name = "comboBoxBelt2";
-            this.comboBoxBelt2.Size = new System.Drawing.Size(58, 21);
-            this.comboBoxBelt2.TabIndex = 1;
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(136, 22);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(34, 13);
+            this.label11.TabIndex = 6;
+            this.label11.Text = "Slot3:";
             // 
-            // comboBoxBelt3
+            // label10
             // 
-            this.comboBoxBelt3.FormattingEnabled = true;
-            this.comboBoxBelt3.Items.AddRange(new object[] {
-            "HP",
-            "Mana",
-            "RV",
-            "Full RV"});
-            this.comboBoxBelt3.Location = new System.Drawing.Point(122, 38);
-            this.comboBoxBelt3.Name = "comboBoxBelt3";
-            this.comboBoxBelt3.Size = new System.Drawing.Size(58, 21);
-            this.comboBoxBelt3.TabIndex = 2;
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(78, 22);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(34, 13);
+            this.label10.TabIndex = 5;
+            this.label10.Text = "Slot2:";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(21, 22);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(34, 13);
+            this.label9.TabIndex = 4;
+            this.label9.Text = "Slot1:";
             // 
             // comboBoxBelt4
             // 
@@ -332,41 +330,44 @@
             this.comboBoxBelt4.Size = new System.Drawing.Size(58, 21);
             this.comboBoxBelt4.TabIndex = 3;
             // 
-            // label9
+            // comboBoxBelt3
             // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(21, 22);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(34, 13);
-            this.label9.TabIndex = 4;
-            this.label9.Text = "Slot1:";
+            this.comboBoxBelt3.FormattingEnabled = true;
+            this.comboBoxBelt3.Items.AddRange(new object[] {
+            "HP",
+            "Mana",
+            "RV",
+            "Full RV"});
+            this.comboBoxBelt3.Location = new System.Drawing.Point(122, 38);
+            this.comboBoxBelt3.Name = "comboBoxBelt3";
+            this.comboBoxBelt3.Size = new System.Drawing.Size(58, 21);
+            this.comboBoxBelt3.TabIndex = 2;
             // 
-            // label10
+            // comboBoxBelt2
             // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(78, 22);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(34, 13);
-            this.label10.TabIndex = 5;
-            this.label10.Text = "Slot2:";
+            this.comboBoxBelt2.FormattingEnabled = true;
+            this.comboBoxBelt2.Items.AddRange(new object[] {
+            "HP",
+            "Mana",
+            "RV",
+            "Full RV"});
+            this.comboBoxBelt2.Location = new System.Drawing.Point(64, 38);
+            this.comboBoxBelt2.Name = "comboBoxBelt2";
+            this.comboBoxBelt2.Size = new System.Drawing.Size(58, 21);
+            this.comboBoxBelt2.TabIndex = 1;
             // 
-            // label11
+            // comboBoxBelt1
             // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(136, 22);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(34, 13);
-            this.label11.TabIndex = 6;
-            this.label11.Text = "Slot3:";
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(193, 22);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(34, 13);
-            this.label12.TabIndex = 7;
-            this.label12.Text = "Slot4:";
+            this.comboBoxBelt1.FormattingEnabled = true;
+            this.comboBoxBelt1.Items.AddRange(new object[] {
+            "HP",
+            "Mana",
+            "RV",
+            "Full RV"});
+            this.comboBoxBelt1.Location = new System.Drawing.Point(6, 38);
+            this.comboBoxBelt1.Name = "comboBoxBelt1";
+            this.comboBoxBelt1.Size = new System.Drawing.Size(58, 21);
+            this.comboBoxBelt1.TabIndex = 0;
             // 
             // groupBoxInventory
             // 
@@ -407,6 +408,7 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.checkBoxUseBO);
             this.groupBox3.Controls.Add(this.numericUpDownKeyYPos);
             this.groupBox3.Controls.Add(this.numericUpDownKeyXPos);
             this.groupBox3.Controls.Add(this.label21);
@@ -432,105 +434,28 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Char Parameters";
             // 
-            // checkBoxUseTeleport
+            // numericUpDownKeyYPos
             // 
-            this.checkBoxUseTeleport.AutoSize = true;
-            this.checkBoxUseTeleport.Location = new System.Drawing.Point(18, 186);
-            this.checkBoxUseTeleport.Name = "checkBoxUseTeleport";
-            this.checkBoxUseTeleport.Size = new System.Drawing.Size(87, 17);
-            this.checkBoxUseTeleport.TabIndex = 18;
-            this.checkBoxUseTeleport.Text = "Use Teleport";
-            this.checkBoxUseTeleport.UseVisualStyleBackColor = true;
+            this.numericUpDownKeyYPos.Location = new System.Drawing.Point(216, 167);
+            this.numericUpDownKeyYPos.Name = "numericUpDownKeyYPos";
+            this.numericUpDownKeyYPos.Size = new System.Drawing.Size(41, 20);
+            this.numericUpDownKeyYPos.TabIndex = 34;
             // 
-            // label15
+            // numericUpDownKeyXPos
             // 
-            this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(15, 43);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(67, 13);
-            this.label15.TabIndex = 20;
-            this.label15.Text = "Chicken HP:";
+            this.numericUpDownKeyXPos.Location = new System.Drawing.Point(174, 167);
+            this.numericUpDownKeyXPos.Name = "numericUpDownKeyXPos";
+            this.numericUpDownKeyXPos.Size = new System.Drawing.Size(41, 20);
+            this.numericUpDownKeyXPos.TabIndex = 33;
             // 
-            // numericUpDownChickenHP
+            // label21
             // 
-            this.numericUpDownChickenHP.Location = new System.Drawing.Point(162, 41);
-            this.numericUpDownChickenHP.Name = "numericUpDownChickenHP";
-            this.numericUpDownChickenHP.Size = new System.Drawing.Size(53, 20);
-            this.numericUpDownChickenHP.TabIndex = 21;
-            // 
-            // numericUpDownTakeHP
-            // 
-            this.numericUpDownTakeHP.Location = new System.Drawing.Point(162, 62);
-            this.numericUpDownTakeHP.Name = "numericUpDownTakeHP";
-            this.numericUpDownTakeHP.Size = new System.Drawing.Size(53, 20);
-            this.numericUpDownTakeHP.TabIndex = 23;
-            // 
-            // label16
-            // 
-            this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(15, 64);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(115, 13);
-            this.label16.TabIndex = 22;
-            this.label16.Text = "Take HP potion under:";
-            // 
-            // numericUpDownTakeMana
-            // 
-            this.numericUpDownTakeMana.Location = new System.Drawing.Point(162, 83);
-            this.numericUpDownTakeMana.Name = "numericUpDownTakeMana";
-            this.numericUpDownTakeMana.Size = new System.Drawing.Size(53, 20);
-            this.numericUpDownTakeMana.TabIndex = 25;
-            // 
-            // label17
-            // 
-            this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(15, 85);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(127, 13);
-            this.label17.TabIndex = 24;
-            this.label17.Text = "Take Mana potion under:";
-            // 
-            // numericUpDownTakeRV
-            // 
-            this.numericUpDownTakeRV.Location = new System.Drawing.Point(162, 104);
-            this.numericUpDownTakeRV.Name = "numericUpDownTakeRV";
-            this.numericUpDownTakeRV.Size = new System.Drawing.Size(53, 20);
-            this.numericUpDownTakeRV.TabIndex = 27;
-            // 
-            // label18
-            // 
-            this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(15, 106);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(139, 13);
-            this.label18.TabIndex = 26;
-            this.label18.Text = "Take RV potion under (HP):";
-            // 
-            // numericUpDownGambleAbove
-            // 
-            this.numericUpDownGambleAbove.Increment = new decimal(new int[] {
-            10000,
-            0,
-            0,
-            0});
-            this.numericUpDownGambleAbove.Location = new System.Drawing.Point(162, 125);
-            this.numericUpDownGambleAbove.Maximum = new decimal(new int[] {
-            10000000,
-            0,
-            0,
-            0});
-            this.numericUpDownGambleAbove.Name = "numericUpDownGambleAbove";
-            this.numericUpDownGambleAbove.Size = new System.Drawing.Size(95, 20);
-            this.numericUpDownGambleAbove.TabIndex = 29;
-            // 
-            // label19
-            // 
-            this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(15, 127);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(140, 13);
-            this.label19.TabIndex = 28;
-            this.label19.Text = "Gamble above gold amount:";
+            this.label21.AutoSize = true;
+            this.label21.Location = new System.Drawing.Point(15, 169);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(153, 13);
+            this.label21.TabIndex = 32;
+            this.label21.Text = "Keys location in Inventory (x,y):";
             // 
             // numericUpDownGambleUntil
             // 
@@ -558,28 +483,105 @@
             this.label20.TabIndex = 30;
             this.label20.Text = "Gamble until gold amount:";
             // 
-            // numericUpDownKeyXPos
+            // numericUpDownGambleAbove
             // 
-            this.numericUpDownKeyXPos.Location = new System.Drawing.Point(174, 167);
-            this.numericUpDownKeyXPos.Name = "numericUpDownKeyXPos";
-            this.numericUpDownKeyXPos.Size = new System.Drawing.Size(41, 20);
-            this.numericUpDownKeyXPos.TabIndex = 33;
+            this.numericUpDownGambleAbove.Increment = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.numericUpDownGambleAbove.Location = new System.Drawing.Point(162, 125);
+            this.numericUpDownGambleAbove.Maximum = new decimal(new int[] {
+            10000000,
+            0,
+            0,
+            0});
+            this.numericUpDownGambleAbove.Name = "numericUpDownGambleAbove";
+            this.numericUpDownGambleAbove.Size = new System.Drawing.Size(95, 20);
+            this.numericUpDownGambleAbove.TabIndex = 29;
             // 
-            // label21
+            // label19
             // 
-            this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(15, 169);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(153, 13);
-            this.label21.TabIndex = 32;
-            this.label21.Text = "Keys location in Inventory (x,y):";
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(15, 127);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(140, 13);
+            this.label19.TabIndex = 28;
+            this.label19.Text = "Gamble above gold amount:";
             // 
-            // numericUpDownKeyYPos
+            // numericUpDownTakeRV
             // 
-            this.numericUpDownKeyYPos.Location = new System.Drawing.Point(216, 167);
-            this.numericUpDownKeyYPos.Name = "numericUpDownKeyYPos";
-            this.numericUpDownKeyYPos.Size = new System.Drawing.Size(41, 20);
-            this.numericUpDownKeyYPos.TabIndex = 34;
+            this.numericUpDownTakeRV.Location = new System.Drawing.Point(162, 104);
+            this.numericUpDownTakeRV.Name = "numericUpDownTakeRV";
+            this.numericUpDownTakeRV.Size = new System.Drawing.Size(53, 20);
+            this.numericUpDownTakeRV.TabIndex = 27;
+            // 
+            // checkBoxUseTeleport
+            // 
+            this.checkBoxUseTeleport.AutoSize = true;
+            this.checkBoxUseTeleport.Location = new System.Drawing.Point(18, 186);
+            this.checkBoxUseTeleport.Name = "checkBoxUseTeleport";
+            this.checkBoxUseTeleport.Size = new System.Drawing.Size(87, 17);
+            this.checkBoxUseTeleport.TabIndex = 18;
+            this.checkBoxUseTeleport.Text = "Use Teleport";
+            this.checkBoxUseTeleport.UseVisualStyleBackColor = true;
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(15, 106);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(139, 13);
+            this.label18.TabIndex = 26;
+            this.label18.Text = "Take RV potion under (HP):";
+            // 
+            // numericUpDownTakeMana
+            // 
+            this.numericUpDownTakeMana.Location = new System.Drawing.Point(162, 83);
+            this.numericUpDownTakeMana.Name = "numericUpDownTakeMana";
+            this.numericUpDownTakeMana.Size = new System.Drawing.Size(53, 20);
+            this.numericUpDownTakeMana.TabIndex = 25;
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(15, 85);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(127, 13);
+            this.label17.TabIndex = 24;
+            this.label17.Text = "Take Mana potion under:";
+            // 
+            // numericUpDownTakeHP
+            // 
+            this.numericUpDownTakeHP.Location = new System.Drawing.Point(162, 62);
+            this.numericUpDownTakeHP.Name = "numericUpDownTakeHP";
+            this.numericUpDownTakeHP.Size = new System.Drawing.Size(53, 20);
+            this.numericUpDownTakeHP.TabIndex = 23;
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(15, 64);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(115, 13);
+            this.label16.TabIndex = 22;
+            this.label16.Text = "Take HP potion under:";
+            // 
+            // numericUpDownChickenHP
+            // 
+            this.numericUpDownChickenHP.Location = new System.Drawing.Point(162, 41);
+            this.numericUpDownChickenHP.Name = "numericUpDownChickenHP";
+            this.numericUpDownChickenHP.Size = new System.Drawing.Size(53, 20);
+            this.numericUpDownChickenHP.TabIndex = 21;
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(15, 43);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(67, 13);
+            this.label15.TabIndex = 20;
+            this.label15.Text = "Chicken HP:";
             // 
             // checkBoxUseMerc
             // 
@@ -631,6 +633,16 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // checkBoxUseBO
+            // 
+            this.checkBoxUseBO.AutoSize = true;
+            this.checkBoxUseBO.Location = new System.Drawing.Point(123, 186);
+            this.checkBoxUseBO.Name = "checkBoxUseBO";
+            this.checkBoxUseBO.Size = new System.Drawing.Size(63, 17);
+            this.checkBoxUseBO.TabIndex = 35;
+            this.checkBoxUseBO.Text = "Use BO";
+            this.checkBoxUseBO.UseVisualStyleBackColor = true;
+            // 
             // FormCharSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -658,14 +670,14 @@
             this.groupBox2.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownChickenHP)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTakeHP)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTakeMana)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTakeRV)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownGambleAbove)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownGambleUntil)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownKeyXPos)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownKeyYPos)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownKeyXPos)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownGambleUntil)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownGambleAbove)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTakeRV)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTakeMana)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTakeHP)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownChickenHP)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMercTakeHPUnder)).EndInit();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
@@ -729,5 +741,6 @@
         private System.Windows.Forms.Label label22;
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.CheckBox checkBoxUseBO;
     }
 }

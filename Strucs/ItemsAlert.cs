@@ -702,24 +702,28 @@ namespace app
             }
             if (ItemTypee == "armor")
             {
-                if (Form1_0.ItemsStruc_0.ItemNAAME.Contains("Plate")
-                    || Form1_0.ItemsStruc_0.ItemNAAME.Contains("Armor")
-                    || Form1_0.ItemsStruc_0.ItemNAAME.Contains("Skin")
-                    || Form1_0.ItemsStruc_0.ItemNAAME.Contains("Mail")
-                    || Form1_0.ItemsStruc_0.ItemNAAME.Contains("Coat")
-                    || Form1_0.ItemsStruc_0.ItemNAAME.Contains("Shell")
-                    || Form1_0.ItemsStruc_0.ItemNAAME == "Cuirass"
-                    || Form1_0.ItemsStruc_0.ItemNAAME == "Dusk Shroud"
-                    || Form1_0.ItemsStruc_0.ItemNAAME == "Wire Fleece"
-                    || Form1_0.ItemsStruc_0.ItemNAAME == "Studded Leather"
-                    || Form1_0.ItemsStruc_0.ItemNAAME == "Great Hauberk"
-                    || Form1_0.ItemsStruc_0.ItemNAAME == "Boneweave"
-                    || Form1_0.ItemsStruc_0.ItemNAAME == "Wyrmhide"
-                    || Form1_0.ItemsStruc_0.ItemNAAME == "Scarab Husk"
-                    || Form1_0.ItemsStruc_0.ItemNAAME == "Boneweave")
+                try
                 {
-                    return true;
+                    if (Form1_0.ItemsStruc_0.ItemNAAME.Contains("Plate")
+                        || Form1_0.ItemsStruc_0.ItemNAAME.Contains("Armor")
+                        || Form1_0.ItemsStruc_0.ItemNAAME.Contains("Skin")
+                        || Form1_0.ItemsStruc_0.ItemNAAME.Contains("Mail")
+                        || Form1_0.ItemsStruc_0.ItemNAAME.Contains("Coat")
+                        || Form1_0.ItemsStruc_0.ItemNAAME.Contains("Shell")
+                        || Form1_0.ItemsStruc_0.ItemNAAME == "Cuirass"
+                        || Form1_0.ItemsStruc_0.ItemNAAME == "Dusk Shroud"
+                        || Form1_0.ItemsStruc_0.ItemNAAME == "Wire Fleece"
+                        || Form1_0.ItemsStruc_0.ItemNAAME == "Studded Leather"
+                        || Form1_0.ItemsStruc_0.ItemNAAME == "Great Hauberk"
+                        || Form1_0.ItemsStruc_0.ItemNAAME == "Boneweave"
+                        || Form1_0.ItemsStruc_0.ItemNAAME == "Wyrmhide"
+                        || Form1_0.ItemsStruc_0.ItemNAAME == "Scarab Husk"
+                        || Form1_0.ItemsStruc_0.ItemNAAME == "Boneweave")
+                    {
+                        return true;
+                    }
                 }
+                catch { }
             }
             if (ItemTypee == "circlet")
             {

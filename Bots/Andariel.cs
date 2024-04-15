@@ -66,17 +66,32 @@ namespace app
 
                 if (CurrentStep == 1)
                 {
+                    //####
+                    if (Form1_0.PlayerScan_0.levelNo == (int)Enums.Area.CatacombsLevel3)
+                    {
+                        CurrentStep++;
+                        return;
+                    }
+                    //####
+
                     Form1_0.PathFinding_0.MoveToExit(Enums.Area.CatacombsLevel3);
                     CurrentStep++;
                 }
 
                 if (CurrentStep == 2)
                 {
+                    //####
+                    if (Form1_0.PlayerScan_0.levelNo == (int)Enums.Area.CatacombsLevel4)
+                    {
+                        CurrentStep++;
+                        return;
+                    }
                     if ((Enums.Area)Form1_0.PlayerScan_0.levelNo == Enums.Area.CatacombsLevel2)
                     {
                         CurrentStep--;
                         return;
                     }
+                    //####
 
                     Form1_0.PathFinding_0.MoveToExit(Enums.Area.CatacombsLevel4);
                     CurrentStep++;
@@ -84,11 +99,13 @@ namespace app
 
                 if (CurrentStep == 3)
                 {
+                    //####
                     if ((Enums.Area)Form1_0.PlayerScan_0.levelNo == Enums.Area.CatacombsLevel3)
                     {
                         CurrentStep--;
                         return;
                     }
+                    //####
 
                     /*X: 22561,
 	                Y: 9553,*/
@@ -144,16 +161,16 @@ namespace app
                                 Form1_0.Battle_0.DoBattleScript(15);
                             }
 
-                            Form1_0.ItemsStruc_0.GetItems(true);
-                            Form1_0.ItemsStruc_0.GetItems(true);
-                            Form1_0.ItemsStruc_0.GetItems(true);
-                            Form1_0.ItemsStruc_0.GetItems(true);
-                            Form1_0.ItemsStruc_0.GetItems(true);
-                            Form1_0.ItemsStruc_0.GetItems(true);
-                            Form1_0.ItemsStruc_0.GetItems(true);
-                            Form1_0.ItemsStruc_0.GetItems(true);
-                            Form1_0.ItemsStruc_0.GetItems(true);
-                            Form1_0.ItemsStruc_0.GetItems(true);
+                            if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
+                            if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
+                            if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
+                            if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
+                            if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
+                            if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
+                            if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
+                            if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
+                            if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
+                            if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
                             Form1_0.ItemsStruc_0.GrabAllItemsForGold();
                             Form1_0.Potions_0.CanUseSkillForRegen = true;
 

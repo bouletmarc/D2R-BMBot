@@ -100,17 +100,32 @@ namespace app
 
                 if (CurrentStep == 1)
                 {
+                    //####
+                    if (Form1_0.PlayerScan_0.levelNo == (int)Enums.Area.TheWorldStoneKeepLevel3)
+                    {
+                        CurrentStep++;
+                        return;
+                    }
+                    //####
+
                     Form1_0.PathFinding_0.MoveToExit(Enums.Area.TheWorldStoneKeepLevel3);
                     CurrentStep++;
                 }
 
                 if (CurrentStep == 2)
                 {
+                    //####
+                    if (Form1_0.PlayerScan_0.levelNo == (int)Enums.Area.ThroneOfDestruction)
+                    {
+                        CurrentStep++;
+                        return;
+                    }
                     if ((Enums.Area)Form1_0.PlayerScan_0.levelNo == Enums.Area.TheWorldStoneKeepLevel2)
                     {
                         CurrentStep--;
                         return;
                     }
+                    //####
 
                     Form1_0.PathFinding_0.MoveToExit(Enums.Area.ThroneOfDestruction);
                     Form1_0.Town_0.TPSpawned = false;
@@ -119,11 +134,13 @@ namespace app
 
                 if (CurrentStep == 3)
                 {
+                    //####
                     if (Form1_0.PlayerScan_0.levelNo == (int)Enums.Area.TheWorldStoneKeepLevel3)
                     {
                         CurrentStep--;
                         return;
                     }
+                    //####
 
                     if (!Form1_0.Town_0.TPSpawned)
                     {
@@ -334,16 +351,16 @@ namespace app
                         }
                         else
                         {
-                            Form1_0.ItemsStruc_0.GetItems(true);
-                            Form1_0.ItemsStruc_0.GetItems(true);
-                            Form1_0.ItemsStruc_0.GetItems(true);
-                            Form1_0.ItemsStruc_0.GetItems(true);
-                            Form1_0.ItemsStruc_0.GetItems(true);
-                            Form1_0.ItemsStruc_0.GetItems(true);
-                            Form1_0.ItemsStruc_0.GetItems(true);
-                            Form1_0.ItemsStruc_0.GetItems(true);
-                            Form1_0.ItemsStruc_0.GetItems(true);
-                            Form1_0.ItemsStruc_0.GetItems(true);
+                            if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
+                            if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
+                            if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
+                            if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
+                            if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
+                            if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
+                            if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
+                            if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
+                            if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
+                            if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
                             Form1_0.ItemsStruc_0.GrabAllItemsForGold();
                             Form1_0.Potions_0.CanUseSkillForRegen = true;
                             //Form1_0.LeaveGame(true);

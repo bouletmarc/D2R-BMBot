@@ -18,6 +18,7 @@ using System.Windows.Forms;
 using System.Xml.Linq;
 using static app.Enums;
 using static app.EnumsStates;
+using static app.MapAreaStruc;
 using static System.Runtime.InteropServices.ComTypes.IStream;
 using static System.Windows.Forms.AxHost;
 
@@ -53,6 +54,10 @@ namespace app
         public long pStatsListEx = 0;
         public long statPtr = 0;
         public long statCount = 0;
+
+        public Enums.PlayerClass CurrentPlayerClass;
+        public Enums.Skill LeftSkill;
+        public Enums.Skill RightSkill;
 
         public long PlayerGoldInventory = 0;
         public long PlayerGoldInStash = 0;
@@ -125,6 +130,14 @@ namespace app
             xPosFinal = (ushort)(xPos + xPosOffsetPercent);
             yPosFinal = (ushort)(yPos + yPosOffsetPercent);
 
+            //Console.WriteLine("X: " + xPos);
+            //Console.WriteLine("Off: " + Form1_0.Mem_0.ReadByteRaw((IntPtr)(pathAddress + 0x02)).ToString("X2"));
+            //Console.WriteLine("Off: " + Form1_0.Mem_0.ReadByteRaw((IntPtr)(pathAddress + 0x03)).ToString("X2"));
+            //Console.WriteLine("Off: " + Form1_0.Mem_0.ReadByteRaw((IntPtr)(pathAddress + 0x04)).ToString("X2"));
+            //Console.WriteLine("Off: " + Form1_0.Mem_0.ReadByteRaw((IntPtr)(pathAddress + 0x05)).ToString("X2"));
+            //byte[] bytee = new byte[2] { 0x76, 0x1e  };
+            //Form1_0.Mem_0.WriteRawMemory((IntPtr)(pathAddress + 0x02), bytee, bytee.Length);
+
             pStatsListEx = Form1_0.Mem_0.ReadInt64Raw((IntPtr)(PlayerPointer + 0x88));
             statPtr = Form1_0.Mem_0.ReadInt64Raw((IntPtr)(pStatsListEx + 0x30));
             statCount = Form1_0.Mem_0.ReadInt32Raw((IntPtr)(pStatsListEx + 0x38));
@@ -154,6 +167,8 @@ namespace app
                 int offset = i * 8;
                 ushort statEnum = BitConverter.ToUInt16(buffer, offset);
                 uint statValue = BitConverter.ToUInt32(buffer, offset + 0x2);
+
+                //Console.WriteLine((Enums.Attribute) statEnum + " - " + statValue);
 
                 if (statEnum == (ushort) Enums.Attribute.Life)
                 {
@@ -253,6 +268,26 @@ namespace app
             //Form1_0.method_1("SEED: " + mapSeed.Item1.ToString(), Color.Red);
             //Form1_0.method_1("Difficulty: " + ((Difficulty) difficulty).ToString(), Color.Red);
             //Form1_0.GetMapData(mapSeed.Item1.ToString(), (Difficulty) difficulty);
+            //#####################################################################################################
+            //#####################################################################################################
+            //#####################################################################################################
+            // Skills
+            long skillListPtr = Form1_0.Mem_0.ReadInt64Raw((IntPtr)(PlayerPointer + 0x100));
+            //var skills = GetSkills(skillListPtr);
+
+            long leftSkillPtr = Form1_0.Mem_0.ReadInt64Raw((IntPtr)(skillListPtr + 0x08));
+            long leftSkillTxtPtr = Form1_0.Mem_0.ReadInt64Raw((IntPtr)leftSkillPtr);
+            ushort leftSkillId = Form1_0.Mem_0.ReadUInt16Raw((IntPtr)leftSkillTxtPtr);
+            LeftSkill = (Enums.Skill)leftSkillId;
+
+            long rightSkillPtr = Form1_0.Mem_0.ReadInt64Raw((IntPtr)(skillListPtr + 0x10));
+            long rightSkillTxtPtr = Form1_0.Mem_0.ReadInt64Raw((IntPtr)rightSkillPtr);
+            ushort rightSkillId = Form1_0.Mem_0.ReadUInt16Raw((IntPtr)rightSkillTxtPtr);
+            RightSkill = (Enums.Skill)rightSkillId;
+
+            // Class
+            uint classValue = Form1_0.Mem_0.ReadUInt32Raw((IntPtr)(PlayerPointer + 0x174));
+            CurrentPlayerClass = (Enums.PlayerClass)classValue;
             //#####################################################################################################
             //#####################################################################################################
             //#####################################################################################################
@@ -429,7 +464,7 @@ namespace app
                 Form1_0.method_1("Leecher name is empty!", Color.Red);
             }
 
-            for (int i = 0; i < 8; i++)
+            for (int i = 0; i < 9; i++)
             {
                 string name = Form1_0.Mem_0.ReadMemString(partyStruct);
                 if (name.ToLower() == LeeeechName.ToLower())

@@ -47,7 +47,7 @@ namespace app
         {
             //return true;
 
-            GetUnitPathData();
+            //GetUnitPathData();
 
             bool[,] ThisCollisionGrid = Form1_0.MapAreaStruc_0.CollisionGrid((Enums.Area)Form1_0.PlayerScan_0.levelNo);
 
@@ -132,57 +132,81 @@ namespace app
             LastMobPos.Y = yPosFinal;
         }
 
+        public List<int> monsterIDs = new List<int>();
+
         public List<int[]> GetAllMobsNearby()
         {
             Form1_0.PatternsScan_0.scanForUnitsPointer("NPC");
 
             List<int[]> monsterPositions2 = new List<int[]>();
-            for (int i = 0; i < Form1_0.PatternsScan_0.AllNPCPointers.Count; i++)
+            monsterIDs = new List<int>();
+
+            try
             {
-                MobsPointerLocation = Form1_0.PatternsScan_0.AllNPCPointers[i];
-                if (MobsPointerLocation > 0)
+                for (int i = 0; i < Form1_0.PatternsScan_0.AllNPCPointers.Count; i++)
                 {
-                    //mobsdatastruc = new byte[144];
-                    //Form1_0.Mem_0.ReadRawMemory(MobsPointerLocation, ref mobsdatastruc, 144);
-                    //txtFileNo = BitConverter.ToUInt32(mobsdatastruc, 4);
-                    //uint FirrstName = txtFileNo;
+                    MobsPointerLocation = Form1_0.PatternsScan_0.AllNPCPointers[i];
+                    if (MobsPointerLocation > 0)
+                    {
+                        //mobsdatastruc = new byte[144];
+                        //Form1_0.Mem_0.ReadRawMemory(MobsPointerLocation, ref mobsdatastruc, 144);
+                        //txtFileNo = BitConverter.ToUInt32(mobsdatastruc, 4);
+                        //uint FirrstName = txtFileNo;
 
-                    CurrentPointerBytes = new byte[4];
-                    Form1_0.Mem_0.ReadRawMemory(MobsPointerLocation + 4, ref CurrentPointerBytes, CurrentPointerBytes.Length);
-                    txtFileNo = BitConverter.ToUInt32(CurrentPointerBytes, 0);
+                        CurrentPointerBytes = new byte[4];
+                        Form1_0.Mem_0.ReadRawMemory(MobsPointerLocation + 4, ref CurrentPointerBytes, CurrentPointerBytes.Length);
+                        txtFileNo = BitConverter.ToUInt32(CurrentPointerBytes, 0);
 
-                    //long pStatsListExPtr = BitConverter.ToInt64(mobsdatastruc, 0x88);
-                    CurrentPointerBytes = new byte[8];
-                    Form1_0.Mem_0.ReadRawMemory(MobsPointerLocation + 0x88, ref CurrentPointerBytes, CurrentPointerBytes.Length);
-                    long pStatsListExPtr = BitConverter.ToInt64(CurrentPointerBytes, 0);
+                        //long pStatsListExPtr = BitConverter.ToInt64(mobsdatastruc, 0x88);
+                        CurrentPointerBytes = new byte[8];
+                        Form1_0.Mem_0.ReadRawMemory(MobsPointerLocation + 0x88, ref CurrentPointerBytes, CurrentPointerBytes.Length);
+                        long pStatsListExPtr = BitConverter.ToInt64(CurrentPointerBytes, 0);
 
-                    bool isPlayerMinion = false;
-                    if (getPlayerMinion((int)txtFileNo) != "") isPlayerMinion = true;
-                    else isPlayerMinion = ((Form1_0.Mem_0.ReadUInt32((IntPtr)(pStatsListExPtr + 0xAC8 + 0xc)) & 31) == 1); //is a revive
+                        bool isPlayerMinion = false;
+                        if (getPlayerMinion((int)txtFileNo) != "") isPlayerMinion = true;
+                        else isPlayerMinion = ((Form1_0.Mem_0.ReadUInt32((IntPtr)(pStatsListExPtr + 0xAC8 + 0xc)) & 31) == 1); //is a revive
 
-                    if (Form1_0.NPCStruc_0.HideNPC((int)txtFileNo) == 0
-                        && Form1_0.NPCStruc_0.getTownNPC((int)txtFileNo) == ""
-                        && !isPlayerMinion)
+                        if ((Form1_0.NPCStruc_0.HideNPC((int)txtFileNo) == 0
+                            && Form1_0.NPCStruc_0.getTownNPC((int)txtFileNo) == ""
+                            && !isPlayerMinion
+                            && !DebuggingMobs)
+                            || DebuggingMobs)
                         //&& IsThisMobInBound())
                         //&& !ShouldBeIgnored(txtFileNo))
-                    {
-                        GetUnitPathData();
-                        GetStatsAddr();
-                        MobsHP = GetHPFromStats();
-
-                        //Console.WriteLine("found near mob " + Form1_0.NPCStruc_0.getNPC_ID((int)txtFileNo) + " at: " + xPosFinal + ", " + yPosFinal + " HP:" + MobsHP);
-
-                        if (xPosFinal != 0 && yPosFinal != 0)
                         {
-                            //if (MobsHP != 0) monsterPositions2.Add(Tuple.Create((int) xPosFinal, (int) yPosFinal));
-                            if (MobsHP != 0) monsterPositions2.Add(new int[2] { (int)xPosFinal, (int)yPosFinal });
+                            GetUnitPathData();
+                            GetStatsAddr();
+                            MobsHP = GetHPFromStats();
+
+                            if (DebuggingMobs)
+                            {
+                                Form1_0.AppendTextDebugMobs("ID:" + txtFileNo + "(" + Form1_0.NPCStruc_0.getNPC_ID((int)txtFileNo) + ") at:" + xPosFinal + ", " + yPosFinal + " - HP:" + MobsHP + Environment.NewLine);
+                            }
+
+                            //Console.WriteLine("found near mob " + Form1_0.NPCStruc_0.getNPC_ID((int)txtFileNo) + " at: " + xPosFinal + ", " + yPosFinal + " HP:" + MobsHP);
+
+                            if (xPosFinal != 0 && yPosFinal != 0)
+                            {
+                                //if (MobsHP != 0) monsterPositions2.Add(Tuple.Create((int) xPosFinal, (int) yPosFinal));
+                                if (MobsHP != 0)
+                                {
+                                    monsterPositions2.Add(new int[2] { (int)xPosFinal, (int)yPosFinal });
+                                    monsterIDs.Add((int) txtFileNo);
+                                }
+                            }
                         }
                     }
                 }
             }
+            catch
+            {
+                Form1_0.method_1("Couldn't get All Mobs Nearby!", Color.Red);
+            }
 
             return monsterPositions2;
         }
+
+        public bool DebuggingMobs = false;
 
         public bool GetMobs(string MobType, string MobName, bool Nearest, int MaxMobDistance, List<long> IgnoredListPointers)
         {
@@ -229,8 +253,8 @@ namespace app
 
                         //Console.WriteLine("found near mob " + txtFileNo + " at: " + xPosFinal + ", " + yPosFinal + " HP:" + MobHPBuffer);
                         if ((MobHPBuffer > 0 || (MobHPBuffer == 0 && MobName != ""))
-                            && (xPosFinal != 0 && yPosFinal != 0))
-                            //&& IsThisMobInBound())
+                            && (xPosFinal != 0 && yPosFinal != 0)//)
+                            && IsThisMobInBound())
                         {
                             //get nearest mobs in all mobs
                             if (Nearest)
@@ -420,8 +444,8 @@ namespace app
 
         public int GetHPFromStats()
         {
-            //try
-            //{
+            try
+            {
                 if (this.statCount < 100)
                 {
                     Form1_0.Mem_0.ReadRawMemory(this.statPtr, ref statBuffer, (int)(this.statCount * 10));
@@ -433,8 +457,10 @@ namespace app
                         int statValue = BitConverter.ToInt32(statBuffer, offset + 0x4);
                         if (statEnum == 6)
                         {
-                            //byte[] RunBuf = new byte[4];
+                            //int NewV = 1 << 8;
+                            //byte[] RunBuf = new byte[4] { 0x01, 0x00, 0x00, 0x00 };
                             //Form1_0.Mem_0.WriteRawMemory((IntPtr)(this.statPtr + offset + 0x4), RunBuf, 4);
+
                             return statValue;
                         }
                     }
@@ -461,8 +487,11 @@ namespace app
                 {
                     Console.WriteLine("statExCount too long > 100: " + this.statExCount);
                 }*/
-            //}
-            //catch { }
+            }
+            catch
+            {
+                Form1_0.method_1("Couldn't get Mob HP from Stats!", Color.Red);
+            }
 
             return 0; // or some other default value
         }

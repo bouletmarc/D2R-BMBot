@@ -59,6 +59,9 @@ namespace app
                 ForceLeave = true;
                 Form1_0.BaalLeech_0.SearchSameGamesAsLastOne = false;
                 Form1_0.LeaveGame(false);
+
+                Form1_0.TotalDeadCount++;
+                Form1_0.LabelDeadCount.Text = Form1_0.TotalDeadCount.ToString();
                 return;
                 //Chicken();
             }
@@ -89,6 +92,9 @@ namespace app
                 ForceLeave = true;
                 Form1_0.BaalLeech_0.SearchSameGamesAsLastOne = false;
                 Form1_0.LeaveGame(false);
+
+                Form1_0.TotalDeadCount++;
+                Form1_0.LabelDeadCount.Text = Form1_0.TotalDeadCount.ToString();
                 return;
                 //Chicken();
             }
@@ -236,6 +242,9 @@ namespace app
         {
             Form1_0.method_1("Leaving reason: Chicken HP", Color.Red);
             Form1_0.LeaveGame(false);
+
+            Form1_0.TotalChickenCount++;
+            Form1_0.LabelChickenCount.Text = Form1_0.TotalChickenCount.ToString();
         }
 
         public void PressPotionKey(int i, bool SendToMerc)

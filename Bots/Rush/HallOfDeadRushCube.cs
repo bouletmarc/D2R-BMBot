@@ -67,17 +67,27 @@ namespace app
 
                 if (CurrentStep == 1)
                 {
+                    //####
+                    if (Form1_0.PlayerScan_0.levelNo == (int)Enums.Area.HallsOfTheDeadLevel3)
+                    {
+                        CurrentStep++;
+                        return;
+                    }
+                    //####
+
                     Form1_0.PathFinding_0.MoveToExit(Enums.Area.HallsOfTheDeadLevel3);
                     CurrentStep++;
                 }
 
                 if (CurrentStep == 2)
                 {
+                    //####
                     if (Form1_0.PlayerScan_0.levelNo != (int)Enums.Area.HallsOfTheDeadLevel3)
                     {
                         CurrentStep--;
                         return;
                     }
+                    //####
 
                     ChestPos = Form1_0.MapAreaStruc_0.GetPositionOfObject("object", "HoradricCubeChest", (int) Enums.Area.HallsOfTheDeadLevel3, new List<int>());
                     if (ChestPos.X != 0 &&  ChestPos.Y != 0)

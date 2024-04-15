@@ -68,6 +68,13 @@ namespace app
 
                 if (CurrentStep == 1)
                 {
+                    //####
+                    if (Form1_0.PlayerScan_0.levelNo == (int)Enums.Area.ForgottenTower)
+                    {
+                        CurrentStep++;
+                        return;
+                    }
+                    //####
 
                     Form1_0.PathFinding_0.MoveToExit(Enums.Area.ForgottenTower);
                     CurrentStep++;
@@ -75,11 +82,18 @@ namespace app
 
                 if (CurrentStep == 2)
                 {
+                    //####
+                    if (Form1_0.PlayerScan_0.levelNo == (int)Enums.Area.TowerCellarLevel1)
+                    {
+                        CurrentStep++;
+                        return;
+                    }
                     if ((Enums.Area)Form1_0.PlayerScan_0.levelNo == Enums.Area.BlackMarsh)
                     {
                         CurrentStep--;
                         return;
                     }
+                    //####
 
                     Form1_0.PathFinding_0.MoveToExit(Enums.Area.TowerCellarLevel1);
                     CurrentStep++;
@@ -87,11 +101,18 @@ namespace app
 
                 if (CurrentStep == 3)
                 {
+                    //####
+                    if (Form1_0.PlayerScan_0.levelNo == (int)Enums.Area.TowerCellarLevel2)
+                    {
+                        CurrentStep++;
+                        return;
+                    }
                     if ((Enums.Area)Form1_0.PlayerScan_0.levelNo == Enums.Area.ForgottenTower)
                     {
                         CurrentStep--;
                         return;
                     }
+                    //####
 
                     Form1_0.PathFinding_0.MoveToExit(Enums.Area.TowerCellarLevel2);
                     CurrentStep++;
@@ -99,11 +120,18 @@ namespace app
 
                 if (CurrentStep == 4)
                 {
+                    //####
+                    if (Form1_0.PlayerScan_0.levelNo == (int)Enums.Area.TowerCellarLevel3)
+                    {
+                        CurrentStep++;
+                        return;
+                    }
                     if ((Enums.Area)Form1_0.PlayerScan_0.levelNo == Enums.Area.TowerCellarLevel1)
                     {
                         CurrentStep--;
                         return;
                     }
+                    //####
 
                     Form1_0.PathFinding_0.MoveToExit(Enums.Area.TowerCellarLevel3);
                     CurrentStep++;
@@ -111,11 +139,18 @@ namespace app
 
                 if (CurrentStep == 5)
                 {
+                    //####
+                    if (Form1_0.PlayerScan_0.levelNo == (int)Enums.Area.TowerCellarLevel3)
+                    {
+                        CurrentStep++;
+                        return;
+                    }
                     if ((Enums.Area)Form1_0.PlayerScan_0.levelNo == Enums.Area.TowerCellarLevel2)
                     {
                         CurrentStep--;
                         return;
                     }
+                    //####
 
                     Form1_0.PathFinding_0.MoveToExit(Enums.Area.TowerCellarLevel4);
                     CurrentStep++;
@@ -123,11 +158,18 @@ namespace app
 
                 if (CurrentStep == 6)
                 {
+                    //####
+                    if (Form1_0.PlayerScan_0.levelNo == (int)Enums.Area.TowerCellarLevel4)
+                    {
+                        CurrentStep++;
+                        return;
+                    }
                     if ((Enums.Area)Form1_0.PlayerScan_0.levelNo == Enums.Area.TowerCellarLevel3)
                     {
                         CurrentStep--;
                         return;
                     }
+                    //####
 
                     Form1_0.PathFinding_0.MoveToExit(Enums.Area.TowerCellarLevel5);
                     CurrentStep++;
@@ -135,11 +177,13 @@ namespace app
 
                 if (CurrentStep == 7)
                 {
+                    //####
                     if ((Enums.Area)Form1_0.PlayerScan_0.levelNo == Enums.Area.TowerCellarLevel4)
                     {
                         CurrentStep--;
                         return;
                     }
+                    //####
 
                     MapAreaStruc.Position ThisChestPos = Form1_0.MapAreaStruc_0.GetPositionOfObject("object", "GoodChest", (int) Enums.Area.TowerCellarLevel5, new List<int>());
 
@@ -162,16 +206,16 @@ namespace app
                         }
                         else
                         {
-                            Form1_0.ItemsStruc_0.GetItems(true);
-                            Form1_0.ItemsStruc_0.GetItems(true);
-                            Form1_0.ItemsStruc_0.GetItems(true);
-                            Form1_0.ItemsStruc_0.GetItems(true);
-                            Form1_0.ItemsStruc_0.GetItems(true);
-                            Form1_0.ItemsStruc_0.GetItems(true);
-                            Form1_0.ItemsStruc_0.GetItems(true);
-                            Form1_0.ItemsStruc_0.GetItems(true);
-                            Form1_0.ItemsStruc_0.GetItems(true);
-                            Form1_0.ItemsStruc_0.GetItems(true);
+                            if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
+                            if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
+                            if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
+                            if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
+                            if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
+                            if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
+                            if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
+                            if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
+                            if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
+                            if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
                             Form1_0.ItemsStruc_0.GrabAllItemsForGold();
                             Form1_0.Potions_0.CanUseSkillForRegen = true;
 

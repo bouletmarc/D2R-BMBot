@@ -113,14 +113,15 @@ namespace app
             LastitemScreenPos = new Dictionary<string, int>();
 
             //sell items
-            if (!Form1_0.Town_0.FastTowning)
-            {
+            //if (!Form1_0.Town_0.FastTowning)
+            //{
                 if (Form1_0.InventoryStruc_0.HasInventoryItems())
                 {
                     Form1_0.SetGameStatus("TOWN-SHOP-SELL ITEMS");
                     for (int i = 0; i < 40; i++)
                     {
-                        if (CharConfig.InventoryDontCheckItem[i] == 0 && Form1_0.InventoryStruc_0.InventoryHasItem[i] >= 1)
+                        if ((CharConfig.InventoryDontCheckItem[i] == 0 && Form1_0.InventoryStruc_0.InventoryHasItem[i] >= 1 && !Form1_0.Town_0.FastTowning)
+                        || (CharConfig.InventoryDontCheckItem[i] == 0 && Form1_0.InventoryStruc_0.InventoryHasItem[i] >= 1 && Form1_0.InventoryStruc_0.InventoryHasStashItem[i] == 0) && Form1_0.Town_0.FastTowning)
                         {
                             Dictionary<string, int> itemScreenPos = Form1_0.InventoryStruc_0.ConvertIndexToXY(i);
                             itemScreenPos = Form1_0.InventoryStruc_0.ConvertInventoryLocToScreenPos(itemScreenPos["x"], itemScreenPos["y"]);
@@ -191,7 +192,7 @@ namespace app
                         }
                     }
                 }
-            }
+            //}
 
             if (!Form1_0.Running || !Form1_0.GameStruc_0.IsInGame())
             {

@@ -372,7 +372,7 @@ namespace app
         {
             //try
             //{
-            if (Form1_0.labelGameName.InvokeRequired)
+            /*if (Form1_0.labelGameName.InvokeRequired)
             {
                 // Call this same method but append THREAD2 to the text
                 Action safeWrite = delegate { method_GameLabel(string_3); };
@@ -382,7 +382,8 @@ namespace app
             {
                 Form1_0.labelGameName.Text = string_3;
                 Application.DoEvents();
-            }
+            }*/
+            Form1_0.labelGameName.Text = string_3;
             //}
             //catch { }
         }
@@ -426,15 +427,19 @@ namespace app
 
         public bool IsInGame()
         {
-            long baseAddress = (long)Form1_0.BaseAddress + (long)Form1_0.offsets["unitTable"] - 64;
-            byte[] unitTableBuffer = new byte[1];
-            Form1_0.Mem_0.ReadRawMemory(baseAddress, ref unitTableBuffer, 1);
-
-            //Console.WriteLine(unitTableBuffer[0]);
-            if (unitTableBuffer[0] == 0x01)
+            try
             {
-                return true;
+                long baseAddress = (long)Form1_0.BaseAddress + (long)Form1_0.offsets["unitTable"] - 64;
+                byte[] unitTableBuffer = new byte[1];
+                Form1_0.Mem_0.ReadRawMemory(baseAddress, ref unitTableBuffer, 1);
+
+                //Console.WriteLine(unitTableBuffer[0]);
+                if (unitTableBuffer[0] == 0x01)
+                {
+                    return true;
+                }
             }
+            catch { }
 
             return false;
         }

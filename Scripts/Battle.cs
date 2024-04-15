@@ -23,7 +23,7 @@ namespace app
         public int AttackNotRegisteredCount = 0;
         public int MoveTryCount = 0;
 
-        public int MaxAttackTry = 5; //edit this after knowing we used attack correctly
+        public int MaxAttackTry = 8; //edit this after knowing we used attack correctly
         public int MaxMoveTry = 5;
 
         public bool FirstAttackCasted = false;
@@ -37,6 +37,50 @@ namespace app
 
         public void CastDefense()
         {
+            if (CharConfig.UseBO && !Form1_0.Town_0.GetInTown())
+            {
+                Form1_0.Potions_0.CheckIfWeUsePotion();
+
+                Form1_0.KeyMouse_0.PressKey(Keys.W);
+                Form1_0.WaitDelay(15);
+                Form1_0.KeyMouse_0.PressKey(Keys.F4);
+                Form1_0.WaitDelay(15);
+                Form1_0.PlayerScan_0.GetPositions();
+
+                //press W again to switch weapon again
+                if (Form1_0.PlayerScan_0.RightSkill != Enums.Skill.BattleOrders)
+                {
+                    Form1_0.KeyMouse_0.PressKey(Keys.W);
+                    Form1_0.WaitDelay(15);
+                    Form1_0.KeyMouse_0.PressKey(Keys.F4);
+                    Form1_0.WaitDelay(15);
+                    //Form1_0.PlayerScan_0.GetPositions();
+                }
+
+                Form1_0.KeyMouse_0.MouseCliccRight(Form1_0.CenterX, Form1_0.CenterY);
+                Form1_0.WaitDelay(30);
+
+                //select battle command
+                Form1_0.KeyMouse_0.MouseClicc(1025, 1025);
+                Form1_0.WaitDelay(5);
+                Form1_0.KeyMouse_0.MouseClicc(1025, 610);
+                Form1_0.WaitDelay(5);
+                Form1_0.KeyMouse_0.MouseCliccRight(Form1_0.CenterX, Form1_0.CenterY);
+                Form1_0.WaitDelay(30); //60 <-
+                Form1_0.Potions_0.CheckIfWeUsePotion();
+
+                //select battle cry
+                Form1_0.KeyMouse_0.MouseClicc(1025, 1025);
+                Form1_0.WaitDelay(5);
+                Form1_0.KeyMouse_0.MouseClicc(1165, 610);
+                Form1_0.WaitDelay(5);
+                Form1_0.KeyMouse_0.MouseCliccRight(Form1_0.CenterX, Form1_0.CenterY);
+                Form1_0.WaitDelay(60);
+
+                Form1_0.KeyMouse_0.PressKey(Keys.W);
+                Form1_0.WaitDelay(15);
+            }
+
             //cast sacred shield
             Form1_0.KeyMouse_0.PressKey(CharConfig.KeySkillCastDefense);
             Form1_0.WaitDelay(5);
@@ -88,38 +132,39 @@ namespace app
 
         public void RunBattleScript()
         {
+            if ((Enums.Area) Form1_0.PlayerScan_0.levelNo == Enums.Area.ThroneOfDestruction)
+            {
+                //15096,5096
+                if (Form1_0.PlayerScan_0.yPosFinal > 5096)
+                {
+                    DoingBattle = false;
+                    FirstAttackCasted = false;
+                    ResetBattleMoveAcceptOffset();
+                    if (!ClearingFullArea) Form1_0.PathFinding_0.MoveToThisPos(new Position { X = AreaX, Y = AreaY });
+                    //Form1_0.Mover_0.MoveToLocation(AreaX, AreaY);
+                    ClearingArea = false;
+                    return;
+                }
+            }
+
             if (Form1_0.MobsStruc_0.GetMobs("", "", true, ClearingSize, IgnoredMobsPointer))
             {
-                //Form1_0.method_1("Clearing area of mobs...", Color.Red);
                 DoingBattle = true;
                 SetBattleMoveAcceptOffset();
                 Form1_0.Mover_0.MoveAcceptOffset = 2;
-                Form1_0.Mover_0.MoveToLocation(Form1_0.MobsStruc_0.xPosFinal + 2, Form1_0.MobsStruc_0.yPosFinal + 2);
+                Form1_0.Mover_0.MoveToLocationAttack(Form1_0.MobsStruc_0.xPosFinal + 1, Form1_0.MobsStruc_0.yPosFinal + 1);
                 Form1_0.Mover_0.MoveAcceptOffset = 4;
                 ResetBattleMoveAcceptOffset();
 
-                /*if (!Form1_0.MobsStruc_0.GetLastMobs())
+                FirstAttackCasting();
+                SetSkills();
+                CastSkills();
+                if (CharConfig.RunningOnChar.ToLower().Contains("paladin"))
                 {
-                    if (Form1_0.MobsStruc_0.GetMobs("", "", true, ClearingSize, IgnoredMobsPointer))
-                    {
-                        FirstAttackCasting();
-                        SetSkills();
-                        CastSkills();
-                        AttackTryCheck();
-                    }
-                }
-                else
-                {*/
-                    FirstAttackCasting();
-                    SetSkills();
                     CastSkills();
-                    if (CharConfig.RunningOnChar.ToLower().Contains("paladin"))
-                    {
-                        CastSkills();
-                        CastSkills();
-                    }
-                    AttackTryCheck();
-                //}
+                    CastSkills();
+                }
+                AttackTryCheck();
             }
             else
             {
@@ -139,32 +184,19 @@ namespace app
                 DoingBattle = true;
                 SetBattleMoveAcceptOffset();
                 Form1_0.Mover_0.MoveAcceptOffset = 2;
-                Form1_0.Mover_0.MoveToLocation(Form1_0.MobsStruc_0.xPosFinal + 2, Form1_0.MobsStruc_0.yPosFinal + 2);
+                Form1_0.Mover_0.MoveToLocationAttack(Form1_0.MobsStruc_0.xPosFinal + 1, Form1_0.MobsStruc_0.yPosFinal + 1);
                 Form1_0.Mover_0.MoveAcceptOffset = 4;
                 ResetBattleMoveAcceptOffset();
 
-                /*if (!Form1_0.MobsStruc_0.GetLastMobs())
+                FirstAttackCasting();
+                SetSkills();
+                CastSkills();
+                if (CharConfig.RunningOnChar.ToLower().Contains("paladin"))
                 {
-                    if (Form1_0.MobsStruc_0.GetMobs("", "", true, MaxDistance, new List<long>()))
-                    {
-                        FirstAttackCasting();
-                        SetSkills();
-                        CastSkills();
-                        AttackTryCheck();
-                    }
-                }
-                else
-                {*/
-                    FirstAttackCasting();
-                    SetSkills();
                     CastSkills();
-                    if (CharConfig.RunningOnChar.ToLower().Contains("paladin"))
-                    {
-                        CastSkills();
-                        CastSkills();
-                    }
-                    AttackTryCheck();
-                //}
+                    CastSkills();
+                }
+                AttackTryCheck();
                 return true;
             }
 
@@ -180,32 +212,20 @@ namespace app
                 DoingBattle = true;
                 SetBattleMoveAcceptOffset();
                 Form1_0.Mover_0.MoveAcceptOffset = 2;
-                Form1_0.Mover_0.MoveToLocation(Form1_0.MobsStruc_0.xPosFinal + 2, Form1_0.MobsStruc_0.yPosFinal + 2);
+                Form1_0.Mover_0.MoveToLocationAttack(Form1_0.MobsStruc_0.xPosFinal + 1, Form1_0.MobsStruc_0.yPosFinal + 1);
                 Form1_0.Mover_0.MoveAcceptOffset = 4;
                 ResetBattleMoveAcceptOffset();
 
-                /*if (!Form1_0.MobsStruc_0.GetLastMobs())
+                
+                FirstAttackCasting();
+                SetSkills();
+                CastSkills();
+                if (CharConfig.RunningOnChar.ToLower().Contains("paladin"))
                 {
-                    if (Form1_0.MobsStruc_0.GetMobs(MobType, MobName, false, 200, new List<long>()))
-                    {
-                        FirstAttackCasting();
-                        SetSkills();
-                        CastSkills();
-                        AttackTryCheck();
-                    }
-                }
-                else
-                {*/
-                    FirstAttackCasting();
-                    SetSkills();
                     CastSkills();
-                    if (CharConfig.RunningOnChar.ToLower().Contains("paladin"))
-                    {
-                        CastSkills();
-                        CastSkills();
-                    }
-                    AttackTryCheck();
-                //}
+                    CastSkills();
+                }
+                AttackTryCheck();
             }
             else
             {
@@ -216,35 +236,37 @@ namespace app
 
         public void MoveAway()
         {
-            int MoveDistance = 4;
+            int MoveDistance = 5;
+            //Form1_0.WaitDelay(5); //wait a little bit, we just casted attack
             if (MoveTryCount == 1)
             {
                 Form1_0.Mover_0.MoveAcceptOffset = 2;
-                Form1_0.Mover_0.MoveToLocation(Form1_0.PlayerScan_0.xPosFinal + MoveDistance, Form1_0.PlayerScan_0.yPosFinal + MoveDistance);
+                Form1_0.Mover_0.MoveToLocationAttack(Form1_0.PlayerScan_0.xPosFinal + MoveDistance, Form1_0.PlayerScan_0.yPosFinal + MoveDistance);
                 Form1_0.Mover_0.MoveAcceptOffset = 4;
             }
             if (MoveTryCount == 2)
             {
                 Form1_0.Mover_0.MoveAcceptOffset = 2;
-                Form1_0.Mover_0.MoveToLocation(Form1_0.PlayerScan_0.xPosFinal - MoveDistance, Form1_0.PlayerScan_0.yPosFinal + MoveDistance);
+                Form1_0.Mover_0.MoveToLocationAttack(Form1_0.PlayerScan_0.xPosFinal - MoveDistance, Form1_0.PlayerScan_0.yPosFinal + MoveDistance);
                 Form1_0.Mover_0.MoveAcceptOffset = 4;
             }
             if (MoveTryCount == 3)
             {
                 Form1_0.Mover_0.MoveAcceptOffset = 2;
-                Form1_0.Mover_0.MoveToLocation(Form1_0.PlayerScan_0.xPosFinal + MoveDistance, Form1_0.PlayerScan_0.yPosFinal - MoveDistance);
+                Form1_0.Mover_0.MoveToLocationAttack(Form1_0.PlayerScan_0.xPosFinal + MoveDistance, Form1_0.PlayerScan_0.yPosFinal - MoveDistance);
                 Form1_0.Mover_0.MoveAcceptOffset = 4;
             }
             if (MoveTryCount == 4)
             {
                 Form1_0.Mover_0.MoveAcceptOffset = 2;
-                Form1_0.Mover_0.MoveToLocation(Form1_0.PlayerScan_0.xPosFinal - MoveDistance, Form1_0.PlayerScan_0.yPosFinal - MoveDistance);
+                Form1_0.Mover_0.MoveToLocationAttack(Form1_0.PlayerScan_0.xPosFinal - MoveDistance, Form1_0.PlayerScan_0.yPosFinal - MoveDistance);
                 Form1_0.Mover_0.MoveAcceptOffset = 4;
             }
         }
 
         public void AttackTryCheck()
         {
+            Form1_0.Potions_0.CheckIfWeUsePotion();
             Form1_0.MobsStruc_0.GetLastMobs();
             //long AttackedThisPointer = Form1_0.MobsStruc_0.LastMobsPointerLocation;
 
@@ -303,7 +325,7 @@ namespace app
                 }
                 else
                 {
-                    Form1_0.KeyMouse_0.MouseCliccRight(itemScreenPos["x"], itemScreenPos["y"] - 30);
+                    Form1_0.KeyMouse_0.MouseCliccRightAttackMove(itemScreenPos["x"], itemScreenPos["y"] - 30);
                 }
             }
             else
@@ -315,10 +337,11 @@ namespace app
                 }
                 else
                 {
-                    Form1_0.KeyMouse_0.MouseCliccRight(Form1_0.CenterX, Form1_0.CenterY - 1);
+                    Form1_0.KeyMouse_0.MouseCliccRightAttackMove(Form1_0.CenterX, Form1_0.CenterY - 1);
                 }
             }
-            Form1_0.WaitDelay(20);
+            //Form1_0.WaitDelay(5);
+            Form1_0.WaitDelay(1);
         }
 
         public void FirstAttackCasting()

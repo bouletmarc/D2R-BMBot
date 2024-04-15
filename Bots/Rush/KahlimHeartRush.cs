@@ -68,6 +68,13 @@ namespace app
 
                 if (CurrentStep == 1)
                 {
+                    //####
+                    if (Form1_0.PlayerScan_0.levelNo == (int)Enums.Area.SewersLevel1Act3)
+                    {
+                        CurrentStep++;
+                        return;
+                    }
+                    //####
 
                     Form1_0.PathFinding_0.MoveToExit(Enums.Area.SewersLevel1Act3);
                     CurrentStep++;
@@ -75,11 +82,18 @@ namespace app
 
                 if (CurrentStep == 2)
                 {
+                    //####
+                    if (Form1_0.PlayerScan_0.levelNo == (int)Enums.Area.SewersLevel2Act3)
+                    {
+                        CurrentStep++;
+                        return;
+                    }
                     if (Form1_0.PlayerScan_0.levelNo != (int)Enums.Area.SewersLevel1Act3)
                     {
                         CurrentStep--;
                         return;
                     }
+                    //####
 
                     Form1_0.PathFinding_0.MoveToExit(Enums.Area.SewersLevel2Act3);
 
@@ -119,11 +133,13 @@ namespace app
 
                 if (CurrentStep == 3)
                 {
+                    //####
                     if (Form1_0.PlayerScan_0.levelNo != (int)Enums.Area.SewersLevel2Act3)
                     {
                         CurrentStep--;
                         return;
                     }
+                    //####
 
                     ChestPos = Form1_0.MapAreaStruc_0.GetPositionOfObject("object", "KhalimChest1", (int) Enums.Area.SewersLevel2Act3, new List<int>());
                     if (ChestPos.X != 0 &&  ChestPos.Y != 0)
