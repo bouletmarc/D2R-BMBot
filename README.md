@@ -4,9 +4,14 @@ Diablo II : Resurrected - Bot
 
 # USE AT YOUR OWN RISK ONLY
 
-![alt tag](https://raw.githubusercontent.com/bouletmarc/D2R-BMBot/main/App.png)
-![alt tag](https://raw.githubusercontent.com/bouletmarc/D2R-BMBot/main/Char.png)
-![alt tag](https://raw.githubusercontent.com/bouletmarc/D2R-BMBot/main/Settings.png)
+![alt tag](https://raw.githubusercontent.com/bouletmarc/D2R-BMBot/main/BMBot1.png)
+![alt tag](https://raw.githubusercontent.com/bouletmarc/D2R-BMBot/main/BMBot2.png)
+![alt tag](https://raw.githubusercontent.com/bouletmarc/D2R-BMBot/main/BMBot3.png)
+![alt tag](https://raw.githubusercontent.com/bouletmarc/D2R-BMBot/main/BMBot4.png)
+![alt tag](https://raw.githubusercontent.com/bouletmarc/D2R-BMBot/main/BMBot5.png)
+![alt tag](https://raw.githubusercontent.com/bouletmarc/D2R-BMBot/main/BMBot6.png)
+![alt tag](https://raw.githubusercontent.com/bouletmarc/D2R-BMBot/main/BMBot7.png)
+![alt tag](https://raw.githubusercontent.com/bouletmarc/D2R-BMBot/main/BMBot8.png)
 
 
 # REQUIREMENTS
