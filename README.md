@@ -20,6 +20,16 @@ Diablo II : Resurrected - Bot
     - .Net Framework 4.7.2
     - Windows 64bit (the game must run in 64x, UNTESTED ON 32BIT)
 
+# INSTALLATION OF DIABLO2 - LORD OF DESTRUCTION 1.13C
+
+    - Download this [DIABLO2 - LOD TORRENT]([https://torrent-games.games/torrents-part16/Diablo_II_Lord_Of_Destructin.torrent])
+    - Extract 'Diablo II.7z' contents somewhere like on your desktop, create a new folder called 'DiabloII'
+    - Download the [1.13C patch]([https://www.moddb.com/games/diablo-2-lod/downloads/lod-patch-113c-for-windows])
+    - Install the 1.13C over Diablo2
+    - You don't need to open D2-LOD 1.13C when it's done, you can leave it like
+    - Add the path of the folder 'Diablo2' from your desktop to the bot Settings.txt
+    - *IMPORTANT, THE PATH WHERE 'DIABLO2' MUST NOT CONTAIN ANY WHITESPACE IN IT!*
+
 # USAGE
 
  Start D2R, then start the bot.
