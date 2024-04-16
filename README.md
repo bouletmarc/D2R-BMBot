@@ -22,13 +22,13 @@ Diablo II : Resurrected - Bot
 
 # INSTALLATION OF DIABLO2 - LORD OF DESTRUCTION 1.13C
 
-    - Download this [DIABLO2 - LOD TORRENT][1]
-    - Extract 'Diablo II.7z' contents somewhere like on your desktop, create a new folder called 'DiabloII'
-    - Download the [1.13C patch][2]
-    - Install the 1.13C over Diablo2
-    - You don't need to open D2-LOD 1.13C when it's done, you can leave it like
-    - Add the path of the folder 'Diablo2' from your desktop to the bot Settings.txt
-    - *IMPORTANT, THE PATH WHERE 'DIABLO2' MUST NOT CONTAIN ANY WHITESPACE IN IT!*
+    1. Download this [DIABLO2 - LOD TORRENT][1]
+    2. Extract 'Diablo II.7z' contents somewhere like on your desktop, create a new folder called 'DiabloII'
+    3. Download the [1.13C patch][2]
+    4. Install the 1.13C over Diablo2
+    5. You don't need to open D2-LOD 1.13C when it's done, you can leave it like
+    6. Add the path of the folder 'Diablo2' from your desktop to the bot Settings.txt
+    *IMPORTANT, THE PATH WHERE 'DIABLO2' MUST NOT CONTAIN ANY WHITESPACE IN IT!*
 
 # USAGE
 
