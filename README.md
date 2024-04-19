@@ -4,6 +4,8 @@ Diablo II : Resurrected - Bot
 
 # USE AT YOUR OWN RISK ONLY
 
+I accept no responsibility for any outcomes or usage of this tool.
+
 ![alt tag](https://raw.githubusercontent.com/bouletmarc/D2R-BMBot/main/BMBot1.png)
 ![alt tag](https://raw.githubusercontent.com/bouletmarc/D2R-BMBot/main/BMBot2.png)
 ![alt tag](https://raw.githubusercontent.com/bouletmarc/D2R-BMBot/main/BMBot3.png)
@@ -108,14 +110,6 @@ Diablo II : Resurrected - Bot
   - Path Finding script (**missing teleport function for pathfinding**)
   - Gambling script
   - Cubing script
-
-# IS IT SAFE?
-
-NO, any hack are not safe, you always use them at your own risk!
-
-Blizzard do have Warden anti-cheat that will scan your computer for running processes and compare them against a blacklist.
-
-I accept no responsibility for any outcomes or usage of this tool.
 
 [1]: https://torrent-games.games/torrents-part16/Diablo_II_Lord_Of_Destructin.torrent
 [2]: https://www.moddb.com/games/diablo-2-lod/downloads/lod-patch-113c-for-windows
