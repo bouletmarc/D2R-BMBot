@@ -4,9 +4,14 @@ Diablo II : Resurrected - Bot
 
 # USE AT YOUR OWN RISK ONLY
 
-![alt tag](https://raw.githubusercontent.com/bouletmarc/D2R-BMBot/main/App.png)
-![alt tag](https://raw.githubusercontent.com/bouletmarc/D2R-BMBot/main/Char.png)
-![alt tag](https://raw.githubusercontent.com/bouletmarc/D2R-BMBot/main/Settings.png)
+![alt tag](https://raw.githubusercontent.com/bouletmarc/D2R-BMBot/main/BMBot1.png)
+![alt tag](https://raw.githubusercontent.com/bouletmarc/D2R-BMBot/main/BMBot2.png)
+![alt tag](https://raw.githubusercontent.com/bouletmarc/D2R-BMBot/main/BMBot3.png)
+![alt tag](https://raw.githubusercontent.com/bouletmarc/D2R-BMBot/main/BMBot4.png)
+![alt tag](https://raw.githubusercontent.com/bouletmarc/D2R-BMBot/main/BMBot5.png)
+![alt tag](https://raw.githubusercontent.com/bouletmarc/D2R-BMBot/main/BMBot6.png)
+![alt tag](https://raw.githubusercontent.com/bouletmarc/D2R-BMBot/main/BMBot7.png)
+![alt tag](https://raw.githubusercontent.com/bouletmarc/D2R-BMBot/main/BMBot8.png)
 
 
 # REQUIREMENTS
@@ -14,6 +19,17 @@ Diablo II : Resurrected - Bot
     - Diablo2 Lord of Destruction 1.13C MUST BE INSTALLED for bot path finding (set the path in Settings.txt)
     - .Net Framework 4.7.2
     - Windows 64bit (the game must run in 64x, UNTESTED ON 32BIT)
+
+# INSTALLATION OF DIABLO2 - LORD OF DESTRUCTION 1.13C
+
+1. Download this [DIABLO2 - LOD TORRENT][1]
+2. Extract 'Diablo II.7z' contents somewhere like on your desktop, create a new folder called 'DiabloII'
+3. Download the [1.13C patch][2]
+4. Install the 1.13C over Diablo2
+5. You don't need to open D2-LOD 1.13C when it's done, you can leave it like
+6. Add the path of the folder 'Diablo2' from your desktop to the bot Settings.txt
+
+*IMPORTANT, THE PATH WHERE 'DIABLO2' MUST NOT CONTAIN ANY WHITESPACE IN IT!*
 
 # USAGE
 
@@ -99,3 +115,6 @@ NO, any hack are not safe, you always use them at your own risk!
 Blizzard do have Warden anti-cheat that will scan your computer for running processes and compare them against a blacklist.
 
 I accept no responsibility for any outcomes or usage of this tool.
+
+[1]: https://torrent-games.games/torrents-part16/Diablo_II_Lord_Of_Destructin.torrent
+[2]: https://www.moddb.com/games/diablo-2-lod/downloads/lod-patch-113c-for-windows
