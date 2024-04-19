@@ -35,6 +35,171 @@ namespace app
             Form1_0 = form1_1;
         }
 
+        public Position GetBestAttackLocation(Position ThisAttackPos)
+        {
+            Position ReturnPos = new Position { X = ThisAttackPos.X, Y = ThisAttackPos.Y};
+            int ChoosenAttackLocation = 0; //0=Down, 1=Right, 2=Left, 3=Up
+
+            bool[,] ThisCollisionGrid = Form1_0.MapAreaStruc_0.CollisionGrid((Enums.Area)Form1_0.PlayerScan_0.levelNo);
+
+            if (ThisCollisionGrid.GetLength(0) == 0 || ThisCollisionGrid.GetLength(1) == 0) return ReturnPos;
+            if (Form1_0.MapAreaStruc_0.AllMapData.Count == 0) return ReturnPos;
+
+            int ThisX = ThisAttackPos.X - Form1_0.MapAreaStruc_0.AllMapData[(int)Form1_0.PlayerScan_0.levelNo - 1].Offset.X;
+            int ThisY = ThisAttackPos.Y - Form1_0.MapAreaStruc_0.AllMapData[(int)Form1_0.PlayerScan_0.levelNo - 1].Offset.Y;
+
+            if (ThisX < 0) return ReturnPos;
+            if (ThisY < 0) return ReturnPos;
+            if (ThisX > ThisCollisionGrid.GetLength(0) - 1) return ReturnPos;
+            if (ThisY > ThisCollisionGrid.GetLength(1) - 1) return ReturnPos;
+
+            try
+            {
+                bool AttackPosFound = false;
+                while (!AttackPosFound)
+                {
+                    //check boundary for attacking the mobs from down position
+                    if (ChoosenAttackLocation == 0)
+                    {
+                        //#####
+                        //Check Validity
+                        bool IsValid = true;
+                        if (ThisX < 2) IsValid = false;
+                        if (ThisY < 2) IsValid = false;
+                        if (ThisX > ThisCollisionGrid.GetLength(0) - 1) IsValid = false;
+                        if (ThisY > ThisCollisionGrid.GetLength(1) - 1) IsValid = false;
+                        //#####
+
+                        if (ThisCollisionGrid[ThisX, ThisY]
+                            && ThisCollisionGrid[ThisX - 1, ThisY]
+                            && ThisCollisionGrid[ThisX - 2, ThisY]
+                            && ThisCollisionGrid[ThisX - 1, ThisY - 1]
+                            && ThisCollisionGrid[ThisX - 2, ThisY - 1]
+                            && ThisCollisionGrid[ThisX - 1, ThisY - 2]
+                            && IsValid) 
+                        {
+                            //Form1_0.method_1("Attack from Bottom!", Color.OrangeRed);
+                            AttackPosFound = true;
+                            ChoosenAttackLocation = 0; //Attack from Bottom
+                            ReturnPos = new Position { X = ThisX + Form1_0.MapAreaStruc_0.AllMapData[(int)Form1_0.PlayerScan_0.levelNo - 1].Offset.X, Y = ThisY + Form1_0.MapAreaStruc_0.AllMapData[(int)Form1_0.PlayerScan_0.levelNo - 1].Offset.Y };
+                        }
+                        else
+                        {
+                            //change attack location to right
+                            ThisX += 4;
+                            ThisY -= 2;
+
+                            ChoosenAttackLocation++;
+                        }
+                    }
+
+                    //check boundary for attacking the mobs from Right position
+                    if (ChoosenAttackLocation == 1)
+                    {
+                        //#####
+                        //Check Validity
+                        bool IsValid = true;
+                        if (ThisX < 2) IsValid = false;
+                        if (ThisY < 0) IsValid = false;
+                        if (ThisX > ThisCollisionGrid.GetLength(0) - 1) IsValid = false;
+                        if (ThisY > ThisCollisionGrid.GetLength(1) - 1) IsValid = false;
+                        //#####
+
+                        if (ThisCollisionGrid[ThisX, ThisY]
+                            && ThisCollisionGrid[ThisX - 1, ThisY]
+                            && ThisCollisionGrid[ThisX - 2, ThisY]
+                            && IsValid)
+                        {
+                            //Form1_0.method_1("Attack from Right!", Color.OrangeRed);
+                            AttackPosFound = true;
+                            ChoosenAttackLocation = 1; //Attack from Right
+                            ReturnPos = new Position { X = ThisX + Form1_0.MapAreaStruc_0.AllMapData[(int)Form1_0.PlayerScan_0.levelNo - 1].Offset.X, Y = ThisY + Form1_0.MapAreaStruc_0.AllMapData[(int)Form1_0.PlayerScan_0.levelNo - 1].Offset.Y };
+                        }
+                        else
+                        {
+                            //change attack location to left
+                            ThisX -= 7;
+
+                            ChoosenAttackLocation++;
+                        }
+                    }
+
+                    //check boundary for attacking the mobs from Left position
+                    if (ChoosenAttackLocation == 2)
+                    {
+                        //#####
+                        //Check Validity
+                        bool IsValid = true;
+                        if (ThisX < 1) IsValid = false;
+                        if (ThisY < 1) IsValid = false;
+                        if (ThisX > ThisCollisionGrid.GetLength(0) - 3) IsValid = false;
+                        if (ThisY > ThisCollisionGrid.GetLength(1) - 1) IsValid = false;
+                        //#####
+
+                        if (ThisCollisionGrid[ThisX, ThisY]
+                            && ThisCollisionGrid[ThisX - 1, ThisY]
+                            && ThisCollisionGrid[ThisX + 1, ThisY]
+                            && ThisCollisionGrid[ThisX + 2, ThisY]
+                            && ThisCollisionGrid[ThisX, ThisY - 1]
+                            && ThisCollisionGrid[ThisX + 1, ThisY - 1]
+                            && IsValid)
+                        {
+                            //Form1_0.method_1("Attack from Left!", Color.OrangeRed);
+                            AttackPosFound = true;
+                            ChoosenAttackLocation = 2; //Attack from Left
+                            ReturnPos = new Position { X = ThisX + Form1_0.MapAreaStruc_0.AllMapData[(int)Form1_0.PlayerScan_0.levelNo - 1].Offset.X, Y = ThisY + Form1_0.MapAreaStruc_0.AllMapData[(int)Form1_0.PlayerScan_0.levelNo - 1].Offset.Y };
+                        }
+                        else
+                        {
+                            //change attack location to top
+                            ThisX += 3;
+                            ThisY -= 5;
+
+                            ChoosenAttackLocation++;
+                        }
+                    }
+
+                    //check boundary for attacking the mobs from Up position (NOT RECOMMENDED FOR HAMMER)
+                    if (ChoosenAttackLocation == 3)
+                    {
+                        //#####
+                        //Check Validity
+                        bool IsValid = true;
+                        if (ThisX < 1) IsValid = false;
+                        if (ThisY < 1) IsValid = false;
+                        if (ThisX > ThisCollisionGrid.GetLength(0) - 2) IsValid = false;
+                        if (ThisY > ThisCollisionGrid.GetLength(1) - 2) IsValid = false;
+                        //#####
+
+                        if (ThisCollisionGrid[ThisX, ThisY]
+                            && ThisCollisionGrid[ThisX - 1, ThisY]
+                            && ThisCollisionGrid[ThisX + 1, ThisY]
+                            && ThisCollisionGrid[ThisX, ThisY - 1]
+                            && ThisCollisionGrid[ThisX, ThisY + 1]
+                            && IsValid)
+                        {
+                            //Form1_0.method_1("Attack from Top!", Color.OrangeRed);
+                            AttackPosFound = true;
+                            ChoosenAttackLocation = 3; //Attack from Top
+                            ReturnPos = new Position { X = ThisX + Form1_0.MapAreaStruc_0.AllMapData[(int)Form1_0.PlayerScan_0.levelNo - 1].Offset.X, Y = ThisY + Form1_0.MapAreaStruc_0.AllMapData[(int)Form1_0.PlayerScan_0.levelNo - 1].Offset.Y };
+                        }
+                        else
+                        {
+                            Form1_0.method_1("No Attack pos found!", Color.Red);
+                            //no atack pos found??
+                            AttackPosFound = true;
+                            ChoosenAttackLocation++; //return attack pos = 4 (for error)
+                            ReturnPos = new Position { X = 0, Y = 0 };
+                        }
+                    }
+                }
+
+            }
+            catch { }
+
+            return ReturnPos;
+        }
+
         public void CastDefense()
         {
             if (CharConfig.UseBO && !Form1_0.Town_0.GetInTown())
@@ -43,8 +208,12 @@ namespace app
 
                 Form1_0.KeyMouse_0.PressKey(Keys.W);
                 Form1_0.WaitDelay(15);
-                Form1_0.KeyMouse_0.PressKey(Keys.F4);
-                Form1_0.WaitDelay(15);
+                //Form1_0.KeyMouse_0.PressKey(Keys.F4);
+                //Form1_0.WaitDelay(15);
+                Form1_0.KeyMouse_0.MouseClicc(1025, 1025);
+                Form1_0.WaitDelay(5);
+                Form1_0.KeyMouse_0.MouseClicc(1095, 610);
+                Form1_0.WaitDelay(5);
                 Form1_0.PlayerScan_0.GetPositions();
 
                 //press W again to switch weapon again
@@ -52,9 +221,13 @@ namespace app
                 {
                     Form1_0.KeyMouse_0.PressKey(Keys.W);
                     Form1_0.WaitDelay(15);
-                    Form1_0.KeyMouse_0.PressKey(Keys.F4);
-                    Form1_0.WaitDelay(15);
-                    //Form1_0.PlayerScan_0.GetPositions();
+                    //Form1_0.KeyMouse_0.PressKey(Keys.F4);
+                    //Form1_0.WaitDelay(15);
+                    Form1_0.KeyMouse_0.MouseClicc(1025, 1025);
+                    Form1_0.WaitDelay(5);
+                    Form1_0.KeyMouse_0.MouseClicc(1095, 610);
+                    Form1_0.WaitDelay(5);
+                    Form1_0.PlayerScan_0.GetPositions();
                 }
 
                 Form1_0.KeyMouse_0.MouseCliccRight(Form1_0.CenterX, Form1_0.CenterY);
@@ -79,6 +252,17 @@ namespace app
 
                 Form1_0.KeyMouse_0.PressKey(Keys.W);
                 Form1_0.WaitDelay(15);
+                Form1_0.PlayerScan_0.GetPositions();
+            }
+
+            //press W again to switch weapon again
+            if (Form1_0.PlayerScan_0.RightSkill == Enums.Skill.BattleCry 
+                || Form1_0.PlayerScan_0.RightSkill == Enums.Skill.BattleOrders
+                || Form1_0.PlayerScan_0.RightSkill == Enums.Skill.BattleCommand)
+            {
+                Form1_0.KeyMouse_0.PressKey(Keys.W);
+                Form1_0.WaitDelay(15);
+                Form1_0.PlayerScan_0.GetPositions();
             }
 
             //cast sacred shield
@@ -152,7 +336,9 @@ namespace app
                 DoingBattle = true;
                 SetBattleMoveAcceptOffset();
                 Form1_0.Mover_0.MoveAcceptOffset = 2;
-                Form1_0.Mover_0.MoveToLocationAttack(Form1_0.MobsStruc_0.xPosFinal + 1, Form1_0.MobsStruc_0.yPosFinal + 1);
+                Position ThisAttackPos = GetBestAttackLocation(new Position { X = Form1_0.MobsStruc_0.xPosFinal + 1, Y = Form1_0.MobsStruc_0.yPosFinal + 5 });
+                if (ThisAttackPos.X != 0 && ThisAttackPos.Y != 0) Form1_0.Mover_0.MoveToLocationAttack(ThisAttackPos.X, ThisAttackPos.Y);
+                //Form1_0.Mover_0.MoveToLocationAttack(Form1_0.MobsStruc_0.xPosFinal - 1, Form1_0.MobsStruc_0.yPosFinal + 2);
                 Form1_0.Mover_0.MoveAcceptOffset = 4;
                 ResetBattleMoveAcceptOffset();
 
@@ -184,7 +370,9 @@ namespace app
                 DoingBattle = true;
                 SetBattleMoveAcceptOffset();
                 Form1_0.Mover_0.MoveAcceptOffset = 2;
-                Form1_0.Mover_0.MoveToLocationAttack(Form1_0.MobsStruc_0.xPosFinal + 1, Form1_0.MobsStruc_0.yPosFinal + 1);
+                Position ThisAttackPos = GetBestAttackLocation(new Position { X = Form1_0.MobsStruc_0.xPosFinal + 1, Y = Form1_0.MobsStruc_0.yPosFinal + 5 });
+                if (ThisAttackPos.X != 0 && ThisAttackPos.Y != 0) Form1_0.Mover_0.MoveToLocationAttack(ThisAttackPos.X, ThisAttackPos.Y);
+                //Form1_0.Mover_0.MoveToLocationAttack(Form1_0.MobsStruc_0.xPosFinal - 1, Form1_0.MobsStruc_0.yPosFinal + 2);
                 Form1_0.Mover_0.MoveAcceptOffset = 4;
                 ResetBattleMoveAcceptOffset();
 
@@ -212,7 +400,9 @@ namespace app
                 DoingBattle = true;
                 SetBattleMoveAcceptOffset();
                 Form1_0.Mover_0.MoveAcceptOffset = 2;
-                Form1_0.Mover_0.MoveToLocationAttack(Form1_0.MobsStruc_0.xPosFinal + 1, Form1_0.MobsStruc_0.yPosFinal + 1);
+                Position ThisAttackPos = GetBestAttackLocation(new Position { X = Form1_0.MobsStruc_0.xPosFinal + 1, Y = Form1_0.MobsStruc_0.yPosFinal + 5 });
+                if (ThisAttackPos.X != 0 && ThisAttackPos.Y != 0) Form1_0.Mover_0.MoveToLocationAttack(ThisAttackPos.X, ThisAttackPos.Y);
+                //Form1_0.Mover_0.MoveToLocationAttack(Form1_0.MobsStruc_0.xPosFinal - 1, Form1_0.MobsStruc_0.yPosFinal + 2);
                 Form1_0.Mover_0.MoveAcceptOffset = 4;
                 ResetBattleMoveAcceptOffset();
 

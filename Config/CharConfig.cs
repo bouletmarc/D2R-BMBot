@@ -55,6 +55,8 @@ namespace app
         public static int GambleUntilGoldAmount = 100000;   //GAMBLE UNTIL THIS LOW GOLD AMOUNT IS REACHED
         public static bool PlayerAttackWithRightHand = true;
         public static (int, int) KeysLocationInInventory = (8, 0);
+        public static bool GrabForGold = true;
+        public static bool IDAtShop = true;
 
         //#######################################
         //MERC SETTINGS

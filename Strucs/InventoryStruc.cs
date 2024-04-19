@@ -29,6 +29,8 @@ namespace app
         public int HUDItems_idscrolls_locx = 0;
         public int HUDItems_idscrolls_locy = 0;
 
+        public bool HasIDTome = false;
+
         public void SetForm1(Form1 form1_1)
         {
             Form1_0 = form1_1;
@@ -44,7 +46,7 @@ namespace app
         public Dictionary<string, int> ConvertInventoryLocToScreenPos(int ThisX, int ThisY)
         {
             //starting at 1295,580 on screen for first item in inv, increment for 48px
-            int xS = 1295 + (ThisX * 48);
+            int xS = 1300 + (ThisX * 48);
             int yS = 580 + (ThisY * 48);
 
             Dictionary<string, int> NewDict = new Dictionary<string, int>();
@@ -206,6 +208,7 @@ namespace app
                 }
                 else if (Form1_0.ItemsStruc_0.txtFileNo == 519)
                 {
+                    HasIDTome = true;
                     HUDItems_idscrolls = HUDItems_idscrolls + quantity;
                     HUDItems_idscrolls_locx = Form1_0.ItemsStruc_0.itemx;
                     HUDItems_idscrolls_locy = Form1_0.ItemsStruc_0.itemy;
@@ -216,7 +219,8 @@ namespace app
         public void DumpBadItemsOnGround()
         {
             Form1_0.UIScan_0.OpenUIMenu("invMenu");
-            Form1_0.ItemsStruc_0.GetItems(false);
+            Form1_0.ItemsStruc_0.GetBadItemsOnCursor();
+            //Form1_0.ItemsStruc_0.GetItems(false);
 
             //place all bad items on ground
             for (int i = 0; i < 40; i++)
@@ -228,16 +232,28 @@ namespace app
                     Dictionary<string, int> itemScreenPos = Form1_0.InventoryStruc_0.ConvertIndexToXY(i);
                     itemScreenPos = Form1_0.InventoryStruc_0.ConvertInventoryLocToScreenPos(itemScreenPos["x"], itemScreenPos["y"]);
 
-                    /*Form1_0.Stash_0.PickItem(itemScreenPos["x"], itemScreenPos["y"]);
-                    if (!Form1_0.Stash_0.PlaceItem(Form1_0.CenterX, Form1_0.CenterY))
+                    if (InventoryItemNames[i].Contains("Healing") || InventoryItemNames[i].Contains("Mana") || InventoryItemNames[i].Contains("Rejuvenation"))
                     {
-                        Form1_0.Stash_0.PlaceItem(itemScreenPos["x"], itemScreenPos["y"]);
-                    }*/
+                        Form1_0.KeyMouse_0.MouseCliccRight(itemScreenPos["x"], itemScreenPos["y"]);
+                        Form1_0.WaitDelay(10);
+                    }
+                    else
+                    {
+                        /*Form1_0.Stash_0.PickItem(itemScreenPos["x"], itemScreenPos["y"]);
+                        if (!Form1_0.Stash_0.PlaceItem(Form1_0.CenterX, Form1_0.CenterY))
+                        {
+                            Form1_0.Stash_0.PlaceItem(itemScreenPos["x"], itemScreenPos["y"]);
+                        }*/
 
-                    Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"]);
-                    Form1_0.WaitDelay(10);
-                    Form1_0.KeyMouse_0.MouseClicc(Form1_0.CenterX, Form1_0.CenterY);
-                    Form1_0.WaitDelay(10);
+                        Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"]);
+                        Form1_0.WaitDelay(12);
+                        Form1_0.KeyMouse_0.MouseClicc(Form1_0.CenterX, Form1_0.CenterY);
+                        Form1_0.WaitDelay(10);
+
+                        /*Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"]);
+                        Form1_0.WaitDelay(12);
+                        Form1_0.Stash_0.PlaceItem(Form1_0.CenterX, Form1_0.CenterY);*/
+                    }
                 }
             }
 
@@ -325,6 +341,21 @@ namespace app
                     {
                         return true;
                     }
+                }
+            }
+            return false;
+        }
+
+        public bool HasInventoryItemsForShop()
+        {
+            for (int i = 0; i < 40; i++)
+            {
+                if (CharConfig.RunCowsScript && !Form1_0.Cows_0.ScriptDone && Form1_0.InventoryStruc_0.InventoryItemNames[i] == "Wirt's Leg") continue;
+                if (CharConfig.RunCowsScript && !Form1_0.Cows_0.ScriptDone && Form1_0.InventoryStruc_0.InventoryItemNames[i] == "Tome of Town Portal") continue;
+
+                if (CharConfig.InventoryDontCheckItem[i] == 0 && InventoryHasItem[i] >= 1 && InventoryHasStashItem[i] == 0)
+                {
+                    return true;
                 }
             }
             return false;

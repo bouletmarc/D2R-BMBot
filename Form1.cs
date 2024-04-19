@@ -40,7 +40,7 @@ namespace app
     public partial class Form1 : Form
     {
 
-        public string BotVersion = "V1.5";
+        public string BotVersion = "V1.6";
 
         public string D2_LOD_113C_Path = "";
 
@@ -53,6 +53,7 @@ namespace app
         public byte[] bufferRead = new byte[0];
         public System.Timers.Timer LoopTimer;
         public bool Running = false;
+        public bool RunFinished = false;
         public bool HasPointers = false;
         public int UnitStrucOffset = -32;
         public int hWnd = 0;
@@ -91,10 +92,14 @@ namespace app
         public bool PublicGame = false;
         public int DebugMenuStyle = 0;
 
+        public bool BotJustStarted = true;
+        public bool SetDeadCount = false;
+
         public double FPS = 0;
 
         public int TotalChickenCount = 0;
         public int TotalDeadCount = 0;
+        public int TotalChickenByTimeCount = 0;
 
         public ItemsStruc ItemsStruc_0;
         public Mem Mem_0;
@@ -226,6 +231,8 @@ namespace app
             richTextBox1.HideSelection = false;//Hide selection so that AppendText will auto scroll to the end
             richTextBox2.HideSelection = false;//Hide selection so that AppendText will auto scroll to the end
             //richTextBox2.Visible = false;
+
+            //ModifyMonsterList();
 
             LabelChickenCount.Text = TotalChickenCount.ToString();
             LabelDeadCount.Text = TotalDeadCount.ToString();
@@ -470,6 +477,7 @@ namespace app
                     Console.WriteLine(string_3);
                     richTextBox1.SelectionColor = ThisColor;
                     richTextBox1.AppendText(string_3 + Environment.NewLine);
+                    overlayForm.AddLogs(string_3, ThisColor);
 
                     if (ThisColor == Color.Red || ThisColor == Color.Orange || ThisColor == Color.DarkOrange || ThisColor == Color.OrangeRed) AppendTextErrorLogs(string_3, ThisColor);
                     if (ThisColor == Color.DarkBlue) AppendTextGameLogs(string_3, ThisColor);
@@ -502,6 +510,7 @@ namespace app
         }
 
         public string PreviousStatus = "IDLE";
+        public string CurrentStatus = "IDLE";
         public void SetGameStatus(string string_3)
         {
             //try
@@ -519,6 +528,8 @@ namespace app
 
                     if (string_3 == "STOPPED") string_3 = PreviousStatus;
                     else PreviousStatus = string_3;
+
+                    CurrentStatus = string_3;
 
                     this.Text = "D2R - BMBot " + BotVersion + " | " + RunText + " | " + string_3;
                     Application.DoEvents();
@@ -731,12 +742,25 @@ namespace app
             BeltStruc_0.ForceMANAPotionQty = 0;
             BeltStruc_0.ForceHPPotionQty = 0;
             SetGamesText();
-            if (CharConfig.RunGameMakerScript) CurrentGameNumber++;
+            if (CharConfig.RunGameMakerScript && !BotJustStarted) CurrentGameNumber++;
             CurrentGameNumberSinceStart++;
             SettingsLoader_0.SaveOthersSettings();
+            ItemsStruc_0.BadItemsOnCursorIDList = new List<long>();
+            ItemsStruc_0.BadItemsOnGroundPointerList = new List<long>();
+            SetDeadCount = false;
 
             //##############################
             MapAreaStruc_0.ScanMapStruc();
+        }
+
+        public void IncreaseDeadCount()
+        {
+            if (!SetDeadCount)
+            {
+                Form1_0.TotalDeadCount++;
+                Form1_0.LabelDeadCount.Text = Form1_0.TotalDeadCount.ToString();
+                SetDeadCount = true;
+            }
         }
 
         void timer_Elapsed(object sender, ElapsedEventArgs e)
@@ -771,6 +795,7 @@ namespace app
                             if (!CharConfig.IsRushing) WaitDelay(400); //wait here because 'loading' menu is not correct
                             if (CharConfig.IsRushing) PlayerScan_0.ScanForLeecher();
                             Town_0.GetCorpse();
+                            ItemsStruc_0.GetBadItemsOnCursor();
                             HasPointers = true;
                         }
                         else
@@ -784,6 +809,7 @@ namespace app
                                 if (!CharConfig.IsRushing) WaitDelay(400); //wait here because 'loading' menu is not correct
                                 if (CharConfig.IsRushing) PlayerScan_0.ScanForLeecher();
                                 Town_0.GetCorpse();
+                                ItemsStruc_0.GetBadItemsOnCursor();
                                 HasPointers = true;
                             }
                             else
@@ -844,6 +870,8 @@ namespace app
                                             else
                                             {
                                                 Town_0.FastTowning = false;
+                                                Town_0.UseLastTP = false;
+                                                Town_0.TPSpawned = false;
 
                                                 if (!Town_0.GetInTown() && Form1_0.ItemsStruc_0.ItemsEquiped <= 2)
                                                 {
@@ -1142,6 +1170,7 @@ namespace app
                     Potions_0.ForceLeave = false;
                     FoundPlayerPointerTryCount = 0;
                     HasPointers = false;
+                    BotJustStarted = false;
 
                     if (!PrintedGameTime)
                     {
@@ -1178,7 +1207,7 @@ namespace app
                             CurrentGameNumberSinceStart++;
                             TriedToCreateNewGameCount = 0;
                         }
-                        Form1_0.GameStruc_0.CreateNewGame();
+                        Form1_0.GameStruc_0.CreateNewGame(CurrentGameNumber);
                     }
                     else
                     {
@@ -1217,6 +1246,7 @@ namespace app
             SetProcessingTime();
 
             if (Running) LoopTimer.Start();
+            //if (!Running) SetStartButtonEnable(true);
             //if (Running && LoopDone < 1) LoopTimer.Start();
             //LoopDone++;
         }
@@ -1359,6 +1389,8 @@ namespace app
             Grid_SetInfos("InBelt", ItemsStruc_0.ItemsInBelt.ToString());
         }
 
+        public string CurrentGameTime = "";
+
         public void method_GameTimeLabel(string string_3)
         {
             //try
@@ -1376,6 +1408,7 @@ namespace app
             }*/
             try 
             {
+                CurrentGameTime = string_3;
                 Form1_0.labelGameTime.Text = string_3;
             }
             catch { }
@@ -1432,6 +1465,27 @@ namespace app
                 button3.Enabled = Enabledd;
                 Application.DoEvents();
             }
+
+            SetItemsButton(Enabledd);
+            SetCharButtonEnable(Enabledd);
+            //}
+            //catch { }
+        }
+        public void SetItemsButton(bool Enabledd)
+        {
+            //try
+            //{
+            if (button4.InvokeRequired)
+            {
+                // Call this same method but append THREAD2 to the text
+                Action safeWrite = delegate { SetItemsButton(Enabledd); };
+                button4.Invoke(safeWrite);
+            }
+            else
+            {
+                button4.Enabled = Enabledd;
+                Application.DoEvents();
+            }
             //}
             //catch { }
         }
@@ -1449,15 +1503,18 @@ namespace app
             MapAreaStruc_0.AllMapData.Clear();
             overlayForm.ClearAllOverlay();
             SetGameStatus("STOPPED");
+
+            //SetStartButtonEnable(false);
         }
 
         public void button1_Click(object sender, EventArgs e)
         {
-            if (!Running)
+            if (!Running && button1.Enabled)
             {
                 SetSettingButton(false);
                 SetPlayButtonText("STOP");
                 Running = true;
+                BotJustStarted = true;
                 Startt();
             }
             else if (Running)
@@ -1707,6 +1764,67 @@ namespace app
                 richTextBoxGamesLogs.AppendText(ThisT + Environment.NewLine);
                 Application.DoEvents();
             }
+        }
+
+
+        public void SetStartButtonEnable(bool Enabled)
+        {
+            if (button1.InvokeRequired)
+            {
+                // Call this same method but append THREAD2 to the text
+                Action safeWrite = delegate { SetStartButtonEnable(Enabled); };
+                button1.Invoke(safeWrite);
+            }
+            else
+            {
+                button1.Enabled = Enabled;
+                Application.DoEvents();
+            }
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            FormItems FormItems_0 = new FormItems(Form1_0);
+            FormItems_0.ShowDialog();
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            FormCharSettings FormCharSettings_0 = new FormCharSettings(Form1_0);
+            FormCharSettings_0.ShowDialog();
+        }
+
+        public void SetCharButtonEnable(bool Enabled)
+        {
+            if (button5.InvokeRequired)
+            {
+                // Call this same method but append THREAD2 to the text
+                Action safeWrite = delegate { SetCharButtonEnable(Enabled); };
+                button5.Invoke(safeWrite);
+            }
+            else
+            {
+                button5.Enabled = Enabled;
+                Application.DoEvents();
+            }
+        }
+
+        public void ModifyMonsterList()
+        {
+            string[] AllLines = File.ReadAllLines(Application.StartupPath + @"\List.txt");
+            string EndTxt = "";
+            for (int i = 0; i < AllLines.Length; i++)
+            {
+                if (AllLines[i].Length > 0)
+                {
+                    EndTxt += AllLines[i].Substring(0, AllLines[i].IndexOf('\t'));
+                    AllLines[i] = AllLines[i].Substring(AllLines[i].IndexOf('\t') + 1);
+                    EndTxt += ":" + AllLines[i].Substring(0, AllLines[i].IndexOf('\t')) + Environment.NewLine;
+                }
+            }
+
+            File.Create(Application.StartupPath + @"\List2.txt").Dispose();
+            File.WriteAllText(Application.StartupPath + @"\List2.txt", EndTxt);
         }
     }
 }

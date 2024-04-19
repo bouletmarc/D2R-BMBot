@@ -53,12 +53,12 @@ namespace app
             if (GetMenuActive("questsMenu")) CloseThisMenu("questsMenu");
             if (GetMenuActive("partyMenu")) CloseThisMenu("partyMenu");
             if (GetMenuActive("mercMenu")) CloseThisMenu("mercMenu");
-            if (GetMenuActive("quitMenu")) CloseThisMenu("quitMenu");
             if (GetMenuActive("stash")) CloseThisMenu("stash");
             if (GetMenuActive("npcInteract")) CloseThisMenu("npcInteract");
             if (GetMenuActive("npcShop")) CloseThisMenu("npcShop");
             if (GetMenuActive("tradeMenu")) CloseThisMenu("tradeMenu");
             if (GetMenuActive("cubeMenu")) CloseThisMenu("cubeMenu");
+            if (GetMenuActive("quitMenu")) CloseThisMenu("quitMenu");
         }
 
         public void CloseThisMenu(string UIName)

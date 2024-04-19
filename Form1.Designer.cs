@@ -60,11 +60,13 @@
             this.LabelChickenCount = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.LabelDeadCount = new System.Windows.Forms.ToolStripStatusLabel();
-            this.button3 = new System.Windows.Forms.Button();
             this.tabPage8 = new System.Windows.Forms.TabPage();
             this.tabPage9 = new System.Windows.Forms.TabPage();
             this.richTextBoxErrorLogs = new System.Windows.Forms.RichTextBox();
             this.richTextBoxGamesLogs = new System.Windows.Forms.RichTextBox();
+            this.button4 = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
+            this.button5 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -84,9 +86,9 @@
             // 
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button1.ForeColor = System.Drawing.Color.Blue;
-            this.button1.Location = new System.Drawing.Point(5, 5);
+            this.button1.Location = new System.Drawing.Point(5, 3);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(64, 23);
+            this.button1.Size = new System.Drawing.Size(64, 25);
             this.button1.TabIndex = 0;
             this.button1.Text = "START";
             this.button1.UseVisualStyleBackColor = true;
@@ -183,9 +185,9 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(249, 5);
+            this.button2.Location = new System.Drawing.Point(249, 3);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(87, 23);
+            this.button2.Size = new System.Drawing.Size(87, 25);
             this.button2.TabIndex = 18;
             this.button2.Text = "Debug Menu";
             this.button2.UseVisualStyleBackColor = true;
@@ -256,7 +258,7 @@
             this.tabPage5.Controls.Add(this.richTextBoxDebugObjects);
             this.tabPage5.Location = new System.Drawing.Point(4, 22);
             this.tabPage5.Name = "tabPage5";
-            this.tabPage5.Size = new System.Drawing.Size(536, 178);
+            this.tabPage5.Size = new System.Drawing.Size(536, 202);
             this.tabPage5.TabIndex = 5;
             this.tabPage5.Text = "Objects";
             this.tabPage5.UseVisualStyleBackColor = true;
@@ -269,7 +271,7 @@
             this.richTextBoxDebugObjects.Name = "richTextBoxDebugObjects";
             this.richTextBoxDebugObjects.ReadOnly = true;
             this.richTextBoxDebugObjects.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedVertical;
-            this.richTextBoxDebugObjects.Size = new System.Drawing.Size(536, 178);
+            this.richTextBoxDebugObjects.Size = new System.Drawing.Size(536, 202);
             this.richTextBoxDebugObjects.TabIndex = 22;
             this.richTextBoxDebugObjects.Text = "";
             // 
@@ -396,18 +398,6 @@
             this.LabelDeadCount.Text = "Dead";
             this.LabelDeadCount.ToolTipText = "Deads Count";
             // 
-            // button3
-            // 
-            this.button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button3.ForeColor = System.Drawing.Color.Blue;
-            this.button3.Image = global::app.Properties.Resources.Application;
-            this.button3.Location = new System.Drawing.Point(75, 5);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(26, 23);
-            this.button3.TabIndex = 102;
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click_1);
-            // 
             // tabPage8
             // 
             this.tabPage8.Controls.Add(this.richTextBoxErrorLogs);
@@ -452,12 +442,50 @@
             this.richTextBoxGamesLogs.TabIndex = 8;
             this.richTextBoxGamesLogs.Text = "";
             // 
+            // button4
+            // 
+            this.button4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button4.ForeColor = System.Drawing.Color.Blue;
+            this.button4.Image = global::app.Properties.Resources.Equipment;
+            this.button4.Location = new System.Drawing.Point(139, 3);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(26, 25);
+            this.button4.TabIndex = 103;
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
+            // 
+            // button3
+            // 
+            this.button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button3.ForeColor = System.Drawing.Color.Blue;
+            this.button3.Image = global::app.Properties.Resources.Application;
+            this.button3.Location = new System.Drawing.Point(75, 3);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(26, 25);
+            this.button3.TabIndex = 102;
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click_1);
+            // 
+            // button5
+            // 
+            this.button5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button5.ForeColor = System.Drawing.Color.Blue;
+            this.button5.Image = global::app.Properties.Resources.Person;
+            this.button5.Location = new System.Drawing.Point(107, 3);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(26, 25);
+            this.button5.TabIndex = 104;
+            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlDark;
             this.ClientSize = new System.Drawing.Size(552, 639);
+            this.Controls.Add(this.button5);
+            this.Controls.Add(this.button4);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.tabControl2);
@@ -529,6 +557,8 @@
         private System.Windows.Forms.RichTextBox richTextBoxErrorLogs;
         private System.Windows.Forms.TabPage tabPage9;
         private System.Windows.Forms.RichTextBox richTextBoxGamesLogs;
+        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button button5;
     }
 }
 

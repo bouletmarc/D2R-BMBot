@@ -59,9 +59,7 @@ namespace app
                 ForceLeave = true;
                 Form1_0.BaalLeech_0.SearchSameGamesAsLastOne = false;
                 Form1_0.LeaveGame(false);
-
-                Form1_0.TotalDeadCount++;
-                Form1_0.LabelDeadCount.Text = Form1_0.TotalDeadCount.ToString();
+                Form1_0.IncreaseDeadCount();
                 return;
                 //Chicken();
             }
@@ -92,9 +90,7 @@ namespace app
                 ForceLeave = true;
                 Form1_0.BaalLeech_0.SearchSameGamesAsLastOne = false;
                 Form1_0.LeaveGame(false);
-
-                Form1_0.TotalDeadCount++;
-                Form1_0.LabelDeadCount.Text = Form1_0.TotalDeadCount.ToString();
+                Form1_0.IncreaseDeadCount();
                 return;
                 //Chicken();
             }

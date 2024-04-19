@@ -196,6 +196,8 @@ namespace app
                     if (Splitted[0] == "PlayerCharName") AllLines[i] = "PlayerCharName=" + CharConfig.PlayerCharName;
                     if (Splitted[0] == "UseTeleport") AllLines[i] = "UseTeleport=" + CharConfig.UseTeleport;
                     if (Splitted[0] == "UseBO") AllLines[i] = "UseBO=" + CharConfig.UseBO;
+                    if (Splitted[0] == "IDAtShop") AllLines[i] = "IDAtShop=" + CharConfig.IDAtShop;
+                    if (Splitted[0] == "GrabForGold") AllLines[i] = "GrabForGold=" + CharConfig.GrabForGold;
                     if (Splitted[0] == "ChickenHP") AllLines[i] = "ChickenHP=" + CharConfig.ChickenHP;
                     if (Splitted[0] == "TakeHPPotUnder" && !Splitted[0].Contains("MercTakeHPPotUnder")) AllLines[i] = "TakeHPPotUnder=" + CharConfig.TakeHPPotUnder;
                     if (Splitted[0] == "TakeRVPotUnder") AllLines[i] = "TakeRVPotUnder=" + CharConfig.TakeRVPotUnder;
@@ -302,27 +304,39 @@ namespace app
                 bool DoingSet = false;
                 bool DoingNormal = false;
 
-                List<string> AllUnique = new List<string>();
-                List<string> AllKeys = new List<string>();
-                List<string> AllSet = new List<string>();
-                List<string> AllNormal = new List<string>();
+                Dictionary<string, bool> AllUnique = new Dictionary<string, bool>();
+                Dictionary<string, bool> AllKeys = new Dictionary<string, bool>();
+                Dictionary<string, bool> AllSet = new Dictionary<string, bool>();
+                Dictionary<string, bool> AllNormal = new Dictionary<string, bool>();
+
+                List<string> UniqueDesc = new List<string>();
+                List<string> SetDesc = new List<string>();
 
                 for (int i = 0; i < AllLines.Length; i++)
                 {
                     if (AllLines[i].Length > 0)
                     {
-                        if (AllLines[i][0] != '/' && AllLines[i][0] != '#')
+                        if (AllLines[i][2] != '#')
                         {
                             string ThisItem = AllLines[i];
+                            bool PickItem = true;
+                            string Desc = "";
+                            if (AllLines[i][0] == '/') 
+                            {
+                                PickItem = false;
+                                ThisItem = AllLines[i].Substring(2);
+                            }
+
                             if (ThisItem.Contains("/"))
                             {
+                                Desc = ThisItem.Substring(ThisItem.IndexOf('/'));
                                 ThisItem = ThisItem.Substring(0, ThisItem.IndexOf('/'));    //remove description '//'
                             }
 
-                            if (DoingUnique) AllUnique.Add(ThisItem);
-                            if (DoingKeysRune) AllKeys.Add(ThisItem);
-                            if (DoingSet) AllSet.Add(ThisItem);
-                            if (DoingNormal) AllNormal.Add(ThisItem);
+                            if (DoingUnique) { AllUnique.Add(ThisItem, PickItem); UniqueDesc.Add(Desc); }
+                            if (DoingKeysRune) AllKeys.Add(ThisItem, PickItem);
+                            if (DoingSet) { AllSet.Add(ThisItem, PickItem); SetDesc.Add(Desc); }
+                            if (DoingNormal) AllNormal.Add(ThisItem, PickItem);
                         }
 
                         if (AllLines[i].Contains("UNIQUE ITEMS"))
@@ -356,17 +370,145 @@ namespace app
                     }
                 }
 
-                Form1_0.ItemsAlert_0.PickItemsUnique = new string[AllUnique.Count];
-                for (int i = 0; i < AllUnique.Count; i++) Form1_0.ItemsAlert_0.PickItemsUnique[i] = AllUnique[i];
+                Form1_0.ItemsAlert_0.PickItemsUnique.Clear();
+                int CurrI = 0;
+                foreach (var ThisDir in AllUnique)
+                {
+                    Form1_0.ItemsAlert_0.PickItemsUnique.Add(ThisDir.Key, ThisDir.Value);
+                    Form1_0.ItemsAlert_0.PickItemsUniqueDesc.Add(UniqueDesc[CurrI]);
+                    CurrI++;
+                }
 
-                Form1_0.ItemsAlert_0.PickItemsRunesKeyGems = new string[AllKeys.Count];
-                for (int i = 0; i < AllKeys.Count; i++) Form1_0.ItemsAlert_0.PickItemsRunesKeyGems[i] = AllKeys[i];
+                Form1_0.ItemsAlert_0.PickItemsRunesKeyGems.Clear();
+                foreach (var ThisDir in AllKeys) Form1_0.ItemsAlert_0.PickItemsRunesKeyGems.Add(ThisDir.Key, ThisDir.Value);
 
-                Form1_0.ItemsAlert_0.PickItemsSet = new string[AllSet.Count];
-                for (int i = 0; i < AllSet.Count; i++) Form1_0.ItemsAlert_0.PickItemsSet[i] = AllSet[i];
+                Form1_0.ItemsAlert_0.PickItemsSet.Clear();
+                CurrI = 0;
+                foreach (var ThisDir in AllSet)
+                {
+                    Form1_0.ItemsAlert_0.PickItemsSet.Add(ThisDir.Key, ThisDir.Value);
+                    Form1_0.ItemsAlert_0.PickItemsSetDesc.Add(SetDesc[CurrI]);
+                    CurrI++;
+                }
 
                 //Form1_0.ItemsAlert_0.PickItemsUnique = new string[AllNormal.Count];
                 //for (int i = 0; i < AllNormal.Count; i++) Form1_0.ItemsAlert_0.PickItemsUnique[i] = AllNormal[i];
+            }
+            catch
+            {
+                Form1_0.method_1("UNABLE TO LOAD 'ItemsSettings.txt' FILE!", Color.Red);
+            }
+        }
+
+        public void SaveItemsSettings()
+        {
+            try
+            {
+                bool DoingUnique = false;
+                bool DoingKeysRune = false;
+                bool DoingSet = false;
+                bool DoingNormal = false;
+
+                AllLines = File.ReadAllLines(File_ItemsSettings);
+                for (int i = 0; i < AllLines.Length; i++)
+                {
+                    if (AllLines[i].Length > 0)
+                    {
+                        if (AllLines[i][2] != '#')
+                        {
+                            string ThisItem = AllLines[i];
+                            bool PickItem = true;
+                            string ThisDesc = "";
+                            if (AllLines[i][0] == '/')
+                            {
+                                PickItem = false;
+                                ThisItem = AllLines[i].Substring(2);
+                            }
+
+                            if (ThisItem.Contains("/"))
+                            {
+                                ThisDesc = ThisItem.Substring(ThisItem.IndexOf('/'));
+                                ThisItem = ThisItem.Substring(0, ThisItem.IndexOf('/'));    //remove description '//'
+                            }
+
+                            if (DoingUnique)
+                            {
+                                foreach (var ThisDir in Form1_0.ItemsAlert_0.PickItemsUnique)
+                                {
+                                    if (ThisDir.Key == ThisItem)
+                                    {
+                                        if (!PickItem && ThisDir.Value) AllLines[i] = ThisItem + ThisDesc;
+                                        if (PickItem && !ThisDir.Value) AllLines[i] = "//" + ThisItem + ThisDesc;
+                                    }
+                                }
+                            }
+                            if (DoingKeysRune)
+                            {
+                                foreach (var ThisDir in Form1_0.ItemsAlert_0.PickItemsRunesKeyGems)
+                                {
+                                    if (ThisDir.Key == ThisItem)
+                                    {
+                                        if (!PickItem && ThisDir.Value) AllLines[i] = ThisItem + ThisDesc;
+                                        if (PickItem && !ThisDir.Value) AllLines[i] = "//" + ThisItem + ThisDesc;
+                                    }
+                                }
+                            }
+                            if (DoingSet)
+                            {
+                                foreach (var ThisDir in Form1_0.ItemsAlert_0.PickItemsSet)
+                                {
+                                    if (ThisDir.Key == ThisItem)
+                                    {
+                                        if (!PickItem && ThisDir.Value) AllLines[i] = ThisItem + ThisDesc;
+                                        if (PickItem && !ThisDir.Value) AllLines[i] = "//" + ThisItem + ThisDesc;
+                                    }
+                                }
+                            }
+                            if (DoingNormal)
+                            {
+                                /*foreach (var ThisDir in Form1_0.ItemsAlert_0.PickItemsSet)
+                                {
+                                    if (ThisDir.Key == ThisItem)
+                                    {
+                                        if (!PickItem && ThisDir.Value) AllLines[i] = ThisItem + ThisDesc;
+                                        if (PickItem && !ThisDir.Value) AllLines[i] = "//" + ThisItem + ThisDesc;
+                                    }
+                                }*/
+                            }
+                        }
+
+                        if (AllLines[i].Contains("UNIQUE ITEMS"))
+                        {
+                            DoingUnique = true;
+                            DoingKeysRune = false;
+                            DoingSet = false;
+                            DoingNormal = false;
+                        }
+                        if (AllLines[i].Contains("KEYS/GEMS/RUNES ITEMS"))
+                        {
+                            DoingUnique = false;
+                            DoingKeysRune = true;
+                            DoingSet = false;
+                            DoingNormal = false;
+                        }
+                        if (AllLines[i].Contains("SET ITEMS"))
+                        {
+                            DoingUnique = false;
+                            DoingKeysRune = false;
+                            DoingSet = true;
+                            DoingNormal = false;
+                        }
+                        if (AllLines[i].Contains("NORMAL ITEMS"))
+                        {
+                            DoingUnique = false;
+                            DoingKeysRune = false;
+                            DoingSet = false;
+                            DoingNormal = true;
+                        }
+                    }
+                }
+
+                File.WriteAllLines(File_ItemsSettings, AllLines);
             }
             catch
             {
@@ -766,6 +908,14 @@ namespace app
                                 if (Params[0].Contains("UseBO"))
                                 {
                                     CharConfig.UseBO = bool.Parse(Params[1].ToLower());
+                                }
+                                if (Params[0].Contains("IDAtShop"))
+                                {
+                                    CharConfig.IDAtShop = bool.Parse(Params[1].ToLower());
+                                }
+                                if (Params[0].Contains("GrabForGold"))
+                                {
+                                    CharConfig.GrabForGold = bool.Parse(Params[1].ToLower());
                                 }
                                 if (Params[0].Contains("ChickenHP"))
                                 {

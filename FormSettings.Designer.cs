@@ -87,8 +87,8 @@
             this.checkBoxRush = new System.Windows.Forms.CheckBox();
             this.label1LeechName = new System.Windows.Forms.Label();
             this.textBox1LeechName = new System.Windows.Forms.TextBox();
-            this.button2 = new System.Windows.Forms.Button();
             this.checkBoxShowOverlay = new System.Windows.Forms.CheckBox();
+            this.button2 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownRunNumber)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMaxTime)).BeginInit();
@@ -429,18 +429,6 @@
             this.textBox1LeechName.TabIndex = 9;
             this.textBox1LeechName.Visible = false;
             // 
-            // button2
-            // 
-            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button2.ForeColor = System.Drawing.Color.Red;
-            this.button2.Location = new System.Drawing.Point(39, 5);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(168, 29);
-            this.button2.TabIndex = 13;
-            this.button2.Text = "OPEN CHAR SETTINGS";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
-            // 
             // checkBoxShowOverlay
             // 
             this.checkBoxShowOverlay.AutoSize = true;
@@ -452,6 +440,18 @@
             this.checkBoxShowOverlay.TabIndex = 14;
             this.checkBoxShowOverlay.Text = "Show Overlays";
             this.checkBoxShowOverlay.UseVisualStyleBackColor = true;
+            // 
+            // button2
+            // 
+            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button2.ForeColor = System.Drawing.Color.Red;
+            this.button2.Location = new System.Drawing.Point(79, 6);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(89, 29);
+            this.button2.TabIndex = 13;
+            this.button2.Text = "SAVE";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // FormSettings
             // 
@@ -516,7 +516,7 @@
         private System.Windows.Forms.CheckBox checkBoxRush;
         private System.Windows.Forms.Label label1LeechName;
         private System.Windows.Forms.TextBox textBox1LeechName;
-        private System.Windows.Forms.Button button2;
         private System.Windows.Forms.CheckBox checkBoxShowOverlay;
+        private System.Windows.Forms.Button button2;
     }
 }

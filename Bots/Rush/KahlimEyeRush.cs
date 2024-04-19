@@ -50,12 +50,14 @@ namespace app
                 if (CurrentStep == 0)
                 {
                     Form1_0.SetGameStatus("DOING KAHLIM EYE");
-                    Form1_0.Battle_0.CastDefense();
-                    Form1_0.WaitDelay(15);
+                    //Form1_0.Battle_0.CastDefense();
+                    //Form1_0.WaitDelay(15);
 
                     if ((Enums.Area) Form1_0.PlayerScan_0.levelNo == Enums.Area.SpiderForest)
                     {
                         Form1_0.Town_0.SpawnTP();
+                        Form1_0.WaitDelay(15);
+                        Form1_0.Battle_0.CastDefense();
                         CurrentStep++;
                     }
                     else

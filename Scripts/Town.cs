@@ -90,9 +90,7 @@ namespace app
                 Form1_0.Potions_0.ForceLeave = true;
                 Form1_0.BaalLeech_0.SearchSameGamesAsLastOne = false;
                 Form1_0.LeaveGame(false);
-
-                Form1_0.TotalDeadCount++;
-                Form1_0.LabelDeadCount.Text = Form1_0.TotalDeadCount.ToString();
+                Form1_0.IncreaseDeadCount();
                 return;
             }
 
@@ -172,9 +170,28 @@ namespace app
                     }
                     else
                     {
-                        TPSpawned = false;
-                        TriedToUseTPCount++;
-                        if (TriedToUseTPCount >= 3) IgnoredTPList.Clear(); //try to clear again the ignored tp list!
+                        if (TriedToUseTPCount == 3 || TriedToUseTPCount == 4)
+                        {
+                            Form1_0.method_1("Trying to use Unkown TP ID!", Color.Red);
+
+                            CurrentScript = 0;
+                            Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, Form1_0.PlayerScan_0.xPosFinal - 2, Form1_0.PlayerScan_0.yPosFinal);
+                            Form1_0.KeyMouse_0.PressKeyHold(System.Windows.Forms.Keys.E);
+                            Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"] - 15);
+                            Form1_0.KeyMouse_0.ReleaseKey(System.Windows.Forms.Keys.E);
+                            Form1_0.WaitDelay(50);
+                            Form1_0.Mover_0.FinishMoving();
+
+                            TPSpawned = false;
+                            TriedToUseTPCount++;
+                            if (TriedToUseTPCount >= 3) IgnoredTPList.Clear(); //try to clear again the ignored tp list!
+                        }
+                        else
+                        {
+                            TPSpawned = false;
+                            TriedToUseTPCount++;
+                            if (TriedToUseTPCount >= 3) IgnoredTPList.Clear(); //try to clear again the ignored tp list!
+                        }
                     }
                 }
                 else
@@ -226,6 +243,8 @@ namespace app
                     }
                 }
 
+                bool AlreadyGoneToShop = false;
+
                 //ID Items
                 if (CurrentScript == 1)
                 {
@@ -238,8 +257,17 @@ namespace app
                     {
                         if (Form1_0.InventoryStruc_0.HasUnidItemInInventory() && !FastTowning)
                         {
-                            Form1_0.SetGameStatus("TOWN-CAIN");
-                            MoveToCain();
+                            if (!CharConfig.IDAtShop)
+                            {
+                                Form1_0.SetGameStatus("TOWN-CAIN");
+                                MoveToCain();
+                            }
+                            else
+                            {
+                                AlreadyGoneToShop = true;
+                                Form1_0.SetGameStatus("TOWN-SHOP (ID)");
+                                MoveToStore();
+                            }
                         }
                     }
                 }
@@ -318,7 +346,7 @@ namespace app
                         if (Form1_0.Gamble_0.CanGamble() && TriedToGambleCount < 3 && !FastTowning)
                         {
                             TriedToStashCount = 0;
-                            Form1_0.SetGameStatus("TOWN-GAMBLE" + " (" + (TriedToGambleCount + 1) + "/" + 3 + ")");
+                            Form1_0.SetGameStatus("TOWN-GAMBLE (" + (TriedToGambleCount + 1) + "/" + 3 + ")");
                             MoveToGamble();
                             TriedToGambleCount++;
                         }
@@ -328,6 +356,12 @@ namespace app
                 //buy potions,tp,etc
                 if (CurrentScript == 5)
                 {
+                    if (CharConfig.IDAtShop && AlreadyGoneToShop)
+                    {
+                        CurrentScript++;
+                        return;
+                    }
+
                     Form1_0.ItemsStruc_0.GetItems(false);
                     if ((Form1_0.InventoryStruc_0.ContainStashItemInInventory())
                         && !FastTowning)
@@ -438,8 +472,8 @@ namespace app
                 if (ThisFinalPosition.X != 0 && ThisFinalPosition.Y != 0)
                 {
                     Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, ThisFinalPosition.X, ThisFinalPosition.Y);
-                    Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"] - 15);
-                    Form1_0.Mover_0.FinishMoving();
+                    Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"] - 100, itemScreenPos["y"] - 15);
+                    //Form1_0.Mover_0.FinishMoving();
                     if (Form1_0.UIScan_0.WaitTilUIOpen("waypointMenu"))
                     {
                         if (SelectWPIndex == -1)
@@ -465,8 +499,8 @@ namespace app
                 if (ThisFinalPosition.X != 0 && ThisFinalPosition.Y != 0)
                 {
                     Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, ThisFinalPosition.X, ThisFinalPosition.Y);
-                    Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"] - 15);
-                    Form1_0.Mover_0.FinishMoving();
+                    Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"] - 100, itemScreenPos["y"] - 15);
+                    //Form1_0.Mover_0.FinishMoving();
                     if (Form1_0.UIScan_0.WaitTilUIOpen("waypointMenu"))
                     {
                         if (SelectWPIndex == -1)
@@ -492,8 +526,8 @@ namespace app
                 if (ThisFinalPosition.X != 0 && ThisFinalPosition.Y != 0)
                 {
                     Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, ThisFinalPosition.X, ThisFinalPosition.Y);
-                    Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"] - 15);
-                    Form1_0.Mover_0.FinishMoving();
+                    Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"] - 100, itemScreenPos["y"] - 15);
+                    //Form1_0.Mover_0.FinishMoving();
                     if (Form1_0.UIScan_0.WaitTilUIOpen("waypointMenu"))
                     {
                         if (SelectWPIndex == -1)
@@ -519,8 +553,8 @@ namespace app
                 if (ThisFinalPosition.X != 0 && ThisFinalPosition.Y != 0)
                 {
                     Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, ThisFinalPosition.X, ThisFinalPosition.Y);
-                    Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"] - 15);
-                    Form1_0.Mover_0.FinishMoving();
+                    Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"] - 100, itemScreenPos["y"] - 15);
+                    //Form1_0.Mover_0.FinishMoving();
                     if (Form1_0.UIScan_0.WaitTilUIOpen("waypointMenu"))
                     {
                         if (SelectWPIndex == -1)
@@ -546,8 +580,8 @@ namespace app
                 if (ThisFinalPosition.X != 0 && ThisFinalPosition.Y != 0)
                 {
                     Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, ThisFinalPosition.X, ThisFinalPosition.Y);
-                    Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"] - 15);
-                    Form1_0.Mover_0.FinishMoving();
+                    Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"] - 100, itemScreenPos["y"] - 15);
+                    //Form1_0.Mover_0.FinishMoving();
                     if (Form1_0.UIScan_0.WaitTilUIOpen("waypointMenu"))
                     {
                         if (SelectWPIndex == -1)
@@ -756,13 +790,15 @@ namespace app
                         if (Form1_0.ObjectsStruc_0.GetObjects("TownPortal", true, new List<uint>(), 999, CharConfig.PlayerCharName))
                         {
                             Form1_0.PathFinding_0.MoveToThisPos(new Position { X = Form1_0.ObjectsStruc_0.itemx, Y = Form1_0.ObjectsStruc_0.itemy });
-                            
+                            Form1_0.WaitDelay(15);
+
                             int tries = 0;
                             while(tries < 5) 
                             {
                                 Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, Form1_0.ObjectsStruc_0.itemx, Form1_0.ObjectsStruc_0.itemy);
                                 Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"] - 15);
-                                Form1_0.WaitDelay(5);
+                                Form1_0.WaitDelay(10);
+                                Form1_0.PlayerScan_0.GetPositions();
                                 tries++;
                             }
                             Form1_0.WaitDelay(10);
@@ -891,7 +927,7 @@ namespace app
             {
                 CheckForNPCValidPos("Larzuk");
                 //Form1_0.PathFinding_0.MoveToNPC("Larzuk");  //not found
-                Form1_0.PathFinding_0.MoveToThisPos(new Position { X = 5145, Y = 5141 });
+                Form1_0.PathFinding_0.MoveToThisPos(new Position { X = 5145, Y = 5041 });
                 Form1_0.NPCStruc_0.GetNPC("Larzuk");
                 MovedCorrectly = true;
             }
@@ -993,6 +1029,8 @@ namespace app
                     Form1_0.Shop_0.RunShopScript();
                     Form1_0.UIScan_0.CloseUIMenu("npcInteract");
                     Form1_0.UIScan_0.CloseUIMenu("npcShop");
+
+                    Form1_0.Shop_0.PlaceItem(Form1_0.CenterX, Form1_0.CenterY);
                 }
             }
         }
@@ -1143,7 +1181,7 @@ namespace app
                 //Clic cain
                 Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, Form1_0.NPCStruc_0.xPosFinal, Form1_0.NPCStruc_0.yPosFinal);
                 Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"]);
-                Form1_0.Mover_0.FinishMoving();
+                //Form1_0.Mover_0.FinishMoving();
                 if (Form1_0.UIScan_0.WaitTilUIOpen("npcInteract"))
                 {
                     //Clic Identify items (get cain pos again) - 227 offset y
@@ -1286,6 +1324,7 @@ namespace app
                 Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, Form1_0.PlayerScan_0.xPosFinalOtherP, Form1_0.PlayerScan_0.yPosFinalOtherP);
                 Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"]);
                 Form1_0.WaitDelay(100);
+                Form1_0.PlayerScan_0.GetPositions();
                 Tries++;
             }
         }

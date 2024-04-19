@@ -36,6 +36,10 @@ namespace app
         public DateTime TimeSinceLastWaveDone = DateTime.Now;
         public bool TimeSinceLastWaveSet = false;
 
+        public int TeleportToBaalTry = 0;
+        public bool TryMovingAwayOnLeftSide = true;
+        public int MaxMoveAwayTry = 3;
+
         public void SetForm1(Form1 form1_1)
         {
             Form1_0 = form1_1;
@@ -52,6 +56,8 @@ namespace app
             CornerClearedIndex = 0;
             TimeSinceLastWaveDone = DateTime.Now;
             TimeSinceLastWaveSet = false;
+            TeleportToBaalTry = 0;
+            TryMovingAwayOnLeftSide = true;
         }
 
         public void DetectCurrentStep()
@@ -59,6 +65,7 @@ namespace app
             if ((Enums.Area)Form1_0.PlayerScan_0.levelNo == Enums.Area.TheWorldStoneKeepLevel2) CurrentStep = 1;
             if ((Enums.Area)Form1_0.PlayerScan_0.levelNo == Enums.Area.TheWorldStoneKeepLevel3) CurrentStep = 2;
             if ((Enums.Area)Form1_0.PlayerScan_0.levelNo == Enums.Area.ThroneOfDestruction) CurrentStep = 3;
+            if ((Enums.Area)Form1_0.PlayerScan_0.levelNo == Enums.Area.TheWorldstoneChamber) CurrentStep = 7;
         }
 
         public void RunScript()
@@ -73,6 +80,17 @@ namespace app
 
             if (Form1_0.Town_0.GetInTown())
             {
+                //stop doing baal if we are in town, and we was actually killing baaal and we dont detect the TP,
+                //else it will go back in the WP and redo the whole Baal script again. (for Public Games)
+                if (CharConfig.RunBaalScript
+                    && !ScriptDone
+                    && CurrentStep >= 7
+                    && Form1_0.PublicGame)
+                {
+                    ScriptDone = true;
+                    return;
+                }
+
                 Form1_0.SetGameStatus("GO TO WP");
                 CurrentStep = 0;
 
@@ -184,10 +202,10 @@ namespace app
                 if (CurrentStep == 5)
                 {
                     //clear waves
-                    if (Form1_0.PlayerScan_0.xPosFinal < ThronePos.X - 4
-                        || Form1_0.PlayerScan_0.xPosFinal > ThronePos.X + 4
-                        || Form1_0.PlayerScan_0.yPosFinal < ThronePos.Y - 4
-                        || Form1_0.PlayerScan_0.yPosFinal > ThronePos.Y + 4)
+                    if (Form1_0.PlayerScan_0.xPosFinal < ThronePos.X - 3
+                        || Form1_0.PlayerScan_0.xPosFinal > ThronePos.X + 3
+                        || Form1_0.PlayerScan_0.yPosFinal < ThronePos.Y - 3
+                        || Form1_0.PlayerScan_0.yPosFinal > ThronePos.Y + 3)
                     {
                         if (!Form1_0.Battle_0.ClearingArea && !Form1_0.Battle_0.DoingBattle)
                         {
@@ -204,19 +222,22 @@ namespace app
                         if (Form1_0.PublicGame && Form1_0.PlayerScan_0.HasAnyPlayerInArea((int)Enums.Area.TheWorldstoneChamber))
                         {
                             Form1_0.method_1("People detected in Worldstone chamber, switching to baal script!", Color.Red);
+
+                            Form1_0.KeyMouse_0.MouseClicc(Form1_0.CenterX, 0); //drop possible items on curson to ground
                             CurrentStep++;
                         }
 
                         //DETECT OTHERS WAVES FOR CASTING
                         if (!TimeSinceLastWaveSet && !Form1_0.MobsStruc_0.GetMobs("", "", true, 25, IgnoredMobs))
                         {
+                            if (!Form1_0.PublicGame) Form1_0.Battle_0.CastDefense();
                             TimeSinceLastWaveDone = DateTime.Now;
                             TimeSinceLastWaveSet = true;
                             Form1_0.InventoryStruc_0.DumpBadItemsOnGround();
                         }
 
                         //START CASTING IN ADVANCE
-                        if ((DateTime.Now -  TimeSinceLastWaveDone).TotalSeconds > 3)
+                        if ((DateTime.Now -  TimeSinceLastWaveDone).TotalSeconds > 6)
                         {
                             Form1_0.Battle_0.SetSkills();
                             Form1_0.Battle_0.CastSkills();
@@ -252,6 +273,7 @@ namespace app
                     }
                     else
                     {
+                        Form1_0.KeyMouse_0.MouseClicc(Form1_0.CenterX, 0); //drop possible items on curson to ground
                         CurrentStep++;
                     }
                 }
@@ -286,6 +308,7 @@ namespace app
                             {
                                 Form1_0.Mover_0.MoveAcceptOffset = 3;
                             }
+                            //Form1_0.PathFinding_0.MoveToThisPos(new Position { X = 15090, Y = 5008 });
                             if (Form1_0.Mover_0.MoveToLocation(15095, 5023))
                             {
                                 if (Form1_0.Mover_0.MoveToLocation(15090, 5008))
@@ -310,6 +333,7 @@ namespace app
                     Form1_0.PathFinding_0.MoveToThisPos(new Position { X = 15134, Y = 5920 });
                     //Form1_0.WaitDelay(50); //wait a bit to detect baal
                     CurrentStep++;
+                    //15065,5891
                 }
 
                 if (CurrentStep == 8)
@@ -318,6 +342,7 @@ namespace app
                     Form1_0.SetGameStatus("KILLING BAAL");
                     if (Form1_0.MobsStruc_0.GetMobs("getBossName", "Baal", false, 200, new List<long>()))
                     {
+                        TeleportToBaalTry = 0;
                         if (Form1_0.MobsStruc_0.MobsHP > 0)
                         {
                             DetectedBaal = true;
@@ -350,34 +375,69 @@ namespace app
                     {
                         Form1_0.method_1("Baal not detected!", Color.Red);
 
-                        for (int i = 0; i < 140; i++)
+                        if (TeleportToBaalTry < MaxMoveAwayTry && TryMovingAwayOnLeftSide)
                         {
-                            Form1_0.PlayerScan_0.GetPositions();
-
-                            Form1_0.Battle_0.SetSkills();
-                            Form1_0.Battle_0.CastSkills();
-
-                            Form1_0.ItemsStruc_0.GetItems(true);
-                            Form1_0.Potions_0.CheckIfWeUsePotion();
-                            Form1_0.ItemsStruc_0.GetItems(false);
-                            Form1_0.overlayForm.UpdateOverlay();
-
-                            if (Form1_0.MobsStruc_0.GetMobs("getBossName", "Baal", false, 200, new List<long>())) return; //redetect baal?
+                            if (Form1_0.Mover_0.MoveToLocation(15062, 5891))
+                            {
+                                if (Form1_0.Mover_0.MoveToLocation(15106, 5901))
+                                //if (Form1_0.Mover_0.MoveToLocation(15134, 5920))
+                                {
+                                    TeleportToBaalTry++;
+                                    if (Form1_0.MobsStruc_0.GetMobs("getBossName", "Baal", false, 200, new List<long>())) return; //redetect baal?
+                                }
+                            }
                         }
+                        else if (TeleportToBaalTry >= MaxMoveAwayTry && TryMovingAwayOnLeftSide)
+                        {
+                            TeleportToBaalTry = 0;
+                            TryMovingAwayOnLeftSide = false; //now try moving away to the right to try detect baal
+                        }
+                        else if (TeleportToBaalTry < MaxMoveAwayTry && !TryMovingAwayOnLeftSide)
+                        {
+                            if (Form1_0.Mover_0.MoveToLocation(15214, 5890))
+                            {
+                                if (Form1_0.Mover_0.MoveToLocation(15166, 5908))
+                                //if (Form1_0.Mover_0.MoveToLocation(15134, 5920))
+                                {
+                                    TeleportToBaalTry++;
+                                    if (Form1_0.MobsStruc_0.GetMobs("getBossName", "Baal", false, 200, new List<long>())) return; //redetect baal?
+                                }
+                            }
+                        }
+                        else if (TeleportToBaalTry >= MaxMoveAwayTry && !TryMovingAwayOnLeftSide)
+                        {
+                            if (Form1_0.Mover_0.MoveToLocation(15134, 5920))
+                            {
+                                for (int i = 0; i < 30; i++) //140
+                                {
+                                    Form1_0.PlayerScan_0.GetPositions();
 
-                        //baal not detected...
-                        Form1_0.ItemsStruc_0.GetItems(true);
-                        if (Form1_0.MobsStruc_0.GetMobs("getBossName", "Baal", false, 200, new List<long>())) return; //redetect baal?
-                        //if (!Form1_0.PublicGame) Form1_0.ItemsStruc_0.GrabAllItemsForGold();
-                        Form1_0.ItemsStruc_0.GrabAllItemsForGold();
-                        if (Form1_0.MobsStruc_0.GetMobs("getBossName", "Baal", false, 200, new List<long>())) return; //redetect baal?
+                                    Form1_0.Battle_0.SetSkills();
+                                    Form1_0.Battle_0.CastSkills();
 
-                        Form1_0.Battle_0.ClearingArea = false;
-                        Form1_0.Battle_0.DoingBattle = false;
-                        Form1_0.Potions_0.CanUseSkillForRegen = true;
-                        //Form1_0.LeaveGame(true);
-                        Form1_0.Town_0.UseLastTP = false;
-                        ScriptDone = true;
+                                    Form1_0.ItemsStruc_0.GetItems(true);
+                                    Form1_0.Potions_0.CheckIfWeUsePotion();
+                                    Form1_0.ItemsStruc_0.GetItems(false);
+                                    Form1_0.overlayForm.UpdateOverlay();
+
+                                    if (Form1_0.MobsStruc_0.GetMobs("getBossName", "Baal", false, 200, new List<long>())) return; //redetect baal?
+                                }
+
+                                //baal not detected...
+                                Form1_0.ItemsStruc_0.GetItems(true);
+                                if (Form1_0.MobsStruc_0.GetMobs("getBossName", "Baal", false, 200, new List<long>())) return; //redetect baal?
+                                                                                                                              //if (!Form1_0.PublicGame) Form1_0.ItemsStruc_0.GrabAllItemsForGold();
+                                Form1_0.ItemsStruc_0.GrabAllItemsForGold();
+                                if (Form1_0.MobsStruc_0.GetMobs("getBossName", "Baal", false, 200, new List<long>())) return; //redetect baal?
+
+                                Form1_0.Battle_0.ClearingArea = false;
+                                Form1_0.Battle_0.DoingBattle = false;
+                                Form1_0.Potions_0.CanUseSkillForRegen = true;
+                                //Form1_0.LeaveGame(true);
+                                Form1_0.Town_0.UseLastTP = false;
+                                ScriptDone = true;
+                            }
+                        }
                     }
                 }
 

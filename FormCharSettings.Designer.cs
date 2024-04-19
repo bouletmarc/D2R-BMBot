@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.label1 = new System.Windows.Forms.Label();
             this.comboBoxType = new System.Windows.Forms.ComboBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -60,6 +61,8 @@
             this.textBoxCharName = new System.Windows.Forms.TextBox();
             this.label14 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.checkBoxGrabGold = new System.Windows.Forms.CheckBox();
+            this.checkBoxUseBO = new System.Windows.Forms.CheckBox();
             this.numericUpDownKeyYPos = new System.Windows.Forms.NumericUpDown();
             this.numericUpDownKeyXPos = new System.Windows.Forms.NumericUpDown();
             this.label21 = new System.Windows.Forms.Label();
@@ -81,7 +84,9 @@
             this.label22 = new System.Windows.Forms.Label();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.button1 = new System.Windows.Forms.Button();
-            this.checkBoxUseBO = new System.Windows.Forms.CheckBox();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.checkBoxIDAtShop = new System.Windows.Forms.CheckBox();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -95,6 +100,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownChickenHP)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMercTakeHPUnder)).BeginInit();
             this.groupBox4.SuspendLayout();
+            this.groupBox5.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -373,10 +379,10 @@
             // 
             this.groupBoxInventory.Location = new System.Drawing.Point(5, 319);
             this.groupBoxInventory.Name = "groupBoxInventory";
-            this.groupBoxInventory.Size = new System.Drawing.Size(441, 101);
+            this.groupBoxInventory.Size = new System.Drawing.Size(282, 101);
             this.groupBoxInventory.TabIndex = 4;
             this.groupBoxInventory.TabStop = false;
-            this.groupBoxInventory.Text = "Inventory Available Slots (Checked mean this slot is NOT FREE)";
+            this.groupBoxInventory.Text = "Inventory Slots (Checked mean this slot is NOT FREE)";
             // 
             // label13
             // 
@@ -408,7 +414,6 @@
             // 
             // groupBox3
             // 
-            this.groupBox3.Controls.Add(this.checkBoxUseBO);
             this.groupBox3.Controls.Add(this.numericUpDownKeyYPos);
             this.groupBox3.Controls.Add(this.numericUpDownKeyXPos);
             this.groupBox3.Controls.Add(this.label21);
@@ -417,7 +422,6 @@
             this.groupBox3.Controls.Add(this.numericUpDownGambleAbove);
             this.groupBox3.Controls.Add(this.label19);
             this.groupBox3.Controls.Add(this.numericUpDownTakeRV);
-            this.groupBox3.Controls.Add(this.checkBoxUseTeleport);
             this.groupBox3.Controls.Add(this.label18);
             this.groupBox3.Controls.Add(this.numericUpDownTakeMana);
             this.groupBox3.Controls.Add(this.label17);
@@ -433,6 +437,28 @@
             this.groupBox3.TabIndex = 20;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Char Parameters";
+            // 
+            // checkBoxGrabGold
+            // 
+            this.checkBoxGrabGold.AutoSize = true;
+            this.checkBoxGrabGold.Location = new System.Drawing.Point(6, 51);
+            this.checkBoxGrabGold.Name = "checkBoxGrabGold";
+            this.checkBoxGrabGold.Size = new System.Drawing.Size(89, 17);
+            this.checkBoxGrabGold.TabIndex = 36;
+            this.checkBoxGrabGold.Text = "Grab for Gold";
+            this.toolTip1.SetToolTip(this.checkBoxGrabGold, "Grab dummy item for Gold when a Boss is killed");
+            this.checkBoxGrabGold.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxUseBO
+            // 
+            this.checkBoxUseBO.AutoSize = true;
+            this.checkBoxUseBO.Location = new System.Drawing.Point(6, 35);
+            this.checkBoxUseBO.Name = "checkBoxUseBO";
+            this.checkBoxUseBO.Size = new System.Drawing.Size(63, 17);
+            this.checkBoxUseBO.TabIndex = 35;
+            this.checkBoxUseBO.Text = "Use BO";
+            this.toolTip1.SetToolTip(this.checkBoxUseBO, "Use Battle Orders");
+            this.checkBoxUseBO.UseVisualStyleBackColor = true;
             // 
             // numericUpDownKeyYPos
             // 
@@ -519,7 +545,7 @@
             // checkBoxUseTeleport
             // 
             this.checkBoxUseTeleport.AutoSize = true;
-            this.checkBoxUseTeleport.Location = new System.Drawing.Point(18, 186);
+            this.checkBoxUseTeleport.Location = new System.Drawing.Point(6, 19);
             this.checkBoxUseTeleport.Name = "checkBoxUseTeleport";
             this.checkBoxUseTeleport.Size = new System.Drawing.Size(87, 17);
             this.checkBoxUseTeleport.TabIndex = 18;
@@ -633,15 +659,29 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // checkBoxUseBO
+            // groupBox5
             // 
-            this.checkBoxUseBO.AutoSize = true;
-            this.checkBoxUseBO.Location = new System.Drawing.Point(123, 186);
-            this.checkBoxUseBO.Name = "checkBoxUseBO";
-            this.checkBoxUseBO.Size = new System.Drawing.Size(63, 17);
-            this.checkBoxUseBO.TabIndex = 35;
-            this.checkBoxUseBO.Text = "Use BO";
-            this.checkBoxUseBO.UseVisualStyleBackColor = true;
+            this.groupBox5.Controls.Add(this.checkBoxIDAtShop);
+            this.groupBox5.Controls.Add(this.checkBoxGrabGold);
+            this.groupBox5.Controls.Add(this.checkBoxUseTeleport);
+            this.groupBox5.Controls.Add(this.checkBoxUseBO);
+            this.groupBox5.Location = new System.Drawing.Point(293, 319);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(153, 101);
+            this.groupBox5.TabIndex = 5;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "Extras";
+            // 
+            // checkBoxIDAtShop
+            // 
+            this.checkBoxIDAtShop.AutoSize = true;
+            this.checkBoxIDAtShop.Location = new System.Drawing.Point(6, 67);
+            this.checkBoxIDAtShop.Name = "checkBoxIDAtShop";
+            this.checkBoxIDAtShop.Size = new System.Drawing.Size(78, 17);
+            this.checkBoxIDAtShop.TabIndex = 37;
+            this.checkBoxIDAtShop.Text = "ID At Shop";
+            this.toolTip1.SetToolTip(this.checkBoxIDAtShop, "Disabled will ID at Cain");
+            this.checkBoxIDAtShop.UseVisualStyleBackColor = true;
             // 
             // FormCharSettings
             // 
@@ -649,6 +689,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlDark;
             this.ClientSize = new System.Drawing.Size(452, 487);
+            this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox3);
@@ -681,6 +722,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMercTakeHPUnder)).EndInit();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
+            this.groupBox5.ResumeLayout(false);
+            this.groupBox5.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -742,5 +785,9 @@
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.CheckBox checkBoxUseBO;
+        private System.Windows.Forms.CheckBox checkBoxGrabGold;
+        private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.GroupBox groupBox5;
+        private System.Windows.Forms.CheckBox checkBoxIDAtShop;
     }
 }

@@ -29,6 +29,7 @@ namespace app
         {
             Form1_0.UIScan_0.readUI();
             if (Form1_0.UIScan_0.leftMenu || Form1_0.UIScan_0.rightMenu) Form1_0.UIScan_0.CloseAllUIMenu();
+            if (Form1_0.UIScan_0.quitMenu) Form1_0.UIScan_0.CloseUIMenu("quitMenu");
 
             Form1_0.PlayerScan_0.GetPositions();
             Form1_0.overlayForm.SetMoveToPoint(new System.Drawing.Point(ThisX, ThisY));
@@ -101,6 +102,7 @@ namespace app
                     }
                 }
 
+                //#######
                 //calculate new Y clicking offset, else it will clic on bottom menu items
                 if (itemScreenPos["y"] >= (Form1_0.ScreenY - Form1_0.ScreenYMenu))
                 {
@@ -109,6 +111,7 @@ namespace app
                     itemScreenPos["y"] = (Form1_0.ScreenY - Form1_0.ScreenYMenu);
                     //Console.WriteLine("corrected pos from: " + Sx + "," + Sy + " to: " + itemScreenPos["x"] + "," + itemScreenPos["y"]);
                 }
+                //#######
 
                 if (!CharConfig.UseTeleport || (CharConfig.UseTeleport && Form1_0.Town_0.GetInTown()))
                 {
@@ -145,6 +148,18 @@ namespace app
                 if (AllowPickingItem) Form1_0.ItemsStruc_0.GetItems(true);      //#############
                 Form1_0.Potions_0.CheckIfWeUsePotion();
                 itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, ThisX, ThisY);
+
+                //#######
+                //calculate new Y clicking offset, else it will clic on bottom menu items
+                if (itemScreenPos["y"] >= (Form1_0.ScreenY - Form1_0.ScreenYMenu))
+                {
+                    int DiffX = Form1_0.CenterX - itemScreenPos["x"];
+                    itemScreenPos["x"] = (int)(itemScreenPos["x"] + (DiffX / 6));
+                    itemScreenPos["y"] = (Form1_0.ScreenY - Form1_0.ScreenYMenu);
+                    //Console.WriteLine("corrected pos from: " + Sx + "," + Sy + " to: " + itemScreenPos["x"] + "," + itemScreenPos["y"]);
+                }
+                //#######
+
                 Application.DoEvents();
 
                 //######
@@ -226,11 +241,11 @@ namespace app
                     }
                     if (AllowPickingItem) Form1_0.ItemsStruc_0.GetItems(true);      //#############
                     Form1_0.Potions_0.CheckIfWeUsePotion();
-                    if (TryMove2 == 0) Form1_0.KeyMouse_0.MouseMoveTo(Form1_0.ScreenX / 2, Form1_0.ScreenY / 2);
+                    /*if (TryMove2 == 0) Form1_0.KeyMouse_0.MouseMoveTo(Form1_0.ScreenX / 2, Form1_0.ScreenY / 2);
                     if (TryMove2 == 1) Form1_0.KeyMouse_0.MouseMoveTo(Form1_0.ScreenX / 2 - 250, Form1_0.ScreenY / 2);
                     if (TryMove2 == 2) Form1_0.KeyMouse_0.MouseMoveTo(Form1_0.ScreenX / 2 + 250, Form1_0.ScreenY / 2);
                     if (TryMove2 == 3) Form1_0.KeyMouse_0.MouseMoveTo(Form1_0.ScreenX / 2, Form1_0.ScreenY / 2 - 250);
-                    if (TryMove2 == 4) Form1_0.KeyMouse_0.MouseMoveTo(Form1_0.ScreenX / 2, Form1_0.ScreenY / 2 + 250);
+                    if (TryMove2 == 4) Form1_0.KeyMouse_0.MouseMoveTo(Form1_0.ScreenX / 2, Form1_0.ScreenY / 2 + 250);*/
 
                     if (!CharConfig.UseTeleport || (CharConfig.UseTeleport && Form1_0.Town_0.GetInTown()))
                     {
@@ -431,7 +446,7 @@ namespace app
                 //Form1_0.KeyMouse_0.MouseClicRelease();
                 Form1_0.KeyMouse_0.ReleaseKey(System.Windows.Forms.Keys.E);
             }
-            Form1_0.KeyMouse_0.PressKey(CharConfig.KeySkillDefenseAura);
+            //Form1_0.KeyMouse_0.PressKey(CharConfig.KeySkillDefenseAura);
 
             
             Form1_0.overlayForm.ResetMoveToLocation();

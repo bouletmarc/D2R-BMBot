@@ -45,14 +45,14 @@ namespace app
             Form1_0.ItemsStruc_0.GetItems(false);   //get inventory
             Form1_0.BeltStruc_0.CheckForMissingPotions();
 
-            ShopForSellingitem = Form1_0.InventoryStruc_0.HasInventoryItems();
+            ShopForSellingitem = Form1_0.InventoryStruc_0.HasInventoryItemsForShop();
             ShopForHP = Form1_0.BeltStruc_0.MissingHPPot;
             ShopForMana = Form1_0.BeltStruc_0.MissingManaPot;
             ShopForTP = (Form1_0.InventoryStruc_0.HUDItems_tpscrolls <= 2);
             ShopForKey = (Form1_0.InventoryStruc_0.HUDItems_keys <= 3);
             ShopForRegainHP = Form1_0.PlayerScan_0.ShouldSeeShopForHP();
 
-            if (Form1_0.InventoryStruc_0.HasInventoryItems()
+            if (Form1_0.InventoryStruc_0.HasInventoryItemsForShop()
                 || Form1_0.BeltStruc_0.MissingHPPot
                 || Form1_0.BeltStruc_0.MissingManaPot
                 || Form1_0.InventoryStruc_0.HUDItems_tpscrolls <= 2
@@ -110,7 +110,61 @@ namespace app
                 FirstShopping = false;
             }
 
+            if (Form1_0.InventoryStruc_0.HasInventoryItemName("Wirt's Leg")) ShopForTomeOfPortal = true;
+
             LastitemScreenPos = new Dictionary<string, int>();
+
+            if (CharConfig.IDAtShop)
+            {
+                int tries2 = 0;
+                while (Form1_0.InventoryStruc_0.HasUnidItemInInventory() && tries2 < 3)
+                {
+                    Form1_0.SetGameStatus("TOWN-SHOP-ID");
+                    if (!Form1_0.Running || !Form1_0.GameStruc_0.IsInGame())
+                    {
+                        break;
+                    }
+                    if (Form1_0.ItemsStruc_0.GetShopItem("Scroll of Identify"))
+                    {
+                        Dictionary<string, int> itemScreenPos = ConvertShopLocToScreenPos(Form1_0.ItemsStruc_0.itemx, Form1_0.ItemsStruc_0.itemy);
+
+                        Form1_0.KeyMouse_0.MouseCliccRight(itemScreenPos["x"], itemScreenPos["y"]);
+                        Form1_0.WaitDelay(20);
+                        Form1_0.ItemsStruc_0.GetItems(false);   //get inventory
+                    }
+
+                    bool IdentifiedItem = false;
+                    for (int i = 0; i < 40; i++) 
+                    { 
+                        if (Form1_0.InventoryStruc_0.InventoryItemNames[i] == "Scroll of Identify")
+                        {
+                            Dictionary<string, int> itemScreenPos = Form1_0.InventoryStruc_0.ConvertIndexToXY(i);
+                            itemScreenPos = Form1_0.InventoryStruc_0.ConvertInventoryLocToScreenPos(itemScreenPos["x"], itemScreenPos["y"]);
+                            Form1_0.KeyMouse_0.MouseCliccRight(itemScreenPos["x"], itemScreenPos["y"]);
+                            Form1_0.WaitDelay(20);
+
+                            for (int k = 0; k < 40; k++)
+                            {
+                                if (Form1_0.InventoryStruc_0.InventoryHasUnidItem[k] == 1)
+                                {
+                                    itemScreenPos = Form1_0.InventoryStruc_0.ConvertIndexToXY(k);
+                                    itemScreenPos = Form1_0.InventoryStruc_0.ConvertInventoryLocToScreenPos(itemScreenPos["x"], itemScreenPos["y"]);
+                                    Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"]);
+                                    Form1_0.WaitDelay(100);
+                                    IdentifiedItem = true;
+                                    break;
+                                }
+                            }
+
+                            break;
+                        }
+                    }
+                    Form1_0.ItemsStruc_0.GetItems(false);   //get inventory
+
+                    if (!IdentifiedItem) tries2++;
+                    else tries2 = 0;
+                }
+            }
 
             //sell items
             //if (!Form1_0.Town_0.FastTowning)
@@ -120,6 +174,8 @@ namespace app
                     Form1_0.SetGameStatus("TOWN-SHOP-SELL ITEMS");
                     for (int i = 0; i < 40; i++)
                     {
+                        if (ShopForTomeOfPortal && Form1_0.InventoryStruc_0.InventoryItemNames[i] == "Wirt's Leg") continue;
+
                         if ((CharConfig.InventoryDontCheckItem[i] == 0 && Form1_0.InventoryStruc_0.InventoryHasItem[i] >= 1 && !Form1_0.Town_0.FastTowning)
                         || (CharConfig.InventoryDontCheckItem[i] == 0 && Form1_0.InventoryStruc_0.InventoryHasItem[i] >= 1 && Form1_0.InventoryStruc_0.InventoryHasStashItem[i] == 0) && Form1_0.Town_0.FastTowning)
                         {
@@ -360,34 +416,37 @@ namespace app
             }
 
             //buy id
-            tries = 0;
-            StartQty = Form1_0.InventoryStruc_0.HUDItems_idscrolls;
-            while (Form1_0.InventoryStruc_0.HUDItems_idscrolls < 20 && tries < 1)
+            if (Form1_0.InventoryStruc_0.HasIDTome)
             {
-                Form1_0.SetGameStatus("TOWN-SHOP-BUY ID'S");
-                if (!Form1_0.Running || !Form1_0.GameStruc_0.IsInGame())
-                {
-                    break;
-                }
-                if (Form1_0.ItemsStruc_0.GetShopItem("Scroll of Identify"))
-                {
-                    Dictionary<string, int> itemScreenPos = ConvertShopLocToScreenPos(Form1_0.ItemsStruc_0.itemx, Form1_0.ItemsStruc_0.itemy);
-
-                    int ShopCount = 20 - Form1_0.InventoryStruc_0.HUDItems_idscrolls;
-                    for (int i = 0; i < ShopCount; i++)
-                    {
-                        //Form1_0.SendSHIFT_RIGHTCLICK(itemScreenPos["x"], itemScreenPos["y"]);
-                        Form1_0.KeyMouse_0.MouseCliccRight(itemScreenPos["x"], itemScreenPos["y"]);
-                        Form1_0.WaitDelay(10);
-                    }
-                    Form1_0.ItemsStruc_0.GetItems(false);   //get inventory
-                }
-
-                if (Form1_0.InventoryStruc_0.HUDItems_idscrolls == StartQty)
-                {
-                    tries++;
-                }
+                tries = 0;
                 StartQty = Form1_0.InventoryStruc_0.HUDItems_idscrolls;
+                while (Form1_0.InventoryStruc_0.HUDItems_idscrolls < 20 && tries < 1)
+                {
+                    Form1_0.SetGameStatus("TOWN-SHOP-BUY ID'S");
+                    if (!Form1_0.Running || !Form1_0.GameStruc_0.IsInGame())
+                    {
+                        break;
+                    }
+                    if (Form1_0.ItemsStruc_0.GetShopItem("Scroll of Identify"))
+                    {
+                        Dictionary<string, int> itemScreenPos = ConvertShopLocToScreenPos(Form1_0.ItemsStruc_0.itemx, Form1_0.ItemsStruc_0.itemy);
+
+                        int ShopCount = 20 - Form1_0.InventoryStruc_0.HUDItems_idscrolls;
+                        for (int i = 0; i < ShopCount; i++)
+                        {
+                            //Form1_0.SendSHIFT_RIGHTCLICK(itemScreenPos["x"], itemScreenPos["y"]);
+                            Form1_0.KeyMouse_0.MouseCliccRight(itemScreenPos["x"], itemScreenPos["y"]);
+                            Form1_0.WaitDelay(10);
+                        }
+                        Form1_0.ItemsStruc_0.GetItems(false);   //get inventory
+                    }
+
+                    if (Form1_0.InventoryStruc_0.HUDItems_idscrolls == StartQty)
+                    {
+                        tries++;
+                    }
+                    StartQty = Form1_0.InventoryStruc_0.HUDItems_idscrolls;
+                }
             }
 
             //buy key
@@ -436,6 +495,8 @@ namespace app
 
                         Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"]);
                         Form1_0.WaitDelay(20);
+                        Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"] + 15);
+                        Form1_0.WaitDelay(10);
                         Form1_0.ItemsStruc_0.GetItems(false);   //get inventory
                     }
 

@@ -63,7 +63,6 @@ namespace app
 
                 if (CurrentStep == 1)
                 {
-
                     Form1_0.PathFinding_0.MoveToNPC("Eldritch");
                     CurrentStep++;
                 }

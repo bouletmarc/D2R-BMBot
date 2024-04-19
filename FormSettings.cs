@@ -215,8 +215,11 @@ namespace app
 
         private void button2_Click(object sender, EventArgs e)
         {
-            FormCharSettings FormCharSettings_0 = new FormCharSettings(Form1_0);
-            FormCharSettings_0.ShowDialog();
+            //FormCharSettings FormCharSettings_0 = new FormCharSettings(Form1_0);
+            //FormCharSettings_0.ShowDialog();
+
+            SaveSettings();
+            Form1_0.SettingsLoader_0.SaveCurrentSettings();
         }
     }
 }

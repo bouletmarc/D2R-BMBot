@@ -26,165 +26,19 @@ namespace app
     {
         Form1 Form1_0;
 
-        public string[] PickItemsRunesKeyGems = new string[] { };
-        public string[] PickItemsUnique = new string[] { };
-        public string[] PickItemsSet = new string[] { };
+        public Dictionary<string, bool> PickItemsRunesKeyGems = new Dictionary<string, bool>();
+        public Dictionary<string, bool> PickItemsUnique = new Dictionary<string, bool>();
+        public Dictionary<string, bool> PickItemsSet = new Dictionary<string, bool>();
 
-        public string[] PickItemsNormal = new string[] { };
+        public List<string> PickItemsUniqueDesc = new List<string>();
+        public List<string> PickItemsSetDesc = new List<string>();
+
+        public Dictionary<string, bool> PickItemsNormal = new Dictionary<string, bool>();
 
 
         public void SetForm1(Form1 form1_1)
         {
             Form1_0 = form1_1;
-
-            PickItemsSet = new string[]
-            {
-                "Lacquered Plate",      //# Tal Rasha's Guardianship
-                "Death Mask",           //# Tal Rasha's Horadric Crest
-                "Mesh Belt",            //# Tal Rasha's Fine Spun Cloth
-                "Sacred Armor",         //# Immortal King
-                "Heavy Bracers",        //# Trang-Oul's Claws
-                "Winged Helm",          //# Guillaume's Face
-                "Russet Armor",         //# Aldur's Advance
-                "Swirling Crystal",
-            };
-
-            PickItemsUnique = new string[]
-            {
-                //HELMS
-                "Grim Helm",     // Vampire Gaze
-                "Shako",        // Harlequin Crest
-                "Demonhead",    // Andariel's Visage
-                "Bone Visage",   // Giant Skull
-                "Spired Helm",   // Nightwing's Veil
-                "Corona",       // Crown of ages
-                //ARMORS
-                "Serpentskin Armor",// Skin of the Vipermagi
-                "Mesh Armor",    // Shaftstop
-                "Sacred Armor",  // Tyrael's Might
-                "Dusk Shroud",   // Ormus' Robes
-                //Gloves
-                "Chain Gloves",         // Chance Guards
-                "Vampirebone Gloves",   // Dracul's Grasp
-                "Ogre Gauntlets",       // Steelrend
-                //Boots
-                "Scarabshell Boots",// Sandstorm Trek
-                "Boneweave Boots",  // Marrowwalk
-                "War Boots",        // Gore Rider
-                "Myrmidon Greaves", // Gore Rider or Shadow Dancer
-                //Belts
-                "War Belt",         // Thundergod's Vigor
-                "Spiderweb Sash",   // Arachnid Mesh
-                "Vampirefang Belt", // Nosferatu's Coil
-                "Mithril Coil",     // Verdungo's Hearty Cord
-                //Paladin Shields
-                "Gilded Shield",    // Herald Of Zakarum
-                "Zakarum Shield",   // Herald Of Zakarum
-                //Sorceress Orbs
-                "Swirling Crystal", // The Oculus
-                "Eldritch Orb",     // Eschuta's Temper
-                "Dimensional Shard",// Death's Fathom
-                //Circlets
-                "Tiara",            // Kira's Guardian
-                "Diadem",           // Griffon's Eye
-                //Necromancer Shrunken Heads
-                "Hierophant Trophy",// Homunculus
-                //Druid Pelts
-                "Totemic Mask",     // Jalal's Mane
-                //Barbarian Helms
-                "Slayer Guard",     // Arreat's Face
-                "Guardian Crown",   // Arreat's Face
-                //Others
-                "Grand Charm",      // Possible GHEED
-                "Ring",             // #### ID LATER ####
-                "Amulet",           // #### ID LATER ####
-                "Jewel",            // #### ID LATER #### -> Rainbow Facet
-            };
-
-            PickItemsRunesKeyGems = new string[]
-            {
-                //"El Rune", 
-                //"Eld Rune",
-                //"Tir Rune",
-                //"Nef Rune",
-                //"Eth Rune",
-                //"Ith Rune",
-                //"Tal Rune",
-                //"Ral Rune",
-                //"Ort Rune",
-                //"Thul Rune",
-                //"Amn Rune",
-                //"Sol Rune",
-                //"Shael Rune",
-                //"Dol Rune",
-                "Hel Rune",
-                "Io Rune",
-                "Lum Rune",
-                "Ko Rune",
-                "Fal Rune",
-                "Lem Rune",
-                "Pul Rune",
-                "Um Rune",
-                "Mal Rune",
-                "Ist Rune",
-                "Gul Rune",
-                "Vex Rune",
-                "Ohm Rune",
-                "Lo Rune",
-                "Sur Rune",
-                "Ber Rune",
-                "Jah Rune",
-                "Cham Rune",
-                "Zod Rune",
-                // ##### Keys ######################
-                "Key of Terror",
-                "Key of Hate",
-                "Key of Destruction",
-                // ##### Essences ######################
-                "Twisted Essence Of Suffering",
-                "Charged Essence Of Hatred",
-                "Burning Essence Of Terror",
-                "Festering Essence Of Destruction",
-                "Token Of Absolution",
-                // ##### Gems ######################
-                "Chipped Amethyst",
-                "Chipped Topaz",
-                "Chipped Sapphire",
-                "Chipped Ruby",
-                "Chipped Emerald",
-                "Chipped Diamond",
-
-                //"Flawed Amethyst",
-                //"Flawed Topaz",
-                //"Flawed Sapphire",
-                //"Flawed Ruby",
-                //"Flawed Emerald",
-                //"Flawed Diamond",
-
-                //"Amethyst",
-                //"Topaz",
-                //"Sapphire",
-                //"Ruby",
-                //"Emerald",
-                //"Diamond",
-
-                "Flawless Amethyst",
-                "Flawless Topaz",
-                "Flawless Sapphire",
-                "Flawless Ruby",
-                "Flawless Emerald",
-                "Flawless Diamond",
-
-                "Perfect Amethyst",
-                "Perfect Topaz",
-                "Perfect Sapphire",
-                "Perfect Ruby",
-                "Perfect Emerald",
-                "Perfect Diamond",
-            };
-
-            //LoadItemsList();
-            //SaveList();
         }
 
         public bool ShouldKeepItem()
@@ -197,21 +51,26 @@ namespace app
         {
             if (Form1_0.ItemsStruc_0.quality == "Unique")
             {
-                for (int i = 0; i < PickItemsUnique.Length; i++)
+                foreach (var ThisDir in PickItemsUnique)
                 {
-                    if (Form1_0.ItemsStruc_0.ItemNAAME == PickItemsUnique[i])
+                    if (Form1_0.ItemsStruc_0.ItemNAAME == ThisDir.Key && ThisDir.Value)
                     {
                         return true;
                     }
                 }
             }
 
-            for (int i = 0; i < PickItemsRunesKeyGems.Length; i++)
+            foreach (var ThisDir in PickItemsRunesKeyGems)
             {
-                if (Form1_0.ItemsStruc_0.ItemNAAME.ToLower() == PickItemsRunesKeyGems[i].ToLower())
+                if (Form1_0.ItemsStruc_0.ItemNAAME.ToLower() == ThisDir.Key.ToLower() && ThisDir.Value)
                 {
-                    if (Form1_0.ItemsStruc_0.ItemNAAME.Contains("Chipped") || Form1_0.ItemsStruc_0.ItemNAAME.Contains("Flawed"))
-                    //if (Form1_0.ItemsStruc_0.ItemNAAME.Contains("Chipped"))
+                    if (Form1_0.ItemsStruc_0.ItemNAAME.Contains("Chipped") || Form1_0.ItemsStruc_0.ItemNAAME.Contains("Flawed")
+                        || Form1_0.ItemsStruc_0.ItemNAAME == "Topaz"
+                        || Form1_0.ItemsStruc_0.ItemNAAME == "Amethyst"
+                        || Form1_0.ItemsStruc_0.ItemNAAME == "Sapphire"
+                        || Form1_0.ItemsStruc_0.ItemNAAME == "Emerald"
+                        || Form1_0.ItemsStruc_0.ItemNAAME == "Ruby"
+                        || Form1_0.ItemsStruc_0.ItemNAAME == "Diamond")
                     {
                         //pick only chipped and flawed gems if count are bellow 2x
                         if (Form1_0.StashStruc_0.GetStashItemCount(Form1_0.ItemsStruc_0.ItemNAAME) < 2)
@@ -242,7 +101,8 @@ namespace app
                         if ((Form1_0.ItemsStruc_0.ItemNAAME.ToLower() == "Grand Charm".ToLower() && Form1_0.ItemsStruc_0.IsItemHaveSameStat("AddSkillTab", 1, "=="))
                             || (Form1_0.ItemsStruc_0.ItemNAAME.ToLower() == "Small Charm".ToLower() && Form1_0.ItemsStruc_0.IsItemHaveSameStat("LifeMax", 19, ">="))
                             || (Form1_0.ItemsStruc_0.ItemNAAME.ToLower() == "Small Charm".ToLower() && Form1_0.ItemsStruc_0.IsItemHaveSameStat("PoisonMaxDamage", 50, ">="))
-                            || (Form1_0.ItemsStruc_0.ItemNAAME.ToLower() == "Small Charm".ToLower() && Form1_0.ItemsStruc_0.IsItemHaveSameStat("MagicFind", 6, ">=")))
+                            || (Form1_0.ItemsStruc_0.ItemNAAME.ToLower() == "Small Charm".ToLower() && Form1_0.ItemsStruc_0.IsItemHaveSameStat("MagicFind", 6, ">="))
+                            || (Form1_0.ItemsStruc_0.ItemNAAME.ToLower() == "Small Charm".ToLower() && Form1_0.ItemsStruc_0.IsItemHaveSameStat("FireResist", 5, ">=") && Form1_0.ItemsStruc_0.IsItemHaveSameStat("LightningResist", 5, ">=") && Form1_0.ItemsStruc_0.IsItemHaveSameStat("ColdResist", 5, ">=") && Form1_0.ItemsStruc_0.IsItemHaveSameStat("PoisonResist", 5, ">=")))
                         {
                             //Console.WriteLine("Keep charm!");
                             return true;
@@ -254,9 +114,9 @@ namespace app
 
             if (Form1_0.ItemsStruc_0.quality == "Set")
             {
-                for (int i = 0; i < PickItemsSet.Length; i++)
+                foreach (var ThisDir in PickItemsSet)
                 {
-                    if (Form1_0.ItemsStruc_0.ItemNAAME.ToLower() == PickItemsSet[i].ToLower())
+                    if (Form1_0.ItemsStruc_0.ItemNAAME.ToLower() == ThisDir.Key.ToLower() && ThisDir.Value)
                     {
                         return true;
                     }

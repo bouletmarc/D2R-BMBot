@@ -77,6 +77,12 @@ namespace app
 
         public int TriesToPickItemCount = 0;
 
+        public List<long> BadItemsOnCursorIDList = new List<long>();
+        public bool HasGotTheBadItemOnCursor = false;
+
+
+        public List<long> BadItemsOnGroundPointerList = new List<long>();
+
         public void SetForm1(Form1 Form1_1)
         {
             Form1_0 = Form1_1;
@@ -252,12 +258,62 @@ namespace app
         public void DebugItems()
         {
             Form1_0.ClearDebugItems();
+
+            AllItemsOnCursor = new List<string>();
+            AllItemsInInventory = new List<string>();
+            AllItemsInStash = new List<string>();
+            AllItemsInSharedStash1 = new List<string>();
+            AllItemsInSharedStash2 = new List<string>();
+            AllItemsInSharedStash3 = new List<string>();
+            AllItemsIncube = new List<string>();
+            AllItemsEquipped = new List<string>();
+            AllItemsInBelt = new List<string>();
+            AllItemsOnGround = new List<string>();
+
             DebuggingItems = true;
             GetItems(false);
             DebuggingItems = false;
+
+            string CurrentAllItemsText = "";
+            for (int i = 0; i < AllItemsOnCursor.Count; i++) CurrentAllItemsText += AllItemsOnCursor[i] + Environment.NewLine;
+            for (int i = 0; i < AllItemsInInventory.Count; i++) CurrentAllItemsText += AllItemsInInventory[i] + Environment.NewLine;
+            for (int i = 0; i < AllItemsInStash.Count; i++) CurrentAllItemsText += AllItemsInStash[i] + Environment.NewLine;
+            for (int i = 0; i < AllItemsInSharedStash1.Count; i++) CurrentAllItemsText += AllItemsInSharedStash1[i] + Environment.NewLine;
+            for (int i = 0; i < AllItemsInSharedStash2.Count; i++) CurrentAllItemsText += AllItemsInSharedStash2[i] + Environment.NewLine;
+            for (int i = 0; i < AllItemsInSharedStash3.Count; i++) CurrentAllItemsText += AllItemsInSharedStash3[i] + Environment.NewLine;
+            for (int i = 0; i < AllItemsIncube.Count; i++) CurrentAllItemsText += AllItemsIncube[i] + Environment.NewLine;
+            for (int i = 0; i < AllItemsEquipped.Count; i++) CurrentAllItemsText += AllItemsEquipped[i] + Environment.NewLine;
+            for (int i = 0; i < AllItemsInBelt.Count; i++) CurrentAllItemsText += AllItemsInBelt[i] + Environment.NewLine;
+            for (int i = 0; i < AllItemsOnGround.Count; i++) CurrentAllItemsText += AllItemsOnGround[i] + Environment.NewLine;
+
+            if (CurrentAllItemsText != AllItemsText && CurrentAllItemsText != "")
+            {
+                AllItemsText = CurrentAllItemsText;
+                Form1_0.AppendTextDebugItems(AllItemsText);
+            }
         }
 
         public bool DebuggingItems = false;
+
+        public List<string> AllItemsOnCursor = new List<string>();
+        public List<string> AllItemsInInventory = new List<string>();
+        public List<string> AllItemsInStash = new List<string>();
+        public List<string> AllItemsInSharedStash1 = new List<string>();
+        public List<string> AllItemsInSharedStash2 = new List<string>();
+        public List<string> AllItemsInSharedStash3 = new List<string>();
+        public List<string> AllItemsIncube = new List<string>();
+        public List<string> AllItemsEquipped = new List<string>();
+        public List<string> AllItemsInBelt = new List<string>();
+        public List<string> AllItemsOnGround = new List<string>();
+
+        public string AllItemsText = "";
+
+        public void GetBadItemsOnCursor()
+        {
+            HasGotTheBadItemOnCursor = false;
+            GetItems(false);
+            HasGotTheBadItemOnCursor = true;
+        }
 
         public bool GetItems(bool IsPickingItem)
         {
@@ -269,9 +325,7 @@ namespace app
                 Form1_0.Potions_0.ForceLeave = true;
                 Form1_0.BaalLeech_0.SearchSameGamesAsLastOne = false;
                 Form1_0.LeaveGame(false);
-
-                Form1_0.TotalDeadCount++;
-                Form1_0.LabelDeadCount.Text = Form1_0.TotalDeadCount.ToString();
+                Form1_0.IncreaseDeadCount();
                 return false;
             }
 
@@ -297,6 +351,7 @@ namespace app
                 Form1_0.PlayerScan_0.ManaPercentFromEquippedItems = 0;
                 Form1_0.StashStruc_0.ResetStashInventory();
                 Form1_0.Cubing_0.ResetCubeInventory();
+                Form1_0.InventoryStruc_0.HasIDTome = false;
                 ItemOnCursor = false;
             }
 
@@ -312,6 +367,7 @@ namespace app
 
                     ItemsScanned++;
                     txtFileNo = BitConverter.ToUInt32(itemdatastruc, 4);
+                    //uint ItemID = BitConverter.ToUInt32(itemdatastruc, 8);
                     ItemNAAME = Form1_0.ItemsNames_0.getItemBaseName(txtFileNo);
                     GetUnitData();
                     GetUnitPathData();
@@ -322,12 +378,20 @@ namespace app
 
                     if (itemdatastruc[0x0C] == 4)
                     {
-                        ItemOnCursor = true;
-                        //Form1_0.method_1("cursor: " + ItemNAAME + " - at: " + itemx + "," + itemy, Color.BlueViolet);
-
-                        if (DebuggingItems)
+                        if (!IsPickingItem && !HasGotTheBadItemOnCursor && !IsIncludedInList(BadItemsOnCursorIDList, ItemPointerLocation))
                         {
-                            Form1_0.AppendTextDebugItems("ID:" + txtFileNo + "(" + ItemNAAME + ") at:" + itemx + ", " + itemy + " - On Cursor" + Environment.NewLine);
+                            Form1_0.method_1("Added bad item 'OnCursor':" + ItemNAAME + ", Pointer:" + ItemPointerLocation, Color.OrangeRed);
+                            BadItemsOnCursorIDList.Add(ItemPointerLocation);
+                        }
+                        else if (HasGotTheBadItemOnCursor && !IsIncludedInList(BadItemsOnCursorIDList, ItemPointerLocation))
+                        {
+                            ItemOnCursor = true;
+                            //Form1_0.method_1("cursor: " + ItemNAAME + " - at: " + itemx + "," + itemy, Color.BlueViolet);
+
+                            if (DebuggingItems)
+                            {
+                                AllItemsOnCursor.Add("ID:" + txtFileNo + "(" + ItemNAAME + ") at:" + itemx + ", " + itemy + " - On Cursor");
+                            }
                         }
                     }
 
@@ -347,7 +411,7 @@ namespace app
 
                             if (DebuggingItems)
                             {
-                                Form1_0.AppendTextDebugItems("ID:" + txtFileNo + "(" + ItemNAAME + ") at:" + itemx + ", " + itemy + " - In Inventory" + Environment.NewLine);
+                                AllItemsInInventory.Add("ID:" + txtFileNo + "(" + ItemNAAME + ") at:" + itemx + ", " + itemy + " - In Inventory");
                             }
                         }
 
@@ -359,7 +423,7 @@ namespace app
 
                             if (DebuggingItems)
                             {
-                                Form1_0.AppendTextDebugItems("ID:" + txtFileNo + "(" + ItemNAAME + ") at:" + itemx + ", " + itemy + " - In Stash" + Environment.NewLine);
+                                AllItemsInStash.Add("ID:" + txtFileNo + "(" + ItemNAAME + ") at:" + itemx + ", " + itemy + " - In Stash");
                             }
                         }
                         if (dwOwnerId != Form1_0.PlayerScan_0.unitId && equiploc == 4)
@@ -374,11 +438,11 @@ namespace app
                                 if (dwOwnerId == dwOwnerId_Shared2) StashNum = 3;
                                 if (dwOwnerId == dwOwnerId_Shared3) StashNum = 4;
                                 Form1_0.StashStruc_0.AddStashItem(itemx, itemy, StashNum);
-                            }
 
-                            if (DebuggingItems)
-                            {
-                                Form1_0.AppendTextDebugItems("ID:" + txtFileNo + "(" + ItemNAAME + ") at:" + itemx + ", " + itemy + " - In Shared Stash" + Environment.NewLine);
+
+                                if (dwOwnerId == dwOwnerId_Shared1 && DebuggingItems) AllItemsInSharedStash1.Add("ID:" + txtFileNo + "(" + ItemNAAME + ") at:" + itemx + ", " + itemy + " - In Shared Stash1");
+                                if (dwOwnerId == dwOwnerId_Shared2 && DebuggingItems) AllItemsInSharedStash2.Add("ID:" + txtFileNo + "(" + ItemNAAME + ") at:" + itemx + ", " + itemy + " - In Shared Stash2");
+                                if (dwOwnerId == dwOwnerId_Shared3 && DebuggingItems) AllItemsInSharedStash3.Add("ID:" + txtFileNo + "(" + ItemNAAME + ") at:" + itemx + ", " + itemy + " - In Shared Stash3");
                             }
                         }
                         if (dwOwnerId == Form1_0.PlayerScan_0.unitId && equiploc == 3)
@@ -389,7 +453,7 @@ namespace app
 
                             if (DebuggingItems)
                             {
-                                Form1_0.AppendTextDebugItems("ID:" + txtFileNo + "(" + ItemNAAME + ") at:" + itemx + ", " + itemy + " - In Cube" + Environment.NewLine);
+                                AllItemsIncube.Add("ID:" + txtFileNo + "(" + ItemNAAME + ") at:" + itemx + ", " + itemy + " - In Cube");
                             }
                         }
                     }
@@ -409,7 +473,7 @@ namespace app
 
                             if (DebuggingItems)
                             {
-                                Form1_0.AppendTextDebugItems("ID:" + txtFileNo + "(" + ItemNAAME + ") at:" + itemx + ", " + itemy + " - Equipped" + Environment.NewLine);
+                                AllItemsEquipped.Add("ID:" + txtFileNo + "(" + ItemNAAME + ") at:" + itemx + ", " + itemy + " - Equipped");
                             }
                         }
                     }
@@ -425,7 +489,7 @@ namespace app
 
                             if (DebuggingItems)
                             {
-                                Form1_0.AppendTextDebugItems("ID:" + txtFileNo + "(" + ItemNAAME + ") at:" + itemx + ", " + itemy + " - In Belt" + Environment.NewLine);
+                                AllItemsInBelt.Add("ID:" + txtFileNo + "(" + ItemNAAME + ") at:" + itemx + ", " + itemy + " - In Belt");
                             }
                         }
                     }
@@ -438,21 +502,16 @@ namespace app
 
                         if (DebuggingItems)
                         {
-                            Form1_0.AppendTextDebugItems("ID:" + txtFileNo + "(" + ItemNAAME + ") at:" + itemx + ", " + itemy + " - On Ground/Droping" + Environment.NewLine);
+                            //GetAllValuesFromStats();
+                            AllItemsOnGround.Add("ID:" + txtFileNo + "(" + ItemNAAME + ") at:" + itemx + ", " + itemy + " - On Ground/Droping");
                         }
 
                         Form1_0.UIScan_0.readUI();
-                        if (Form1_0.ItemsAlert_0.ShouldPickItem(false) || Form1_0.BeltStruc_0.ItemGrabPotion()
+                        if ((Form1_0.ItemsAlert_0.ShouldPickItem(false) || Form1_0.BeltStruc_0.ItemGrabPotion())
                             && (!Form1_0.UIScan_0.leftMenu && !Form1_0.UIScan_0.rightMenu && !Form1_0.UIScan_0.fullMenu)
-                            && IsPickingItem)
+                            && IsPickingItem
+                            && !IsIncludedInList(BadItemsOnGroundPointerList, ItemPointerLocation))
                         {
-                            //###########
-                            //Bugged items
-                            //if (ItemNAAME == "Perfect Diamond" && (Form1_0.PlayerScan_0.levelNo >= 106 && Form1_0.PlayerScan_0.levelNo < 109)) continue;
-                            //if (ItemNAAME == "Large Axe") continue;
-                            //if (ItemNAAME == "Hand Axe") continue;
-                            //###########
-
                             /*string SavePathh = Form1_0.ThisEndPath + "DumpItempPathStruc";
                             File.Create(SavePathh).Dispose();
                             File.WriteAllBytes(SavePathh, itemdatastruc);*/
@@ -460,13 +519,6 @@ namespace app
                             Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, itemx, itemy);
                             if (ShouldPickPos(itemScreenPos))
                             {
-                                //###########
-                                //Bugged items
-                                //if (ItemNAAME == "Perfect Diamond" && (Form1_0.PlayerScan_0.levelNo >= 106 && Form1_0.PlayerScan_0.levelNo < 109)) continue;
-                                //if (ItemNAAME == "Large Axe") continue;
-                                //if (ItemNAAME == "Hand Axe") continue;
-                                //###########
-
                                 int DiffXPlayer = itemx - Form1_0.PlayerScan_0.xPosFinal;
                                 int DiffYPlayer = itemy - Form1_0.PlayerScan_0.yPosFinal;
                                 if (DiffXPlayer < 0) DiffXPlayer = -DiffXPlayer;
@@ -485,18 +537,37 @@ namespace app
                                         //Form1_0.Mover_0.MoveToLocation(itemx, itemy); //slow move
                                         Form1_0.Mover_0.MoveToLocationAttack(itemx, itemy); //fast move
                                         Form1_0.PlayerScan_0.GetPositions();
-                                        //GetUnitPathData();
+                                        GetUnitPathData();
                                         itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, itemx, itemy);
                                     }
                                 }
 
                                 if (itemScreenPos["x"] == 0 && itemScreenPos["y"] == 0) continue;
 
+                                //##############################################
+                                //##############################################
+                                //detect bad items??
+                                if (((!Form1_0.ItemsAlert_0.ShouldPickItem(false) && !Form1_0.BeltStruc_0.ItemGrabPotion())
+                                    || (itemx == 0 && itemy == 0))
+                                    && !IsIncludedInList(BadItemsOnGroundPointerList, ItemPointerLocation))
+                                {
+                                    Form1_0.method_1("Added bad item 'OnGround':" + ItemNAAME + ", Pointer:" + ItemPointerLocation, Color.OrangeRed);
+                                    BadItemsOnGroundPointerList.Add(ItemPointerLocation);
+                                    continue;
+                                }
+                                if (IsIncludedInList(BadItemsOnGroundPointerList, ItemPointerLocation))
+                                {
+                                    //Form1_0.method_1("Avoided bad item 'OnGround':" + ItemNAAME + ", Pointer:" + ItemPointerLocation, Color.OrangeRed);
+                                    continue;
+                                }
+                                //##############################################
+                                //##############################################
+
                                 //####
                                 TriesToPickItemCount++;
                                 Form1_0.KeyMouse_0.PressKeyHold(System.Windows.Forms.Keys.E);
                                 Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"]);
-                                //Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"]);
+                                Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"]); //clic twice??
                                 Form1_0.KeyMouse_0.ReleaseKey(System.Windows.Forms.Keys.E);
 
                                 if (ItemNAAME != LastPick)
@@ -540,6 +611,24 @@ namespace app
             return false;
         }
 
+        public bool IsIncludedInList(List<long> IgnoredIDList, long ThisID)
+        {
+            if (IgnoredIDList != null)
+            {
+                if (IgnoredIDList.Count > 0)
+                {
+                    for (int i = 0; i < IgnoredIDList.Count; i++)
+                    {
+                        if (IgnoredIDList[i] == ThisID)
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
+            return false;
+        }
+
         public bool PickThisItem(string ThisItemName)
         {
             if (!Form1_0.GameStruc_0.IsInGame()) return false;
@@ -550,11 +639,11 @@ namespace app
                 Form1_0.Potions_0.ForceLeave = true;
                 Form1_0.BaalLeech_0.SearchSameGamesAsLastOne = false;
                 Form1_0.LeaveGame(false);
-
-                Form1_0.TotalDeadCount++;
-                Form1_0.LabelDeadCount.Text = Form1_0.TotalDeadCount.ToString();
+                Form1_0.IncreaseDeadCount();
                 return false;
             }
+
+            Form1_0.PlayerScan_0.GetPositions();
 
             Form1_0.PatternsScan_0.scanForUnitsPointer("item");
             for (int i = 0; i < Form1_0.PatternsScan_0.AllItemsPointers.Count; i++)
@@ -603,6 +692,7 @@ namespace app
                                     }
                                 }
                                 //####
+
                                 TriesToPickItemCount++;
                                 Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"]);
                                 Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"]);
@@ -652,6 +742,8 @@ namespace app
 
         public void GrabAllItemsForGold()
         {
+            if (!CharConfig.GrabForGold) return;
+
             string LastGrabbedItem = "";
             int TryGrabCount = 0;
             int ItemsGrabbed = 0;
@@ -697,8 +789,8 @@ namespace app
         {
             Form1_0.PatternsScan_0.scanForUnitsPointer("item");
 
-            long ItemPointMaxValue = 0;
-            int ItemHighestValue = 0;
+            //long ItemPointMaxValue = 0;
+            //int ItemHighestValue = 0;
 
             for (int i = 0; i < Form1_0.PatternsScan_0.AllItemsPointers.Count; i++)
             {
@@ -709,31 +801,53 @@ namespace app
                     Form1_0.Mem_0.ReadRawMemory(ItemPointerLocation, ref itemdatastruc, 144);
                     GetStatsAddr();
                     GetUnitPathData();
-                    int ItemValue = GetValuesFromStats(Enums.Attribute.Value);
+                    //int ItemValue = GetValuesFromStats(Enums.Attribute.Value);
 
                     //; on ground, dropping
                     if (itemdatastruc[0x0C] == 3 || itemdatastruc[0x0C] == 5)
                     {
-                        if (itemx > 0 && itemy > 0)
+                        Form1_0.UIScan_0.readUI();
+                        if (!Form1_0.UIScan_0.leftMenu && !Form1_0.UIScan_0.rightMenu && !Form1_0.UIScan_0.fullMenu)
                         {
-                            int DiffXPlayer = itemx - Form1_0.PlayerScan_0.xPosFinal;
-                            int DiffYPlayer = itemy - Form1_0.PlayerScan_0.yPosFinal;
-                            if (DiffXPlayer < 0) DiffXPlayer = -DiffXPlayer;
-                            if (DiffYPlayer < 0) DiffYPlayer = -DiffYPlayer;
-
-                            if (DiffXPlayer > 100 || DiffYPlayer > 100)
+                            Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, itemx, itemy);
+                            if (ShouldPickPos(itemScreenPos))
                             {
-                                return false;
-                            }
+                                //####
+                                int DiffXPlayer = itemx - Form1_0.PlayerScan_0.xPosFinal;
+                                int DiffYPlayer = itemy - Form1_0.PlayerScan_0.yPosFinal;
+                                if (DiffXPlayer < 0) DiffXPlayer = -DiffXPlayer;
+                                if (DiffYPlayer < 0) DiffYPlayer = -DiffYPlayer;
 
-                            Form1_0.UIScan_0.readUI();
-                            if (!Form1_0.UIScan_0.leftMenu && !Form1_0.UIScan_0.rightMenu && !Form1_0.UIScan_0.fullMenu)
-                            {
-                                if (ItemValue >= ItemHighestValue)
+                                if (DiffXPlayer > 100 || DiffYPlayer > 100)
+                                {
+                                    continue;
+                                }
+
+                                //#################
+                                /*if (ItemValue >= ItemHighestValue)
                                 {
                                     ItemHighestValue = ItemValue;
                                     ItemPointMaxValue = ItemPointerLocation;
+                                }*/
+                                //#################
+
+                                if (DiffXPlayer > 4
+                                    || DiffYPlayer > 4)
+                                {
+                                    Form1_0.Mover_0.MoveToLocation(itemx, itemy);
+                                    Form1_0.PlayerScan_0.GetPositions();
+                                    GetUnitPathData();
+                                    itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, itemx, itemy);
                                 }
+                                //####
+                                Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"]);
+
+                                if (ItemNAAME != LastPick)
+                                {
+                                    LastPick = ItemNAAME;
+                                    Form1_0.method_1("Grabbed for gold: " + ItemNAAME, GetColorFromQuality((int)itemQuality));
+                                }
+                                return true;
                             }
                         }
                     }
@@ -741,13 +855,15 @@ namespace app
             }
 
             //clic highest value item
-            if (ItemPointMaxValue > 0)
+            /*if (ItemPointMaxValue > 0)
             {
                 ItemPointerLocation = ItemPointMaxValue;
                 itemdatastruc = new byte[144];
                 Form1_0.Mem_0.ReadRawMemory(ItemPointerLocation, ref itemdatastruc, 144);
                 ItemNAAME = Form1_0.ItemsNames_0.getItemBaseName(BitConverter.ToUInt32(itemdatastruc, 4));
                 GetUnitPathData();
+                int ItemValue = GetValuesFromStats(Enums.Attribute.Value);
+
                 //; on ground, dropping
                 if (itemdatastruc[0x0C] == 3 || itemdatastruc[0x0C] == 5)
                 {
@@ -782,13 +898,13 @@ namespace app
                             if (ItemNAAME != LastPick)
                             {
                                 LastPick = ItemNAAME;
-                                Form1_0.method_1("Grabbed for gold: " + ItemNAAME, GetColorFromQuality((int)itemQuality));
+                                Form1_0.method_1("Grabbed for gold: " + ItemNAAME + ", Value: " + ItemValue, GetColorFromQuality((int)itemQuality));
                             }
                             return true;
                         }
                     }
                 }
-            }
+            }*/
 
             return false;
         }
@@ -819,6 +935,37 @@ namespace app
             {
                 numSockets = GetValuesFromStats(Enums.Attribute.NumSockets);
             }
+        }
+
+        public int GetAllValuesFromStats()
+        {
+            if (this.statCount > 0)
+            {
+                for (int i = 0; i < this.statCount; i++)
+                {
+                    int offset = i * 8;
+                    //short statLayer = BitConverter.ToInt16(statBuffer, offset);
+                    ushort statEnum = BitConverter.ToUInt16(statBuffer, offset + 0x2);
+                    int statValue = BitConverter.ToInt32(statBuffer, offset + 0x4);
+
+                    Form1_0.method_1("Item: " + ItemNAAME + ", Stat (" + ((Enums.Attribute) statEnum) + "):" + statValue, Color.Red);
+                }
+            }
+
+            if (this.statExCount > 0)
+            {
+                for (int i = 0; i < this.statExCount; i++)
+                {
+                    int offset = i * 8;
+                    //short statLayer = BitConverter.ToInt16(statBufferEx, offset);
+                    ushort statEnum = BitConverter.ToUInt16(statBufferEx, offset + 0x2);
+                    int statValue = BitConverter.ToInt32(statBufferEx, offset + 0x4);
+
+                    Form1_0.method_1("Item: " + ItemNAAME + ", Stat (" + ((Enums.Attribute)statEnum) + "):" + statValue, Color.Red);
+                }
+            }
+
+            return 0; // or some other default value
         }
 
         public int GetValuesFromStats(Enums.Attribute CheckTStat)

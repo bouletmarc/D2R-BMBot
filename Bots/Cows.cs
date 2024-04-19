@@ -33,15 +33,10 @@ namespace app
 
         public void DetectCurrentStep()
         {
-            if (HasWirtsLeg)
-            {
-                if ((Enums.Area)Form1_0.PlayerScan_0.levelNo == Enums.Area.MooMooFarm) CurrentStep = 1;
-            }
-            else
-            {
-                if ((Enums.Area)Form1_0.PlayerScan_0.levelNo == Enums.Area.StonyField) CurrentStep = 1;
-                if ((Enums.Area)Form1_0.PlayerScan_0.levelNo == Enums.Area.Tristram) CurrentStep = 3;
-            }
+            if ((Enums.Area)Form1_0.PlayerScan_0.levelNo == Enums.Area.MooMooFarm) CurrentStep = 1;
+
+            if ((Enums.Area)Form1_0.PlayerScan_0.levelNo == Enums.Area.StonyField) CurrentStep = 1;
+            if ((Enums.Area)Form1_0.PlayerScan_0.levelNo == Enums.Area.Tristram) CurrentStep = 3;
         }
 
         public void RunScriptTristam()
@@ -119,6 +114,8 @@ namespace app
 
                     Form1_0.SetGameStatus("Doing Tristram");
 
+                    Form1_0.PathFinding_0.MoveToObject("WirtCorpse");
+
                     if (Form1_0.ObjectsStruc_0.GetObjects("WirtCorpse", true, new List<uint>()))
                     {
                         if (Form1_0.Mover_0.MoveToLocation(Form1_0.ObjectsStruc_0.itemx, Form1_0.ObjectsStruc_0.itemy))
@@ -135,10 +132,6 @@ namespace app
 
                             CurrentStep++;
                         }
-                    }
-                    else
-                    {
-                        Form1_0.PathFinding_0.MoveToNPC("WirtCorpse");
                     }
                 }
 
@@ -171,7 +164,7 @@ namespace app
         {
             if (Form1_0.Town_0.GetInTown())
             {
-                Form1_0.SetGameStatus("GO TO WP");
+                Form1_0.SetGameStatus("GO TO SHOP");
                 CurrentStep = 0;
 
                 bool HasTownPortal = Form1_0.InventoryStruc_0.HasInventoryItemName("Tome of Town Portal");
@@ -234,6 +227,7 @@ namespace app
 
             Form1_0.ItemsStruc_0.GetItems(false); //get inventory
             HasWirtsLeg = Form1_0.InventoryStruc_0.HasInventoryItemName("Wirt's Leg");
+            if ((Enums.Area)Form1_0.PlayerScan_0.levelNo == Enums.Area.MooMooFarm) HasWirtsLeg = true;
 
             if (HasWirtsLeg)
             {

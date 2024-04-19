@@ -1,7 +1,8 @@
+﻿//#######################################
+//###### UNIQUE ITEMS
 //#######################################
-//UNIQUE ITEMS
+//###### HELMS
 //#######################################
-//HELMS
 Grim Helm// Vampire Gaze
 Shako// Harlequin Crest
 Demonhead// Andariel's Visage
@@ -9,60 +10,84 @@ Bone Visage// Giant Skull
 Spired Helm// Nightwing's Veil
 Corona// Crown of ages
 
-//ARMORS
+//#######################################
+//###### ARMORS
+//#######################################
 Serpentskin Armor// Skin of the Vipermagi
 Mesh Armor// Shaftstop
 Sacred Armor// Tyrael's Might
 Dusk Shroud// Ormus' Robes
 
-//Gloves
+//#######################################
+//###### Gloves
+//#######################################
 Chain Gloves// Chance Guards
 Vampirebone Gloves// Dracul's Grasp
 Ogre Gauntlets// Steelrend
 
-//Boots
+//#######################################
+//###### Boots
+//#######################################
 Scarabshell Boots// Sandstorm Trek
 Boneweave Boots// Marrowwalk
 War Boots// Gore Rider
 Myrmidon Greaves// Gore Rider or Shadow Dancer
 
-//Belts
+//#######################################
+//###### Belts
+//#######################################
 War Belt// Thundergod's Vigor
 Spiderweb Sash// Arachnid Mesh
 Vampirefang Belt// Nosferatu's Coil
 Mithril Coil// Verdungo's Hearty Cord
 
-//Paladin Shields
+//#######################################
+//###### Paladin Shields
+//#######################################
 Gilded Shield// Herald Of Zakarum
 Zakarum Shield// Herald Of Zakarum
 
-//Sorceress Orbs
+//#######################################
+//###### Sorceress Orbs
+//#######################################
 Swirling Crystal// The Oculus
 Eldritch Orb// Eschuta's Temper
 Dimensional Shard// Death's Fathom
 
-//Circlets
+//#######################################
+//###### Circlets
+//#######################################
 Tiara// Kira's Guardian
 Diadem// Griffon's Eye
 
-//Necromancer Shrunken Heads
+//#######################################
+//###### Necromancer Shrunken Heads
+//#######################################
 Hierophant Trophy// Homunculus
 
-//Druid Pelts
+//#######################################
+//###### Druid Pelts
+//#######################################
 Totemic Mask// Jalal's Mane
 
-//Barbarian Helms
+//#######################################
+//###### Barbarian Helms
+//#######################################
 Slayer Guard// Arreat's Face
 Guardian Crown// Arreat's Face
 
-//Others
-Grand Charm// Possible GHEED
-Ring// #### ID LATER ####
-Amulet// #### ID LATER ####
-Jewel// #### ID LATER #### -> Rainbow Facet
+//#######################################
+//###### Others
+//#######################################
+Small Charm// Annihilus
+Large Charm// Hellfire Torch
+Grand Charm// Gheed and other's Unique GC
+Ring//#### ID LATER ####
+Amulet//#### ID LATER ####
+Jewel// Rainbow Facet
 
 //#######################################
-//KEYS/GEMS/RUNES ITEMS
+//###### KEYS/GEMS/RUNES ITEMS
 //#######################################
 //El Rune 
 Eld Rune
@@ -97,59 +122,258 @@ Ber Rune
 Jah Rune
 Cham Rune
 Zod Rune
-// ##### Keys ######################
+
+//#######################################
+//###### Keys
+//#######################################
 Key of Terror
 Key of Hate
 Key of Destruction
-// ##### Essences ######################
+
+//#######################################
+//##### Organs
+//#######################################
+Mephisto's Brain
+Baal's Eye
+Diablo's Horn
+
+//#######################################
+//###### Essences
+//#######################################
 Twisted Essence Of Suffering
 Charged Essence Of Hatred
 Burning Essence Of Terror
 Festering Essence Of Destruction
+
 Token Of Absolution
-// ##### Gems ######################
-Chipped Amethyst
+
+//#######################################
+//###### Gems
+//#######################################
 Chipped Topaz
+Chipped Amethyst
 Chipped Sapphire
 Chipped Ruby
 Chipped Emerald
 Chipped Diamond
 
-Flawed Amethyst
 Flawed Topaz
+Flawed Amethyst
 Flawed Sapphire
 Flawed Ruby
 Flawed Emerald
 Flawed Diamond
 
-//Amethyst
-//Topaz
+Topaz
+Amethyst
 //Sapphire
 //Ruby
 //Emerald
 //Diamond
 
-Flawless Amethyst
 Flawless Topaz
+Flawless Amethyst
 Flawless Sapphire
 Flawless Ruby
 Flawless Emerald
 Flawless Diamond
 
-Perfect Amethyst
 Perfect Topaz
+Perfect Amethyst
 Perfect Sapphire
 Perfect Ruby
 Perfect Emerald
 Perfect Diamond
 
 //#######################################
-//SET ITEMS
+//###### SET ITEMS
 //#######################################
-Lacquered Plate// Tal Rasha's Guardianship
-Death Mask// Tal Rasha's Horadric Crest
-Mesh Belt// Tal Rasha's Fine Spun Cloth
-Sacred Armor// Immortal King
-Heavy Bracers// Trang-Oul's Claws
-Winged Helm// Guillaume's Face
+//Ring Mail// Angelic Mantle
+//Sabre// Angelic Sickle
+//#[Type] == ring# [MaxHP] == 20 // Angelic Halo
+//#[Type] == amulet# [ItemLightRadius] == 3 && [ItemDamageToMana] == 20 // Angelic Wings
+
+//##### Arcanna's Tricks ##############
+//#[Type] == amulet# [MaxMana] == 15 // Arcanna's Sign
+//Skull Cap// Arcanna's Head
+//Light Plate// Arcanna's Flesh
+//War Staff// Arcanna's Deathwand
+
+//##### Arctic Gear ###################
+//Quilted Armor// Arctic Furs
+//Light Belt// Arctic Binding
+//Light Gauntlets// Arctic Mitts
+//Short War Bow// Arctic Horn
+
+//##### Berseker's Arsenal ############
+//Helm// Berserker's Headgear
+//Splint Mail// Berserker's Hauberk
+//Double Axe// Berserker's Hatchet
+
+//##### Cathan's Traps ################
+//#[Type] == ring# [LifeLeech] == 6 && [NormalDamageReduction] == 2 // Cathan's Seal
+//#[Type] == amulet# [FHR] == 10 && [LightMaxDam] == 5 // Cathan's Sigil
+//Chain Mail// Cathan's Mesh
+//Mask// Cathan's Visage
+
+//##### Civerb's Vestment #############
+//Grand Scepter// Civerb's Cudgel
+//#[Type] == amulet# [ManaRecovery] == 40 && [HPRegen] == 4 // Civerb's Icon
+//Large Shield// Civerb's Ward
+
+//##### Cleglaw's Brace ###############
+//Long Sword// Cleglaw's Tooth
+//Chain Gloves// Cleglaw's Pincers
+//Small Shield// Cleglaw's Claw
+
+//##### Death's Disguise ##############
+//War Sword// Death's Touch
+//Leather Gloves// Death's Hand
+//Sash// Death's Guard
+
+//##### Hsaru's Defense ###############
+//Buckler// Hsarus' Iron Fist
+//Belt// Hsarus' Iron Stay
+//Chain Boots// Hsarus' Iron Heel
+
+//##### Infernal Tools ################
+//Cap// Infernal Cranium
+//Grim Wand// Infernal Touch
+//Heavy Belt// Infernal Sign
+
+//##### Iratha's Finery ###############
+//#Heavy Belt// Iratha's Cord
+//Crown// Iratha's Coil
+//#[Type] == amulet# [PoisonResist] == 30 && [PoisonLength] == -75 // Iratha's Collar
+//#Light Gauntlets// Iratha's Cuff
+
+//##### Isenhart's Armory #############
+//Broad Sword// Isenhart's Lightbrand
+//Full Helm// Isenhart's Horns
+//Breast Plate// Isenhart's Case
+//Gothic Shield// Isenhart's Parry
+
+//##### Milabrega's Regalia ###########
+//Kite Shield// Milabrega's Orb
+//Ancient Armor// Milabrega's Robe
+//War Scepter// Milabrega's Rod
+//#Crown// Milabrega's Diadem
+
+//##### Sigon's Steel #################
+//Great Helm// Sigon's Visor
+//Gothic Plate// Sigon's Shelter
+//Greaves// Sigon's Sabot
+//Tower Shield// Sigon's Guard
+//Plated Belt// Sigon's Warp
+//Gauntlets// Sigon's Gage
+
+//##### Tancred's Battlegear ##########
+//Bone Helm// Tancred's Skull
+//Full Plate Mail// Tancred's Spine
+//Boots// Tancred's Hobnails
+//Military Pick// Tancred's Crowbill
+//#[Type] == amulet# [MagicDamageReduction] == 1 && [NormalDamageReduction] == 2 // Tancred's Weird
+
+//##### Vidala's Rig ##################
+//#[Type] == amulet# [ColdResist] == 20 && [MaxMana] == 15 // Vidala's Snare
+//Long Battle Bow// Vidala's Barb
+//Leather Armor// Vidala's Ambush
+//Light Plated Boots// Vidala's Fetlock
+
+//##### Aldur's Watchtower ############
+//Hunter's Guise// Aldur's Stony Gaze
+//Battle Boots// Aldur's Advance
 Russet Armor// Aldur's Advance
+//Shadow Plate// Aldur's Deception
+//Jagged Star// Aldur's Rhythm
+
+//##### Bul Kathos' Children ##########
+//Colossus Blade// Bul-Kathos' Sacred Charge
+//Mythical Sword// Bul-Kathos' Tribal Guardian
+
+//##### Cow King's Leathers ###########
+//War Hat// Cow King's Horns
+//Studded Leather// Cow King's Hide
+//Heavy Boots// Cow King's Hooves
+
+//##### The Disciple ##################
+//#[Type] == amulet# [ItemAllSkills] == 1 && [ColdResist] == 18 // Telling of Beads
+//Bramble Mitts// Laying of Hands
+//Dusk Shroud// Dark Adherent
+//Demonhide Boots// Rite of Passage
+//Mithril Coil// Credendum
+
+//##### Griswold's Legacy #############
+//Ornate Plate// Griswold's Heart
+//Corona// Griswold's Valor
+//Caduceus// Griswold's Redemption
+//Vortex Shield// Griswold's Honor
+
+//##### Heaven's Brethren #############
+//Cuirass// Haemosu's Adamant
+//Reinforced Mace// Dangoon's Teaching
+//Ward// Taebaek's Glory
+//Spired Helm// Ondal's Almighty
+
+//##### Hwanin's Majesty ##############
+//Grand Crown// Hwanin's Splendor
+//Bill// Hwanin's Justice
+//Tigulated Mail// Hwanin's Refuge
+//#Belt// Hwanin's Blessing
+
+//##### Immortal King #################
+//War Belt// Immortal King's Detail
+//Avenger Guard// Immortal King's Will
+//Ogre Maul// Immortal King's Stone Crusher
+Sacred Armor// Immortal King's Soul Cage
+//War Gauntlets// Immortal King's Forge
+//War Boots// Immortal King's Pillar
+
+//##### M'avina's Battle Hymn #########
+//Diadem// M'avina's True Sight
+//Grand Matron Bow// M'avina's Caster
+//Kraken Shell// M'avina's Embrace
+//Battle Gauntlets// M'avina's Icy Clutch
+//Sharkskin Belt// M'avina's Tenet
+
+//##### Natalya's Odium ###############
+//Grim Helm// Natalya's Totem
+//Scissors Suwayyah// Natalya's Mark
+//Loricated Mail// Natalya's Shadow
+//Mesh Boots// Natalya's Soul
+
+//##### Naj's Ancient Vestige #########
+//Circlet// Naj's Circlet
+//Hellforge Plate// Naj's Light Plate
+//Elder Staff// Naj's Puzzler
+
+//##### Orphan's Call #################
+Winged Helm// Guillaume's Face
+//Round Shield// Whistan's Guard
+//Sharkskin Gloves// Magnus' Skin
+//Battle Belt// Wilhelm's Pride
+
+//##### Sander's Folly ################
+//#Cap// Sander's Paragon
+//Bone Wand// Sander's Superstition
+//Heavy Gloves// Sander's Taboo
+//#Heavy Boots// Sander's Riprap
+
+//##### Sazabi's Grand Tribute ########
+//Basinet// Sazabi's Mental Sheath
+//Cryptic Sword// Sazabi's Cobalt Redeemer
+//Balrog Skin// Sazabi's Ghost Liberator
+
+//##### Tal Rasha's Wrappings #########
+Swirling Crystal// Tal Rasha's Lidless Eye
+Death Mask// Tal Rasha's Horadric Crest
+Lacquered Plate// Tal Rasha's Guardianship
+//#[Type] == amulet# [SorceressSkills] == 2 // Tal Rasha's Adjucation
+Mesh Belt// Tal Rasha's Fine-Spun Cloth
+
+//##### Trang-Oul's Avatar ############
+//Bone Visage// Trang-Oul's Guise
+//Chaos Armor// Trang-Oul's Scales
+//Cantor Trophy// Trang-Oul's Wing
+//Troll Belt// Trang-Oul's Girth
+Heavy Bracers// Trang-Oul's Claws

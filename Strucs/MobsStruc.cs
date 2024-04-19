@@ -27,6 +27,13 @@ namespace app
         public ushort yPosFinal = 0;
         public byte[] pPath = new byte[144];
 
+        public int MobsHPAll = 0;
+        public ushort xPosFinalAll = 0;
+        public ushort yPosFinalAll = 0;
+        public uint statCountAll = 0;
+        public long statPtrAll = 0;
+        public byte[] statBufferAll = new byte[] { };
+
         public uint statCount = 0;
         //public uint statExCount = 0;
         public long statPtr = 0;
@@ -155,7 +162,7 @@ namespace app
 
                         CurrentPointerBytes = new byte[4];
                         Form1_0.Mem_0.ReadRawMemory(MobsPointerLocation + 4, ref CurrentPointerBytes, CurrentPointerBytes.Length);
-                        txtFileNo = BitConverter.ToUInt32(CurrentPointerBytes, 0);
+                        uint txtFileNo2 = BitConverter.ToUInt32(CurrentPointerBytes, 0);
 
                         //long pStatsListExPtr = BitConverter.ToInt64(mobsdatastruc, 0x88);
                         CurrentPointerBytes = new byte[8];
@@ -163,35 +170,34 @@ namespace app
                         long pStatsListExPtr = BitConverter.ToInt64(CurrentPointerBytes, 0);
 
                         bool isPlayerMinion = false;
-                        if (getPlayerMinion((int)txtFileNo) != "") isPlayerMinion = true;
+                        if (getPlayerMinion((int)txtFileNo2) != "") isPlayerMinion = true;
                         else isPlayerMinion = ((Form1_0.Mem_0.ReadUInt32((IntPtr)(pStatsListExPtr + 0xAC8 + 0xc)) & 31) == 1); //is a revive
 
-                        if ((Form1_0.NPCStruc_0.HideNPC((int)txtFileNo) == 0
-                            && Form1_0.NPCStruc_0.getTownNPC((int)txtFileNo) == ""
+                        if ((Form1_0.NPCStruc_0.HideNPC((int)txtFileNo2) == 0
+                            && Form1_0.NPCStruc_0.getTownNPC((int)txtFileNo2) == ""
                             && !isPlayerMinion
                             && !DebuggingMobs)
                             || DebuggingMobs)
                         //&& IsThisMobInBound())
-                        //&& !ShouldBeIgnored(txtFileNo))
+                        //&& !ShouldBeIgnored(txtFileNo2))
                         {
-                            GetUnitPathData();
-                            GetStatsAddr();
-                            MobsHP = GetHPFromStats();
+                            GetUnitPathDataAll();
+                            GetStatsAddrAll();
+                            MobsHPAll = GetHPFromStatsAll();
 
                             if (DebuggingMobs)
                             {
-                                Form1_0.AppendTextDebugMobs("ID:" + txtFileNo + "(" + Form1_0.NPCStruc_0.getNPC_ID((int)txtFileNo) + ") at:" + xPosFinal + ", " + yPosFinal + " - HP:" + MobsHP + Environment.NewLine);
+                                Form1_0.AppendTextDebugMobs("ID:" + txtFileNo2 + "(" + Form1_0.NPCStruc_0.getNPC_ID((int)txtFileNo2) + ") at:" + xPosFinalAll + ", " + yPosFinalAll + " - HP:" + MobsHPAll + Environment.NewLine);
                             }
 
-                            //Console.WriteLine("found near mob " + Form1_0.NPCStruc_0.getNPC_ID((int)txtFileNo) + " at: " + xPosFinal + ", " + yPosFinal + " HP:" + MobsHP);
+                            //Console.WriteLine("found near mob " + Form1_0.NPCStruc_0.getNPC_ID((int)txtFileNo2) + " at: " + xPosFinal + ", " + yPosFinal + " HP:" + MobsHP);
 
-                            if (xPosFinal != 0 && yPosFinal != 0)
+                            if (xPosFinalAll != 0 && yPosFinalAll != 0)
                             {
-                                //if (MobsHP != 0) monsterPositions2.Add(Tuple.Create((int) xPosFinal, (int) yPosFinal));
-                                if (MobsHP != 0)
+                                if (MobsHPAll != 0)
                                 {
-                                    monsterPositions2.Add(new int[2] { (int)xPosFinal, (int)yPosFinal });
-                                    monsterIDs.Add((int) txtFileNo);
+                                    monsterPositions2.Add(new int[2] { (int)xPosFinalAll, (int)yPosFinalAll });
+                                    monsterIDs.Add((int)txtFileNo2);
                                 }
                             }
                         }
@@ -204,6 +210,67 @@ namespace app
             }
 
             return monsterPositions2;
+        }
+
+        public void GetUnitPathDataAll()
+        {
+            //pPathPtr = BitConverter.ToInt64(mobsdatastruc, 0x38);
+            CurrentPointerBytes = new byte[8];
+            Form1_0.Mem_0.ReadRawMemory(MobsPointerLocation + 0x38, ref CurrentPointerBytes, CurrentPointerBytes.Length);
+            pPathPtr = BitConverter.ToInt64(CurrentPointerBytes, 0);
+            //pPath = new byte[144];
+            pPath = new byte[0x08];
+            Form1_0.Mem_0.ReadRawMemory(pPathPtr, ref pPath, pPath.Length);
+
+            ushort itemx2 = BitConverter.ToUInt16(pPath, 0x02);
+            ushort itemy2 = BitConverter.ToUInt16(pPath, 0x06);
+            ushort xPosOffset = BitConverter.ToUInt16(pPath, 0x00);
+            ushort yPosOffset = BitConverter.ToUInt16(pPath, 0x04);
+            int xPosOffsetPercent = (xPosOffset / 65536); //get percentage
+            int yPosOffsetPercent = (yPosOffset / 65536); //get percentage
+            xPosFinalAll = (ushort)(itemx2 + xPosOffsetPercent);
+            yPosFinalAll = (ushort)(itemy2 + yPosOffsetPercent);
+        }
+
+        public void GetStatsAddrAll()
+        {
+            //long pStatsListExPtr = BitConverter.ToInt64(mobsdatastruc, 0x88);
+            CurrentPointerBytes = new byte[8];
+            Form1_0.Mem_0.ReadRawMemory(MobsPointerLocation + 0x88, ref CurrentPointerBytes, CurrentPointerBytes.Length);
+            try
+            {
+                long pStatsListExPtr = BitConverter.ToInt64(CurrentPointerBytes, 0);
+                statPtrAll = Form1_0.Mem_0.ReadInt64Raw((IntPtr)(pStatsListExPtr + 0x30));
+                statCountAll = Form1_0.Mem_0.ReadUInt32Raw((IntPtr)(pStatsListExPtr + 0x38));
+            }
+            catch { }
+        }
+
+        public int GetHPFromStatsAll()
+        {
+            try
+            {
+                if (this.statCountAll < 100)
+                {
+                    Form1_0.Mem_0.ReadRawMemory(this.statPtrAll, ref statBufferAll, (int)(this.statCountAll * 10));
+                    for (int i = 0; i < this.statCountAll; i++)
+                    {
+                        int offset = i * 8;
+                        short statLayer = BitConverter.ToInt16(statBufferAll, offset);
+                        ushort statEnum = BitConverter.ToUInt16(statBufferAll, offset + 0x2);
+                        int statValue = BitConverter.ToInt32(statBufferAll, offset + 0x4);
+                        if (statEnum == 6)
+                        {
+                            return statValue;
+                        }
+                    }
+                }
+            }
+            catch
+            {
+                Form1_0.method_1("Couldn't get Mob HP from Stats!", Color.Red);
+            }
+            return 0; // or some other default value
         }
 
         public bool DebuggingMobs = false;
@@ -618,93 +685,5 @@ namespace app
             return "";
         }
 
-        public bool ShouldBeIgnored(uint txtNo)
-        {
-            switch ((EnumsMobsNPC.MobsNPC)txtNo)
-            {
-                case EnumsMobsNPC.MobsNPC.Chicken:
-                //case EnumsMobsNPC.MobsNPC.Rat:
-                case EnumsMobsNPC.MobsNPC.Rogue:
-                case EnumsMobsNPC.MobsNPC.HellMeteor:
-                //case EnumsMobsNPC.MobsNPC.Bird:
-                case EnumsMobsNPC.MobsNPC.Bird2:
-                case EnumsMobsNPC.MobsNPC.Bat:
-                case EnumsMobsNPC.MobsNPC.Act2Male:
-                case EnumsMobsNPC.MobsNPC.Act2Female:
-                case EnumsMobsNPC.MobsNPC.Act2Child:
-                case EnumsMobsNPC.MobsNPC.Cow:
-                case EnumsMobsNPC.MobsNPC.Camel:
-                case EnumsMobsNPC.MobsNPC.Act2Guard:
-                case EnumsMobsNPC.MobsNPC.Act2Vendor:
-                case EnumsMobsNPC.MobsNPC.Act2Vendor2:
-                case EnumsMobsNPC.MobsNPC.Maggot:
-                case EnumsMobsNPC.MobsNPC.Bug:
-                case EnumsMobsNPC.MobsNPC.Scorpion:
-                case EnumsMobsNPC.MobsNPC.Rogue2:
-                case EnumsMobsNPC.MobsNPC.Rogue3:
-                case EnumsMobsNPC.MobsNPC.Larva:
-                case EnumsMobsNPC.MobsNPC.Familiar:
-                case EnumsMobsNPC.MobsNPC.Act3Male:
-                case EnumsMobsNPC.MobsNPC.ClayGolem:
-                case EnumsMobsNPC.MobsNPC.BloodGolem:
-                case EnumsMobsNPC.MobsNPC.IronGolem:
-                case EnumsMobsNPC.MobsNPC.FireGolem:
-                case EnumsMobsNPC.MobsNPC.Act3Female:
-                case EnumsMobsNPC.MobsNPC.Snake:
-                case EnumsMobsNPC.MobsNPC.Parrot:
-                case EnumsMobsNPC.MobsNPC.Fish:
-                case EnumsMobsNPC.MobsNPC.EvilHole:
-                case EnumsMobsNPC.MobsNPC.EvilHole2:
-                case EnumsMobsNPC.MobsNPC.EvilHole3:
-                case EnumsMobsNPC.MobsNPC.EvilHole4:
-                case EnumsMobsNPC.MobsNPC.EvilHole5:
-                case EnumsMobsNPC.MobsNPC.FireboltTrap:
-                case EnumsMobsNPC.MobsNPC.HorzMissileTrap:
-                case EnumsMobsNPC.MobsNPC.VertMissileTrap:
-                case EnumsMobsNPC.MobsNPC.PoisonCloudTrap:
-                case EnumsMobsNPC.MobsNPC.LightningTrap:
-                case EnumsMobsNPC.MobsNPC.InvisoSpawner:
-                case EnumsMobsNPC.MobsNPC.Guard:
-                case EnumsMobsNPC.MobsNPC.MiniSper:
-                case EnumsMobsNPC.MobsNPC.BoneWall:
-                case EnumsMobsNPC.MobsNPC.Hydra:
-                case EnumsMobsNPC.MobsNPC.Hydra2:
-                case EnumsMobsNPC.MobsNPC.Hydra3:
-                case EnumsMobsNPC.MobsNPC.SevenTombs:
-                case EnumsMobsNPC.MobsNPC.Valkyrie:
-                case EnumsMobsNPC.MobsNPC.IronWolf:
-                case EnumsMobsNPC.MobsNPC.NecroSkeleton:
-                case EnumsMobsNPC.MobsNPC.NecroMage:
-                case EnumsMobsNPC.MobsNPC.CompellingOrbNpc:
-                case EnumsMobsNPC.MobsNPC.SpiritMummy:
-                case EnumsMobsNPC.MobsNPC.Act2Guard4:
-                case EnumsMobsNPC.MobsNPC.Act2Guard5:
-                case EnumsMobsNPC.MobsNPC.Window:
-                case EnumsMobsNPC.MobsNPC.Window2:
-                case EnumsMobsNPC.MobsNPC.MephistoSpirit:
-                case EnumsMobsNPC.MobsNPC.WakeOfDestruction:
-                case EnumsMobsNPC.MobsNPC.ChargedBoltSentry:
-                case EnumsMobsNPC.MobsNPC.LightningSentry:
-                case EnumsMobsNPC.MobsNPC.InvisiblePet:
-                case EnumsMobsNPC.MobsNPC.InfernoSentry:
-                case EnumsMobsNPC.MobsNPC.DeathSentry:
-                case EnumsMobsNPC.MobsNPC.ShadowWarrior:
-                case EnumsMobsNPC.MobsNPC.ShadowMaster:
-                case EnumsMobsNPC.MobsNPC.DruHawk:
-                case EnumsMobsNPC.MobsNPC.DruSpiritWolf:
-                case EnumsMobsNPC.MobsNPC.DruFenris:
-                case EnumsMobsNPC.MobsNPC.HeartOfWolverine:
-                case EnumsMobsNPC.MobsNPC.OakSage:
-                case EnumsMobsNPC.MobsNPC.DruBear:
-                case EnumsMobsNPC.MobsNPC.BaalThrone:
-                case EnumsMobsNPC.MobsNPC.InjuredBarbarian:
-                case EnumsMobsNPC.MobsNPC.InjuredBarbarian2:
-                case EnumsMobsNPC.MobsNPC.InjuredBarbarian3:
-                case EnumsMobsNPC.MobsNPC.DemonHole:
-                    return true;
-                default:
-                    return false;
-            }
-        }
     }
 }

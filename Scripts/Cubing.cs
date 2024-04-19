@@ -87,7 +87,7 @@ namespace app
 
         public bool StashContainRecipeItem(string ItemName)
         {
-            for (int i = 0; i < 100; i++)
+            for (int i = 2; i < 100; i++)
             {
                 if (Form1_0.StashStruc_0.Stash1_ItemTxtNoList[i] > 0)
                 {
@@ -100,7 +100,7 @@ namespace app
                     }
                 }
             }
-            for (int i = 0; i < 100; i++)
+            for (int i = 1; i < 100; i++)
             {
                 if (Form1_0.StashStruc_0.Stash2_ItemTxtNoList[i] > 0)
                 {
@@ -113,7 +113,7 @@ namespace app
                     }
                 }
             }
-            for (int i = 0; i < 100; i++)
+            for (int i = 1; i < 100; i++)
             {
                 if (Form1_0.StashStruc_0.Stash3_ItemTxtNoList[i] > 0)
                 {
@@ -126,7 +126,7 @@ namespace app
                     }
                 }
             }
-            for (int i = 0; i < 100; i++)
+            for (int i = 1; i < 100; i++)
             {
                 if (Form1_0.StashStruc_0.Stash4_ItemTxtNoList[i] > 0)
                 {
@@ -139,6 +139,20 @@ namespace app
                     }
                 }
             }
+
+            if (CharConfig.RunCowsScript && !Form1_0.Cows_0.ScriptDone)
+            {
+                for (int i = 0; i < 40; i++)
+                {
+                    if (Form1_0.InventoryStruc_0.InventoryItemNames[i] == ItemName)
+                    {
+                        CurrentRecipeItemLocations.Add(i);
+                        CurrentRecipeItemInStashNumber.Add(5);
+                        return true;
+                    }
+                }
+            }
+
             return false;
         }
 
@@ -151,7 +165,7 @@ namespace app
             if (Form1_0.ItemsStruc_0.dwOwnerId_Shared1 == 0 || Form1_0.ItemsStruc_0.dwOwnerId_Shared2 == 0 || Form1_0.ItemsStruc_0.dwOwnerId_Shared3 == 0)
             {
                 Form1_0.ItemsStruc_0.GetItems(false);
-                Form1_0.ItemsStruc_0.GetItems(false);
+                //Form1_0.ItemsStruc_0.GetItems(false);
 
                 //still zero return error
                 if (Form1_0.ItemsStruc_0.dwOwnerId_Shared1 == 0 || Form1_0.ItemsStruc_0.dwOwnerId_Shared2 == 0 || Form1_0.ItemsStruc_0.dwOwnerId_Shared3 == 0)
@@ -219,11 +233,16 @@ namespace app
                 {
                     Form1_0.KeyMouse_0.MouseClicc(600, 200);   //clic shared stash3
                 }
-                Form1_0.WaitDelay(15);
+                Form1_0.WaitDelay(16);
 
                 //select the item
                 Dictionary<string, int> itemScreenPos = ConvertIndexToXY(CurrentRecipeItemLocations[i]);
                 itemScreenPos = ConvertInventoryLocToScreenPos(itemScreenPos["x"], itemScreenPos["y"]);
+                if (CurrentRecipeItemInStashNumber[i] == 5)
+                {
+                    itemScreenPos = Form1_0.InventoryStruc_0.ConvertIndexToXY(CurrentRecipeItemLocations[i]);
+                    itemScreenPos = Form1_0.InventoryStruc_0.ConvertInventoryLocToScreenPos(itemScreenPos["x"], itemScreenPos["y"]);
+                }
                 Form1_0.Stash_0.PickItem(itemScreenPos["x"], itemScreenPos["y"]);
                 //Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"]);
                 //Form1_0.WaitDelay(10);
@@ -245,7 +264,7 @@ namespace app
                 {
                     Form1_0.KeyMouse_0.MouseClicc(600, 200);   //clic shared stash3
                 }
-                Form1_0.WaitDelay(15);
+                Form1_0.WaitDelay(16);
 
                 //clic on cube to send item to cube
                 itemScreenPos = ConvertIndexToXY(Form1_0.StashStruc_0.CubeIndex);
@@ -254,6 +273,7 @@ namespace app
                 //Form1_0.Stash_0.PlaceItem(itemScreenPos["x"], itemScreenPos["y"]);
                 //Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"]);
                 //Form1_0.WaitDelay(40);
+                Form1_0.WaitDelay(5);
             }
 
             //clic on cube to open the cube
@@ -282,13 +302,13 @@ namespace app
             {
                 //clic transmute button
                 Form1_0.KeyMouse_0.MouseClicc(405, 615);
-                Form1_0.WaitDelay(15);
+                Form1_0.WaitDelay(10);
                 Form1_0.KeyMouse_0.MouseClicc(405, 615);
-                Form1_0.WaitDelay(15);
+                Form1_0.WaitDelay(10);
                 Form1_0.KeyMouse_0.MouseClicc(405, 615);
-                Form1_0.WaitDelay(15);
+                Form1_0.WaitDelay(10);
                 Form1_0.ItemsStruc_0.GetItems(false);   //get inventory again
-                Form1_0.WaitDelay(100);
+                Form1_0.WaitDelay(120);
 
                 //send item to inventory
                 Form1_0.UIScan_0.readUI();

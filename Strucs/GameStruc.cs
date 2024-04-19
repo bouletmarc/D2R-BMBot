@@ -64,8 +64,14 @@ namespace app
             GetAllGamesNames();
         }
 
-        public void CreateNewGame()
+        public void CreateNewGame(int ThisGameNumber)
         {
+            if (Form1_0.TriedToCreateNewGameCount > 0)
+            {
+                Form1_0.KeyMouse_0.MouseClicc(960, 580); //clic 'ok' if game already exist
+                Thread.Sleep(300);
+            }
+
             Form1_0.SetGameStatus("CREATING GAME");
             Form1_0.KeyMouse_0.MouseClicc(1190, 990); //clic 'salon' if not in server
             Form1_0.KeyMouse_0.MouseClicc(1275, 65);  //clic 'create game' if not in game create area
@@ -77,7 +83,8 @@ namespace app
                 Form1_0.KeyMouse_0.PressKey(Keys.Back);
                 Thread.Sleep(3);
             }
-            string GameName = CharConfig.GameName + Form1_0.CurrentGameNumber.ToString("000");
+            Thread.Sleep(3);
+            string GameName = CharConfig.GameName + ThisGameNumber.ToString("000");
             for (int i = 0; i < GameName.Length; i++)
             {
                 var helper = new Helper { Value = VkKeyScan(GameName[i]) };
@@ -94,6 +101,7 @@ namespace app
                 Form1_0.KeyMouse_0.PressKey(Keys.Back);
                 Thread.Sleep(3);
             }
+            Thread.Sleep(3);
             for (int i = 0; i < CharConfig.GamePass.Length; i++)
             {
                 var helper = new Helper { Value = VkKeyScan(CharConfig.GamePass[i]) };
@@ -111,7 +119,6 @@ namespace app
 
             Form1_0.SetGameStatus("LOADING GAME");
 
-
             //###############
             /*GetAllGamesNames();
             SelectGame(0, false);
@@ -125,6 +132,28 @@ namespace app
             ClicTopRow();
             Form1_0.KeyMouse_0.MouseClicc(1190, 990); //clic 'salon' if not in server
             Form1_0.KeyMouse_0.MouseClicc(1415, 65);  //clic 'join game' if not in game list area
+
+            //#####
+            Form1_0.KeyMouse_0.MouseClicc(1205, 210); //clic search bar
+            //type 'search' type games
+            for (int i = 0; i < 16; i++)
+            {
+                Form1_0.KeyMouse_0.PressKey(Keys.Back);
+                Thread.Sleep(3);
+            }
+            Thread.Sleep(3);
+            string GameName = "";
+            if (CharConfig.RunBaalSearchGameScript && !CharConfig.RunItemGrabScriptOnly) GameName = "baal";
+            if (CharConfig.RunChaosSearchGameScript && !CharConfig.RunItemGrabScriptOnly) GameName = "chaos";
+            for (int i = 0; i < GameName.Length; i++)
+            {
+                var helper = new Helper { Value = VkKeyScan(GameName[i]) };
+                byte virtualKeyCode = helper.Low;
+                Form1_0.KeyMouse_0.PressKey2((Keys)virtualKeyCode);
+                Thread.Sleep(3);
+            }
+            //#####
+
             Form1_0.KeyMouse_0.MouseClicc(1720, 210); //clic refresh
             Form1_0.WaitDelay(60);
 
@@ -335,6 +364,7 @@ namespace app
                             Form1_0.method_1("Leaving reason: Chicken time", Color.Red);
                             Form1_0.LeaveGame(false);
                             AlreadyChickening = true;
+                            Form1_0.TotalChickenByTimeCount++;
                         }
                     }
                 }

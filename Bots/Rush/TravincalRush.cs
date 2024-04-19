@@ -48,12 +48,14 @@ namespace app
                 if (CurrentStep == 0)
                 {
                     Form1_0.SetGameStatus("DOING TRAVINCAL");
-                    Form1_0.Battle_0.CastDefense();
-                    Form1_0.WaitDelay(15);
+                    //Form1_0.Battle_0.CastDefense();
+                    //Form1_0.WaitDelay(15);
 
                     if ((Enums.Area) Form1_0.PlayerScan_0.levelNo == Enums.Area.Travincal)
                     {
                         Form1_0.Town_0.SpawnTP();
+                        Form1_0.WaitDelay(15);
+                        Form1_0.Battle_0.CastDefense();
                         PortalPosition.X = Form1_0.PlayerScan_0.xPos + 85;
                         PortalPosition.Y = Form1_0.PlayerScan_0.yPos - 139;
                         CurrentStep++;

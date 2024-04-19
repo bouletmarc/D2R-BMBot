@@ -350,7 +350,7 @@ namespace app
                         }
                     }
                     //###
-                    if (BaalThronePointer == 0)
+                    /*if (BaalThronePointer == 0)
                     {
                         if (Form1_0.MobsStruc_0.GetMobs("getBossName", "BaalThrone", false, 99, new List<long>()))
                         {
@@ -374,7 +374,7 @@ namespace app
                     {
                         Form1_0.method_1("Too low FPS, switching to baal script!", Color.Red);
                         CurrentStep++;
-                    }
+                    }*/
                     //CurrentStep++;
 
                     if (Form1_0.PlayerScan_0.HasAnyPlayerInArea((int) Enums.Area.TheWorldstoneChamber))

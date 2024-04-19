@@ -57,7 +57,6 @@ namespace app
                 {
                     Form1_0.SetGameStatus("DOING DURIEL");
                     Form1_0.Battle_0.CastDefense();
-                    Form1_0.WaitDelay(15);
 
                     if ((Enums.Area) Form1_0.PlayerScan_0.levelNo == Enums.Area.CanyonOfTheMagi)
                     {

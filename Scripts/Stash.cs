@@ -189,6 +189,8 @@ namespace app
 
         public bool PickItem(int PosX, int PosY)
         {
+            Form1_0.ItemsStruc_0.GetBadItemsOnCursor();
+
             int Tryy = 0;
             while (!Form1_0.ItemsStruc_0.ItemOnCursor && Tryy < 5)
             {

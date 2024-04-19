@@ -103,7 +103,11 @@ namespace app
         public bool PrintedLeechFoundInfo = false;
         public bool HasBattleOrderState = false;
         public long MaxHPValueWithBO = 0;
+        public long MaxManaValueWithBO = 0;
         List<EnumsStates.State> PlayerStates = new List<EnumsStates.State>();
+
+        public int SameHPCount = 0;
+        public long LastPlayerHP = 0;
 
         public int[] RoomExit = new int[2];
 
@@ -402,6 +406,25 @@ namespace app
             //Set Max HP With BattleOrder State
             if (HasBattleOrderState)
             {
+                //#####
+                //Check if Max HP/Mana remain the same, that BO 'power' level didn't changed
+                if (PlayerHP == LastPlayerHP)
+                {
+                    SameHPCount++;
+                    if (SameHPCount >= 100 && PlayerHP != PlayerMaxHP)
+                    {
+                        MaxHPValueWithBO = PlayerMaxHP;
+                        MaxManaValueWithBO = PlayerMaxMana;
+                        SameHPCount = 0;
+                    }
+                }
+                else
+                {
+                    LastPlayerHP = PlayerHP;
+                    SameHPCount = 0;
+                }
+                //#####
+
                 if (MaxHPValueWithBO < PlayerMaxHP)
                 {
                     MaxHPValueWithBO = PlayerMaxHP;
@@ -414,6 +437,23 @@ namespace app
             else
             {
                 MaxHPValueWithBO = 0;
+            }
+
+            //Set Max Mana With BattleOrder State
+            if (HasBattleOrderState)
+            {
+                if (MaxManaValueWithBO < PlayerMaxMana)
+                {
+                    MaxManaValueWithBO = PlayerMaxMana;
+                }
+                else
+                {
+                    PlayerMaxMana = MaxManaValueWithBO;
+                }
+            }
+            else
+            {
+                MaxManaValueWithBO = 0;
             }
         }
 

@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static app.EnumsMobsNPC;
+using static System.Diagnostics.DebuggableAttribute;
 
 namespace app
 {
@@ -19,9 +22,79 @@ namespace app
         public ushort yPosFinal = 0;
         public byte[] pPath = new byte[144];
 
+        public ushort xPosFinal_Overlay = 0;
+        public ushort yPosFinal_Overlay = 0;
+
+
         public void SetForm1(Form1 form1_1)
         {
             Form1_0 = form1_1;
+        }
+
+        public List<int> NPC_IDs = new List<int>();
+
+        public List<int[]> GetAllNPCNearby()
+        {
+            Form1_0.PatternsScan_0.scanForUnitsPointer("NPC");
+
+            List<int[]> npcPositions2 = new List<int[]>();
+            NPC_IDs = new List<int>();
+
+            try
+            {
+                for (int i = 0; i < Form1_0.PatternsScan_0.AllNPCPointers.Count; i++)
+                {
+                    NPCPointerLocation = Form1_0.PatternsScan_0.AllNPCPointers[i];
+                    if (NPCPointerLocation > 0)
+                    {
+                        NPCdatastruc = new byte[144];
+                        Form1_0.Mem_0.ReadRawMemory(NPCPointerLocation, ref NPCdatastruc, 144);
+
+                        uint txtFileNoO = BitConverter.ToUInt32(NPCdatastruc, 4);
+                        GetUnitPathDataOverlay();
+
+                        if (getTownNPC((int)txtFileNoO) != ""
+                            && getTownNPC((int)txtFileNoO) != "DeadCorpse")
+                        {
+                            /*if (DebuggingMobs)
+                            {
+                                Form1_0.AppendTextDebugMobs("ID:" + txtFileNoO + "(" + Form1_0.NPCStruc_0.getNPC_ID((int)txtFileNoO) + ") at:" + xPosFinal + ", " + yPosFinal + " - HP:" + MobsHP + Environment.NewLine);
+                            }*/
+
+                            //Console.WriteLine("found near mob " + Form1_0.NPCStruc_0.getNPC_ID((int)txtFileNoO) + " at: " + xPosFinal + ", " + yPosFinal + " HP:" + MobsHP);
+
+                            if (xPosFinal_Overlay != 0 && yPosFinal_Overlay != 0)
+                            {
+                                npcPositions2.Add(new int[2] { (int)xPosFinal_Overlay, (int)yPosFinal_Overlay });
+                                NPC_IDs.Add((int)txtFileNoO);
+                            }
+                        }
+                    }
+                }
+            }
+            catch
+            {
+                Form1_0.method_1("Couldn't get All NPC Nearby!", Color.Red);
+            }
+
+            return npcPositions2;
+        }
+
+        public void GetUnitPathDataOverlay()
+        {
+            pPathPtr = BitConverter.ToInt64(NPCdatastruc, 0x38);
+            //pPath = new byte[144];
+            pPath = new byte[0x08];
+            Form1_0.Mem_0.ReadRawMemory(pPathPtr, ref pPath, pPath.Length);
+
+            ushort itemx2 = BitConverter.ToUInt16(pPath, 0x02);
+            ushort itemy2 = BitConverter.ToUInt16(pPath, 0x06);
+            ushort xPosOffset = BitConverter.ToUInt16(pPath, 0x00);
+            ushort yPosOffset = BitConverter.ToUInt16(pPath, 0x04);
+            int xPosOffsetPercent = (xPosOffset / 65536); //get percentage
+            int yPosOffsetPercent = (yPosOffset / 65536); //get percentage
+            xPosFinal_Overlay = (ushort)(itemx2 + xPosOffsetPercent);
+            yPosFinal_Overlay = (ushort)(itemy2 + yPosOffsetPercent);
         }
 
         public bool GetNPC(string MobName)
@@ -298,6 +371,8 @@ namespace app
             switch (txtFileNo)
             {
                 case 0: return 1; //UNKOWN
+                case 1: return 1; //Skeleton
+                //case 23: return 1; //WarpedFallen
                 case 149: return 1; //Chicken
                 case 151: return 1; //Rat
                 case 152: return 1; //Rogue
@@ -322,10 +397,10 @@ namespace app
                 case 283: return 1; //Larva
                 case 293: return 1; //Familiar
                 case 294: return 1; //Act3Male
-                // case 289: return 1; //ClayGolem
-                // case 290: return 1; //BloodGolem
-                // case 291: return 1; //IronGolem
-                // case 292: return 1; //FireGolem
+                case 289: return 1; //ClayGolem
+                case 290: return 1; //BloodGolem
+                case 291: return 1; //IronGolem
+                case 292: return 1; //FireGolem
                 case 296: return 1; //Act3Female
                 case 318: return 1; //Snake
                 case 319: return 1; //Parrot
@@ -348,10 +423,11 @@ namespace app
                 case 352: return 1; //Hydra2
                 case 353: return 1; //Hydra3
                 case 355: return 1; //SevenTombs
-                // case 357: return 1; //Valkyrie
-                // case 359: return 1; //IronWolf
-                // case 363: return 1; //NecroSkeleton
-                // case 364: return 1; //NecroMage
+                case 356: return 1; //??
+                case 357: return 1; //Valkyrie
+                case 359: return 1; //IronWolf
+                case 363: return 1; //NecroSkeleton
+                case 364: return 1; //NecroMage
                 case 366: return 1; //CompellingOrb},
                 case 370: return 1; //SpiritMummy
                 case 377: return 1; //Act2Guard4
@@ -365,19 +441,31 @@ namespace app
                 case 414: return 1; //InvisiblePet
                 case 415: return 1; //InfernoSentry
                 case 416: return 1; //DeathSentry
-                // case 417: return 1; //ShadowWarrior
-                // case 418: return 1; //ShadowMaster
-                // case 419: return 1; //DruidHawk
-                // case 420: return 1; //DruidSpiritWolf
-                // case 421: return 1; //DruidFenris
-                // case 423: return 1; //HeartOfWolverine
-                // case 424: return 1; //OakSage
-                // case 428: return 1; //DruidBear
+                case 417: return 1; //ShadowWarrior
+                case 418: return 1; //ShadowMaster
+                case 419: return 1; //DruidHawk
+                case 420: return 1; //DruidSpiritWolf
+                case 421: return 1; //DruidFenris
+                case 422: return 1; //spiritofbarbs	heartofwolverine
+                case 423: return 1; //HeartOfWolverine
+                case 424: return 1; //OakSage
+                case 425: return 1; //Druid Plague Poppy
+                case 426: return 1; //Druid Cycle of Life
+                case 427: return 1; //Druid Something
+                case 428: return 1; //DruidBear
+                case 430: return 1; //Necro Wolf
+                case 431: return 1; //Necro Bear
                 case 543: return 1; //BaalThrone
+                case 559: return 1; //Baal Crab at portal
+                case 562: return 1; //Baal spawned legs on ground
+                case 563: return 1; //Baal spawned legs on ground
+                case 564: return 1; //Baal spawned legs on ground
                 case 565: return 1; //BaalThrone Something...
+                case 566: return 1; //Baal spawned legs on ground
                 case 567: return 1; //InjuredBarbarian
                 case 568: return 1; //InjuredBarbarian2
                 case 569: return 1; //InjuredBarbarian3
+                case 570: return 1; //Baalclone
                 case 574: return 1; //BaalThrone Something...
                 case 711: return 1; //DemonHole
             }
