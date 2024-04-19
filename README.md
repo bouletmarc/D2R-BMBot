@@ -12,6 +12,7 @@ Diablo II : Resurrected - Bot
 ![alt tag](https://raw.githubusercontent.com/bouletmarc/D2R-BMBot/main/BMBot6.png)
 ![alt tag](https://raw.githubusercontent.com/bouletmarc/D2R-BMBot/main/BMBot7.png)
 ![alt tag](https://raw.githubusercontent.com/bouletmarc/D2R-BMBot/main/BMBot8.png)
+![alt tag](https://raw.githubusercontent.com/bouletmarc/D2R-BMBot/main/BMBot9.png)
 
 
 # REQUIREMENTS
@@ -48,7 +49,7 @@ Diablo II : Resurrected - Bot
 # BOT RUNS SCRIPTS AVAILABLE
 
   - Item grab Only script (this script can be used to move arround manually but let the bot pick items)
-  - Cows script (untested)
+  - Cows script
   - Countess script
   - Andariel script
   - Summoner script
