@@ -241,7 +241,7 @@ namespace app
             }*/
             if (targetPos.X <= 0 || targetPos.Y <= 0)
             {
-                Form1_0.method_1("Target pos are bad: " + targetPos.X + ", " + targetPos.Y, Color.Red);
+                Form1_0.method_1("Target pos are bad: " + targetPos.X + ", " + targetPos.Y, Color.OrangeRed);
                 return;
             }
 

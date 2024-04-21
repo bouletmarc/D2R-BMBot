@@ -13,6 +13,8 @@ namespace app
         Form1 Form1_0;
 
         public List<string> CubingRecipes = new List<string>();
+        public List<bool> CubingRecipesEnabled = new List<bool>();
+
         public List<string> CurrentRecipe = new List<string>();
         public string CurrentRecipeResult = "";
         public List<int> CurrentRecipeItemInStashNumber = new List<int>();
@@ -87,7 +89,7 @@ namespace app
 
         public bool StashContainRecipeItem(string ItemName)
         {
-            for (int i = 2; i < 100; i++)
+            for (int i = 0; i < 100; i++)
             {
                 if (Form1_0.StashStruc_0.Stash1_ItemTxtNoList[i] > 0)
                 {
@@ -100,7 +102,7 @@ namespace app
                     }
                 }
             }
-            for (int i = 1; i < 100; i++)
+            for (int i = 0; i < 100; i++)
             {
                 if (Form1_0.StashStruc_0.Stash2_ItemTxtNoList[i] > 0)
                 {
@@ -113,7 +115,7 @@ namespace app
                     }
                 }
             }
-            for (int i = 1; i < 100; i++)
+            for (int i = 0; i < 100; i++)
             {
                 if (Form1_0.StashStruc_0.Stash3_ItemTxtNoList[i] > 0)
                 {
@@ -126,7 +128,7 @@ namespace app
                     }
                 }
             }
-            for (int i = 1; i < 100; i++)
+            for (int i = 0; i < 100; i++)
             {
                 if (Form1_0.StashStruc_0.Stash4_ItemTxtNoList[i] > 0)
                 {
@@ -165,11 +167,12 @@ namespace app
             if (Form1_0.ItemsStruc_0.dwOwnerId_Shared1 == 0 || Form1_0.ItemsStruc_0.dwOwnerId_Shared2 == 0 || Form1_0.ItemsStruc_0.dwOwnerId_Shared3 == 0)
             {
                 Form1_0.ItemsStruc_0.GetItems(false);
-                //Form1_0.ItemsStruc_0.GetItems(false);
+                Form1_0.ItemsStruc_0.GetItems(false);
 
                 //still zero return error
                 if (Form1_0.ItemsStruc_0.dwOwnerId_Shared1 == 0 || Form1_0.ItemsStruc_0.dwOwnerId_Shared2 == 0 || Form1_0.ItemsStruc_0.dwOwnerId_Shared3 == 0)
                 {
+                    Form1_0.method_1("Couln't perform Cubing, Shared Stashes aren't Identifed correctly!", Color.OrangeRed);
                     return;
                 }
             }
@@ -177,6 +180,8 @@ namespace app
             //loop thru all recipes
             for (int i = 0; i < CubingRecipes.Count; i++)
             {
+                if (!CubingRecipesEnabled[i]) continue;
+
                 if (!Form1_0.Running || !Form1_0.GameStruc_0.IsInGame())
                 {
                     break;
@@ -217,22 +222,10 @@ namespace app
                 if (!Form1_0.UIScan_0.leftMenu && !Form1_0.UIScan_0.rightMenu) return;
 
                 //select the stash where the item is located
-                if (CurrentRecipeItemInStashNumber[i] == 1)
-                {
-                    Form1_0.KeyMouse_0.MouseClicc(200, 200);   //clic stash1
-                }
-                if (CurrentRecipeItemInStashNumber[i] == 2)
-                {
-                    Form1_0.KeyMouse_0.MouseClicc(340, 200);   //clic shared stash1
-                }
-                if (CurrentRecipeItemInStashNumber[i] == 3)
-                {
-                    Form1_0.KeyMouse_0.MouseClicc(450, 200);   //clic shared stash2
-                }
-                if (CurrentRecipeItemInStashNumber[i] == 4)
-                {
-                    Form1_0.KeyMouse_0.MouseClicc(600, 200);   //clic shared stash3
-                }
+                if (CurrentRecipeItemInStashNumber[i] == 1) Form1_0.KeyMouse_0.MouseClicc(200, 200);   //clic stash1
+                if (CurrentRecipeItemInStashNumber[i] == 2) Form1_0.KeyMouse_0.MouseClicc(340, 200);   //clic shared stash1
+                if (CurrentRecipeItemInStashNumber[i] == 3) Form1_0.KeyMouse_0.MouseClicc(450, 200);   //clic shared stash2
+                if (CurrentRecipeItemInStashNumber[i] == 4) Form1_0.KeyMouse_0.MouseClicc(600, 200);   //clic shared stash3
                 Form1_0.WaitDelay(16);
 
                 //select the item
@@ -244,35 +237,19 @@ namespace app
                     itemScreenPos = Form1_0.InventoryStruc_0.ConvertInventoryLocToScreenPos(itemScreenPos["x"], itemScreenPos["y"]);
                 }
                 Form1_0.Stash_0.PickItem(itemScreenPos["x"], itemScreenPos["y"]);
-                //Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"]);
                 //Form1_0.WaitDelay(10);
 
                 //select the stash where the cube is located
-                if (Form1_0.StashStruc_0.CubeStashNumber == 1)
-                {
-                    Form1_0.KeyMouse_0.MouseClicc(200, 200);   //clic stash1
-                }
-                if (Form1_0.StashStruc_0.CubeStashNumber == 2)
-                {
-                    Form1_0.KeyMouse_0.MouseClicc(340, 200);   //clic shared stash1
-                }
-                if (Form1_0.StashStruc_0.CubeStashNumber == 3)
-                {
-                    Form1_0.KeyMouse_0.MouseClicc(450, 200);   //clic shared stash2
-                }
-                if (Form1_0.StashStruc_0.CubeStashNumber == 4)
-                {
-                    Form1_0.KeyMouse_0.MouseClicc(600, 200);   //clic shared stash3
-                }
+                if (Form1_0.StashStruc_0.CubeStashNumber == 1) Form1_0.KeyMouse_0.MouseClicc(200, 200);   //clic stash1
+                if (Form1_0.StashStruc_0.CubeStashNumber == 2) Form1_0.KeyMouse_0.MouseClicc(340, 200);   //clic shared stash1
+                if (Form1_0.StashStruc_0.CubeStashNumber == 3) Form1_0.KeyMouse_0.MouseClicc(450, 200);   //clic shared stash2
+                if (Form1_0.StashStruc_0.CubeStashNumber == 4) Form1_0.KeyMouse_0.MouseClicc(600, 200);   //clic shared stash3
                 Form1_0.WaitDelay(16);
 
                 //clic on cube to send item to cube
                 itemScreenPos = ConvertIndexToXY(Form1_0.StashStruc_0.CubeIndex);
                 itemScreenPos = ConvertInventoryLocToScreenPos(itemScreenPos["x"], itemScreenPos["y"]);
-                Form1_0.Stash_0.PlaceItem(itemScreenPos["x"], itemScreenPos["y"]);
-                //Form1_0.Stash_0.PlaceItem(itemScreenPos["x"], itemScreenPos["y"]);
-                //Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"]);
-                //Form1_0.WaitDelay(40);
+                Form1_0.Stash_0.PlaceItemShift(itemScreenPos["x"], itemScreenPos["y"]);
                 Form1_0.WaitDelay(5);
             }
 

@@ -465,13 +465,13 @@ namespace app
                 if (Form1_0.MobsStruc_0.MobsHP >= LastMobAttackedHP)
                 {
                     AttackNotRegisteredCount++;
-                    //Form1_0.method_1("Attack not registered! " + AttackNotRegisteredCount + "/" + MaxAttackTry, Color.Red);
+                    //Form1_0.method_1("Attack not registered! " + AttackNotRegisteredCount + "/" + MaxAttackTry, Color.OrangeRed);
 
                     if (AttackNotRegisteredCount >= MaxAttackTry)
                     {
                         AttackNotRegisteredCount = 0;
                         MoveTryCount++;
-                        Form1_0.method_1("Attack not registered, moving away! " + MoveTryCount + "/" + MaxMoveTry, Color.Red);
+                        Form1_0.method_1("Attack not registered, moving away! " + MoveTryCount + "/" + MaxMoveTry, Color.OrangeRed);
                         MoveAway();
 
                         if (MoveTryCount >= MaxMoveTry)
@@ -508,10 +508,11 @@ namespace app
         {
             if (Form1_0.MobsStruc_0.xPosFinal != 0 && Form1_0.MobsStruc_0.yPosFinal != 0)
             {
+                Form1_0.PlayerScan_0.GetPositions();
                 Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, Form1_0.MobsStruc_0.xPosFinal, Form1_0.MobsStruc_0.yPosFinal);
                 if (!CharConfig.PlayerAttackWithRightHand)
                 {
-                    Form1_0.KeyMouse_0.SendSHIFT_CLICK(itemScreenPos["x"], itemScreenPos["y"] - 30);
+                    Form1_0.KeyMouse_0.SendSHIFT_CLICK_ATTACK(itemScreenPos["x"], itemScreenPos["y"] - 30);
                 }
                 else
                 {
@@ -522,8 +523,7 @@ namespace app
             {
                 if (!CharConfig.PlayerAttackWithRightHand)
                 {
-                    Form1_0.KeyMouse_0.SendSHIFT_CLICK(Form1_0.CenterX, Form1_0.CenterY - 1);
-                    //Form1_0.KeyMouse_0.SendSHIFT_CLICK(Form1_0.CenterX, Form1_0.CenterY);
+                    Form1_0.KeyMouse_0.SendSHIFT_CLICK_ATTACK(Form1_0.CenterX, Form1_0.CenterY - 1);
                 }
                 else
                 {
@@ -531,7 +531,37 @@ namespace app
                 }
             }
             //Form1_0.WaitDelay(5);
-            Form1_0.WaitDelay(1);
+            //Form1_0.WaitDelay(1);
+        }
+
+        public void CastSkillsNoMove()
+        {
+            if (Form1_0.MobsStruc_0.xPosFinal != 0 && Form1_0.MobsStruc_0.yPosFinal != 0)
+            {
+                Form1_0.PlayerScan_0.GetPositions();
+                Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, Form1_0.MobsStruc_0.xPosFinal, Form1_0.MobsStruc_0.yPosFinal);
+                if (!CharConfig.PlayerAttackWithRightHand)
+                {
+                    Form1_0.KeyMouse_0.SendSHIFT_CLICK_ATTACK_CAST_NO_MOVE(itemScreenPos["x"], itemScreenPos["y"] - 30);
+                }
+                else
+                {
+                    Form1_0.KeyMouse_0.MouseCliccRightAttackMove(itemScreenPos["x"], itemScreenPos["y"] - 30);
+                }
+            }
+            else
+            {
+                if (!CharConfig.PlayerAttackWithRightHand)
+                {
+                    Form1_0.KeyMouse_0.SendSHIFT_CLICK_ATTACK_CAST_NO_MOVE(Form1_0.CenterX, Form1_0.CenterY - 1);
+                }
+                else
+                {
+                    Form1_0.KeyMouse_0.MouseCliccRightAttackMove(Form1_0.CenterX, Form1_0.CenterY - 1);
+                }
+            }
+            //Form1_0.WaitDelay(5);
+            //Form1_0.WaitDelay(1);
         }
 
         public void FirstAttackCasting()

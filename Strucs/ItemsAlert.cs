@@ -19,6 +19,7 @@ using System.Collections;
 using System.Xml.Linq;
 using System.Security.Cryptography;
 using static System.Net.Mime.MediaTypeNames;
+using System.Text.RegularExpressions;
 
 namespace app
 {
@@ -29,12 +30,39 @@ namespace app
         public Dictionary<string, bool> PickItemsRunesKeyGems = new Dictionary<string, bool>();
         public Dictionary<string, bool> PickItemsUnique = new Dictionary<string, bool>();
         public Dictionary<string, bool> PickItemsSet = new Dictionary<string, bool>();
+        public Dictionary<string, bool> PickItemsPotions = new Dictionary<string, bool>();
 
         public List<string> PickItemsUniqueDesc = new List<string>();
         public List<string> PickItemsSetDesc = new List<string>();
 
-        public Dictionary<string, bool> PickItemsNormal = new Dictionary<string, bool>();
+        public Dictionary<string, bool> PickItemsNormal_ByName = new Dictionary<string, bool>();
+        public Dictionary<string, Dictionary<uint, string>> PickItemsNormal_ByName_Flags = new Dictionary<string, Dictionary<uint, string>>();
+        public Dictionary<string, int> PickItemsNormal_ByName_Quality = new Dictionary<string, int>();
+        public Dictionary<string, Dictionary<string, int>> PickItemsNormal_ByName_Stats = new Dictionary<string, Dictionary<string, int>>();
+        public Dictionary<string, Dictionary<string, string>> PickItemsNormal_ByName_Operators = new Dictionary<string, Dictionary<string, string>>();
+        public List<string> PickItemsNormal_ByNameDesc = new List<string>();
 
+        public Dictionary<string, bool> PickItemsNormal_ByType = new Dictionary<string, bool>();
+        public Dictionary<string, Dictionary<uint, string>> PickItemsNormal_ByType_Flags = new Dictionary<string, Dictionary<uint, string>>();
+        public Dictionary<string, int> PickItemsNormal_ByType_Quality = new Dictionary<string, int>();
+        public Dictionary<string, Dictionary<string, int>> PickItemsNormal_ByType_Stats = new Dictionary<string, Dictionary<string, int>>();
+        public Dictionary<string, Dictionary<string, string>> PickItemsNormal_ByType_Operators = new Dictionary<string, Dictionary<string, string>>();
+        public List<string> PickItemsNormal_ByTypeDesc = new List<string>();
+
+
+        public Dictionary<string, bool> PickItemsRare_ByName = new Dictionary<string, bool>();
+        public Dictionary<string, Dictionary<uint, string>> PickItemsRare_ByName_Flags = new Dictionary<string, Dictionary<uint, string>>();
+        public Dictionary<string, int> PickItemsRare_ByName_Quality = new Dictionary<string, int>();
+        public Dictionary<string, Dictionary<string, int>> PickItemsRare_ByName_Stats = new Dictionary<string, Dictionary<string, int>>();
+        public Dictionary<string, Dictionary<string, string>> PickItemsRare_ByName_Operators = new Dictionary<string, Dictionary<string, string>>();
+        public List<string> PickItemsRare_ByNameDesc = new List<string>();
+
+        public Dictionary<string, bool> PickItemsRare_ByType = new Dictionary<string, bool>();
+        public Dictionary<string, Dictionary<uint, string>> PickItemsRare_ByType_Flags = new Dictionary<string, Dictionary<uint, string>>();
+        public Dictionary<string, int> PickItemsRare_ByType_Quality = new Dictionary<string, int>();
+        public Dictionary<string, Dictionary<string, int>> PickItemsRare_ByType_Stats = new Dictionary<string, Dictionary<string, int>>();
+        public Dictionary<string, Dictionary<string, string>> PickItemsRare_ByType_Operators = new Dictionary<string, Dictionary<string, string>>();
+        public List<string> PickItemsRare_ByTypeDesc = new List<string>();
 
         public void SetForm1(Form1 form1_1)
         {
@@ -53,7 +81,7 @@ namespace app
             {
                 foreach (var ThisDir in PickItemsUnique)
                 {
-                    if (Form1_0.ItemsStruc_0.ItemNAAME == ThisDir.Key && ThisDir.Value)
+                    if (Form1_0.ItemsStruc_0.ItemNAAME.ToLower().Replace(" ", "") == ThisDir.Key.ToLower().Replace(" ", "") && ThisDir.Value)
                     {
                         return true;
                     }
@@ -62,7 +90,7 @@ namespace app
 
             foreach (var ThisDir in PickItemsRunesKeyGems)
             {
-                if (Form1_0.ItemsStruc_0.ItemNAAME.ToLower() == ThisDir.Key.ToLower() && ThisDir.Value)
+                if (Form1_0.ItemsStruc_0.ItemNAAME.ToLower().Replace(" ", "") == ThisDir.Key.ToLower().Replace(" ", "") && ThisDir.Value)
                 {
                     if (Form1_0.ItemsStruc_0.ItemNAAME.Contains("Chipped") || Form1_0.ItemsStruc_0.ItemNAAME.Contains("Flawed")
                         || Form1_0.ItemsStruc_0.ItemNAAME == "Topaz"
@@ -85,8 +113,7 @@ namespace app
                 }
             }
 
-            //[Name] == GrandCharm && [Quality] == Magic # [ItemAddSkillTab] == 1
-            if (Form1_0.ItemsStruc_0.ItemNAAME.ToLower() == "Small Charm".ToLower()
+            /*if (Form1_0.ItemsStruc_0.ItemNAAME.ToLower() == "Small Charm".ToLower()
                 //|| Form1_0.ItemsStruc_0.ItemNAAME.ToLower() == "Large Charm".ToLower()
                 || Form1_0.ItemsStruc_0.ItemNAAME.ToLower() == "Grand Charm".ToLower())
             {
@@ -110,20 +137,197 @@ namespace app
                         //return true;
                     }
                 }
-            }
+            }*/
 
             if (Form1_0.ItemsStruc_0.quality == "Set")
             {
                 foreach (var ThisDir in PickItemsSet)
                 {
-                    if (Form1_0.ItemsStruc_0.ItemNAAME.ToLower() == ThisDir.Key.ToLower() && ThisDir.Value)
+                    if (Form1_0.ItemsStruc_0.ItemNAAME.ToLower().Replace(" ", "") == ThisDir.Key.ToLower().Replace(" ", "") && ThisDir.Value)
                     {
                         return true;
                     }
                 }
             }
 
-            if (Form1_0.ItemsStruc_0.quality == "Normal"
+
+            //###############
+            foreach (var ThisDir in PickItemsNormal_ByName)
+            {
+                if (Form1_0.ItemsStruc_0.ItemNAAME.ToLower().Replace(" ", "") == Regex.Replace(ThisDir.Key.ToLower().Replace(" ", ""), @"[\d-]", string.Empty) && ThisDir.Value)
+                {
+                    bool SameFlags = true;
+                    bool SameQuality = true;
+                    bool SameStats = true;
+
+                    if (PickItemsNormal_ByName_Flags.ContainsKey(ThisDir.Key))
+                    {
+                        bool BufferId = Form1_0.ItemsStruc_0.identified;
+                        bool BufferSock = Form1_0.ItemsStruc_0.isSocketed;
+                        bool BufferEth = Form1_0.ItemsStruc_0.ethereal;
+
+                        uint TotalFlags = 0;
+                        foreach (var ThisList in PickItemsNormal_ByName_Flags[ThisDir.Key]) TotalFlags += ThisList.Key;
+                        Form1_0.ItemsFlags_0.calculateFlags(TotalFlags);
+
+                        //might have issue here with flags
+                        if (BufferId != Form1_0.ItemsStruc_0.identified
+                            && BufferSock != Form1_0.ItemsStruc_0.isSocketed
+                            && BufferEth != Form1_0.ItemsStruc_0.ethereal)
+                        {
+                            SameFlags = false;
+                        }
+                        //Console.WriteLine(Form1_0.ItemsStruc_0.ItemNAAME + ":" + SameFlags);
+                    }
+                    if (PickItemsNormal_ByName_Quality.ContainsKey(ThisDir.Key))
+                    {
+                        if (Form1_0.ItemsStruc_0.quality != Form1_0.ItemsStruc_0.getQuality(PickItemsNormal_ByName_Quality[ThisDir.Key])) SameQuality = false;
+                    }
+                    if (PickItemsNormal_ByName_Stats.ContainsKey(ThisDir.Key))
+                    {
+                        foreach (var ThisDir2 in PickItemsNormal_ByName_Stats[ThisDir.Key])
+                        {
+                            //Console.WriteLine(Form1_0.ItemsStruc_0.ItemNAAME + ":" + ThisDir2.Key + "=" + ThisDir2.Value);
+                            if (!Form1_0.ItemsStruc_0.IsItemHaveSameStatMultiCheck(ThisDir2.Key, ThisDir2.Value, PickItemsNormal_ByName_Operators[ThisDir.Key][ThisDir2.Key])) SameStats = false;
+                        }
+                    }
+
+
+                    if (SameFlags && SameQuality && SameStats) return true;
+                }
+            }
+            //###############
+            foreach (var ThisDir in PickItemsNormal_ByType)
+            {
+                if (IsItemThisType(Regex.Replace(ThisDir.Key.ToLower().Replace(" ", ""), @"[\d-]", string.Empty)) && ThisDir.Value)
+                {
+                    bool SameFlags = true;
+                    bool SameQuality = true;
+                    bool SameStats = true;
+
+                    if (PickItemsNormal_ByType_Flags.ContainsKey(ThisDir.Key))
+                    {
+                        bool BufferId = Form1_0.ItemsStruc_0.identified;
+                        bool BufferSock = Form1_0.ItemsStruc_0.isSocketed;
+                        bool BufferEth = Form1_0.ItemsStruc_0.ethereal;
+
+                        uint TotalFlags = 0;
+                        foreach (var ThisList in PickItemsNormal_ByType_Flags[ThisDir.Key]) TotalFlags += ThisList.Key;
+                        Form1_0.ItemsFlags_0.calculateFlags(TotalFlags);
+
+                        //might have issue here with flags
+                        if (BufferId != Form1_0.ItemsStruc_0.identified
+                            && BufferSock != Form1_0.ItemsStruc_0.isSocketed
+                            && BufferEth != Form1_0.ItemsStruc_0.ethereal)
+                        {
+                            SameFlags = false;
+                        }
+                    }
+                    if (PickItemsNormal_ByType_Quality.ContainsKey(ThisDir.Key))
+                    {
+                        if (Form1_0.ItemsStruc_0.quality != Form1_0.ItemsStruc_0.getQuality(PickItemsNormal_ByType_Quality[ThisDir.Key])) SameQuality = false;
+                    }
+                    if (PickItemsNormal_ByType_Stats.ContainsKey(ThisDir.Key))
+                    {
+                        foreach (var ThisDir2 in PickItemsNormal_ByType_Stats[ThisDir.Key])
+                        {
+                            if (!Form1_0.ItemsStruc_0.IsItemHaveSameStatMultiCheck(ThisDir2.Key, ThisDir2.Value, PickItemsNormal_ByType_Operators[ThisDir.Key][ThisDir2.Key])) SameStats = false;
+                        }
+                    }
+
+                    if (SameFlags && SameQuality && SameStats) return true;
+                }
+            }
+            //###############
+
+            //###############
+            foreach (var ThisDir in PickItemsRare_ByName)
+            {
+                if (Form1_0.ItemsStruc_0.ItemNAAME.ToLower().Replace(" ", "") == Regex.Replace(ThisDir.Key.ToLower().Replace(" ", ""), @"[\d-]", string.Empty) && ThisDir.Value)
+                {
+                    bool SameFlags = true;
+                    bool SameQuality = true;
+                    bool SameStats = true;
+
+                    if (PickItemsRare_ByName_Flags.ContainsKey(ThisDir.Key))
+                    {
+                        bool BufferId = Form1_0.ItemsStruc_0.identified;
+                        bool BufferSock = Form1_0.ItemsStruc_0.isSocketed;
+                        bool BufferEth = Form1_0.ItemsStruc_0.ethereal;
+
+                        uint TotalFlags = 0;
+                        foreach (var ThisList in PickItemsRare_ByName_Flags[ThisDir.Key]) TotalFlags += ThisList.Key;
+                        Form1_0.ItemsFlags_0.calculateFlags(TotalFlags);
+
+                        //might have issue here with flags
+                        if (BufferId != Form1_0.ItemsStruc_0.identified
+                            && BufferSock != Form1_0.ItemsStruc_0.isSocketed
+                            && BufferEth != Form1_0.ItemsStruc_0.ethereal)
+                        {
+                            SameFlags = false;
+                        }
+                    }
+                    if (PickItemsRare_ByName_Quality.ContainsKey(ThisDir.Key))
+                    {
+                        if (Form1_0.ItemsStruc_0.quality != Form1_0.ItemsStruc_0.getQuality(PickItemsRare_ByName_Quality[ThisDir.Key])) SameQuality = false;
+                    }
+                    if (PickItemsRare_ByName_Stats.ContainsKey(ThisDir.Key))
+                    {
+                        foreach (var ThisDir2 in PickItemsRare_ByName_Stats[ThisDir.Key])
+                        {
+                            if (!Form1_0.ItemsStruc_0.IsItemHaveSameStatMultiCheck(ThisDir2.Key, ThisDir2.Value, PickItemsRare_ByName_Operators[ThisDir.Key][ThisDir2.Key])) SameStats = false;
+                        }
+                    }
+
+                    if (SameFlags && SameQuality && SameStats) return true;
+                }
+            }
+            //###############
+            foreach (var ThisDir in PickItemsRare_ByType)
+            {
+                if (IsItemThisType(Regex.Replace(ThisDir.Key.ToLower().Replace(" ", ""), @"[\d-]", string.Empty)) && ThisDir.Value)
+                {
+                    bool SameFlags = true;
+                    bool SameQuality = true;
+                    bool SameStats = true;
+
+                    if (PickItemsRare_ByType_Flags.ContainsKey(ThisDir.Key))
+                    {
+                        bool BufferId = Form1_0.ItemsStruc_0.identified;
+                        bool BufferSock = Form1_0.ItemsStruc_0.isSocketed;
+                        bool BufferEth = Form1_0.ItemsStruc_0.ethereal;
+
+                        uint TotalFlags = 0;
+                        foreach(var ThisList in PickItemsRare_ByType_Flags[ThisDir.Key]) TotalFlags += ThisList.Key;
+                        Form1_0.ItemsFlags_0.calculateFlags(TotalFlags);
+
+                        //might have issue here with flags
+                        if (BufferId != Form1_0.ItemsStruc_0.identified
+                            && BufferSock != Form1_0.ItemsStruc_0.isSocketed
+                            && BufferEth != Form1_0.ItemsStruc_0.ethereal)
+                        {
+                            SameFlags = false;
+                        }
+                    }
+                    if (PickItemsRare_ByType_Quality.ContainsKey(ThisDir.Key))
+                    {
+                        if (Form1_0.ItemsStruc_0.quality != Form1_0.ItemsStruc_0.getQuality(PickItemsRare_ByType_Quality[ThisDir.Key])) SameQuality = false;
+                    }
+                    if (PickItemsRare_ByType_Stats.ContainsKey(ThisDir.Key))
+                    {
+                        foreach (var ThisDir2 in PickItemsRare_ByType_Stats[ThisDir.Key])
+                        {
+                            if (!Form1_0.ItemsStruc_0.IsItemHaveSameStatMultiCheck(ThisDir2.Key, ThisDir2.Value, PickItemsRare_ByType_Operators[ThisDir.Key][ThisDir2.Key])) SameStats = false;
+                        }
+                    }
+
+                    if (SameFlags && SameQuality && SameStats) return true;
+                }
+            }
+            //###############
+
+
+            /*if (Form1_0.ItemsStruc_0.quality == "Normal"
                 || Form1_0.ItemsStruc_0.quality == "Superior")
             {
                 //3-4os AP
@@ -269,233 +473,11 @@ namespace app
                 {
                     return true;
                 }
-                /*if (Form1_0.ItemsStruc_0.ItemNAAME == "Flail"
-                    && Form1_0.ItemsStruc_0.numSockets == 5
-                    && !Form1_0.ItemsStruc_0.ethereal)
-                {
-                    return true;
-                }*/
-        }
+            }*/
 
             return false;
             //return PickOrKeepItem(false);
         }
-
-
-
-
-
-
-
-
-
-
-
-
-        /*public List<string> AllItemsNames = new List<string>();
-        public List<string> AllItemsTypes = new List<string>();
-        public List<string> AllItemsQuality = new List<string>();
-        public List<string> AllItemsClass = new List<string>();
-        public List<string> AllItemsFlags = new List<string>();
-        public List<string> AllItemsStats = new List<string>();
-
-        public List<string> AllItemsFiles = new List<string>();
-        public List<string> AllPossibleClass = new List<string>();*/
-
-
-        /*public bool PickOrKeepItem(bool CheckForKeeping)
-        {
-            for (int i = 0; i < AllItemsNames.Count; i++)
-            {
-                bool GoodNameOrType = false;
-                bool GoodQuality = false;
-                bool GoodClass = false;
-                bool GoodFlags = false;
-                bool GoodStats = false;
-
-                if (AllItemsNames[i] != "")
-                {
-                    if (Form1_0.ItemsStruc_0.ItemNAAME.ToLower() == AllItemsNames[i].ToLower())
-                    {
-                        GoodNameOrType = true;
-                    }
-                }
-                else
-                {
-                    if (IsItemThisType(AllItemsTypes[i].ToLower()))
-                    {
-                        GoodNameOrType = true;
-                    }
-                }
-
-                if (AllItemsQuality[i] != "")
-                {
-                    if (Form1_0.ItemsStruc_0.quality.ToLower() == AllItemsQuality[i].ToLower())
-                    {
-                        GoodQuality = true;
-                    }
-                }
-                else
-                {
-                    GoodQuality = true;
-                }
-
-                //if (AllItemsClass[i] != "")
-                //{
-                //    if (Form1_0.ItemsStruc_0.ItemClass.ToLower() == AllItemsClass[i].ToLower())
-                //    {
-                //        GoodClass = true;
-                //    }
-                //}
-                //else
-                //{
-                //    GoodClass = true;
-                //}
-
-                if (AllItemsFlags[i] != "")
-                {
-                    if (IsSameFlags(AllItemsFlags[i].ToLower()))
-                    {
-                        GoodFlags = true;
-                    }
-                }
-                else
-                {
-                    GoodFlags = true;
-                }
-
-                if (AllItemsStats[i] != "")
-                {
-                    if (Form1_0.ItemsStruc_0.identified)
-                    {
-                        if (IsSameStats(AllItemsStats[i].ToLower()))
-                        {
-                            GoodStats = true;
-                        }
-                    }
-                    else
-                    {
-                        //not identified return true for picking up
-                        if (!CheckForKeeping)
-                        {
-                            GoodStats = true;
-                        }
-                    }
-                }
-                else
-                {
-                    GoodStats = true;
-                }
-
-
-                if (GoodNameOrType && GoodQuality && GoodClass && GoodFlags && GoodStats)
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        public void LoadItemsList()
-        {
-            AllItemsFiles.Add(Application.StartupPath + @"\ItemsPicker\craft.txt");
-            AllItemsFiles.Add(Application.StartupPath + @"\ItemsPicker\key.txt");
-            AllItemsFiles.Add(Application.StartupPath + @"\ItemsPicker\magic_rare.txt");
-            AllItemsFiles.Add(Application.StartupPath + @"\ItemsPicker\normal.txt");
-            AllItemsFiles.Add(Application.StartupPath + @"\ItemsPicker\set.txt");
-            AllItemsFiles.Add(Application.StartupPath + @"\ItemsPicker\unique.txt");
-
-            for (int i = 0; i < AllItemsFiles.Count; i++)
-            {
-                string ThisFile = AllItemsFiles[i];
-                if (File.Exists(ThisFile))
-                {
-                    string[] AllLines = File.ReadAllLines(ThisFile);
-
-                    for (int k = 0; k < AllLines.Length; k++)
-                    {
-                        if (AllLines[k].Length > 2)
-                        {
-                            if (AllLines[k][0] != '/' && AllLines[k][1] != '/')
-                            {
-                                string CurrentLine = AllLines[k].Replace(" # ", " && ").Replace(" ", "").Replace("&&", "&");
-
-                                //Console.WriteLine(CurrentLine);
-                                if (CurrentLine.Contains("&"))
-                                {
-                                    string[] CommandsSplit = CurrentLine.Split('&');
-
-                                    for (int m = 0; m < CommandsSplit.Length; m++)
-                                    {
-                                        //Console.WriteLine(CommandsSplit[m]);
-
-                                        string Comparator = GetComparatorInString(CommandsSplit[m]);
-                                        string[] SpitCmbAndName = SplitStringWithComparator(Comparator, CommandsSplit[m]);
-
-                                        //############# [Name]== | [Type]==
-                                        if (SpitCmbAndName.Length >= 2)
-                                        {
-                                            //###
-                                            if (SpitCmbAndName[1].Contains("//"))
-                                            {
-                                                SpitCmbAndName[1] = SpitCmbAndName[1].Substring(0, SpitCmbAndName[1].IndexOf('/'));
-                                            }
-                                            //###
-
-                                            if (SpitCmbAndName[0] == "[Name]")
-                                            {
-                                                //Console.WriteLine(SpitCmbAndName[1]);
-                                                AddItemToPick();
-                                                SetLastItemParameters("name", SpitCmbAndName[1]);
-                                            }
-                                            else if (SpitCmbAndName[0] == "[Type]")
-                                            {
-                                                AddItemToPick();
-                                                SetLastItemParameters("type", SpitCmbAndName[1]);
-                                            }
-
-                                            //#####
-                                            else if (SpitCmbAndName[0] == "[Quality]")
-                                            {
-                                                SpitCmbAndName[0] = SpitCmbAndName[0].Replace("[", "").Replace("]", "");
-                                                SetLastItemParameters("quality", SpitCmbAndName[0] + Comparator + SpitCmbAndName[1]);
-                                            }
-                                            else if (SpitCmbAndName[0] == "[Class]")
-                                            {
-                                                SpitCmbAndName[0] = SpitCmbAndName[0].Replace("[", "").Replace("]", "");
-                                                SetLastItemParameters("class", SpitCmbAndName[0] + Comparator + SpitCmbAndName[1]);
-                                                //AddToListClass(SpitCmbAndName[1]);
-                                            }
-                                            else if (SpitCmbAndName[0] == "[Flags]" || SpitCmbAndName[0] == "[Flag]")
-                                            {
-                                                SpitCmbAndName[0] = SpitCmbAndName[0].Replace("[", "").Replace("]", "");
-                                                SetLastItemParameters("flags", SpitCmbAndName[0] + Comparator + SpitCmbAndName[1]);
-                                            }
-                                            else if (SpitCmbAndName[0].Contains("[") && SpitCmbAndName[0].Contains("]"))
-                                            {
-                                                SpitCmbAndName[0] = SpitCmbAndName[0].Replace("[", "").Replace("]", "");
-                                                SetLastItemParameters("stats", SpitCmbAndName[0] + Comparator + SpitCmbAndName[1]);
-
-                                                //if (Form1_0.ItemsStruc_0.GetStatEnumIndex(SpitCmbAndName[0]) == -1)
-                                                //{
-                                                //    AddToListClass(SpitCmbAndName[0]);
-                                                //}
-                                            }
-                                        }
-                                    }
-                                }
-                                //###
-
-                            }
-                        }
-                    }
-                }
-                else
-                {
-                    Form1_0.method_1("Cannot find items picking file: " + Path.GetFileName(ThisFile));
-                }
-            }
-        }*/
 
         public bool IsItemThisType(string ItemTypee)
         {
@@ -605,195 +587,88 @@ namespace app
             return false;
         }
 
-        /*public void AddToListClass(string thisnnnn)
+        public string GetItemTypeText()
         {
-            //Only output 1 class -> 'elite'
-            if (thisnnnn != "")
+            return "[Type] == " + GetItemType();
+        }
+
+        public string GetItemType()
+        {
+            if (Form1_0.ItemsStruc_0.ItemNAAME.Contains("Mask")
+                || Form1_0.ItemsStruc_0.ItemNAAME.Contains("Helm")
+                || Form1_0.ItemsStruc_0.ItemNAAME.Contains("Crown")
+                || Form1_0.ItemsStruc_0.ItemNAAME == "Demonhead"
+                || Form1_0.ItemsStruc_0.ItemNAAME == "Cap"
+                || Form1_0.ItemsStruc_0.ItemNAAME == "Basinet"
+                || Form1_0.ItemsStruc_0.ItemNAAME == "Bone Visage"
+                || Form1_0.ItemsStruc_0.ItemNAAME == "Shako"
+                || Form1_0.ItemsStruc_0.ItemNAAME == "War Hat"
+                || Form1_0.ItemsStruc_0.ItemNAAME == "Sallet"
+                || Form1_0.ItemsStruc_0.ItemNAAME == "Casque"
+                || Form1_0.ItemsStruc_0.ItemNAAME == "Armet"
+                || Form1_0.ItemsStruc_0.ItemNAAME == "Skull Cap"
+                || Form1_0.ItemsStruc_0.ItemNAAME == "Hydraskull"
+                || Form1_0.ItemsStruc_0.ItemNAAME == "Giant Conch"
+                || Form1_0.ItemsStruc_0.ItemNAAME == "Diadem"
+                || Form1_0.ItemsStruc_0.ItemNAAME == "Tiara"
+                || Form1_0.ItemsStruc_0.ItemNAAME == "Circlet")
             {
-                if (!AllPossibleClass.Contains(thisnnnn))
+                return "helm";
+            }
+            if (Form1_0.ItemsStruc_0.ItemNAAME.Contains("Gloves")
+                || Form1_0.ItemsStruc_0.ItemNAAME.Contains("Gauntlets")
+                || Form1_0.ItemsStruc_0.ItemNAAME == "Heavy Bracers"
+                || Form1_0.ItemsStruc_0.ItemNAAME == "Vambraces"
+                || Form1_0.ItemsStruc_0.ItemNAAME == "Bramble Mitts")
+            {
+                return "gloves";
+            }
+            if (Form1_0.ItemsStruc_0.ItemNAAME.Contains("Boots")
+                || Form1_0.ItemsStruc_0.ItemNAAME.Contains("Greaves"))
+            {
+                return "boots";
+            }
+            if (Form1_0.ItemsStruc_0.ItemNAAME.Contains("Belt")
+                || Form1_0.ItemsStruc_0.ItemNAAME.Contains("Sash")
+                || Form1_0.ItemsStruc_0.ItemNAAME == "Mithril Coil"
+                || Form1_0.ItemsStruc_0.ItemNAAME == "Colossus Girdle")
+            {
+                return "belt";
+            }
+            if (Form1_0.ItemsStruc_0.ItemNAAME == "Ring") return "ring";
+            if (Form1_0.ItemsStruc_0.ItemNAAME == "Amulet") return "amulet";
+            try
+            {
+                if (Form1_0.ItemsStruc_0.ItemNAAME.Contains("Plate")
+                    || Form1_0.ItemsStruc_0.ItemNAAME.Contains("Armor")
+                    || Form1_0.ItemsStruc_0.ItemNAAME.Contains("Skin")
+                    || Form1_0.ItemsStruc_0.ItemNAAME.Contains("Mail")
+                    || Form1_0.ItemsStruc_0.ItemNAAME.Contains("Coat")
+                    || Form1_0.ItemsStruc_0.ItemNAAME.Contains("Shell")
+                    || Form1_0.ItemsStruc_0.ItemNAAME == "Cuirass"
+                    || Form1_0.ItemsStruc_0.ItemNAAME == "Dusk Shroud"
+                    || Form1_0.ItemsStruc_0.ItemNAAME == "Wire Fleece"
+                    || Form1_0.ItemsStruc_0.ItemNAAME == "Studded Leather"
+                    || Form1_0.ItemsStruc_0.ItemNAAME == "Great Hauberk"
+                    || Form1_0.ItemsStruc_0.ItemNAAME == "Boneweave"
+                    || Form1_0.ItemsStruc_0.ItemNAAME == "Wyrmhide"
+                    || Form1_0.ItemsStruc_0.ItemNAAME == "Scarab Husk"
+                    || Form1_0.ItemsStruc_0.ItemNAAME == "Boneweave")
                 {
-                    AllPossibleClass.Add(thisnnnn);
+                    return "armor";
                 }
             }
+            catch { }
+            if (Form1_0.ItemsStruc_0.ItemNAAME == "Circlet"
+                || Form1_0.ItemsStruc_0.ItemNAAME == "Tiara"
+                || Form1_0.ItemsStruc_0.ItemNAAME == "Diadem")
+            {
+                return "circlet";
+            }
+            if (Form1_0.ItemsStruc_0.ItemNAAME == "Gold") return "gold";
+            if (Form1_0.ItemsStruc_0.ItemNAAME == "Jewel") return "jewel";
+            return "";
         }
-
-        public void SaveList()
-        {
-            string[] Alli = new string[AllPossibleClass.Count];
-            for (int i = 0; i < AllPossibleClass.Count; i++) Alli[i] = AllPossibleClass[i];
-
-            string SavePathh = Form1_0.ThisEndPath + "DumpItemStatsNameList.txt";
-            File.Create(SavePathh).Dispose();
-            File.WriteAllLines(SavePathh, Alli);
-        }
-
-        public void SetLastItemParameters(string ThisParam, string Desc)
-        {
-            if (ThisParam == "name") AllItemsNames[AllItemsNames.Count - 1] = Desc;
-            if (ThisParam == "type") AllItemsTypes[AllItemsTypes.Count - 1] = Desc;
-            if (ThisParam == "quality") AllItemsQuality[AllItemsQuality.Count - 1] = Desc;
-            if (ThisParam == "class") AllItemsClass[AllItemsClass.Count - 1] = Desc;
-            if (ThisParam == "flags") AllItemsFlags[AllItemsFlags.Count - 1] = Desc;
-            if (ThisParam == "stats")
-            {
-                if (AllItemsStats[AllItemsStats.Count - 1] != "") AllItemsStats[AllItemsStats.Count - 1] += ",";
-                AllItemsStats[AllItemsStats.Count - 1] += Desc;
-            }
-        }
-
-        public void AddItemToPick()
-        {
-            AllItemsNames.Add("");
-            AllItemsTypes.Add("");
-            AllItemsQuality.Add("");
-            AllItemsClass.Add("");
-            AllItemsFlags.Add("");
-            AllItemsStats.Add("");
-        }
-
-        public string[] SplitStringWithComparator(string Compa, string ThisLinee)
-        {
-            string[] Spitteed = new string[] { };
-            if (Compa == "==")
-            {
-                Spitteed = ThisLinee.Replace("==", "=").Split('=');
-            }
-            if (Compa == "<=")
-            {
-                Spitteed = ThisLinee.Replace("<=", "=").Split('=');
-            }
-            if (Compa == ">=")
-            {
-                Spitteed = ThisLinee.Replace(">=", "=").Split('=');
-            }
-            if (Compa == "!=")
-            {
-                Spitteed = ThisLinee.Replace("!=", "=").Split('=');
-            }
-            if (Compa == "<")
-            {
-                Spitteed = ThisLinee.Replace("<", "=").Split('=');
-            }
-            if (Compa == ">")
-            {
-                Spitteed = ThisLinee.Replace("<", "=").Split('=');
-            }
-            return Spitteed;
-        }
-
-        public string GetComparatorInString(string ThisC)
-        {
-            string Comparator = "";
-            if (ThisC.Contains("=="))
-            {
-                Comparator = "==";
-            }
-            if (ThisC.Contains("<="))
-            {
-                Comparator = "<=";
-            }
-            if (ThisC.Contains(">="))
-            {
-                Comparator = ">=";
-            }
-            if (ThisC.Contains("!="))
-            {
-                Comparator = "!=";
-            }
-            if (ThisC.Contains("<") && !ThisC.Contains("<="))
-            {
-                Comparator = "<";
-            }
-            if (ThisC.Contains(">") && !ThisC.Contains(">="))
-            {
-                Comparator = ">";
-            }
-            return Comparator;
-        }
-
-        public bool IsSameStats(string ThisStats)
-        {
-            bool SameStats = false;
-            List<string> StatListCheck = new List<string>();
-            List<string> StatValuesCheck = new List<string>();
-            List<string> StatParamsCheck = new List<string>();
-            if (ThisStats.Contains(","))
-            {
-                string[] StatsSplit = ThisStats.Split(',');
-                for (int i = 0; i < StatsSplit.Length; i++)
-                {
-                    string Comparator = GetComparatorInString(StatsSplit[i]);
-                    string[] SplitCmbAndName = SplitStringWithComparator(Comparator, StatsSplit[i]);
-
-                    StatListCheck.Add(SplitCmbAndName[0]);
-                    StatValuesCheck.Add(SplitCmbAndName[1]);
-                    StatParamsCheck.Add(Comparator);
-                }
-            }
-            else
-            {
-                string Comparator = GetComparatorInString(ThisStats);
-                string[] SplitCmbAndName = SplitStringWithComparator(Comparator, ThisStats);
-
-                StatListCheck.Add(SplitCmbAndName[0]);
-                StatValuesCheck.Add(SplitCmbAndName[1]);
-                StatParamsCheck.Add(Comparator);
-            }
-
-            //compare stats
-            for (int i = 0; i < StatListCheck.Count; i++)
-            {
-                try
-                {
-                    string CheckName = StatListCheck[i];
-                    int CheckValue = int.Parse(StatValuesCheck[i]);
-                    string CheckComparator = StatParamsCheck[i];
-
-                    if (!CheckName.Contains("+"))
-                    {
-                        SameStats = Form1_0.ItemsStruc_0.IsItemHaveSameStat(CheckName, CheckValue, CheckComparator);
-                    }
-                    else
-                    {
-                        //multi stats comparaison
-                        string[] AllCheckNames = CheckName.Split('+');
-                        SameStats = Form1_0.ItemsStruc_0.IsItemHaveSameStatMulti(AllCheckNames, CheckValue, CheckComparator);
-                    }
-                }
-                catch
-                {
-                    Form1_0.method_1("Something wrong with stat: " + StatListCheck[i] + StatParamsCheck[i] + StatValuesCheck[i]);
-                }
-            }
-
-            return SameStats;
-        }
-
-        public bool IsSameFlags(string ThisFlags)
-        {
-            bool SameFlags = false;
-
-            //identified
-            if (ThisFlags.Contains("==identified") && Form1_0.ItemsStruc_0.identified)
-            {
-                SameFlags = true;
-            }
-            if (ThisFlags.Contains("!=identified") && !Form1_0.ItemsStruc_0.identified)
-            {
-                SameFlags = true;
-            }
-            //etheral
-            if (ThisFlags.Contains("==ethereal") && Form1_0.ItemsStruc_0.ethereal)
-            {
-                SameFlags = true;
-            }
-            if (ThisFlags.Contains("!=ethereal") && !Form1_0.ItemsStruc_0.ethereal)
-            {
-                SameFlags = true;
-            }
-
-            return SameFlags;
-        }*/
 
     }
 }

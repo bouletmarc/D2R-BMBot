@@ -40,7 +40,7 @@ namespace app
         public bool SetUI = false;
 
         public int MaxTryUIOpen = 5;
-        public int MaxWaitingDelayForMenuInteractions = 175;
+        public int MaxWaitingDelayForMenuInteractions = 50;
 
         public void SetForm1(Form1 form1_1)
         {

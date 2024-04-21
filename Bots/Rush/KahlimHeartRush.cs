@@ -105,7 +105,7 @@ namespace app
                         Form1_0.PathFinding_0.MoveToThisPos(ChestPos);
 
                         Form1_0.Battle_0.SetSkills();
-                        Form1_0.Battle_0.CastSkills();
+                        Form1_0.Battle_0.CastSkillsNoMove();
 
                         //repeat clic on leverfor stair
                         int tryyy = 0;

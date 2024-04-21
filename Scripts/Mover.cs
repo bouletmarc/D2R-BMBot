@@ -11,7 +11,7 @@ namespace app
     {
         Form1 Form1_0;
 
-        public int MaxMoveTry = 5;
+        public int MaxMoveTry = 5; //default is 5
         public int MoveAcceptOffset = 4;
         public long StartAreaBeforeMoving = 0;
 
@@ -64,14 +64,35 @@ namespace app
                 return false;
             }
 
+            //fix town act5 stuck near bolder
+            if (Form1_0.Town_0.GetInTown()
+                && Form1_0.PlayerScan_0.xPosFinal >= (5093 - 2)
+                && Form1_0.PlayerScan_0.xPosFinal <= (5093 + 2)
+                && Form1_0.PlayerScan_0.yPosFinal >= (5034 - 2)
+                && Form1_0.PlayerScan_0.yPosFinal <= (5034 + 2))
+            {
+                MoveToLocationAttack(5096, 5024);
+            }
+
             int TryMove = 0;
             int TryMove2 = 0;
             int LastX = Form1_0.PlayerScan_0.xPosFinal;
             int LastY = Form1_0.PlayerScan_0.yPosFinal;
             Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, ThisX, ThisY);
+            //#######
+            //calculate new Y clicking offset, else it will clic on bottom menu items
+            if (itemScreenPos["y"] >= (Form1_0.ScreenY - Form1_0.ScreenYMenu))
+            {
+                int DiffX = Form1_0.CenterX - itemScreenPos["x"];
+                itemScreenPos["x"] = (int)(itemScreenPos["x"] + (DiffX / 6));
+                itemScreenPos["y"] = (Form1_0.ScreenY - Form1_0.ScreenYMenu);
+                //Console.WriteLine("corrected pos from: " + Sx + "," + Sy + " to: " + itemScreenPos["x"] + "," + itemScreenPos["y"]);
+            }
+            //#######
 
             if (!CharConfig.UseTeleport || (CharConfig.UseTeleport && Form1_0.Town_0.GetInTown()))
             {
+                Form1_0.KeyMouse_0.MouseMoveTo(itemScreenPos["x"], itemScreenPos["y"]);
                 Form1_0.KeyMouse_0.MouseClicHoldWithoutRelease();
                 Form1_0.KeyMouse_0.PressKeyHold(System.Windows.Forms.Keys.E);
             }
@@ -101,17 +122,6 @@ namespace app
                         }
                     }
                 }
-
-                //#######
-                //calculate new Y clicking offset, else it will clic on bottom menu items
-                if (itemScreenPos["y"] >= (Form1_0.ScreenY - Form1_0.ScreenYMenu))
-                {
-                    int DiffX = Form1_0.CenterX - itemScreenPos["x"];
-                    itemScreenPos["x"] = (int)(itemScreenPos["x"] + (DiffX / 6));
-                    itemScreenPos["y"] = (Form1_0.ScreenY - Form1_0.ScreenYMenu);
-                    //Console.WriteLine("corrected pos from: " + Sx + "," + Sy + " to: " + itemScreenPos["x"] + "," + itemScreenPos["y"]);
-                }
-                //#######
 
                 if (!CharConfig.UseTeleport || (CharConfig.UseTeleport && Form1_0.Town_0.GetInTown()))
                 {
@@ -221,6 +231,19 @@ namespace app
                         Form1_0.KeyMouse_0.PressKey(CharConfig.KeySkillfastMoveOutsideTown);
                         if (CharConfig.UseTeleport) AllowFastMove = true;
                     }
+
+                    Form1_0.PlayerScan_0.GetPositions();
+                    itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, ThisX, ThisY);
+                    //#######
+                    //calculate new Y clicking offset, else it will clic on bottom menu items
+                    if (itemScreenPos["y"] >= (Form1_0.ScreenY - Form1_0.ScreenYMenu))
+                    {
+                        int DiffX = Form1_0.CenterX - itemScreenPos["x"];
+                        itemScreenPos["x"] = (int)(itemScreenPos["x"] + (DiffX / 6));
+                        itemScreenPos["y"] = (Form1_0.ScreenY - Form1_0.ScreenYMenu);
+                        //Console.WriteLine("corrected pos from: " + Sx + "," + Sy + " to: " + itemScreenPos["x"] + "," + itemScreenPos["y"]);
+                    }
+                    //#######
                     Form1_0.KeyMouse_0.MouseCliccRight(itemScreenPos["x"], itemScreenPos["y"]);
                 }
 
@@ -286,10 +309,10 @@ namespace app
 
             //#######
             //finish moving
-            if (MovedCorrectly && !AllowFastMove)
+            /*if (MovedCorrectly && !AllowFastMove)
             {
                 FinishMoving();
-            }
+            }*/
             //#######
 
             Form1_0.overlayForm.ResetMoveToLocation();
@@ -298,6 +321,8 @@ namespace app
 
         public void FinishMoving()
         {
+            return; //not needed anymore???
+
             int LastX = Form1_0.PlayerScan_0.xPosFinal;
             int LastY = Form1_0.PlayerScan_0.yPosFinal;
 
@@ -374,14 +399,6 @@ namespace app
 
             Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, ThisX, ThisY);
 
-            if (!CharConfig.UseTeleport || (CharConfig.UseTeleport && Form1_0.Town_0.GetInTown()))
-            {
-                Form1_0.KeyMouse_0.MouseClicHoldWithoutRelease();
-                Form1_0.KeyMouse_0.PressKeyHold(System.Windows.Forms.Keys.E);
-            }
-            if (Form1_0.Town_0.GetInTown()) Form1_0.KeyMouse_0.PressKey(CharConfig.KeySkillfastMoveAtTown);
-            else Form1_0.KeyMouse_0.PressKey(CharConfig.KeySkillfastMoveOutsideTown);
-
             //calculate new Y clicking offset, else it will clic on bottom menu items
             if (itemScreenPos["y"] >= (Form1_0.ScreenY - Form1_0.ScreenYMenu))
             {
@@ -390,6 +407,16 @@ namespace app
                 itemScreenPos["y"] = (Form1_0.ScreenY - Form1_0.ScreenYMenu);
                 //Console.WriteLine("corrected pos from: " + Sx + "," + Sy + " to: " + itemScreenPos["x"] + "," + itemScreenPos["y"]);
             }
+
+            if (!CharConfig.UseTeleport || (CharConfig.UseTeleport && Form1_0.Town_0.GetInTown()))
+            {
+                Form1_0.KeyMouse_0.MouseMoveTo(itemScreenPos["x"], itemScreenPos["y"]);
+                Form1_0.KeyMouse_0.MouseClicHoldWithoutRelease();
+                Form1_0.KeyMouse_0.PressKeyHold(System.Windows.Forms.Keys.E);
+            }
+            if (Form1_0.Town_0.GetInTown()) Form1_0.KeyMouse_0.PressKey(CharConfig.KeySkillfastMoveAtTown);
+            else Form1_0.KeyMouse_0.PressKey(CharConfig.KeySkillfastMoveOutsideTown);
+
 
             Form1_0.WaitDelay(5); //wait a little bit, we just casted attack
 

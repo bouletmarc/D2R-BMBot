@@ -229,7 +229,7 @@ namespace app
                         if ((DateTime.Now -  TimeSinceLastWaveDone).TotalSeconds > 3)
                         {
                             Form1_0.Battle_0.SetSkills();
-                            Form1_0.Battle_0.CastSkills();
+                            Form1_0.Battle_0.CastSkillsNoMove();
                         }
 
                         //STOP CASTING

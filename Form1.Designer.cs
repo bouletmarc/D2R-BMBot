@@ -28,6 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.button1 = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -38,6 +40,10 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.tabPage8 = new System.Windows.Forms.TabPage();
+            this.richTextBoxErrorLogs = new System.Windows.Forms.RichTextBox();
+            this.tabPage9 = new System.Windows.Forms.TabPage();
+            this.richTextBoxGamesLogs = new System.Windows.Forms.RichTextBox();
             this.button2 = new System.Windows.Forms.Button();
             this.tabControl2 = new System.Windows.Forms.TabControl();
             this.tabPage3 = new System.Windows.Forms.TabPage();
@@ -60,17 +66,16 @@
             this.LabelChickenCount = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.LabelDeadCount = new System.Windows.Forms.ToolStripStatusLabel();
-            this.tabPage8 = new System.Windows.Forms.TabPage();
-            this.tabPage9 = new System.Windows.Forms.TabPage();
-            this.richTextBoxErrorLogs = new System.Windows.Forms.RichTextBox();
-            this.richTextBoxGamesLogs = new System.Windows.Forms.RichTextBox();
             this.button4 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
+            this.tabPage8.SuspendLayout();
+            this.tabPage9.SuspendLayout();
             this.tabControl2.SuspendLayout();
             this.tabPage3.SuspendLayout();
             this.tabPage4.SuspendLayout();
@@ -78,8 +83,6 @@
             this.tabPage6.SuspendLayout();
             this.tabPage7.SuspendLayout();
             this.statusStrip1.SuspendLayout();
-            this.tabPage8.SuspendLayout();
-            this.tabPage9.SuspendLayout();
             this.SuspendLayout();
             // 
             // button1
@@ -91,6 +94,7 @@
             this.button1.Size = new System.Drawing.Size(64, 25);
             this.button1.TabIndex = 0;
             this.button1.Text = "START";
+            this.toolTip1.SetToolTip(this.button1, "Start or Stop the Bot");
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
@@ -183,6 +187,50 @@
             this.tabPage2.Text = "Items Logs";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // tabPage8
+            // 
+            this.tabPage8.Controls.Add(this.richTextBoxErrorLogs);
+            this.tabPage8.Location = new System.Drawing.Point(4, 22);
+            this.tabPage8.Name = "tabPage8";
+            this.tabPage8.Size = new System.Drawing.Size(323, 324);
+            this.tabPage8.TabIndex = 2;
+            this.tabPage8.Text = "Errors Logs";
+            this.tabPage8.UseVisualStyleBackColor = true;
+            // 
+            // richTextBoxErrorLogs
+            // 
+            this.richTextBoxErrorLogs.DetectUrls = false;
+            this.richTextBoxErrorLogs.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.richTextBoxErrorLogs.Location = new System.Drawing.Point(0, 0);
+            this.richTextBoxErrorLogs.Name = "richTextBoxErrorLogs";
+            this.richTextBoxErrorLogs.ReadOnly = true;
+            this.richTextBoxErrorLogs.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedVertical;
+            this.richTextBoxErrorLogs.Size = new System.Drawing.Size(323, 324);
+            this.richTextBoxErrorLogs.TabIndex = 8;
+            this.richTextBoxErrorLogs.Text = "";
+            // 
+            // tabPage9
+            // 
+            this.tabPage9.Controls.Add(this.richTextBoxGamesLogs);
+            this.tabPage9.Location = new System.Drawing.Point(4, 22);
+            this.tabPage9.Name = "tabPage9";
+            this.tabPage9.Size = new System.Drawing.Size(323, 324);
+            this.tabPage9.TabIndex = 3;
+            this.tabPage9.Text = "Games Logs";
+            this.tabPage9.UseVisualStyleBackColor = true;
+            // 
+            // richTextBoxGamesLogs
+            // 
+            this.richTextBoxGamesLogs.DetectUrls = false;
+            this.richTextBoxGamesLogs.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.richTextBoxGamesLogs.Location = new System.Drawing.Point(0, 0);
+            this.richTextBoxGamesLogs.Name = "richTextBoxGamesLogs";
+            this.richTextBoxGamesLogs.ReadOnly = true;
+            this.richTextBoxGamesLogs.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedVertical;
+            this.richTextBoxGamesLogs.Size = new System.Drawing.Size(323, 324);
+            this.richTextBoxGamesLogs.TabIndex = 8;
+            this.richTextBoxGamesLogs.Text = "";
+            // 
             // button2
             // 
             this.button2.Location = new System.Drawing.Point(249, 3);
@@ -190,6 +238,7 @@
             this.button2.Size = new System.Drawing.Size(87, 25);
             this.button2.TabIndex = 18;
             this.button2.Text = "Debug Menu";
+            this.toolTip1.SetToolTip(this.button2, "Open the Debug menu\'s");
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
@@ -225,10 +274,10 @@
             this.richTextBoxDebugItems.Location = new System.Drawing.Point(3, 3);
             this.richTextBoxDebugItems.Name = "richTextBoxDebugItems";
             this.richTextBoxDebugItems.ReadOnly = true;
-            this.richTextBoxDebugItems.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedVertical;
             this.richTextBoxDebugItems.Size = new System.Drawing.Size(530, 196);
             this.richTextBoxDebugItems.TabIndex = 20;
             this.richTextBoxDebugItems.Text = "";
+            this.richTextBoxDebugItems.WordWrap = false;
             // 
             // tabPage4
             // 
@@ -398,50 +447,6 @@
             this.LabelDeadCount.Text = "Dead";
             this.LabelDeadCount.ToolTipText = "Deads Count";
             // 
-            // tabPage8
-            // 
-            this.tabPage8.Controls.Add(this.richTextBoxErrorLogs);
-            this.tabPage8.Location = new System.Drawing.Point(4, 22);
-            this.tabPage8.Name = "tabPage8";
-            this.tabPage8.Size = new System.Drawing.Size(323, 324);
-            this.tabPage8.TabIndex = 2;
-            this.tabPage8.Text = "Errors Logs";
-            this.tabPage8.UseVisualStyleBackColor = true;
-            // 
-            // tabPage9
-            // 
-            this.tabPage9.Controls.Add(this.richTextBoxGamesLogs);
-            this.tabPage9.Location = new System.Drawing.Point(4, 22);
-            this.tabPage9.Name = "tabPage9";
-            this.tabPage9.Size = new System.Drawing.Size(323, 324);
-            this.tabPage9.TabIndex = 3;
-            this.tabPage9.Text = "Games Logs";
-            this.tabPage9.UseVisualStyleBackColor = true;
-            // 
-            // richTextBoxErrorLogs
-            // 
-            this.richTextBoxErrorLogs.DetectUrls = false;
-            this.richTextBoxErrorLogs.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.richTextBoxErrorLogs.Location = new System.Drawing.Point(0, 0);
-            this.richTextBoxErrorLogs.Name = "richTextBoxErrorLogs";
-            this.richTextBoxErrorLogs.ReadOnly = true;
-            this.richTextBoxErrorLogs.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedVertical;
-            this.richTextBoxErrorLogs.Size = new System.Drawing.Size(323, 324);
-            this.richTextBoxErrorLogs.TabIndex = 8;
-            this.richTextBoxErrorLogs.Text = "";
-            // 
-            // richTextBoxGamesLogs
-            // 
-            this.richTextBoxGamesLogs.DetectUrls = false;
-            this.richTextBoxGamesLogs.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.richTextBoxGamesLogs.Location = new System.Drawing.Point(0, 0);
-            this.richTextBoxGamesLogs.Name = "richTextBoxGamesLogs";
-            this.richTextBoxGamesLogs.ReadOnly = true;
-            this.richTextBoxGamesLogs.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedVertical;
-            this.richTextBoxGamesLogs.Size = new System.Drawing.Size(323, 324);
-            this.richTextBoxGamesLogs.TabIndex = 8;
-            this.richTextBoxGamesLogs.Text = "";
-            // 
             // button4
             // 
             this.button4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -451,6 +456,7 @@
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(26, 25);
             this.button4.TabIndex = 103;
+            this.toolTip1.SetToolTip(this.button4, "Items + Cubing Settings");
             this.button4.UseVisualStyleBackColor = true;
             this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
@@ -463,6 +469,7 @@
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(26, 25);
             this.button3.TabIndex = 102;
+            this.toolTip1.SetToolTip(this.button3, "Bot Settings");
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click_1);
             // 
@@ -475,6 +482,7 @@
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(26, 25);
             this.button5.TabIndex = 104;
+            this.toolTip1.SetToolTip(this.button5, "Char Settings");
             this.button5.UseVisualStyleBackColor = true;
             this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
@@ -494,15 +502,17 @@
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.button1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "Form1";
-            this.ShowIcon = false;
             this.Text = "D2R - BMBot";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
+            this.tabPage8.ResumeLayout(false);
+            this.tabPage9.ResumeLayout(false);
             this.tabControl2.ResumeLayout(false);
             this.tabPage3.ResumeLayout(false);
             this.tabPage4.ResumeLayout(false);
@@ -511,8 +521,6 @@
             this.tabPage7.ResumeLayout(false);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
-            this.tabPage8.ResumeLayout(false);
-            this.tabPage9.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -559,6 +567,7 @@
         private System.Windows.Forms.RichTextBox richTextBoxGamesLogs;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }
 

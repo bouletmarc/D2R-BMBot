@@ -92,6 +92,7 @@ namespace app
             checkBoxUseBO.Checked = CharConfig.UseBO;
             checkBoxGrabGold.Checked = CharConfig.GrabForGold;
             checkBoxIDAtShop.Checked = CharConfig.IDAtShop;
+            checkBoxDClone.Checked = CharConfig.LeaveDiabloClone;
 
             comboBoxBelt1.SelectedIndex = CharConfig.BeltPotTypeToHave[0];
             comboBoxBelt2.SelectedIndex = CharConfig.BeltPotTypeToHave[1];
@@ -140,6 +141,7 @@ namespace app
             CharConfig.UseBO = checkBoxUseBO.Checked;
             CharConfig.GrabForGold = checkBoxGrabGold.Checked;
             CharConfig.IDAtShop = checkBoxIDAtShop.Checked;
+            CharConfig.LeaveDiabloClone = checkBoxDClone.Checked;
 
             CharConfig.BeltPotTypeToHave[0] = comboBoxBelt1.SelectedIndex;
             CharConfig.BeltPotTypeToHave[1] = comboBoxBelt2.SelectedIndex;

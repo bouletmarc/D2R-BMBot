@@ -142,7 +142,7 @@ namespace app
             {
                 bool UsedPot = false;
                 TimeSpan ThisTimeCheck = DateTime.Now - LastTimeSinceUsedHPPot;
-                if (ThisTimeCheck.TotalMilliseconds > 3000) 
+                if (ThisTimeCheck.TotalMilliseconds > 3500) 
                 {
                     for (int i = 0; i < CharConfig.BeltPotTypeToHave.Length; i++)
                     {
@@ -176,7 +176,7 @@ namespace app
             {
                 bool UsedPot = false;
                 TimeSpan ThisTimeCheck = DateTime.Now - LastTimeSinceUsedManaPot;
-                if (ThisTimeCheck.TotalMilliseconds > 2200)
+                if (ThisTimeCheck.TotalMilliseconds > 2500)
                 {
                     for (int i = 0; i < CharConfig.BeltPotTypeToHave.Length; i++)
                     {

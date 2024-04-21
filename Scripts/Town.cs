@@ -21,6 +21,8 @@ namespace app
         public bool TPSpawned = false;
         public bool UseLastTP = false;
         public int ScriptTownAct = 5;       //default should be 0
+        public int TriedToCainCount = 0;
+        public int TriedToCainCount2 = 0;
         public int TriedToStashCount = 0;
         public int TriedToGambleCount = 0;
         public int TriedToShopCount = 0;
@@ -44,6 +46,8 @@ namespace app
         public void StopTowningReturn()
         {
             CurrentScript = 0;
+            TriedToCainCount = 0;
+            TriedToCainCount2 = 0;
             TriedToStashCount = 0;
             TriedToGambleCount = 0;
             TriedToShopCount = 0;
@@ -118,7 +122,7 @@ namespace app
 
                 if (TriedToUseTPCount >= 5)
                 {
-                    Form1_0.method_1("NO TP FOUND NEAR WHEN TRYING TO TOWN", Color.Red);
+                    Form1_0.method_1("No TP found nearby when trying to Town", Color.Red);
                     Form1_0.LeaveGame(false);
                     return;
                 }
@@ -133,7 +137,7 @@ namespace app
                         {
                             //if (Form1_0.Mover_0.MoveToLocation(Form1_0.ObjectsStruc_0.itemx, Form1_0.ObjectsStruc_0.itemy))
                             //{
-                                Form1_0.method_1("Trying to use TP ID: " + Form1_0.ObjectsStruc_0.ObjectUnitID, Color.Red);
+                                Form1_0.method_1("Trying to use TP ID: " + Form1_0.ObjectsStruc_0.ObjectUnitID, Color.OrangeRed);
 
                                 if (LastUsedTPID != Form1_0.ObjectsStruc_0.ObjectUnitID)
                                 {
@@ -172,7 +176,7 @@ namespace app
                     {
                         if (TriedToUseTPCount == 3 || TriedToUseTPCount == 4)
                         {
-                            Form1_0.method_1("Trying to use Unkown TP ID!", Color.Red);
+                            Form1_0.method_1("Trying to use Unkown TP ID!", Color.OrangeRed);
 
                             CurrentScript = 0;
                             Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, Form1_0.PlayerScan_0.xPosFinal - 2, Form1_0.PlayerScan_0.yPosFinal);
@@ -253,20 +257,50 @@ namespace app
                         CurrentScript++;
                     }
 
+                    if (TriedToCainCount2 >= 10)
+                    {
+                        CurrentScript++;
+                    }
+
+                    //Go see Cain if we cannot ID at shop
+                    if (CharConfig.IDAtShop && Form1_0.Shop_0.HasUnidItem && TriedToCainCount2 < 10)
+                    {
+                        Form1_0.SetGameStatus("TOWN-CAIN");
+                        MoveToCain();
+                        AlreadyGoneToShop = false;
+                        TriedToCainCount = 10;
+                        TriedToCainCount2++;
+                        return;
+                    }
+
                     if (CurrentScript == 1)
                     {
-                        if (Form1_0.InventoryStruc_0.HasUnidItemInInventory() && !FastTowning)
+                        if (TriedToCainCount >= 10)
+                        {
+                            if (CharConfig.IDAtShop) Form1_0.Shop_0.HasUnidItem = true;
+                            else
+                            {
+                                TriedToCainCount = 10;
+                                TriedToCainCount2 = 10;
+                                CurrentScript++;
+                            }
+                            return;
+                        }
+
+                        if (Form1_0.InventoryStruc_0.HasUnidItemInInventory() && !FastTowning && TriedToCainCount < 10)
                         {
                             if (!CharConfig.IDAtShop)
                             {
                                 Form1_0.SetGameStatus("TOWN-CAIN");
                                 MoveToCain();
+                                TriedToCainCount++;
                             }
                             else
                             {
                                 AlreadyGoneToShop = true;
                                 Form1_0.SetGameStatus("TOWN-SHOP (ID)");
                                 MoveToStore();
+                                TriedToCainCount++;
                             }
                         }
                     }
@@ -306,7 +340,10 @@ namespace app
                 //stash items
                 if (CurrentScript == 3)
                 {
-                    if (Form1_0.InventoryStruc_0.HasUnidItemInInventory() && !FastTowning)
+                    if (Form1_0.InventoryStruc_0.HasUnidItemInInventory() 
+                        && !FastTowning
+                        && TriedToCainCount2 < 10
+                        && TriedToCainCount < 10)
                     {
                         //return to identify script, still contain unid item
                         CurrentScript = 1;
@@ -488,7 +525,7 @@ namespace app
                 }
                 else
                 {
-                    Form1_0.method_1("NO WP FOUND NEAR IN TOWN", Color.OrangeRed);
+                    Form1_0.method_1("No WP found nearby in Town", Color.OrangeRed);
                     IgnoredWPList.Clear();
                 }
             }
@@ -515,7 +552,7 @@ namespace app
                 }
                 else
                 {
-                    Form1_0.method_1("NO WP FOUND NEAR IN TOWN", Color.OrangeRed);
+                    Form1_0.method_1("No WP found nearby in Town", Color.OrangeRed);
                     IgnoredWPList.Clear();
                 }
             }
@@ -542,7 +579,7 @@ namespace app
                 }
                 else
                 {
-                    Form1_0.method_1("NO WP FOUND NEAR IN TOWN", Color.OrangeRed);
+                    Form1_0.method_1("No WP found nearby in Town", Color.OrangeRed);
                     IgnoredWPList.Clear();
                 }
             }
@@ -569,7 +606,7 @@ namespace app
                 }
                 else
                 {
-                    Form1_0.method_1("NO WP FOUND NEAR IN TOWN", Color.OrangeRed);
+                    Form1_0.method_1("No WP found nearby in Town", Color.OrangeRed);
                     IgnoredWPList.Clear();
                 }
             }
@@ -596,7 +633,7 @@ namespace app
                 }
                 else
                 {
-                    Form1_0.method_1("NO WP FOUND NEAR IN TOWN", Color.OrangeRed);
+                    Form1_0.method_1("No WP found nearby in Town", Color.OrangeRed);
                     IgnoredWPList.Clear();
                 }
             }
@@ -693,7 +730,7 @@ namespace app
             }
             else
             {
-                Form1_0.method_1(ThisNPC.ToUpper() + " NOT FOUND NEAR", Color.OrangeRed);
+                Form1_0.method_1(ThisNPC.ToUpper() + " not found nearby", Color.OrangeRed);
 
                 if (ThisNPC == "DeckardCain" && TownAct == 1)
                 {
@@ -739,7 +776,7 @@ namespace app
                 }
                 else
                 {
-                    Form1_0.method_1("NO BONFIRE FOUND NEAR IN TOWN", Color.OrangeRed);
+                    Form1_0.method_1("No RogueBonfire found nearby in Town", Color.OrangeRed);
                 }
             }
             if (TownAct == 2)
@@ -757,7 +794,7 @@ namespace app
                 }
                 else
                 {
-                    Form1_0.method_1("NO TP/WP SPOT (STASH) FOUND NEAR IN TOWN", Color.OrangeRed);
+                    Form1_0.method_1("No TP/WP spot (Stash) found nearby in Town", Color.OrangeRed);
                 }
             }
 
@@ -771,7 +808,7 @@ namespace app
                 }
                 else
                 {
-                    Form1_0.method_1("NO TP/WP SPOT (STASH) FOUND NEAR IN TOWN", Color.OrangeRed);
+                    Form1_0.method_1("No TP/WP spot (Stash) found nearby in Town", Color.OrangeRed);
                 }
             }
             if (TownAct == 5)
@@ -805,7 +842,7 @@ namespace app
                         }
                         else
                         {
-                            Form1_0.method_1("NO TP FOUND NEAR IN TOWN", Color.OrangeRed);
+                            Form1_0.method_1("No TP found nearby in Town", Color.OrangeRed);
                         }
                     }
                     /*else
@@ -1081,13 +1118,13 @@ namespace app
                 {
                     if (Form1_0.ObjectsStruc_0.GetObjects("Bank", true))
                     {
-                        Form1_0.method_1("CHANGE STASH POS TO: " + Form1_0.ObjectsStruc_0.itemx + ", " + Form1_0.ObjectsStruc_0.itemy, Color.BlueViolet);
+                        Form1_0.method_1("Changed Stash pos to: " + Form1_0.ObjectsStruc_0.itemx + ", " + Form1_0.ObjectsStruc_0.itemy, Color.BlueViolet);
                         itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, Form1_0.ObjectsStruc_0.itemx, Form1_0.ObjectsStruc_0.itemy);
                         HasPosForStash = true;
                     }
                     else
                     {
-                        Form1_0.method_1("STASH NOT FOUND NEAR", Color.OrangeRed);
+                        Form1_0.method_1("Stash not found nearby in Town", Color.OrangeRed);
                         if (TownAct == 1)
                         {
                             Form1_0.PathFinding_0.MoveToNPC("Akara");

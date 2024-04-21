@@ -1,6 +1,6 @@
-//#######################################
+//########################################
 //SET ALL CUBING RECIPES TO PERFORM
-//#######################################
+//########################################
 Flawless Emerald+Flawless Emerald+Flawless Emerald=Perfect Emerald
 Flawless Sapphire+Flawless Sapphire+Flawless Sapphire=Perfect Sapphire
 Flawless Amethyst+Flawless Amethyst+Flawless Amethyst=Perfect Amethyst

@@ -170,6 +170,24 @@ namespace app
 
         }
 
+        //Place item to cube
+        public bool PlaceItemShift(int PosX, int PosY)
+        {
+            int Tryy = 0;
+            while (Form1_0.ItemsStruc_0.ItemOnCursor && Tryy < 5)
+            {
+                Form1_0.KeyMouse_0.SendSHIFT_CLICK(PosX, PosY);
+                Form1_0.WaitDelay(5);
+                Form1_0.ItemsStruc_0.GetItems(false);   //get inventory again
+                Tryy++;
+            }
+            if (Tryy >= 5)
+            {
+                return false;
+            }
+            return true;
+        }
+
         public bool PlaceItem(int PosX, int PosY)
         {
             int Tryy = 0;

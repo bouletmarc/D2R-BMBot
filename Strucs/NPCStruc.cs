@@ -438,6 +438,7 @@ namespace app
                 case 410: return 1; //WakeOfDestruction
                 case 411: return 1; //ChargedBoltSentry
                 case 412: return 1; //LightningSentry
+                case 413: return 1; //LightningSentry
                 case 414: return 1; //InvisiblePet
                 case 415: return 1; //InfernoSentry
                 case 416: return 1; //DeathSentry

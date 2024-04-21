@@ -5,6 +5,7 @@ using System.ComponentModel.Design;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 
 namespace app
 {
@@ -51,6 +52,8 @@ namespace app
                 MissingManaPot = false;
             }
             //####
+
+            //Console.WriteLine("" + MissingHPPot + MissingManaPot + MissingRVPot);
 
             if (MissingHPPot || MissingManaPot || MissingRVPot)
             {
@@ -184,10 +187,22 @@ namespace app
             IsItemManaPotion = false;
             IsItemRVPotion = false;
             IsItemFullRVPotion = false;
-            if (Form1_0.ItemsStruc_0.ItemNAAME == "Super Healing Potion") IsItemHPPotion = true;
+
+            foreach (var ThisDir in Form1_0.ItemsAlert_0.PickItemsPotions)
+            {
+                if (Form1_0.ItemsStruc_0.ItemNAAME.ToLower().Replace(" ", "") == Regex.Replace(ThisDir.Key.ToLower().Replace(" ", ""), @"[\d-]", string.Empty) && ThisDir.Value)
+                {
+                    if (Form1_0.ItemsStruc_0.ItemNAAME.ToLower().Contains("healing")) IsItemHPPotion = true;
+                    if (Form1_0.ItemsStruc_0.ItemNAAME.ToLower().Contains("mana")) IsItemManaPotion = true;
+                    if (Form1_0.ItemsStruc_0.ItemNAAME.ToLower().Contains("rejuvenation")) IsItemRVPotion = true;
+                    if (Form1_0.ItemsStruc_0.ItemNAAME.ToLower().Contains("full rejuvenation")) IsItemFullRVPotion = true;
+                }
+            }
+
+            /*if (Form1_0.ItemsStruc_0.ItemNAAME == "Super Healing Potion") IsItemHPPotion = true;
             if (Form1_0.ItemsStruc_0.ItemNAAME == "Super Mana Potion") IsItemManaPotion = true;
             if (Form1_0.ItemsStruc_0.ItemNAAME == "Rejuvenation Potion") IsItemRVPotion = true;
-            if (Form1_0.ItemsStruc_0.ItemNAAME == "Full Rejuvenation Potion") IsItemFullRVPotion = true;
+            if (Form1_0.ItemsStruc_0.ItemNAAME == "Full Rejuvenation Potion") IsItemFullRVPotion = true;*/
         }
 
         public int GetPotType()

@@ -100,6 +100,8 @@ namespace app
             return true;
         }
 
+        public bool HasUnidItem = false;
+
         public void RunShopScript()
         {
             if (FirstShopping)
@@ -109,6 +111,7 @@ namespace app
 
                 FirstShopping = false;
             }
+            HasUnidItem = false;
 
             if (Form1_0.InventoryStruc_0.HasInventoryItemName("Wirt's Leg")) ShopForTomeOfPortal = true;
 
@@ -117,9 +120,11 @@ namespace app
             if (CharConfig.IDAtShop)
             {
                 int tries2 = 0;
-                while (Form1_0.InventoryStruc_0.HasUnidItemInInventory() && tries2 < 3)
+                int LastItemIdentified = 0;
+                while (Form1_0.InventoryStruc_0.HasUnidItemInInventory() && tries2 < 2)
                 {
                     Form1_0.SetGameStatus("TOWN-SHOP-ID");
+                    Form1_0.SetProcessingTime();
                     if (!Form1_0.Running || !Form1_0.GameStruc_0.IsInGame())
                     {
                         break;
@@ -151,7 +156,21 @@ namespace app
                                     itemScreenPos = Form1_0.InventoryStruc_0.ConvertInventoryLocToScreenPos(itemScreenPos["x"], itemScreenPos["y"]);
                                     Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"]);
                                     Form1_0.WaitDelay(100);
+                                    PlaceItem(itemScreenPos["x"], itemScreenPos["y"]);
                                     IdentifiedItem = true;
+                                    if (k == LastItemIdentified)
+                                    {
+                                        //try selling this bad item
+                                        Form1_0.KeyMouse_0.SendCTRL_CLICK(itemScreenPos["x"], itemScreenPos["y"]);
+                                        Form1_0.WaitDelay(5);
+                                        Form1_0.ItemsStruc_0.GetItems(false);   //get inventory again
+                                        if (Form1_0.ItemsStruc_0.ItemOnCursor)
+                                        {
+                                            PlaceItem(itemScreenPos["x"], itemScreenPos["y"]);
+                                            IdentifiedItem = false;
+                                        }
+                                    }
+                                    LastItemIdentified = k;
                                     break;
                                 }
                             }
@@ -164,6 +183,8 @@ namespace app
                     if (!IdentifiedItem) tries2++;
                     else tries2 = 0;
                 }
+
+                if (Form1_0.InventoryStruc_0.HasUnidItemInInventory()) HasUnidItem = true;
             }
 
             //sell items
@@ -176,8 +197,10 @@ namespace app
                     {
                         if (ShopForTomeOfPortal && Form1_0.InventoryStruc_0.InventoryItemNames[i] == "Wirt's Leg") continue;
 
-                        if ((CharConfig.InventoryDontCheckItem[i] == 0 && Form1_0.InventoryStruc_0.InventoryHasItem[i] >= 1 && !Form1_0.Town_0.FastTowning)
-                        || (CharConfig.InventoryDontCheckItem[i] == 0 && Form1_0.InventoryStruc_0.InventoryHasItem[i] >= 1 && Form1_0.InventoryStruc_0.InventoryHasStashItem[i] == 0) && Form1_0.Town_0.FastTowning)
+                        if (CharConfig.InventoryDontCheckItem[i] == 0 
+                            && Form1_0.InventoryStruc_0.InventoryHasItem[i] >= 1 
+                            && Form1_0.InventoryStruc_0.InventoryHasStashItem[i] == 0 
+                            && Form1_0.InventoryStruc_0.InventoryHasUnidItem[i] == 0)
                         {
                             Dictionary<string, int> itemScreenPos = Form1_0.InventoryStruc_0.ConvertIndexToXY(i);
                             itemScreenPos = Form1_0.InventoryStruc_0.ConvertInventoryLocToScreenPos(itemScreenPos["x"], itemScreenPos["y"]);
@@ -192,31 +215,12 @@ namespace app
                                 }
 
                                 Form1_0.ItemsStruc_0.GetItems(false);   //get inventory again
-                                /*PickItem(itemScreenPos["x"], itemScreenPos["y"]);
-                                Form1_0.WaitDelay(10);
-                                if (!PlaceItem(555, 465))
-                                {
-                                    Form1_0.WaitDelay(10);
-                                    PlaceItem(itemScreenPos["x"], itemScreenPos["y"]);
-                                }*/
-
 
                                 //CTRL+Clic to send item into stash
                                 Form1_0.KeyMouse_0.SendCTRL_CLICK(itemScreenPos["x"], itemScreenPos["y"]);
                                 Form1_0.WaitDelay(5);
                                 Form1_0.ItemsStruc_0.GetItems(false);   //get inventory again
                                 PlaceItem(itemScreenPos["x"], itemScreenPos["y"]);
-
-                                //############## OLD CODE
-                                //Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"]);
-                                //Form1_0.WaitDelay(5);
-                                //Form1_0.KeyMouse_0.MouseClicc(555, 465);
-                                //Form1_0.WaitDelay(5);
-                                //Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"]);
-                                //Form1_0.WaitDelay(10);
-                                //Form1_0.ItemsStruc_0.GetItems(false);   //get inventory again
-                                //Form1_0.SetGameStatus("TOWN-SHOP-SELL ITEMS");
-                                //##############
 
                                 //item still in inventory
                                 if (Form1_0.InventoryStruc_0.InventoryHasItem[i] >= 1)
@@ -237,7 +241,7 @@ namespace app
 
                             if (Tries > MaxTries)
                             {
-                                Form1_0.method_1("DIDNT SELL ITEM CORRECTLY!", Color.OrangeRed);
+                                Form1_0.method_1("Item didn't sell correctly!", Color.OrangeRed);
                                 break;
                             }
                         }
@@ -263,7 +267,7 @@ namespace app
             //buy potions
             int tries = 0;
             int StartQty = Form1_0.BeltStruc_0.HPQuantity;
-            while (Form1_0.BeltStruc_0.MissingHPPot && tries < 1)
+            while (Form1_0.BeltStruc_0.MissingHPPot && tries < 2)
             {
                 Form1_0.SetGameStatus("TOWN-SHOP-BUY HP POTIONS");
                 if (!Form1_0.Running || !Form1_0.GameStruc_0.IsInGame())
@@ -326,7 +330,7 @@ namespace app
             //buy mana
             tries = 0;
             StartQty = Form1_0.BeltStruc_0.ManyQuantity;
-            while (Form1_0.BeltStruc_0.MissingManaPot && tries < 1)
+            while (Form1_0.BeltStruc_0.MissingManaPot && tries < 2)
             {
                 Form1_0.SetGameStatus("TOWN-SHOP-BUY MANA POTIONS");
                 if (!Form1_0.Running || !Form1_0.GameStruc_0.IsInGame())

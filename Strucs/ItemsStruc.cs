@@ -186,6 +186,34 @@ namespace app
             //File.WriteAllBytes(SavePathh, pUnitData);
         }
 
+        public string GetAllFlagsFromItem()
+        {
+            string AllFlags = "";
+
+            if (Form1_0.ItemsStruc_0.identified)
+            {
+                if (AllFlags != "") AllFlags += " && ";
+                AllFlags += "[Flag] == identified";
+            }
+            else
+            {
+                if (AllFlags != "") AllFlags += " && ";
+                AllFlags += "[Flag] == unidentified";
+            }
+            if (Form1_0.ItemsStruc_0.isSocketed)
+            {
+                if (AllFlags != "") AllFlags += " && ";
+                AllFlags += "[Flag] == sockted";
+            }
+            if (Form1_0.ItemsStruc_0.ethereal)
+            {
+                if (AllFlags != "") AllFlags += " && ";
+                AllFlags += "[Flag] == ethereal";
+            }
+
+            return AllFlags;
+        }
+
         public void GetUnitPathData()
         {
             pPathPtr = BitConverter.ToInt64(itemdatastruc, 0x38);
@@ -380,7 +408,7 @@ namespace app
                     {
                         if (!IsPickingItem && !HasGotTheBadItemOnCursor && !IsIncludedInList(BadItemsOnCursorIDList, ItemPointerLocation))
                         {
-                            Form1_0.method_1("Added bad item 'OnCursor':" + ItemNAAME + ", Pointer:" + ItemPointerLocation, Color.OrangeRed);
+                            Form1_0.method_1("Added bad item 'OnCursor':" + ItemNAAME, Color.OrangeRed);
                             BadItemsOnCursorIDList.Add(ItemPointerLocation);
                         }
                         else if (HasGotTheBadItemOnCursor && !IsIncludedInList(BadItemsOnCursorIDList, ItemPointerLocation))
@@ -390,7 +418,7 @@ namespace app
 
                             if (DebuggingItems)
                             {
-                                AllItemsOnCursor.Add("ID:" + txtFileNo + "(" + ItemNAAME + ") at:" + itemx + ", " + itemy + " - On Cursor");
+                                AllItemsOnCursor.Add("ID:" + txtFileNo + "(" + ItemNAAME + ") at:" + itemx + ", " + itemy + " - On Cursor - " + Form1_0.ItemsAlert_0.GetItemTypeText() + " && " + GetQualityTextString() + " && " + GetAllFlagsFromItem() + " && " + GetAllValuesFromStats());
                             }
                         }
                     }
@@ -411,7 +439,7 @@ namespace app
 
                             if (DebuggingItems)
                             {
-                                AllItemsInInventory.Add("ID:" + txtFileNo + "(" + ItemNAAME + ") at:" + itemx + ", " + itemy + " - In Inventory");
+                                AllItemsInInventory.Add("ID:" + txtFileNo + "(" + ItemNAAME + ") at:" + itemx + ", " + itemy + " - In Inventory - " + Form1_0.ItemsAlert_0.GetItemTypeText() + " && " + GetQualityTextString() + " && " + GetAllFlagsFromItem() + " && " + GetAllValuesFromStats());
                             }
                         }
 
@@ -423,7 +451,7 @@ namespace app
 
                             if (DebuggingItems)
                             {
-                                AllItemsInStash.Add("ID:" + txtFileNo + "(" + ItemNAAME + ") at:" + itemx + ", " + itemy + " - In Stash");
+                                AllItemsInStash.Add("ID:" + txtFileNo + "(" + ItemNAAME + ") at:" + itemx + ", " + itemy + " - In Stash - " + Form1_0.ItemsAlert_0.GetItemTypeText() + " && " + GetQualityTextString() + " && " + GetAllFlagsFromItem() + " && " + GetAllValuesFromStats());
                             }
                         }
                         if (dwOwnerId != Form1_0.PlayerScan_0.unitId && equiploc == 4)
@@ -439,10 +467,9 @@ namespace app
                                 if (dwOwnerId == dwOwnerId_Shared3) StashNum = 4;
                                 Form1_0.StashStruc_0.AddStashItem(itemx, itemy, StashNum);
 
-
-                                if (dwOwnerId == dwOwnerId_Shared1 && DebuggingItems) AllItemsInSharedStash1.Add("ID:" + txtFileNo + "(" + ItemNAAME + ") at:" + itemx + ", " + itemy + " - In Shared Stash1");
-                                if (dwOwnerId == dwOwnerId_Shared2 && DebuggingItems) AllItemsInSharedStash2.Add("ID:" + txtFileNo + "(" + ItemNAAME + ") at:" + itemx + ", " + itemy + " - In Shared Stash2");
-                                if (dwOwnerId == dwOwnerId_Shared3 && DebuggingItems) AllItemsInSharedStash3.Add("ID:" + txtFileNo + "(" + ItemNAAME + ") at:" + itemx + ", " + itemy + " - In Shared Stash3");
+                                if (dwOwnerId == dwOwnerId_Shared1 && DebuggingItems) AllItemsInSharedStash1.Add("ID:" + txtFileNo + "(" + ItemNAAME + ") at:" + itemx + ", " + itemy + " - In Shared Stash1 - " + Form1_0.ItemsAlert_0.GetItemTypeText() + " && " + GetQualityTextString() + " && " + GetAllFlagsFromItem() + " && " + GetAllValuesFromStats());
+                                if (dwOwnerId == dwOwnerId_Shared2 && DebuggingItems) AllItemsInSharedStash2.Add("ID:" + txtFileNo + "(" + ItemNAAME + ") at:" + itemx + ", " + itemy + " - In Shared Stash2 - " + Form1_0.ItemsAlert_0.GetItemTypeText() + " && " + GetQualityTextString() + " && " + GetAllFlagsFromItem() + " && " + GetAllValuesFromStats());
+                                if (dwOwnerId == dwOwnerId_Shared3 && DebuggingItems) AllItemsInSharedStash3.Add("ID:" + txtFileNo + "(" + ItemNAAME + ") at:" + itemx + ", " + itemy + " - In Shared Stash3 - " + Form1_0.ItemsAlert_0.GetItemTypeText() + " && " + GetQualityTextString() + " && " + GetAllFlagsFromItem() + " && " + GetAllValuesFromStats());
                             }
                         }
                         if (dwOwnerId == Form1_0.PlayerScan_0.unitId && equiploc == 3)
@@ -453,7 +480,7 @@ namespace app
 
                             if (DebuggingItems)
                             {
-                                AllItemsIncube.Add("ID:" + txtFileNo + "(" + ItemNAAME + ") at:" + itemx + ", " + itemy + " - In Cube");
+                                AllItemsIncube.Add("ID:" + txtFileNo + "(" + ItemNAAME + ") at:" + itemx + ", " + itemy + " - In Cube - " + Form1_0.ItemsAlert_0.GetItemTypeText() + " && " + GetQualityTextString() + " && " + GetAllFlagsFromItem() + " && " + GetAllValuesFromStats());
                             }
                         }
                     }
@@ -473,7 +500,7 @@ namespace app
 
                             if (DebuggingItems)
                             {
-                                AllItemsEquipped.Add("ID:" + txtFileNo + "(" + ItemNAAME + ") at:" + itemx + ", " + itemy + " - Equipped");
+                                AllItemsEquipped.Add("ID:" + txtFileNo + "(" + ItemNAAME + ") at:" + itemx + ", " + itemy + " - Equipped - " + Form1_0.ItemsAlert_0.GetItemTypeText() + " && " + GetQualityTextString() + " && " + GetAllFlagsFromItem() + " && " + GetAllValuesFromStats());
                             }
                         }
                     }
@@ -489,7 +516,7 @@ namespace app
 
                             if (DebuggingItems)
                             {
-                                AllItemsInBelt.Add("ID:" + txtFileNo + "(" + ItemNAAME + ") at:" + itemx + ", " + itemy + " - In Belt");
+                                AllItemsInBelt.Add("ID:" + txtFileNo + "(" + ItemNAAME + ") at:" + itemx + ", " + itemy + " - In Belt - " + Form1_0.ItemsAlert_0.GetItemTypeText() + " && " + GetQualityTextString() + " && " + GetAllFlagsFromItem() + " && " + GetAllValuesFromStats());
                             }
                         }
                     }
@@ -503,7 +530,7 @@ namespace app
                         if (DebuggingItems)
                         {
                             //GetAllValuesFromStats();
-                            AllItemsOnGround.Add("ID:" + txtFileNo + "(" + ItemNAAME + ") at:" + itemx + ", " + itemy + " - On Ground/Droping");
+                            AllItemsOnGround.Add("ID:" + txtFileNo + "(" + ItemNAAME + ") at:" + itemx + ", " + itemy + " - On Ground/Droping - " + Form1_0.ItemsAlert_0.GetItemTypeText() + " && " + GetQualityTextString() + " && " + GetAllFlagsFromItem() + " && " + GetAllValuesFromStats());
                         }
 
                         Form1_0.UIScan_0.readUI();
@@ -551,13 +578,13 @@ namespace app
                                     || (itemx == 0 && itemy == 0))
                                     && !IsIncludedInList(BadItemsOnGroundPointerList, ItemPointerLocation))
                                 {
-                                    Form1_0.method_1("Added bad item 'OnGround':" + ItemNAAME + ", Pointer:" + ItemPointerLocation, Color.OrangeRed);
+                                    Form1_0.method_1("Added bad item 'OnGround':" + ItemNAAME, Color.OrangeRed);
                                     BadItemsOnGroundPointerList.Add(ItemPointerLocation);
                                     continue;
                                 }
                                 if (IsIncludedInList(BadItemsOnGroundPointerList, ItemPointerLocation))
                                 {
-                                    //Form1_0.method_1("Avoided bad item 'OnGround':" + ItemNAAME + ", Pointer:" + ItemPointerLocation, Color.OrangeRed);
+                                    //Form1_0.method_1("Avoided bad item 'OnGround':" + ItemNAAME, Color.OrangeRed);
                                     continue;
                                 }
                                 //##############################################
@@ -933,12 +960,13 @@ namespace app
             numSockets = 0;
             if (isSocketed)
             {
-                numSockets = GetValuesFromStats(Enums.Attribute.NumSockets);
+                numSockets = GetValuesFromStats(Enums.Attribute.Sockets);
             }
         }
 
-        public int GetAllValuesFromStats()
+        public string GetAllValuesFromStats()
         {
+            string AllStats = "";
             if (this.statCount > 0)
             {
                 for (int i = 0; i < this.statCount; i++)
@@ -948,7 +976,11 @@ namespace app
                     ushort statEnum = BitConverter.ToUInt16(statBuffer, offset + 0x2);
                     int statValue = BitConverter.ToInt32(statBuffer, offset + 0x4);
 
-                    Form1_0.method_1("Item: " + ItemNAAME + ", Stat (" + ((Enums.Attribute) statEnum) + "):" + statValue, Color.Red);
+                    if (statEnum == 56 || statEnum == 59) statValue = statValue / 25;
+
+                    if (AllStats != "") AllStats += " && ";
+                    AllStats += "[" + ((Enums.Attribute)statEnum) + "] == " + statValue;
+                    //Form1_0.method_1("Item: " + ItemNAAME + ", Stat (" + ((Enums.Attribute) statEnum) + "):" + statValue, Color.Red);
                 }
             }
 
@@ -961,11 +993,15 @@ namespace app
                     ushort statEnum = BitConverter.ToUInt16(statBufferEx, offset + 0x2);
                     int statValue = BitConverter.ToInt32(statBufferEx, offset + 0x4);
 
-                    Form1_0.method_1("Item: " + ItemNAAME + ", Stat (" + ((Enums.Attribute)statEnum) + "):" + statValue, Color.Red);
+                    if (statEnum == 56 || statEnum == 59) statValue = statValue / 25;
+
+                    if (AllStats != "") AllStats += " && ";
+                    AllStats += "[" + ((Enums.Attribute)statEnum) + "] == " + statValue;
+                    //Form1_0.method_1("Item: " + ItemNAAME + ", Stat (" + ((Enums.Attribute)statEnum) + "):" + statValue, Color.Red);
                 }
             }
 
-            return 0; // or some other default value
+            return AllStats; // or some other default value
         }
 
         public int GetValuesFromStats(Enums.Attribute CheckTStat)
@@ -1021,6 +1057,11 @@ namespace app
             }
 
             return 0; // or some other default value
+        }
+
+        public string GetQualityTextString()
+        {
+            return "[Quality] == " + getQuality((int)itemQuality);
         }
 
         public void setQuality(int qualityNo)
@@ -1082,35 +1123,65 @@ namespace app
             }
         }
 
-        public bool IsItemHaveSameStatMulti(string[] StatNames, int StatValueToCheck, string ComparatorMethod)
+        public bool IsItemHaveSameStatMultiCheck(string StatName, int StatValueToCheck, string ComparatorMethod)
         {
-            int[] statValues = new int[StatNames.Length];
-            for (int i = 0; i < StatNames.Length; i++)
+            if (StatName.Contains("+"))
             {
-                statValues[i] = GetStatValue(GetStatEnumIndex(StatNames[i]));
-            }
+                string[] StatNames = StatName.Split('+');
 
-            bool HasBadValue = false;
-            for (int i = 0; i < statValues.Length; i++)
+                int TotalValue = 0;
+                for (int i = 0; i < StatNames.Length; i++) TotalValue += GetValueFromStats(StatNames[i]);
+                return IsValueTrue(ComparatorMethod, TotalValue, StatValueToCheck);
+            }
+            else
             {
-                if (statValues[i] == -1)
+                return IsItemHaveSameStat(StatName, StatValueToCheck, ComparatorMethod);
+            }
+        }
+
+        public int GetValueFromStats(string StatName)
+        {
+            int EnumIndex = GetStatEnumIndex(StatName);
+            if (EnumIndex > -1)
+            {
+                if (this.statCount > 0)
                 {
-                    HasBadValue = true;
+                    for (int i = 0; i < this.statCount; i++)
+                    {
+                        int offset = i * 8;
+                        //short statLayer = BitConverter.ToInt16(statBuffer, offset);
+                        ushort statEnum = BitConverter.ToUInt16(statBuffer, offset + 0x2);
+                        int statValue = BitConverter.ToInt32(statBuffer, offset + 0x4);
+
+                        if (statEnum == EnumIndex)
+                        {
+                            return statValue;
+                        }
+                    }
+                }
+
+                if (this.statExCount > 0)
+                {
+                    for (int i = 0; i < this.statExCount; i++)
+                    {
+                        int offset = i * 8;
+                        //short statLayer = BitConverter.ToInt16(statBufferEx, offset);
+                        ushort statEnum = BitConverter.ToUInt16(statBufferEx, offset + 0x2);
+                        int statValue = BitConverter.ToInt32(statBufferEx, offset + 0x4);
+
+                        if (statEnum == EnumIndex)
+                        {
+                            return statValue;
+                        }
+                    }
                 }
             }
-
-            if (!HasBadValue)
+            else
             {
-                int FinalValue = 0;
-                for (int i = 0; i < statValues.Length; i++)
-                {
-                    FinalValue += statValues[i];
-                }
-
-                return IsValueTrue(ComparatorMethod, FinalValue, StatValueToCheck);
+                Form1_0.method_1("Error Stat '" + StatName + "' doesn't exist!", Color.Red);
             }
 
-            return true; //no identical stats found, return true by default
+            return 0; //no identical stats found, return true by default
         }
 
         public bool IsItemHaveSameStat(string StatName, int StatValueToCheck, string ComparatorMethod)
@@ -1149,6 +1220,10 @@ namespace app
                         }
                     }
                 }
+            }
+            else
+            {
+                Form1_0.method_1("Error Stat '" + StatName + "' doesn't exist!", Color.Red);
             }
 
             return false; //no identical stats found, return true by default

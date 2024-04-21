@@ -64,6 +64,23 @@ namespace app
             GetAllGamesNames();
         }
 
+        public bool IsPlayerConnectedToBnet()
+        {
+            long baseAddr = (long)Form1_0.BaseAddress + (long)Form1_0.offsets["SelectedChar"] - 16;
+            return Form1_0.Mem_0.ReadByteRaw((IntPtr)baseAddr) == 0x07;
+        }
+
+        public void ClicCreateNewChar()
+        {
+            Form1_0.KeyMouse_0.MouseClicc(1620, 50); //clic online button
+            Form1_0.WaitDelay(200);
+
+            Form1_0.KeyMouse_0.MouseClicc(1700, 935); //clic create new char
+            Form1_0.WaitDelay(200);
+            Form1_0.KeyMouse_0.PressKey(Keys.Escape); //leave create new char menu
+            Form1_0.WaitDelay(50);
+        }
+
         public void CreateNewGame(int ThisGameNumber)
         {
             if (Form1_0.TriedToCreateNewGameCount > 0)
@@ -90,7 +107,7 @@ namespace app
                 var helper = new Helper { Value = VkKeyScan(GameName[i]) };
                 byte virtualKeyCode = helper.Low;
                 Form1_0.KeyMouse_0.PressKey2((Keys)virtualKeyCode);
-                Thread.Sleep(3);
+                Thread.Sleep(5);
             }
 
 
@@ -107,7 +124,7 @@ namespace app
                 var helper = new Helper { Value = VkKeyScan(CharConfig.GamePass[i]) };
                 byte virtualKeyCode = helper.Low;
                 Form1_0.KeyMouse_0.PressKey2((Keys)virtualKeyCode);
-                Thread.Sleep(3);
+                Thread.Sleep(5);
             }
 
             //select difficulty
@@ -348,6 +365,8 @@ namespace app
             Form1_0.WaitDelay(10);
         }
 
+        public int ChickenTry = 0;
+
         public void CheckChickenGameTime()
         {
             if (!CharConfig.RunItemGrabScriptOnly)
@@ -365,6 +384,15 @@ namespace app
                             Form1_0.LeaveGame(false);
                             AlreadyChickening = true;
                             Form1_0.TotalChickenByTimeCount++;
+                        }
+                    }
+                    else
+                    {
+                        ChickenTry++;
+                        if (ChickenTry > 10)
+                        {
+                            AlreadyChickening = false;
+                            ChickenTry = 0;
                         }
                     }
                 }

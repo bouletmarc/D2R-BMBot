@@ -133,7 +133,11 @@ namespace app
                 TimeSpan UpdatingDisplayTime = DateTime.Now - StartScanTime;
 
                 //stop scanning too much lags!! (->> issue fixed!)
-                if (UpdatingDisplayTime.TotalMilliseconds > 160) ScanningOverlayItems = false;
+                if (UpdatingDisplayTime.TotalMilliseconds > 160)
+                {
+                    Form1_0.method_1("Overlay creating too much slowdown, disabling Overlay!", Color.OrangeRed);
+                    ScanningOverlayItems = false;
+                }
             }
             else
             {
@@ -275,7 +279,7 @@ namespace app
         {
             base.OnPaint(e);
 
-            if (CharConfig.ShowOverlay && CanDisplayOverlay)
+            if (CharConfig.ShowOverlay && Form1_0.GameStruc_0.IsInGame())
             {
                 e.Graphics.CompositingQuality = CompositingQuality.HighQuality;
                 e.Graphics.TextRenderingHint = TextRenderingHint.AntiAliasGridFit;
@@ -292,27 +296,31 @@ namespace app
                     if ((i == 2 || i == 6 || i == 10 || i == 14) && Form1_0.BeltStruc_0.BeltHaveItems[i] > 0) Qty3++;
                     if ((i == 3 || i == 7 || i == 11 || i == 15) && Form1_0.BeltStruc_0.BeltHaveItems[i] > 0) Qty4++;
                 }
-                e.Graphics.DrawString(Qty1.ToString(), drawFontBold, drawBrushWhite, 1092, 1019);
-                e.Graphics.DrawString(Qty2.ToString(), drawFontBold, drawBrushWhite, 1092 + 62, 1019);
-                e.Graphics.DrawString(Qty3.ToString(), drawFontBold, drawBrushWhite, 1092 + (62 * 2), 1019);
-                e.Graphics.DrawString(Qty4.ToString(), drawFontBold, drawBrushWhite, 1092 + (62 * 3), 1019);
+                e.Graphics.DrawString(Qty1.ToString(), drawFontBold, drawBrushWhite, 1091, 1018);
+                e.Graphics.DrawString(Qty2.ToString(), drawFontBold, drawBrushWhite, 1091 + 62, 1018);
+                e.Graphics.DrawString(Qty3.ToString(), drawFontBold, drawBrushWhite, 1091 + (62 * 2), 1018);
+                e.Graphics.DrawString(Qty4.ToString(), drawFontBold, drawBrushWhite, 1091 + (62 * 3), 1018);
 
                 //Print HP/Mana
                 int Percent = (int)((Form1_0.PlayerScan_0.PlayerHP * 100.0) / Form1_0.PlayerScan_0.PlayerMaxHP);
-                e.Graphics.DrawString(Form1_0.PlayerScan_0.PlayerHP.ToString() + "/" + Form1_0.PlayerScan_0.PlayerMaxHP.ToString() + " (" + Percent + "%)", drawFontBold, drawBrushRed, 560, 960);
+                string HPTxt = Form1_0.PlayerScan_0.PlayerHP.ToString() + "/" + Form1_0.PlayerScan_0.PlayerMaxHP.ToString() + " (" + Percent + "%)";
+                SizeF ThisS2 = e.Graphics.MeasureString(HPTxt, drawFontBold);
+                //e.Graphics.FillRectangle(drawBrushDark, 560, 960, ThisS2.Width, 20);
+                e.Graphics.DrawString(HPTxt, drawFontBold, drawBrushRed, 560, 960);
 
                 int PercentMana = (int)((Form1_0.PlayerScan_0.PlayerMana * 100.0) / Form1_0.PlayerScan_0.PlayerMaxMana);
                 string ManaTxt = Form1_0.PlayerScan_0.PlayerMana.ToString() + "/" + Form1_0.PlayerScan_0.PlayerMaxMana.ToString() + " (" + PercentMana + "%)";
-                SizeF ThisS2 = e.Graphics.MeasureString(ManaTxt, drawFontBold);
+                ThisS2 = e.Graphics.MeasureString(ManaTxt, drawFontBold);
                 e.Graphics.DrawString(ManaTxt, drawFontBold, drawBrushBlue, 1360 - ThisS2.Width, 960);
 
                 //Print Player Pos
                 string CordsTxt = Form1_0.PlayerScan_0.xPosFinal.ToString() + ", " + Form1_0.PlayerScan_0.yPosFinal.ToString();
                 ThisS2 = e.Graphics.MeasureString(CordsTxt, drawFontBold);
-                e.Graphics.DrawString(CordsTxt, drawFontBold, drawBrushWhite, Form1_0.CenterX - (ThisS2.Width / 2), 960);
+                //e.Graphics.DrawString(CordsTxt, drawFontBold, drawBrushWhite, Form1_0.CenterX - (ThisS2.Width / 2), 960);
+                e.Graphics.DrawString(CordsTxt, drawFontBold, drawBrushWhite, 1000, 960);
 
                 //Print Infos
-                e.Graphics.DrawString("Mobs:" + MobsPoints.Count, drawFontBold, drawBrushWhite, 760, 960);
+                e.Graphics.DrawString("Mobs:" + MobsPoints.Count, drawFontBold, drawBrushWhite, 790, 960);
                 string MapTxt = "Map Level:" + Form1_0.PlayerScan_0.levelNo;
                 ThisS2 = e.Graphics.MeasureString(MapTxt, drawFontBold);
                 e.Graphics.DrawString(MapTxt, drawFontBold, drawBrushWhite, 1360 - ThisS2.Width, 935);
@@ -320,7 +328,7 @@ namespace app
                 //Print Battle Infos
                 if (Form1_0.Battle_0.DoingBattle || Form1_0.Battle_0.ClearingArea)
                 {
-                    string MobsTxt = Form1_0.NPCStruc_0.getNPC_ID((int)Form1_0.MobsStruc_0.txtFileNo) + " (" + Form1_0.MobsStruc_0.txtFileNo + ") - HP:" + Form1_0.MobsStruc_0.MobsHP + " - Pos:" + Form1_0.MobsStruc_0.xPosFinal + ", " + Form1_0.MobsStruc_0.yPosFinal;
+                    string MobsTxt = (EnumsMobsNPC.MonsterType)((int)Form1_0.MobsStruc_0.txtFileNo) + " (" + Form1_0.MobsStruc_0.txtFileNo + ") - HP:" + Form1_0.MobsStruc_0.MobsHP + " - Pos:" + Form1_0.MobsStruc_0.xPosFinal + ", " + Form1_0.MobsStruc_0.yPosFinal;
                     e.Graphics.DrawString(MobsTxt, drawFontBold, drawBrushWhite, 560, 910);
                 }
 
@@ -345,108 +353,114 @@ namespace app
                     SolidBrush drawBrushCustom = new SolidBrush(Color.FromArgb(200, LogsTextColor[ThisIndexInverted].R, LogsTextColor[ThisIndexInverted].G, LogsTextColor[ThisIndexInverted].B));
                     string ThisLogTxt = LogsTexts[ThisIndexInverted];
                     SizeF ThisS = e.Graphics.MeasureString(ThisLogTxt, drawFontBold10);
-                    e.Graphics.FillRectangle(drawBrushDark, 1500, 840 - (i * 20), 410, 20);
-                    e.Graphics.DrawString(ThisLogTxt, drawFontBold10, drawBrushCustom, 1890 - ThisS.Width, 840 - (i * 20));
+                    //e.Graphics.FillRectangle(drawBrushDark, 1500, 840 - (i * 20), 410, 20);
+                    e.Graphics.FillRectangle(drawBrushDark, 1890 - ThisS.Width, 840 - (i * 20), ThisS.Width, 20);
+                    e.Graphics.DrawString(ThisLogTxt, drawFontBold10, drawBrushCustom, 1890 - ThisS.Width + 2, 840 - (i * 20));
                 }
 
                 //Print Status
                 e.Graphics.DrawString("Status: " + Form1_0.CurrentStatus, drawFontBold, drawBrushWhite, 560, 935);
                 ThisS2 = e.Graphics.MeasureString(Form1_0.CurrentGameTime, drawFontBold);
-                e.Graphics.DrawString(Form1_0.CurrentGameTime, drawFontBold, drawBrushYellow, Form1_0.CenterX, 935);
+                //e.Graphics.DrawString(Form1_0.CurrentGameTime, drawFontBold, drawBrushYellow, Form1_0.CenterX, 935);
+                e.Graphics.DrawString(Form1_0.CurrentGameTime, drawFontBold, drawBrushYellow, 1000, 935);
+                e.Graphics.DrawString(Form1_0.mS + ", " + Form1_0.FPS.ToString("00") + "Fps", drawFontBold, drawBrushYellow, 1060, 910);
 
                 string OtherInfosTxt = Form1_0.TotalChickenCount + " ChickensByHP, " + Form1_0.TotalChickenByTimeCount + " ChickensByTime";
                 ThisS2 = e.Graphics.MeasureString(OtherInfosTxt, drawFontBold);
-                e.Graphics.DrawString(OtherInfosTxt, drawFontBold, drawBrushWhite, 1360 - ThisS2.Width, 910);
+                e.Graphics.DrawString(OtherInfosTxt, drawFontBold, drawBrushWhite, 1360 - ThisS2.Width, 885);
 
                 string OtherInfosTxt2 = Form1_0.CurrentGameNumberFullyDone.ToString() + " Done, " + Form1_0.TotalDeadCount + " Dead";
                 ThisS2 = e.Graphics.MeasureString(OtherInfosTxt2, drawFontBold);
-                e.Graphics.DrawString(OtherInfosTxt2, drawFontBold, drawBrushWhite, 1360 - ThisS2.Width, 885);
+                e.Graphics.DrawString(OtherInfosTxt2, drawFontBold, drawBrushWhite, 1360 - ThisS2.Width, 910);
 
-                for (int i = 0; i < PathFindingPoints.Count - 1; i++)
+                if (CanDisplayOverlay)
                 {
-                    Dictionary<string, int> itemScreenPosStart = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, PathFindingPoints[i].X, PathFindingPoints[i].Y);
-                    Dictionary<string, int> itemScreenPosEnd = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, PathFindingPoints[i + 1].X, PathFindingPoints[i + 1].Y);
-
-                    System.Drawing.Point StartPoint = new System.Drawing.Point(itemScreenPosStart["x"], itemScreenPosStart["y"]);
-                    System.Drawing.Point EndPoint = new System.Drawing.Point(itemScreenPosEnd["x"], itemScreenPosEnd["y"]);
-                    StartPoint = RescaleThisPoint(StartPoint);
-                    EndPoint = RescaleThisPoint(EndPoint);
-
-                    System.Drawing.Point MidPoint = new System.Drawing.Point(Form1_0.CenterX, Form1_0.CenterY);
-
-                    //Console.WriteLine("line: " + StartPoint.X + ", " + StartPoint.Y + " to " + EndPoint.X + ", " + EndPoint.Y);
-                    if (i == 0) e.Graphics.DrawLine(redPen, MidPoint, StartPoint);
-
-                    e.Graphics.DrawLine(redPen, StartPoint, EndPoint);
-
-                    if (i != 0) DrawCrossAtPoint(e, StartPoint, orangePen);
-                }
-
-                if (MoveToPoint.X != 0 && MoveToPoint.Y != 0)
-                {
-                    Dictionary<string, int> itemScreenPosStart = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, MoveToPoint.X, MoveToPoint.Y);
-                    System.Drawing.Point StartPoint = new System.Drawing.Point(itemScreenPosStart["x"], itemScreenPosStart["y"]);
-                    StartPoint = RescaleThisPoint(StartPoint);
-                    if (PathFindingPoints.Count == 0)
+                    for (int i = 0; i < PathFindingPoints.Count - 1; i++)
                     {
+                        Dictionary<string, int> itemScreenPosStart = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, PathFindingPoints[i].X, PathFindingPoints[i].Y);
+                        Dictionary<string, int> itemScreenPosEnd = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, PathFindingPoints[i + 1].X, PathFindingPoints[i + 1].Y);
+
+                        System.Drawing.Point StartPoint = new System.Drawing.Point(itemScreenPosStart["x"], itemScreenPosStart["y"]);
+                        System.Drawing.Point EndPoint = new System.Drawing.Point(itemScreenPosEnd["x"], itemScreenPosEnd["y"]);
+                        StartPoint = RescaleThisPoint(StartPoint);
+                        EndPoint = RescaleThisPoint(EndPoint);
+
                         System.Drawing.Point MidPoint = new System.Drawing.Point(Form1_0.CenterX, Form1_0.CenterY);
-                        e.Graphics.DrawLine(redPen, MidPoint, StartPoint);
+
+                        //Console.WriteLine("line: " + StartPoint.X + ", " + StartPoint.Y + " to " + EndPoint.X + ", " + EndPoint.Y);
+                        if (i == 0) e.Graphics.DrawLine(redPen, MidPoint, StartPoint);
+
+                        e.Graphics.DrawLine(redPen, StartPoint, EndPoint);
+
+                        if (i != 0) DrawCrossAtPoint(e, StartPoint, orangePen);
                     }
-                    DrawCrossAtPoint(e, StartPoint, redPen);
-                }
 
-                for (int i = 0; i < MobsPoints.Count; i++)
-                {
-                    Dictionary<string, int> itemScreenPosStart = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, MobsPoints[i].X, MobsPoints[i].Y);
-                    System.Drawing.Point StartPoint = new System.Drawing.Point(itemScreenPosStart["x"], itemScreenPosStart["y"]);
-                    StartPoint = RescaleThisPoint(StartPoint);
-                    DrawCrossAtPoint(e, StartPoint, yellowPen);
+                    if (MoveToPoint.X != 0 && MoveToPoint.Y != 0)
+                    {
+                        Dictionary<string, int> itemScreenPosStart = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, MoveToPoint.X, MoveToPoint.Y);
+                        System.Drawing.Point StartPoint = new System.Drawing.Point(itemScreenPosStart["x"], itemScreenPosStart["y"]);
+                        StartPoint = RescaleThisPoint(StartPoint);
+                        if (PathFindingPoints.Count == 0)
+                        {
+                            System.Drawing.Point MidPoint = new System.Drawing.Point(Form1_0.CenterX, Form1_0.CenterY);
+                            e.Graphics.DrawLine(redPen, MidPoint, StartPoint);
+                        }
+                        DrawCrossAtPoint(e, StartPoint, redPen);
+                    }
 
-                    //if (Form1_0.MobsStruc_0.DebuggingMobs)
-                    //{
+                    for (int i = 0; i < MobsPoints.Count; i++)
+                    {
+                        Dictionary<string, int> itemScreenPosStart = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, MobsPoints[i].X, MobsPoints[i].Y);
+                        System.Drawing.Point StartPoint = new System.Drawing.Point(itemScreenPosStart["x"], itemScreenPosStart["y"]);
+                        StartPoint = RescaleThisPoint(StartPoint);
+                        DrawCrossAtPoint(e, StartPoint, yellowPen);
+
+                        //if (Form1_0.MobsStruc_0.DebuggingMobs)
+                        //{
                         string ThisTxt = "ID:" + MobsIDs[i].ToString();
                         SizeF ThisS3 = e.Graphics.MeasureString(ThisTxt, drawFont);
                         e.Graphics.DrawString(ThisTxt, drawFont, drawBrushYellow, StartPoint.X - (ThisS3.Width / 2), StartPoint.Y + 9);
-                    //}
-                }
+                        //}
+                    }
 
-                for (int i = 0; i < NPCPoints.Count; i++)
-                {
-                    Dictionary<string, int> itemScreenPosStart = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, NPCPoints[i].X, NPCPoints[i].Y);
-                    System.Drawing.Point StartPoint = new System.Drawing.Point(itemScreenPosStart["x"], itemScreenPosStart["y"]);
-                    StartPoint = RescaleThisPoint(StartPoint);
-                    DrawCrossAtPoint(e, StartPoint, purplePen);
+                    for (int i = 0; i < NPCPoints.Count; i++)
+                    {
+                        Dictionary<string, int> itemScreenPosStart = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, NPCPoints[i].X, NPCPoints[i].Y);
+                        System.Drawing.Point StartPoint = new System.Drawing.Point(itemScreenPosStart["x"], itemScreenPosStart["y"]);
+                        StartPoint = RescaleThisPoint(StartPoint);
+                        DrawCrossAtPoint(e, StartPoint, purplePen);
 
-                    //if (Form1_0.MobsStruc_0.DebuggingMobs)
-                    //{
+                        //if (Form1_0.MobsStruc_0.DebuggingMobs)
+                        //{
                         string ThisTxt = "ID:" + NPCIDs[i].ToString();
                         SizeF ThisS3 = e.Graphics.MeasureString(ThisTxt, drawFont);
                         e.Graphics.DrawString(ThisTxt, drawFont, drawBrushWhite, StartPoint.X - (ThisS3.Width / 2), StartPoint.Y + 9);
-                    //}
-                }
+                        //}
+                    }
 
-                for (int i = 0; i < GoodChestsPoints.Count; i++)
-                {
-                    Dictionary<string, int> itemScreenPosStart = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, GoodChestsPoints[i].X, GoodChestsPoints[i].Y);
-                    System.Drawing.Point StartPoint = new System.Drawing.Point(itemScreenPosStart["x"], itemScreenPosStart["y"]);
-                    StartPoint = RescaleThisPoint(StartPoint);
-                    DrawCrossAtPoint(e, StartPoint, greenPen);
-                }
+                    for (int i = 0; i < GoodChestsPoints.Count; i++)
+                    {
+                        Dictionary<string, int> itemScreenPosStart = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, GoodChestsPoints[i].X, GoodChestsPoints[i].Y);
+                        System.Drawing.Point StartPoint = new System.Drawing.Point(itemScreenPosStart["x"], itemScreenPosStart["y"]);
+                        StartPoint = RescaleThisPoint(StartPoint);
+                        DrawCrossAtPoint(e, StartPoint, greenPen);
+                    }
 
-                for (int i = 0; i < WPPoints.Count; i++)
-                {
-                    Dictionary<string, int> itemScreenPosStart = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, WPPoints[i].X, WPPoints[i].Y);
-                    System.Drawing.Point StartPoint = new System.Drawing.Point(itemScreenPosStart["x"], itemScreenPosStart["y"]);
-                    StartPoint = RescaleThisPoint(StartPoint);
-                    DrawCrossAtPoint(e, StartPoint, bluePen);
-                }
+                    for (int i = 0; i < WPPoints.Count; i++)
+                    {
+                        Dictionary<string, int> itemScreenPosStart = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, WPPoints[i].X, WPPoints[i].Y);
+                        System.Drawing.Point StartPoint = new System.Drawing.Point(itemScreenPosStart["x"], itemScreenPosStart["y"]);
+                        StartPoint = RescaleThisPoint(StartPoint);
+                        DrawCrossAtPoint(e, StartPoint, bluePen);
+                    }
 
-                for (int i = 0; i < ExitPoints.Count; i++)
-                {
-                    Dictionary<string, int> itemScreenPosStart = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, ExitPoints[i].X, ExitPoints[i].Y);
-                    System.Drawing.Point StartPoint = new System.Drawing.Point(itemScreenPosStart["x"], itemScreenPosStart["y"]);
-                    StartPoint = RescaleThisPoint(StartPoint);
-                    DrawCrossAtPoint(e, StartPoint, cyanPen);
+                    for (int i = 0; i < ExitPoints.Count; i++)
+                    {
+                        Dictionary<string, int> itemScreenPosStart = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, ExitPoints[i].X, ExitPoints[i].Y);
+                        System.Drawing.Point StartPoint = new System.Drawing.Point(itemScreenPosStart["x"], itemScreenPosStart["y"]);
+                        StartPoint = RescaleThisPoint(StartPoint);
+                        DrawCrossAtPoint(e, StartPoint, cyanPen);
+                    }
                 }
             }
         }

@@ -133,7 +133,7 @@ namespace app
 
                         //cast attack during this waiting time
                         Form1_0.Battle_0.SetSkills();
-                        Form1_0.Battle_0.CastSkills();
+                        Form1_0.Battle_0.CastSkillsNoMove();
                         Form1_0.ItemsStruc_0.GetItems(true);      //#############
                         Form1_0.Potions_0.CheckIfWeUsePotion();
 

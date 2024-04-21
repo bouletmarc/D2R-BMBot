@@ -21,7 +21,7 @@ namespace app
         public string File_ItemsSettings = Application.StartupPath + @"\Settings\ItemsSettings.txt";
         public string File_CubingSettings = Application.StartupPath + @"\Settings\CubingRecipes.txt";
         public string File_Settings = Application.StartupPath + @"\Settings\Settings.txt";
-        string[] AllLines = new string[] { };
+        public string[] AllLines = new string[] { };
 
         public void SetForm1(Form1 form1_1)
         {
@@ -37,7 +37,7 @@ namespace app
             }
             else
             {
-                Form1_0.method_1("UNABLE TO FIND 'CharSettings.txt' FILE!", Color.Red);
+                Form1_0.method_1("Unable to find 'CharSettings.txt' file!", Color.Red);
             }
 
             //###################
@@ -52,7 +52,7 @@ namespace app
             }
             else
             {
-                Form1_0.method_1("UNABLE TO FIND 'BotSettings.txt' FILE!", Color.Red);
+                Form1_0.method_1("Unable to find 'BotSettings.txt' file!", Color.Red);
             }
             //#####
             if (File.Exists(File_ItemsSettings))
@@ -62,7 +62,7 @@ namespace app
             }
             else
             {
-                Form1_0.method_1("UNABLE TO FIND 'ItemsSettings.txt' FILE!", Color.Red);
+                Form1_0.method_1("Unable to find 'ItemsSettings.txt' file!", Color.Red);
             }
             //#####
             if (File.Exists(File_CubingSettings))
@@ -72,7 +72,7 @@ namespace app
             }
             else
             {
-                Form1_0.method_1("UNABLE TO FIND 'CubingRecipes.txt' FILE!", Color.Red);
+                Form1_0.method_1("Unable to find 'CubingRecipes.txt' file!", Color.Red);
             }
             //#####
             if (File.Exists(File_Settings))
@@ -115,7 +115,7 @@ namespace app
             }
             catch
             {
-                Form1_0.method_1("UNABLE TO LOAD 'Settings.txt' FILE!", Color.Red);
+                Form1_0.method_1("Unable to load 'Settings.txt' file!", Color.Red);
             }
         }
 
@@ -130,7 +130,7 @@ namespace app
                 }
                 else
                 {
-                    Form1_0.method_1("UNABLE TO FIND 'PaladinHammer.txt' FILE!", Color.Red);
+                    Form1_0.method_1("Unable to find 'PaladinHammer.txt' file!", Color.Red);
                 }
             }
             else if (CharConfig.RunningOnChar == "SorceressBlizzard")
@@ -142,7 +142,7 @@ namespace app
                 }
                 else
                 {
-                    Form1_0.method_1("UNABLE TO FIND 'SorceressBlizzard.txt' FILE!", Color.Red);
+                    Form1_0.method_1("Unable to find 'SorceressBlizzard.txt' file!", Color.Red);
                 }
             }
         }
@@ -198,6 +198,7 @@ namespace app
                     if (Splitted[0] == "UseBO") AllLines[i] = "UseBO=" + CharConfig.UseBO;
                     if (Splitted[0] == "IDAtShop") AllLines[i] = "IDAtShop=" + CharConfig.IDAtShop;
                     if (Splitted[0] == "GrabForGold") AllLines[i] = "GrabForGold=" + CharConfig.GrabForGold;
+                    if (Splitted[0] == "LeaveDiabloClone") AllLines[i] = "LeaveDiabloClone=" + CharConfig.LeaveDiabloClone;
                     if (Splitted[0] == "ChickenHP") AllLines[i] = "ChickenHP=" + CharConfig.ChickenHP;
                     if (Splitted[0] == "TakeHPPotUnder" && !Splitted[0].Contains("MercTakeHPPotUnder")) AllLines[i] = "TakeHPPotUnder=" + CharConfig.TakeHPPotUnder;
                     if (Splitted[0] == "TakeRVPotUnder") AllLines[i] = "TakeRVPotUnder=" + CharConfig.TakeRVPotUnder;
@@ -303,70 +304,477 @@ namespace app
                 bool DoingKeysRune = false;
                 bool DoingSet = false;
                 bool DoingNormal = false;
+                bool DoingRare = false;
 
                 Dictionary<string, bool> AllUnique = new Dictionary<string, bool>();
                 Dictionary<string, bool> AllKeys = new Dictionary<string, bool>();
                 Dictionary<string, bool> AllSet = new Dictionary<string, bool>();
-                Dictionary<string, bool> AllNormal = new Dictionary<string, bool>();
+                Dictionary<string, bool> AllPotion = new Dictionary<string, bool>();
+
+                //######
+                Dictionary<string, bool> AllNormall_ByName = new Dictionary<string, bool>();
+                Dictionary<string, Dictionary<uint, string>> AllNormall_ByName_Flags = new Dictionary<string, Dictionary<uint, string>>();
+                Dictionary<string, int> AllNormall_ByName_Quality = new Dictionary<string, int>();
+                Dictionary<string, Dictionary<string, int>> AllNormall_ByName_Stats = new Dictionary<string, Dictionary<string, int>>();
+                Dictionary<string, Dictionary<string, string>> AllNormall_ByName_Operators = new Dictionary<string, Dictionary<string, string>>();
+                List<string> NormalNameDesc = new List<string>();
+
+                Dictionary<string, bool> AllNormall_ByType = new Dictionary<string, bool>();
+                Dictionary<string, Dictionary<uint, string>> AllNormall_ByType_Flags = new Dictionary<string, Dictionary<uint, string>>();
+                Dictionary<string, int> AllNormall_ByType_Quality = new Dictionary<string, int>();
+                Dictionary<string, Dictionary<string, int>> AllNormall_ByType_Stats = new Dictionary<string, Dictionary<string, int>>();
+                Dictionary<string, Dictionary<string, string>> AllNormal_ByType_Operators = new Dictionary<string, Dictionary<string, string>>();
+                List<string> NormalTypeDesc = new List<string>();
+                //######
+                //######
+                Dictionary<string, bool> AllRare_ByName = new Dictionary<string, bool>();
+                Dictionary<string, Dictionary<uint, string>> AllRare_ByName_Flags = new Dictionary<string, Dictionary<uint, string>>();
+                Dictionary<string, int> AllRare_ByName_Quality = new Dictionary<string, int>();
+                Dictionary<string, Dictionary<string, int>> AllRare_ByName_Stats = new Dictionary<string, Dictionary<string, int>>();
+                Dictionary<string, Dictionary<string, string>> AllRare_ByName_Operators = new Dictionary<string, Dictionary<string, string>>();
+                List<string> RareNameDesc = new List<string>();
+
+                Dictionary<string, bool> AllRare_ByType = new Dictionary<string, bool>();
+                Dictionary<string, Dictionary<uint, string>> AllRare_ByType_Flags = new Dictionary<string, Dictionary<uint, string>>();
+                Dictionary<string, int> AllRare_ByType_Quality = new Dictionary<string, int>();
+                Dictionary<string, Dictionary<string, int>> AllRare_ByType_Stats = new Dictionary<string, Dictionary<string, int>>();
+                Dictionary<string, Dictionary<string, string>> AllRare_ByType_Operators = new Dictionary<string, Dictionary<string, string>>();
+                List<string> RareTypeDesc = new List<string>();
+                //######
 
                 List<string> UniqueDesc = new List<string>();
                 List<string> SetDesc = new List<string>();
 
+
+                int CurrentNameIndex = 1;
+                int CurrentTypeIndex = 1;
                 for (int i = 0; i < AllLines.Length; i++)
                 {
-                    if (AllLines[i].Length > 0)
+                    try
                     {
-                        if (AllLines[i][2] != '#')
+                        if (AllLines[i].Length > 0)
                         {
-                            string ThisItem = AllLines[i];
-                            bool PickItem = true;
-                            string Desc = "";
-                            if (AllLines[i][0] == '/') 
+                            if (AllLines[i][2] != '#')
                             {
-                                PickItem = false;
-                                ThisItem = AllLines[i].Substring(2);
+                                string ThisItem = AllLines[i];
+                                bool PickItem = true;
+                                string Desc = "";
+                                if (AllLines[i][0] == '/')
+                                {
+                                    PickItem = false;
+                                    ThisItem = AllLines[i].Substring(2);
+                                }
+
+                                if (ThisItem.Contains("/"))
+                                {
+                                    Desc = ThisItem.Substring(ThisItem.IndexOf('/'));
+                                    ThisItem = ThisItem.Substring(0, ThisItem.IndexOf('/'));    //remove description '//'
+                                }
+
+                                if (DoingNormal)
+                                {
+                                    ThisItem = "";
+                                    Desc = "";
+                                    if (AllLines[i].Contains("/"))
+                                    {
+                                        string ThisLineeee = AllLines[i];
+                                        if (ThisLineeee[1] == '/') ThisLineeee = ThisLineeee.Substring(2);
+                                        if (ThisLineeee.Contains("/")) Desc = "//" + ThisLineeee.Substring(ThisLineeee.LastIndexOf('/') + 1);
+                                    }
+                                    string ThisLine = AllLines[i];
+                                    ThisLine = ThisLine.Replace(" ", "");
+
+                                    bool GoingByName = true;
+                                    string currentName = "";
+
+                                    Dictionary<uint, string> AllFlags_ByName = new Dictionary<uint, string>();
+                                    Dictionary<string, int> AllStats_ByName = new Dictionary<string, int>();
+                                    Dictionary<string, string> AllOperators_ByName = new Dictionary<string, string>();
+
+                                    Dictionary<uint, string> AllFlags_ByType = new Dictionary<uint, string>();
+                                    Dictionary<string, int> AllStats_ByType = new Dictionary<string, int>();
+                                    Dictionary<string, string> AllOperators_ByType = new Dictionary<string, string>();
+                                    while (ThisLine != "")
+                                    {
+                                        if (ThisLine[2] == '#' || ThisLine[3] == '#')
+                                        {
+                                            ThisLine = "";
+                                            break;
+                                        }
+                                        //Console.WriteLine(ThisLine);
+
+                                        if (ThisLine[0] == '/') ThisLine = ThisLine.Substring(2);
+
+                                        if (ThisLine[0] == '[')
+                                        {
+                                            //[Type] == primalhelm && [Class] == elite && [Quality] <= superior && [Flag] != ethereal # [Sockets] == 3 && [SkillBattleOrders]+[SkillShout] >= 5 // Delirium
+                                            //[Name] == BerserkerAxe
+                                            string ThisParam = ThisLine.Substring(1, ThisLine.IndexOf("]") - 1);
+                                            int IndexBracket = ThisLine.IndexOf("]");
+                                            if (ThisLine.Contains("+"))
+                                            {
+                                                //[SkillBattleOrders]+[SkillShout]
+                                                while (true)
+                                                {
+                                                    if (ThisLine.IndexOf("+") == IndexBracket + 1)
+                                                    {
+                                                        ThisLine = ThisLine.Substring(ThisLine.IndexOf("]") + 3);
+                                                        string OtherNames = ThisLine.Substring(0, ThisLine.IndexOf("]"));
+                                                        ThisParam += "+" + OtherNames;
+                                                        //Console.WriteLine(OtherNames);
+
+                                                        ThisLine = ThisLine.Substring(ThisLine.IndexOf("]") + 1);
+                                                        if (ThisLine.Contains("+")) IndexBracket = ThisLine.IndexOf("]");
+                                                        else break;
+                                                    }
+                                                    else
+                                                    {
+                                                        break;
+                                                    }
+                                                }
+                                            }
+
+                                            string ThisOperator = ThisLine.Substring(ThisLine.IndexOf("]") + 1, 2);
+                                            string ThisValue = ThisLine.Substring(ThisLine.IndexOf("]") + 3);
+                                            if (ThisValue.Contains("&")) ThisValue = ThisValue.Substring(0, ThisValue.IndexOf("&"));
+                                            if (ThisValue.Contains("/")) ThisValue = ThisValue.Substring(0, ThisValue.IndexOf("/"));
+
+                                            if (ThisLine.Contains("&"))
+                                            {
+                                                ThisLine = ThisLine.Substring(ThisLine.IndexOf("&") + 2);
+                                            }
+                                            else
+                                            {
+                                                //if (ThisLine.Contains("/")) Desc = ThisLine.Substring(ThisLine.IndexOf('/'));
+                                                ThisLine = "";
+                                            }
+
+                                            if (ThisParam.ToLower() == "name")
+                                            {
+                                                currentName = ThisValue + CurrentNameIndex;
+                                                AllNormall_ByName.Add(currentName, PickItem);
+                                                CurrentNameIndex++;
+                                                GoingByName = true;
+                                            }
+                                            else if (ThisParam.ToLower() == "type")
+                                            {
+                                                currentName = ThisValue + CurrentTypeIndex;
+                                                AllNormall_ByType.Add(currentName, PickItem);
+                                                CurrentTypeIndex++;
+                                                GoingByName = false;
+                                            }
+                                            else if (ThisParam.ToLower() == "quality")
+                                            {
+                                                int QualityValue = 0;
+                                                if (ThisValue.ToLower() == "inferior") QualityValue = 1;
+                                                if (ThisValue.ToLower() == "normal") QualityValue = 2;
+                                                if (ThisValue.ToLower() == "superior") QualityValue = 3;
+                                                if (ThisValue.ToLower() == "magic") QualityValue = 4;
+                                                if (ThisValue.ToLower() == "set") QualityValue = 5;
+                                                if (ThisValue.ToLower() == "rare") QualityValue = 6;
+                                                if (ThisValue.ToLower() == "unique") QualityValue = 7;
+                                                if (ThisValue.ToLower() == "crafted") QualityValue = 8;
+                                                if (ThisValue.ToLower() == "tempered") QualityValue = 9;
+
+                                                if (GoingByName) AllNormall_ByName_Quality.Add(currentName, QualityValue);
+                                                else AllNormall_ByType_Quality.Add(currentName, QualityValue);
+                                            }
+                                            else if (ThisParam.ToLower() == "flag")
+                                            {
+                                                uint ThisFlagss = 0;
+                                                if (ThisValue.ToLower() == "identified") ThisFlagss += 0x00000010;
+                                                if (ThisValue.ToLower() == "socketed") ThisFlagss += 0x00000800;
+                                                if (ThisValue.ToLower() == "ethereal") ThisFlagss += 0x00400000;
+
+                                                if (GoingByName) AllFlags_ByName.Add(ThisFlagss, ThisOperator);
+                                                else AllFlags_ByType.Add(ThisFlagss, ThisOperator);
+                                                //if (GoingByName) AllNormall_ByName_Flags.Add(currentName, ThisFlagss);
+                                                //else AllNormall_ByType_Flags.Add(currentName, ThisFlagss);
+                                            }
+                                            else if (ThisParam.ToLower() == "class")
+                                            {
+                                                //NOT IMPLEMENTED YET
+                                            }
+                                            else
+                                            {
+                                                if (GoingByName)
+                                                {
+                                                    //Console.WriteLine("Added:" + ThisParam + ThisOperator + ThisValue);
+                                                    AllStats_ByName.Add(ThisParam, int.Parse(ThisValue));
+                                                    AllOperators_ByName.Add(ThisParam, ThisOperator);
+                                                }
+                                                else
+                                                {
+                                                    //Console.WriteLine("Added:" + ThisParam + " " + ThisOperator + " " + ThisValue + " for " + currentName);
+                                                    AllStats_ByType.Add(ThisParam, int.Parse(ThisValue));
+                                                    AllOperators_ByType.Add(ThisParam, ThisOperator);
+                                                }
+                                            }
+                                        }
+                                        else
+                                        {
+                                            ThisLine = "";
+                                        }
+                                    }
+
+                                    if (AllStats_ByName.Count > 0)
+                                    {
+                                        AllNormall_ByName_Stats.Add(currentName, AllStats_ByName);
+                                        AllNormall_ByName_Operators.Add(currentName, AllOperators_ByName);
+                                    }
+                                    if (AllStats_ByType.Count > 0)
+                                    {
+                                        AllNormall_ByType_Stats.Add(currentName, AllStats_ByType);
+                                        AllNormal_ByType_Operators.Add(currentName, AllOperators_ByType);
+                                    }
+                                    if (AllFlags_ByName.Count > 0)
+                                    {
+                                        AllNormall_ByName_Flags.Add(currentName, AllFlags_ByName);
+                                    }
+                                    if (AllFlags_ByType.Count > 0)
+                                    {
+                                        AllNormall_ByType_Flags.Add(currentName, AllFlags_ByType);
+                                    }
+
+                                    if (GoingByName) NormalNameDesc.Add(Desc);
+                                    else NormalTypeDesc.Add(Desc);
+                                }
+
+                                //##########################################################################################################################
+
+                                if (DoingRare)
+                                {
+                                    ThisItem = "";
+                                    Desc = "";
+                                    if (AllLines[i].Contains("/"))
+                                    {
+                                        string ThisLineeee = AllLines[i];
+                                        if (ThisLineeee[1] == '/') ThisLineeee = ThisLineeee.Substring(2);
+                                        if (ThisLineeee.Contains("/")) Desc = "//" + ThisLineeee.Substring(ThisLineeee.LastIndexOf('/') + 1);
+                                    }
+                                    string ThisLine = AllLines[i];
+                                    ThisLine = ThisLine.Replace(" ", "");
+
+                                    bool GoingByName = true;
+                                    string currentName = "";
+
+                                    Dictionary<uint, string> AllFlags_ByName = new Dictionary<uint, string>();
+                                    Dictionary<string, int> AllStats_ByName = new Dictionary<string, int>();
+                                    Dictionary<string, string> AllOperators_ByName = new Dictionary<string, string>();
+
+                                    Dictionary<uint, string> AllFlags_ByType = new Dictionary<uint, string>();
+                                    Dictionary<string, int> AllStats_ByType = new Dictionary<string, int>();
+                                    Dictionary<string, string> AllOperators_ByType = new Dictionary<string, string>();
+                                    while (ThisLine != "")
+                                    {
+                                        if (ThisLine[2] == '#' || ThisLine[3] == '#')
+                                        {
+                                            ThisLine = "";
+                                            break;
+                                        }
+                                        //Console.WriteLine(ThisLine);
+
+                                        if (ThisLine[0] == '/') ThisLine = ThisLine.Substring(2);
+
+                                        if (ThisLine[0] == '[')
+                                        {
+                                            //[Type] == primalhelm && [Class] == elite && [Quality] <= superior && [Flag] != ethereal # [Sockets] == 3 && [SkillBattleOrders]+[SkillShout] >= 5 // Delirium
+                                            //[Name] == BerserkerAxe
+                                            string ThisParam = ThisLine.Substring(1, ThisLine.IndexOf("]") - 1);
+                                            int IndexBracket = ThisLine.IndexOf("]");
+                                            bool AddedMultiple = false;
+                                            if (ThisLine.Contains("+"))
+                                            {
+                                                //[SkillBattleOrders]+[SkillShout]
+                                                //Console.WriteLine("start:");
+                                                while (true)
+                                                {
+                                                    if (ThisLine.IndexOf("+") == IndexBracket + 1)
+                                                    {
+                                                        AddedMultiple = true;
+                                                        //+[ColdResist]+[PoisonResist]>=80
+                                                        if (IndexBracket != -1) ThisLine = ThisLine.Substring(ThisLine.IndexOf("]") + 3);
+                                                        string OtherNames = ThisLine.Substring(0, ThisLine.IndexOf("]"));
+
+                                                        OtherNames = OtherNames.Replace("+", "");
+                                                        OtherNames = OtherNames.Replace("[", "");
+                                                        //Console.WriteLine("adding:" + OtherNames);
+                                                        ThisParam += "+" + OtherNames;
+
+                                                        ThisLine = ThisLine.Substring(ThisLine.IndexOf("]") + 1);
+                                                        if (ThisLine.Contains("+")) IndexBracket = -1;
+                                                        else break;
+                                                    }
+                                                    else
+                                                    {
+                                                        break;
+                                                    }
+                                                }
+                                            }
+                                            //[FireResist]+[LightResist]+[ColdResist]+[PoisonResist] >= 36 && [LifeLeech]+[ManaLeech] >= 11
+
+                                            string ThisOperator = ThisLine.Substring(ThisLine.IndexOf("]") + 1, 2);
+                                            string ThisValue = ThisLine.Substring(ThisLine.IndexOf("]") + 3);
+                                            if (AddedMultiple)
+                                            {
+                                                ThisOperator = ThisLine.Substring(0, 2);
+                                                ThisValue = ThisLine.Substring(2);
+                                            }
+                                            if (ThisValue.Contains("&")) ThisValue = ThisValue.Substring(0, ThisValue.IndexOf("&"));
+                                            if (ThisValue.Contains("/")) ThisValue = ThisValue.Substring(0, ThisValue.IndexOf("/"));
+                                            //if (ThisValue.Contains("]")) ThisValue = ThisValue.Substring(ThisValue.IndexOf("]"));
+
+                                            if (ThisLine.Contains("&"))
+                                            {
+                                                ThisLine = ThisLine.Substring(ThisLine.IndexOf("&") + 2);
+                                            }
+                                            else
+                                            {
+                                                //if (ThisLine.Contains("/")) Desc = ThisLine.Substring(ThisLine.IndexOf('/'));
+                                                ThisLine = "";
+                                            }
+
+                                            if (ThisParam.ToLower() == "name")
+                                            {
+                                                currentName = ThisValue + CurrentNameIndex;
+                                                AllRare_ByName.Add(currentName, PickItem);
+                                                CurrentNameIndex++;
+                                                GoingByName = true;
+                                            }
+                                            else if (ThisParam.ToLower() == "type")
+                                            {
+                                                currentName = ThisValue + CurrentTypeIndex;
+                                                AllRare_ByType.Add(currentName, PickItem);
+                                                CurrentTypeIndex++;
+                                                GoingByName = false;
+                                            }
+                                            else if (ThisParam.ToLower() == "quality")
+                                            {
+                                                int QualityValue = 0;
+                                                if (ThisValue.ToLower() == "inferior") QualityValue = 1;
+                                                if (ThisValue.ToLower() == "normal") QualityValue = 2;
+                                                if (ThisValue.ToLower() == "superior") QualityValue = 3;
+                                                if (ThisValue.ToLower() == "magic") QualityValue = 4;
+                                                if (ThisValue.ToLower() == "set") QualityValue = 5;
+                                                if (ThisValue.ToLower() == "rare") QualityValue = 6;
+                                                if (ThisValue.ToLower() == "unique") QualityValue = 7;
+                                                if (ThisValue.ToLower() == "crafted") QualityValue = 8;
+                                                if (ThisValue.ToLower() == "tempered") QualityValue = 9;
+
+                                                if (GoingByName) AllRare_ByName_Quality.Add(currentName, QualityValue);
+                                                else AllRare_ByType_Quality.Add(currentName, QualityValue);
+                                            }
+                                            else if (ThisParam.ToLower() == "flag")
+                                            {
+                                                uint ThisFlagss = 0;
+                                                if (ThisValue.ToLower() == "identified") ThisFlagss += 0x00000010;
+                                                if (ThisValue.ToLower() == "socketed") ThisFlagss += 0x00000800;
+                                                if (ThisValue.ToLower() == "ethereal") ThisFlagss += 0x00400000;
+
+                                                if (GoingByName) AllFlags_ByName.Add(ThisFlagss, ThisOperator);
+                                                else AllFlags_ByType.Add(ThisFlagss, ThisOperator);
+                                                //if (GoingByName) AllRare_ByName_Flags.Add(currentName, ThisFlagss);
+                                                //else AllRare_ByType_Flags.Add(currentName, ThisFlagss);
+                                            }
+                                            else if (ThisParam.ToLower() == "class")
+                                            {
+                                                //NOT IMPLEMENTED YET
+                                            }
+                                            else
+                                            {
+                                                if (GoingByName)
+                                                {
+                                                    //Console.WriteLine("Added:" + ThisParam + ThisOperator + ThisValue);
+                                                    AllStats_ByName.Add(ThisParam, int.Parse(ThisValue));
+                                                    AllOperators_ByName.Add(ThisParam, ThisOperator);
+                                                }
+                                                else
+                                                {
+                                                    //Console.WriteLine("Added:" + ThisParam + " " + ThisOperator + " " + ThisValue + " for " + currentName);
+                                                    AllStats_ByType.Add(ThisParam, int.Parse(ThisValue));
+                                                    AllOperators_ByType.Add(ThisParam, ThisOperator);
+                                                }
+                                            }
+                                        }
+                                        else
+                                        {
+                                            ThisLine = "";
+                                        }
+                                    }
+
+                                    if (AllStats_ByName.Count > 0)
+                                    {
+                                        AllRare_ByName_Stats.Add(currentName, AllStats_ByName);
+                                        AllRare_ByName_Operators.Add(currentName, AllOperators_ByName);
+                                    }
+                                    if (AllStats_ByType.Count > 0)
+                                    {
+                                        AllRare_ByType_Stats.Add(currentName, AllStats_ByType);
+                                        AllRare_ByType_Operators.Add(currentName, AllOperators_ByType);
+                                    }
+                                    if (AllFlags_ByName.Count > 0)
+                                    {
+                                        AllRare_ByName_Flags.Add(currentName, AllFlags_ByName);
+                                    }
+                                    if (AllFlags_ByType.Count > 0)
+                                    {
+                                        AllRare_ByType_Flags.Add(currentName, AllFlags_ByType);
+                                    }
+
+                                    if (GoingByName) RareNameDesc.Add(Desc);
+                                    else RareTypeDesc.Add(Desc);
+                                }
+
+                                if (DoingUnique) { AllUnique.Add(ThisItem, PickItem); UniqueDesc.Add(Desc); }
+                                if (DoingKeysRune) AllKeys.Add(ThisItem, PickItem);
+                                if (DoingSet) { AllSet.Add(ThisItem, PickItem); SetDesc.Add(Desc); }
                             }
 
-                            if (ThisItem.Contains("/"))
+                            if (AllLines[i].Contains("UNIQUE ITEMS"))
                             {
-                                Desc = ThisItem.Substring(ThisItem.IndexOf('/'));
-                                ThisItem = ThisItem.Substring(0, ThisItem.IndexOf('/'));    //remove description '//'
+                                DoingUnique = true;
+                                DoingKeysRune = false;
+                                DoingSet = false;
+                                DoingNormal = false;
+                                DoingRare = false;
                             }
-
-                            if (DoingUnique) { AllUnique.Add(ThisItem, PickItem); UniqueDesc.Add(Desc); }
-                            if (DoingKeysRune) AllKeys.Add(ThisItem, PickItem);
-                            if (DoingSet) { AllSet.Add(ThisItem, PickItem); SetDesc.Add(Desc); }
-                            if (DoingNormal) AllNormal.Add(ThisItem, PickItem);
+                            if (AllLines[i].Contains("KEYS/GEMS/RUNES ITEMS"))
+                            {
+                                DoingUnique = false;
+                                DoingKeysRune = true;
+                                DoingSet = false;
+                                DoingNormal = false;
+                                DoingRare = false;
+                            }
+                            if (AllLines[i].Contains("SET ITEMS"))
+                            {
+                                DoingUnique = false;
+                                DoingKeysRune = false;
+                                DoingSet = true;
+                                DoingNormal = false;
+                                DoingRare = false;
+                            }
+                            if (AllLines[i].Contains("NORMAL ITEMS"))
+                            {
+                                DoingUnique = false;
+                                DoingKeysRune = false;
+                                DoingSet = false;
+                                DoingNormal = true;
+                                DoingRare = false;
+                            }
+                            if (AllLines[i].Contains("RARE/MAGIC ITEMS"))
+                            {
+                                DoingUnique = false;
+                                DoingKeysRune = false;
+                                DoingSet = false;
+                                DoingNormal = false;
+                                DoingRare = true;
+                            }
                         }
-
-                        if (AllLines[i].Contains("UNIQUE ITEMS"))
-                        {
-                            DoingUnique = true;
-                            DoingKeysRune = false;
-                            DoingSet = false;
-                            DoingNormal = false;
-                        }
-                        if (AllLines[i].Contains("KEYS/GEMS/RUNES ITEMS"))
-                        {
-                            DoingUnique = false;
-                            DoingKeysRune = true;
-                            DoingSet = false;
-                            DoingNormal = false;
-                        }
-                        if (AllLines[i].Contains("SET ITEMS"))
-                        {
-                            DoingUnique = false;
-                            DoingKeysRune = false;
-                            DoingSet = true;
-                            DoingNormal = false;
-                        }
-                        if (AllLines[i].Contains("NORMAL ITEMS"))
-                        {
-                            DoingUnique = false;
-                            DoingKeysRune = false;
-                            DoingSet = false;
-                            DoingNormal = true;
-                        }
+                    }
+                    catch
+                    {
+                        Form1_0.method_1("Error encountered in 'ItemsSettings.txt' file at line" + i + "!", Color.Red);
                     }
                 }
 
@@ -391,12 +799,153 @@ namespace app
                     CurrI++;
                 }
 
+                Form1_0.ItemsAlert_0.PickItemsPotions.Clear();
+
+                //#####
+                Form1_0.ItemsAlert_0.PickItemsNormal_ByName.Clear();
+                Form1_0.ItemsAlert_0.PickItemsNormal_ByName_Flags.Clear();
+                Form1_0.ItemsAlert_0.PickItemsNormal_ByName_Quality.Clear();
+                Form1_0.ItemsAlert_0.PickItemsNormal_ByName_Stats.Clear();
+                Form1_0.ItemsAlert_0.PickItemsNormal_ByName_Operators.Clear();
+                Form1_0.ItemsAlert_0.PickItemsNormal_ByNameDesc.Clear();
+                CurrI = 0;
+                foreach (var ThisDir in AllNormall_ByName)
+                {
+                    if (ThisDir.Key.Contains("Potion"))
+                    {
+                        Form1_0.ItemsAlert_0.PickItemsPotions.Add(ThisDir.Key, ThisDir.Value);
+                    }
+                    else
+                    {
+                        //Console.WriteLine("Key:" + ThisDir.Key + ", value:" + ThisDir.Value);
+                        Form1_0.ItemsAlert_0.PickItemsNormal_ByName.Add(ThisDir.Key, ThisDir.Value);
+                        if (AllNormall_ByName_Flags.ContainsKey(ThisDir.Key)) Form1_0.ItemsAlert_0.PickItemsNormal_ByName_Flags.Add(ThisDir.Key, AllNormall_ByName_Flags[ThisDir.Key]);
+                        if (AllNormall_ByName_Quality.ContainsKey(ThisDir.Key)) Form1_0.ItemsAlert_0.PickItemsNormal_ByName_Quality.Add(ThisDir.Key, AllNormall_ByName_Quality[ThisDir.Key]);
+                        if (AllNormall_ByName_Stats.ContainsKey(ThisDir.Key)) Form1_0.ItemsAlert_0.PickItemsNormal_ByName_Stats.Add(ThisDir.Key, AllNormall_ByName_Stats[ThisDir.Key]);
+                        if (AllNormall_ByName_Operators.ContainsKey(ThisDir.Key)) Form1_0.ItemsAlert_0.PickItemsNormal_ByName_Operators.Add(ThisDir.Key, AllNormall_ByName_Operators[ThisDir.Key]);
+                        Form1_0.ItemsAlert_0.PickItemsNormal_ByNameDesc.Add(NormalNameDesc[CurrI]);
+                        CurrI++;
+                    }
+                }
+                //#####
+
+                //#####
+                Form1_0.ItemsAlert_0.PickItemsNormal_ByType.Clear();
+                Form1_0.ItemsAlert_0.PickItemsNormal_ByType_Flags.Clear();
+                Form1_0.ItemsAlert_0.PickItemsNormal_ByType_Quality.Clear();
+                Form1_0.ItemsAlert_0.PickItemsNormal_ByType_Stats.Clear();
+                Form1_0.ItemsAlert_0.PickItemsNormal_ByType_Operators.Clear();
+                Form1_0.ItemsAlert_0.PickItemsNormal_ByTypeDesc.Clear();
+                CurrI = 0;
+                foreach (var ThisDir in AllNormall_ByType)
+                {
+                    //Console.WriteLine("Key:" + ThisDir.Key + ", value:" + ThisDir.Value);
+                    Form1_0.ItemsAlert_0.PickItemsNormal_ByType.Add(ThisDir.Key, ThisDir.Value);
+                    if (AllNormall_ByType_Flags.ContainsKey(ThisDir.Key)) Form1_0.ItemsAlert_0.PickItemsNormal_ByType_Flags.Add(ThisDir.Key, AllNormall_ByType_Flags[ThisDir.Key]);
+                    if (AllNormall_ByType_Quality.ContainsKey(ThisDir.Key)) Form1_0.ItemsAlert_0.PickItemsNormal_ByType_Quality.Add(ThisDir.Key, AllNormall_ByType_Quality[ThisDir.Key]);
+                    if (AllNormall_ByType_Stats.ContainsKey(ThisDir.Key)) Form1_0.ItemsAlert_0.PickItemsNormal_ByType_Stats.Add(ThisDir.Key, AllNormall_ByType_Stats[ThisDir.Key]);
+                    if (AllNormal_ByType_Operators.ContainsKey(ThisDir.Key)) Form1_0.ItemsAlert_0.PickItemsNormal_ByType_Operators.Add(ThisDir.Key, AllNormal_ByType_Operators[ThisDir.Key]);
+                    Form1_0.ItemsAlert_0.PickItemsNormal_ByTypeDesc.Add(NormalTypeDesc[CurrI]);
+                    CurrI++;
+                }
+
+                //#####
+                Form1_0.ItemsAlert_0.PickItemsRare_ByName.Clear();
+                Form1_0.ItemsAlert_0.PickItemsRare_ByName_Flags.Clear();
+                Form1_0.ItemsAlert_0.PickItemsRare_ByName_Quality.Clear();
+                Form1_0.ItemsAlert_0.PickItemsRare_ByName_Stats.Clear();
+                Form1_0.ItemsAlert_0.PickItemsRare_ByName_Operators.Clear();
+                Form1_0.ItemsAlert_0.PickItemsRare_ByNameDesc.Clear();
+                CurrI = 0;
+                foreach (var ThisDir in AllRare_ByName)
+                {
+                    if (ThisDir.Key.Contains("Potion"))
+                    {
+                        Form1_0.ItemsAlert_0.PickItemsPotions.Add(ThisDir.Key, ThisDir.Value);
+                    }
+                    else
+                    {
+                        //Console.WriteLine("Key:" + ThisDir.Key + ", value:" + ThisDir.Value);
+                        Form1_0.ItemsAlert_0.PickItemsRare_ByName.Add(ThisDir.Key, ThisDir.Value);
+                        if (AllRare_ByName_Flags.ContainsKey(ThisDir.Key)) Form1_0.ItemsAlert_0.PickItemsRare_ByName_Flags.Add(ThisDir.Key, AllRare_ByName_Flags[ThisDir.Key]);
+                        if (AllRare_ByName_Quality.ContainsKey(ThisDir.Key)) Form1_0.ItemsAlert_0.PickItemsRare_ByName_Quality.Add(ThisDir.Key, AllRare_ByName_Quality[ThisDir.Key]);
+                        if (AllRare_ByName_Stats.ContainsKey(ThisDir.Key)) Form1_0.ItemsAlert_0.PickItemsRare_ByName_Stats.Add(ThisDir.Key, AllRare_ByName_Stats[ThisDir.Key]);
+                        if (AllRare_ByName_Operators.ContainsKey(ThisDir.Key)) Form1_0.ItemsAlert_0.PickItemsRare_ByName_Operators.Add(ThisDir.Key, AllRare_ByName_Operators[ThisDir.Key]);
+                        Form1_0.ItemsAlert_0.PickItemsRare_ByNameDesc.Add(RareNameDesc[CurrI]);
+                        CurrI++;
+                    }
+                }
+                //#####
+
+                //#####
+                Form1_0.ItemsAlert_0.PickItemsRare_ByType.Clear();
+                Form1_0.ItemsAlert_0.PickItemsRare_ByType_Flags.Clear();
+                Form1_0.ItemsAlert_0.PickItemsRare_ByType_Quality.Clear();
+                Form1_0.ItemsAlert_0.PickItemsRare_ByType_Stats.Clear();
+                Form1_0.ItemsAlert_0.PickItemsRare_ByType_Operators.Clear();
+                Form1_0.ItemsAlert_0.PickItemsRare_ByTypeDesc.Clear();
+                CurrI = 0;
+                foreach (var ThisDir in AllRare_ByType)
+                {
+                    //Console.WriteLine("Key:" + ThisDir.Key + ", value:" + ThisDir.Value);
+                    Form1_0.ItemsAlert_0.PickItemsRare_ByType.Add(ThisDir.Key, ThisDir.Value);
+                    if (AllRare_ByType_Flags.ContainsKey(ThisDir.Key)) Form1_0.ItemsAlert_0.PickItemsRare_ByType_Flags.Add(ThisDir.Key, AllRare_ByType_Flags[ThisDir.Key]);
+                    if (AllRare_ByType_Quality.ContainsKey(ThisDir.Key)) Form1_0.ItemsAlert_0.PickItemsRare_ByType_Quality.Add(ThisDir.Key, AllRare_ByType_Quality[ThisDir.Key]);
+                    if (AllRare_ByType_Stats.ContainsKey(ThisDir.Key)) Form1_0.ItemsAlert_0.PickItemsRare_ByType_Stats.Add(ThisDir.Key, AllRare_ByType_Stats[ThisDir.Key]);
+                    if (AllRare_ByType_Operators.ContainsKey(ThisDir.Key)) Form1_0.ItemsAlert_0.PickItemsRare_ByType_Operators.Add(ThisDir.Key, AllRare_ByType_Operators[ThisDir.Key]);
+                    Form1_0.ItemsAlert_0.PickItemsRare_ByTypeDesc.Add(RareTypeDesc[CurrI]);
+                    CurrI++;
+                }
+
+                //Console.WriteLine("Done normal loading");
+
+                //#####
+
                 //Form1_0.ItemsAlert_0.PickItemsUnique = new string[AllNormal.Count];
                 //for (int i = 0; i < AllNormal.Count; i++) Form1_0.ItemsAlert_0.PickItemsUnique[i] = AllNormal[i];
             }
             catch
             {
-                Form1_0.method_1("UNABLE TO LOAD 'ItemsSettings.txt' FILE!", Color.Red);
+                Form1_0.method_1("Unable to save 'ItemsSettings.txt' file!", Color.Red);
+            }
+        }
+
+        public void SaveCubingSettings()
+        {
+            try
+            {
+                AllLines = File.ReadAllLines(File_CubingSettings);
+                for (int i = 0; i < AllLines.Length; i++)
+                {
+                    if (AllLines[i].Length > 0)
+                    {
+                        if (AllLines[i][2] != '#')
+                        {
+                            string ThisItem = AllLines[i];
+                            bool PickItem = true;
+                            if (AllLines[i][0] == '/')
+                            {
+                                PickItem = false;
+                                ThisItem = AllLines[i].Substring(2);
+                            }
+
+                            for (int k = 0; k < Form1_0.Cubing_0.CubingRecipes.Count; k++)
+                            {
+                                if (Form1_0.Cubing_0.CubingRecipes[k] == ThisItem)
+                                {
+                                    if (!PickItem && Form1_0.Cubing_0.CubingRecipesEnabled[k]) AllLines[i] = ThisItem;
+                                    if (PickItem && !Form1_0.Cubing_0.CubingRecipesEnabled[k]) AllLines[i] = "//" + ThisItem;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                File.WriteAllLines(File_CubingSettings, AllLines);
+            }
+            catch
+            {
+                Form1_0.method_1("Unable to save 'CubingRecipes.txt' file!", Color.Red);
             }
         }
 
@@ -408,6 +957,10 @@ namespace app
                 bool DoingKeysRune = false;
                 bool DoingSet = false;
                 bool DoingNormal = false;
+                bool DoingRare = false;
+
+                bool DoingName = true;
+                int NormalStartAt = 0;
 
                 AllLines = File.ReadAllLines(File_ItemsSettings);
                 for (int i = 0; i < AllLines.Length; i++)
@@ -430,6 +983,65 @@ namespace app
                                 ThisDesc = ThisItem.Substring(ThisItem.IndexOf('/'));
                                 ThisItem = ThisItem.Substring(0, ThisItem.IndexOf('/'));    //remove description '//'
                             }
+
+                            string FullLine = ThisItem;
+                            //##########
+                            if (DoingNormal || DoingRare)
+                            {
+                                if (ThisItem.Replace(" ", "").ToLower().Contains("[type]=="))
+                                {
+                                    DoingName = false;
+                                    ThisItem = ThisItem.Replace(" ", "").Substring(ThisItem.IndexOf('=') + 1, ThisItem.IndexOf('&'));
+                                    ThisItem = ThisItem.Substring(0, ThisItem.IndexOf('&'));
+
+                                    //Get the index count
+                                    int Count = 1;
+                                    for (int k = NormalStartAt; k < i; k++)
+                                    {
+                                        if (AllLines[k].Length > 0)
+                                        {
+                                            if (AllLines[k][3] == '#') continue;
+                                            string ThisItemBuf = AllLines[k];
+                                            if (AllLines[k][0] == '/') ThisItemBuf = AllLines[k].Substring(2);
+                                            Console.WriteLine(ThisItemBuf);
+                                            ThisItemBuf = ThisItemBuf.Replace(" ", "").Substring(ThisItemBuf.IndexOf('=') + 2, ThisItemBuf.IndexOf('&'));
+                                            if (ThisItemBuf == ThisItem) Count++;
+                                        }
+                                    }
+                                    ThisItem += Count;
+                                }
+                                if (ThisItem.Replace(" ", "").ToLower().Contains("[name]=="))
+                                {
+                                    DoingName = true;
+
+                                    if (ThisItem.Contains('&'))
+                                    {
+                                        ThisItem = ThisItem.Replace(" ", "").Substring(ThisItem.IndexOf('=') + 1, ThisItem.IndexOf('&'));
+                                        ThisItem = ThisItem.Substring(0, ThisItem.IndexOf('&'));
+
+                                        //Get the index count
+                                        int Count = 1;
+                                        for (int k = NormalStartAt; k < i; k++)
+                                        {
+                                            if (AllLines[k].Length > 0)
+                                            {
+                                                if (AllLines[k][3] == '#') continue;
+                                                string ThisItemBuf = AllLines[k];
+                                                if (AllLines[k][0] == '/') ThisItemBuf = AllLines[k].Substring(2);
+                                                ThisItemBuf = ThisItemBuf.Replace(" ", "").Substring(ThisItemBuf.IndexOf('=') + 2, ThisItemBuf.IndexOf('&'));
+                                                if (ThisItemBuf == ThisItem) Count++;
+                                            }
+                                        }
+                                        ThisItem += Count;
+                                    }
+                                    else
+                                    {
+                                        ThisItem = ThisItem.Replace(" ", "").Substring(ThisItem.IndexOf('=') + 1);
+                                        if (ThisItem.Contains('/')) ThisItem = ThisItem.Substring(0, ThisItem.IndexOf('/'));
+                                    }
+                                }
+                            }
+                            //##########
 
                             if (DoingUnique)
                             {
@@ -466,14 +1078,53 @@ namespace app
                             }
                             if (DoingNormal)
                             {
-                                /*foreach (var ThisDir in Form1_0.ItemsAlert_0.PickItemsSet)
+                                if (DoingName)
                                 {
-                                    if (ThisDir.Key == ThisItem)
+                                    foreach (var ThisDir in Form1_0.ItemsAlert_0.PickItemsNormal_ByName)
                                     {
-                                        if (!PickItem && ThisDir.Value) AllLines[i] = ThisItem + ThisDesc;
-                                        if (PickItem && !ThisDir.Value) AllLines[i] = "//" + ThisItem + ThisDesc;
+                                        if (ThisDir.Key == ThisItem)
+                                        {
+                                            if (!PickItem && ThisDir.Value) AllLines[i] = FullLine + ThisDesc;
+                                            if (PickItem && !ThisDir.Value) AllLines[i] = "//" + FullLine + ThisDesc;
+                                        }
                                     }
-                                }*/
+                                }
+                                else
+                                {
+                                    foreach (var ThisDir in Form1_0.ItemsAlert_0.PickItemsNormal_ByType)
+                                    {
+                                        if (ThisDir.Key == ThisItem)
+                                        {
+                                            if (!PickItem && ThisDir.Value) AllLines[i] = FullLine + ThisDesc;
+                                            if (PickItem && !ThisDir.Value) AllLines[i] = "//" + FullLine + ThisDesc;
+                                        }
+                                    }
+                                }
+                            }
+                            if (DoingRare)
+                            {
+                                if (DoingName)
+                                {
+                                    foreach (var ThisDir in Form1_0.ItemsAlert_0.PickItemsRare_ByName)
+                                    {
+                                        if (ThisDir.Key == ThisItem)
+                                        {
+                                            if (!PickItem && ThisDir.Value) AllLines[i] = FullLine + ThisDesc;
+                                            if (PickItem && !ThisDir.Value) AllLines[i] = "//" + FullLine + ThisDesc;
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    foreach (var ThisDir in Form1_0.ItemsAlert_0.PickItemsRare_ByType)
+                                    {
+                                        if (ThisDir.Key == ThisItem)
+                                        {
+                                            if (!PickItem && ThisDir.Value) AllLines[i] = FullLine + ThisDesc;
+                                            if (PickItem && !ThisDir.Value) AllLines[i] = "//" + FullLine + ThisDesc;
+                                        }
+                                    }
+                                }
                             }
                         }
 
@@ -483,6 +1134,7 @@ namespace app
                             DoingKeysRune = false;
                             DoingSet = false;
                             DoingNormal = false;
+                            DoingRare = false;
                         }
                         if (AllLines[i].Contains("KEYS/GEMS/RUNES ITEMS"))
                         {
@@ -490,6 +1142,7 @@ namespace app
                             DoingKeysRune = true;
                             DoingSet = false;
                             DoingNormal = false;
+                            DoingRare = false;
                         }
                         if (AllLines[i].Contains("SET ITEMS"))
                         {
@@ -497,6 +1150,7 @@ namespace app
                             DoingKeysRune = false;
                             DoingSet = true;
                             DoingNormal = false;
+                            DoingRare = false;
                         }
                         if (AllLines[i].Contains("NORMAL ITEMS"))
                         {
@@ -504,6 +1158,17 @@ namespace app
                             DoingKeysRune = false;
                             DoingSet = false;
                             DoingNormal = true;
+                            DoingRare = false;
+                            NormalStartAt = i;
+                        }
+                        if (AllLines[i].Contains("RARE/MAGIC ITEMS"))
+                        {
+                            DoingUnique = false;
+                            DoingKeysRune = false;
+                            DoingSet = false;
+                            DoingNormal = false;
+                            DoingRare = true;
+                            NormalStartAt = i;
                         }
                     }
                 }
@@ -512,7 +1177,7 @@ namespace app
             }
             catch
             {
-                Form1_0.method_1("UNABLE TO LOAD 'ItemsSettings.txt' FILE!", Color.Red);
+                Form1_0.method_1("Unable to save 'ItemsSettings.txt' file!", Color.Red);
             }
         }
 
@@ -727,7 +1392,7 @@ namespace app
             }
             catch
             {
-                Form1_0.method_1("UNABLE TO LOAD 'BotSettings.txt' FILE!", Color.Red);
+                Form1_0.method_1("Unable to load 'BotSettings.txt' file!", Color.Red);
             }
         }
 
@@ -744,6 +1409,19 @@ namespace app
                             if (AllLines[i].Contains("="))
                             {
                                 Form1_0.Cubing_0.CubingRecipes.Add(AllLines[i]);
+                                Form1_0.Cubing_0.CubingRecipesEnabled.Add(true);
+                            }
+                        }
+                        else
+                        {
+                            if (AllLines[i][0] != '/' && AllLines[i][2] != '#')
+                            {
+                                AllLines[i] = AllLines[i].Substring(2);
+                                if (AllLines[i].Contains("="))
+                                {
+                                    Form1_0.Cubing_0.CubingRecipes.Add(AllLines[i]);
+                                    Form1_0.Cubing_0.CubingRecipesEnabled.Add(false);
+                                }
                             }
                         }
                     }
@@ -751,7 +1429,7 @@ namespace app
             }
             catch
             {
-                Form1_0.method_1("UNABLE TO LOAD 'CubingRecipes.txt' FILE!", Color.Red);
+                Form1_0.method_1("Unable to load 'CubingRecipes.txt' file!", Color.Red);
             }
         }
 
@@ -797,7 +1475,7 @@ namespace app
             }
             catch
             {
-                Form1_0.method_1("UNABLE TO LOAD 'CharSettings.txt' FILE!", Color.Red);
+                Form1_0.method_1("Unable to load 'CharSettings.txt' file!", Color.Red);
             }
         }
 
@@ -917,6 +1595,10 @@ namespace app
                                 {
                                     CharConfig.GrabForGold = bool.Parse(Params[1].ToLower());
                                 }
+                                if (Params[0].Contains("LeaveDiabloClone"))
+                                {
+                                    CharConfig.LeaveDiabloClone = bool.Parse(Params[1].ToLower());
+                                }
                                 if (Params[0].Contains("ChickenHP"))
                                 {
                                     CharConfig.ChickenHP = int.Parse(Params[1]);
@@ -972,7 +1654,7 @@ namespace app
             }
             catch
             {
-                Form1_0.method_1("UNABLE TO LOAD THE SETTINGS FILE FOR CURRENT CHAR!", Color.Red);
+                Form1_0.method_1("Unable to load the settings file for the Current Char!", Color.Red);
             }
         }
     }

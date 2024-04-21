@@ -38,7 +38,7 @@ namespace app
 
         public int TeleportToBaalTry = 0;
         public bool TryMovingAwayOnLeftSide = true;
-        public int MaxMoveAwayTry = 3;
+        public int MaxMoveAwayTry = 2;
 
         public void SetForm1(Form1 form1_1)
         {
@@ -240,7 +240,7 @@ namespace app
                         if ((DateTime.Now -  TimeSinceLastWaveDone).TotalSeconds > 6)
                         {
                             Form1_0.Battle_0.SetSkills();
-                            Form1_0.Battle_0.CastSkills();
+                            Form1_0.Battle_0.CastSkillsNoMove();
                         }
 
                         //STOP CASTING
@@ -313,6 +313,7 @@ namespace app
                             {
                                 if (Form1_0.Mover_0.MoveToLocation(15090, 5008))
                                 {
+                                    Form1_0.InventoryStruc_0.DumpBadItemsOnGround();
                                     Form1_0.Battle_0.CastDefense();
                                     Form1_0.Mover_0.MoveAcceptOffset = 4;
                                 }
@@ -379,8 +380,8 @@ namespace app
                         {
                             if (Form1_0.Mover_0.MoveToLocation(15062, 5891))
                             {
-                                if (Form1_0.Mover_0.MoveToLocation(15106, 5901))
-                                //if (Form1_0.Mover_0.MoveToLocation(15134, 5920))
+                                //if (Form1_0.Mover_0.MoveToLocation(15106, 5901))
+                                if (Form1_0.Mover_0.MoveToLocation(15134, 5920))
                                 {
                                     TeleportToBaalTry++;
                                     if (Form1_0.MobsStruc_0.GetMobs("getBossName", "Baal", false, 200, new List<long>())) return; //redetect baal?
@@ -389,15 +390,15 @@ namespace app
                         }
                         else if (TeleportToBaalTry >= MaxMoveAwayTry && TryMovingAwayOnLeftSide)
                         {
-                            TeleportToBaalTry = 0;
+                            TeleportToBaalTry = 1;
                             TryMovingAwayOnLeftSide = false; //now try moving away to the right to try detect baal
                         }
                         else if (TeleportToBaalTry < MaxMoveAwayTry && !TryMovingAwayOnLeftSide)
                         {
                             if (Form1_0.Mover_0.MoveToLocation(15214, 5890))
                             {
-                                if (Form1_0.Mover_0.MoveToLocation(15166, 5908))
-                                //if (Form1_0.Mover_0.MoveToLocation(15134, 5920))
+                                //if (Form1_0.Mover_0.MoveToLocation(15166, 5908))
+                                if (Form1_0.Mover_0.MoveToLocation(15134, 5920))
                                 {
                                     TeleportToBaalTry++;
                                     if (Form1_0.MobsStruc_0.GetMobs("getBossName", "Baal", false, 200, new List<long>())) return; //redetect baal?
@@ -413,7 +414,7 @@ namespace app
                                     Form1_0.PlayerScan_0.GetPositions();
 
                                     Form1_0.Battle_0.SetSkills();
-                                    Form1_0.Battle_0.CastSkills();
+                                    Form1_0.Battle_0.CastSkillsNoMove();
 
                                     Form1_0.ItemsStruc_0.GetItems(true);
                                     Form1_0.Potions_0.CheckIfWeUsePotion();

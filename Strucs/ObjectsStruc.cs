@@ -169,7 +169,7 @@ namespace app
                         {
                             if (itemx != 0 && itemy != 0)
                             {
-                                Form1_0.method_1("Object: " + itemx + ", " + itemy + " - " + getObjectName((int)txtFileNo), Color.DarkOrchid);
+                                //Form1_0.method_1("Object: " + itemx + ", " + itemy + " - " + getObjectName((int)txtFileNo), Color.DarkOrchid);
                                 SetNearestObject(Nearest);
                                 if (!Nearest)
                                 {
@@ -182,7 +182,7 @@ namespace app
                     {
                         if (getObjectName((int)txtFileNo) == ObjectType && !IsIgnoredID(IgnoredIDList))
                         {
-                            Form1_0.method_1("Object: " + itemx + ", " + itemy + " - " + getObjectName((int)txtFileNo), Color.DarkOrchid);
+                            //Form1_0.method_1("Object: " + itemx + ", " + itemy + " - " + getObjectName((int)txtFileNo), Color.DarkOrchid);
                             if (itemx != 0 && itemy != 0)
                             {
                                 //Form1_0.method_1("Object: " + itemx + ", " + itemy + " - " + getObjectName((int)txtFileNo), Color.DarkOrchid);

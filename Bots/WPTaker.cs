@@ -150,7 +150,7 @@ namespace app
                         }
                         else
                         {
-                            Form1_0.method_1("NO WP FOUND NEAR", Color.OrangeRed);
+                            Form1_0.method_1("No WP found nearby", Color.OrangeRed);
                         }
                     }
 
@@ -298,7 +298,7 @@ namespace app
                     }
                     else
                     {
-                        Form1_0.method_1("NO WP FOUND NEAR", Color.OrangeRed);
+                        Form1_0.method_1("No WP found nearby", Color.OrangeRed);
                     }
                     CurrentStep++;
                 }

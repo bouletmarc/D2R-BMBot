@@ -193,7 +193,7 @@ namespace app
                                 Form1_0.Battle_0.DoBattleScript(10);
                                 //###
                                 Form1_0.Battle_0.SetSkills();
-                                Form1_0.Battle_0.CastSkills();
+                                Form1_0.Battle_0.CastSkillsNoMove();
                                 //###
                                 Application.DoEvents();
                             }
@@ -321,7 +321,7 @@ namespace app
                                 Form1_0.Battle_0.DoBattleScript(10);
                                 //###
                                 Form1_0.Battle_0.SetSkills();
-                                Form1_0.Battle_0.CastSkills();
+                                Form1_0.Battle_0.CastSkillsNoMove();
                                 //###
                                 Application.DoEvents();
                             }
@@ -434,7 +434,7 @@ namespace app
                                 Form1_0.Battle_0.DoBattleScript(10);
                                 //###
                                 Form1_0.Battle_0.SetSkills();
-                                Form1_0.Battle_0.CastSkills();
+                                Form1_0.Battle_0.CastSkillsNoMove();
                                 //###
                                 Application.DoEvents();
                             }
@@ -509,7 +509,7 @@ namespace app
 
                     if (TimeSinceDetecting.TotalSeconds >= 12)
                     {
-                        Form1_0.method_1("Waited too long for Diablo repoping the seals!", Color.Red);
+                        Form1_0.method_1("Waited too long for Diablo repoping the seals!", Color.OrangeRed);
                         CurrentStep = 3;
                         return;
                     }

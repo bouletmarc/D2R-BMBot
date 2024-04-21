@@ -100,14 +100,14 @@ namespace app
 
             if (txtFileNo != LastMobtxtFileNo)
             {
-                Form1_0.method_1("BAD Last mob ID!", Color.Red);
+                Form1_0.method_1("Bad Last mob ID!", Color.OrangeRed);
 
                 return false;
             }
 
             if (xPosFinal == 0 && yPosFinal == 0)
             {
-                Form1_0.method_1("BAD Last mob positions!", Color.Red);
+                Form1_0.method_1("Bad Last mob positions!", Color.OrangeRed);
                 xPosFinal = (ushort) LastMobPos.X;
                 yPosFinal = (ushort) LastMobPos.Y;
             }
@@ -323,6 +323,14 @@ namespace app
                             && (xPosFinal != 0 && yPosFinal != 0)//)
                             && IsThisMobInBound())
                         {
+                            if (CharConfig.LeaveDiabloClone && Form1_0.NPCStruc_0.getNPC_ID((int)Form1_0.MobsStruc_0.txtFileNo) == "Diabloclone")
+                            {
+                                Form1_0.method_1("DClone found near, leaving game!", Color.Red);
+                                Form1_0.LeaveGame(false);
+                                Form1_0.WaitDelay(100);
+                                return false;
+                            }
+
                             //get nearest mobs in all mobs
                             if (Nearest)
                             {

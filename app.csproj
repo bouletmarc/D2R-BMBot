@@ -215,6 +215,7 @@
     <None Include="Resources\Male.png" />
     <None Include="Resources\Person.png" />
     <None Include="Resources\Wrench.png" />
+    <None Include="Resources\Delete.png" />
     <Content Include="Settings\Char\PaladinHammer.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

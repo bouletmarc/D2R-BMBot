@@ -230,7 +230,7 @@ namespace app
                             Form1_0.WaitDelay(100);
                         }
 
-                        Form1_0.method_1("Added ignored TP ID: " + LastUsedTP_ID, Color.Red);
+                        Form1_0.method_1("Added ignored TP ID: " + LastUsedTP_ID, Color.OrangeRed);
 
                         IgnoredTPList.Add(LastUsedTP_ID);
                         Form1_0.Town_0.UseLastTP = false;

@@ -116,7 +116,7 @@ namespace app
             MouseMoveTo(ThX, ThY);
             //PostMessage((int)Form1_0.hWnd, WM_RBUTTONUP, 0x00000000, CreateLParam(150, 150));
             PostMessage((int)Form1_0.hWnd, WM_RBUTTONDOWN, 0x00000001, CreateLParam(150, 150));
-            PostMessage((int)Form1_0.hWnd, WM_RBUTTONUP, 0x00000000, CreateLParam(150, 150));
+            //PostMessage((int)Form1_0.hWnd, WM_RBUTTONUP, 0x00000000, CreateLParam(150, 150));
         }
 
         public void PressKey(System.Windows.Forms.Keys ThisK)
@@ -178,9 +178,41 @@ namespace app
         {
             MouseMoveTo(ThX, ThY);
 
+            //ReleaseKey(Keys.LShiftKey);
+            PressKeyHold(Keys.LShiftKey);
+            //PostMessage((int)Form1_0.hWnd, WM_LBUTTONUP, 0x00000000, (IntPtr)0);
+            PostMessage((int)Form1_0.hWnd, WM_LBUTTONDOWN, 0x00000001, (IntPtr)0);
+            PostMessage((int)Form1_0.hWnd, WM_LBUTTONUP, 0x00000000, (IntPtr)0);
+            ReleaseKey(Keys.LShiftKey);
+        }
+
+        public void SendSHIFT_CLICK_ATTACK(int ThX, int ThY)
+        {
+            MouseMoveTo(ThX, ThY);
+
+            //ReleaseKey(Keys.LShiftKey);
+            PressKeyHold(Keys.LShiftKey);
+            //PostMessage((int)Form1_0.hWnd, WM_LBUTTONDOWN, 0x00000001, (IntPtr)0);
+            //PostMessage((int)Form1_0.hWnd, WM_LBUTTONUP, 0x00000000, (IntPtr)0);
+            SendMessage((int)Form1_0.hWnd, WM_LBUTTONDOWN, 0x00000001, (IntPtr)0);
+            //SendMessage((int)Form1_0.hWnd, WM_LBUTTONDOWN, 0x00000001, CreateLParam(150, 150));
+            //PostMessage((int)Form1_0.hWnd, WM_LBUTTONUP, 0x00000000, (IntPtr)0);
+            //SendMessage((int)Form1_0.hWnd, WM_LBUTTONUP, 0x00000000, CreateLParam(150, 150));
+            ReleaseKey(Keys.LShiftKey);
+        }
+
+        public void SendSHIFT_CLICK_ATTACK_CAST_NO_MOVE(int ThX, int ThY)
+        {
+            MouseMoveTo(ThX, ThY);
+
+            //ReleaseKey(Keys.LShiftKey);
             PressKeyHold(Keys.LShiftKey);
             PostMessage((int)Form1_0.hWnd, WM_LBUTTONDOWN, 0x00000001, (IntPtr)0);
-            PostMessage((int)Form1_0.hWnd, WM_LBUTTONDOWN, 0x00000000, (IntPtr)0);
+            //PostMessage((int)Form1_0.hWnd, WM_LBUTTONUP, 0x00000000, (IntPtr)0);
+            //SendMessage((int)Form1_0.hWnd, WM_LBUTTONDOWN, 0x00000001, (IntPtr)0);
+            //SendMessage((int)Form1_0.hWnd, WM_LBUTTONDOWN, 0x00000001, CreateLParam(150, 150));
+            PostMessage((int)Form1_0.hWnd, WM_LBUTTONUP, 0x00000000, (IntPtr)0);
+            //SendMessage((int)Form1_0.hWnd, WM_LBUTTONUP, 0x00000000, CreateLParam(150, 150));
             ReleaseKey(Keys.LShiftKey);
         }
 

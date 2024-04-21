@@ -57,6 +57,7 @@ namespace app
         public static (int, int) KeysLocationInInventory = (8, 0);
         public static bool GrabForGold = true;
         public static bool IDAtShop = true;
+        public static bool LeaveDiabloClone = true;
 
         //#######################################
         //MERC SETTINGS

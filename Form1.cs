@@ -40,7 +40,7 @@ namespace app
     public partial class Form1 : Form
     {
 
-        public string BotVersion = "V1.6";
+        public string BotVersion = "V2.0";
 
         public string D2_LOD_113C_Path = "";
 
@@ -96,6 +96,7 @@ namespace app
         public bool SetDeadCount = false;
 
         public double FPS = 0;
+        public string mS = "";
 
         public int TotalChickenCount = 0;
         public int TotalDeadCount = 0;
@@ -232,7 +233,7 @@ namespace app
             richTextBox2.HideSelection = false;//Hide selection so that AppendText will auto scroll to the end
             //richTextBox2.Visible = false;
 
-            //ModifyMonsterList();
+            ModifyMonsterList();
 
             LabelChickenCount.Text = TotalChickenCount.ToString();
             LabelDeadCount.Text = TotalDeadCount.ToString();
@@ -748,6 +749,7 @@ namespace app
             ItemsStruc_0.BadItemsOnCursorIDList = new List<long>();
             ItemsStruc_0.BadItemsOnGroundPointerList = new List<long>();
             SetDeadCount = false;
+            GameStruc_0.ChickenTry = 0;
 
             //##############################
             MapAreaStruc_0.ScanMapStruc();
@@ -854,6 +856,18 @@ namespace app
                                     //PlayerScan_0.ScanForLeecher();
                                     //Battle_0.SetSkills();
                                     //Battle_0.CastSkills();
+                                    /*WaitDelay(50);
+                                    if (Town_0.FirstTown)
+                                    {
+                                        Town_0.FirstTown = false;
+                                        Mover_0.MoveToLocationAttack(PlayerScan_0.xPosFinal + 15, PlayerScan_0.yPosFinal);
+                                    }
+                                    else
+                                    {
+                                        Town_0.FirstTown = true;
+                                        Mover_0.MoveToLocationAttack(PlayerScan_0.xPosFinal - 15, PlayerScan_0.yPosFinal);
+                                    }
+                                    WaitDelay(50);*/
                                     //ItemsStruc_0.GetItems(false);
                                     //if (Running) LoopTimer.Start();
                                     //return;
@@ -875,7 +889,7 @@ namespace app
 
                                                 if (!Town_0.GetInTown() && Form1_0.ItemsStruc_0.ItemsEquiped <= 2)
                                                 {
-                                                    method_1("Going to town, body not grabbed!", Color.Red);
+                                                    method_1("Going to town, body not grabbed!", Color.OrangeRed);
                                                     Form1_0.Town_0.GoToTown();
                                                 }
                                                 else
@@ -1181,63 +1195,71 @@ namespace app
                         PrintedGameTime = true;
                     }
 
-                    ChangeCharScript();
-
-                    if (CharConfig.IsRushing)
+                    if (!GameStruc_0.IsPlayerConnectedToBnet())
                     {
-                        CharConfig.RunGameMakerScript = false;
-                        CharConfig.RunItemGrabScriptOnly = false;
-                        CharConfig.RunChaosSearchGameScript = false;
-                        CharConfig.RunBaalSearchGameScript = false;
-                    }
-
-                    if (CharConfig.RunGameMakerScript)
-                    {
-                        Form1_0.SetGameStatus("CREATING GAME");
-
-                        if (BadPlayerPointerFound)
-                        {
-                            CurrentGameNumber++;
-                            CurrentGameNumberSinceStart++;
-                            BadPlayerPointerFound = false;
-                        }
-                        if (TriedToCreateNewGameCount >= 4)
-                        {
-                            CurrentGameNumber++;
-                            CurrentGameNumberSinceStart++;
-                            TriedToCreateNewGameCount = 0;
-                        }
-                        Form1_0.GameStruc_0.CreateNewGame(CurrentGameNumber);
+                        Form1_0.SetGameStatus("CONNECTING TO BNET!");
+                        GameStruc_0.ClicCreateNewChar();
                     }
                     else
                     {
-                        if (CharConfig.RunBaalSearchGameScript && !CharConfig.RunItemGrabScriptOnly)
-                        {
-                            Form1_0.SetGameStatus("SEARCHING GAMES");
-                            BaalLeech_0.RunScriptNOTInGame();
+                        ChangeCharScript();
 
-                            TimeSpan ThisTimeCheckk = DateTime.Now - TimeSinceSearchingForGames;
-                            if (ThisTimeCheckk.TotalMinutes > 8)
-                            {
-                                LeaveGame(false);
-                                TimeSinceSearchingForGames = DateTime.Now;
-                            }
+                        if (CharConfig.IsRushing)
+                        {
+                            CharConfig.RunGameMakerScript = false;
+                            CharConfig.RunItemGrabScriptOnly = false;
+                            CharConfig.RunChaosSearchGameScript = false;
+                            CharConfig.RunBaalSearchGameScript = false;
                         }
-                        else if (CharConfig.RunChaosSearchGameScript && !CharConfig.RunItemGrabScriptOnly)
-                        {
-                            Form1_0.SetGameStatus("SEARCHING GAMES");
-                            ChaosLeech_0.RunScriptNOTInGame();
 
-                            TimeSpan ThisTimeCheckk = DateTime.Now - TimeSinceSearchingForGames;
-                            if (ThisTimeCheckk.TotalMinutes > 8)
+                        if (CharConfig.RunGameMakerScript)
+                        {
+                            Form1_0.SetGameStatus("CREATING GAME");
+
+                            if (BadPlayerPointerFound)
                             {
-                                LeaveGame(false);
-                                TimeSinceSearchingForGames = DateTime.Now;
+                                CurrentGameNumber++;
+                                CurrentGameNumberSinceStart++;
+                                BadPlayerPointerFound = false;
                             }
+                            if (TriedToCreateNewGameCount >= 4)
+                            {
+                                CurrentGameNumber++;
+                                CurrentGameNumberSinceStart++;
+                                TriedToCreateNewGameCount = 0;
+                            }
+                            Form1_0.GameStruc_0.CreateNewGame(CurrentGameNumber);
                         }
                         else
                         {
-                            Form1_0.SetGameStatus("IDLE");
+                            if (CharConfig.RunBaalSearchGameScript && !CharConfig.RunItemGrabScriptOnly)
+                            {
+                                Form1_0.SetGameStatus("SEARCHING GAMES");
+                                BaalLeech_0.RunScriptNOTInGame();
+
+                                TimeSpan ThisTimeCheckk = DateTime.Now - TimeSinceSearchingForGames;
+                                if (ThisTimeCheckk.TotalMinutes > 8)
+                                {
+                                    LeaveGame(false);
+                                    TimeSinceSearchingForGames = DateTime.Now;
+                                }
+                            }
+                            else if (CharConfig.RunChaosSearchGameScript && !CharConfig.RunItemGrabScriptOnly)
+                            {
+                                Form1_0.SetGameStatus("SEARCHING GAMES");
+                                ChaosLeech_0.RunScriptNOTInGame();
+
+                                TimeSpan ThisTimeCheckk = DateTime.Now - TimeSinceSearchingForGames;
+                                if (ThisTimeCheckk.TotalMinutes > 8)
+                                {
+                                    LeaveGame(false);
+                                    TimeSinceSearchingForGames = DateTime.Now;
+                                }
+                            }
+                            else
+                            {
+                                Form1_0.SetGameStatus("IDLE");
+                            }
                         }
                     }
                 }
@@ -1370,6 +1392,7 @@ namespace app
 
             overlayForm.SetAllOverlay();
 
+            mS = TimeStr;
             Grid_SetInfos("Processing Time", TimeStr + "-" + FPS.ToString("00") + "FPS");
             CheckTime = DateTime.Now;
 
@@ -1500,7 +1523,7 @@ namespace app
             Stash_0.StashFull = false;
             SetSettingButton(true);
             LoopTimer.Stop();
-            MapAreaStruc_0.AllMapData.Clear();
+            //MapAreaStruc_0.AllMapData.Clear();
             overlayForm.ClearAllOverlay();
             SetGameStatus("STOPPED");
 
@@ -1813,15 +1836,33 @@ namespace app
         {
             string[] AllLines = File.ReadAllLines(Application.StartupPath + @"\List.txt");
             string EndTxt = "";
+            EndTxt += "public enum MonsterType" + Environment.NewLine;
+            EndTxt += "{" + Environment.NewLine;
+
             for (int i = 0; i < AllLines.Length; i++)
             {
                 if (AllLines[i].Length > 0)
                 {
-                    EndTxt += AllLines[i].Substring(0, AllLines[i].IndexOf('\t'));
+                    //EndTxt += AllLines[i].Substring(0, AllLines[i].IndexOf('\t'));
                     AllLines[i] = AllLines[i].Substring(AllLines[i].IndexOf('\t') + 1);
-                    EndTxt += ":" + AllLines[i].Substring(0, AllLines[i].IndexOf('\t')) + Environment.NewLine;
+                    string ThidID = AllLines[i].Substring(0, AllLines[i].IndexOf('\t'));
+
+                    AllLines[i] = AllLines[i].Substring(AllLines[i].IndexOf('\t') + 1);
+                    AllLines[i] = AllLines[i].Substring(AllLines[i].IndexOf('\t') + 1);
+                    AllLines[i] = AllLines[i].Substring(AllLines[i].IndexOf('\t') + 1);
+                    AllLines[i] = AllLines[i].Substring(AllLines[i].IndexOf('\t') + 1);
+                    string ThidName = AllLines[i].Substring(0, AllLines[i].IndexOf('\t'));
+
+                    if (ThidName == "dummy" ||  ThidName == "Dummy" || ThidName == "unused" || ThidName == "Unused" || ThidName == "")
+                    {
+                        AllLines[i] = AllLines[i].Substring(AllLines[i].IndexOf('\t') + 1);
+                        ThidName = AllLines[i].Substring(0, AllLines[i].IndexOf('\t'));
+                    }
+
+                    EndTxt += "\t" + ThidName.Replace(" ", "") + " = " + ThidID + "," + Environment.NewLine;
                 }
             }
+            EndTxt += "}";
 
             File.Create(Application.StartupPath + @"\List2.txt").Dispose();
             File.WriteAllText(Application.StartupPath + @"\List2.txt", EndTxt);

@@ -35,7 +35,7 @@ namespace app
         public int ScanUnitsNumber = 2600;
         //public int ScanUnitsNumber = 2200;
         //public int ScanUnitsNumber = 6000;
-        public int ScanUnitsNegativeOffset = 128;
+        public int ScanUnitsNegativeOffset = 0;
 
         public void SetForm1(Form1 form1_1)
         {

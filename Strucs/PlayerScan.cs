@@ -411,10 +411,14 @@ namespace app
                 if (PlayerHP == LastPlayerHP)
                 {
                     SameHPCount++;
-                    if (SameHPCount >= 100 && PlayerHP != PlayerMaxHP)
+                    if (SameHPCount >= 15 && MaxHPValueWithBO != PlayerMaxHP)
                     {
                         MaxHPValueWithBO = PlayerMaxHP;
                         MaxManaValueWithBO = PlayerMaxMana;
+
+                        PlayerMaxHP = MaxHPValueWithBO;
+                        PlayerMaxMana = MaxManaValueWithBO;
+
                         SameHPCount = 0;
                     }
                 }

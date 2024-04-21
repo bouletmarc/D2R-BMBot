@@ -1,6 +1,6 @@
-//#######################################
+//########################################
 //SET ALL CUBING RECIPES TO PERFORM
-//#######################################
+//########################################
 Flawless Emerald+Flawless Emerald+Flawless Emerald=Perfect Emerald
 Flawless Sapphire+Flawless Sapphire+Flawless Sapphire=Perfect Sapphire
 Flawless Amethyst+Flawless Amethyst+Flawless Amethyst=Perfect Amethyst
@@ -15,7 +15,7 @@ Nef Rune+Nef Rune+Nef Rune=Eth Rune
 Eth Rune+Eth Rune+Eth Rune=Ith Rune
 Ith Rune+Ith Rune+Ith Rune=Tal Rune
 Tal Rune+Tal Rune+Tal Rune=Ral Rune
-Ral Rune+Ral Rune+Ral Rune=Ort Rune
+//Ral Rune+Ral Rune+Ral Rune=Ort Rune
 Ort Rune+Ort Rune+Ort Rune=Thul Rune
 
 Thul Rune+Thul Rune+Thul Rune+Chipped Topaz=Amn Rune
@@ -31,6 +31,9 @@ Ko Rune+Ko Rune+Ko Rune+Flawed Sapphire=Fal Rune
 Fal Rune+Fal Rune+Fal Rune+Flawed Ruby=Lem Rune
 Lem Rune+Lem Rune+Lem Rune+Flawed Emerald=Pul Rune
 Pul Rune+Pul Rune+Flawed Diamond=Um Rune
+
+Um Rune+Um Rune+Topaz=Mal Rune
+Mal Rune+Mal Rune+Amethyst=Ist Rune
 
 Twisted Essence of Suffering+Charged Essense of Hatred+Burning Essence of Terror+Festering Essence of Destruction=Token of Absolution
 
