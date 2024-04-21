@@ -559,14 +559,14 @@ namespace app
                                 //####
                                 if (CharConfig.UseTeleport)
                                 {
-                                    if (DiffXPlayer > 4 || DiffYPlayer > 4)
+                                    /*if (DiffXPlayer > 4 || DiffYPlayer > 4)
                                     {
                                         //Form1_0.Mover_0.MoveToLocation(itemx, itemy); //slow move
                                         Form1_0.Mover_0.MoveToLocationAttack(itemx, itemy); //fast move
                                         Form1_0.PlayerScan_0.GetPositions();
                                         GetUnitPathData();
                                         itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, itemx, itemy);
-                                    }
+                                    }*/
                                 }
 
                                 if (itemScreenPos["x"] == 0 && itemScreenPos["y"] == 0) continue;
@@ -592,10 +592,11 @@ namespace app
 
                                 //####
                                 TriesToPickItemCount++;
-                                Form1_0.KeyMouse_0.PressKeyHold(System.Windows.Forms.Keys.E);
-                                Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"]);
-                                Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"]); //clic twice??
-                                Form1_0.KeyMouse_0.ReleaseKey(System.Windows.Forms.Keys.E);
+                                //Form1_0.KeyMouse_0.PressKeyHold(System.Windows.Forms.Keys.E);
+                                Form1_0.KeyMouse_0.MouseMoveTo_RealPos(itemScreenPos["x"], itemScreenPos["y"]);
+                                //Form1_0.KeyMouse_0.MouseClicc_RealPos(itemScreenPos["x"], itemScreenPos["y"]);
+                                //Form1_0.KeyMouse_0.MouseClicc_RealPos(itemScreenPos["x"], itemScreenPos["y"]); //clic twice??
+                                //Form1_0.KeyMouse_0.ReleaseKey(System.Windows.Forms.Keys.E);
 
                                 if (ItemNAAME != LastPick)
                                 {
@@ -721,8 +722,8 @@ namespace app
                                 //####
 
                                 TriesToPickItemCount++;
-                                Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"]);
-                                Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"]);
+                                Form1_0.KeyMouse_0.MouseClicc_RealPos(itemScreenPos["x"], itemScreenPos["y"]);
+                                Form1_0.KeyMouse_0.MouseClicc_RealPos(itemScreenPos["x"], itemScreenPos["y"]);
 
                                 if (ItemNAAME != LastPick)
                                 {
@@ -867,7 +868,7 @@ namespace app
                                     itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, itemx, itemy);
                                 }
                                 //####
-                                Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"]);
+                                Form1_0.KeyMouse_0.MouseClicc_RealPos(itemScreenPos["x"], itemScreenPos["y"]);
 
                                 if (ItemNAAME != LastPick)
                                 {

@@ -223,7 +223,7 @@ namespace app
                         {
                             Form1_0.method_1("People detected in Worldstone chamber, switching to baal script!", Color.Red);
 
-                            Form1_0.KeyMouse_0.MouseClicc(Form1_0.CenterX, 0); //drop possible items on curson to ground
+                            Form1_0.KeyMouse_0.MouseClicc_RealPos(Form1_0.CenterX, Form1_0.ScreenYOffset); //drop possible items on curson to ground
                             CurrentStep++;
                         }
 
@@ -273,7 +273,7 @@ namespace app
                     }
                     else
                     {
-                        Form1_0.KeyMouse_0.MouseClicc(Form1_0.CenterX, 0); //drop possible items on curson to ground
+                        Form1_0.KeyMouse_0.MouseClicc_RealPos(Form1_0.CenterX, Form1_0.ScreenYOffset); //drop possible items on curson to ground
                         CurrentStep++;
                     }
                 }
@@ -322,7 +322,7 @@ namespace app
                         else
                         {
                             Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, 15091, 5005);
-                            Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"] - 5, itemScreenPos["y"] - 20);
+                            Form1_0.KeyMouse_0.MouseClicc_RealPos(itemScreenPos["x"] - 5, itemScreenPos["y"] - 20);
                             Form1_0.WaitDelay(10);
                         }
                     }

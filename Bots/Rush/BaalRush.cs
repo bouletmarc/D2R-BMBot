@@ -313,7 +313,7 @@ namespace app
                         else
                         {
                             Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, 15091, 5005);
-                            Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"] - 5, itemScreenPos["y"] - 20);
+                            Form1_0.KeyMouse_0.MouseClicc_RealPos(itemScreenPos["x"] - 5, itemScreenPos["y"] - 20);
                             Form1_0.WaitDelay(10);
                         }
                     }

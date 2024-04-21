@@ -460,12 +460,15 @@ namespace app
             long xdiff = targetx - playerX;
             long ydiff = targety - playerY;
 
+            double ThisScales = (double) Form1_0.D2Widht / 1920.0;
+
             double angle = 0.785398; //45 deg
             double x = xdiff * Math.Cos(angle) - ydiff * Math.Sin(angle);
             double y = xdiff * Math.Sin(angle) + ydiff * Math.Cos(angle);
-            int xS = (int) (Form1_0.CenterX + (x * scale));
+
+            int xS = (int) (Form1_0.CenterX + (x * scale * ThisScales));
             //int yS = (int) (Form1_0.CenterY + (y * scale * 0.5) - 10);
-            int yS = (int)(Form1_0.CenterY + (y * scale * 0.5) - 30);
+            int yS = (int) (Form1_0.CenterY + ((y * scale * 0.5 * ThisScales) - 30));
 
             Dictionary<string, int> NewDict = new Dictionary<string, int>();
             NewDict["x"] = xS;

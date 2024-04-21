@@ -81,6 +81,27 @@ namespace app
             return (IntPtr)((HiWord << 16) | (LoWord & 0xffff));
         }
 
+        public void MouseClicc_RealPos(int ThX, int ThY)
+        {
+            //Thread.Sleep(ProcessingDelay);
+
+            MouseMoveTo_RealPos(ThX, ThY);
+            SendMessage((int)Form1_0.hWnd, WM_LBUTTONUP, 0x00000000, CreateLParam(150, 150));
+            Thread.Sleep(1);
+            SendMessage((int)Form1_0.hWnd, WM_LBUTTONDOWN, 0x00000001, CreateLParam(150, 150));
+            Thread.Sleep(ProcessingDelay);
+            SendMessage((int)Form1_0.hWnd, WM_LBUTTONUP, 0x00000000, CreateLParam(150, 150));
+        }
+        public void MouseCliccRight_RealPos(int ThX, int ThY)
+        {
+            MouseMoveTo(ThX, ThY);
+            SendMessage((int)Form1_0.hWnd, WM_RBUTTONUP, 0x00000000, CreateLParam(150, 150));
+            Thread.Sleep(1);
+            SendMessage((int)Form1_0.hWnd, WM_RBUTTONDOWN, 0x00000001, CreateLParam(150, 150));
+            Thread.Sleep(ProcessingDelay);
+            SendMessage((int)Form1_0.hWnd, WM_RBUTTONUP, 0x00000000, CreateLParam(150, 150));
+        }
+
         public void MouseClicc(int ThX, int ThY)
         {
             //Thread.Sleep(ProcessingDelay);
@@ -103,17 +124,17 @@ namespace app
             SendMessage((int)Form1_0.hWnd, WM_RBUTTONUP, 0x00000000, CreateLParam(150, 150));
         }
 
-        public void MouseCliccAttackMove(int ThX, int ThY)
+        /*public void MouseCliccAttackMove(int ThX, int ThY)
         {
             MouseMoveTo(ThX, ThY);
             //PostMessage((int)Form1_0.hWnd, WM_LBUTTONUP, 0x00000000, CreateLParam(150, 150));
             PostMessage((int)Form1_0.hWnd, WM_LBUTTONDOWN, 0x00000001, CreateLParam(150, 150));
             PostMessage((int)Form1_0.hWnd, WM_LBUTTONUP, 0x00000000, CreateLParam(150, 150));
-        }
+        }*/
 
         public void MouseCliccRightAttackMove(int ThX, int ThY)
         {
-            MouseMoveTo(ThX, ThY);
+            MouseMoveTo_RealPos(ThX, ThY);
             //PostMessage((int)Form1_0.hWnd, WM_RBUTTONUP, 0x00000000, CreateLParam(150, 150));
             PostMessage((int)Form1_0.hWnd, WM_RBUTTONDOWN, 0x00000001, CreateLParam(150, 150));
             //PostMessage((int)Form1_0.hWnd, WM_RBUTTONUP, 0x00000000, CreateLParam(150, 150));
@@ -188,7 +209,7 @@ namespace app
 
         public void SendSHIFT_CLICK_ATTACK(int ThX, int ThY)
         {
-            MouseMoveTo(ThX, ThY);
+            MouseMoveTo_RealPos(ThX, ThY);
 
             //ReleaseKey(Keys.LShiftKey);
             PressKeyHold(Keys.LShiftKey);
@@ -203,7 +224,7 @@ namespace app
 
         public void SendSHIFT_CLICK_ATTACK_CAST_NO_MOVE(int ThX, int ThY)
         {
-            MouseMoveTo(ThX, ThY);
+            MouseMoveTo_RealPos(ThX, ThY);
 
             //ReleaseKey(Keys.LShiftKey);
             PressKeyHold(Keys.LShiftKey);
@@ -238,6 +259,12 @@ namespace app
             SetCursorPos(position.X, position.Y);
         }
 
+
+        public void MouseMoveTo_RealPos(int ThX, int ThY)
+        {
+            Point position = new Point(ThX, ThY);
+            SetCursorPos(position.X, position.Y);
+        }
 
         public void MouseClicHoldWithoutRelease()
         {

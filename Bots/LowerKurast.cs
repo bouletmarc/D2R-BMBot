@@ -83,7 +83,7 @@ namespace app
                         //if (Form1_0.ObjectsStruc_0.GetObjects("Act3TownWaypoint", false))
                         //{
                             Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, WP_X, WP_Y);
-                            Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"] - 15);
+                            Form1_0.KeyMouse_0.MouseClicc_RealPos(itemScreenPos["x"], itemScreenPos["y"] - 15);
                             //Form1_0.Mover_0.FinishMoving();
                             if (Form1_0.UIScan_0.WaitTilUIOpen("waypointMenu"))
                             {
@@ -122,11 +122,11 @@ namespace app
                     HasTakenAnyChest = true;
 
                     Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, ThisChestPos.X, ThisChestPos.Y);
-                    Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"] - 15);
+                    Form1_0.KeyMouse_0.MouseClicc_RealPos(itemScreenPos["x"], itemScreenPos["y"] - 15);
                     Form1_0.WaitDelay(10);
-                    Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"] - 15);
+                    Form1_0.KeyMouse_0.MouseClicc_RealPos(itemScreenPos["x"], itemScreenPos["y"] - 15);
                     Form1_0.WaitDelay(10);
-                    Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"] - 15);
+                    Form1_0.KeyMouse_0.MouseClicc_RealPos(itemScreenPos["x"], itemScreenPos["y"] - 15);
                     Form1_0.WaitDelay(10);
 
                     int tryy2 = 0;

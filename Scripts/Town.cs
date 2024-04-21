@@ -159,7 +159,7 @@ namespace app
                                 CurrentScript = 0;
                                 Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, Form1_0.ObjectsStruc_0.itemx, Form1_0.ObjectsStruc_0.itemy);
                                 Form1_0.KeyMouse_0.PressKeyHold(System.Windows.Forms.Keys.E);
-                                Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"] - 15);
+                                Form1_0.KeyMouse_0.MouseClicc_RealPos(itemScreenPos["x"], itemScreenPos["y"] - 15);
                                 Form1_0.KeyMouse_0.ReleaseKey(System.Windows.Forms.Keys.E);
                                 Form1_0.WaitDelay(50);
                                 Form1_0.Mover_0.FinishMoving();
@@ -181,7 +181,7 @@ namespace app
                             CurrentScript = 0;
                             Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, Form1_0.PlayerScan_0.xPosFinal - 2, Form1_0.PlayerScan_0.yPosFinal);
                             Form1_0.KeyMouse_0.PressKeyHold(System.Windows.Forms.Keys.E);
-                            Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"] - 15);
+                            Form1_0.KeyMouse_0.MouseClicc_RealPos(itemScreenPos["x"], itemScreenPos["y"] - 15);
                             Form1_0.KeyMouse_0.ReleaseKey(System.Windows.Forms.Keys.E);
                             Form1_0.WaitDelay(50);
                             Form1_0.Mover_0.FinishMoving();
@@ -227,7 +227,7 @@ namespace app
                                 //Clic corpse
                                 FirstTown = false;
                                 Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal);
-                                Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"] - 45, itemScreenPos["y"] - 5);
+                                Form1_0.KeyMouse_0.MouseClicc_RealPos(itemScreenPos["x"] - 45, itemScreenPos["y"] - 5);
                                 //Form1_0.WaitDelay(100);
                                 //Tries++;
                             //}
@@ -509,7 +509,7 @@ namespace app
                 if (ThisFinalPosition.X != 0 && ThisFinalPosition.Y != 0)
                 {
                     Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, ThisFinalPosition.X, ThisFinalPosition.Y);
-                    Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"] - 100, itemScreenPos["y"] - 15);
+                    Form1_0.KeyMouse_0.MouseClicc_RealPos(itemScreenPos["x"] - 100, itemScreenPos["y"] - 15);
                     //Form1_0.Mover_0.FinishMoving();
                     if (Form1_0.UIScan_0.WaitTilUIOpen("waypointMenu"))
                     {
@@ -536,7 +536,7 @@ namespace app
                 if (ThisFinalPosition.X != 0 && ThisFinalPosition.Y != 0)
                 {
                     Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, ThisFinalPosition.X, ThisFinalPosition.Y);
-                    Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"] - 100, itemScreenPos["y"] - 15);
+                    Form1_0.KeyMouse_0.MouseClicc_RealPos(itemScreenPos["x"] - 100, itemScreenPos["y"] - 15);
                     //Form1_0.Mover_0.FinishMoving();
                     if (Form1_0.UIScan_0.WaitTilUIOpen("waypointMenu"))
                     {
@@ -563,7 +563,7 @@ namespace app
                 if (ThisFinalPosition.X != 0 && ThisFinalPosition.Y != 0)
                 {
                     Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, ThisFinalPosition.X, ThisFinalPosition.Y);
-                    Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"] - 100, itemScreenPos["y"] - 15);
+                    Form1_0.KeyMouse_0.MouseClicc_RealPos(itemScreenPos["x"] - 100, itemScreenPos["y"] - 15);
                     //Form1_0.Mover_0.FinishMoving();
                     if (Form1_0.UIScan_0.WaitTilUIOpen("waypointMenu"))
                     {
@@ -590,7 +590,7 @@ namespace app
                 if (ThisFinalPosition.X != 0 && ThisFinalPosition.Y != 0)
                 {
                     Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, ThisFinalPosition.X, ThisFinalPosition.Y);
-                    Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"] - 100, itemScreenPos["y"] - 15);
+                    Form1_0.KeyMouse_0.MouseClicc_RealPos(itemScreenPos["x"] - 100, itemScreenPos["y"] - 15);
                     //Form1_0.Mover_0.FinishMoving();
                     if (Form1_0.UIScan_0.WaitTilUIOpen("waypointMenu"))
                     {
@@ -617,7 +617,7 @@ namespace app
                 if (ThisFinalPosition.X != 0 && ThisFinalPosition.Y != 0)
                 {
                     Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, ThisFinalPosition.X, ThisFinalPosition.Y);
-                    Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"] - 100, itemScreenPos["y"] - 15);
+                    Form1_0.KeyMouse_0.MouseClicc_RealPos(itemScreenPos["x"] - 100, itemScreenPos["y"] - 15);
                     //Form1_0.Mover_0.FinishMoving();
                     if (Form1_0.UIScan_0.WaitTilUIOpen("waypointMenu"))
                     {
@@ -833,7 +833,7 @@ namespace app
                             while(tries < 5) 
                             {
                                 Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, Form1_0.ObjectsStruc_0.itemx, Form1_0.ObjectsStruc_0.itemy);
-                                Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"] - 15);
+                                Form1_0.KeyMouse_0.MouseClicc_RealPos(itemScreenPos["x"], itemScreenPos["y"] - 15);
                                 Form1_0.WaitDelay(10);
                                 Form1_0.PlayerScan_0.GetPositions();
                                 tries++;
@@ -901,7 +901,7 @@ namespace app
             {
                 //Clic store
                 Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, Form1_0.NPCStruc_0.xPosFinal, Form1_0.NPCStruc_0.yPosFinal);
-                Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"]);
+                Form1_0.KeyMouse_0.MouseClicc_RealPos(itemScreenPos["x"], itemScreenPos["y"]);
                 Form1_0.Mover_0.FinishMoving();
                 if (Form1_0.UIScan_0.WaitTilUIOpen("npcInteract"))  //npcShop
                 {
@@ -973,7 +973,7 @@ namespace app
             {
                 //Clic store
                 Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, Form1_0.NPCStruc_0.xPosFinal, Form1_0.NPCStruc_0.yPosFinal);
-                Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"]);
+                Form1_0.KeyMouse_0.MouseClicc_RealPos(itemScreenPos["x"], itemScreenPos["y"]);
                 Form1_0.Mover_0.FinishMoving();
                 if (Form1_0.UIScan_0.WaitTilUIOpen("npcInteract"))  //npcShop
                 {
@@ -1053,7 +1053,7 @@ namespace app
             {
                 //Clic store
                 Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, Form1_0.NPCStruc_0.xPosFinal, Form1_0.NPCStruc_0.yPosFinal);
-                Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"]);
+                Form1_0.KeyMouse_0.MouseClicc_RealPos(itemScreenPos["x"], itemScreenPos["y"]);
                 Form1_0.Mover_0.FinishMoving();
                 if (Form1_0.UIScan_0.WaitTilUIOpen("npcInteract"))  //npcShop
                 {
@@ -1147,7 +1147,7 @@ namespace app
                 if (HasPosForStash)
                 {
                     //Clic stash
-                    Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"]);
+                    Form1_0.KeyMouse_0.MouseClicc_RealPos(itemScreenPos["x"], itemScreenPos["y"]);
                     Form1_0.Mover_0.FinishMoving();
                     if (Form1_0.UIScan_0.WaitTilUIOpen("stash"))
                     {
@@ -1217,7 +1217,7 @@ namespace app
 
                 //Clic cain
                 Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, Form1_0.NPCStruc_0.xPosFinal, Form1_0.NPCStruc_0.yPosFinal);
-                Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"]);
+                Form1_0.KeyMouse_0.MouseClicc_RealPos(itemScreenPos["x"], itemScreenPos["y"]);
                 //Form1_0.Mover_0.FinishMoving();
                 if (Form1_0.UIScan_0.WaitTilUIOpen("npcInteract"))
                 {
@@ -1282,7 +1282,7 @@ namespace app
             {
                 //Clic merc NPC
                 Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, Form1_0.NPCStruc_0.xPosFinal, Form1_0.NPCStruc_0.yPosFinal);
-                Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"]);
+                Form1_0.KeyMouse_0.MouseClicc_RealPos(itemScreenPos["x"], itemScreenPos["y"]);
                 Form1_0.Mover_0.FinishMoving();
                 if (Form1_0.UIScan_0.WaitTilUIOpen("npcInteract"))
                 {
@@ -1348,7 +1348,7 @@ namespace app
                 Form1_0.method_1("Grab corpse #1", Color.Red);
                 //Clic corpse
                 Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, Form1_0.NPCStruc_0.xPosFinal, Form1_0.NPCStruc_0.yPosFinal);
-                Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"]);
+                Form1_0.KeyMouse_0.MouseClicc_RealPos(itemScreenPos["x"], itemScreenPos["y"]);
             }
 
             //method #2
@@ -1359,7 +1359,7 @@ namespace app
                 Form1_0.method_1("Grab corpse #2", Color.Red);
                 //Clic corpse
                 Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, Form1_0.PlayerScan_0.xPosFinalOtherP, Form1_0.PlayerScan_0.yPosFinalOtherP);
-                Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"]);
+                Form1_0.KeyMouse_0.MouseClicc_RealPos(itemScreenPos["x"], itemScreenPos["y"]);
                 Form1_0.WaitDelay(100);
                 Form1_0.PlayerScan_0.GetPositions();
                 Tries++;

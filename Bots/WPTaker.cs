@@ -141,7 +141,7 @@ namespace app
                         if (ThisFinalPosition.X != 0 && ThisFinalPosition.Y != 0)
                         {
                             Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, ThisFinalPosition.X, ThisFinalPosition.Y);
-                            Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"] - 15);
+                            Form1_0.KeyMouse_0.MouseClicc_RealPos(itemScreenPos["x"], itemScreenPos["y"] - 15);
                             Form1_0.Mover_0.FinishMoving();
                             if (Form1_0.UIScan_0.WaitTilUIOpen("waypointMenu"))
                             {
@@ -288,7 +288,7 @@ namespace app
                     if (ThisFinalPosition.X != 0 && ThisFinalPosition.Y != 0)
                     {
                         Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, ThisFinalPosition.X, ThisFinalPosition.Y);
-                        Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"] - 15);
+                        Form1_0.KeyMouse_0.MouseClicc_RealPos(itemScreenPos["x"], itemScreenPos["y"] - 15);
                         Form1_0.Mover_0.FinishMoving();
                         if (Form1_0.UIScan_0.WaitTilUIOpen("waypointMenu"))
                         {

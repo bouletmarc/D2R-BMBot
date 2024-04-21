@@ -230,7 +230,7 @@ namespace app
                     Form1_0.PlayerScan_0.GetPositions();
                 }
 
-                Form1_0.KeyMouse_0.MouseCliccRight(Form1_0.CenterX, Form1_0.CenterY);
+                Form1_0.KeyMouse_0.MouseCliccRight_RealPos(Form1_0.CenterX, Form1_0.CenterY);
                 Form1_0.WaitDelay(30);
 
                 //select battle command
@@ -238,7 +238,7 @@ namespace app
                 Form1_0.WaitDelay(5);
                 Form1_0.KeyMouse_0.MouseClicc(1025, 610);
                 Form1_0.WaitDelay(5);
-                Form1_0.KeyMouse_0.MouseCliccRight(Form1_0.CenterX, Form1_0.CenterY);
+                Form1_0.KeyMouse_0.MouseCliccRight_RealPos(Form1_0.CenterX, Form1_0.CenterY);
                 Form1_0.WaitDelay(30); //60 <-
                 Form1_0.Potions_0.CheckIfWeUsePotion();
 
@@ -247,7 +247,7 @@ namespace app
                 Form1_0.WaitDelay(5);
                 Form1_0.KeyMouse_0.MouseClicc(1165, 610);
                 Form1_0.WaitDelay(5);
-                Form1_0.KeyMouse_0.MouseCliccRight(Form1_0.CenterX, Form1_0.CenterY);
+                Form1_0.KeyMouse_0.MouseCliccRight_RealPos(Form1_0.CenterX, Form1_0.CenterY);
                 Form1_0.WaitDelay(60);
 
                 Form1_0.KeyMouse_0.PressKey(Keys.W);
@@ -268,13 +268,13 @@ namespace app
             //cast sacred shield
             Form1_0.KeyMouse_0.PressKey(CharConfig.KeySkillCastDefense);
             Form1_0.WaitDelay(5);
-            Form1_0.KeyMouse_0.MouseCliccRight(Form1_0.CenterX, Form1_0.CenterY);
+            Form1_0.KeyMouse_0.MouseCliccRight_RealPos(Form1_0.CenterX, Form1_0.CenterY);
             Form1_0.WaitDelay(35);
 
             //cast sacred shield
             Form1_0.KeyMouse_0.PressKey(CharConfig.KeySkillLifeAura);
             Form1_0.WaitDelay(5);
-            Form1_0.KeyMouse_0.MouseCliccRight(Form1_0.CenterX, Form1_0.CenterY);
+            Form1_0.KeyMouse_0.MouseCliccRight_RealPos(Form1_0.CenterX, Form1_0.CenterY);
             Form1_0.WaitDelay(5);
         }
 

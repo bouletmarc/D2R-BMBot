@@ -81,7 +81,7 @@ namespace app
             Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, ThisX, ThisY);
             //#######
             //calculate new Y clicking offset, else it will clic on bottom menu items
-            if (itemScreenPos["y"] >= (Form1_0.ScreenY - Form1_0.ScreenYMenu))
+            if (itemScreenPos["y"] >= (Form1_0.D2Height + Form1_0.ScreenYOffset - Form1_0.ScreenYMenu))
             {
                 int DiffX = Form1_0.CenterX - itemScreenPos["x"];
                 itemScreenPos["x"] = (int)(itemScreenPos["x"] + (DiffX / 6));
@@ -92,7 +92,7 @@ namespace app
 
             if (!CharConfig.UseTeleport || (CharConfig.UseTeleport && Form1_0.Town_0.GetInTown()))
             {
-                Form1_0.KeyMouse_0.MouseMoveTo(itemScreenPos["x"], itemScreenPos["y"]);
+                Form1_0.KeyMouse_0.MouseMoveTo_RealPos(itemScreenPos["x"], itemScreenPos["y"]);
                 Form1_0.KeyMouse_0.MouseClicHoldWithoutRelease();
                 Form1_0.KeyMouse_0.PressKeyHold(System.Windows.Forms.Keys.E);
             }
@@ -125,11 +125,11 @@ namespace app
 
                 if (!CharConfig.UseTeleport || (CharConfig.UseTeleport && Form1_0.Town_0.GetInTown()))
                 {
-                    Form1_0.KeyMouse_0.MouseMoveTo(itemScreenPos["x"], itemScreenPos["y"]);
+                    Form1_0.KeyMouse_0.MouseMoveTo_RealPos(itemScreenPos["x"], itemScreenPos["y"]);
                 }
                 if (CharConfig.UseTeleport && !Form1_0.Town_0.GetInTown())
                 {
-                    Form1_0.KeyMouse_0.MouseCliccRight(itemScreenPos["x"], itemScreenPos["y"]);
+                    Form1_0.KeyMouse_0.MouseCliccRight_RealPos(itemScreenPos["x"], itemScreenPos["y"]);
 
                     //#######
                     if (!AllowFastMove)
@@ -161,11 +161,11 @@ namespace app
 
                 //#######
                 //calculate new Y clicking offset, else it will clic on bottom menu items
-                if (itemScreenPos["y"] >= (Form1_0.ScreenY - Form1_0.ScreenYMenu))
+                if (itemScreenPos["y"] >= (Form1_0.D2Height + Form1_0.ScreenYOffset - Form1_0.ScreenYMenu))
                 {
                     int DiffX = Form1_0.CenterX - itemScreenPos["x"];
                     itemScreenPos["x"] = (int)(itemScreenPos["x"] + (DiffX / 6));
-                    itemScreenPos["y"] = (Form1_0.ScreenY - Form1_0.ScreenYMenu);
+                    itemScreenPos["y"] = (Form1_0.D2Height + Form1_0.ScreenYOffset - Form1_0.ScreenYMenu);
                     //Console.WriteLine("corrected pos from: " + Sx + "," + Sy + " to: " + itemScreenPos["x"] + "," + itemScreenPos["y"]);
                 }
                 //#######
@@ -236,15 +236,15 @@ namespace app
                     itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, ThisX, ThisY);
                     //#######
                     //calculate new Y clicking offset, else it will clic on bottom menu items
-                    if (itemScreenPos["y"] >= (Form1_0.ScreenY - Form1_0.ScreenYMenu))
+                    if (itemScreenPos["y"] >= (Form1_0.D2Height + Form1_0.ScreenYOffset - Form1_0.ScreenYMenu))
                     {
                         int DiffX = Form1_0.CenterX - itemScreenPos["x"];
                         itemScreenPos["x"] = (int)(itemScreenPos["x"] + (DiffX / 6));
-                        itemScreenPos["y"] = (Form1_0.ScreenY - Form1_0.ScreenYMenu);
+                        itemScreenPos["y"] = (Form1_0.D2Height + Form1_0.ScreenYOffset - Form1_0.ScreenYMenu);
                         //Console.WriteLine("corrected pos from: " + Sx + "," + Sy + " to: " + itemScreenPos["x"] + "," + itemScreenPos["y"]);
                     }
                     //#######
-                    Form1_0.KeyMouse_0.MouseCliccRight(itemScreenPos["x"], itemScreenPos["y"]);
+                    Form1_0.KeyMouse_0.MouseCliccRight_RealPos(itemScreenPos["x"], itemScreenPos["y"]);
                 }
 
                 if (TryMove >= MaxMoveTry)
@@ -400,17 +400,17 @@ namespace app
             Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, ThisX, ThisY);
 
             //calculate new Y clicking offset, else it will clic on bottom menu items
-            if (itemScreenPos["y"] >= (Form1_0.ScreenY - Form1_0.ScreenYMenu))
+            if (itemScreenPos["y"] >= (Form1_0.D2Height + Form1_0.ScreenYOffset - Form1_0.ScreenYMenu))
             {
                 int DiffX = Form1_0.CenterX - itemScreenPos["x"];
                 itemScreenPos["x"] = (int)(itemScreenPos["x"] + (DiffX / 6));
-                itemScreenPos["y"] = (Form1_0.ScreenY - Form1_0.ScreenYMenu);
+                itemScreenPos["y"] = (Form1_0.D2Height + Form1_0.ScreenYOffset - Form1_0.ScreenYMenu);
                 //Console.WriteLine("corrected pos from: " + Sx + "," + Sy + " to: " + itemScreenPos["x"] + "," + itemScreenPos["y"]);
             }
 
             if (!CharConfig.UseTeleport || (CharConfig.UseTeleport && Form1_0.Town_0.GetInTown()))
             {
-                Form1_0.KeyMouse_0.MouseMoveTo(itemScreenPos["x"], itemScreenPos["y"]);
+                Form1_0.KeyMouse_0.MouseMoveTo_RealPos(itemScreenPos["x"], itemScreenPos["y"]);
                 Form1_0.KeyMouse_0.MouseClicHoldWithoutRelease();
                 Form1_0.KeyMouse_0.PressKeyHold(System.Windows.Forms.Keys.E);
             }
@@ -420,7 +420,7 @@ namespace app
 
             Form1_0.WaitDelay(5); //wait a little bit, we just casted attack
 
-            if (!CharConfig.UseTeleport || (CharConfig.UseTeleport && Form1_0.Town_0.GetInTown())) Form1_0.KeyMouse_0.MouseMoveTo(itemScreenPos["x"], itemScreenPos["y"]);
+            if (!CharConfig.UseTeleport || (CharConfig.UseTeleport && Form1_0.Town_0.GetInTown())) Form1_0.KeyMouse_0.MouseMoveTo_RealPos(itemScreenPos["x"], itemScreenPos["y"]);
             if (CharConfig.UseTeleport && !Form1_0.Town_0.GetInTown()) Form1_0.KeyMouse_0.MouseCliccRightAttackMove(itemScreenPos["x"], itemScreenPos["y"]);
 
             //#######

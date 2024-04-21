@@ -193,6 +193,12 @@ namespace app
         [DllImport("user32.dll")]
         private static extern int GetWindowRect(int hwnd, out Rectangle rect);
 
+        [DllImport("user32.dll")]
+        private static extern bool GetClientRect(int hwnd, out Rectangle lpRect);
+
+        [DllImport("user32.dll")]
+        static extern bool ClientToScreen(int hWnd, out Point lpPoint);
+
 
         // REQUIRED STRUCTS
         public struct MEMORY_BASIC_INFORMATION
@@ -604,15 +610,39 @@ namespace app
                     method_1("D2R is running...", Color.DarkGreen);
 
                     hWnd = FindWindow(null, "Diablo II: Resurrected");
-                    GetWindowRect(hWnd, out D2Rect);
-                    //ScreenX = Screen.PrimaryScreen.Bounds.Width;
-                    //ScreenY = Screen.PrimaryScreen.Bounds.Height;
-                    CenterX = ScreenX / 2;
-                    CenterY = ScreenY / 2;
+                    //GetWindowRect(hWnd, out D2Rect);
+                    GetClientRect(hWnd, out D2Rect);
+                    Point thiP = new Point();
+                    ClientToScreen(hWnd, out thiP);
+
                     D2Widht = D2Rect.Width;
                     D2Height = D2Rect.Height;
-                    ScreenXOffset = D2Rect.Location.X;
-                    ScreenYOffset = D2Rect.Location.Y;
+                    ScreenXOffset = thiP.X;
+                    ScreenYOffset = thiP.Y;
+
+                    CenterX = (D2Widht / 2) + ScreenXOffset;
+                    CenterY = (D2Height / 2) + ScreenYOffset;
+
+                    method_1("Screen Specs:", Color.DarkBlue);
+                    method_1("-> Screen size: " + ScreenX + ", " + ScreenY, Color.DarkBlue);
+                    method_1("-> D2R rect Size: " + D2Widht + ", " + D2Height, Color.DarkBlue);
+                    method_1("-> D2R rect offset: " + ScreenXOffset + ", " + ScreenYOffset, Color.DarkBlue);
+                    method_1("-> D2R Center Position: " + CenterX + ", " + CenterY, Color.DarkBlue);
+
+                    double screenRatio = (double)D2Widht / D2Height;
+
+                    if (Math.Abs(screenRatio - (16.0 / 9.0)) > 0.01)
+                    {
+                        method_1("D2R rect Size ratio is not 16:9!", Color.Red);
+                    }
+                    if (CenterX >= ((ScreenX / 2) - 15)
+                        && CenterX <= ((ScreenX / 2) + 15)
+                        && CenterY >= ((ScreenY / 2) - 15)
+                        && CenterY <= ((ScreenY / 2) + 15))
+                    {
+                        method_1("D2R rect Position is not in the center of screen, might have some issues!", Color.OrangeRed);
+                    }
+
 
                     process = Process.GetProcessesByName("D2R")[0];
                     processHandle = OpenProcess(PROCESS_QUERY_INFORMATION | PROCESS_VM_READ, false, process.Id);
@@ -856,21 +886,9 @@ namespace app
                                     //PlayerScan_0.ScanForLeecher();
                                     //Battle_0.SetSkills();
                                     //Battle_0.CastSkills();
-                                    /*WaitDelay(50);
-                                    if (Town_0.FirstTown)
-                                    {
-                                        Town_0.FirstTown = false;
-                                        Mover_0.MoveToLocationAttack(PlayerScan_0.xPosFinal + 15, PlayerScan_0.yPosFinal);
-                                    }
-                                    else
-                                    {
-                                        Town_0.FirstTown = true;
-                                        Mover_0.MoveToLocationAttack(PlayerScan_0.xPosFinal - 15, PlayerScan_0.yPosFinal);
-                                    }
-                                    WaitDelay(50);*/
-                                    //ItemsStruc_0.GetItems(false);
+                                    ItemsStruc_0.GetItems(true);
                                     //if (Running) LoopTimer.Start();
-                                    //return;
+                                    return;
 
                                     if (!ItemsStruc_0.GetItems(true))
                                     {
