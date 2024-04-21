@@ -592,11 +592,11 @@ namespace app
 
                                 //####
                                 TriesToPickItemCount++;
-                                //Form1_0.KeyMouse_0.PressKeyHold(System.Windows.Forms.Keys.E);
-                                Form1_0.KeyMouse_0.MouseMoveTo_RealPos(itemScreenPos["x"], itemScreenPos["y"]);
-                                //Form1_0.KeyMouse_0.MouseClicc_RealPos(itemScreenPos["x"], itemScreenPos["y"]);
-                                //Form1_0.KeyMouse_0.MouseClicc_RealPos(itemScreenPos["x"], itemScreenPos["y"]); //clic twice??
-                                //Form1_0.KeyMouse_0.ReleaseKey(System.Windows.Forms.Keys.E);
+                                Form1_0.KeyMouse_0.PressKeyHold(System.Windows.Forms.Keys.E);
+                                //Form1_0.KeyMouse_0.MouseMoveTo_RealPos(itemScreenPos["x"], itemScreenPos["y"]);
+                                Form1_0.KeyMouse_0.MouseClicc_RealPos(itemScreenPos["x"], itemScreenPos["y"]);
+                                Form1_0.KeyMouse_0.MouseClicc_RealPos(itemScreenPos["x"], itemScreenPos["y"]); //clic twice??
+                                Form1_0.KeyMouse_0.ReleaseKey(System.Windows.Forms.Keys.E);
 
                                 if (ItemNAAME != LastPick)
                                 {

@@ -40,7 +40,7 @@ namespace app
     public partial class Form1 : Form
     {
 
-        public string BotVersion = "V2.0";
+        public string BotVersion = "V2.1";
 
         public string D2_LOD_113C_Path = "";
 
@@ -886,9 +886,9 @@ namespace app
                                     //PlayerScan_0.ScanForLeecher();
                                     //Battle_0.SetSkills();
                                     //Battle_0.CastSkills();
-                                    ItemsStruc_0.GetItems(true);
+                                    //ItemsStruc_0.GetItems(true);
                                     //if (Running) LoopTimer.Start();
-                                    return;
+                                    //return;
 
                                     if (!ItemsStruc_0.GetItems(true))
                                     {
