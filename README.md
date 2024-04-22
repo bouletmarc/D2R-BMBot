@@ -111,5 +111,5 @@ I accept no responsibility for any outcomes or usage of this tool.
   - Gambling script
   - Cubing script
 
-[1]: https://torrent-games.games/torrents-part16/Diablo_II_Lord_Of_Destructin.torrent
+[1]: https://ia903402.us.archive.org/5/items/diablo-ii-lod/diablo-ii-lod_archive.torrent
 [2]: https://www.moddb.com/games/diablo-2-lod/downloads/lod-patch-113c-for-windows
