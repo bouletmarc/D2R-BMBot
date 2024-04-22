@@ -15,6 +15,7 @@ I accept no responsibility for any outcomes or usage of this tool.
 ![alt tag](https://raw.githubusercontent.com/bouletmarc/D2R-BMBot/main/BMBot7.png)
 ![alt tag](https://raw.githubusercontent.com/bouletmarc/D2R-BMBot/main/BMBot8.png)
 ![alt tag](https://raw.githubusercontent.com/bouletmarc/D2R-BMBot/main/BMBot9.png)
+![alt tag](https://raw.githubusercontent.com/bouletmarc/D2R-BMBot/main/BMBot10.png)
 
 
 # REQUIREMENTS
