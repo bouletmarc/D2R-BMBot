@@ -240,7 +240,7 @@ namespace app
             richTextBox2.HideSelection = false;//Hide selection so that AppendText will auto scroll to the end
             //richTextBox2.Visible = false;
 
-            ModifyMonsterList();
+            //ModifyMonsterList();
 
             LabelChickenCount.Text = TotalChickenCount.ToString();
             LabelDeadCount.Text = TotalDeadCount.ToString();
