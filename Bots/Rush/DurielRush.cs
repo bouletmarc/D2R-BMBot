@@ -93,6 +93,7 @@ namespace app
                             while (Form1_0.PlayerScan_0.levelNo == (int)Enums.Area.CanyonOfTheMagi && Tryyyy <= 25)
                             {
                                 Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, ThisFinalPosition.X, ThisFinalPosition.Y);
+                                itemScreenPos = Form1_0.Mover_0.FixMouseYPosition(itemScreenPos);
                                 Form1_0.KeyMouse_0.MouseClicc_RealPos(itemScreenPos["x"], itemScreenPos["y"]);
                                 Form1_0.PlayerScan_0.GetPositions();
                                 Tryyyy++;
@@ -102,6 +103,7 @@ namespace app
                             while (Form1_0.PlayerScan_0.levelNo == (int)Enums.Area.CanyonOfTheMagi && Tryyyy <= 25)
                             {
                                 Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, ThisFinalPosition.X, ThisFinalPosition.Y);
+                                itemScreenPos = Form1_0.Mover_0.FixMouseYPosition(itemScreenPos);
                                 Form1_0.KeyMouse_0.MouseClicc_RealPos(itemScreenPos["x"] - 70, itemScreenPos["y"]);
                                 Form1_0.PlayerScan_0.GetPositions();
                                 Tryyyy++;
@@ -111,6 +113,7 @@ namespace app
                             while (Form1_0.PlayerScan_0.levelNo == (int)Enums.Area.CanyonOfTheMagi && Tryyyy <= 25)
                             {
                                 Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, ThisFinalPosition.X, ThisFinalPosition.Y);
+                                itemScreenPos = Form1_0.Mover_0.FixMouseYPosition(itemScreenPos);
                                 Form1_0.KeyMouse_0.MouseClicc_RealPos(itemScreenPos["x"] + 70, itemScreenPos["y"]);
                                 Form1_0.PlayerScan_0.GetPositions();
                                 Tryyyy++;

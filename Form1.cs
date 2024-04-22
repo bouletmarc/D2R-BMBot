@@ -41,7 +41,7 @@ namespace app
     public partial class Form1 : Form
     {
 
-        public string BotVersion = "V2.2";
+        public string BotVersion = "V2.3";
 
         public string D2_LOD_113C_Path = "";
 
@@ -637,14 +637,17 @@ namespace app
                     {
                         method_1("D2R rect Size ratio is not 16:9!", Color.Red);
                     }
-                    if (CenterX >= ((ScreenX / 2) - 15)
-                        && CenterX <= ((ScreenX / 2) + 15)
-                        && CenterY >= ((ScreenY / 2) - 15)
-                        && CenterY <= ((ScreenY / 2) + 15))
+                    if (CenterX >= ((ScreenX / 2) + 15)
+                        || CenterX <= ((ScreenX / 2) - 15)
+                        || CenterY >= ((ScreenY / 2) + 15)
+                        || CenterY <= ((ScreenY / 2) - 15))
                     {
                         method_1("D2R rect Position is not in the center of screen, might have some issues!", Color.OrangeRed);
                     }
 
+                    overlayForm.ScaleScreenSize = (float)Form1_0.D2Widht / 1920f;
+                    overlayForm.ScaleScreenSizeInverted = 1920f / (float)Form1_0.D2Widht;
+                    overlayForm.ResetScaleForDisplay();
 
                     process = Process.GetProcessesByName("D2R")[0];
                     processHandle = OpenProcess(PROCESS_QUERY_INFORMATION | PROCESS_VM_READ, false, process.Id);
@@ -890,6 +893,10 @@ namespace app
                                     //Battle_0.CastSkills();
                                     //ItemsStruc_0.GetItems(true);
                                     //if (Running) LoopTimer.Start();
+
+                                    //Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, 5260, 2892);
+                                    //itemScreenPos = Mover_0.FixMouseYPosition(itemScreenPos);
+                                    //Form1_0.KeyMouse_0.MouseMoveTo_RealPos(itemScreenPos["x"], itemScreenPos["y"]);
                                     //return;
 
                                     if (!ItemsStruc_0.GetItems(true))

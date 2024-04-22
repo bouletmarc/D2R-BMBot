@@ -79,7 +79,7 @@ namespace app
             int LastX = Form1_0.PlayerScan_0.xPosFinal;
             int LastY = Form1_0.PlayerScan_0.yPosFinal;
             Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, ThisX, ThisY);
-            itemScreenPos = FixMousePositionWithScreenSize(itemScreenPos);
+            itemScreenPos = FixMouseYPosition(itemScreenPos);
 
             if (!CharConfig.UseTeleport || (CharConfig.UseTeleport && Form1_0.Town_0.GetInTown()))
             {
@@ -143,7 +143,7 @@ namespace app
                 if (AllowPickingItem) Form1_0.ItemsStruc_0.GetItems(true);      //#############
                 Form1_0.Potions_0.CheckIfWeUsePotion();
                 itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, ThisX, ThisY);
-                itemScreenPos = FixMousePositionWithScreenSize(itemScreenPos);
+                itemScreenPos = FixMouseYPosition(itemScreenPos);
 
                 Application.DoEvents();
 
@@ -200,7 +200,7 @@ namespace app
 
                     Form1_0.PlayerScan_0.GetPositions();
                     itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, ThisX, ThisY);
-                    itemScreenPos = FixMousePositionWithScreenSize(itemScreenPos);
+                    itemScreenPos = FixMouseYPosition(itemScreenPos);
                     Form1_0.KeyMouse_0.MouseCliccRight_RealPos(itemScreenPos["x"], itemScreenPos["y"]);
                 }
 
@@ -340,7 +340,7 @@ namespace app
             }
 
             Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, ThisX, ThisY);
-            itemScreenPos = FixMousePositionWithScreenSize(itemScreenPos);
+            itemScreenPos = FixMouseYPosition(itemScreenPos);
 
             if (!CharConfig.UseTeleport || (CharConfig.UseTeleport && Form1_0.Town_0.GetInTown()))
             {
@@ -405,7 +405,7 @@ namespace app
             return MovedCorrectly;
         }
 
-        public Dictionary<string, int> FixMousePositionWithScreenSize(Dictionary<string, int> itemScreenPos)
+        public Dictionary<string, int> FixMouseYPosition(Dictionary<string, int> itemScreenPos)
         {
             //calculate new Y clicking offset, else it will clic on bottom menu items
             if (itemScreenPos["y"] >= (Form1_0.D2Height + Form1_0.ScreenYOffset - Form1_0.ScreenYMenu))

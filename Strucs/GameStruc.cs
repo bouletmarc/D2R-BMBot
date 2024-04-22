@@ -461,20 +461,51 @@ namespace app
             long ydiff = targety - playerY;
 
             double ThisScales = (double) Form1_0.D2Widht / 1920.0;
+            //double ThisScalesInv = 1920.0 / (double)Form1_0.D2Widht;
+            //if (ThisScales != 1) scale = scale / (ThisScales * 2);
+            if (ThisScales != 1) scale = scale * ThisScales;
 
             double angle = 0.785398; //45 deg
             double x = xdiff * Math.Cos(angle) - ydiff * Math.Sin(angle);
             double y = xdiff * Math.Sin(angle) + ydiff * Math.Cos(angle);
 
-            int xS = (int) (Form1_0.CenterX + (x * scale * ThisScales));
+            int xS = (int) (Form1_0.CenterX + (x * scale)) ;
             //int yS = (int) (Form1_0.CenterY + (y * scale * 0.5) - 10);
-            int yS = (int) (Form1_0.CenterY + ((y * scale * 0.5 * ThisScales) - 30));
+            int yS = (int) (Form1_0.CenterY + ((y * scale * 0.5) - 30));
 
             Dictionary<string, int> NewDict = new Dictionary<string, int>();
             NewDict["x"] = xS;
             NewDict["y"] = yS;
             return NewDict;
         }
+
+        public Dictionary<string, int> World2ScreenDisplay(long playerX, long playerY, long targetx, long targety)
+        {
+            //; scale = 27
+            //double scale = Form1_0.centerModeScale * Form1_0.renderScale * 100;
+            double scale = 40.8;
+            long xdiff = targetx - playerX;
+            long ydiff = targety - playerY;
+
+            double ThisScales = (double)Form1_0.D2Widht / 1920.0;
+            //double ThisScalesInv = 1920.0 / (double)Form1_0.D2Widht;
+            if (ThisScales != 1) scale = scale / (ThisScales * 2);
+            //if (ThisScales != 1) scale = scale * ThisScales;
+
+            double angle = 0.785398; //45 deg
+            double x = xdiff * Math.Cos(angle) - ydiff * Math.Sin(angle);
+            double y = xdiff * Math.Sin(angle) + ydiff * Math.Cos(angle);
+
+            int xS = (int)(Form1_0.CenterX + (x * scale));
+            //int yS = (int) (Form1_0.CenterY + (y * scale * 0.5) - 10);
+            int yS = (int)(Form1_0.CenterY + ((y * scale * 0.5) - 30));
+
+            Dictionary<string, int> NewDict = new Dictionary<string, int>();
+            NewDict["x"] = xS;
+            NewDict["y"] = yS;
+            return NewDict;
+        }
+
 
         public bool IsGameRunning()
         {

@@ -589,6 +589,7 @@ namespace app
                                 }
                                 //##############################################
                                 //##############################################
+                                itemScreenPos = Form1_0.Mover_0.FixMouseYPosition(itemScreenPos);
 
                                 //####
                                 TriesToPickItemCount++;
@@ -720,6 +721,7 @@ namespace app
                                     }
                                 }
                                 //####
+                                itemScreenPos = Form1_0.Mover_0.FixMouseYPosition(itemScreenPos);
 
                                 TriesToPickItemCount++;
                                 Form1_0.KeyMouse_0.MouseClicc_RealPos(itemScreenPos["x"], itemScreenPos["y"]);
@@ -868,6 +870,7 @@ namespace app
                                     itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, itemx, itemy);
                                 }
                                 //####
+                                itemScreenPos = Form1_0.Mover_0.FixMouseYPosition(itemScreenPos);
                                 Form1_0.KeyMouse_0.MouseClicc_RealPos(itemScreenPos["x"], itemScreenPos["y"]);
 
                                 if (ItemNAAME != LastPick)
