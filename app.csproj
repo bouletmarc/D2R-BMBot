@@ -113,6 +113,12 @@
     <Compile Include="FormCharSettings.Designer.cs">
       <DependentUpon>FormCharSettings.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormD2LOD.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormD2LOD.Designer.cs">
+      <DependentUpon>FormD2LOD.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormItems.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -178,6 +184,9 @@
     <EmbeddedResource Include="FormCharSettings.resx">
       <DependentUpon>FormCharSettings.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormD2LOD.resx">
+      <DependentUpon>FormD2LOD.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormItems.resx">
       <DependentUpon>FormItems.cs</DependentUpon>
     </EmbeddedResource>
@@ -216,6 +225,7 @@
     <None Include="Resources\Person.png" />
     <None Include="Resources\Wrench.png" />
     <None Include="Resources\Delete.png" />
+    <None Include="Resources\Error.png" />
     <Content Include="Settings\Char\PaladinHammer.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

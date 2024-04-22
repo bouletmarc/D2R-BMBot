@@ -187,7 +187,7 @@ namespace app
             {
                 string[] arr = new string[2];
                 arr[0] = Regex.Replace(ThisDir.Key, @"[\d-]", string.Empty);
-                arr[1] = ThisDir.Key;
+                arr[1] = "";// ThisDir.Key;
                 ListViewItem item = new ListViewItem(arr);
 
                 listViewPotions.Items.Add(item);
@@ -210,16 +210,14 @@ namespace app
                 if (Form1_0.ItemsAlert_0.PickItemsNormal_ByName_Flags.ContainsKey(ThisDir.Key))
                 {
                     string FlagsTxt = "";
-                    uint TotalFlags = 0;
-                    foreach (var ThisList in Form1_0.ItemsAlert_0.PickItemsNormal_ByName_Flags[ThisDir.Key]) TotalFlags += ThisList.Key;
-                    Form1_0.ItemsFlags_0.calculateFlags(TotalFlags);
-                    if (Form1_0.ItemsStruc_0.identified) FlagsTxt += "identified";
-                    if (Form1_0.ItemsStruc_0.isSocketed)
+                    foreach (var ThisList in Form1_0.ItemsAlert_0.PickItemsNormal_ByName_Flags[ThisDir.Key])
                     {
                         if (FlagsTxt != "") FlagsTxt += ", ";
-                        FlagsTxt += "socketed";
+                        FlagsTxt += ThisList.Value;
+                        if ((0x00000010 & ThisList.Key) != 0) FlagsTxt += "identified";
+                        if ((0x00000800 & ThisList.Key) != 0) FlagsTxt += "socketed";
+                        if ((0x00400000 & ThisList.Key) != 0) FlagsTxt += "ethereal";
                     }
-                    if (Form1_0.ItemsStruc_0.ethereal) FlagsTxt += "ethereal";
 
                     arr[1] = FlagsTxt;
                 }
@@ -271,16 +269,14 @@ namespace app
                 if (Form1_0.ItemsAlert_0.PickItemsNormal_ByType_Flags.ContainsKey(ThisDir.Key))
                 {
                     string FlagsTxt = "";
-                    uint TotalFlags = 0;
-                    foreach (var ThisList in Form1_0.ItemsAlert_0.PickItemsNormal_ByType_Flags[ThisDir.Key]) TotalFlags += ThisList.Key;
-                    Form1_0.ItemsFlags_0.calculateFlags(TotalFlags);
-                    if (Form1_0.ItemsStruc_0.identified) FlagsTxt += "identified";
-                    if (Form1_0.ItemsStruc_0.isSocketed)
+                    foreach (var ThisList in Form1_0.ItemsAlert_0.PickItemsNormal_ByType_Flags[ThisDir.Key])
                     {
                         if (FlagsTxt != "") FlagsTxt += ", ";
-                        FlagsTxt += "socketed";
+                        FlagsTxt += ThisList.Value;
+                        if ((0x00000010 & ThisList.Key) != 0) FlagsTxt += "identified";
+                        if ((0x00000800 & ThisList.Key) != 0) FlagsTxt += "socketed";
+                        if ((0x00400000 & ThisList.Key) != 0) FlagsTxt += "ethereal";
                     }
-                    if (Form1_0.ItemsStruc_0.ethereal) FlagsTxt += "ethereal";
 
                     arr[1] = FlagsTxt;
                 }
@@ -336,16 +332,14 @@ namespace app
                 if (Form1_0.ItemsAlert_0.PickItemsRare_ByName_Flags.ContainsKey(ThisDir.Key))
                 {
                     string FlagsTxt = "";
-                    uint TotalFlags = 0;
-                    foreach (var ThisList in Form1_0.ItemsAlert_0.PickItemsRare_ByName_Flags[ThisDir.Key]) TotalFlags += ThisList.Key;
-                    Form1_0.ItemsFlags_0.calculateFlags(TotalFlags);
-                    if (Form1_0.ItemsStruc_0.identified) FlagsTxt += "identified";
-                    if (Form1_0.ItemsStruc_0.isSocketed)
+                    foreach (var ThisList in Form1_0.ItemsAlert_0.PickItemsRare_ByName_Flags[ThisDir.Key])
                     {
                         if (FlagsTxt != "") FlagsTxt += ", ";
-                        FlagsTxt += "socketed";
+                        FlagsTxt += ThisList.Value;
+                        if ((0x00000010 & ThisList.Key) != 0) FlagsTxt += "identified";
+                        if ((0x00000800 & ThisList.Key) != 0) FlagsTxt += "socketed";
+                        if ((0x00400000 & ThisList.Key) != 0) FlagsTxt += "ethereal";
                     }
-                    if (Form1_0.ItemsStruc_0.ethereal) FlagsTxt += "ethereal";
 
                     arr[1] = FlagsTxt;
                 }
@@ -397,16 +391,14 @@ namespace app
                 if (Form1_0.ItemsAlert_0.PickItemsRare_ByType_Flags.ContainsKey(ThisDir.Key))
                 {
                     string FlagsTxt = "";
-                    uint TotalFlags = 0;
-                    foreach (var ThisList in Form1_0.ItemsAlert_0.PickItemsRare_ByType_Flags[ThisDir.Key]) TotalFlags += ThisList.Key;
-                    Form1_0.ItemsFlags_0.calculateFlags(TotalFlags);
-                    if (Form1_0.ItemsStruc_0.identified) FlagsTxt += "identified";
-                    if (Form1_0.ItemsStruc_0.isSocketed)
+                    foreach (var ThisList in Form1_0.ItemsAlert_0.PickItemsRare_ByType_Flags[ThisDir.Key])
                     {
                         if (FlagsTxt != "") FlagsTxt += ", ";
-                        FlagsTxt += "socketed";
+                        FlagsTxt += ThisList.Value;
+                        if ((0x00000010 & ThisList.Key) != 0) FlagsTxt += "identified";
+                        if ((0x00000800 & ThisList.Key) != 0) FlagsTxt += "socketed";
+                        if ((0x00400000 & ThisList.Key) != 0) FlagsTxt += "ethereal";
                     }
-                    if (Form1_0.ItemsStruc_0.ethereal) FlagsTxt += "ethereal";
 
                     arr[1] = FlagsTxt;
                 }

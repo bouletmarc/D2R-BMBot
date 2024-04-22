@@ -47,10 +47,10 @@ namespace app
         Font drawFontBold = new Font("Arial", 14, FontStyle.Bold);
         Font drawFontBold10 = new Font("Arial", 12, FontStyle.Bold);
 
-        SolidBrush drawBrushYellow = new SolidBrush(Color.FromArgb(150, 255, 255, 0));
+        SolidBrush drawBrushYellow = new SolidBrush(Color.FromArgb(200, 255, 255, 0));
         SolidBrush drawBrushWhite = new SolidBrush(Color.FromArgb(150, 255, 255, 255));
-        SolidBrush drawBrushRed = new SolidBrush(Color.FromArgb(150, 255, 0, 0));
-        SolidBrush drawBrushBlue = new SolidBrush(Color.FromArgb(150, 0, 0, 255));
+        SolidBrush drawBrushRed = new SolidBrush(Color.FromArgb(200, 255, 0, 0));
+        SolidBrush drawBrushBlue = new SolidBrush(Color.FromArgb(200, 0, 0, 255));
         SolidBrush drawBrushGreen = new SolidBrush(Color.FromArgb(150, 0, 255, 0));
         SolidBrush drawBrushDark = new SolidBrush(Color.FromArgb(250, 0, 0, 0));
 
@@ -296,40 +296,40 @@ namespace app
                     if ((i == 2 || i == 6 || i == 10 || i == 14) && Form1_0.BeltStruc_0.BeltHaveItems[i] > 0) Qty3++;
                     if ((i == 3 || i == 7 || i == 11 || i == 15) && Form1_0.BeltStruc_0.BeltHaveItems[i] > 0) Qty4++;
                 }
-                e.Graphics.DrawString(Qty1.ToString(), drawFontBold, drawBrushWhite, 1091, 1018);
-                e.Graphics.DrawString(Qty2.ToString(), drawFontBold, drawBrushWhite, 1091 + 62, 1018);
-                e.Graphics.DrawString(Qty3.ToString(), drawFontBold, drawBrushWhite, 1091 + (62 * 2), 1018);
-                e.Graphics.DrawString(Qty4.ToString(), drawFontBold, drawBrushWhite, 1091 + (62 * 3), 1018);
+                DrawString(e, Qty1.ToString(), drawFontBold, drawBrushWhite, 1091, 1018);
+                DrawString(e, Qty2.ToString(), drawFontBold, drawBrushWhite, 1091 + 62, 1018);
+                DrawString(e, Qty3.ToString(), drawFontBold, drawBrushWhite, 1091 + (62 * 2), 1018);
+                DrawString(e, Qty4.ToString(), drawFontBold, drawBrushWhite, 1091 + (62 * 3), 1018);
 
                 //Print HP/Mana
                 int Percent = (int)((Form1_0.PlayerScan_0.PlayerHP * 100.0) / Form1_0.PlayerScan_0.PlayerMaxHP);
                 string HPTxt = Form1_0.PlayerScan_0.PlayerHP.ToString() + "/" + Form1_0.PlayerScan_0.PlayerMaxHP.ToString() + " (" + Percent + "%)";
                 SizeF ThisS2 = e.Graphics.MeasureString(HPTxt, drawFontBold);
-                //e.Graphics.FillRectangle(drawBrushDark, 560, 960, ThisS2.Width, 20);
-                e.Graphics.DrawString(HPTxt, drawFontBold, drawBrushRed, 560, 960);
+                //FillRectangle(e, drawBrushDark, 560, 960, ThisS2.Width, 20);
+                DrawString(e, HPTxt, drawFontBold, drawBrushRed, 560, 960);
 
                 int PercentMana = (int)((Form1_0.PlayerScan_0.PlayerMana * 100.0) / Form1_0.PlayerScan_0.PlayerMaxMana);
                 string ManaTxt = Form1_0.PlayerScan_0.PlayerMana.ToString() + "/" + Form1_0.PlayerScan_0.PlayerMaxMana.ToString() + " (" + PercentMana + "%)";
                 ThisS2 = e.Graphics.MeasureString(ManaTxt, drawFontBold);
-                e.Graphics.DrawString(ManaTxt, drawFontBold, drawBrushBlue, 1360 - ThisS2.Width, 960);
+                DrawString(e, ManaTxt, drawFontBold, drawBrushBlue, 1360 - ThisS2.Width, 960);
 
                 //Print Player Pos
                 string CordsTxt = Form1_0.PlayerScan_0.xPosFinal.ToString() + ", " + Form1_0.PlayerScan_0.yPosFinal.ToString();
                 ThisS2 = e.Graphics.MeasureString(CordsTxt, drawFontBold);
-                //e.Graphics.DrawString(CordsTxt, drawFontBold, drawBrushWhite, Form1_0.CenterX - (ThisS2.Width / 2), 960);
-                e.Graphics.DrawString(CordsTxt, drawFontBold, drawBrushWhite, 1000, 960);
+                //DrawString(e, CordsTxt, drawFontBold, drawBrushWhite, Form1_0.CenterX - (ThisS2.Width / 2), 960);
+                DrawString(e, CordsTxt, drawFontBold, drawBrushWhite, 1000, 960);
 
                 //Print Infos
-                e.Graphics.DrawString("Mobs:" + MobsPoints.Count, drawFontBold, drawBrushWhite, 790, 960);
+                DrawString(e, "Mobs:" + MobsPoints.Count, drawFontBold, drawBrushWhite, 790, 960);
                 string MapTxt = "Map Level:" + Form1_0.PlayerScan_0.levelNo;
                 ThisS2 = e.Graphics.MeasureString(MapTxt, drawFontBold);
-                e.Graphics.DrawString(MapTxt, drawFontBold, drawBrushWhite, 1360 - ThisS2.Width, 935);
+                DrawString(e, MapTxt, drawFontBold, drawBrushWhite, 1360 - ThisS2.Width, 935);
 
                 //Print Battle Infos
                 if (Form1_0.Battle_0.DoingBattle || Form1_0.Battle_0.ClearingArea)
                 {
                     string MobsTxt = (EnumsMobsNPC.MonsterType)((int)Form1_0.MobsStruc_0.txtFileNo) + " (" + Form1_0.MobsStruc_0.txtFileNo + ") - HP:" + Form1_0.MobsStruc_0.MobsHP + " - Pos:" + Form1_0.MobsStruc_0.xPosFinal + ", " + Form1_0.MobsStruc_0.yPosFinal;
-                    e.Graphics.DrawString(MobsTxt, drawFontBold, drawBrushWhite, 560, 910);
+                    DrawString(e, MobsTxt, drawFontBold, drawBrushWhite, 560, 910);
                 }
 
                 //Print Logs
@@ -353,25 +353,25 @@ namespace app
                     SolidBrush drawBrushCustom = new SolidBrush(Color.FromArgb(200, LogsTextColor[ThisIndexInverted].R, LogsTextColor[ThisIndexInverted].G, LogsTextColor[ThisIndexInverted].B));
                     string ThisLogTxt = LogsTexts[ThisIndexInverted];
                     SizeF ThisS = e.Graphics.MeasureString(ThisLogTxt, drawFontBold10);
-                    //e.Graphics.FillRectangle(drawBrushDark, 1500, 840 - (i * 20), 410, 20);
-                    e.Graphics.FillRectangle(drawBrushDark, 1890 - ThisS.Width, 840 - (i * 20), ThisS.Width, 20);
-                    e.Graphics.DrawString(ThisLogTxt, drawFontBold10, drawBrushCustom, 1890 - ThisS.Width + 2, 840 - (i * 20));
+                    //FillRectangle(e, drawBrushDark, 1500, 840 - (i * 20), 410, 20);
+                    FillRectangle(e, drawBrushDark, 1890 - ThisS.Width, 840 - (i * 20), ThisS.Width, 20);
+                    DrawString(e, ThisLogTxt, drawFontBold10, drawBrushCustom, 1890 - ThisS.Width + 2, 840 - (i * 20));
                 }
 
                 //Print Status
-                e.Graphics.DrawString("Status: " + Form1_0.CurrentStatus, drawFontBold, drawBrushWhite, 560, 935);
+                DrawString(e, "Status: " + Form1_0.CurrentStatus, drawFontBold, drawBrushWhite, 560, 935);
                 ThisS2 = e.Graphics.MeasureString(Form1_0.CurrentGameTime, drawFontBold);
-                //e.Graphics.DrawString(Form1_0.CurrentGameTime, drawFontBold, drawBrushYellow, Form1_0.CenterX, 935);
-                e.Graphics.DrawString(Form1_0.CurrentGameTime, drawFontBold, drawBrushYellow, 1000, 935);
-                e.Graphics.DrawString(Form1_0.mS + ", " + Form1_0.FPS.ToString("00") + "Fps", drawFontBold, drawBrushYellow, 1060, 910);
+                //DrawString(e, Form1_0.CurrentGameTime, drawFontBold, drawBrushYellow, Form1_0.CenterX, 935);
+                DrawString(e, Form1_0.CurrentGameTime, drawFontBold, drawBrushYellow, 1000, 935);
+                DrawString(e, Form1_0.mS + ", " + Form1_0.FPS.ToString("00") + "Fps", drawFontBold, drawBrushYellow, 1060, 910);
 
                 string OtherInfosTxt = Form1_0.TotalChickenCount + " ChickensByHP, " + Form1_0.TotalChickenByTimeCount + " ChickensByTime";
                 ThisS2 = e.Graphics.MeasureString(OtherInfosTxt, drawFontBold);
-                e.Graphics.DrawString(OtherInfosTxt, drawFontBold, drawBrushWhite, 1360 - ThisS2.Width, 885);
+                DrawString(e, OtherInfosTxt, drawFontBold, drawBrushWhite, 1360 - ThisS2.Width, 885);
 
                 string OtherInfosTxt2 = Form1_0.CurrentGameNumberFullyDone.ToString() + " Done, " + Form1_0.TotalDeadCount + " Dead";
                 ThisS2 = e.Graphics.MeasureString(OtherInfosTxt2, drawFontBold);
-                e.Graphics.DrawString(OtherInfosTxt2, drawFontBold, drawBrushWhite, 1360 - ThisS2.Width, 910);
+                DrawString(e, OtherInfosTxt2, drawFontBold, drawBrushWhite, 1360 - ThisS2.Width, 910);
 
                 if (CanDisplayOverlay)
                 {
@@ -388,9 +388,9 @@ namespace app
                         System.Drawing.Point MidPoint = new System.Drawing.Point(Form1_0.CenterX, Form1_0.CenterY);
 
                         //Console.WriteLine("line: " + StartPoint.X + ", " + StartPoint.Y + " to " + EndPoint.X + ", " + EndPoint.Y);
-                        if (i == 0) e.Graphics.DrawLine(redPen, MidPoint, StartPoint);
+                        if (i == 0) DrawLine(e, redPen, MidPoint, StartPoint);
 
-                        e.Graphics.DrawLine(redPen, StartPoint, EndPoint);
+                        DrawLine(e, redPen, StartPoint, EndPoint);
 
                         if (i != 0) DrawCrossAtPoint(e, StartPoint, orangePen);
                     }
@@ -403,7 +403,7 @@ namespace app
                         if (PathFindingPoints.Count == 0)
                         {
                             System.Drawing.Point MidPoint = new System.Drawing.Point(Form1_0.CenterX, Form1_0.CenterY);
-                            e.Graphics.DrawLine(redPen, MidPoint, StartPoint);
+                            DrawLine(e, redPen, MidPoint, StartPoint);
                         }
                         DrawCrossAtPoint(e, StartPoint, redPen);
                     }
@@ -419,7 +419,7 @@ namespace app
                         //{
                         string ThisTxt = "ID:" + MobsIDs[i].ToString();
                         SizeF ThisS3 = e.Graphics.MeasureString(ThisTxt, drawFont);
-                        e.Graphics.DrawString(ThisTxt, drawFont, drawBrushYellow, StartPoint.X - (ThisS3.Width / 2), StartPoint.Y + 9);
+                        DrawString(e, ThisTxt, drawFont, drawBrushYellow, StartPoint.X - (ThisS3.Width / 2), StartPoint.Y + 9);
                         //}
                     }
 
@@ -434,7 +434,7 @@ namespace app
                         //{
                         string ThisTxt = "ID:" + NPCIDs[i].ToString();
                         SizeF ThisS3 = e.Graphics.MeasureString(ThisTxt, drawFont);
-                        e.Graphics.DrawString(ThisTxt, drawFont, drawBrushWhite, StartPoint.X - (ThisS3.Width / 2), StartPoint.Y + 9);
+                        DrawString(e, ThisTxt, drawFont, drawBrushWhite, StartPoint.X - (ThisS3.Width / 2), StartPoint.Y + 9);
                         //}
                     }
 
@@ -465,6 +465,29 @@ namespace app
             }
         }
 
+        public void DrawString(PaintEventArgs e, string ThisTxt, Font ThisFont, Brush ThisBrush, float PosX, float PosY)
+        {
+            int ThisX = Form1_0.KeyMouse_0.CorrectXPos((int)PosX);
+            int ThisY = Form1_0.KeyMouse_0.CorrectYPos((int)PosY);
+            e.Graphics.DrawString(ThisTxt, ThisFont, ThisBrush, ThisX, ThisY);
+        }
+
+        public void FillRectangle(PaintEventArgs e, Brush ThisBrush, float PosX, float PosY, float Width, float Height)
+        {
+            int ThisX = Form1_0.KeyMouse_0.CorrectXPos((int)PosX);
+            int ThisY = Form1_0.KeyMouse_0.CorrectYPos((int)PosY);
+            e.Graphics.FillRectangle(ThisBrush, ThisX, ThisY, Width, Height);
+        }
+
+        public void DrawLine(PaintEventArgs e, Pen ThisPen, Point StartP, Point EndP)
+        {
+            StartP.X = Form1_0.KeyMouse_0.CorrectXPos(StartP.X);
+            StartP.Y = Form1_0.KeyMouse_0.CorrectYPos(StartP.Y);
+            EndP.X = Form1_0.KeyMouse_0.CorrectXPos(EndP.X);
+            EndP.Y = Form1_0.KeyMouse_0.CorrectYPos(EndP.Y);
+            e.Graphics.DrawLine(ThisPen, StartP, EndP);
+        }
+
         public void DrawCrossAtPoint(PaintEventArgs e, System.Drawing.Point ThisP, Pen ThisPenColor)
         {
             System.Drawing.Point ThisPoint1 = new System.Drawing.Point(ThisP.X - 5, ThisP.Y - 5);
@@ -474,8 +497,8 @@ namespace app
             System.Drawing.Point ThisPoint4 = new System.Drawing.Point(ThisP.X + 5, ThisP.Y - 5);
 
             // Draw a X red cross
-            e.Graphics.DrawLine(ThisPenColor, ThisPoint1, ThisPoint2);
-            e.Graphics.DrawLine(ThisPenColor, ThisPoint3, ThisPoint4);
+            DrawLine(e, ThisPenColor, ThisPoint1, ThisPoint2);
+            DrawLine(e, ThisPenColor, ThisPoint3, ThisPoint4);
         }
 
         public System.Drawing.Point RescaleThisPoint(System.Drawing.Point ThisssPoint)

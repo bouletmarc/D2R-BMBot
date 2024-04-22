@@ -66,10 +66,11 @@
             this.LabelChickenCount = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.LabelDeadCount = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.buttonD2LOD = new System.Windows.Forms.Button();
+            this.button5 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
-            this.button5 = new System.Windows.Forms.Button();
-            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -447,6 +448,33 @@
             this.LabelDeadCount.Text = "Dead";
             this.LabelDeadCount.ToolTipText = "Deads Count";
             // 
+            // buttonD2LOD
+            // 
+            this.buttonD2LOD.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonD2LOD.ForeColor = System.Drawing.Color.Blue;
+            this.buttonD2LOD.Image = global::app.Properties.Resources.Error;
+            this.buttonD2LOD.Location = new System.Drawing.Point(171, 3);
+            this.buttonD2LOD.Name = "buttonD2LOD";
+            this.buttonD2LOD.Size = new System.Drawing.Size(26, 25);
+            this.buttonD2LOD.TabIndex = 105;
+            this.toolTip1.SetToolTip(this.buttonD2LOD, "Diablo2 LOD - 1.13C Help Tool");
+            this.buttonD2LOD.UseVisualStyleBackColor = true;
+            this.buttonD2LOD.Visible = false;
+            this.buttonD2LOD.Click += new System.EventHandler(this.buttonD2LOD_Click);
+            // 
+            // button5
+            // 
+            this.button5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button5.ForeColor = System.Drawing.Color.Blue;
+            this.button5.Image = global::app.Properties.Resources.Person;
+            this.button5.Location = new System.Drawing.Point(107, 3);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(26, 25);
+            this.button5.TabIndex = 104;
+            this.toolTip1.SetToolTip(this.button5, "Char Settings");
+            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
+            // 
             // button4
             // 
             this.button4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -473,25 +501,13 @@
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click_1);
             // 
-            // button5
-            // 
-            this.button5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button5.ForeColor = System.Drawing.Color.Blue;
-            this.button5.Image = global::app.Properties.Resources.Person;
-            this.button5.Location = new System.Drawing.Point(107, 3);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(26, 25);
-            this.button5.TabIndex = 104;
-            this.toolTip1.SetToolTip(this.button5, "Char Settings");
-            this.button5.UseVisualStyleBackColor = true;
-            this.button5.Click += new System.EventHandler(this.button5_Click);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlDark;
             this.ClientSize = new System.Drawing.Size(552, 639);
+            this.Controls.Add(this.buttonD2LOD);
             this.Controls.Add(this.button5);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.button3);
@@ -568,6 +584,7 @@
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.Button buttonD2LOD;
     }
 }
 

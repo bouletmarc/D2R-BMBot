@@ -559,14 +559,14 @@ namespace app
                                 //####
                                 if (CharConfig.UseTeleport)
                                 {
-                                    /*if (DiffXPlayer > 4 || DiffYPlayer > 4)
+                                    if (DiffXPlayer > 4 || DiffYPlayer > 4)
                                     {
                                         //Form1_0.Mover_0.MoveToLocation(itemx, itemy); //slow move
                                         Form1_0.Mover_0.MoveToLocationAttack(itemx, itemy); //fast move
                                         Form1_0.PlayerScan_0.GetPositions();
                                         GetUnitPathData();
                                         itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, itemx, itemy);
-                                    }*/
+                                    }
                                 }
 
                                 if (itemScreenPos["x"] == 0 && itemScreenPos["y"] == 0) continue;

@@ -20,6 +20,7 @@ using System.Security.Policy;
 using System.Text;
 using System.Text.Json;
 using Newtonsoft.Json;
+using Microsoft.Win32;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
@@ -40,7 +41,7 @@ namespace app
     public partial class Form1 : Form
     {
 
-        public string BotVersion = "V2.1";
+        public string BotVersion = "V2.2";
 
         public string D2_LOD_113C_Path = "";
 
@@ -400,11 +401,12 @@ namespace app
 
             SettingsLoader_0.LoadSettings();
 
-            if (Form1_0.D2_LOD_113C_Path == "")
+            if (Form1_0.D2_LOD_113C_Path == "" || !Directory.Exists(Form1_0.D2_LOD_113C_Path))
             {
                 method_1("ERROR: Diablo2 LOD 1.13C Path NOT SET CORRECTLY!", Color.Red);
                 method_1("Clic on the settings button and set the path where Diablo2 1.13c (the old legacy diablo2) is located!", Color.Red);
                 method_1("Make sure the path don't contain any whitespace!", Color.Red);
+                buttonD2LOD.Visible = true;
             }
 
             KeyMouse_0.proc = KeyMouse_0.HookCallback;
@@ -1884,6 +1886,12 @@ namespace app
 
             File.Create(Application.StartupPath + @"\List2.txt").Dispose();
             File.WriteAllText(Application.StartupPath + @"\List2.txt", EndTxt);
+        }
+
+        private void buttonD2LOD_Click(object sender, EventArgs e)
+        {
+            FormD2LOD FormD2LOD_0 = new FormD2LOD(Form1_0);
+            FormD2LOD_0.ShowDialog();
         }
     }
 }

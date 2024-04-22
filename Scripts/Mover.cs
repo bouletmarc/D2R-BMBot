@@ -24,6 +24,18 @@ namespace app
             Form1_0 = form1_1;
         }
 
+        public bool IsPositionNearOf(int ThisX, int ThisY, int Offset)
+        {
+            if (Form1_0.PlayerScan_0.xPosFinal >= (ThisX - Offset)
+                && Form1_0.PlayerScan_0.xPosFinal <= (ThisX + Offset)
+                && Form1_0.PlayerScan_0.yPosFinal >= (ThisY - Offset)
+                && Form1_0.PlayerScan_0.yPosFinal <= (ThisY + Offset))
+            {
+                return true;
+            }
+            return false;
+        }
+
         //This will move to a direct location -> no pathfinding
         public bool MoveToLocation(int ThisX, int ThisY, bool AllowPickingItem = false, bool AllowMoveSideWay = true)
         {
@@ -38,21 +50,12 @@ namespace app
 
             //######
             //moving location is way to far away something might be wrong!
-            if (Form1_0.PlayerScan_0.xPosFinal < (ThisX - 300)
-                || Form1_0.PlayerScan_0.xPosFinal > (ThisX + 300)
-                || Form1_0.PlayerScan_0.yPosFinal < (ThisY - 300)
-                || Form1_0.PlayerScan_0.yPosFinal > (ThisY + 300))
-            {
-                return false;
-            }
+            if (!IsPositionNearOf(ThisX, ThisY, 300)) return false;
             if (ThisX == 0 && ThisY == 0) return false;
             //######
 
             //no need to move we are close already!
-            if (Form1_0.PlayerScan_0.xPosFinal >= (ThisX - MoveAcceptOffset)
-                && Form1_0.PlayerScan_0.xPosFinal <= (ThisX + MoveAcceptOffset)
-                && Form1_0.PlayerScan_0.yPosFinal >= (ThisY - MoveAcceptOffset)
-                && Form1_0.PlayerScan_0.yPosFinal <= (ThisY + MoveAcceptOffset))
+            if (IsPositionNearOf(ThisX, ThisY, MoveAcceptOffset))
             {
                 Form1_0.overlayForm.ResetMoveToLocation();
                 return true;
@@ -66,10 +69,7 @@ namespace app
 
             //fix town act5 stuck near bolder
             if (Form1_0.Town_0.GetInTown()
-                && Form1_0.PlayerScan_0.xPosFinal >= (5093 - 2)
-                && Form1_0.PlayerScan_0.xPosFinal <= (5093 + 2)
-                && Form1_0.PlayerScan_0.yPosFinal >= (5034 - 2)
-                && Form1_0.PlayerScan_0.yPosFinal <= (5034 + 2))
+                && IsPositionNearOf(5093, 5034, 2))
             {
                 MoveToLocationAttack(5096, 5024);
             }
@@ -79,16 +79,7 @@ namespace app
             int LastX = Form1_0.PlayerScan_0.xPosFinal;
             int LastY = Form1_0.PlayerScan_0.yPosFinal;
             Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, ThisX, ThisY);
-            //#######
-            //calculate new Y clicking offset, else it will clic on bottom menu items
-            if (itemScreenPos["y"] >= (Form1_0.D2Height + Form1_0.ScreenYOffset - Form1_0.ScreenYMenu))
-            {
-                int DiffX = Form1_0.CenterX - itemScreenPos["x"];
-                itemScreenPos["x"] = (int)(itemScreenPos["x"] + (DiffX / 6));
-                itemScreenPos["y"] = (Form1_0.ScreenY - Form1_0.ScreenYMenu);
-                //Console.WriteLine("corrected pos from: " + Sx + "," + Sy + " to: " + itemScreenPos["x"] + "," + itemScreenPos["y"]);
-            }
-            //#######
+            itemScreenPos = FixMousePositionWithScreenSize(itemScreenPos);
 
             if (!CharConfig.UseTeleport || (CharConfig.UseTeleport && Form1_0.Town_0.GetInTown()))
             {
@@ -113,13 +104,7 @@ namespace app
                     //Check if we are in close range from target destination, if we are, desactivate fast moving (eles it teleport twice)
                     if (AllowFastMove)
                     {
-                        if (Form1_0.PlayerScan_0.xPosFinal >= (ThisX - 21)
-                            && Form1_0.PlayerScan_0.xPosFinal <= (ThisX + 21)
-                            && Form1_0.PlayerScan_0.yPosFinal >= (ThisY - 21)
-                            && Form1_0.PlayerScan_0.yPosFinal <= (ThisY + 21))
-                        {
-                            AllowFastMove = false;
-                        }
+                        if (IsPositionNearOf(ThisX, ThisY, 21)) AllowFastMove = false;
                     }
                 }
 
@@ -158,26 +143,13 @@ namespace app
                 if (AllowPickingItem) Form1_0.ItemsStruc_0.GetItems(true);      //#############
                 Form1_0.Potions_0.CheckIfWeUsePotion();
                 itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, ThisX, ThisY);
-
-                //#######
-                //calculate new Y clicking offset, else it will clic on bottom menu items
-                if (itemScreenPos["y"] >= (Form1_0.D2Height + Form1_0.ScreenYOffset - Form1_0.ScreenYMenu))
-                {
-                    int DiffX = Form1_0.CenterX - itemScreenPos["x"];
-                    itemScreenPos["x"] = (int)(itemScreenPos["x"] + (DiffX / 6));
-                    itemScreenPos["y"] = (Form1_0.D2Height + Form1_0.ScreenYOffset - Form1_0.ScreenYMenu);
-                    //Console.WriteLine("corrected pos from: " + Sx + "," + Sy + " to: " + itemScreenPos["x"] + "," + itemScreenPos["y"]);
-                }
-                //#######
+                itemScreenPos = FixMousePositionWithScreenSize(itemScreenPos);
 
                 Application.DoEvents();
 
                 //######
                 //moving location is way to far away something might be wrong!
-                if (Form1_0.PlayerScan_0.xPosFinal < (ThisX - 300)
-                    || Form1_0.PlayerScan_0.xPosFinal > (ThisX + 300)
-                    || Form1_0.PlayerScan_0.yPosFinal < (ThisY - 300)
-                    || Form1_0.PlayerScan_0.yPosFinal > (ThisY + 300))
+                if (!IsPositionNearOf(ThisX, ThisY, 300))
                 {
                     Form1_0.KeyMouse_0.ReleaseKey(System.Windows.Forms.Keys.E);
                     return false;
@@ -210,13 +182,7 @@ namespace app
                 }
 
                 //break moving loop
-                if (Form1_0.PlayerScan_0.xPosFinal >= (ThisX - MoveAcceptOffset)
-                    && Form1_0.PlayerScan_0.xPosFinal <= (ThisX + MoveAcceptOffset)
-                    && Form1_0.PlayerScan_0.yPosFinal >= (ThisY - MoveAcceptOffset)
-                    && Form1_0.PlayerScan_0.yPosFinal <= (ThisY + MoveAcceptOffset))
-                {
-                    break;
-                }
+                if (IsPositionNearOf(ThisX, ThisY, MoveAcceptOffset)) break;
 
                 //teleport again
                 if (AllowFastMove)
@@ -234,16 +200,7 @@ namespace app
 
                     Form1_0.PlayerScan_0.GetPositions();
                     itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, ThisX, ThisY);
-                    //#######
-                    //calculate new Y clicking offset, else it will clic on bottom menu items
-                    if (itemScreenPos["y"] >= (Form1_0.D2Height + Form1_0.ScreenYOffset - Form1_0.ScreenYMenu))
-                    {
-                        int DiffX = Form1_0.CenterX - itemScreenPos["x"];
-                        itemScreenPos["x"] = (int)(itemScreenPos["x"] + (DiffX / 6));
-                        itemScreenPos["y"] = (Form1_0.D2Height + Form1_0.ScreenYOffset - Form1_0.ScreenYMenu);
-                        //Console.WriteLine("corrected pos from: " + Sx + "," + Sy + " to: " + itemScreenPos["x"] + "," + itemScreenPos["y"]);
-                    }
-                    //#######
+                    itemScreenPos = FixMousePositionWithScreenSize(itemScreenPos);
                     Form1_0.KeyMouse_0.MouseCliccRight_RealPos(itemScreenPos["x"], itemScreenPos["y"]);
                 }
 
@@ -292,13 +249,7 @@ namespace app
             }
 
             bool MovedCorrectly = false;
-            if (Form1_0.PlayerScan_0.xPosFinal >= (ThisX - MoveAcceptOffset)
-                    && Form1_0.PlayerScan_0.xPosFinal <= (ThisX + MoveAcceptOffset)
-                    && Form1_0.PlayerScan_0.yPosFinal >= (ThisY - MoveAcceptOffset)
-                    && Form1_0.PlayerScan_0.yPosFinal <= (ThisY + MoveAcceptOffset))
-            {
-                MovedCorrectly = true;
-            }
+            if (IsPositionNearOf(ThisX, ThisY, MoveAcceptOffset)) MovedCorrectly = true;
 
             if (!CharConfig.UseTeleport || (CharConfig.UseTeleport && Form1_0.Town_0.GetInTown()))
             {
@@ -371,21 +322,12 @@ namespace app
 
             //######
             //moving location is way to far away something might be wrong!
-            if (Form1_0.PlayerScan_0.xPosFinal < (ThisX - 300)
-                || Form1_0.PlayerScan_0.xPosFinal > (ThisX + 300)
-                || Form1_0.PlayerScan_0.yPosFinal < (ThisY - 300)
-                || Form1_0.PlayerScan_0.yPosFinal > (ThisY + 300))
-            {
-                return false;
-            }
+            if (!IsPositionNearOf(ThisX, ThisY, 300)) return false;
             if (ThisX == 0 && ThisY == 0) return false;
             //######
 
             //no need to move we are close already!
-            if (Form1_0.PlayerScan_0.xPosFinal >= (ThisX - MoveAcceptOffset)
-                && Form1_0.PlayerScan_0.xPosFinal <= (ThisX + MoveAcceptOffset)
-                && Form1_0.PlayerScan_0.yPosFinal >= (ThisY - MoveAcceptOffset)
-                && Form1_0.PlayerScan_0.yPosFinal <= (ThisY + MoveAcceptOffset))
+            if (IsPositionNearOf(ThisX, ThisY, MoveAcceptOffset))
             {
                 Form1_0.overlayForm.ResetMoveToLocation();
                 return true;
@@ -398,15 +340,7 @@ namespace app
             }
 
             Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, ThisX, ThisY);
-
-            //calculate new Y clicking offset, else it will clic on bottom menu items
-            if (itemScreenPos["y"] >= (Form1_0.D2Height + Form1_0.ScreenYOffset - Form1_0.ScreenYMenu))
-            {
-                int DiffX = Form1_0.CenterX - itemScreenPos["x"];
-                itemScreenPos["x"] = (int)(itemScreenPos["x"] + (DiffX / 6));
-                itemScreenPos["y"] = (Form1_0.D2Height + Form1_0.ScreenYOffset - Form1_0.ScreenYMenu);
-                //Console.WriteLine("corrected pos from: " + Sx + "," + Sy + " to: " + itemScreenPos["x"] + "," + itemScreenPos["y"]);
-            }
+            itemScreenPos = FixMousePositionWithScreenSize(itemScreenPos);
 
             if (!CharConfig.UseTeleport || (CharConfig.UseTeleport && Form1_0.Town_0.GetInTown()))
             {
@@ -435,10 +369,7 @@ namespace app
 
             //######
             //moving location is way to far away something might be wrong!
-            if (Form1_0.PlayerScan_0.xPosFinal < (ThisX - 300)
-                || Form1_0.PlayerScan_0.xPosFinal > (ThisX + 300)
-                || Form1_0.PlayerScan_0.yPosFinal < (ThisY - 300)
-                || Form1_0.PlayerScan_0.yPosFinal > (ThisY + 300))
+            if (!IsPositionNearOf(ThisX, ThisY, 300))
             {
                 Form1_0.KeyMouse_0.ReleaseKey(System.Windows.Forms.Keys.E);
                 return false;
@@ -460,13 +391,7 @@ namespace app
             }
 
             bool MovedCorrectly = false;
-            if (Form1_0.PlayerScan_0.xPosFinal >= (ThisX - MoveAcceptOffset)
-                    && Form1_0.PlayerScan_0.xPosFinal <= (ThisX + MoveAcceptOffset)
-                    && Form1_0.PlayerScan_0.yPosFinal >= (ThisY - MoveAcceptOffset)
-                    && Form1_0.PlayerScan_0.yPosFinal <= (ThisY + MoveAcceptOffset))
-            {
-                MovedCorrectly = true;
-            }
+            if (IsPositionNearOf(ThisX, ThisY, MoveAcceptOffset)) MovedCorrectly = true;
 
             if (!CharConfig.UseTeleport || (CharConfig.UseTeleport && Form1_0.Town_0.GetInTown()))
             {
@@ -478,6 +403,20 @@ namespace app
             
             Form1_0.overlayForm.ResetMoveToLocation();
             return MovedCorrectly;
+        }
+
+        public Dictionary<string, int> FixMousePositionWithScreenSize(Dictionary<string, int> itemScreenPos)
+        {
+            //calculate new Y clicking offset, else it will clic on bottom menu items
+            if (itemScreenPos["y"] >= (Form1_0.D2Height + Form1_0.ScreenYOffset - Form1_0.ScreenYMenu))
+            {
+                int DiffX = Form1_0.CenterX - itemScreenPos["x"];
+                itemScreenPos["x"] = (int)(itemScreenPos["x"] + (DiffX / 6));
+                itemScreenPos["y"] = (Form1_0.D2Height + Form1_0.ScreenYOffset - Form1_0.ScreenYMenu);
+                //Console.WriteLine("corrected pos from: " + Sx + "," + Sy + " to: " + itemScreenPos["x"] + "," + itemScreenPos["y"]);
+            }
+
+            return itemScreenPos;
         }
     }
 }
