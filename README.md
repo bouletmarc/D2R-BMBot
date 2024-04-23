@@ -4,7 +4,7 @@ Diablo II : Resurrected - Bot
 
 # USE AT YOUR OWN RISK ONLY
 
-I accept no responsibility for any outcomes or usage of this tool.
+I accept no responsibility for any outcomes for the usage of this tool.
 
 ![alt tag](https://raw.githubusercontent.com/bouletmarc/D2R-BMBot/main/BMBot1.png)
 ![alt tag](https://raw.githubusercontent.com/bouletmarc/D2R-BMBot/main/BMBot2.png)
@@ -30,12 +30,12 @@ I accept no responsibility for any outcomes or usage of this tool.
 2. Extract 'Diablo II.7z' contents somewhere like on your desktop, create a new folder called 'DiabloII'
 3. Download the [1.13C patch][2]
 4. Install the 1.13C over Diablo2
-5. You don't need to open D2-LOD 1.13C when it's done, you can leave it like
-6. Add the path of the folder 'Diablo2' from your desktop to the bot Settings.txt
+5. You don't need to open D2-LOD 1.13C when it's done, you can leave it like this
+6. Add the path of the folder 'DiabloII' from your desktop to the bot Settings.txt
 
 *IMPORTANT, THE PATH WHERE 'DIABLO2' MUST NOT CONTAIN ANY WHITESPACE IN IT!*
 
-*IF YOU HAVE AND ISSUE INSTALLING THE 1.13C PATH WITH AN ERROR SIMILAR TO REGISTRY KEY 'InstallDir' NOT FOUND THEN OPEN THE BOT AND CLIC ON THE 'D2 1.13C Tools Button', IN THE TOOL MENU, THERE WILL BE A BUTTON TO CREATE THIS REGISTRY KEY!*
+*IF YOU HAVE AND ISSUE INSTALLING THE 1.13C PATCH OVER DIABLO2 WITH AN ERROR SIMILAR TO REGISTRY KEY 'InstallDir' NOT FOUND THEN OPEN THE BOT AND CLIC ON THE 'D2 1.13C Tools Button', IN THE TOOL MENU, THERE WILL BE A BUTTON TO CREATE THIS REGISTRY KEY!*
 
 # USAGE
 
