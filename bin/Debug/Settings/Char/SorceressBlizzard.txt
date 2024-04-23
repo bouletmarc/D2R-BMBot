@@ -1,7 +1,7 @@
 //#######################################
 //#######################################
 //#######	SKILL ARE REPRESENTED AS BELLOW: (IF YOU DONT WANT TO USE THE SKILL SET THE SHORTCUT KEY TO SOMETHING UNAVAILABLE!)
-//#######	KeySkillAttack=Ice Bolt
+//#######	KeySkillAttack=Static
 //#######	KeySkillAura=Blizzard
 //#######	KeySkillfastMoveAtTown=**NOTHING (NO SKILL IS SET TO THIS SHORTCUT KEY)**
 //#######	KeySkillfastMoveOutsideTown=Teleport
@@ -50,6 +50,7 @@ DummyItemSharedStash3=Scroll of Town Portal
 //#######################################
 PlayerCharName=CHARNAMEHERE
 UseTeleport=true
+UseBO=true
 ChickenHP=22
 TakeHPPotUnder=85
 TakeRVPotUnder=35
@@ -57,6 +58,10 @@ TakeManaPotUnder=15
 GambleAboveGoldAmount=500000
 GambleUntilGoldAmount=100000
 KeysLocationInInventory=8,0
+GrabForGold=true
+IDAtShop=true
+LeaveDiabloClone=true
+GambleGold=true
 
 //#######################################
 //MERC SETTINGS

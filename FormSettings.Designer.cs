@@ -28,7 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("Maphack ONLY");
+            this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("Maphack ONLY (no script running)");
             System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("Item Grab ONLY");
             System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem("Cows");
             System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem("Countess");
@@ -66,6 +67,7 @@
             System.Windows.Forms.ListViewItem listViewItem36 = new System.Windows.Forms.ListViewItem("Baal");
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormSettings));
             this.listViewRunScripts = new System.Windows.Forms.ListView();
+            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.label1Run = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -92,10 +94,33 @@
             this.button2 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.textBoxStartKey = new System.Windows.Forms.TextBox();
-            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.panelBaalFeature = new System.Windows.Forms.Panel();
+            this.buttonBaalApply = new System.Windows.Forms.Button();
+            this.checkBoxKillBaal = new System.Windows.Forms.CheckBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.checkBoxBaalSafeHealing = new System.Windows.Forms.CheckBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.numericUpDownBaalLeaveMobsCount = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDownBaalMobID = new System.Windows.Forms.NumericUpDown();
+            this.label11 = new System.Windows.Forms.Label();
+            this.numericUpDownBaalMobCount = new System.Windows.Forms.NumericUpDown();
+            this.label12 = new System.Windows.Forms.Label();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.buttonBaalAddMob = new System.Windows.Forms.Button();
+            this.buttonBaalClearMob = new System.Windows.Forms.Button();
+            this.listViewBaalLeaveOnMobs = new System.Windows.Forms.ListView();
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownRunNumber)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMaxTime)).BeginInit();
+            this.panelBaalFeature.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownBaalLeaveMobsCount)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownBaalMobID)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownBaalMobCount)).BeginInit();
+            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // listViewRunScripts
@@ -150,9 +175,16 @@
             this.listViewRunScripts.Name = "listViewRunScripts";
             this.listViewRunScripts.Size = new System.Drawing.Size(225, 276);
             this.listViewRunScripts.TabIndex = 0;
+            this.toolTip1.SetToolTip(this.listViewRunScripts, "Double Clic on a Run script to edit it\'s features (if there is any)");
             this.listViewRunScripts.UseCompatibleStateImageBehavior = false;
             this.listViewRunScripts.View = System.Windows.Forms.View.Details;
             this.listViewRunScripts.SelectedIndexChanged += new System.EventHandler(this.listViewRunScripts_SelectedIndexChanged);
+            this.listViewRunScripts.DoubleClick += new System.EventHandler(this.listViewRunScripts_DoubleClick);
+            // 
+            // columnHeader3
+            // 
+            this.columnHeader3.Text = "Script Name";
+            this.columnHeader3.Width = 200;
             // 
             // label1Run
             // 
@@ -220,6 +252,7 @@
             this.numericUpDownRunNumber.Name = "numericUpDownRunNumber";
             this.numericUpDownRunNumber.Size = new System.Drawing.Size(89, 20);
             this.numericUpDownRunNumber.TabIndex = 7;
+            this.toolTip1.SetToolTip(this.numericUpDownRunNumber, "Acutal Run Numer (will increase by one each time a game end)");
             this.numericUpDownRunNumber.Value = new decimal(new int[] {
             1,
             0,
@@ -255,6 +288,7 @@
             this.comboBoxDifficulty.Name = "comboBoxDifficulty";
             this.comboBoxDifficulty.Size = new System.Drawing.Size(149, 21);
             this.comboBoxDifficulty.TabIndex = 4;
+            this.toolTip1.SetToolTip(this.comboBoxDifficulty, "Select your Game Difficulty");
             // 
             // label4
             // 
@@ -271,6 +305,7 @@
             this.textBoxGamePass.Name = "textBoxGamePass";
             this.textBoxGamePass.Size = new System.Drawing.Size(149, 20);
             this.textBoxGamePass.TabIndex = 2;
+            this.toolTip1.SetToolTip(this.textBoxGamePass, "Set your Game Pass here");
             // 
             // label3
             // 
@@ -287,6 +322,7 @@
             this.textBoxGameName.Name = "textBoxGameName";
             this.textBoxGameName.Size = new System.Drawing.Size(149, 20);
             this.textBoxGameName.TabIndex = 0;
+            this.toolTip1.SetToolTip(this.textBoxGameName, "Set your Game Name here");
             // 
             // numericUpDownMaxTime
             // 
@@ -325,6 +361,7 @@
             this.comboBoxLobby.Name = "comboBoxLobby";
             this.comboBoxLobby.Size = new System.Drawing.Size(226, 21);
             this.comboBoxLobby.TabIndex = 9;
+            this.toolTip1.SetToolTip(this.comboBoxLobby, "Select the script to perform inside the Game Lobby (Create or Search for games)");
             this.comboBoxLobby.SelectedIndexChanged += new System.EventHandler(this.comboBoxLobby_SelectedIndexChanged);
             // 
             // label8
@@ -344,6 +381,7 @@
             this.textBoxD2Path.Name = "textBoxD2Path";
             this.textBoxD2Path.Size = new System.Drawing.Size(225, 20);
             this.textBoxD2Path.TabIndex = 9;
+            this.toolTip1.SetToolTip(this.textBoxD2Path, "Set the Path where DiabloII - Lord of Desctruction 1.13C is located");
             // 
             // listViewRush
             // 
@@ -409,6 +447,7 @@
             this.checkBoxRush.Size = new System.Drawing.Size(203, 17);
             this.checkBoxRush.TabIndex = 12;
             this.checkBoxRush.Text = "Show and Run on Rush Scripts";
+            this.toolTip1.SetToolTip(this.checkBoxRush, "Enable this for the Bot to Run with Rush Scripts");
             this.checkBoxRush.UseVisualStyleBackColor = true;
             this.checkBoxRush.CheckedChanged += new System.EventHandler(this.checkBoxRush_CheckedChanged);
             // 
@@ -428,6 +467,7 @@
             this.textBox1LeechName.Name = "textBox1LeechName";
             this.textBox1LeechName.Size = new System.Drawing.Size(149, 20);
             this.textBox1LeechName.TabIndex = 9;
+            this.toolTip1.SetToolTip(this.textBox1LeechName, "Set the Player name of who follow you for the Rush");
             this.textBox1LeechName.Visible = false;
             // 
             // checkBoxShowOverlay
@@ -440,6 +480,7 @@
             this.checkBoxShowOverlay.Size = new System.Drawing.Size(110, 17);
             this.checkBoxShowOverlay.TabIndex = 14;
             this.checkBoxShowOverlay.Text = "Show Overlays";
+            this.toolTip1.SetToolTip(this.checkBoxShowOverlay, "Show Graphics Overlay (Maphack, Bot Infos, Etc..)");
             this.checkBoxShowOverlay.UseVisualStyleBackColor = true;
             // 
             // button2
@@ -469,18 +510,205 @@
             this.textBoxStartKey.Name = "textBoxStartKey";
             this.textBoxStartKey.Size = new System.Drawing.Size(72, 20);
             this.textBoxStartKey.TabIndex = 9;
+            this.toolTip1.SetToolTip(this.textBoxStartKey, "Set the Shortcut Key for Starting/Stopping the Bot");
             // 
-            // columnHeader3
+            // panelBaalFeature
             // 
-            this.columnHeader3.Text = "Script Name";
-            this.columnHeader3.Width = 200;
+            this.panelBaalFeature.Controls.Add(this.groupBox2);
+            this.panelBaalFeature.Controls.Add(this.numericUpDownBaalLeaveMobsCount);
+            this.panelBaalFeature.Controls.Add(this.checkBoxBaalSafeHealing);
+            this.panelBaalFeature.Controls.Add(this.label9);
+            this.panelBaalFeature.Controls.Add(this.label10);
+            this.panelBaalFeature.Controls.Add(this.buttonBaalApply);
+            this.panelBaalFeature.Controls.Add(this.checkBoxKillBaal);
+            this.panelBaalFeature.Controls.Add(this.label7);
+            this.panelBaalFeature.Location = new System.Drawing.Point(289, 12);
+            this.panelBaalFeature.Name = "panelBaalFeature";
+            this.panelBaalFeature.Size = new System.Drawing.Size(203, 275);
+            this.panelBaalFeature.TabIndex = 15;
+            // 
+            // buttonBaalApply
+            // 
+            this.buttonBaalApply.Location = new System.Drawing.Point(64, 246);
+            this.buttonBaalApply.Name = "buttonBaalApply";
+            this.buttonBaalApply.Size = new System.Drawing.Size(75, 23);
+            this.buttonBaalApply.TabIndex = 2;
+            this.buttonBaalApply.Text = "Apply";
+            this.toolTip1.SetToolTip(this.buttonBaalApply, "Apply and Leave this menu");
+            this.buttonBaalApply.UseVisualStyleBackColor = true;
+            this.buttonBaalApply.Click += new System.EventHandler(this.buttonBaalApply_Click);
+            // 
+            // checkBoxKillBaal
+            // 
+            this.checkBoxKillBaal.AutoSize = true;
+            this.checkBoxKillBaal.Location = new System.Drawing.Point(27, 33);
+            this.checkBoxKillBaal.Name = "checkBoxKillBaal";
+            this.checkBoxKillBaal.Size = new System.Drawing.Size(63, 17);
+            this.checkBoxKillBaal.TabIndex = 1;
+            this.checkBoxKillBaal.Text = "Kill Baal";
+            this.toolTip1.SetToolTip(this.checkBoxKillBaal, "Enable this to Kill Baal");
+            this.checkBoxKillBaal.UseVisualStyleBackColor = true;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.ForeColor = System.Drawing.Color.Blue;
+            this.label7.Location = new System.Drawing.Point(43, 11);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(112, 13);
+            this.label7.TabIndex = 0;
+            this.label7.Text = "Baal Run Features";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(40, 95);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(121, 13);
+            this.label9.TabIndex = 3;
+            this.label9.Text = "Leave on Mobs Nearby:";
+            // 
+            // checkBoxBaalSafeHealing
+            // 
+            this.checkBoxBaalSafeHealing.AutoSize = true;
+            this.checkBoxBaalSafeHealing.Location = new System.Drawing.Point(27, 50);
+            this.checkBoxBaalSafeHealing.Name = "checkBoxBaalSafeHealing";
+            this.checkBoxBaalSafeHealing.Size = new System.Drawing.Size(112, 17);
+            this.checkBoxBaalSafeHealing.TabIndex = 4;
+            this.checkBoxBaalSafeHealing.Text = "Safe Healing Strat";
+            this.toolTip1.SetToolTip(this.checkBoxBaalSafeHealing, "Enable this to use a Safer Healing Strategy");
+            this.checkBoxBaalSafeHealing.UseVisualStyleBackColor = true;
+            this.checkBoxBaalSafeHealing.Visible = false;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(11, 71);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(115, 13);
+            this.label10.TabIndex = 5;
+            this.label10.Text = "Leave on Mobs Count:";
+            this.label10.Click += new System.EventHandler(this.label10_Click);
+            // 
+            // numericUpDownBaalLeaveMobsCount
+            // 
+            this.numericUpDownBaalLeaveMobsCount.Location = new System.Drawing.Point(132, 68);
+            this.numericUpDownBaalLeaveMobsCount.Name = "numericUpDownBaalLeaveMobsCount";
+            this.numericUpDownBaalLeaveMobsCount.Size = new System.Drawing.Size(51, 20);
+            this.numericUpDownBaalLeaveMobsCount.TabIndex = 6;
+            this.toolTip1.SetToolTip(this.numericUpDownBaalLeaveMobsCount, "Leave the Game if this Mobs Count is reached (All ID\'s)");
+            // 
+            // numericUpDownBaalMobID
+            // 
+            this.numericUpDownBaalMobID.Location = new System.Drawing.Point(51, 14);
+            this.numericUpDownBaalMobID.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            this.numericUpDownBaalMobID.Name = "numericUpDownBaalMobID";
+            this.numericUpDownBaalMobID.Size = new System.Drawing.Size(46, 20);
+            this.numericUpDownBaalMobID.TabIndex = 8;
+            this.toolTip1.SetToolTip(this.numericUpDownBaalMobID, "Set the Mob ID to check for leaving the Game if the count is reached");
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(4, 16);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(45, 13);
+            this.label11.TabIndex = 7;
+            this.label11.Text = "Mob ID:";
+            // 
+            // numericUpDownBaalMobCount
+            // 
+            this.numericUpDownBaalMobCount.Location = new System.Drawing.Point(144, 14);
+            this.numericUpDownBaalMobCount.Name = "numericUpDownBaalMobCount";
+            this.numericUpDownBaalMobCount.Size = new System.Drawing.Size(46, 20);
+            this.numericUpDownBaalMobCount.TabIndex = 10;
+            this.toolTip1.SetToolTip(this.numericUpDownBaalMobCount, "Set the Mob Count to check for the current Mob ID");
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(104, 16);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(38, 13);
+            this.label12.TabIndex = 9;
+            this.label12.Text = "Count:";
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.listViewBaalLeaveOnMobs);
+            this.groupBox2.Controls.Add(this.buttonBaalClearMob);
+            this.groupBox2.Controls.Add(this.buttonBaalAddMob);
+            this.groupBox2.Controls.Add(this.numericUpDownBaalMobCount);
+            this.groupBox2.Controls.Add(this.label11);
+            this.groupBox2.Controls.Add(this.label12);
+            this.groupBox2.Controls.Add(this.numericUpDownBaalMobID);
+            this.groupBox2.Location = new System.Drawing.Point(3, 109);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(197, 133);
+            this.groupBox2.TabIndex = 11;
+            this.groupBox2.TabStop = false;
+            // 
+            // buttonBaalAddMob
+            // 
+            this.buttonBaalAddMob.Location = new System.Drawing.Point(33, 38);
+            this.buttonBaalAddMob.Name = "buttonBaalAddMob";
+            this.buttonBaalAddMob.Size = new System.Drawing.Size(66, 23);
+            this.buttonBaalAddMob.TabIndex = 11;
+            this.buttonBaalAddMob.Text = "Add";
+            this.toolTip1.SetToolTip(this.buttonBaalAddMob, "Add the Mob ID and Count to the Checking list");
+            this.buttonBaalAddMob.UseVisualStyleBackColor = true;
+            this.buttonBaalAddMob.Click += new System.EventHandler(this.buttonBaalAddMob_Click);
+            // 
+            // buttonBaalClearMob
+            // 
+            this.buttonBaalClearMob.Location = new System.Drawing.Point(106, 38);
+            this.buttonBaalClearMob.Name = "buttonBaalClearMob";
+            this.buttonBaalClearMob.Size = new System.Drawing.Size(66, 23);
+            this.buttonBaalClearMob.TabIndex = 12;
+            this.buttonBaalClearMob.Text = "Clear List";
+            this.toolTip1.SetToolTip(this.buttonBaalClearMob, "Clear All the Mobs ID and Counts from the Checking List");
+            this.buttonBaalClearMob.UseVisualStyleBackColor = true;
+            this.buttonBaalClearMob.Click += new System.EventHandler(this.buttonBaalClearMob_Click);
+            // 
+            // listViewBaalLeaveOnMobs
+            // 
+            this.listViewBaalLeaveOnMobs.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader1,
+            this.columnHeader4});
+            this.listViewBaalLeaveOnMobs.Enabled = false;
+            this.listViewBaalLeaveOnMobs.FullRowSelect = true;
+            this.listViewBaalLeaveOnMobs.GridLines = true;
+            this.listViewBaalLeaveOnMobs.HideSelection = false;
+            this.listViewBaalLeaveOnMobs.LabelWrap = false;
+            this.listViewBaalLeaveOnMobs.Location = new System.Drawing.Point(6, 65);
+            this.listViewBaalLeaveOnMobs.Name = "listViewBaalLeaveOnMobs";
+            this.listViewBaalLeaveOnMobs.Size = new System.Drawing.Size(185, 62);
+            this.listViewBaalLeaveOnMobs.TabIndex = 7;
+            this.listViewBaalLeaveOnMobs.UseCompatibleStateImageBehavior = false;
+            this.listViewBaalLeaveOnMobs.View = System.Windows.Forms.View.Details;
+            // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Text = "Mob ID";
+            this.columnHeader1.Width = 90;
+            // 
+            // columnHeader4
+            // 
+            this.columnHeader4.Text = "Mob Count";
+            this.columnHeader4.Width = 70;
             // 
             // FormSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.ClientSize = new System.Drawing.Size(250, 656);
+            this.ClientSize = new System.Drawing.Size(823, 656);
+            this.Controls.Add(this.panelBaalFeature);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.checkBoxShowOverlay);
             this.Controls.Add(this.textBoxStartKey);
@@ -509,6 +737,13 @@
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownRunNumber)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMaxTime)).EndInit();
+            this.panelBaalFeature.ResumeLayout(false);
+            this.panelBaalFeature.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownBaalLeaveMobsCount)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownBaalMobID)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownBaalMobCount)).EndInit();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -544,5 +779,24 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox textBoxStartKey;
         private System.Windows.Forms.ColumnHeader columnHeader3;
+        private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.Panel panelBaalFeature;
+        private System.Windows.Forms.CheckBox checkBoxKillBaal;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Button buttonBaalApply;
+        private System.Windows.Forms.CheckBox checkBoxBaalSafeHealing;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.NumericUpDown numericUpDownBaalLeaveMobsCount;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.NumericUpDown numericUpDownBaalMobID;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.NumericUpDown numericUpDownBaalMobCount;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.Button buttonBaalAddMob;
+        private System.Windows.Forms.Button buttonBaalClearMob;
+        private System.Windows.Forms.ListView listViewBaalLeaveOnMobs;
+        private System.Windows.Forms.ColumnHeader columnHeader1;
+        private System.Windows.Forms.ColumnHeader columnHeader4;
     }
 }

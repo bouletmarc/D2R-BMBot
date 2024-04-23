@@ -67,18 +67,21 @@ namespace app
         public bool IsPlayerConnectedToBnet()
         {
             long baseAddr = (long)Form1_0.BaseAddress + (long)Form1_0.offsets["SelectedChar"] - 16;
-            return Form1_0.Mem_0.ReadByteRaw((IntPtr)baseAddr) == 0x07;
+            return Form1_0.Mem_0.ReadByteRaw((IntPtr)baseAddr) != 0x00;
         }
 
         public void ClicCreateNewChar()
         {
+            Form1_0.method_1("Connecting to BNet/Creating new Char", Color.OrangeRed);
+            Form1_0.method_1("-> If this happens anytime after a game ends, report as bug!", Color.OrangeRed);
+
             Form1_0.KeyMouse_0.MouseClicc(1620, 50); //clic online button
             Form1_0.WaitDelay(200);
 
             Form1_0.KeyMouse_0.MouseClicc(1700, 935); //clic create new char
             Form1_0.WaitDelay(200);
             Form1_0.KeyMouse_0.PressKey(Keys.Escape); //leave create new char menu
-            Form1_0.WaitDelay(50);
+            Form1_0.WaitDelay(200);
         }
 
         public void CreateNewGame(int ThisGameNumber)
@@ -102,6 +105,7 @@ namespace app
             }
             Thread.Sleep(3);
             string GameName = CharConfig.GameName + ThisGameNumber.ToString("000");
+            Form1_0.method_1("Creating Game: " + GameName, Color.Black);
             for (int i = 0; i < GameName.Length; i++)
             {
                 var helper = new Helper { Value = VkKeyScan(GameName[i]) };
@@ -402,10 +406,11 @@ namespace app
         public string GetTimeNow()
         {
             DateTime ThisTimee = DateTime.Now;
-            string HourTime = ThisTimee.Minute.ToString("00") + ":" + ThisTimee.Second.ToString("00");
-            string MonthTime = ThisTimee.Day + "-" + ThisTimee.Month + "-" + ThisTimee.Year;
+            string HourTime = " (" + DateTime.Now.ToString("hh:mm:ss") + ")";
+            return HourTime;
 
-            return HourTime + " (" + MonthTime + ")";
+            //string MonthTime = ThisTimee.Day + "-" + ThisTimee.Month + "-" + ThisTimee.Year;
+            //return HourTime + " (" + MonthTime + ")";
         }
 
         public void SetNewGame()

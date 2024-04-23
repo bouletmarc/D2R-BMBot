@@ -58,6 +58,7 @@ namespace app
         public static bool GrabForGold = true;
         public static bool IDAtShop = true;
         public static bool LeaveDiabloClone = true;
+        public static bool GambleGold = true;
 
         //#######################################
         //MERC SETTINGS

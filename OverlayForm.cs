@@ -350,7 +350,7 @@ namespace app
                 //Print Battle Infos
                 if (Form1_0.Battle_0.DoingBattle || Form1_0.Battle_0.ClearingArea)
                 {
-                    string MobsTxt = (EnumsMobsNPC.MonsterType)((int)Form1_0.MobsStruc_0.txtFileNo) + " (" + Form1_0.MobsStruc_0.txtFileNo + ") - HP:" + Form1_0.MobsStruc_0.MobsHP + " - Pos:" + Form1_0.MobsStruc_0.xPosFinal + ", " + Form1_0.MobsStruc_0.yPosFinal;
+                    string MobsTxt = (EnumsMobsNPC.MonsterType)((int)Form1_0.MobsStruc_0.txtFileNo) + "(" + Form1_0.MobsStruc_0.txtFileNo + "), HP:" + Form1_0.MobsStruc_0.MobsHP + ", Pos:" + Form1_0.MobsStruc_0.xPosFinal + ", " + Form1_0.MobsStruc_0.yPosFinal;
                     DrawString(e, MobsTxt, drawFontBold, drawBrushWhite, 560, 910, true);
                 }
 

@@ -13,6 +13,17 @@ namespace app
     {
         Form1 Form1_0;
 
+        //#####################################################
+        //#####################################################
+        //Special Run Variable
+        public bool KillBaal = true;
+        public List<uint> LeaveIfMobsIsPresent_ID = new List<uint>();
+        public List<int> LeaveIfMobsIsPresent_Count = new List<int>();
+        public int LeaveIfMobsCountIsAbove = 0;
+        public bool SafeHealingStrat = false;
+        //#####################################################
+        //#####################################################
+
         public int CurrentStep = 0;
         public bool ScriptDone = false;
         public bool DetectedBaal = false;
@@ -41,6 +52,7 @@ namespace app
         public int MaxMoveAwayTry = 2;
 
         public int CheckingThroneBackMode = 0;
+        public int PortalYOffset = 0;
 
         public void SetForm1(Form1 form1_1)
         {
@@ -61,6 +73,7 @@ namespace app
             TeleportToBaalTry = 0;
             TryMovingAwayOnLeftSide = true;
             CheckingThroneBackMode = 0;
+            PortalYOffset = 0;
         }
 
         public void DetectCurrentStep()
@@ -69,6 +82,37 @@ namespace app
             if ((Enums.Area)Form1_0.PlayerScan_0.levelNo == Enums.Area.TheWorldStoneKeepLevel3) CurrentStep = 2;
             if ((Enums.Area)Form1_0.PlayerScan_0.levelNo == Enums.Area.ThroneOfDestruction) CurrentStep = 3;
             if ((Enums.Area)Form1_0.PlayerScan_0.levelNo == Enums.Area.TheWorldstoneChamber) CurrentStep = 7;
+        }
+
+        public bool LeaveOnMobs()
+        {
+            bool IsLeaving = false;
+
+            //Check by mobs count
+            if (LeaveIfMobsCountIsAbove > 0)
+            {
+                if (Form1_0.MobsStruc_0.GetMobsCount(0) >= LeaveIfMobsCountIsAbove) IsLeaving = true;
+            }
+
+            //Check by mobs ID and count
+            if (!IsLeaving)
+            {
+                if (LeaveIfMobsIsPresent_ID.Count > 0)
+                {
+                    for (int i = 0; i < LeaveIfMobsIsPresent_ID.Count; i++)
+                    {
+                        if (Form1_0.MobsStruc_0.GetMobsCount(LeaveIfMobsIsPresent_ID[i]) >= LeaveIfMobsIsPresent_Count[i])
+                        {
+                            IsLeaving = true;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            Form1_0.LeaveGame(false);
+
+            return IsLeaving;
         }
 
         public void RunScript()
@@ -164,9 +208,14 @@ namespace app
 
                     if (Form1_0.PublicGame && !Form1_0.Town_0.TPSpawned)
                     {
+                        PortalPos.Y += PortalYOffset;
                         Form1_0.PathFinding_0.MoveToThisPos(PortalPos);
                         Form1_0.Town_0.SpawnTP();
+
+                        PortalYOffset -= 6;
                     }
+
+                    if (LeaveOnMobs()) return;
 
                     Form1_0.PathFinding_0.MoveToThisPos(ThronePos);
                     CurrentStep++;
@@ -177,26 +226,35 @@ namespace app
                     //clear throne area of mobs
                     if (CornerClearedIndex == 0)
                     {
+                        if (LeaveOnMobs()) return;
                         Form1_0.PathFinding_0.MoveToThisPos(ThroneCorner1Pos, 4, true);
+                        if (LeaveOnMobs()) return;
                         CornerClearedIndex++;
                     }
                     else if (CornerClearedIndex == 1)
                     {
+                        if (LeaveOnMobs()) return;
                         Form1_0.PathFinding_0.MoveToThisPos(ThroneCorner2Pos, 4, true);
+                        if (LeaveOnMobs()) return;
                         CornerClearedIndex++;
                     }
                     else if (CornerClearedIndex == 2)
                     {
+                        if (LeaveOnMobs()) return;
                         Form1_0.PathFinding_0.MoveToThisPos(ThroneCorner4Pos, 4, true);
+                        if (LeaveOnMobs()) return;
                         CornerClearedIndex++;
                     }
                     else if (CornerClearedIndex == 3)
                     {
+                        if (LeaveOnMobs()) return;
                         Form1_0.PathFinding_0.MoveToThisPos(ThroneCorner3Pos, 4, true);
+                        if (LeaveOnMobs()) return;
                         CornerClearedIndex++;
                     }
                     if (CornerClearedIndex == 4)
                     {
+                        if (LeaveOnMobs()) return;
                         //Form1_0.PathFinding_0.MoveToThisPos(ThroneCorner4Pos, 4, true);
                         CurrentStep++;
                     }
@@ -320,6 +378,19 @@ namespace app
 
                 if (CurrentStep == 6)
                 {
+                    if (!KillBaal)
+                    {
+
+                        Form1_0.ItemsStruc_0.GrabAllItemsForGold();
+                        Form1_0.Battle_0.ClearingArea = false;
+                        Form1_0.Battle_0.DoingBattle = false;
+                        Form1_0.Potions_0.CanUseSkillForRegen = true;
+                        //Form1_0.LeaveGame(true);
+                        Form1_0.Town_0.UseLastTP = false;
+                        ScriptDone = true;
+                        return;
+                    }
+
                     Form1_0.SetGameStatus("WAITING PORTAL");
 
                     //move to baal red portal
@@ -466,10 +537,12 @@ namespace app
                                 //baal not detected...
                                 Form1_0.ItemsStruc_0.GetItems(true);
                                 if (Form1_0.MobsStruc_0.GetMobs("getBossName", "Baal", false, 200, new List<long>())) return; //redetect baal?
-                                                                                                                              //if (!Form1_0.PublicGame) Form1_0.ItemsStruc_0.GrabAllItemsForGold();
+                                //if (!Form1_0.PublicGame) Form1_0.ItemsStruc_0.GrabAllItemsForGold();
                                 Form1_0.ItemsStruc_0.GrabAllItemsForGold();
                                 if (Form1_0.MobsStruc_0.GetMobs("getBossName", "Baal", false, 200, new List<long>())) return; //redetect baal?
+                                //if (!Form1_0.PublicGame) Form1_0.ItemsStruc_0.GrabAllItemsForGold();
 
+                                Form1_0.ItemsStruc_0.GrabAllItemsForGold();
                                 Form1_0.Battle_0.ClearingArea = false;
                                 Form1_0.Battle_0.DoingBattle = false;
                                 Form1_0.Potions_0.CanUseSkillForRegen = true;

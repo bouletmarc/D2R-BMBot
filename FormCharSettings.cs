@@ -93,6 +93,13 @@ namespace app
             checkBoxGrabGold.Checked = CharConfig.GrabForGold;
             checkBoxIDAtShop.Checked = CharConfig.IDAtShop;
             checkBoxDClone.Checked = CharConfig.LeaveDiabloClone;
+            checkBoxGamble.Checked = CharConfig.GambleGold;
+
+            if (!checkBoxGamble.Checked)
+            {
+                numericUpDownGambleAbove.Enabled = false;
+                numericUpDownGambleUntil.Enabled = false;
+            }
 
             comboBoxBelt1.SelectedIndex = CharConfig.BeltPotTypeToHave[0];
             comboBoxBelt2.SelectedIndex = CharConfig.BeltPotTypeToHave[1];
@@ -142,6 +149,7 @@ namespace app
             CharConfig.GrabForGold = checkBoxGrabGold.Checked;
             CharConfig.IDAtShop = checkBoxIDAtShop.Checked;
             CharConfig.LeaveDiabloClone = checkBoxDClone.Checked;
+            CharConfig.GambleGold = checkBoxGamble.Checked;
 
             CharConfig.BeltPotTypeToHave[0] = comboBoxBelt1.SelectedIndex;
             CharConfig.BeltPotTypeToHave[1] = comboBoxBelt2.SelectedIndex;
@@ -180,6 +188,20 @@ namespace app
         {
             SaveSettings();
             Form1_0.SettingsLoader_0.SaveCharSettings();
+        }
+
+        private void checkBoxGamble_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!checkBoxGamble.Checked)
+            {
+                numericUpDownGambleAbove.Enabled = false;
+                numericUpDownGambleUntil.Enabled = false;
+            }
+            else
+            {
+                numericUpDownGambleAbove.Enabled = true;
+                numericUpDownGambleUntil.Enabled = true;
+            }
         }
     }
 }

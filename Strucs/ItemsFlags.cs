@@ -18,6 +18,39 @@ namespace app
             Form1_0 = form1_1;
         }
 
+        public bool IsItemSameFlags(string ComparatorMethod, uint FlagsToCheck, uint ItemFlags)
+        {
+            bool Checking_identified = false;
+            bool Checking_isSocketed = false;
+            bool Checking_ethereal = false;
+            if ((0x00000010 & FlagsToCheck) != 0) Checking_identified = true;
+            if ((0x00000800 & FlagsToCheck) != 0) Checking_isSocketed = true;
+            if ((0x00400000 & FlagsToCheck) != 0) Checking_ethereal = true;
+
+            bool item_identified = false;
+            bool item_isSocketed = false;
+            bool item_ethereal = false;
+            if ((0x00000010 & ItemFlags) != 0) item_identified = true;
+            if ((0x00000800 & ItemFlags) != 0) item_isSocketed = true;
+            if ((0x00400000 & ItemFlags) != 0) item_ethereal = true;
+
+            bool SameFlags = true;
+            if (ComparatorMethod == "==")
+            {
+                if (Checking_identified && !item_identified) SameFlags = false;
+                if (Checking_isSocketed && !item_isSocketed) SameFlags = false;
+                if (Checking_ethereal && !item_ethereal) SameFlags = false;
+            }
+            if (ComparatorMethod == "!=")
+            {
+                if (Checking_identified && item_identified) SameFlags = false;
+                if (Checking_isSocketed && item_isSocketed) SameFlags = false;
+                if (Checking_ethereal && item_ethereal) SameFlags = false;
+            }
+
+            return SameFlags;
+        }
+
         public void calculateFlags(uint flags)
         {
             Form1_0.ItemsStruc_0.identified = false;
@@ -130,29 +163,5 @@ namespace app
         0x00004000 =  14 = NPC sequence = NPC sequence
         0x00008000 =  15 = NPC running = NPC running*/
 
-
-
-        /*item.getStat( 188, tab ); // lookup table
-        0	Bow and Crossbow Skills
-        1	Passive and Magic Skills
-        2	Javelin and Spear Skills
-        8	Fire Skills
-        9	Lightning Skills
-        10	Cold Skills
-        16	Curses Skills
-        17	Poison and Bone Skills
-        18	Necromancer Summoning Skills
-        24	Paladin Combat Skills
-        25	Offensive Auras Skills
-        26	Defensive Auras Skills
-        32	Barbarian Combat Skills
-        33	Masteries Skills
-        34	Warcries Skills
-        40	Druid Summoning Skills
-        41	Shape Shifting Skills
-        42	Elemental Skills
-        48	Traps Skills
-        49	Shadow Disciplines Skills
-        50	Martial Arts Skills*/
-}
+    }
 }

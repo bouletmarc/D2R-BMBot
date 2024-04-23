@@ -89,6 +89,8 @@
             this.checkBoxDClone = new System.Windows.Forms.CheckBox();
             this.checkBoxIDAtShop = new System.Windows.Forms.CheckBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.label23 = new System.Windows.Forms.Label();
+            this.checkBoxGamble = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -390,12 +392,11 @@
             // 
             this.label13.AutoSize = true;
             this.label13.ForeColor = System.Drawing.Color.Red;
-            this.label13.Location = new System.Drawing.Point(106, 427);
+            this.label13.Location = new System.Drawing.Point(74, 443);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(258, 52);
+            this.label13.Size = new System.Drawing.Size(137, 39);
             this.label13.TabIndex = 5;
-            this.label13.Text = "**Place theses dummy items inside the shared stash**\r\n-Key in Shared Stash1\r\n-ID " +
-    "Scroll in Shared Stash2\r\n-TP Scroll in Shared Stash3";
+            this.label13.Text = "-Key in Shared Stash1\r\n-ID Scroll in Shared Stash2\r\n-TP Scroll in Shared Stash3";
             this.label13.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // textBoxCharName
@@ -667,6 +668,7 @@
             // 
             // groupBox5
             // 
+            this.groupBox5.Controls.Add(this.checkBoxGamble);
             this.groupBox5.Controls.Add(this.checkBoxDClone);
             this.groupBox5.Controls.Add(this.checkBoxIDAtShop);
             this.groupBox5.Controls.Add(this.checkBoxGrabGold);
@@ -674,7 +676,7 @@
             this.groupBox5.Controls.Add(this.checkBoxUseBO);
             this.groupBox5.Location = new System.Drawing.Point(293, 319);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(153, 101);
+            this.groupBox5.Size = new System.Drawing.Size(153, 168);
             this.groupBox5.TabIndex = 5;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Extras";
@@ -682,7 +684,7 @@
             // checkBoxDClone
             // 
             this.checkBoxDClone.AutoSize = true;
-            this.checkBoxDClone.Location = new System.Drawing.Point(6, 82);
+            this.checkBoxDClone.Location = new System.Drawing.Point(6, 83);
             this.checkBoxDClone.Name = "checkBoxDClone";
             this.checkBoxDClone.Size = new System.Drawing.Size(109, 17);
             this.checkBoxDClone.TabIndex = 38;
@@ -701,12 +703,36 @@
             this.toolTip1.SetToolTip(this.checkBoxIDAtShop, "Disabled will ID at Cain");
             this.checkBoxIDAtShop.UseVisualStyleBackColor = true;
             // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label23.ForeColor = System.Drawing.Color.Red;
+            this.label23.Location = new System.Drawing.Point(8, 425);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(277, 13);
+            this.label23.TabIndex = 39;
+            this.label23.Text = "Put theses dummy items inside the shared stash";
+            // 
+            // checkBoxGamble
+            // 
+            this.checkBoxGamble.AutoSize = true;
+            this.checkBoxGamble.Location = new System.Drawing.Point(6, 99);
+            this.checkBoxGamble.Name = "checkBoxGamble";
+            this.checkBoxGamble.Size = new System.Drawing.Size(87, 17);
+            this.checkBoxGamble.TabIndex = 39;
+            this.checkBoxGamble.Text = "Gamble Gold";
+            this.toolTip1.SetToolTip(this.checkBoxGamble, "Enable this if you want to Gamble your Gold at Anya for Rings and Amulets");
+            this.checkBoxGamble.UseVisualStyleBackColor = true;
+            this.checkBoxGamble.CheckedChanged += new System.EventHandler(this.checkBoxGamble_CheckedChanged);
+            // 
             // FormCharSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlDark;
             this.ClientSize = new System.Drawing.Size(452, 487);
+            this.Controls.Add(this.label23);
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.groupBox4);
@@ -808,5 +834,7 @@
         private System.Windows.Forms.GroupBox groupBox5;
         private System.Windows.Forms.CheckBox checkBoxIDAtShop;
         private System.Windows.Forms.CheckBox checkBoxDClone;
+        private System.Windows.Forms.CheckBox checkBoxGamble;
+        private System.Windows.Forms.Label label23;
     }
 }

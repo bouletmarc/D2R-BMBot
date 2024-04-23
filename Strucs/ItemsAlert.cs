@@ -107,20 +107,14 @@ namespace app
 
                             if (PickItemsNormal_ByName_Flags.ContainsKey(ThisDir.Key))
                             {
-                                bool BufferId = Form1_0.ItemsStruc_0.identified;
-                                bool BufferSock = Form1_0.ItemsStruc_0.isSocketed;
-                                bool BufferEth = Form1_0.ItemsStruc_0.ethereal;
-
                                 uint TotalFlags = 0;
-                                foreach (var ThisList in PickItemsNormal_ByName_Flags[ThisDir.Key]) TotalFlags += ThisList.Key;
-                                Form1_0.ItemsFlags_0.calculateFlags(TotalFlags);
-
-                                //might have issue here with flags
-                                if (BufferId != Form1_0.ItemsStruc_0.identified
-                                    && BufferSock != Form1_0.ItemsStruc_0.isSocketed
-                                    && BufferEth != Form1_0.ItemsStruc_0.ethereal)
+                                foreach (var ThisList in PickItemsNormal_ByName_Flags[ThisDir.Key])
                                 {
-                                    SameFlags = false;
+                                    TotalFlags += ThisList.Key;
+                                }
+                                foreach (var ThisList in PickItemsNormal_ByName_Flags[ThisDir.Key])
+                                {
+                                    SameStats = Form1_0.ItemsFlags_0.IsItemSameFlags(ThisList.Value, TotalFlags, Form1_0.ItemsStruc_0.flags);
                                 }
                                 //Console.WriteLine(Form1_0.ItemsStruc_0.ItemNAAME + ":" + SameFlags);
                             }
@@ -168,21 +162,16 @@ namespace app
 
                             if (PickItemsNormal_ByType_Flags.ContainsKey(ThisDir.Key))
                             {
-                                bool BufferId = Form1_0.ItemsStruc_0.identified;
-                                bool BufferSock = Form1_0.ItemsStruc_0.isSocketed;
-                                bool BufferEth = Form1_0.ItemsStruc_0.ethereal;
-
                                 uint TotalFlags = 0;
-                                foreach (var ThisList in PickItemsNormal_ByType_Flags[ThisDir.Key]) TotalFlags += ThisList.Key;
-                                Form1_0.ItemsFlags_0.calculateFlags(TotalFlags);
-
-                                //might have issue here with flags
-                                if (BufferId != Form1_0.ItemsStruc_0.identified
-                                    && BufferSock != Form1_0.ItemsStruc_0.isSocketed
-                                    && BufferEth != Form1_0.ItemsStruc_0.ethereal)
+                                foreach (var ThisList in PickItemsNormal_ByType_Flags[ThisDir.Key])
                                 {
-                                    SameFlags = false;
+                                    TotalFlags += ThisList.Key;
                                 }
+                                foreach (var ThisList in PickItemsNormal_ByType_Flags[ThisDir.Key])
+                                {
+                                    SameStats = Form1_0.ItemsFlags_0.IsItemSameFlags(ThisList.Value, TotalFlags, Form1_0.ItemsStruc_0.flags);
+                                }
+                                //Console.WriteLine(Form1_0.ItemsStruc_0.ItemNAAME + ":" + SameFlags);
                             }
                             if (PickItemsNormal_ByType_Quality.ContainsKey(ThisDir.Key))
                             {

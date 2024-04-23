@@ -15,8 +15,11 @@ namespace app
 
             InitializeComponent();
 
-            listViewRush.Location = new System.Drawing.Point(listViewRunScripts.Location.X, listViewRunScripts.Location.Y);
             listViewRush.Visible = false;
+            listViewRush.Location = new System.Drawing.Point(listViewRunScripts.Location.X, listViewRunScripts.Location.Y);
+
+            panelBaalFeature.Visible = false;
+            panelBaalFeature.Location = new System.Drawing.Point(23, 197);
 
             LoadSettings();
         }
@@ -82,6 +85,21 @@ namespace app
             comboBoxDifficulty.SelectedIndex = CharConfig.GameDifficulty;
 
             numericUpDownRunNumber.Value = Form1_0.CurrentGameNumber;
+
+            //###################
+            checkBoxKillBaal.Checked = Form1_0.Baal_0.KillBaal;
+            checkBoxBaalSafeHealing.Checked = Form1_0.Baal_0.SafeHealingStrat;
+            numericUpDownBaalLeaveMobsCount.Value = Form1_0.Baal_0.LeaveIfMobsCountIsAbove;
+            for (int i = 0; i < Form1_0.Baal_0.LeaveIfMobsIsPresent_ID.Count; i++)
+            {
+                string[] arr = new string[2];
+                arr[0] = Form1_0.Baal_0.LeaveIfMobsIsPresent_ID[i].ToString();
+                arr[1] = Form1_0.Baal_0.LeaveIfMobsIsPresent_Count[i].ToString();
+                ListViewItem item = new ListViewItem(arr);
+
+                listViewBaalLeaveOnMobs.Items.Add(item);
+            }
+            //###################
 
             SetCreateGameGroupbox();
             SetRushMenu();
@@ -189,6 +207,19 @@ namespace app
             CharConfig.GameDifficulty = comboBoxDifficulty.SelectedIndex;
 
             Form1_0.CurrentGameNumber = (int) numericUpDownRunNumber.Value;
+
+            //###################
+            Form1_0.Baal_0.KillBaal = checkBoxKillBaal.Checked;
+            Form1_0.Baal_0.SafeHealingStrat = checkBoxBaalSafeHealing.Checked;
+            Form1_0.Baal_0.LeaveIfMobsCountIsAbove = (int) numericUpDownBaalLeaveMobsCount.Value;
+            Form1_0.Baal_0.LeaveIfMobsIsPresent_ID.Clear();
+            Form1_0.Baal_0.LeaveIfMobsIsPresent_Count.Clear();
+            for (int i = 0; i < listViewBaalLeaveOnMobs.Items.Count; i++)
+            {
+                Form1_0.Baal_0.LeaveIfMobsIsPresent_ID.Add(uint.Parse(listViewBaalLeaveOnMobs.Items[i].SubItems[0].Text));
+                Form1_0.Baal_0.LeaveIfMobsIsPresent_Count.Add(int.Parse(listViewBaalLeaveOnMobs.Items[i].SubItems[1].Text));
+            }
+            //###################
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -229,6 +260,46 @@ namespace app
 
             SaveSettings();
             Form1_0.SettingsLoader_0.SaveCurrentSettings();
+        }
+
+        private void listViewRunScripts_DoubleClick(object sender, EventArgs e)
+        {
+            if (listViewRunScripts.SelectedItems[0].Text == "Baal")
+            {
+                Form1_0.Baal_0.KillBaal = checkBoxKillBaal.Checked = Form1_0.Baal_0.KillBaal;
+
+                panelBaalFeature.Visible = true;
+            }
+            else
+            {
+                MessageBox.Show("No specials features exist for this run!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private void buttonBaalApply_Click(object sender, EventArgs e)
+        {
+            Form1_0.Baal_0.KillBaal = checkBoxKillBaal.Checked;
+            panelBaalFeature.Visible = false;
+        }
+
+        private void label10_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void buttonBaalAddMob_Click(object sender, EventArgs e)
+        {
+            string[] arr = new string[2];
+            arr[0] = numericUpDownBaalMobID.Value.ToString();
+            arr[1] = numericUpDownBaalMobCount.Value.ToString();
+            ListViewItem item = new ListViewItem(arr);
+
+            listViewBaalLeaveOnMobs.Items.Add(item);
+        }
+
+        private void buttonBaalClearMob_Click(object sender, EventArgs e)
+        {
+            listViewBaalLeaveOnMobs.Items.Clear();
         }
     }
 }

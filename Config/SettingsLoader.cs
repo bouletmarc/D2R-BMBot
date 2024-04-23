@@ -199,6 +199,7 @@ namespace app
                     if (Splitted[0] == "IDAtShop") AllLines[i] = "IDAtShop=" + CharConfig.IDAtShop;
                     if (Splitted[0] == "GrabForGold") AllLines[i] = "GrabForGold=" + CharConfig.GrabForGold;
                     if (Splitted[0] == "LeaveDiabloClone") AllLines[i] = "LeaveDiabloClone=" + CharConfig.LeaveDiabloClone;
+                    if (Splitted[0] == "GambleGold") AllLines[i] = "GambleGold=" + CharConfig.GambleGold;
                     if (Splitted[0] == "ChickenHP") AllLines[i] = "ChickenHP=" + CharConfig.ChickenHP;
                     if (Splitted[0] == "TakeHPPotUnder" && !Splitted[0].Contains("MercTakeHPPotUnder")) AllLines[i] = "TakeHPPotUnder=" + CharConfig.TakeHPPotUnder;
                     if (Splitted[0] == "TakeRVPotUnder") AllLines[i] = "TakeRVPotUnder=" + CharConfig.TakeRVPotUnder;
@@ -235,6 +236,30 @@ namespace app
 
                     if (Splitted[0] == "IsRushing") AllLines[i] = "IsRushing=" + CharConfig.IsRushing;
                     if (Splitted[0] == "RushLeecherName") AllLines[i] = "RushLeecherName=" + CharConfig.RushLeecherName;
+
+                    //#########
+                    if (Splitted[0] == "KillBaal") AllLines[i] = "KillBaal=" + Form1_0.Baal_0.KillBaal;
+                    if (Splitted[0] == "LeaveIfMobsIsPresent_ID")
+                    {
+                        AllLines[i] = "LeaveIfMobsIsPresent_ID=";
+                        for (int j = 0; j < Form1_0.Baal_0.LeaveIfMobsIsPresent_ID.Count; j++)
+                        {
+                            if (j > 0) AllLines[i] += ",";
+                            AllLines[i] += Form1_0.Baal_0.LeaveIfMobsIsPresent_ID[j];
+                        }
+                    }
+                    if (Splitted[0] == "LeaveIfMobsIsPresent_Count")
+                    {
+                        AllLines[i] = "LeaveIfMobsIsPresent_Count=";
+                        for (int j = 0; j < Form1_0.Baal_0.LeaveIfMobsIsPresent_Count.Count; j++)
+                        {
+                            if (j > 0) AllLines[i] += ",";
+                            AllLines[i] += Form1_0.Baal_0.LeaveIfMobsIsPresent_Count[j];
+                        }
+                    }
+                    if (Splitted[0] == "LeaveIfMobsCountIsAbove") AllLines[i] = "LeaveIfMobsCountIsAbove=" + Form1_0.Baal_0.LeaveIfMobsCountIsAbove;
+                    if (Splitted[0] == "SafeHealingStrat") AllLines[i] = "SafeHealingStrat=" + Form1_0.Baal_0.SafeHealingStrat;
+                    //#########
 
                     if (Splitted[0] == "RunMapHackOnly") AllLines[i] = "RunMapHackOnly=" + CharConfig.RunMapHackOnly;
                     if (Splitted[0] == "RunDarkWoodRush") AllLines[i] = "RunDarkWoodRush=" + CharConfig.RunDarkWoodRush;
@@ -859,6 +884,48 @@ namespace app
                                     CharConfig.RushLeecherName = Params[1];
                                 }
 
+                                //#########
+                                if (Params[0].Contains("KillBaal"))
+                                {
+                                    Form1_0.Baal_0.KillBaal = bool.Parse(Params[1].ToLower());
+                                }
+                                if (Params[0].Contains("LeaveIfMobsIsPresent_ID"))
+                                {
+                                    Form1_0.Baal_0.LeaveIfMobsIsPresent_ID.Clear();
+                                    if (Params[1].Contains(","))
+                                    {
+                                        string[] Splitted = Params[1].Split(',');
+                                        Form1_0.Baal_0.LeaveIfMobsIsPresent_ID.Add(uint.Parse(Splitted[i]));
+                                    }
+                                    else if(Params[1] != "")
+                                    {
+                                        Form1_0.Baal_0.LeaveIfMobsIsPresent_ID.Add(uint.Parse(Params[1]));
+                                    }
+                                }
+                                if (Params[0].Contains("LeaveIfMobsIsPresent_Count"))
+                                {
+                                    Form1_0.Baal_0.LeaveIfMobsIsPresent_Count.Clear();
+                                    if (Params[1].Contains(","))
+                                    {
+                                        string[] Splitted = Params[1].Split(',');
+                                        Form1_0.Baal_0.LeaveIfMobsIsPresent_Count.Add(int.Parse(Splitted[i]));
+                                    }
+                                    else if (Params[1] != "")
+                                    {
+                                        Form1_0.Baal_0.LeaveIfMobsIsPresent_Count.Add(int.Parse(Params[1]));
+                                    }
+                                }
+                                if (Params[0].Contains("LeaveIfMobsCountIsAbove"))
+                                {
+                                    Form1_0.Baal_0.LeaveIfMobsCountIsAbove = int.Parse(Params[1].ToLower());
+                                }
+                                if (Params[0].Contains("SafeHealingStrat"))
+                                {
+                                    Form1_0.Baal_0.SafeHealingStrat = bool.Parse(Params[1].ToLower());
+                                }
+                                //#########
+
+
                                 if (Params[0].Contains("RunMapHackOnly"))
                                 {
                                     CharConfig.RunMapHackOnly = bool.Parse(Params[1].ToLower());
@@ -1254,6 +1321,10 @@ namespace app
                                 if (Params[0].Contains("LeaveDiabloClone"))
                                 {
                                     CharConfig.LeaveDiabloClone = bool.Parse(Params[1].ToLower());
+                                }
+                                if (Params[0].Contains("GambleGold"))
+                                {
+                                    CharConfig.GambleGold = bool.Parse(Params[1].ToLower());
                                 }
                                 if (Params[0].Contains("ChickenHP"))
                                 {

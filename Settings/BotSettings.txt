@@ -11,6 +11,7 @@ IsRushing=false
 RushLeecherName=
 ShowOverlay=true
 RunWPTaker=false
+RunMapHackOnly=false
 RunDarkWoodRush=false
 RunTristramRush=false
 RunAndarielRush=false
@@ -54,3 +55,12 @@ RunGameMakerScript=true
 GameName=GAMENAMEHERE
 GamePass=33
 GameDifficulty=2
+
+//#######################################
+//SPECIALS BAAL FEATURES
+//#######################################
+KillBaal=true
+LeaveIfMobsIsPresent_ID=
+LeaveIfMobsIsPresent_Count=
+LeaveIfMobsCountIsAbove=0
+SafeHealingStrat=false

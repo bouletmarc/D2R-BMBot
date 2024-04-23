@@ -374,6 +374,10 @@ namespace app
                 //gamble
                 if (CurrentScript == 4)
                 {
+                    if (!CharConfig.GambleGold)
+                    {
+                        CurrentScript++;
+                    }
                     if (!Form1_0.Gamble_0.CanGamble() || TriedToGambleCount >= 3 || FastTowning)
                     {
                         CurrentScript++;

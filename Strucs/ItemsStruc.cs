@@ -5,15 +5,15 @@ using System.IO;
 using System.Linq;
 using System.Media;
 using System.Net.Sockets;
+using System.Runtime.InteropServices;
 using System.Runtime.Remoting.Metadata.W3cXsd2001;
+using System.Security.Policy;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static app.Enums;
 using static app.MapAreaStruc;
-using static System.Windows.Forms.AxHost;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.TaskbarClock;
 
 namespace app
 {
@@ -129,9 +129,9 @@ namespace app
 
             SetNumSockets();
 
-            //string SavePathh = Form1_0.ThisEndPath + "DumpItempStatBStruc";
+            //string SavePathh = Form1_0.ThisEndPath + "DumpItempStatStruc";
             //File.Create(SavePathh).Dispose();
-            //File.WriteAllBytes(SavePathh, pStatB);
+            //File.WriteAllBytes(SavePathh, statBuffer);
         }
 
         public void GetUnitData()
@@ -992,7 +992,7 @@ namespace app
                 for (int i = 0; i < this.statCount; i++)
                 {
                     int offset = i * 8;
-                    //short statLayer = BitConverter.ToInt16(statBuffer, offset);
+                    ushort statLayer = BitConverter.ToUInt16(statBuffer, offset);
                     ushort statEnum = BitConverter.ToUInt16(statBuffer, offset + 0x2);
                     int statValue = BitConverter.ToInt32(statBuffer, offset + 0x4);
 
@@ -1002,9 +1002,11 @@ namespace app
                         if (statValue > 1000) statValue = statValue >> 8;
                     }
                     if (statEnum == 56 || statEnum == 59) statValue = statValue / 25;
+                    if (statEnum == 57 || statEnum == 58) statValue = (int) ((double) statValue / 3.5);
 
                     if (AllStats != "") AllStats += " && ";
-                    AllStats += "[" + ((Enums.Attribute)statEnum) + "] == " + statValue;
+                    if (GetCustomStatsName(statEnum, statLayer) != "") AllStats += "[" + ((Enums.Attribute)statEnum) + "-" + GetCustomStatsName(statEnum, statLayer) + "] == " + statValue;
+                    else  AllStats += "[" + ((Enums.Attribute)statEnum) + "] == " + statValue;
                     //Form1_0.method_1("Item: " + ItemNAAME + ", Stat (" + ((Enums.Attribute) statEnum) + "):" + statValue, Color.Red);
                 }
             }
@@ -1014,7 +1016,7 @@ namespace app
                 for (int i = 0; i < this.statExCount; i++)
                 {
                     int offset = i * 8;
-                    //short statLayer = BitConverter.ToInt16(statBufferEx, offset);
+                    ushort statLayer = BitConverter.ToUInt16(statBufferEx, offset);
                     ushort statEnum = BitConverter.ToUInt16(statBufferEx, offset + 0x2);
                     int statValue = BitConverter.ToInt32(statBufferEx, offset + 0x4);
 
@@ -1024,9 +1026,11 @@ namespace app
                         if (statValue > 1000) statValue = statValue >> 8;
                     }
                     if (statEnum == 56 || statEnum == 59) statValue = statValue / 25;
+                    if (statEnum == 57 || statEnum == 58) statValue = (int)((double)statValue / 3.5);
 
                     if (AllStats != "") AllStats += " && ";
-                    AllStats += "[" + ((Enums.Attribute)statEnum) + "] == " + statValue;
+                    if (GetCustomStatsName(statEnum, statLayer) != "") AllStats += "[" + ((Enums.Attribute)statEnum) + "-" + GetCustomStatsName(statEnum, statLayer) + "] == " + statValue;
+                    else AllStats += "[" + ((Enums.Attribute)statEnum) + "] == " + statValue;
                     //Form1_0.method_1("Item: " + ItemNAAME + ", Stat (" + ((Enums.Attribute)statEnum) + "):" + statValue, Color.Red);
                 }
             }
@@ -1034,29 +1038,30 @@ namespace app
             return AllStats; // or some other default value
         }
 
-        public int GetValuesFromStats(Enums.Attribute CheckTStat)
+        public int GetValuesFromStats(Enums.Attribute CheckTStat, ushort ThisLayer = 0)
         {
             if (this.statCount > 0)
             {
                 for (int i = 0; i < this.statCount; i++)
                 {
                     int offset = i * 8;
-                    //short statLayer = BitConverter.ToInt16(statBuffer, offset);
+                    ushort statLayer = BitConverter.ToUInt16(statBuffer, offset);
                     ushort statEnum = BitConverter.ToUInt16(statBuffer, offset + 0x2);
                     int statValue = BitConverter.ToInt32(statBuffer, offset + 0x4);
 
                     if (statEnum == (ushort)CheckTStat)
                     {
-                        if (statEnum == 6 || statEnum == 7 || statEnum == 8 || statEnum == 9 || statEnum == 10 || statEnum == 11
-                        || statEnum == 216 || statEnum == 217)
+                        if (ThisLayer == 0 || (ThisLayer != 0 && statLayer == ThisLayer))
                         {
-                            if (statValue > 1000) return statValue >> 8;
+                            if (statEnum == 6 || statEnum == 7 || statEnum == 8 || statEnum == 9 || statEnum == 10 || statEnum == 11
+                                || statEnum == 216 || statEnum == 217)
+                            {
+                                if (statValue > 1000) return statValue >> 8;
+                            }
+                            if (statEnum == 56 || statEnum == 59) return statValue / 25;
+                            if (statEnum == 57 || statEnum == 58) return (int)((double)statValue / 3.5);
+                            return statValue;
                         }
-                        if (statEnum == 56 || statEnum == 59)
-                        {
-                            return statValue / 25;
-                        }
-                        return statValue;
                     }
                 }
             }
@@ -1066,27 +1071,65 @@ namespace app
                 for (int i = 0; i < this.statExCount; i++)
                 {
                     int offset = i * 8;
-                    //short statLayer = BitConverter.ToInt16(statBufferEx, offset);
+                    ushort statLayer = BitConverter.ToUInt16(statBufferEx, offset);
                     ushort statEnum = BitConverter.ToUInt16(statBufferEx, offset + 0x2);
                     int statValue = BitConverter.ToInt32(statBufferEx, offset + 0x4);
 
                     if (statEnum == (ushort)CheckTStat)
                     {
-                        if (statEnum == 6 || statEnum == 7 || statEnum == 8 || statEnum == 9 || statEnum == 10 || statEnum == 11
-                        || statEnum == 216 || statEnum == 217)
+                        if (ThisLayer == 0 || (ThisLayer != 0 && statLayer == ThisLayer))
                         {
-                            if (statValue > 1000) return statValue >> 8;
+                            if (statEnum == 6 || statEnum == 7 || statEnum == 8 || statEnum == 9 || statEnum == 10 || statEnum == 11
+                                || statEnum == 216 || statEnum == 217)
+                            {
+                                if (statValue > 1000) return statValue >> 8;
+                            }
+                            if (statEnum == 56 || statEnum == 59) return statValue / 25;
+                            if (statEnum == 57 || statEnum == 58) return (int)((double)statValue / 3.5);
+                            return statValue;
                         }
-                        if (statEnum == 56 || statEnum == 59)
-                        {
-                            return statValue / 25;
-                        }
-                        return statValue;
                     }
                 }
             }
 
             return 0; // or some other default value
+        }
+
+        public string GetCustomStatsName(ushort statEnum, ushort statLayer)
+        {
+            string CustomName = "";
+            if ((Enums.Attribute)statEnum == Enums.Attribute.NonClassSkill)
+            {
+                return ((Enums.NonClassSkill)statLayer).ToString();
+            }
+            if ((Enums.Attribute)statEnum == Enums.Attribute.AddClassSkills)
+            {
+                return ((Enums.AddClassSkills)statLayer).ToString();
+            }
+            if ((Enums.Attribute) statEnum == Enums.Attribute.AddSkillTab)
+            {
+                return ((Enums.AddSkillTab)statLayer).ToString();
+            }
+            if ((Enums.Attribute)statEnum == Enums.Attribute.SingleSkill)
+            {
+                return ((Enums.SingleSkill)statLayer).ToString();
+            }
+            if ((Enums.Attribute)statEnum == Enums.Attribute.Aura)
+            {
+                return ((Enums.Aura)statLayer).ToString();
+            }
+            return CustomName;
+        }
+
+        public bool GetIsCustomStats(Enums.Attribute statEnum)
+        {
+            if (statEnum == Enums.Attribute.NonClassSkill) return true;
+            if (statEnum == Enums.Attribute.AddClassSkills) return true;
+            if (statEnum == Enums.Attribute.AddSkillTab) return true;
+            if (statEnum == Enums.Attribute.SingleSkill) return true;
+            if (statEnum == Enums.Attribute.Aura) return true;
+
+            return false;
         }
 
         public string GetQualityTextString()
@@ -1160,16 +1203,16 @@ namespace app
                 string[] StatNames = StatName.Split('+');
 
                 int TotalValue = 0;
-                for (int i = 0; i < StatNames.Length; i++) TotalValue += GetValueFromStats(StatNames[i]);
+                for (int i = 0; i < StatNames.Length; i++) TotalValue += GetValueFromStats(StatNames[i], GetStatLayerIndex(StatNames[i]));
                 return IsValueTrue(ComparatorMethod, TotalValue, StatValueToCheck);
             }
             else
             {
-                return IsItemHaveSameStat(StatName, StatValueToCheck, ComparatorMethod);
+                return IsItemHaveSameStat(StatName, StatValueToCheck, ComparatorMethod, GetStatLayerIndex(StatName));
             }
         }
 
-        public int GetValueFromStats(string StatName)
+        public int GetValueFromStats(string StatName, ushort ThisLayer = 0)
         {
             int EnumIndex = GetStatEnumIndex(StatName);
             if (EnumIndex > -1)
@@ -1179,13 +1222,23 @@ namespace app
                     for (int i = 0; i < this.statCount; i++)
                     {
                         int offset = i * 8;
-                        //short statLayer = BitConverter.ToInt16(statBuffer, offset);
+                        ushort statLayer = BitConverter.ToUInt16(statBuffer, offset);
                         ushort statEnum = BitConverter.ToUInt16(statBuffer, offset + 0x2);
                         int statValue = BitConverter.ToInt32(statBuffer, offset + 0x4);
 
                         if (statEnum == EnumIndex)
                         {
-                            return statValue;
+                            if (ThisLayer == 0 || (ThisLayer != 0 && statLayer == ThisLayer))
+                            {
+                                if (statEnum == 6 || statEnum == 7 || statEnum == 8 || statEnum == 9 || statEnum == 10 || statEnum == 11
+                                    || statEnum == 216 || statEnum == 217)
+                                {
+                                    if (statValue > 1000) return statValue >> 8;
+                                }
+                                if (statEnum == 56 || statEnum == 59) return statValue / 25;
+                                if (statEnum == 57 || statEnum == 58) return (int)((double)statValue / 3.5);
+                                return statValue;
+                            }
                         }
                     }
                 }
@@ -1195,13 +1248,23 @@ namespace app
                     for (int i = 0; i < this.statExCount; i++)
                     {
                         int offset = i * 8;
-                        //short statLayer = BitConverter.ToInt16(statBufferEx, offset);
+                        ushort statLayer = BitConverter.ToUInt16(statBufferEx, offset);
                         ushort statEnum = BitConverter.ToUInt16(statBufferEx, offset + 0x2);
                         int statValue = BitConverter.ToInt32(statBufferEx, offset + 0x4);
 
                         if (statEnum == EnumIndex)
                         {
-                            return statValue;
+                            if (ThisLayer == 0 || (ThisLayer != 0 && statLayer == ThisLayer))
+                            {
+                                if (statEnum == 6 || statEnum == 7 || statEnum == 8 || statEnum == 9 || statEnum == 10 || statEnum == 11
+                                    || statEnum == 216 || statEnum == 217)
+                                {
+                                    if (statValue > 1000) return statValue >> 8;
+                                }
+                                if (statEnum == 56 || statEnum == 59) return statValue / 25;
+                                if (statEnum == 57 || statEnum == 58) return (int)((double)statValue / 3.5);
+                                return statValue;
+                            }
                         }
                     }
                 }
@@ -1214,7 +1277,7 @@ namespace app
             return 0; //no identical stats found, return true by default
         }
 
-        public bool IsItemHaveSameStat(string StatName, int StatValueToCheck, string ComparatorMethod)
+        public bool IsItemHaveSameStat(string StatName, int StatValueToCheck, string ComparatorMethod, ushort ThisLayer = 0)
         {
             int EnumIndex = GetStatEnumIndex(StatName);
             if (EnumIndex > -1)
@@ -1224,12 +1287,23 @@ namespace app
                     for (int i = 0; i < this.statCount; i++)
                     {
                         int offset = i * 8;
-                        //short statLayer = BitConverter.ToInt16(statBuffer, offset);
+                        ushort statLayer = BitConverter.ToUInt16(statBuffer, offset);
                         ushort statEnum = BitConverter.ToUInt16(statBuffer, offset + 0x2);
                         int statValue = BitConverter.ToInt32(statBuffer, offset + 0x4);
 
                         if (statEnum == EnumIndex)
                         {
+                            if (ThisLayer == 0 || (ThisLayer != 0 && statLayer == ThisLayer))
+                            {
+                                if (statEnum == 6 || statEnum == 7 || statEnum == 8 || statEnum == 9 || statEnum == 10 || statEnum == 11
+                                    || statEnum == 216 || statEnum == 217)
+                                {
+                                    if (statValue > 1000) statValue = statValue >> 8;
+                                }
+                                if (statEnum == 56 || statEnum == 59) statValue = statValue / 25;
+                                if (statEnum == 57 || statEnum == 58) statValue = (int)((double)statValue / 3.5);
+                            }
+
                             return IsValueTrue(ComparatorMethod, statValue, StatValueToCheck);
                         }
                     }
@@ -1240,12 +1314,23 @@ namespace app
                     for (int i = 0; i < this.statExCount; i++)
                     {
                         int offset = i * 8;
-                        //short statLayer = BitConverter.ToInt16(statBufferEx, offset);
+                        ushort statLayer = BitConverter.ToUInt16(statBufferEx, offset);
                         ushort statEnum = BitConverter.ToUInt16(statBufferEx, offset + 0x2);
                         int statValue = BitConverter.ToInt32(statBufferEx, offset + 0x4);
 
                         if (statEnum == EnumIndex)
                         {
+                            if (ThisLayer == 0 || (ThisLayer != 0 && statLayer == ThisLayer))
+                            {
+                                if (statEnum == 6 || statEnum == 7 || statEnum == 8 || statEnum == 9 || statEnum == 10 || statEnum == 11
+                                || statEnum == 216 || statEnum == 217)
+                                {
+                                    if (statValue > 1000) statValue = statValue >> 8;
+                                }
+                                if (statEnum == 56 || statEnum == 59) statValue = statValue / 25;
+                                if (statEnum == 57 || statEnum == 58) statValue = (int)((double)statValue / 3.5);
+                            }
+
                             return IsValueTrue(ComparatorMethod, statValue, StatValueToCheck);
                         }
                     }
@@ -1259,8 +1344,89 @@ namespace app
             return false; //no identical stats found, return true by default
         }
 
+        public ushort GetStatLayerIndex(string StatNammm)
+        {
+            //Custom Stats
+            foreach (int i in Enum.GetValues(typeof(Enums.NonClassSkill)))
+            {
+                string EnumStr = Enum.GetName(typeof(Enums.NonClassSkill), i);
+                if (EnumStr.ToLower() == StatNammm.ToLower()) return (ushort)i;
+            }
+            foreach (int i in Enum.GetValues(typeof(Enums.AddClassSkills)))
+            {
+                string EnumStr = Enum.GetName(typeof(Enums.AddClassSkills), i);
+                if (EnumStr.ToLower() == StatNammm.ToLower()) return (ushort)i;
+            }
+            foreach (int i in Enum.GetValues(typeof(Enums.AddSkillTab)))
+            {
+                string EnumStr = Enum.GetName(typeof(Enums.AddSkillTab), i);
+                if (EnumStr.ToLower() == StatNammm.ToLower()) return (ushort) i;
+            }
+            foreach (int i in Enum.GetValues(typeof(Enums.SingleSkill)))
+            {
+                string EnumStr = Enum.GetName(typeof(Enums.SingleSkill), i);
+                if (EnumStr.ToLower() == StatNammm.ToLower()) return (ushort)i;
+            }
+            foreach (int i in Enum.GetValues(typeof(Enums.Aura)))
+            {
+                string EnumStr = Enum.GetName(typeof(Enums.Aura), i);
+                if (EnumStr.ToLower() == StatNammm.ToLower()) return (ushort)i;
+            }
+
+            //Normal Stats
+            foreach (int i in Enum.GetValues(typeof(Enums.Attribute)))
+            {
+                string EnumStr = Enum.GetName(typeof(Enums.Attribute), i);
+                if (EnumStr.ToLower() == StatNammm.ToLower()) return (ushort) i;
+            }
+            return 0;
+        }
+
         public int GetStatEnumIndex(string StatNammm)
         {
+            //Custom Stats
+            foreach (int i in Enum.GetValues(typeof(Enums.NonClassSkill)))
+            {
+                string EnumStr = Enum.GetName(typeof(Enums.NonClassSkill), i);
+                if (EnumStr.ToLower() == StatNammm.ToLower())
+                {
+                    return 97;
+                }
+            }
+            foreach (int i in Enum.GetValues(typeof(Enums.AddClassSkills)))
+            {
+                string EnumStr = Enum.GetName(typeof(Enums.AddClassSkills), i);
+                if (EnumStr.ToLower() == StatNammm.ToLower())
+                {
+                    return 83;
+                }
+            }
+            foreach (int i in Enum.GetValues(typeof(Enums.AddSkillTab)))
+            {
+                string EnumStr = Enum.GetName(typeof(Enums.AddSkillTab), i);
+                if (EnumStr.ToLower() == StatNammm.ToLower())
+                {
+                    return 188;
+                }
+            }
+            foreach (int i in Enum.GetValues(typeof(Enums.SingleSkill)))
+            {
+                string EnumStr = Enum.GetName(typeof(Enums.SingleSkill), i);
+                if (EnumStr.ToLower() == StatNammm.ToLower())
+                {
+                    return 107;
+                }
+            }
+            foreach (int i in Enum.GetValues(typeof(Enums.Aura)))
+            {
+                string EnumStr = Enum.GetName(typeof(Enums.Aura), i);
+                if (EnumStr.ToLower() == StatNammm.ToLower())
+                {
+                    return 151;
+                }
+            }
+
+            //Normal Stats
             int EnumIndexing = 0;
             int EnumIndex = -1;
             foreach (int i in Enum.GetValues(typeof(Enums.Attribute)))
@@ -1276,7 +1442,7 @@ namespace app
             return EnumIndex;
         }
 
-        public int GetStatValue(int ThisEnum)
+        public int GetStatValue(int ThisEnum, ushort ThisLayer = 0)
         {
             if (ThisEnum == -1) return -1;
 
@@ -1285,13 +1451,23 @@ namespace app
                 for (int i = 0; i < this.statCount; i++)
                 {
                     int offset = i * 8;
-                    //short statLayer = BitConverter.ToInt16(statBuffer, offset);
+                    ushort statLayer = BitConverter.ToUInt16(statBuffer, offset);
                     ushort statEnum = BitConverter.ToUInt16(statBuffer, offset + 0x2);
                     int statValue = BitConverter.ToInt32(statBuffer, offset + 0x4);
 
                     if (statEnum == ThisEnum)
                     {
-                        return statValue;
+                        if (ThisLayer == 0 || (ThisLayer != 0 && statLayer == ThisLayer))
+                        {
+                            if (statEnum == 6 || statEnum == 7 || statEnum == 8 || statEnum == 9 || statEnum == 10 || statEnum == 11
+                                || statEnum == 216 || statEnum == 217)
+                            {
+                                if (statValue > 1000) return statValue >> 8;
+                            }
+                            if (statEnum == 56 || statEnum == 59) return statValue / 25;
+                            if (statEnum == 57 || statEnum == 58) return (int)((double)statValue / 3.5);
+                            return statValue;
+                        }
                     }
                 }
             }
@@ -1301,13 +1477,23 @@ namespace app
                 for (int i = 0; i < this.statExCount; i++)
                 {
                     int offset = i * 8;
-                    //short statLayer = BitConverter.ToInt16(statBufferEx, offset);
+                    ushort statLayer = BitConverter.ToUInt16(statBufferEx, offset);
                     ushort statEnum = BitConverter.ToUInt16(statBufferEx, offset + 0x2);
                     int statValue = BitConverter.ToInt32(statBufferEx, offset + 0x4);
 
                     if (statEnum == ThisEnum)
                     {
-                        return statValue;
+                        if (ThisLayer == 0 || (ThisLayer != 0 && statLayer == ThisLayer))
+                        {
+                            if (statEnum == 6 || statEnum == 7 || statEnum == 8 || statEnum == 9 || statEnum == 10 || statEnum == 11
+                                || statEnum == 216 || statEnum == 217)
+                            {
+                                if (statValue > 1000) return statValue >> 8;
+                            }
+                            if (statEnum == 56 || statEnum == 59) return statValue / 25;
+                            if (statEnum == 57 || statEnum == 58) return (int)((double)statValue / 3.5);
+                            return statValue;
+                        }
                     }
                 }
             }

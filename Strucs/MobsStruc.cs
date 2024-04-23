@@ -137,6 +137,69 @@ namespace app
             LastMobPos.Y = yPosFinal;
         }
 
+        public int GetMobsCount(uint ThisMobID)
+        {
+            int Count = 0;
+            try
+            {
+                Form1_0.PatternsScan_0.scanForUnitsPointer("NPC");
+                for (int i = 0; i < Form1_0.PatternsScan_0.AllNPCPointers.Count; i++)
+                {
+                    MobsPointerLocation = Form1_0.PatternsScan_0.AllNPCPointers[i];
+                    if (MobsPointerLocation > 0)
+                    {
+                        //mobsdatastruc = new byte[144];
+                        //Form1_0.Mem_0.ReadRawMemory(MobsPointerLocation, ref mobsdatastruc, 144);
+                        //txtFileNo = BitConverter.ToUInt32(mobsdatastruc, 4);
+                        //uint FirrstName = txtFileNo;
+
+                        CurrentPointerBytes = new byte[4];
+                        Form1_0.Mem_0.ReadRawMemory(MobsPointerLocation + 4, ref CurrentPointerBytes, CurrentPointerBytes.Length);
+                        uint txtFileNo2 = BitConverter.ToUInt32(CurrentPointerBytes, 0);
+
+                        //long pStatsListExPtr = BitConverter.ToInt64(mobsdatastruc, 0x88);
+                        CurrentPointerBytes = new byte[8];
+                        Form1_0.Mem_0.ReadRawMemory(MobsPointerLocation + 0x88, ref CurrentPointerBytes, CurrentPointerBytes.Length);
+                        long pStatsListExPtr = BitConverter.ToInt64(CurrentPointerBytes, 0);
+
+                        bool isPlayerMinion = false;
+                        if (getPlayerMinion((int)txtFileNo2) != "") isPlayerMinion = true;
+                        else isPlayerMinion = ((Form1_0.Mem_0.ReadUInt32((IntPtr)(pStatsListExPtr + 0xAC8 + 0xc)) & 31) == 1); //is a revive
+
+                        if ((Form1_0.NPCStruc_0.HideNPC((int)txtFileNo2) == 0
+                            && Form1_0.NPCStruc_0.getTownNPC((int)txtFileNo2) == ""
+                            && !isPlayerMinion
+                            && !DebuggingMobs)
+                            || DebuggingMobs)
+                        //&& IsThisMobInBound())
+                        //&& !ShouldBeIgnored(txtFileNo2))
+                        {
+                            GetUnitPathDataAll();
+                            GetStatsAddrAll();
+                            MobsHPAll = GetHPFromStatsAll();
+
+                            if (xPosFinalAll != 0 && yPosFinalAll != 0)
+                            {
+                                if (MobsHPAll != 0)
+                                {
+                                    if (ThisMobID == 0 || (ThisMobID > 0 && ThisMobID == txtFileNo2))
+                                    {
+                                        Count++;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch
+            {
+                Form1_0.method_1("Couldn't get Mobs Count!", Color.Red);
+            }
+
+            return Count;
+        }
+
         public List<int> monsterIDs = new List<int>();
 
         public List<int[]> GetAllMobsNearby()

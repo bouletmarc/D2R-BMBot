@@ -124,6 +124,7 @@ namespace app
                         }
 
                         Form1_0.SetGameStatus("SEARCHING:" + Form1_0.GameStruc_0.AllGamesNames[PossibleGamesIndex[i]]);
+                        Form1_0.method_1("Checking Game: " + PossibleGamesIndex[i], Color.Black);
 
                         Form1_0.GameStruc_0.SelectGame(PossibleGamesIndex[i], false);
                         if (!Form1_0.GameStruc_0.SelectedGameName.Contains(Form1_0.GameStruc_0.AllGamesNames[PossibleGamesIndex[i]]))

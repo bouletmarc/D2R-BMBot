@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -57,6 +58,8 @@ namespace app
             txtFileNo = 0;
             Form1_0.PatternsScan_0.scanForUnitsPointer("NPC");
 
+            int MercCount = 1;
+
             for (int i = 0; i < Form1_0.PatternsScan_0.AllNPCPointers.Count; i++)
             {
                 MercPointerLocation = Form1_0.PatternsScan_0.AllNPCPointers[i];
@@ -72,18 +75,37 @@ namespace app
                     GetUnitPathData();
                     GetStatsAddr();
 
-                    bool isPlayerMinion = false;
-                    string playerMinion = Form1_0.MobsStruc_0.getPlayerMinion((int)txtFileNo);
-                    if (playerMinion != "") isPlayerMinion = true;
-
                     //Console.WriteLine(Form1_0.NPCStruc_0.getNPC_ID((int) txtFileNo));
                     //Console.WriteLine(txtFileNo.ToString() + ", isUnique:" + isUnique + ", isPlayerMinion:" + isPlayerMinion + ", mode:" + mode + ", pos:" + xPosFinal + ", " + yPosFinal);
 
                     //if (IsMerc((int) txtFileNo))
-                    if (isUnique == 0 && isPlayerMinion && mode != 0 && mode != 12)
+                    if (isUnique == 0 && (txtFileNo == 338) && mode != 0 && mode != 12)
+                    //if (isUnique == 0 && isPlayerMinion && mode == 1)
                     {
                         if (xPosFinal != 0 && yPosFinal != 0)
                         {
+                            //SetHPFromStats();
+                            /*string SavePathh = Form1_0.ThisEndPath + "DumpMercStruc" + MercCount;
+                            File.Create(SavePathh).Dispose();
+                            File.WriteAllBytes(SavePathh, statBuffer);*/
+
+                            /*byte[] buffff = new byte[144];
+                            long pStatsListExPtr = BitConverter.ToInt64(Mercdatastruc, 0x10);
+                            Form1_0.Mem_0.ReadRawMemory(pStatsListExPtr, ref buffff, 144);
+
+                            pStatsListExPtr = BitConverter.ToInt64(Mercdatastruc, 0x78);
+                            Form1_0.Mem_0.ReadRawMemory(pStatsListExPtr, ref buffff, 144);
+                            //uint dwOwnerId = BitConverter.ToUInt32(buffff, 0x0c);
+                            //uint flags = BitConverter.ToUInt32(buffff, 0x18);
+
+                            string SavePathh2 = Form1_0.ThisEndPath + "DumpMercStrucBuf" + MercCount;
+                            File.Create(SavePathh2).Dispose();
+                            File.WriteAllBytes(SavePathh2, buffff);*/
+
+                            //Console.WriteLine(txtFileNo.ToString() + ", isUnique:" + isUnique + ", isPlayerMinion:" + isPlayerMinion + ", mode:" + mode + ", pos:" + xPosFinal + ", " + yPosFinal);
+                            //Console.WriteLine(flags);
+                            //MercCount++;
+
                             SetHPFromStats();
                             Form1_0.Grid_SetInfos("Merc", MercHP.ToString() + "/" + MercMaxHP.ToString());
                             return true;
@@ -104,7 +126,7 @@ namespace app
                 MercHP = 100;
                 MercMaxHP = 100;
 
-                int ThisHPStat = 0;
+                //int ThisHPStat = 0;
                 Form1_0.Mem_0.ReadRawMemory(this.statPtr, ref statBuffer, (int)(this.statCount * 10));
                 for (int i = (int) this.statCount - 1; i  >= 0; i--)
                 {
@@ -114,42 +136,30 @@ namespace app
                     int statValue = BitConverter.ToInt32(statBuffer, offset + 0x4);
                     if (statEnum == (ushort)Enums.Attribute.Life)
                     {
-                        ThisHPStat = statValue;
-                        
+                        //ThisHPStat = statValue;
+                        MercHP = statValue;
+
+
                     }
                     if (statEnum == (ushort)Enums.Attribute.LifeMax)
                     {
-                        MercMaxHP = statValue >> 8;
+                        MercMaxHP = statValue;
                     }
+
+                    //Console.WriteLine(((Enums.Attribute) statEnum).ToString() + " = " + statValue);
                 }
 
-                if (ThisHPStat <= 32768)
+                if (MercMaxHP < MercHP) MercMaxHP = MercHP;
+                /*if (ThisHPStat <= 32768)
                 {
                     MercHP = ThisHPStat / 32768 * MercMaxHP;
                 }
                 else
                 {
                     MercHP = ThisHPStat >> 8;
-                }
+                }*/
 
                 //Console.WriteLine("HP:" + MercHP);
-
-                /*Form1_0.Mem_0.ReadRawMemory(this.statExPtr, ref statBuffer, (int)(this.statExCount * 10));
-                for (int i = 0; i < this.statExCount; i++)
-                {
-                    int offset = i * 8;
-                    //short statLayer = BitConverter.ToInt16(statBuffer, offset);
-                    ushort statEnum = BitConverter.ToUInt16(statBuffer, offset + 0x2);
-                    int statValue = BitConverter.ToInt32(statBuffer, offset + 0x4);
-                    if (statEnum == (ushort)Enums.Attribute.Life)
-                    {
-                        if (MercHP == 100) MercHP = statValue >> 8;
-                    }
-                    if (statEnum == (ushort)Enums.Attribute.LifeMax)
-                    {
-                        if (MercMaxHP == 100) MercMaxHP = statValue >> 8;
-                    }
-                }*/
             }
             catch { }
         }

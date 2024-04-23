@@ -42,7 +42,7 @@ namespace app
     public partial class Form1 : Form
     {
 
-        public string BotVersion = "V2.4";
+        public string BotVersion = "V2.5";
 
         public string D2_LOD_113C_Path = "";
 
@@ -518,7 +518,7 @@ namespace app
             }
         }
 
-        public void method_1(string string_3, Color ThisColor)
+        public void method_1(string string_3, Color ThisColor, bool LogTime = true)
         {
             //try
             //{
@@ -530,6 +530,7 @@ namespace app
                 }
                 else
                 {
+                    string_3 = string_3 + " " + GameStruc_0.GetTimeNow();
                     Console.WriteLine(string_3);
                     richTextBox1.SelectionColor = ThisColor;
                     richTextBox1.AppendText(string_3 + Environment.NewLine);
@@ -558,7 +559,7 @@ namespace app
                     string LogThis = string_3+ " in " + Town_0.getAreaName((int) PlayerScan_0.levelNo) + " " + GameStruc_0.GetTimeNow();
                     richTextBox2.SelectionColor = ThisColor;
                     richTextBox2.AppendText(LogThis + Environment.NewLine);
-                    method_1(LogThis, ThisColor);
+                    method_1(LogThis, ThisColor, false);
                     Application.DoEvents();
                 }
             //}
@@ -750,7 +751,7 @@ namespace app
             if (PublicGame) KeyMouse_0.ProcessingDelay = 5;
             else KeyMouse_0.ProcessingDelay = 2;
             GameStruc_0.AlreadyChickening = false;
-            PatternsScan_0.StartIndexItemLast = long.MaxValue;
+            //PatternsScan_0.StartIndexItemLast = long.MaxValue;
             //PatternsScan_0.ScanUnitsNumber = 2600;
             PatternsScan_0.ScanUnitsNumber = 2400;
             //PatternsScan_0.ScanUnitsNumber = 2048;
@@ -1281,8 +1282,8 @@ namespace app
                         Form1_0.SetGameStatus("CONNECTING TO BNET!");
                         GameStruc_0.ClicCreateNewChar();
                     }
-                    else
-                    {
+                    //else
+                    //{
                         ChangeCharScript();
 
                         if (CharConfig.IsRushing)
@@ -1342,7 +1343,7 @@ namespace app
                                 Form1_0.SetGameStatus("IDLE");
                             }
                         }
-                    }
+                    //}
                 }
             }
 
@@ -1350,8 +1351,6 @@ namespace app
 
             if (Running) LoopTimer.Start();
             //if (!Running) SetStartButtonEnable(true);
-            //if (Running && LoopDone < 1) LoopTimer.Start();
-            //LoopDone++;
         }
 
         public void GoToNextScript()

@@ -385,7 +385,7 @@ Perfect Diamond
 //##### Scepters
 //[Name] == MightyScepter && [Quality] == unique && [Sockets] >= 2 && [EnhancedDamage] >= 270 && [PaladinSkills] >= 3 && [IAS] >= 20 // Heaven's Light
 //[Name] == MightyScepter && [Quality] == unique && [EnhancedDamage] >= 270 && [NormalDamage] >= 90 && [RequirementPercent] <= -60 // The Redeemer
-//[Name] == Caduceus && [Quality] == unique && [EnhancedDamage] >= 260 && [PaliCombatSkillTab] >= 3 // Astreon's Iron Ward
+//[Name] == Caduceus && [Quality] == unique && [EnhancedDamage] >= 260 && [PalidinCombatSkillTab] >= 3 // Astreon's Iron Ward
 
 //##### Spears
 //[Name] == Fuscina && [Quality] == unique && [Flag] == ethereal && [EnhancedDamage] >= 180 // Kelpie Snare
@@ -744,10 +744,10 @@ Perfect Diamond
 //##### Shields
 //[Name] == Monarch && [Quality] == magic && [Flag] != ethereal && [Sockets] >= 4 && [Defense] >= 140 && [FBR] >= 30
 //[Type] == auricshields && [Class] == elite && [Quality] == magic && [Flag] != ethereal && [PaladinSkills] == 2 && [FBR] == 30 && [FireResist] >= 30
-//[Type] == auricshields && [Class] == elite && [Quality] == magic && [Flag] != ethereal && [PaliCombatSkillTab] == 3 && [FBR] == 30 && [FireResist] >= 30
+//[Type] == auricshields && [Class] == elite && [Quality] == magic && [Flag] != ethereal && [PalidinCombatSkillTab] == 3 && [FBR] == 30 && [FireResist] >= 30
 //[Type] == auricshields && [Class] == elite && [Quality] == magic && [Flag] != ethereal && [Sockets] == 4 && [FBR] == 30 && [FireResist] >= 30
 //[Type] == auricshields && [Class] == elite && [Quality] == magic && [Flag] != ethereal && [PaladinSkills] == 2 && [FBR] == 30 && [EnhancedDamage] >= 60 && [AttackRating] >= 120
-//[Type] == auricshields && [Class] == elite && [Quality] == magic && [Flag] != ethereal && [PaliCombatSkillTab] == 3 && [FBR] == 30 && [EnhancedDamage] >= 60 && [AttackRating] >= 120
+//[Type] == auricshields && [Class] == elite && [Quality] == magic && [Flag] != ethereal && [PalidinCombatSkillTab] == 3 && [FBR] == 30 && [EnhancedDamage] >= 60 && [AttackRating] >= 120
 //[Type] == auricshields && [Class] == elite && [Quality] == magic && [Flag] != ethereal && [Sockets] == 4 && [FBR] == 30 && [EnhancedDamage] >= 60 && [AttackRating] >= 120
 //[Type] == auricshields && [Class] == elite && [Quality] == magic && [Flag] != ethereal && [Sockets] == 4 && [FBR] == 30
 //[Type] == auricshields && [Class] == elite && [Quality] == magic && [Flag] != ethereal && [Sockets] == 4 && [LifeMax] >= 60
@@ -1016,18 +1016,18 @@ Perfect Diamond
 //[Name] == GrandCharm && [Quality] == magic && [Strength] == 4
 [Name] == GrandCharm && [Quality] == magic && [AddSkillTab] == 1
 //[Name] == GrandCharm && [Quality] == magic && [ManaMax] >= 59 && [FasterHitRecovery] == 12
-//[Name] == GrandCharm && [Quality] == magic && [BowandCrossbowSkillTab] == 1 // WILL NO WORK -> Char specific skills not set
-//[Name] == GrandCharm && [Quality] == magic && [FireSkillTab] == 1 // fire // WILL NO WORK -> Char specific skills not set
-//[Name] == GrandCharm && [Quality] == magic && [LightningSkillTab] == 1 // lightning // WILL NO WORK -> Char specific skills not set
-//[Name] == GrandCharm && [Quality] == magic && [ColdSkillTab] == 1 // cold WILL NO WORK -> Char specific skills not set
-//[Name] == GrandCharm && [Quality] == magic && [PoisonandBoneSkillTab] == 1 // WILL NO WORK -> Char specific skills not set
-//[Name] == GrandCharm && [Quality] == magic && [PoisonandBoneSkillTab] == 1 // WILL NO WORK -> Char specific skills not set
-//[Name] == GrandCharm && [Quality] == magic && [NecromancerSummoningSkillTab] == 1 // WILL NO WORK -> Char specific skills not set
-//[Name] == GrandCharm && [Quality] == magic && [NecromancerSummoningSkillTab] == 1 // WILL NO WORK -> Char specific skills not set
-//[Name] == GrandCharm && [Quality] == magic && [PaliCombatSkillTab] == 1 // paladin combat WILL NO WORK -> Char specific skills not set
-//[Name] == GrandCharm && [Quality] == magic && [BarbCombatSkillTab] == 1 // barbarian combat WILL NO WORK -> Char specific skills not set
-//[Name] == GrandCharm && [Quality] == magic && [ElementalSkillTab] == 1 // elemental WILL NO WORK -> Char specific skills not set
-//[Name] == GrandCharm && [Quality] == magic && [TrapsSkillTab] == 1 // trap  WILL NO WORK -> Char specific skills not set
+//[Name] == GrandCharm && [Quality] == magic && [BowandCrossbowSkillTab] == 1
+//[Name] == GrandCharm && [Quality] == magic && [FireSkillTab] == 1 // fire
+//[Name] == GrandCharm && [Quality] == magic && [LightningSkillTab] == 1 // lightning
+//[Name] == GrandCharm && [Quality] == magic && [ColdSkillTab] == 1 // cold 
+//[Name] == GrandCharm && [Quality] == magic && [PoisonandBoneSkillTab] == 1
+//[Name] == GrandCharm && [Quality] == magic && [PoisonandBoneSkillTab] == 1
+//[Name] == GrandCharm && [Quality] == magic && [NecromancerSummoningSkillTab] == 1
+//[Name] == GrandCharm && [Quality] == magic && [NecromancerSummoningSkillTab] == 1
+//[Name] == GrandCharm && [Quality] == magic && [PalidinCombatSkillTab] == 1 // paladin combat
+//[Name] == GrandCharm && [Quality] == magic && [BarbarianCombatSkillTab] == 1 // barbarian combat
+//[Name] == GrandCharm && [Quality] == magic && [ElementalSkillTab] == 1 // elemental
+//[Name] == GrandCharm && [Quality] == magic && [TrapsSkillTab] == 1 // trap
 
 
 //#######################################

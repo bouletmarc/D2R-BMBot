@@ -134,6 +134,9 @@ namespace app
             xPosFinal = (ushort)(xPos + xPosOffsetPercent);
             yPosFinal = (ushort)(yPos + yPosOffsetPercent);
 
+            //long UnitID = Form1_0.Mem_0.ReadInt64Raw((IntPtr)(PlayerPointer + 8));
+            //Console.WriteLine("PlayerID: 0x" + UnitID.ToString("X"));
+
             //Console.WriteLine("X: " + xPos);
             //Console.WriteLine("Off: " + Form1_0.Mem_0.ReadByteRaw((IntPtr)(pathAddress + 0x02)).ToString("X2"));
             //Console.WriteLine("Off: " + Form1_0.Mem_0.ReadByteRaw((IntPtr)(pathAddress + 0x03)).ToString("X2"));
