@@ -110,7 +110,7 @@ namespace app
                 }
             }
 
-            Form1_0.LeaveGame(false);
+            if (IsLeaving) Form1_0.LeaveGame(false);
 
             return IsLeaving;
         }
