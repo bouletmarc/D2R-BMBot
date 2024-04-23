@@ -26,6 +26,7 @@ namespace app
 
         public bool IsPositionNearOf(int ThisX, int ThisY, int Offset)
         {
+            //Form1_0.PlayerScan_0.GetPositions();
             if (Form1_0.PlayerScan_0.xPosFinal >= (ThisX - Offset)
                 && Form1_0.PlayerScan_0.xPosFinal <= (ThisX + Offset)
                 && Form1_0.PlayerScan_0.yPosFinal >= (ThisY - Offset)
@@ -68,8 +69,7 @@ namespace app
             }
 
             //fix town act5 stuck near bolder
-            if (Form1_0.Town_0.GetInTown()
-                && IsPositionNearOf(5093, 5034, 2))
+            if (Form1_0.Town_0.GetInTown() && IsPositionNearOf(5093, 5034, 2))
             {
                 MoveToLocationAttack(5096, 5024);
             }
@@ -185,7 +185,8 @@ namespace app
                 if (IsPositionNearOf(ThisX, ThisY, MoveAcceptOffset)) break;
 
                 //teleport again
-                if (AllowFastMove)
+                /*Form1_0.PlayerScan_0.GetPositions();
+                if (AllowFastMove && !IsPositionNearOf(ThisX, ThisY, MoveAcceptOffset))
                 {
                     if (Form1_0.Town_0.GetInTown())
                     {
@@ -198,13 +199,12 @@ namespace app
                         if (CharConfig.UseTeleport) AllowFastMove = true;
                     }
 
-                    Form1_0.PlayerScan_0.GetPositions();
                     itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, ThisX, ThisY);
                     itemScreenPos = FixMouseYPosition(itemScreenPos);
                     Form1_0.KeyMouse_0.MouseCliccRight_RealPos(itemScreenPos["x"], itemScreenPos["y"]);
-                }
+                }*/
 
-                if (TryMove >= MaxMoveTry)
+                if (TryMove >= MaxMoveTry  && (!CharConfig.UseTeleport || (CharConfig.UseTeleport && Form1_0.Town_0.GetInTown())))
                 {
                     if (!AllowMoveSideWay)
                     {
@@ -227,13 +227,10 @@ namespace app
                     if (TryMove2 == 3) Form1_0.KeyMouse_0.MouseMoveTo(Form1_0.ScreenX / 2, Form1_0.ScreenY / 2 - 250);
                     if (TryMove2 == 4) Form1_0.KeyMouse_0.MouseMoveTo(Form1_0.ScreenX / 2, Form1_0.ScreenY / 2 + 250);*/
 
-                    if (!CharConfig.UseTeleport || (CharConfig.UseTeleport && Form1_0.Town_0.GetInTown()))
-                    {
-                        Form1_0.KeyMouse_0.MouseClicRelease();
-                        Form1_0.KeyMouse_0.ReleaseKey(System.Windows.Forms.Keys.E);
-                        Form1_0.KeyMouse_0.MouseClicHoldWithoutRelease();
-                        Form1_0.KeyMouse_0.PressKeyHold(System.Windows.Forms.Keys.E);
-                    }
+                    Form1_0.KeyMouse_0.MouseClicRelease();
+                    Form1_0.KeyMouse_0.ReleaseKey(System.Windows.Forms.Keys.E);
+                    Form1_0.KeyMouse_0.MouseClicHoldWithoutRelease();
+                    Form1_0.KeyMouse_0.PressKeyHold(System.Windows.Forms.Keys.E);
 
                     Form1_0.WaitDelay(4);
 
@@ -258,55 +255,8 @@ namespace app
             }
             Form1_0.KeyMouse_0.PressKey(CharConfig.KeySkillDefenseAura);
 
-            //#######
-            //finish moving
-            /*if (MovedCorrectly && !AllowFastMove)
-            {
-                FinishMoving();
-            }*/
-            //#######
-
             Form1_0.overlayForm.ResetMoveToLocation();
             return MovedCorrectly;
-        }
-
-        public void FinishMoving()
-        {
-            return; //not needed anymore???
-
-            int LastX = Form1_0.PlayerScan_0.xPosFinal;
-            int LastY = Form1_0.PlayerScan_0.yPosFinal;
-
-            Form1_0.PlayerScan_0.GetPositions();
-            Form1_0.overlayForm.UpdateOverlay();
-            bool IsMoving = true;
-            int Triess = 0;
-
-            while (IsMoving)
-            {
-                if (!Form1_0.GameStruc_0.IsInGame() || !Form1_0.Running)
-                {
-                    return;
-                }
-
-                if (Form1_0.PlayerScan_0.xPosFinal == LastX
-                    || Form1_0.PlayerScan_0.yPosFinal == LastY)
-                {
-                    IsMoving = false;
-                }
-
-                Application.DoEvents();
-                Form1_0.PlayerScan_0.GetPositions();
-                Form1_0.Potions_0.CheckIfWeUsePotion();
-                Form1_0.ItemsStruc_0.GetItems(false);
-                Form1_0.overlayForm.UpdateOverlay();
-
-                LastX = Form1_0.PlayerScan_0.xPosFinal;
-                LastY = Form1_0.PlayerScan_0.yPosFinal;
-
-                Triess++;
-                if (Triess >= 20) IsMoving = false;
-            }
         }
 
         //This will FAST move to a direct location -> no pathfinding (used for attacking mobs)
@@ -342,12 +292,12 @@ namespace app
             Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, ThisX, ThisY);
             itemScreenPos = FixMouseYPosition(itemScreenPos);
 
-            if (!CharConfig.UseTeleport || (CharConfig.UseTeleport && Form1_0.Town_0.GetInTown()))
-            {
+            //if (!CharConfig.UseTeleport || (CharConfig.UseTeleport && Form1_0.Town_0.GetInTown()))
+            //{
                 Form1_0.KeyMouse_0.MouseMoveTo_RealPos(itemScreenPos["x"], itemScreenPos["y"]);
                 Form1_0.KeyMouse_0.MouseClicHoldWithoutRelease();
                 Form1_0.KeyMouse_0.PressKeyHold(System.Windows.Forms.Keys.E);
-            }
+            //}
             if (Form1_0.Town_0.GetInTown()) Form1_0.KeyMouse_0.PressKey(CharConfig.KeySkillfastMoveAtTown);
             else Form1_0.KeyMouse_0.PressKey(CharConfig.KeySkillfastMoveOutsideTown);
 
@@ -393,11 +343,11 @@ namespace app
             bool MovedCorrectly = false;
             if (IsPositionNearOf(ThisX, ThisY, MoveAcceptOffset)) MovedCorrectly = true;
 
-            if (!CharConfig.UseTeleport || (CharConfig.UseTeleport && Form1_0.Town_0.GetInTown()))
-            {
-                //Form1_0.KeyMouse_0.MouseClicRelease();
+            //if (!CharConfig.UseTeleport || (CharConfig.UseTeleport && Form1_0.Town_0.GetInTown()))
+            //{
+                Form1_0.KeyMouse_0.MouseClicRelease();
                 Form1_0.KeyMouse_0.ReleaseKey(System.Windows.Forms.Keys.E);
-            }
+            //}
             //Form1_0.KeyMouse_0.PressKey(CharConfig.KeySkillDefenseAura);
 
             
@@ -407,16 +357,20 @@ namespace app
 
         public Dictionary<string, int> FixMouseYPosition(Dictionary<string, int> itemScreenPos)
         {
+            Dictionary<string, int> itemScreenPos2 = new Dictionary<string, int>();
+            itemScreenPos2["x"] = itemScreenPos["x"];
+            itemScreenPos2["y"] = itemScreenPos["y"];
+
             //calculate new Y clicking offset, else it will clic on bottom menu items
-            if (itemScreenPos["y"] >= (Form1_0.D2Height + Form1_0.ScreenYOffset - Form1_0.ScreenYMenu))
+            if (itemScreenPos2["y"] >= (Form1_0.D2Height + Form1_0.ScreenYOffset - Form1_0.ScreenYMenu))
             {
-                int DiffX = Form1_0.CenterX - itemScreenPos["x"];
-                itemScreenPos["x"] = (int)(itemScreenPos["x"] + (DiffX / 6));
-                itemScreenPos["y"] = (Form1_0.D2Height + Form1_0.ScreenYOffset - Form1_0.ScreenYMenu);
-                //Console.WriteLine("corrected pos from: " + Sx + "," + Sy + " to: " + itemScreenPos["x"] + "," + itemScreenPos["y"]);
+                int DiffX = Form1_0.CenterX - itemScreenPos2["x"];
+                itemScreenPos2["x"] = (int)(itemScreenPos2["x"] + (DiffX / 6));
+                itemScreenPos2["y"] = (Form1_0.D2Height + Form1_0.ScreenYOffset - Form1_0.ScreenYMenu);
+                //Console.WriteLine("corrected pos from: " + Sx + "," + Sy + " to: " + itemScreenPos2["x"] + "," + itemScreenPos2["y"]);
             }
 
-            return itemScreenPos;
+            return itemScreenPos2;
         }
     }
 }

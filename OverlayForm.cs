@@ -371,8 +371,11 @@ namespace app
                     if (LogsTextColor[ThisIndexInverted] == Color.Black) LogsTextColor[ThisIndexInverted] = Color.White;
                     if (LogsTextColor[ThisIndexInverted] == Color.DarkBlue) LogsTextColor[ThisIndexInverted] = Color.LightBlue;
                     if (LogsTextColor[ThisIndexInverted] == Color.DarkGreen) LogsTextColor[ThisIndexInverted] = Color.LightGreen;
-                    if (LogsTextColor[ThisIndexInverted] == Color.DarkMagenta) LogsTextColor[ThisIndexInverted] = Color.Magenta;
+                    if (LogsTextColor[ThisIndexInverted] == Color.DarkMagenta) LogsTextColor[ThisIndexInverted] = Color.FromArgb(255, 255, 120, 255);
                     if (LogsTextColor[ThisIndexInverted] == Color.OrangeRed) LogsTextColor[ThisIndexInverted] = Color.Orange;
+                    if (LogsTextColor[ThisIndexInverted] == Color.Red) LogsTextColor[ThisIndexInverted] = Color.LightPink;
+                    if (LogsTextColor[ThisIndexInverted] == System.Drawing.ColorTranslator.FromHtml("#0005ff")) LogsTextColor[ThisIndexInverted] = Color.LightBlue;
+                    if (LogsTextColor[ThisIndexInverted] == System.Drawing.ColorTranslator.FromHtml("#6a6a6a")) LogsTextColor[ThisIndexInverted] = Color.LightGray;
 
                     SolidBrush drawBrushCustom = new SolidBrush(Color.FromArgb(200, LogsTextColor[ThisIndexInverted].R, LogsTextColor[ThisIndexInverted].G, LogsTextColor[ThisIndexInverted].B));
                     string ThisLogTxt = LogsTexts[ThisIndexInverted];
@@ -396,6 +399,20 @@ namespace app
                 string OtherInfosTxt2 = Form1_0.CurrentGameNumberFullyDone.ToString() + " Done, " + Form1_0.TotalDeadCount + " Dead";
                 ThisS2 = e.Graphics.MeasureString(OtherInfosTxt2, drawFontBold);
                 DrawString(e, OtherInfosTxt2, drawFontBold, drawBrushWhite, 1360 - (ThisS2.Width * ScaleScreenSizeInverted), 910, true);
+
+                //Print Merc
+                if (CharConfig.UsingMerc)
+                {
+                    string ThisMercTxt = "Merc not alive";
+                    if (Form1_0.MercStruc_0.MercAlive)
+                    {
+
+                        int PercentMerc = (int)((Form1_0.MercStruc_0.MercHP * 100.0) / Form1_0.MercStruc_0.MercMaxHP);
+                        ThisMercTxt = "Merc:" + Form1_0.MercStruc_0.MercHP.ToString() + "/" + Form1_0.MercStruc_0.MercMaxHP.ToString() + " (" + PercentMerc + "%)";
+                    }
+                    ThisS2 = e.Graphics.MeasureString(ThisMercTxt, drawFontBold);
+                    DrawString(e, ThisMercTxt, drawFontBold, drawBrushGreen, 1360 - (ThisS2.Width * ScaleScreenSizeInverted), 860, true);
+                }
 
                 if (CanDisplayOverlay)
                 {

@@ -28,6 +28,7 @@ using System.Timers;
 using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
 using System.Xml.Linq;
+using System.Net.Http;
 using static app.Enums;
 using static app.Form1;
 using static System.Collections.Specialized.BitVector32;
@@ -41,7 +42,7 @@ namespace app
     public partial class Form1 : Form
     {
 
-        public string BotVersion = "V2.3";
+        public string BotVersion = "V2.4";
 
         public string D2_LOD_113C_Path = "";
 
@@ -436,6 +437,52 @@ namespace app
             dataGridView1.Rows.Add("Left Open", "Unknown");
             dataGridView1.Rows.Add("Right Open", "Unknown");
             dataGridView1.Rows.Add("Full Open", "Unknown");
+
+            CheckForUpdates();
+        }
+
+        public void CheckForUpdates()
+        {
+            string url = "https://raw.githubusercontent.com/bouletmarc/D2R-BMBot/main/Form1.cs";
+
+            using (HttpClient client = new HttpClient())
+            {
+                try
+                {
+                    HttpResponseMessage response = client.GetAsync(url).Result;
+                    response.EnsureSuccessStatusCode();
+                    string responseBody = response.Content.ReadAsStringAsync().Result;
+
+                    if (responseBody.Contains("public string BotVersion = "))
+                    {
+                        double ThisVersionOnline = double.Parse(responseBody.Substring(responseBody.IndexOf('=') + 4, 3), System.Globalization.CultureInfo.InvariantCulture);
+                        double ThisVersionCurrent = double.Parse(BotVersion.Substring(1, 3), System.Globalization.CultureInfo.InvariantCulture);
+
+                        if (ThisVersionOnline > ThisVersionCurrent)
+                        {
+                            method_1("New update V" + ThisVersionOnline + " available on github!", Color.Red);
+                            buttonUpdate.Visible = true;
+                        }
+                        else if (ThisVersionOnline == ThisVersionCurrent)
+                        {
+                            method_1("BMBot is updated!", Color.DarkGreen);
+                        }
+                        else if (ThisVersionOnline < ThisVersionCurrent)
+                        {
+                            method_1("BMBot is updated (Development Version)!", Color.DarkGreen);
+                        }
+                    }
+                    else
+                    {
+                        method_1("Couldn't check for updates!", Color.Red);
+                    }
+                }
+                catch (HttpRequestException e)
+                {
+                    method_1("Couldn't check for updates! Error:", Color.Red);
+                    method_1(e.Message, Color.Red);
+                }
+            }
         }
 
         public void LeaveGame(bool BotCompletlyDone)
@@ -898,6 +945,13 @@ namespace app
                                     //itemScreenPos = Mover_0.FixMouseYPosition(itemScreenPos);
                                     //Form1_0.KeyMouse_0.MouseMoveTo_RealPos(itemScreenPos["x"], itemScreenPos["y"]);
                                     //return;
+
+                                    if (CharConfig.RunMapHackOnly)
+                                    {
+                                        SetProcessingTime();
+                                        if (Running) LoopTimer.Start();
+                                        return;
+                                    }
 
                                     if (!ItemsStruc_0.GetItems(true))
                                     {
@@ -1899,6 +1953,11 @@ namespace app
         {
             FormD2LOD FormD2LOD_0 = new FormD2LOD(Form1_0);
             FormD2LOD_0.ShowDialog();
+        }
+
+        private void buttonUpdate_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://github.com/bouletmarc/D2R-BMBot/releases");
         }
     }
 }

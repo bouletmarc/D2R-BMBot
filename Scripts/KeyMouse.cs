@@ -309,17 +309,15 @@ namespace app
             }
         }
 
-        public delegate IntPtr LowLevelKeyboardProc(
-            int nCode, IntPtr wParam, IntPtr lParam);
+        public delegate IntPtr LowLevelKeyboardProc(int nCode, IntPtr wParam, IntPtr lParam);
 
-        public IntPtr HookCallback(
-            int nCode, IntPtr wParam, IntPtr lParam)
+        public IntPtr HookCallback(int nCode, IntPtr wParam, IntPtr lParam)
         {
             if (nCode >= 0 && wParam == (IntPtr)WM_KEYDOWN)
             {
                 int vkCode = Marshal.ReadInt32(lParam);
 
-                if (vkCode == 0x65) //numpad5
+                if (vkCode == (int) CharConfig.StartStopKey) //numpad5
                 {
                     Form1_0.button1_Click(null, null);
                 }

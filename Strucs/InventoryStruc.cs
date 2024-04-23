@@ -16,6 +16,7 @@ namespace app
         public int[] InventoryHasItem = new int[40];
         public int[] InventoryHasUnidItem = new int[40];
         public int[] InventoryHasStashItem = new int[40];
+        public int[] InventoryHasItemToID = new int[40];
         public long[] InventoryItemPointers = new long[40];
         public string[] InventoryItemNames = new string[40];
         public int[] InventoryItemQuality = new int[40];
@@ -226,7 +227,7 @@ namespace app
             for (int i = 0; i < 40; i++)
             {
                 Form1_0.UIScan_0.OpenUIMenu("invMenu");
-                if (CharConfig.InventoryDontCheckItem[i] == 0 && InventoryHasItem[i] >= 1 && InventoryHasStashItem[i] == 0)
+                if (CharConfig.InventoryDontCheckItem[i] == 0 && InventoryHasItem[i] >= 1 && InventoryHasItemToID[i] == 0)
                 {
                     //pick key item from this slot
                     Dictionary<string, int> itemScreenPos = Form1_0.InventoryStruc_0.ConvertIndexToXY(i);
@@ -263,6 +264,7 @@ namespace app
         public void ResetInventory()
         {
             InventoryHasItem = new int[40];
+            InventoryHasItemToID = new int[40];
             InventoryHasUnidItem = new int[40];
             InventoryItemPointers = new long[40];
             InventoryItemNames = new string[40];
@@ -285,6 +287,10 @@ namespace app
                 if (Form1_0.ItemsAlert_0.ShouldKeepItem())
                 {
                     InventoryHasStashItem[FullIndex] = 1;
+                }
+                if (Form1_0.ItemsAlert_0.ShouldPickItem(false))
+                {
+                    InventoryHasItemToID[FullIndex] = 1;
                 }
 
                 if (!Form1_0.ItemsStruc_0.identified)

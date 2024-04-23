@@ -95,7 +95,7 @@ namespace app
                             }
                             if (AllMapData[i].Objects[k].Type == "npc" && ObjectType == "npc")
                             {
-                                if (Form1_0.NPCStruc_0.getNPC_ID(int.Parse(AllMapData[i].Objects[k].ID)) == ObjectName)
+                                if (((EnumsMobsNPC.MonsterType)(int.Parse(AllMapData[i].Objects[k].ID))).ToString().ToLower().Contains(ObjectName.ToLower()))
                                 {
                                     ThisPos.X = AllMapData[i].Offset.X + AllMapData[i].Objects[k].X;
                                     ThisPos.Y = AllMapData[i].Offset.Y + AllMapData[i].Objects[k].Y;
@@ -191,7 +191,7 @@ namespace app
                         if (AllMapData[i].Objects[k].Type == "npc" && ObjectType == "npc")
                         {
                             //Console.WriteLine("NPC: " + Form1_0.NPCStruc_0.getNPC_ID(int.Parse(AllMapData[i].Objects[k].ID)));
-                            if ((Form1_0.NPCStruc_0.getNPC_ID(int.Parse(AllMapData[i].Objects[k].ID)) == ObjectName && !IgnoreName)
+                            if ((((EnumsMobsNPC.MonsterType)(int.Parse(AllMapData[i].Objects[k].ID))).ToString().ToLower().Contains(ObjectName.ToLower()) && !IgnoreName)
                                 || IgnoreName)
                             {
                                 ThisPos.X = AllMapData[i].Offset.X + AllMapData[i].Objects[k].X;
@@ -301,14 +301,14 @@ namespace app
                         if (AllMapData[i].Objects[k].Type == "npc" && ObjectType == "npc")
                         {
                             //Console.WriteLine("NPC: " + Form1_0.NPCStruc_0.getNPC_ID(int.Parse(AllMapData[i].Objects[k].ID)));
-                            if ((Form1_0.NPCStruc_0.getNPC_ID(int.Parse(AllMapData[i].Objects[k].ID)) == ObjectName && !IgnoreName)
+                            if ((((EnumsMobsNPC.MonsterType)(int.Parse(AllMapData[i].Objects[k].ID))).ToString().ToLower().Contains(ObjectName.ToLower()) && !IgnoreName)
                                 || IgnoreName)
                             {
                                 ThisPos.Add(new Position { X = AllMapData[i].Offset.X + AllMapData[i].Objects[k].X, Y = AllMapData[i].Offset.Y + AllMapData[i].Objects[k].Y });
 
                                 if (DebuggingMapData)
                                 {
-                                    Form1_0.AppendTextDebugMapData("ID:" + AllMapData[i].Objects[k].ID + "(" + Form1_0.NPCStruc_0.getNPC_ID(int.Parse(AllMapData[i].Objects[k].ID)) + ") at:" + (AllMapData[i].Offset.X + AllMapData[i].Objects[k].X) + ", " + (AllMapData[i].Offset.Y + AllMapData[i].Objects[k].Y) + Environment.NewLine);
+                                    Form1_0.AppendTextDebugMapData("ID:" + AllMapData[i].Objects[k].ID + "(" + (EnumsMobsNPC.MonsterType)(int.Parse(AllMapData[i].Objects[k].ID)) + ") at:" + (AllMapData[i].Offset.X + AllMapData[i].Objects[k].X) + ", " + (AllMapData[i].Offset.Y + AllMapData[i].Objects[k].Y) + Environment.NewLine);
                                 }
                             }
                         }

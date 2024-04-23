@@ -58,7 +58,7 @@ namespace app
                         int MaxTries = 1;
                         while (true)
                         {
-                            if (!Form1_0.Running || !Form1_0.GameStruc_0.IsInGame()) 
+                            if (!Form1_0.Running || !Form1_0.GameStruc_0.IsInGame())
                             {
                                 break;
                             }

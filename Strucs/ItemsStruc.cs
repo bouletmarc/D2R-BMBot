@@ -408,8 +408,11 @@ namespace app
                     {
                         if (!IsPickingItem && !HasGotTheBadItemOnCursor && !IsIncludedInList(BadItemsOnCursorIDList, ItemPointerLocation))
                         {
-                            Form1_0.method_1("Added bad item 'OnCursor':" + ItemNAAME, Color.OrangeRed);
-                            BadItemsOnCursorIDList.Add(ItemPointerLocation);
+                            if (ItemNAAME != "Horadric Cube")
+                            {
+                                Form1_0.method_1("Added bad item 'OnCursor':" + ItemNAAME, Color.OrangeRed);
+                                BadItemsOnCursorIDList.Add(ItemPointerLocation);
+                            }
                         }
                         else if (HasGotTheBadItemOnCursor && !IsIncludedInList(BadItemsOnCursorIDList, ItemPointerLocation))
                         {
@@ -568,14 +571,13 @@ namespace app
                                         itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, itemx, itemy);
                                     }
                                 }
-
-                                if (itemScreenPos["x"] == 0 && itemScreenPos["y"] == 0) continue;
+                                itemScreenPos = Form1_0.Mover_0.FixMouseYPosition(itemScreenPos);
 
                                 //##############################################
                                 //##############################################
                                 //detect bad items??
-                                if (((!Form1_0.ItemsAlert_0.ShouldPickItem(false) && !Form1_0.BeltStruc_0.ItemGrabPotion())
-                                    || (itemx == 0 && itemy == 0))
+                                if (((itemx <= 0 && itemy <= 0)
+                                    || (itemScreenPos["x"] <= 0 && itemScreenPos["y"] <= 0))
                                     && !IsIncludedInList(BadItemsOnGroundPointerList, ItemPointerLocation))
                                 {
                                     Form1_0.method_1("Added bad item 'OnGround':" + ItemNAAME, Color.OrangeRed);
@@ -589,7 +591,6 @@ namespace app
                                 }
                                 //##############################################
                                 //##############################################
-                                itemScreenPos = Form1_0.Mover_0.FixMouseYPosition(itemScreenPos);
 
                                 //####
                                 TriesToPickItemCount++;
@@ -603,6 +604,20 @@ namespace app
                                 {
                                     LastPick = ItemNAAME;
                                     Form1_0.method_1_Items("Picked: " + ItemNAAME, GetColorFromQuality((int) itemQuality));
+
+                                    //##############################################
+                                    //##############################################
+                                    //detect bad items??
+                                    /*if (((itemx <= 0 && itemy <= 0)
+                                        || (itemScreenPos["x"] <= 0 && itemScreenPos["y"] <= 0))
+                                        && !IsIncludedInList(BadItemsOnGroundPointerList, ItemPointerLocation))
+                                    {
+                                        Form1_0.method_1("Added bad item 'OnGround':" + ItemNAAME, Color.OrangeRed);
+                                        BadItemsOnGroundPointerList.Add(ItemPointerLocation);
+                                        continue;
+                                    }*/
+                                    //##############################################
+                                    //##############################################
 
                                     Form1_0.BeltStruc_0.ItemIsPotion();
                                     if (Form1_0.BeltStruc_0.IsItemHPPotion
@@ -829,6 +844,7 @@ namespace app
                 {
                     itemdatastruc = new byte[144];
                     Form1_0.Mem_0.ReadRawMemory(ItemPointerLocation, ref itemdatastruc, 144);
+                    ItemNAAME = Form1_0.ItemsNames_0.getItemBaseName(BitConverter.ToUInt32(itemdatastruc, 4));
                     GetStatsAddr();
                     GetUnitPathData();
                     //int ItemValue = GetValuesFromStats(Enums.Attribute.Value);
@@ -980,6 +996,11 @@ namespace app
                     ushort statEnum = BitConverter.ToUInt16(statBuffer, offset + 0x2);
                     int statValue = BitConverter.ToInt32(statBuffer, offset + 0x4);
 
+                    if (statEnum == 6 || statEnum == 7 || statEnum == 8 || statEnum == 9 || statEnum == 10 || statEnum == 11
+                        || statEnum == 216 || statEnum == 217)
+                    {
+                        if (statValue > 1000) statValue = statValue >> 8;
+                    }
                     if (statEnum == 56 || statEnum == 59) statValue = statValue / 25;
 
                     if (AllStats != "") AllStats += " && ";
@@ -997,6 +1018,11 @@ namespace app
                     ushort statEnum = BitConverter.ToUInt16(statBufferEx, offset + 0x2);
                     int statValue = BitConverter.ToInt32(statBufferEx, offset + 0x4);
 
+                    if (statEnum == 6 || statEnum == 7 || statEnum == 8 || statEnum == 9 || statEnum == 10 || statEnum == 11
+                        || statEnum == 216 || statEnum == 217)
+                    {
+                        if (statValue > 1000) statValue = statValue >> 8;
+                    }
                     if (statEnum == 56 || statEnum == 59) statValue = statValue / 25;
 
                     if (AllStats != "") AllStats += " && ";
@@ -1021,11 +1047,11 @@ namespace app
 
                     if (statEnum == (ushort)CheckTStat)
                     {
-                        /*if (statEnum == 6 || statEnum == 7 || statEnum == 8 || statEnum == 9 || statEnum == 10 || statEnum == 11
-                            || statEnum == 216 || statEnum == 217)
+                        if (statEnum == 6 || statEnum == 7 || statEnum == 8 || statEnum == 9 || statEnum == 10 || statEnum == 11
+                        || statEnum == 216 || statEnum == 217)
                         {
-                            return statValue >> 8;
-                        }*/
+                            if (statValue > 1000) return statValue >> 8;
+                        }
                         if (statEnum == 56 || statEnum == 59)
                         {
                             return statValue / 25;
@@ -1046,11 +1072,11 @@ namespace app
 
                     if (statEnum == (ushort)CheckTStat)
                     {
-                        /*if (statEnum == 6 || statEnum == 7 || statEnum == 8 || statEnum == 9 || statEnum == 10 || statEnum == 11
-                            || statEnum == 216 || statEnum == 217)
+                        if (statEnum == 6 || statEnum == 7 || statEnum == 8 || statEnum == 9 || statEnum == 10 || statEnum == 11
+                        || statEnum == 216 || statEnum == 217)
                         {
-                            return statValue >> 8;
-                        }*/
+                            if (statValue > 1000) return statValue >> 8;
+                        }
                         if (statEnum == 56 || statEnum == 59)
                         {
                             return statValue / 25;

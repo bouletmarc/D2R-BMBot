@@ -143,7 +143,6 @@ namespace app
                             Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, ThisFinalPosition.X, ThisFinalPosition.Y);
                             itemScreenPos = Form1_0.Mover_0.FixMouseYPosition(itemScreenPos);
                             Form1_0.KeyMouse_0.MouseClicc_RealPos(itemScreenPos["x"], itemScreenPos["y"] - 15);
-                            Form1_0.Mover_0.FinishMoving();
                             if (Form1_0.UIScan_0.WaitTilUIOpen("waypointMenu"))
                             {
                                 Form1_0.Town_0.SelectTownWP();
@@ -291,7 +290,6 @@ namespace app
                         Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, ThisFinalPosition.X, ThisFinalPosition.Y);
                         itemScreenPos = Form1_0.Mover_0.FixMouseYPosition(itemScreenPos);
                         Form1_0.KeyMouse_0.MouseClicc_RealPos(itemScreenPos["x"], itemScreenPos["y"] - 15);
-                        Form1_0.Mover_0.FinishMoving();
                         if (Form1_0.UIScan_0.WaitTilUIOpen("waypointMenu"))
                         {
                             Form1_0.Town_0.SelectTownWP();

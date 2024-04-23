@@ -116,8 +116,6 @@ namespace app
                 LastMobPos.X = xPosFinal;
                 LastMobPos.Y = yPosFinal;
             }
-            //Form1_0.method_1("Last mob: " + Form1_0.NPCStruc_0.getNPC_ID((int) txtFileNo) + " - " + MobsHP + "HP" + " - Pos:" + xPosFinal + ", " + yPosFinal, Color.Red);
-
             return true;
         }
 
@@ -187,10 +185,8 @@ namespace app
 
                             if (DebuggingMobs)
                             {
-                                Form1_0.AppendTextDebugMobs("ID:" + txtFileNo2 + "(" + Form1_0.NPCStruc_0.getNPC_ID((int)txtFileNo2) + ") at:" + xPosFinalAll + ", " + yPosFinalAll + " - HP:" + MobsHPAll + Environment.NewLine);
+                                Form1_0.AppendTextDebugMobs("ID:" + txtFileNo2 + "(" + (EnumsMobsNPC.MonsterType)((int)txtFileNo2) + ") at:" + xPosFinalAll + ", " + yPosFinalAll + " - HP:" + MobsHPAll + Environment.NewLine);
                             }
-
-                            //Console.WriteLine("found near mob " + Form1_0.NPCStruc_0.getNPC_ID((int)txtFileNo2) + " at: " + xPosFinal + ", " + yPosFinal + " HP:" + MobsHP);
 
                             if (xPosFinalAll != 0 && yPosFinalAll != 0)
                             {
@@ -323,7 +319,7 @@ namespace app
                             && (xPosFinal != 0 && yPosFinal != 0)//)
                             && IsThisMobInBound())
                         {
-                            if (CharConfig.LeaveDiabloClone && Form1_0.NPCStruc_0.getNPC_ID((int)Form1_0.MobsStruc_0.txtFileNo) == "Diabloclone")
+                            if (CharConfig.LeaveDiabloClone && (EnumsMobsNPC.MonsterType) txtFileNo == EnumsMobsNPC.MonsterType.Diabloclone)
                             {
                                 Form1_0.method_1("DClone found near, leaving game!", Color.Red);
                                 Form1_0.LeaveGame(false);
@@ -359,8 +355,6 @@ namespace app
                                 {
                                     if (!Nearest)
                                     {
-                                        //if (MobName != "BaalThrone") Form1_0.method_1("Boss mob: " + Form1_0.NPCStruc_0.getNPC_ID((int)txtFileNo) + " - " + MobHPBuffer + "HP" + " - Pos:" + xPosFinal + ", " + yPosFinal, Color.Red);
-
                                         MobsHP = MobHPBuffer;
                                         LastMobsPointerLocation = MobsPointerLocation;
                                         LastMobtxtFileNo = txtFileNo;
@@ -438,14 +432,8 @@ namespace app
                 LastMobPos.X = xPosFinal;
                 LastMobPos.Y = yPosFinal;
 
-                //Console.WriteLine("found near mob " + Form1_0.NPCStruc_0.getNPC_ID((int)txtFileNo) + " at: " + xPosFinal + ", " + yPosFinal + " HP:" + MobsHP);
                 return true;
             }
-
-            /*if (MobType == "getBossName")
-            {
-                if (MobName != "BaalThrone") Form1_0.method_1("Boss mob: " + MobName + " NOT FOUND!", Color.Red);
-            }*/
 
             return false;
         }

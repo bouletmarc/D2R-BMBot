@@ -33,3 +33,4 @@ C:\Users\boule\OneDrive\Documents\Visual Studio 2022\Projects\D2R-BMBot-main\bin
 C:\Users\boule\OneDrive\Documents\Visual Studio 2022\Projects\D2R-BMBot-main\obj\Debug\app.FormCharSettings.resources
 C:\Users\boule\OneDrive\Documents\Visual Studio 2022\Projects\D2R-BMBot-main\obj\Debug\app.FormItems.resources
 C:\Users\boule\OneDrive\Documents\Visual Studio 2022\Projects\D2R-BMBot-main\obj\Debug\app.FormD2LOD.resources
+C:\Users\boule\OneDrive\Documents\Visual Studio 2022\Projects\D2R-BMBot-main\obj\Debug\app.OverlayForm.resources

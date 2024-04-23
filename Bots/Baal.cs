@@ -40,6 +40,8 @@ namespace app
         public bool TryMovingAwayOnLeftSide = true;
         public int MaxMoveAwayTry = 2;
 
+        public int CheckingThroneBackMode = 0;
+
         public void SetForm1(Form1 form1_1)
         {
             Form1_0 = form1_1;
@@ -54,10 +56,11 @@ namespace app
             Wave5Cleared = false;
             IgnoredMobs = new List<long>();
             CornerClearedIndex = 0;
-            TimeSinceLastWaveDone = DateTime.Now;
+            TimeSinceLastWaveDone = DateTime.MaxValue;
             TimeSinceLastWaveSet = false;
             TeleportToBaalTry = 0;
             TryMovingAwayOnLeftSide = true;
+            CheckingThroneBackMode = 0;
         }
 
         public void DetectCurrentStep()
@@ -211,17 +214,30 @@ namespace app
                         {
                             Form1_0.PathFinding_0.MoveToThisPos(ThronePos, 2, true);
                         }
+                        else
+                        {
+                            TimeSinceLastWaveDone = DateTime.MaxValue;
+                            TimeSinceLastWaveSet = false;
+                            return;
+                        }
                     }
                     else
                     {
                         Form1_0.Battle_0.DoBattleScript(30);
+
+                        if (Form1_0.Battle_0.ClearingArea || Form1_0.Battle_0.DoingBattle)
+                        {
+                            TimeSinceLastWaveDone = DateTime.MaxValue;
+                            TimeSinceLastWaveSet = false;
+                            return;
+                        }
                     }
 
                     if (!Wave5Cleared)
                     {
                         if (Form1_0.PublicGame && Form1_0.PlayerScan_0.HasAnyPlayerInArea((int)Enums.Area.TheWorldstoneChamber))
                         {
-                            Form1_0.method_1("People detected in Worldstone chamber, switching to baal script!", Color.Red);
+                            Form1_0.method_1("People detected in Worldstone chamber, switching to baal script!", Color.OrangeRed);
 
                             Form1_0.KeyMouse_0.MouseClicc_RealPos(Form1_0.CenterX, Form1_0.ScreenYOffset); //drop possible items on curson to ground
                             CurrentStep++;
@@ -243,10 +259,33 @@ namespace app
                             Form1_0.Battle_0.CastSkillsNoMove();
                         }
 
-                        //STOP CASTING
-                        if (Form1_0.MobsStruc_0.GetMobs("", "", true, 25, IgnoredMobs))
+                        //STOP CASTING ERROR DETECTING MOBS/BAAL MOVED
+                        if ((DateTime.Now - TimeSinceLastWaveDone).TotalSeconds > 25)
                         {
-                            TimeSinceLastWaveDone = DateTime.Now;
+                            TimeSinceLastWaveDone = DateTime.MaxValue;
+                            TimeSinceLastWaveSet = false;
+
+                            if (CheckingThroneBackMode == 0)
+                            {
+                                Form1_0.method_1("Mobs undetected, moving back to clear Throne!", Color.OrangeRed);
+                                CornerClearedIndex = 0;
+                                CurrentStep--;
+                                CheckingThroneBackMode = 1;
+                                return;
+                            }
+                            else if (CheckingThroneBackMode == 1)
+                            {
+                                Form1_0.method_1("Mobs undetected, moving forward to Kill Baal!", Color.OrangeRed);
+                                CurrentStep++;
+                                CheckingThroneBackMode = 0;
+                                return;
+                            }
+                        }
+
+                        //STOP CASTING
+                        if (Form1_0.MobsStruc_0.GetMobs("", "", true, 30, IgnoredMobs))
+                        {
+                            TimeSinceLastWaveDone = DateTime.MaxValue;
                             TimeSinceLastWaveSet = false;
                             Form1_0.Battle_0.DoBattleScript(30);
                         }
@@ -262,7 +301,7 @@ namespace app
                             {
                                 if (Wave5Detected)
                                 {
-                                    if (!Form1_0.MobsStruc_0.GetMobs("", "", true, 25, IgnoredMobs)) 
+                                    if (!Form1_0.MobsStruc_0.GetMobs("", "", true, 30, IgnoredMobs)) 
                                     {
                                         Wave5Cleared = true;
                                     }
@@ -277,7 +316,6 @@ namespace app
                         CurrentStep++;
                     }
                 }
-
 
 
                 if (CurrentStep == 6)

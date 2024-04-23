@@ -30,6 +30,8 @@ namespace app
         public bool DoingBattle = false;
         public bool ClearingFullArea = false;
 
+        public int TriedToMoveToMobsCount = 0;
+
         public void SetForm1(Form1 form1_1)
         {
             Form1_0 = form1_1;
@@ -337,7 +339,19 @@ namespace app
                 SetBattleMoveAcceptOffset();
                 Form1_0.Mover_0.MoveAcceptOffset = 2;
                 Position ThisAttackPos = GetBestAttackLocation(new Position { X = Form1_0.MobsStruc_0.xPosFinal + 1, Y = Form1_0.MobsStruc_0.yPosFinal + 5 });
-                if (ThisAttackPos.X != 0 && ThisAttackPos.Y != 0) Form1_0.Mover_0.MoveToLocationAttack(ThisAttackPos.X, ThisAttackPos.Y);
+                if (ThisAttackPos.X != 0 && ThisAttackPos.Y != 0)
+                {
+                    if (!Form1_0.Mover_0.MoveToLocationAttack(ThisAttackPos.X, ThisAttackPos.Y))
+                    {
+                        TriedToMoveToMobsCount++;
+                        if (TriedToMoveToMobsCount >= 2)
+                        {
+                            ThisAttackPos = ResetMovePostionInBetween(ThisAttackPos);
+                            Form1_0.Mover_0.MoveToLocationAttack(ThisAttackPos.X, ThisAttackPos.Y);
+                            TriedToMoveToMobsCount = 0;
+                        }
+                    }
+                }
                 //Form1_0.Mover_0.MoveToLocationAttack(Form1_0.MobsStruc_0.xPosFinal - 1, Form1_0.MobsStruc_0.yPosFinal + 2);
                 Form1_0.Mover_0.MoveAcceptOffset = 4;
                 ResetBattleMoveAcceptOffset();
@@ -354,6 +368,7 @@ namespace app
             }
             else
             {
+                TriedToMoveToMobsCount = 0;
                 DoingBattle = false;
                 FirstAttackCasted = false;
                 ResetBattleMoveAcceptOffset();
@@ -371,7 +386,19 @@ namespace app
                 SetBattleMoveAcceptOffset();
                 Form1_0.Mover_0.MoveAcceptOffset = 2;
                 Position ThisAttackPos = GetBestAttackLocation(new Position { X = Form1_0.MobsStruc_0.xPosFinal + 1, Y = Form1_0.MobsStruc_0.yPosFinal + 5 });
-                if (ThisAttackPos.X != 0 && ThisAttackPos.Y != 0) Form1_0.Mover_0.MoveToLocationAttack(ThisAttackPos.X, ThisAttackPos.Y);
+                if (ThisAttackPos.X != 0 && ThisAttackPos.Y != 0)
+                {
+                    if (!Form1_0.Mover_0.MoveToLocationAttack(ThisAttackPos.X, ThisAttackPos.Y))
+                    {
+                        TriedToMoveToMobsCount++;
+                        if (TriedToMoveToMobsCount >= 2)
+                        {
+                            ThisAttackPos = ResetMovePostionInBetween(ThisAttackPos);
+                            Form1_0.Mover_0.MoveToLocationAttack(ThisAttackPos.X, ThisAttackPos.Y);
+                            TriedToMoveToMobsCount = 0;
+                        }
+                    }
+                }
                 //Form1_0.Mover_0.MoveToLocationAttack(Form1_0.MobsStruc_0.xPosFinal - 1, Form1_0.MobsStruc_0.yPosFinal + 2);
                 Form1_0.Mover_0.MoveAcceptOffset = 4;
                 ResetBattleMoveAcceptOffset();
@@ -388,6 +415,7 @@ namespace app
                 return true;
             }
 
+            TriedToMoveToMobsCount = 0;
             DoingBattle = false;
             FirstAttackCasted = false;
             return false;
@@ -401,7 +429,19 @@ namespace app
                 SetBattleMoveAcceptOffset();
                 Form1_0.Mover_0.MoveAcceptOffset = 2;
                 Position ThisAttackPos = GetBestAttackLocation(new Position { X = Form1_0.MobsStruc_0.xPosFinal + 1, Y = Form1_0.MobsStruc_0.yPosFinal + 5 });
-                if (ThisAttackPos.X != 0 && ThisAttackPos.Y != 0) Form1_0.Mover_0.MoveToLocationAttack(ThisAttackPos.X, ThisAttackPos.Y);
+                if (ThisAttackPos.X != 0 && ThisAttackPos.Y != 0)
+                {
+                    if (!Form1_0.Mover_0.MoveToLocationAttack(ThisAttackPos.X, ThisAttackPos.Y))
+                    {
+                        TriedToMoveToMobsCount++;
+                        if (TriedToMoveToMobsCount >= 2)
+                        {
+                            ThisAttackPos = ResetMovePostionInBetween(ThisAttackPos);
+                            Form1_0.Mover_0.MoveToLocationAttack(ThisAttackPos.X, ThisAttackPos.Y);
+                            TriedToMoveToMobsCount = 0;
+                        }
+                    }
+                }
                 //Form1_0.Mover_0.MoveToLocationAttack(Form1_0.MobsStruc_0.xPosFinal - 1, Form1_0.MobsStruc_0.yPosFinal + 2);
                 Form1_0.Mover_0.MoveAcceptOffset = 4;
                 ResetBattleMoveAcceptOffset();
@@ -419,9 +459,24 @@ namespace app
             }
             else
             {
+                TriedToMoveToMobsCount = 0;
                 DoingBattle = false;
                 FirstAttackCasted = false;
             }
+        }
+
+        public Position ResetMovePostionInBetween(Position ThisPos)
+        {
+            Position ReturnPos = new Position { };
+            ReturnPos.X = 0;
+            ReturnPos.Y = 0;
+
+            if (ThisPos.X >= Form1_0.PlayerScan_0.xPosFinal) ReturnPos.X = ThisPos.X - ((ThisPos.X - Form1_0.PlayerScan_0.xPosFinal) / 2);
+            if (ThisPos.Y >= Form1_0.PlayerScan_0.yPosFinal) ReturnPos.Y = ThisPos.Y - ((ThisPos.Y - Form1_0.PlayerScan_0.yPosFinal) / 2);
+            if (ThisPos.X < Form1_0.PlayerScan_0.xPosFinal) ReturnPos.X = ThisPos.X + ((Form1_0.PlayerScan_0.xPosFinal - ThisPos.X) / 2);
+            if (ThisPos.Y < Form1_0.PlayerScan_0.yPosFinal) ReturnPos.Y = ThisPos.Y + ((Form1_0.PlayerScan_0.yPosFinal - ThisPos.Y) / 2);
+
+            return ReturnPos;
         }
 
         public void MoveAway()

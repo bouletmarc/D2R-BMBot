@@ -13,7 +13,7 @@ namespace app
         //#######################################
         //SHORTCUT KEY TO START/STOP BOT
         //#######################################
-        public static int StartStopKey = 0x65;   //numpad5 -> refer to virtual key code (vkcode)
+        public static System.Windows.Forms.Keys StartStopKey = Keys.NumPad5;   //numpad5 -> refer to virtual key code (vkcode)
         
         //#######################################
         //SHORTCUT KEYS SETTINGS (FOR PALADIN)
@@ -74,6 +74,7 @@ namespace app
         public static string RushLeecherName = "";
         public static bool ShowOverlay = true;
         public static bool RunWPTaker = false;
+        public static bool RunMapHackOnly = false;
         public static bool RunDarkWoodRush = false;
         public static bool RunTristramRush = false;
         public static bool RunAndarielRush = false;
