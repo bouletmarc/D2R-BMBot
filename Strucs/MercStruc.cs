@@ -123,10 +123,9 @@ namespace app
         {
             try
             {
-                MercHP = 100;
-                MercMaxHP = 100;
+                MercHP = 32768;
+                MercMaxHP = 32768;
 
-                //int ThisHPStat = 0;
                 Form1_0.Mem_0.ReadRawMemory(this.statPtr, ref statBuffer, (int)(this.statCount * 10));
                 for (int i = (int) this.statCount - 1; i  >= 0; i--)
                 {
@@ -136,20 +135,19 @@ namespace app
                     int statValue = BitConverter.ToInt32(statBuffer, offset + 0x4);
                     if (statEnum == (ushort)Enums.Attribute.Life)
                     {
-                        //ThisHPStat = statValue;
                         MercHP = statValue;
-
+                        if (MercHP > 32768) MercHP = statValue >> 8;
 
                     }
-                    if (statEnum == (ushort)Enums.Attribute.LifeMax)
+                    /*if (statEnum == (ushort)Enums.Attribute.LifeMax)
                     {
-                        MercMaxHP = statValue;
-                    }
+                        MercMaxHP = statValue >> 8;
+                    }*/
 
                     //Console.WriteLine(((Enums.Attribute) statEnum).ToString() + " = " + statValue);
                 }
 
-                if (MercMaxHP < MercHP) MercMaxHP = MercHP;
+                //if (MercMaxHP < MercHP) MercMaxHP = MercHP;
                 /*if (ThisHPStat <= 32768)
                 {
                     MercHP = ThisHPStat / 32768 * MercMaxHP;

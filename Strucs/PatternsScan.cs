@@ -34,10 +34,10 @@ namespace app
 
         public long StartIndexItem = long.MaxValue;
         //public int ScanUnitsNumber = 3000;
-        public int ScanUnitsNumber = 2600;
+        public int ScanUnitsNumber = 2048;
         //public int ScanUnitsNumber = 2200;
         //public int ScanUnitsNumber = 6000;
-        public int ScanUnitsNegativeOffset = 22;
+        //public int ScanUnitsNegativeOffset = 22;
 
 
         public void SetForm1(Form1 form1_1)
@@ -263,8 +263,8 @@ namespace app
         public void DetectFirstUnitPointer()
         {
             long UnitOffset = 0;
-            try
-            {
+            //try
+            //{
                 UnitOffset = (long)Form1_0.BaseAddress + (long)Form1_0.offsets["unitTable"] + Form1_0.UnitStrucOffset;
 
                 AllPossiblePointers = new List<long>();
@@ -284,10 +284,14 @@ namespace app
                 //1C 00 00 00 0C 00 00 00 21 00 00 00 1D 00 00 00
                 //04 00 00 00 1F 00 00 00 06 00 00 00 00 00 00 00
 
+                int BadCount = 0;
+
                 long CheckThisI = StartIndexItem;
                 //CheckThisI -= (0x48 + 0x170) * 100;  //offseting in negative here
                 for (int i = 100; i >= 0; i--)
                 {
+                    //if ((i % 2) == 1) CheckThisI -= 0x48;
+                    //else CheckThisI -= 0x170;
                     CheckThisI -= (0x48 + 0x170);
 
                     byte[] CurrentUnitBuff = new byte[16];
@@ -298,20 +302,33 @@ namespace app
                     
                     if (CurrentUnitBuff[6] == 0 && CurrentUnitBuff[7] == 0)
                     {
+                        BadCount = 0;
                         StartIndexItem = CheckThisI;
                     }
                     else
                     {
-                        Form1_0.method_1("Units pointer start at: 0x" + StartIndexItem.ToString("X"), Color.Black);
-                        //Form1_0.method_1("BAD Units pointer start at: 0x" + CheckThisI.ToString("X"), Color.Black);
-                        return;
+                        if (CurrentUnitBuff[6] != 0xff && CurrentUnitBuff[7] != 0xff && CurrentUnitBuff[7] != 0x80)
+                        {
+                            BadCount++;
+                            if (BadCount >= 3)
+                            {
+                                //ScanUnitsNumber += i;
+                                Form1_0.method_1("Units pointer start at: 0x" + StartIndexItem.ToString("X"), Color.Black);
+                                //Form1_0.method_1("BAD Units pointer start at: 0x" + CheckThisI.ToString("X"), Color.Black);
+                                return;
+                            }
+                        }
+                        else
+                        {
+                            BadCount = 0;
+                        }
                     }
                 }
-            }
+            /*}
             catch
             {
                 return;
-            }
+            }*/
         }
 
         public void UnitPatternScan(string SearchUnitsType)

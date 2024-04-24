@@ -42,7 +42,7 @@ namespace app
     public partial class Form1 : Form
     {
 
-        public string BotVersion = "V2.5";
+        public string BotVersion = "V2.51";
 
         public string D2_LOD_113C_Path = "";
 
@@ -753,7 +753,7 @@ namespace app
             GameStruc_0.AlreadyChickening = false;
             //PatternsScan_0.StartIndexItemLast = long.MaxValue;
             //PatternsScan_0.ScanUnitsNumber = 2600;
-            PatternsScan_0.ScanUnitsNumber = 2400;
+            //PatternsScan_0.ScanUnitsNumber = 2400;
             //PatternsScan_0.ScanUnitsNumber = 2048;
             Town_0.TriedToShopCount = 0;
             Town_0.TriedToShopCount2 = 0;
