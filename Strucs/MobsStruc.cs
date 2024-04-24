@@ -45,6 +45,9 @@ namespace app
         public Position LastMobPos = new Position { X = 0, Y = 0 };
         public uint LastMobtxtFileNo = 0;
 
+        List<EnumsStates.State> MobsStates = new List<EnumsStates.State>();
+        List<EnumsStates.State> MobsStatesAll = new List<EnumsStates.State>();
+
         public void SetForm1(Form1 form1_1)
         {
             Form1_0 = form1_1;
@@ -162,6 +165,8 @@ namespace app
                         Form1_0.Mem_0.ReadRawMemory(MobsPointerLocation + 0x88, ref CurrentPointerBytes, CurrentPointerBytes.Length);
                         long pStatsListExPtr = BitConverter.ToInt64(CurrentPointerBytes, 0);
 
+                        MobsStatesAll = Form1_0.PlayerScan_0.GetStates(pStatsListExPtr);
+
                         bool isPlayerMinion = false;
                         if (getPlayerMinion((int)txtFileNo2) != "") isPlayerMinion = true;
                         else isPlayerMinion = ((Form1_0.Mem_0.ReadUInt32((IntPtr)(pStatsListExPtr + 0xAC8 + 0xc)) & 31) == 1); //is a revive
@@ -169,6 +174,7 @@ namespace app
                         if ((Form1_0.NPCStruc_0.HideNPC((int)txtFileNo2) == 0
                             && Form1_0.NPCStruc_0.getTownNPC((int)txtFileNo2) == ""
                             && !isPlayerMinion
+                            && !Form1_0.PlayerScan_0.HasState(EnumsStates.State.Revive, MobsStatesAll)
                             && !DebuggingMobs)
                             || DebuggingMobs)
                         //&& IsThisMobInBound())
@@ -230,6 +236,8 @@ namespace app
                         Form1_0.Mem_0.ReadRawMemory(MobsPointerLocation + 0x88, ref CurrentPointerBytes, CurrentPointerBytes.Length);
                         long pStatsListExPtr = BitConverter.ToInt64(CurrentPointerBytes, 0);
 
+                        MobsStatesAll = Form1_0.PlayerScan_0.GetStates(pStatsListExPtr);
+
                         bool isPlayerMinion = false;
                         if (getPlayerMinion((int)txtFileNo2) != "") isPlayerMinion = true;
                         else isPlayerMinion = ((Form1_0.Mem_0.ReadUInt32((IntPtr)(pStatsListExPtr + 0xAC8 + 0xc)) & 31) == 1); //is a revive
@@ -237,6 +245,7 @@ namespace app
                         if ((Form1_0.NPCStruc_0.HideNPC((int)txtFileNo2) == 0
                             && Form1_0.NPCStruc_0.getTownNPC((int)txtFileNo2) == ""
                             && !isPlayerMinion
+                            && !Form1_0.PlayerScan_0.HasState(EnumsStates.State.Revive, MobsStatesAll)
                             && !DebuggingMobs)
                             || DebuggingMobs)
                         //&& IsThisMobInBound())
@@ -363,6 +372,8 @@ namespace app
                     Form1_0.Mem_0.ReadRawMemory(MobsPointerLocation + 0x88, ref CurrentPointerBytes, CurrentPointerBytes.Length);
                     long pStatsListExPtr = BitConverter.ToInt64(CurrentPointerBytes, 0);
 
+                    MobsStates = Form1_0.PlayerScan_0.GetStates(pStatsListExPtr);
+
                     bool isPlayerMinion = false;
                     if (getPlayerMinion((int)txtFileNo) != "") isPlayerMinion = true;
                     else isPlayerMinion = ((Form1_0.Mem_0.ReadUInt32((IntPtr)(pStatsListExPtr + 0xAC8 + 0xc)) & 31) == 1); //is a revive
@@ -371,7 +382,8 @@ namespace app
 
                     if (Form1_0.NPCStruc_0.HideNPC((int) txtFileNo) == 0
                         && Form1_0.NPCStruc_0.getTownNPC((int)txtFileNo) == ""
-                        && !isPlayerMinion)
+                        && !isPlayerMinion
+                        && !Form1_0.PlayerScan_0.HasState(EnumsStates.State.Revive, MobsStates))
                         //&& !ShouldBeIgnored(txtFileNo))
                     {
                         GetUnitPathData();

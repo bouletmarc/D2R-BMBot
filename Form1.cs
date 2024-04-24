@@ -42,7 +42,7 @@ namespace app
     public partial class Form1 : Form
     {
 
-        public string BotVersion = "V2.53";
+        public string BotVersion = "V2.54";
 
         public string D2_LOD_113C_Path = "";
 
@@ -834,6 +834,7 @@ namespace app
             ItemsStruc_0.BadItemsOnGroundPointerList = new List<long>();
             SetDeadCount = false;
             GameStruc_0.ChickenTry = 0;
+            MercStruc_0.MercOwnerID = 0;
 
             //##############################
             MapAreaStruc_0.ScanMapStruc();
@@ -942,10 +943,6 @@ namespace app
                                     //Battle_0.CastSkills();
                                     //ItemsStruc_0.GetItems(true);
                                     //if (Running) LoopTimer.Start();
-
-                                    //Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, 5260, 2892);
-                                    //itemScreenPos = Mover_0.FixMouseYPosition(itemScreenPos);
-                                    //Form1_0.KeyMouse_0.MouseMoveTo_RealPos(itemScreenPos["x"], itemScreenPos["y"]);
                                     //return;
 
                                     if (CharConfig.RunMapHackOnly)

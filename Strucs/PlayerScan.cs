@@ -150,7 +150,7 @@ namespace app
             statCount = Form1_0.Mem_0.ReadInt32Raw((IntPtr)(pStatsListEx + 0x38));
 
             PlayerStates = GetStates(pStatsListEx);
-            HasBattleOrderState = HasState(EnumsStates.State.Battleorders);
+            HasBattleOrderState = HasState(EnumsStates.State.Battleorders, PlayerStates);
 
             byte[] buffer = new byte[statCount * 8];
             Form1_0.Mem_0.ReadRawMemory(statPtr + 0x2, ref buffer, (int) (statCount * 8));
@@ -808,9 +808,9 @@ namespace app
             ManaPercentFromEquippedItems += AddedManaPercent;
         }
 
-        public bool HasState(EnumsStates.State state)
+        public bool HasState(EnumsStates.State state, List<EnumsStates.State> ThisStatesList)
         {
-            foreach (EnumsStates.State st in PlayerStates)
+            foreach (EnumsStates.State st in ThisStatesList)
             {
                 if (st == state)
                 {

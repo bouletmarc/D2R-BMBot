@@ -30,12 +30,11 @@ namespace app
         public int[] DontCheckUnitIndexes = new int[] { 0, 0, 0, 0, 1, 1, 0, 0 };
         public int[] DontCheckIndexes = new int[0];
 
+        public long StartIndexItem = long.MaxValue;
         public long StartIndexItemLast = long.MaxValue;
-        //public int ScanUnitsNumber = 3000;
         public int ScanUnitsNumber = 2600;
-        //public int ScanUnitsNumber = 2200;
-        //public int ScanUnitsNumber = 6000;
         public int ScanUnitsNegativeOffset = 0;
+
 
         public void SetForm1(Form1 form1_1)
         {
@@ -329,13 +328,13 @@ namespace app
             //{
             //    return;
             //}
-        }
+        }*/
 
         public int GetUnitsScannedCount()
         {
             int UnitsScannedCount = 0;
-            //long CheckThisI = StartIndexItem;
-            long CheckThisI -= (0x48 + 0x170) * ScanUnitsNegativeOffset;  //offseting in negative here
+            long CheckThisI = StartIndexItem;
+            CheckThisI -= (0x48 + 0x170) * ScanUnitsNegativeOffset;  //offseting in negative here
             UnitBuffer = new byte[9];
 
             //string SavePathh = Form1_0.ThisEndPath + "DumpHexUnits";
@@ -372,7 +371,7 @@ namespace app
             }
 
             return UnitsScannedCount;
-        }*/
+        }
 
         public void scanForUnitsPointer(string SearchUnitsType)
         {
@@ -445,50 +444,35 @@ namespace app
             if (SearchUnitsType == "objects") AllObjectsPointers = new List<long>();
             if (SearchUnitsType == "NPC") AllNPCPointers = new List<long>();
 
-            long StartIndexItem = long.MaxValue;
-            long StartIndexPlayer = long.MaxValue;
-            long StartIndexMobs = long.MaxValue;
-            long StartIndexNPC = long.MaxValue;
+            StartIndexItem = long.MaxValue;
 
             //set start index for searching
             if (SearchUnitsType == "item")
             {
                 for (int i = 0; i < AllPossibleItemsPointers.Count; i++)
                 {
-                    if (AllPossibleItemsPointers[i] < StartIndexItem)
-                    {
-                        StartIndexItem = AllPossibleItemsPointers[i];
-                    }
+                    if (AllPossibleItemsPointers[i] < StartIndexItem) StartIndexItem = AllPossibleItemsPointers[i];
                 }
             }
             if (SearchUnitsType == "player")
             {
                 for (int i = 0; i < AllPossiblePlayerPointers.Count; i++)
                 {
-                    if (AllPossiblePlayerPointers[i] < StartIndexPlayer)
-                    {
-                        StartIndexPlayer = AllPossiblePlayerPointers[i];
-                    }
+                    if (AllPossiblePlayerPointers[i] < StartIndexItem) StartIndexItem = AllPossiblePlayerPointers[i];
                 }
             }
             if (SearchUnitsType == "objects")
             {
                 for (int i = 0; i < AllPossibleObjectsPointers.Count; i++)
                 {
-                    if (AllPossibleObjectsPointers[i] < StartIndexMobs)
-                    {
-                        StartIndexMobs = AllPossibleObjectsPointers[i];
-                    }
+                    if (AllPossibleObjectsPointers[i] < StartIndexItem) StartIndexItem = AllPossibleObjectsPointers[i];
                 }
             }
             if (SearchUnitsType == "NPC")
             {
                 for (int i = 0; i < AllPossibleNPCPointers.Count; i++)
                 {
-                    if (AllPossibleNPCPointers[i] < StartIndexNPC)
-                    {
-                        StartIndexNPC = AllPossibleNPCPointers[i];
-                    }
+                    if (AllPossibleNPCPointers[i] < StartIndexItem) StartIndexItem = AllPossibleNPCPointers[i];
                 }
             }
 
@@ -505,7 +489,7 @@ namespace app
                     if (DiffVal < 0xFFFFF)  //here
                     {
                         ScanUnitsNumber += UnitNumberDiff;
-                        Form1_0.method_1("Item start diff: 0x" + (DiffVal).ToString("X") + ", scann for: " + ScanUnitsNumber + " +" + UnitNumberDiff, Color.DarkOrchid);
+                        Form1_0.method_1("Units start diff: 0x" + (DiffVal).ToString("X") + ", scann for: " + ScanUnitsNumber + " +" + UnitNumberDiff, Color.DarkOrchid);
                     }
                     else
                     {
@@ -519,30 +503,13 @@ namespace app
 
             //search
             long CheckThisI = StartIndexItem;
-            long CheckThisP = StartIndexPlayer;
-            long CheckThisM = StartIndexMobs;
-            long CheckThisN = StartIndexNPC;
             UnitBuffer = new byte[9];
 
             CheckThisI -= (0x48 + 0x170) * ScanUnitsNegativeOffset;  //offseting in negative here
             for (int i = 0; i < ScanUnitsNumber; i++)
-            //for (int i = 0; i < 2048; i++)
-            //for (int i = 0; i < 2500; i++)
             {
-                if ((i % 2) == 1)
-                {
-                    CheckThisI += 0x48;
-                    CheckThisP += 0x48;
-                    CheckThisM += 0x48;
-                    CheckThisN += 0x48;
-                }
-                else
-                {
-                    CheckThisI += 0x170;
-                    CheckThisP += 0x170;
-                    CheckThisM += 0x170;
-                    CheckThisN += 0x170;
-                }
+                if ((i % 2) == 1) CheckThisI += 0x48;
+                else CheckThisI += 0x170;
 
                 if (SearchUnitsType == "item")
                 {
@@ -554,22 +521,22 @@ namespace app
                 if (SearchUnitsType == "player")
                 {
                     ThisCheckbytes = new byte[] { (byte)UnitType.Player, 0x00, 0x00, 0x00, 0xff, 0xff, 0x00, 0x00 };
-                    Form1_0.Mem_0.ReadRawMemory(CheckThisP, ref UnitBuffer, UnitBuffer.Length);
-                    unitPatternScan(CheckThisP, "player");
+                    Form1_0.Mem_0.ReadRawMemory(CheckThisI, ref UnitBuffer, UnitBuffer.Length);
+                    unitPatternScan(CheckThisI, "player");
                 }
 
                 if (SearchUnitsType == "objects")
                 {
                     ThisCheckbytes = new byte[] { (byte)UnitType.GameObject, 0x00, 0x00, 0x00, 0xff, 0xff, 0x00, 0x00 };
-                    Form1_0.Mem_0.ReadRawMemory(CheckThisM, ref UnitBuffer, UnitBuffer.Length);
-                    unitPatternScan(CheckThisM, "objects");
+                    Form1_0.Mem_0.ReadRawMemory(CheckThisI, ref UnitBuffer, UnitBuffer.Length);
+                    unitPatternScan(CheckThisI, "objects");
                 }
 
                 if (SearchUnitsType == "NPC")
                 {
                     ThisCheckbytes = new byte[] { (byte)UnitType.NPC, 0x00, 0x00, 0x00, 0xff, 0xff, 0x00, 0x00 };
-                    Form1_0.Mem_0.ReadRawMemory(CheckThisN, ref UnitBuffer, UnitBuffer.Length);
-                    unitPatternScan(CheckThisN, "NPC");
+                    Form1_0.Mem_0.ReadRawMemory(CheckThisI, ref UnitBuffer, UnitBuffer.Length);
+                    unitPatternScan(CheckThisI, "NPC");
                 }
             }
         }
@@ -578,31 +545,19 @@ namespace app
         {
             if (SearchUnitsType == "item")
             {
-                for (int i = 0; i < AllPossibleItemsPointers.Count; i++)
-                {
-                    AddPointerToList(AllPossibleItemsPointers[i], "item");
-                }
+                for (int i = 0; i < AllPossibleItemsPointers.Count; i++) AddPointerToList(AllPossibleItemsPointers[i], "item");
             }
             if (SearchUnitsType == "player")
             {
-                for (int i = 0; i < AllPlayersPointers.Count; i++)
-                {
-                    AddPointerToList(AllPlayersPointers[i], "player");
-                }
+                for (int i = 0; i < AllPossiblePlayerPointers.Count; i++) AddPointerToList(AllPossiblePlayerPointers[i], "player");
             }
             if (SearchUnitsType == "objects")
             {
-                for (int i = 0; i < AllObjectsPointers.Count; i++)
-                {
-                    AddPointerToList(AllObjectsPointers[i], "objects");
-                }
+                for (int i = 0; i < AllPossibleObjectsPointers.Count; i++) AddPointerToList(AllPossibleObjectsPointers[i], "objects");
             }
             if (SearchUnitsType == "NPC")
             {
-                for (int i = 0; i < AllNPCPointers.Count; i++)
-                {
-                    AddPointerToList(AllNPCPointers[i], "NPC");
-                }
+                for (int i = 0; i < AllPossibleNPCPointers.Count; i++) AddPointerToList(AllPossibleNPCPointers[i], "NPC");
             }
         }
 

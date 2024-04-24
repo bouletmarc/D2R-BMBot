@@ -140,7 +140,7 @@ namespace app
                 if (CurrentStep == 5)
                 {
                     //####
-                    if (Form1_0.PlayerScan_0.levelNo == (int)Enums.Area.TowerCellarLevel3)
+                    if (Form1_0.PlayerScan_0.levelNo == (int)Enums.Area.TowerCellarLevel4)
                     {
                         CurrentStep++;
                         return;
@@ -159,7 +159,7 @@ namespace app
                 if (CurrentStep == 6)
                 {
                     //####
-                    if (Form1_0.PlayerScan_0.levelNo == (int)Enums.Area.TowerCellarLevel4)
+                    if (Form1_0.PlayerScan_0.levelNo == (int)Enums.Area.TowerCellarLevel5)
                     {
                         CurrentStep++;
                         return;

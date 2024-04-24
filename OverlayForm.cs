@@ -401,22 +401,26 @@ namespace app
                 DrawString(e, OtherInfosTxt2, drawFontBold, drawBrushWhite, 1360 - (ThisS2.Width * ScaleScreenSizeInverted), 910, true);
 
                 //Print Merc
-                /*if (CharConfig.UsingMerc)
+                if (Form1_0.DebugMenuStyle > 0)
                 {
-                    string ThisMercTxt = "Merc not alive";
-                    if (Form1_0.MercStruc_0.MercAlive)
+                    if (CharConfig.UsingMerc)
                     {
+                        string ThisMercTxt = "Merc not alive";
+                        if (Form1_0.MercStruc_0.MercAlive)
+                        {
 
-                        int PercentMerc = (int)((Form1_0.MercStruc_0.MercHP * 100.0) / Form1_0.MercStruc_0.MercMaxHP);
-                        ThisMercTxt = "Merc:" + Form1_0.MercStruc_0.MercHP.ToString() + "/" + Form1_0.MercStruc_0.MercMaxHP.ToString() + " (" + PercentMerc + "%)";
+                            int PercentMerc = (int)((Form1_0.MercStruc_0.MercHP * 100.0) / Form1_0.MercStruc_0.MercMaxHP);
+                            ThisMercTxt = "Merc:" + Form1_0.MercStruc_0.MercHP.ToString() + "/" + Form1_0.MercStruc_0.MercMaxHP.ToString() + " (" + PercentMerc + "%)";
+                        }
+                        ThisS2 = e.Graphics.MeasureString(ThisMercTxt, drawFontBold);
+                        DrawString(e, ThisMercTxt, drawFontBold, drawBrushGreen, 1360 - (ThisS2.Width * ScaleScreenSizeInverted), 860, true);
                     }
-                    ThisS2 = e.Graphics.MeasureString(ThisMercTxt, drawFontBold);
-                    DrawString(e, ThisMercTxt, drawFontBold, drawBrushGreen, 1360 - (ThisS2.Width * ScaleScreenSizeInverted), 860, true);
-                }*/
-
-                //Print Units Scanned Count
-                //string UnitsStr = "Units:" + Form1_0.PatternsScan_0.GetUnitsScannedCount().ToString();
-                //DrawString(e, UnitsStr, drawFontBold, drawBrushGreen, 560, 885, true);
+                //if (Form1_0.DebugMenuStyle > 0)
+                //{
+                    //Print Units Scanned Count
+                    string UnitsStr = "Units:" + Form1_0.PatternsScan_0.GetUnitsScannedCount().ToString();
+                    DrawString(e, UnitsStr, drawFontBold, drawBrushGreen, 560, 885, true);
+                }
 
                 if (CanDisplayOverlay)
                 {

@@ -227,7 +227,7 @@ namespace app
             for (int i = 0; i < 40; i++)
             {
                 Form1_0.UIScan_0.OpenUIMenu("invMenu");
-                if (CharConfig.InventoryDontCheckItem[i] == 0 && InventoryHasItem[i] >= 1 && InventoryHasItemToID[i] == 0)
+                if (CharConfig.InventoryDontCheckItem[i] == 0 && InventoryHasItem[i] >= 1 && InventoryHasItemToID[i] == 0 && InventoryHasStashItem[i] == 0)
                 {
                     //pick key item from this slot
                     Dictionary<string, int> itemScreenPos = Form1_0.InventoryStruc_0.ConvertIndexToXY(i);
@@ -248,12 +248,9 @@ namespace app
 
                         Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"]);
                         Form1_0.WaitDelay(12);
-                        Form1_0.KeyMouse_0.MouseClicc_RealPos(Form1_0.CenterX, Form1_0.CenterY);
+                        //Form1_0.KeyMouse_0.MouseClicc_RealPos(Form1_0.CenterX, Form1_0.CenterY);
+                        Form1_0.Stash_0.PlaceItem(Form1_0.CenterX, Form1_0.CenterY);
                         Form1_0.WaitDelay(10);
-
-                        /*Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"]);
-                        Form1_0.WaitDelay(12);
-                        Form1_0.Stash_0.PlaceItem(Form1_0.CenterX, Form1_0.CenterY);*/
                     }
                 }
             }

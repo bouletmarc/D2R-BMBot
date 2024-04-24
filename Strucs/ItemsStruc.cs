@@ -395,7 +395,7 @@ namespace app
 
                     ItemsScanned++;
                     txtFileNo = BitConverter.ToUInt32(itemdatastruc, 4);
-                    //uint ItemID = BitConverter.ToUInt32(itemdatastruc, 8);
+                    uint ItemID = BitConverter.ToUInt32(itemdatastruc, 8);
                     ItemNAAME = Form1_0.ItemsNames_0.getItemBaseName(txtFileNo);
                     GetUnitData();
                     GetUnitPathData();
@@ -504,6 +504,14 @@ namespace app
                             if (DebuggingItems)
                             {
                                 AllItemsEquipped.Add("ID:" + txtFileNo + "(" + ItemNAAME + ") at:" + itemx + ", " + itemy + " - Equipped - " + Form1_0.ItemsAlert_0.GetItemTypeText() + " && " + GetQualityTextString() + " && " + GetAllFlagsFromItem() + " && " + GetAllValuesFromStats());
+                            }
+                        }
+                        else
+                        {
+                            if (dwOwnerId != 0 && Form1_0.MercStruc_0.MercOwnerID == 0)
+                            {
+                                Form1_0.MercStruc_0.MercOwnerID = ItemID;
+                                //Form1_0.method_1("owner: " + dwOwnerId + ", ID: " + ItemID + ", name: " + ItemNAAME + " - at: " + itemx + "," + itemy + " - " + equiploc, Color.DarkGreen);
                             }
                         }
                     }
