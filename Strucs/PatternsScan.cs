@@ -284,8 +284,9 @@ namespace app
                 //1C 00 00 00 0C 00 00 00 21 00 00 00 1D 00 00 00
                 //04 00 00 00 1F 00 00 00 06 00 00 00 00 00 00 00
 
-                int BadCount = 0;
+                if (StartIndexItem == long.MaxValue) return;
 
+                int BadCount = 0;
                 long CheckThisI = StartIndexItem;
                 //CheckThisI -= (0x48 + 0x170) * 100;  //offseting in negative here
                 for (int i = 100; i >= 0; i--)
@@ -333,6 +334,8 @@ namespace app
 
         public void UnitPatternScan(string SearchUnitsType)
         {
+            if (StartIndexItem == long.MaxValue) DetectFirstUnitPointer();
+
             if (SearchUnitsType == "item") AllItemsPointers = new List<long>();
             if (SearchUnitsType == "player") AllPlayersPointers = new List<long>();
             if (SearchUnitsType == "objects") AllObjectsPointers = new List<long>();
