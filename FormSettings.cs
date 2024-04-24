@@ -88,7 +88,7 @@ namespace app
 
             //###################
             checkBoxKillBaal.Checked = Form1_0.Baal_0.KillBaal;
-            checkBoxBaalSafeHealing.Checked = Form1_0.Baal_0.SafeHealingStrat;
+            checkBoxBaalSafeHealing.Checked = Form1_0.Baal_0.SafeYoloStrat;
             numericUpDownBaalLeaveMobsCount.Value = Form1_0.Baal_0.LeaveIfMobsCountIsAbove;
             for (int i = 0; i < Form1_0.Baal_0.LeaveIfMobsIsPresent_ID.Count; i++)
             {
@@ -210,7 +210,7 @@ namespace app
 
             //###################
             Form1_0.Baal_0.KillBaal = checkBoxKillBaal.Checked;
-            Form1_0.Baal_0.SafeHealingStrat = checkBoxBaalSafeHealing.Checked;
+            Form1_0.Baal_0.SafeYoloStrat = checkBoxBaalSafeHealing.Checked;
             Form1_0.Baal_0.LeaveIfMobsCountIsAbove = (int) numericUpDownBaalLeaveMobsCount.Value;
             Form1_0.Baal_0.LeaveIfMobsIsPresent_ID.Clear();
             Form1_0.Baal_0.LeaveIfMobsIsPresent_Count.Clear();
@@ -264,6 +264,7 @@ namespace app
 
         private void listViewRunScripts_DoubleClick(object sender, EventArgs e)
         {
+            listViewRunScripts.SelectedItems[0].Checked = !listViewRunScripts.SelectedItems[0].Checked;
             if (listViewRunScripts.SelectedItems[0].Text == "Baal")
             {
                 Form1_0.Baal_0.KillBaal = checkBoxKillBaal.Checked = Form1_0.Baal_0.KillBaal;

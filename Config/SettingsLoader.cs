@@ -258,7 +258,7 @@ namespace app
                         }
                     }
                     if (Splitted[0] == "LeaveIfMobsCountIsAbove") AllLines[i] = "LeaveIfMobsCountIsAbove=" + Form1_0.Baal_0.LeaveIfMobsCountIsAbove;
-                    if (Splitted[0] == "SafeHealingStrat") AllLines[i] = "SafeHealingStrat=" + Form1_0.Baal_0.SafeHealingStrat;
+                    if (Splitted[0] == "SafeHealingStrat") AllLines[i] = "SafeHealingStrat=" + Form1_0.Baal_0.SafeYoloStrat;
                     //#########
 
                     if (Splitted[0] == "RunMapHackOnly") AllLines[i] = "RunMapHackOnly=" + CharConfig.RunMapHackOnly;
@@ -921,7 +921,7 @@ namespace app
                                 }
                                 if (Params[0].Contains("SafeHealingStrat"))
                                 {
-                                    Form1_0.Baal_0.SafeHealingStrat = bool.Parse(Params[1].ToLower());
+                                    Form1_0.Baal_0.SafeYoloStrat = bool.Parse(Params[1].ToLower());
                                 }
                                 //#########
 

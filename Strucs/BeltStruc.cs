@@ -35,6 +35,20 @@ namespace app
             Form1_0 = form1_1;
         }
 
+        public int GetPotionQuantityInBelt(int ThisPotType)
+        {
+            int Qty1 = 0;
+            for (int i = 0; i < BeltHaveItems.Length; i++)
+            {
+                if ((i == 0 || i == 4 || i == 8 || i == 12) && BeltHaveItems[i] > 0 && BeltItemsTypes[i] == ThisPotType) Qty1++;
+                if ((i == 1 || i == 5 || i == 9 || i == 13) && BeltHaveItems[i] > 0 && BeltItemsTypes[i] == ThisPotType) Qty1++;
+                if ((i == 2 || i == 6 || i == 10 || i == 14) && BeltHaveItems[i] > 0 && BeltItemsTypes[i] == ThisPotType) Qty1++;
+                if ((i == 3 || i == 7 || i == 11 || i == 15) && BeltHaveItems[i] > 0 && BeltItemsTypes[i] == ThisPotType) Qty1++;
+            }
+
+            return Qty1;
+        }
+
         public bool ItemGrabPotion()
         {
             if (CharConfig.RunItemGrabScriptOnly) return false; //item grab only
@@ -42,7 +56,7 @@ namespace app
             //####
             if (Form1_0.InventoryStruc_0.HasInventoryItemName("Super Healing Potion"))
             {
-                //Form1_0.method_1("FORCING HP POT QTY: " + Form1_0.BeltStruc_0.HPQuantity, Color.Red);
+                //Form1_0.method_1("FORCING HP POT QTY: " + HPQuantity, Color.Red);
                 ForceHPPotionQty = HPQuantity; //reset qty in belt
                 MissingHPPot = false;
             }

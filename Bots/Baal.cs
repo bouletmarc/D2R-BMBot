@@ -20,7 +20,7 @@ namespace app
         public List<uint> LeaveIfMobsIsPresent_ID = new List<uint>();
         public List<int> LeaveIfMobsIsPresent_Count = new List<int>();
         public int LeaveIfMobsCountIsAbove = 0;
-        public bool SafeHealingStrat = false;
+        public bool SafeYoloStrat = false;
         //#####################################################
         //#####################################################
 
@@ -54,6 +54,9 @@ namespace app
         public int CheckingThroneBackMode = 0;
         public int PortalYOffset = 0;
 
+        public int SafeYoloStratIndex = 0;
+        public int DefaultTakeRVPot = 0;
+
         public void SetForm1(Form1 form1_1)
         {
             Form1_0 = form1_1;
@@ -61,6 +64,8 @@ namespace app
 
         public void ResetVars()
         {
+            if (DefaultTakeRVPot != 0) CharConfig.TakeRVPotUnder = DefaultTakeRVPot;
+
             CurrentStep = 0;
             ScriptDone = false;
             DetectedBaal = false;
@@ -74,6 +79,8 @@ namespace app
             TryMovingAwayOnLeftSide = true;
             CheckingThroneBackMode = 0;
             PortalYOffset = 0;
+            SafeYoloStratIndex = 0;
+            DefaultTakeRVPot = CharConfig.TakeRVPotUnder;
         }
 
         public void DetectCurrentStep()
@@ -110,7 +117,28 @@ namespace app
                 }
             }
 
-            if (IsLeaving) Form1_0.LeaveGame(false);
+            if (IsLeaving)
+            {
+                Form1_0.method_1("Leaving game (Baal leaving mobs condition)!", Color.Red);
+                Form1_0.LeaveGame(false);
+            }
+
+            //Yolo Strat
+            if (SafeYoloStrat)
+            {
+                if (Form1_0.MobsStruc_0.GetMobsCount(0) >= 45 && CharConfig.TakeRVPotUnder < 45) CharConfig.TakeRVPotUnder = DefaultTakeRVPot + 10;
+                if (Form1_0.MobsStruc_0.GetMobsCount(0) >= 25 && Form1_0.MobsStruc_0.GetMobsCount(0) < 45 && CharConfig.TakeRVPotUnder < 45) CharConfig.TakeRVPotUnder = DefaultTakeRVPot + 5;
+                if (Form1_0.MobsStruc_0.GetMobsCount(0) < 25) CharConfig.TakeRVPotUnder = DefaultTakeRVPot;
+
+                int PlayerHPPercent = (int) ((Form1_0.PlayerScan_0.PlayerHP * 100) / Form1_0.PlayerScan_0.PlayerMaxHP);
+                if (Form1_0.MobsStruc_0.GetMobsCount(0) >= 45 
+                    && PlayerHPPercent < DefaultTakeRVPot - 5 
+                    && Form1_0.BeltStruc_0.GetPotionQuantityInBelt(3) == 0)
+                {
+                    Form1_0.method_1("Leaving game (Baal Yolo Strat)!", Color.Red);
+                    Form1_0.LeaveGame(false);
+                }
+            }
 
             return IsLeaving;
         }
@@ -318,7 +346,7 @@ namespace app
                         }
 
                         //STOP CASTING ERROR DETECTING MOBS/BAAL MOVED
-                        /*if ((DateTime.Now - TimeSinceLastWaveDone).TotalSeconds > 25)
+                        if ((DateTime.Now - TimeSinceLastWaveDone).TotalSeconds > 25)
                         {
                             TimeSinceLastWaveDone = DateTime.MaxValue;
                             TimeSinceLastWaveSet = false;
@@ -338,7 +366,7 @@ namespace app
                                 CheckingThroneBackMode = 0;
                                 return;
                             }
-                        }*/
+                        }
 
                         //STOP CASTING
                         if (Form1_0.MobsStruc_0.GetMobs("", "", true, 30, IgnoredMobs))

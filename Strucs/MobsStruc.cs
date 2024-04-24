@@ -356,6 +356,7 @@ namespace app
                     CurrentPointerBytes = new byte[4];
                     Form1_0.Mem_0.ReadRawMemory(MobsPointerLocation + 4, ref CurrentPointerBytes, CurrentPointerBytes.Length);
                     txtFileNo = BitConverter.ToUInt32(CurrentPointerBytes, 0);
+                    MobsName = ((EnumsMobsNPC.MonsterType)((int)txtFileNo)).ToString();
 
                     //long pStatsListExPtr = BitConverter.ToInt64(mobsdatastruc, 0x88);
                     CurrentPointerBytes = new byte[8];
@@ -485,6 +486,7 @@ namespace app
                 CurrentPointerBytes = new byte[4];
                 Form1_0.Mem_0.ReadRawMemory(MobsPointerLocation + 4, ref CurrentPointerBytes, CurrentPointerBytes.Length);
                 txtFileNo = BitConverter.ToUInt32(CurrentPointerBytes, 0);
+                MobsName = ((EnumsMobsNPC.MonsterType)((int)txtFileNo)).ToString();
 
                 GetUnitPathData();
                 GetStatsAddr();

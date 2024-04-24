@@ -37,6 +37,60 @@ namespace app
             Form1_0 = form1_1;
         }
 
+        public int[] FindBestPositionNoMobsArround(int playerX, int playerY, List<int[]> monsterPositions, int maxDisplacement)
+        {
+            // Create a list to store all possible positions around the player
+            List<int[]> possiblePositions = new List<int[]>();
+
+            // Generate all possible positions within the maximum displacement range
+            for (int x = playerX - maxDisplacement; x <= playerX + maxDisplacement; x++)
+            {
+                for (int y = playerY - maxDisplacement; y <= playerY + maxDisplacement; y++)
+                {
+                    // Calculate the distance between the player and the current position
+                    double distance = Math.Sqrt(Math.Pow(playerX - x, 2) + Math.Pow(playerY - y, 2));
+
+                    // Check if the distance is within the maximum displacement and the position is not occupied by a monster
+                    if (distance <= maxDisplacement && !IsMonsterNearPosition(x, y, monsterPositions))
+                    {
+                        //possiblePositions.Add(Tuple.Create(x, y));
+                        possiblePositions.Add(new int[2] { x, y });
+                    }
+                }
+            }
+
+            // Find the closest position among the possible positions
+            //int[] bestPosition = Tuple.Create(playerX, playerY);
+            int[] bestPosition = new int[2] { playerX, playerY };
+            double closestDistance = double.MaxValue;
+            foreach (var position in possiblePositions)
+            {
+                double distance = Math.Sqrt(Math.Pow(playerX - position[0], 2) + Math.Pow(playerY - position[1], 2));
+                if (distance < closestDistance)
+                {
+                    closestDistance = distance;
+                    bestPosition = position;
+                }
+            }
+
+            return bestPosition;
+        }
+
+        static bool IsMonsterNearPosition(int x, int y, List<int[]> monsterPositions)
+        {
+            foreach (var monsterPosition in monsterPositions)
+            {
+                if (monsterPosition[0] >= x - 6
+                    && monsterPosition[0] <= x + 6
+                    && monsterPosition[1] >= y - 6
+                    && monsterPosition[1] <= y + 6)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         public Position GetBestAttackLocation(Position ThisAttackPos)
         {
             Position ReturnPos = new Position { X = ThisAttackPos.X, Y = ThisAttackPos.Y};
@@ -335,6 +389,7 @@ namespace app
 
             if (Form1_0.MobsStruc_0.GetMobs("", "", true, ClearingSize, IgnoredMobsPointer))
             {
+                if (CharConfig.RunBaalScript && !Form1_0.Baal_0.ScriptDone && Form1_0.MobsStruc_0.MobsName == "BaalSubject5") Form1_0.Baal_0.Wave5Detected = true;
                 DoingBattle = true;
                 SetBattleMoveAcceptOffset();
                 Form1_0.Mover_0.MoveAcceptOffset = 2;
@@ -368,6 +423,7 @@ namespace app
             }
             else
             {
+                if (CharConfig.RunBaalScript && !Form1_0.Baal_0.ScriptDone && Form1_0.Baal_0.Wave5Detected) Form1_0.Baal_0.Wave5Cleared = true;
                 TriedToMoveToMobsCount = 0;
                 DoingBattle = false;
                 FirstAttackCasted = false;
@@ -382,6 +438,7 @@ namespace app
         {
             if (Form1_0.MobsStruc_0.GetMobs("", "", true, MaxDistance, new List<long>()))
             {
+                if (CharConfig.RunBaalScript && !Form1_0.Baal_0.ScriptDone && Form1_0.MobsStruc_0.MobsName == "BaalSubject5") Form1_0.Baal_0.Wave5Detected = true;
                 DoingBattle = true;
                 SetBattleMoveAcceptOffset();
                 Form1_0.Mover_0.MoveAcceptOffset = 2;
@@ -415,6 +472,7 @@ namespace app
                 return true;
             }
 
+            if (CharConfig.RunBaalScript && !Form1_0.Baal_0.ScriptDone && Form1_0.Baal_0.Wave5Detected) Form1_0.Baal_0.Wave5Cleared = true;
             TriedToMoveToMobsCount = 0;
             DoingBattle = false;
             FirstAttackCasted = false;
@@ -425,6 +483,8 @@ namespace app
         {
             if (Form1_0.MobsStruc_0.GetMobs(MobType, MobName, false, 200, new List<long>()))
             {
+                if (CharConfig.RunBaalScript && !Form1_0.Baal_0.ScriptDone && Form1_0.MobsStruc_0.MobsName == "BaalSubject5") Form1_0.Baal_0.Wave5Detected = true;
+
                 DoingBattle = true;
                 SetBattleMoveAcceptOffset();
                 Form1_0.Mover_0.MoveAcceptOffset = 2;
@@ -459,6 +519,7 @@ namespace app
             }
             else
             {
+                if (CharConfig.RunBaalScript && !Form1_0.Baal_0.ScriptDone && Form1_0.Baal_0.Wave5Detected) Form1_0.Baal_0.Wave5Cleared = true;
                 TriedToMoveToMobsCount = 0;
                 DoingBattle = false;
                 FirstAttackCasted = false;
