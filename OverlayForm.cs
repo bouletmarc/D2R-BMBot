@@ -371,7 +371,7 @@ namespace app
                     if (LogsTextColor[ThisIndexInverted] == Color.Black) LogsTextColor[ThisIndexInverted] = Color.White;
                     if (LogsTextColor[ThisIndexInverted] == Color.DarkBlue) LogsTextColor[ThisIndexInverted] = Color.LightBlue;
                     if (LogsTextColor[ThisIndexInverted] == Color.DarkGreen) LogsTextColor[ThisIndexInverted] = Color.LightGreen;
-                    if (LogsTextColor[ThisIndexInverted] == Color.DarkMagenta) LogsTextColor[ThisIndexInverted] = Color.FromArgb(255, 255, 120, 255);
+                    if (LogsTextColor[ThisIndexInverted] == Color.DarkMagenta || LogsTextColor[ThisIndexInverted] == Color.Magenta) LogsTextColor[ThisIndexInverted] = Color.FromArgb(255, 255, 120, 255);
                     if (LogsTextColor[ThisIndexInverted] == Color.OrangeRed) LogsTextColor[ThisIndexInverted] = Color.Orange;
                     if (LogsTextColor[ThisIndexInverted] == Color.Red) LogsTextColor[ThisIndexInverted] = Color.LightPink;
                     if (LogsTextColor[ThisIndexInverted] == System.Drawing.ColorTranslator.FromHtml("#0005ff")) LogsTextColor[ThisIndexInverted] = Color.LightBlue;
@@ -401,7 +401,7 @@ namespace app
                 DrawString(e, OtherInfosTxt2, drawFontBold, drawBrushWhite, 1360 - (ThisS2.Width * ScaleScreenSizeInverted), 910, true);
 
                 //Print Merc
-                if (CharConfig.UsingMerc)
+                /*if (CharConfig.UsingMerc)
                 {
                     string ThisMercTxt = "Merc not alive";
                     if (Form1_0.MercStruc_0.MercAlive)
@@ -412,7 +412,11 @@ namespace app
                     }
                     ThisS2 = e.Graphics.MeasureString(ThisMercTxt, drawFontBold);
                     DrawString(e, ThisMercTxt, drawFontBold, drawBrushGreen, 1360 - (ThisS2.Width * ScaleScreenSizeInverted), 860, true);
-                }
+                }*/
+
+                //Print Units Scanned Count
+                //string UnitsStr = "Units:" + Form1_0.PatternsScan_0.GetUnitsScannedCount().ToString();
+                //DrawString(e, UnitsStr, drawFontBold, drawBrushGreen, 560, 885, true);
 
                 if (CanDisplayOverlay)
                 {

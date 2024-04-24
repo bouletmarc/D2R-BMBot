@@ -42,7 +42,7 @@ namespace app
     public partial class Form1 : Form
     {
 
-        public string BotVersion = "V2.52";
+        public string BotVersion = "V2.53";
 
         public string D2_LOD_113C_Path = "";
 
@@ -745,6 +745,7 @@ namespace app
         {
             Form1_0.SetGameStatus("NEW GAME STARTED");
 
+            //PatternsScan_0.StartIndexItem = long.MaxValue;
             PublicGame = (CharConfig.GamePass == "");
             if (!PublicGame && CharConfig.IsRushing) PublicGame = true;
             if (!PublicGame && !CharConfig.RunGameMakerScript) PublicGame = true;
@@ -752,7 +753,7 @@ namespace app
             else KeyMouse_0.ProcessingDelay = 2;
             GameStruc_0.AlreadyChickening = false;
             //PatternsScan_0.StartIndexItemLast = long.MaxValue;
-            //PatternsScan_0.ScanUnitsNumber = 2600;
+            PatternsScan_0.ScanUnitsNumber = 2600;
             //PatternsScan_0.ScanUnitsNumber = 2400;
             //PatternsScan_0.ScanUnitsNumber = 2048;
             Town_0.TriedToShopCount = 0;
