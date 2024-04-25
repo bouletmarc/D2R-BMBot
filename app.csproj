@@ -235,6 +235,9 @@
     <Content Include="d2r-lod-regred - Copy.ico" />
     <None Include="Resources\Download.png" />
     <None Include="Resources\Update.png" />
+    <None Include="Resources\Load.png" />
+    <None Include="Resources\Save.png" />
+    <None Include="Resources\BMBot10.png" />
     <Content Include="Settings\Char\PaladinHammer.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

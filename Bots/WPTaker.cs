@@ -62,6 +62,8 @@ namespace app
                 }
                 else
                 {
+                    Form1_0.Town_0.FastTowning = false;
+                    Form1_0.Town_0.UseLastTP = false;
                     ScriptDone = true;
                 }
             }
@@ -70,6 +72,12 @@ namespace app
         public void RunScript()
         {
             Form1_0.Town_0.ScriptTownAct = CurrentAct;
+
+            if (!Form1_0.Running || !Form1_0.GameStruc_0.IsInGame())
+            {
+                ScriptDone = true;
+                return;
+            }
 
             if (Form1_0.Town_0.GetInTown())
             {

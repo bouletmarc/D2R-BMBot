@@ -250,7 +250,6 @@ namespace app
                         if (!Form1_0.Running || !Form1_0.GameStruc_0.IsInGame())
                         {
                             ScriptDone = true;
-                            Form1_0.Town_0.UseLastTP = false;
                             return;
                         }
 
@@ -266,7 +265,6 @@ namespace app
                             if (!Form1_0.Running || !Form1_0.GameStruc_0.IsInGame())
                             {
                                 ScriptDone = true;
-                                Form1_0.Town_0.UseLastTP = false;
                                 return;
                             }
 
@@ -311,7 +309,6 @@ namespace app
                                 if (!Form1_0.Running || !Form1_0.GameStruc_0.IsInGame())
                                 {
                                     ScriptDone = true;
-                                    Form1_0.Town_0.UseLastTP = false;
                                     return;
                                 }
 
@@ -377,7 +374,6 @@ namespace app
                                 if (!Form1_0.Running || !Form1_0.GameStruc_0.IsInGame())
                                 {
                                     ScriptDone = true;
-                                    Form1_0.Town_0.UseLastTP = false;
                                     return;
                                 }
 

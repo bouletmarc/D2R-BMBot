@@ -103,6 +103,7 @@
             this.numericUpDownBaalMobCount = new System.Windows.Forms.NumericUpDown();
             this.buttonBaalAddMob = new System.Windows.Forms.Button();
             this.buttonBaalClearMob = new System.Windows.Forms.Button();
+            this.label13 = new System.Windows.Forms.Label();
             this.panelBaalFeature = new System.Windows.Forms.Panel();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.listViewBaalLeaveOnMobs = new System.Windows.Forms.ListView();
@@ -113,7 +114,8 @@
             this.label9 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
-            this.label13 = new System.Windows.Forms.Label();
+            this.buttonReload = new System.Windows.Forms.Button();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownRunNumber)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMaxTime)).BeginInit();
@@ -486,13 +488,14 @@
             // 
             // button2
             // 
-            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button2.ForeColor = System.Drawing.Color.Red;
-            this.button2.Location = new System.Drawing.Point(79, 6);
+            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button2.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.button2.Image = global::app.Properties.Resources.Save;
+            this.button2.Location = new System.Drawing.Point(189, 6);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(89, 29);
+            this.button2.Size = new System.Drawing.Size(48, 29);
             this.button2.TabIndex = 13;
-            this.button2.Text = "SAVE";
+            this.toolTip1.SetToolTip(this.button2, "Save current Settings");
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
@@ -596,6 +599,18 @@
             this.toolTip1.SetToolTip(this.buttonBaalClearMob, "Clear All the Mobs ID and Counts from the Checking List");
             this.buttonBaalClearMob.UseVisualStyleBackColor = true;
             this.buttonBaalClearMob.Click += new System.EventHandler(this.buttonBaalClearMob_Click);
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label13.ForeColor = System.Drawing.Color.Red;
+            this.label13.Location = new System.Drawing.Point(206, 128);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(14, 20);
+            this.label13.TabIndex = 16;
+            this.label13.Text = "!";
+            this.toolTip1.SetToolTip(this.label13, "Double Clic on a Run script to edit it\'s features (if there is any)");
             // 
             // panelBaalFeature
             // 
@@ -702,17 +717,24 @@
             this.label7.TabIndex = 0;
             this.label7.Text = "Baal Run Features";
             // 
-            // label13
+            // buttonReload
             // 
-            this.label13.AutoSize = true;
-            this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label13.ForeColor = System.Drawing.Color.Red;
-            this.label13.Location = new System.Drawing.Point(206, 128);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(14, 20);
-            this.label13.TabIndex = 16;
-            this.label13.Text = "!";
-            this.toolTip1.SetToolTip(this.label13, "Double Clic on a Run script to edit it\'s features (if there is any)");
+            this.buttonReload.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonReload.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.buttonReload.Image = global::app.Properties.Resources.Load;
+            this.buttonReload.Location = new System.Drawing.Point(12, 6);
+            this.buttonReload.Name = "buttonReload";
+            this.buttonReload.Size = new System.Drawing.Size(34, 29);
+            this.buttonReload.TabIndex = 17;
+            this.toolTip1.SetToolTip(this.buttonReload, "Load from a previous Settings File");
+            this.buttonReload.UseVisualStyleBackColor = true;
+            this.buttonReload.Click += new System.EventHandler(this.buttonReload_Click);
+            // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.DefaultExt = "*.txt";
+            this.openFileDialog1.Filter = "BotSettings|*.txt";
+            this.openFileDialog1.Title = "Open \'BotSettings.txt\'";
             // 
             // FormSettings
             // 
@@ -720,6 +742,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlDark;
             this.ClientSize = new System.Drawing.Size(251, 656);
+            this.Controls.Add(this.buttonReload);
             this.Controls.Add(this.label13);
             this.Controls.Add(this.panelBaalFeature);
             this.Controls.Add(this.label1);
@@ -812,5 +835,7 @@
         private System.Windows.Forms.ColumnHeader columnHeader1;
         private System.Windows.Forms.ColumnHeader columnHeader4;
         private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Button buttonReload;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
     }
 }

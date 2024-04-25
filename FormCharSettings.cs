@@ -203,5 +203,26 @@ namespace app
                 numericUpDownGambleUntil.Enabled = true;
             }
         }
+
+        private void buttonReload_Click(object sender, EventArgs e)
+        {
+            DialogResult result = openFileDialog1.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                Form1_0.SettingsLoader_0.ReloadCharSettingsFromThisFile(openFileDialog1.FileName);
+                LoadSettings();
+                Application.DoEvents();
+            }
+        }
+
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            panelHelpKeys.Visible = true;
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            panelHelpKeys.Visible = false;
+        }
     }
 }

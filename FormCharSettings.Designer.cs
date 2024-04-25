@@ -84,13 +84,18 @@
             this.numericUpDownMercTakeHPUnder = new System.Windows.Forms.NumericUpDown();
             this.label22 = new System.Windows.Forms.Label();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.button1 = new System.Windows.Forms.Button();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.checkBoxGamble = new System.Windows.Forms.CheckBox();
             this.checkBoxDClone = new System.Windows.Forms.CheckBox();
             this.checkBoxIDAtShop = new System.Windows.Forms.CheckBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.label23 = new System.Windows.Forms.Label();
-            this.checkBoxGamble = new System.Windows.Forms.CheckBox();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
+            this.panelHelpKeys = new System.Windows.Forms.Panel();
+            this.buttonReload = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -105,6 +110,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMercTakeHPUnder)).BeginInit();
             this.groupBox4.SuspendLayout();
             this.groupBox5.SuspendLayout();
+            this.panelHelpKeys.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -168,6 +174,7 @@
             this.textBoxLifeSkill.Name = "textBoxLifeSkill";
             this.textBoxLifeSkill.Size = new System.Drawing.Size(37, 20);
             this.textBoxLifeSkill.TabIndex = 16;
+            this.toolTip1.SetToolTip(this.textBoxLifeSkill, "Paladin=Prayer, Sorceress=Energy Shield");
             // 
             // label8
             // 
@@ -184,6 +191,7 @@
             this.textBoxCastDefenseSkill.Name = "textBoxCastDefenseSkill";
             this.textBoxCastDefenseSkill.Size = new System.Drawing.Size(37, 20);
             this.textBoxCastDefenseSkill.TabIndex = 14;
+            this.toolTip1.SetToolTip(this.textBoxCastDefenseSkill, "Paladin=Sacred Shield, Sorceress=Frozen Armor");
             // 
             // label7
             // 
@@ -200,6 +208,7 @@
             this.textBoxDefenseSkill.Name = "textBoxDefenseSkill";
             this.textBoxDefenseSkill.Size = new System.Drawing.Size(37, 20);
             this.textBoxDefenseSkill.TabIndex = 12;
+            this.toolTip1.SetToolTip(this.textBoxDefenseSkill, "Paladin=Defiance, Sorceress=Teleport");
             // 
             // label6
             // 
@@ -216,6 +225,7 @@
             this.textBoxFastMoveTeleport.Name = "textBoxFastMoveTeleport";
             this.textBoxFastMoveTeleport.Size = new System.Drawing.Size(37, 20);
             this.textBoxFastMoveTeleport.TabIndex = 10;
+            this.toolTip1.SetToolTip(this.textBoxFastMoveTeleport, "Teleport if have Teleport else Vigor else Nothing->F9");
             // 
             // label5
             // 
@@ -232,6 +242,7 @@
             this.textBoxFastMoveTown.Name = "textBoxFastMoveTown";
             this.textBoxFastMoveTown.Size = new System.Drawing.Size(37, 20);
             this.textBoxFastMoveTown.TabIndex = 8;
+            this.toolTip1.SetToolTip(this.textBoxFastMoveTown, "Paladin=Vigor, Sorceress=Nothing->F9");
             // 
             // label4
             // 
@@ -248,6 +259,7 @@
             this.textBoxRightSkill.Name = "textBoxRightSkill";
             this.textBoxRightSkill.Size = new System.Drawing.Size(37, 20);
             this.textBoxRightSkill.TabIndex = 6;
+            this.toolTip1.SetToolTip(this.textBoxRightSkill, "Paladin=Concentration, Sorceress=Blizzard");
             // 
             // label3
             // 
@@ -264,6 +276,7 @@
             this.textBoxLeftSkill.Name = "textBoxLeftSkill";
             this.textBoxLeftSkill.Size = new System.Drawing.Size(37, 20);
             this.textBoxLeftSkill.TabIndex = 4;
+            this.toolTip1.SetToolTip(this.textBoxLeftSkill, "Paladin=Hammer, Sorceress=Static");
             // 
             // label2
             // 
@@ -417,6 +430,7 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.linkLabel1);
             this.groupBox3.Controls.Add(this.numericUpDownKeyYPos);
             this.groupBox3.Controls.Add(this.numericUpDownKeyXPos);
             this.groupBox3.Controls.Add(this.label21);
@@ -443,9 +457,9 @@
             // 
             // numericUpDownKeyYPos
             // 
-            this.numericUpDownKeyYPos.Location = new System.Drawing.Point(216, 167);
+            this.numericUpDownKeyYPos.Location = new System.Drawing.Point(207, 167);
             this.numericUpDownKeyYPos.Name = "numericUpDownKeyYPos";
-            this.numericUpDownKeyYPos.Size = new System.Drawing.Size(41, 20);
+            this.numericUpDownKeyYPos.Size = new System.Drawing.Size(32, 20);
             this.numericUpDownKeyYPos.TabIndex = 34;
             this.toolTip1.SetToolTip(this.numericUpDownKeyYPos, "This is the Y location of the Key inside your inventory (which row, starting from" +
         " 0)");
@@ -454,7 +468,7 @@
             // 
             this.numericUpDownKeyXPos.Location = new System.Drawing.Point(174, 167);
             this.numericUpDownKeyXPos.Name = "numericUpDownKeyXPos";
-            this.numericUpDownKeyXPos.Size = new System.Drawing.Size(41, 20);
+            this.numericUpDownKeyXPos.Size = new System.Drawing.Size(32, 20);
             this.numericUpDownKeyXPos.TabIndex = 33;
             this.toolTip1.SetToolTip(this.numericUpDownKeyXPos, "This is the X location of the Key inside your inventory (which column, starting f" +
         "rom 0)");
@@ -654,18 +668,6 @@
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Merc Parameters";
             // 
-            // button1
-            // 
-            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.ForeColor = System.Drawing.Color.Red;
-            this.button1.Location = new System.Drawing.Point(364, 7);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 38;
-            this.button1.Text = "Save";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
             // groupBox5
             // 
             this.groupBox5.Controls.Add(this.checkBoxGamble);
@@ -680,6 +682,18 @@
             this.groupBox5.TabIndex = 5;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Extras";
+            // 
+            // checkBoxGamble
+            // 
+            this.checkBoxGamble.AutoSize = true;
+            this.checkBoxGamble.Location = new System.Drawing.Point(6, 99);
+            this.checkBoxGamble.Name = "checkBoxGamble";
+            this.checkBoxGamble.Size = new System.Drawing.Size(87, 17);
+            this.checkBoxGamble.TabIndex = 39;
+            this.checkBoxGamble.Text = "Gamble Gold";
+            this.toolTip1.SetToolTip(this.checkBoxGamble, "Enable this if you want to Gamble your Gold at Anya for Rings and Amulets");
+            this.checkBoxGamble.UseVisualStyleBackColor = true;
+            this.checkBoxGamble.CheckedChanged += new System.EventHandler(this.checkBoxGamble_CheckedChanged);
             // 
             // checkBoxDClone
             // 
@@ -714,17 +728,69 @@
             this.label23.TabIndex = 39;
             this.label23.Text = "Put theses dummy items inside the shared stash";
             // 
-            // checkBoxGamble
+            // openFileDialog1
             // 
-            this.checkBoxGamble.AutoSize = true;
-            this.checkBoxGamble.Location = new System.Drawing.Point(6, 99);
-            this.checkBoxGamble.Name = "checkBoxGamble";
-            this.checkBoxGamble.Size = new System.Drawing.Size(87, 17);
-            this.checkBoxGamble.TabIndex = 39;
-            this.checkBoxGamble.Text = "Gamble Gold";
-            this.toolTip1.SetToolTip(this.checkBoxGamble, "Enable this if you want to Gamble your Gold at Anya for Rings and Amulets");
-            this.checkBoxGamble.UseVisualStyleBackColor = true;
-            this.checkBoxGamble.CheckedChanged += new System.EventHandler(this.checkBoxGamble_CheckedChanged);
+            this.openFileDialog1.DefaultExt = "*.txt";
+            this.openFileDialog1.Filter = "\'Char\' Settings|*.txt";
+            this.openFileDialog1.Title = "Open \'PaladinHammer.txt\' or \'SorceressBlizzard.txt\'";
+            // 
+            // linkLabel1
+            // 
+            this.linkLabel1.AutoSize = true;
+            this.linkLabel1.Location = new System.Drawing.Point(243, 170);
+            this.linkLabel1.Name = "linkLabel1";
+            this.linkLabel1.Size = new System.Drawing.Size(13, 13);
+            this.linkLabel1.TabIndex = 35;
+            this.linkLabel1.TabStop = true;
+            this.linkLabel1.Text = "?";
+            this.toolTip1.SetToolTip(this.linkLabel1, "Help for Keys location");
+            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
+            // 
+            // panelHelpKeys
+            // 
+            this.panelHelpKeys.BackgroundImage = global::app.Properties.Resources.BMBot10;
+            this.panelHelpKeys.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.panelHelpKeys.Controls.Add(this.button2);
+            this.panelHelpKeys.Location = new System.Drawing.Point(4, 248);
+            this.panelHelpKeys.Name = "panelHelpKeys";
+            this.panelHelpKeys.Size = new System.Drawing.Size(441, 190);
+            this.panelHelpKeys.TabIndex = 41;
+            // 
+            // buttonReload
+            // 
+            this.buttonReload.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonReload.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.buttonReload.Image = global::app.Properties.Resources.Load;
+            this.buttonReload.Location = new System.Drawing.Point(5, 6);
+            this.buttonReload.Name = "buttonReload";
+            this.buttonReload.Size = new System.Drawing.Size(31, 25);
+            this.buttonReload.TabIndex = 40;
+            this.toolTip1.SetToolTip(this.buttonReload, "Load from a previous Settings File");
+            this.buttonReload.UseVisualStyleBackColor = true;
+            this.buttonReload.Click += new System.EventHandler(this.buttonReload_Click);
+            // 
+            // button1
+            // 
+            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button1.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.button1.Image = global::app.Properties.Resources.Save;
+            this.button1.Location = new System.Drawing.Point(364, 6);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 25);
+            this.button1.TabIndex = 38;
+            this.toolTip1.SetToolTip(this.button1, "Save current Settings");
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // button2
+            // 
+            this.button2.Image = global::app.Properties.Resources.Delete;
+            this.button2.Location = new System.Drawing.Point(416, 0);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(25, 25);
+            this.button2.TabIndex = 0;
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // FormCharSettings
             // 
@@ -732,6 +798,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlDark;
             this.ClientSize = new System.Drawing.Size(452, 487);
+            this.Controls.Add(this.panelHelpKeys);
+            this.Controls.Add(this.buttonReload);
             this.Controls.Add(this.label23);
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.button1);
@@ -768,6 +836,7 @@
             this.groupBox4.PerformLayout();
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
+            this.panelHelpKeys.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -836,5 +905,10 @@
         private System.Windows.Forms.CheckBox checkBoxDClone;
         private System.Windows.Forms.CheckBox checkBoxGamble;
         private System.Windows.Forms.Label label23;
+        private System.Windows.Forms.Button buttonReload;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.LinkLabel linkLabel1;
+        private System.Windows.Forms.Panel panelHelpKeys;
+        private System.Windows.Forms.Button button2;
     }
 }

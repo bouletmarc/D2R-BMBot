@@ -24,8 +24,8 @@ namespace app
         public int CurrentObjectAreaIndex = 0;
 
         public bool[,] CurrentAreaCollisionGrid = new bool[0,0];
-
         public string[] MapDataLines = new string[0];
+        public List<int> AllExitsIDs = new List<int>();
 
         public void SetForm1(Form1 form1_1)
         {
@@ -227,6 +227,7 @@ namespace app
         public List<Position> GetPositionOfAllObject(string ObjectType, string ObjectName, int AreaID, List<int> IgnoreTheseIndex, bool IgnoreName = false)
         {
             List<Position> ThisPos = new List<Position>();
+            AllExitsIDs = new List<int>();
 
             if (AllMapData.Count == 0) return ThisPos;
 
@@ -250,6 +251,7 @@ namespace app
                                 || IgnoreName)
                             {
                                 ThisPos.Add(new Position { X = AllMapData[i].Offset.X + AllMapData[i].Objects[k].X, Y = AllMapData[i].Offset.Y + AllMapData[i].Objects[k].Y });
+                                AllExitsIDs.Add(int.Parse(AllMapData[i].Objects[k].ID));
 
                                 if (DebuggingMapData)
                                 {
@@ -263,6 +265,7 @@ namespace app
                                 || IgnoreName)
                             {
                                 ThisPos.Add(new Position { X = AllMapData[i].Offset.X + AllMapData[i].Objects[k].X, Y = AllMapData[i].Offset.Y + AllMapData[i].Objects[k].Y });
+                                AllExitsIDs.Add(int.Parse(AllMapData[i].Objects[k].ID));
 
                                 if (DebuggingMapData)
                                 {

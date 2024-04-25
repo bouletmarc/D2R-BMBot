@@ -41,6 +41,12 @@ namespace app
 
         public void RunScriptTristam()
         {
+            if (!Form1_0.Running || !Form1_0.GameStruc_0.IsInGame())
+            {
+                ScriptDone = true;
+                return;
+            }
+
             if (Form1_0.Town_0.GetInTown())
             {
                 Form1_0.SetGameStatus("GO TO WP");
@@ -79,6 +85,7 @@ namespace app
                     else
                     {
                         Form1_0.method_1("Tristram location not detected!", Color.Red);
+                        Form1_0.Town_0.FastTowning = false;
                         Form1_0.Town_0.UseLastTP = false;
                         ScriptDone = true;
                         return;
@@ -164,6 +171,12 @@ namespace app
 
         public void RunScriptCow()
         {
+            if (!Form1_0.Running || !Form1_0.GameStruc_0.IsInGame())
+            {
+                ScriptDone = true;
+                return;
+            }
+
             if (Form1_0.Town_0.GetInTown())
             {
                 Form1_0.SetGameStatus("GO TO SHOP");
@@ -217,6 +230,7 @@ namespace app
 
                     if (!Form1_0.Battle_0.ClearingArea)
                     {
+                        Form1_0.Town_0.FastTowning = false;
                         Form1_0.Town_0.UseLastTP = false;
                         ScriptDone = true;
                     }
@@ -227,6 +241,12 @@ namespace app
         public void RunScript()
         {
             Form1_0.Town_0.ScriptTownAct = 1; //set to town act 5 when running this script
+
+            if (!Form1_0.Running || !Form1_0.GameStruc_0.IsInGame())
+            {
+                ScriptDone = true;
+                return;
+            }
 
             Form1_0.ItemsStruc_0.GetItems(false); //get inventory
             HasWirtsLeg = Form1_0.InventoryStruc_0.HasInventoryItemName("Wirt's Leg");

@@ -106,7 +106,6 @@ namespace app
             {
                 //Console.WriteLine("here");
                 int ThisNewIndex = GetNextFreeSpaceInInventory();
-
                 if (ThisNewIndex > -1)
                 {
                     //remove item from this slot
@@ -127,6 +126,7 @@ namespace app
             }
 
             //place all keys together
+            thisindex = CharConfig.KeysLocationInInventory.Item1 + (CharConfig.KeysLocationInInventory.Item2 * 10);
             for (int i = 0; i < 40; i++)
             {
                 if (CharConfig.InventoryDontCheckItem[i] == 0 && InventoryHasItem[i] >= 1 && InventoryItemNames[i] == "Key")
@@ -253,6 +253,7 @@ namespace app
                         Form1_0.WaitDelay(12);
                         Form1_0.ItemsStruc_0.GetItems(false);
                         //Form1_0.KeyMouse_0.MouseClicc_RealPos(Form1_0.CenterX, Form1_0.CenterY);
+                        Form1_0.Stash_0.PlaceItem(Form1_0.CenterX, Form1_0.CenterY);
                         Form1_0.Stash_0.PlaceItem(Form1_0.CenterX, Form1_0.CenterY);
                         Form1_0.WaitDelay(10);
                     }

@@ -545,6 +545,7 @@ namespace app
                             Form1_0.Potions_0.CanUseSkillForRegen = true;
 
                             Form1_0.PathFinding_0.AcceptMoveOffset = BufferPathFindingMoveSize;
+                            Form1_0.Town_0.FastTowning = false;
                             Form1_0.Town_0.UseLastTP = false;
                             ScriptDone = true;
                             return;
@@ -565,6 +566,7 @@ namespace app
                         Form1_0.Potions_0.CanUseSkillForRegen = true;
 
                         Form1_0.PathFinding_0.AcceptMoveOffset = BufferPathFindingMoveSize;
+                        Form1_0.Town_0.FastTowning = false;
                         Form1_0.Town_0.UseLastTP = false;
                         ScriptDone = true;
                         return;

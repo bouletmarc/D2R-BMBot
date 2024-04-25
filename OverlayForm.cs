@@ -7,6 +7,7 @@ using System.Drawing.Drawing2D;
 using System.Drawing.Text;
 using System.Linq;
 using System.Net;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -35,6 +36,9 @@ namespace app
         public List<System.Drawing.Point> GoodChestsPoints = new List<System.Drawing.Point>();
         public List<System.Drawing.Point> WPPoints = new List<System.Drawing.Point>();
         public List<System.Drawing.Point> ExitPoints = new List<System.Drawing.Point>();
+        public List<int> ExitIDs = new List<int>();
+        public Point ExitPointDuriel = new Point();
+        public Point ExitPointSummoner = new Point();
         public System.Drawing.Point MoveToPoint = new System.Drawing.Point(0, 0);
 
         public List<System.Drawing.Point> MobsPoints = new List<System.Drawing.Point>();
@@ -48,6 +52,9 @@ namespace app
         Font drawFontBold10 = new Font("Arial", 12, FontStyle.Bold);
 
         SolidBrush drawBrushYellow = new SolidBrush(Color.FromArgb(255, 255, 255, 0));
+        SolidBrush drawBrushOrange = new SolidBrush(Color.FromArgb(255, 255, 95, 0));
+        SolidBrush drawBrushPurple = new SolidBrush(Color.FromArgb(255, 172, 19, 224));
+        SolidBrush drawBrushCyan = new SolidBrush(Color.FromArgb(255, 0, 255, 255));
         SolidBrush drawBrushWhite = new SolidBrush(Color.FromArgb(150, 255, 255, 255));
         SolidBrush drawBrushRed = new SolidBrush(Color.LightPink);
         SolidBrush drawBrushBlue = new SolidBrush(Color.LightBlue);
@@ -187,11 +194,34 @@ namespace app
         public void SetAllExitNearby()
         {
             ExitPoints = new List<System.Drawing.Point>();
+            ExitIDs = new List<int>();
 
             List<Position> AllPos = Form1_0.MapAreaStruc_0.GetPositionOfAllObject("exit", "", (int)Form1_0.PlayerScan_0.levelNo, new List<int>(), true);
-            foreach (var objectPos in AllPos)
+            for (int i = 0; i < AllPos.Count; i++)
             {
-                ExitPoints.Add(new System.Drawing.Point(objectPos.X, objectPos.Y));
+                ExitPoints.Add(new System.Drawing.Point(AllPos[i].X, AllPos[i].Y));
+                ExitIDs.Add(Form1_0.MapAreaStruc_0.AllExitsIDs[i]);
+            }
+
+            //Set duriel tomb exit
+            Position OrificePos = Form1_0.MapAreaStruc_0.GetAreaOfObject("object", "HoradricOrifice", new List<int>(), 65, 72);
+            if (OrificePos.X != 0 && OrificePos.Y != 0)
+            {
+                //"id":71, "type":"exit", "x":214, "y":25, "isGoodExit":true}
+                //Form1_0.method_1("Moving to: " + ((Enums.Area)(Form1_0.MapAreaStruc_0.CurrentObjectAreaIndex + 1)), Color.Red);
+                Position ThisFinalPosition = Form1_0.MapAreaStruc_0.GetPositionOfObject("exit", Form1_0.Town_0.getAreaName((int)Form1_0.MapAreaStruc_0.CurrentObjectAreaIndex + 1), (int)Form1_0.PlayerScan_0.levelNo, new List<int>() { });
+                ExitPointDuriel.X = ThisFinalPosition.X;
+                ExitPointDuriel.Y = ThisFinalPosition.Y;
+            }
+
+            //Set Summoner Pos
+            Position ThisFinalPositionArcane = Form1_0.MapAreaStruc_0.GetPositionOfObject("npc", "Summoner", (int) Enums.Area.ArcaneSanctuary, new List<int>() { });
+            ExitPointSummoner.X = ThisFinalPositionArcane.X;
+            ExitPointSummoner.Y = ThisFinalPositionArcane.Y;
+            if (ExitPointSummoner.X != 0 && ExitPointSummoner.Y != 0)
+            {
+                ExitPoints.Add(new System.Drawing.Point(ThisFinalPositionArcane.X, ThisFinalPositionArcane.Y));
+                ExitIDs.Add((int)Enums.Area.CanyonOfTheMagi);
             }
         }
 
@@ -339,7 +369,7 @@ namespace app
                 string CordsTxt = Form1_0.PlayerScan_0.xPosFinal.ToString() + ", " + Form1_0.PlayerScan_0.yPosFinal.ToString();
                 ThisS2 = e.Graphics.MeasureString(CordsTxt, drawFontBold);
                 //DrawString(e, CordsTxt, drawFontBold, drawBrushWhite, Form1_0.CenterX - (ThisS2.Width / 2), 960);
-                DrawString(e, CordsTxt, drawFontBold, drawBrushWhite, 1000, 960, true);
+                DrawString(e, CordsTxt, drawFontBold, drawBrushWhite, 990, 960, true);
 
                 //Print Infos
                 DrawString(e, "Mobs:" + MobsPoints.Count, drawFontBold, drawBrushWhite, 790, 960, true);
@@ -389,8 +419,15 @@ namespace app
                 DrawString(e, "Status: " + Form1_0.CurrentStatus, drawFontBold, drawBrushWhite, 560, 935, true);
                 ThisS2 = e.Graphics.MeasureString(Form1_0.CurrentGameTime, drawFontBold);
                 //DrawString(e, Form1_0.CurrentGameTime, drawFontBold, drawBrushYellow, Form1_0.CenterX, 935, true);
-                DrawString(e, Form1_0.CurrentGameTime, drawFontBold, drawBrushYellow, 1000, 935, true);
-                DrawString(e, Form1_0.mS + ", " + Form1_0.FPS.ToString("00") + "Fps", drawFontBold, drawBrushYellow, 1060, 910, true);
+                DrawString(e, Form1_0.CurrentGameTime, drawFontBold, drawBrushYellow, 990, 935, true);
+                
+                //Print mS Delay
+                string ThisMSStr = Form1_0.mS + "(~" + Form1_0.Average_mS + ")";
+                DrawString(e, ThisMSStr, drawFontBold, drawBrushYellow, 1090, 910, true);
+
+                //Print FPS Delay
+                string ThisFPSStr = Form1_0.FPS.ToString("00") + "Fps(~" + Form1_0.Average_FPS.ToString("00") + ")";
+                DrawString(e, ThisFPSStr, drawFontBold, drawBrushYellow, 1090, 935, true);
 
                 string OtherInfosTxt = Form1_0.TotalChickenCount + " ChickensByHP, " + Form1_0.TotalChickenByTimeCount + " ChickensByTime";
                 ThisS2 = e.Graphics.MeasureString(OtherInfosTxt, drawFontBold);
@@ -401,23 +438,22 @@ namespace app
                 DrawString(e, OtherInfosTxt2, drawFontBold, drawBrushWhite, 1360 - (ThisS2.Width * ScaleScreenSizeInverted), 910, true);
 
                 //Print Merc
+                if (CharConfig.UsingMerc)
+                {
+                    string ThisMercTxt = "Merc not alive";
+                    if (Form1_0.MercStruc_0.MercAlive)
+                    {
+
+                        int PercentMerc = (int)((Form1_0.MercStruc_0.MercHP * 100.0) / Form1_0.MercStruc_0.MercMaxHP);
+                        ThisMercTxt = "Merc:" + Form1_0.MercStruc_0.MercHP.ToString() + "/" + Form1_0.MercStruc_0.MercMaxHP.ToString() + " (" + PercentMerc + "%)";
+                    }
+                    ThisS2 = e.Graphics.MeasureString(ThisMercTxt, drawFontBold);
+                    DrawString(e, ThisMercTxt, drawFontBold, drawBrushGreen, 1360 - (ThisS2.Width * ScaleScreenSizeInverted), 860, true);
+                }
+
+                //Print Units Scanned Count
                 if (Form1_0.DebugMenuStyle > 0)
                 {
-                    if (CharConfig.UsingMerc)
-                    {
-                        string ThisMercTxt = "Merc not alive";
-                        if (Form1_0.MercStruc_0.MercAlive)
-                        {
-
-                            int PercentMerc = (int)((Form1_0.MercStruc_0.MercHP * 100.0) / Form1_0.MercStruc_0.MercMaxHP);
-                            ThisMercTxt = "Merc:" + Form1_0.MercStruc_0.MercHP.ToString() + "/" + Form1_0.MercStruc_0.MercMaxHP.ToString() + " (" + PercentMerc + "%)";
-                        }
-                        ThisS2 = e.Graphics.MeasureString(ThisMercTxt, drawFontBold);
-                        DrawString(e, ThisMercTxt, drawFontBold, drawBrushGreen, 1360 - (ThisS2.Width * ScaleScreenSizeInverted), 860, true);
-                    }
-                //if (Form1_0.DebugMenuStyle > 0)
-                //{
-                    //Print Units Scanned Count
                     string UnitsStr = "Units:" + Form1_0.PatternsScan_0.GetUnitsScannedCount().ToString();
                     DrawString(e, UnitsStr, drawFontBold, drawBrushGreen, 560, 885, true);
                 }
@@ -493,6 +529,13 @@ namespace app
                         System.Drawing.Point StartPoint = new System.Drawing.Point(itemScreenPosStart.X, itemScreenPosStart.Y);
                         StartPoint = RescaleThisPoint(StartPoint);
                         DrawCrossAtPoint(e, StartPoint, greenPen, false);
+
+                        if (CharConfig.RunMapHackOnly)
+                        {
+                            System.Drawing.Point PlayerPoint = new System.Drawing.Point(Form1_0.CenterX, Form1_0.CenterY);
+                            PlayerPoint = RescaleThisPoint(PlayerPoint);
+                            DrawLine(e, greenPen, StartPoint, PlayerPoint, false);
+                        }
                     }
 
                     for (int i = 0; i < WPPoints.Count; i++)
@@ -501,6 +544,24 @@ namespace app
                         System.Drawing.Point StartPoint = new System.Drawing.Point(itemScreenPosStart.X, itemScreenPosStart.Y);
                         StartPoint = RescaleThisPoint(StartPoint);
                         DrawCrossAtPoint(e, StartPoint, bluePen, false);
+
+                        if (CharConfig.RunMapHackOnly)
+                        {
+                            System.Drawing.Point PlayerPoint = new System.Drawing.Point(Form1_0.CenterX, Form1_0.CenterY);
+                            PlayerPoint = RescaleThisPoint(PlayerPoint);
+                            DrawLine(e, bluePen, StartPoint, PlayerPoint, false);
+                        }
+                    }
+
+                    if (CharConfig.RunMapHackOnly)
+                    {
+                        FillRectangle(e, drawBrushDark, 1398, 5, 270, 119, true);
+                        DrawString(e, "Green: Good Chest", drawFontBold10, drawBrushGreen, 1400, 5, true);
+                        DrawString(e, "Blue: Waypoint", drawFontBold10, drawBrushBlue, 1400, 25, true);
+                        DrawString(e, "Red: Next Area Exit", drawFontBold10, drawBrushRed, 1400, 45, true);
+                        DrawString(e, "Yellow: Next Area Exit (Special)", drawFontBold10, drawBrushOrange, 1400, 65, true);
+                        DrawString(e, "Purple: Previous Area Exit", drawFontBold10, drawBrushPurple, 1400, 85, true);
+                        DrawString(e, "Cyan: Previous Area Exit (Special)", drawFontBold10, drawBrushCyan, 1400, 105, true);
                     }
 
                     for (int i = 0; i < ExitPoints.Count; i++)
@@ -509,6 +570,58 @@ namespace app
                         System.Drawing.Point StartPoint = new System.Drawing.Point(itemScreenPosStart.X, itemScreenPosStart.Y);
                         StartPoint = RescaleThisPoint(StartPoint);
                         DrawCrossAtPoint(e, StartPoint, cyanPen, false);
+
+                        if (CharConfig.RunMapHackOnly)
+                        {
+                            System.Drawing.Point PlayerPoint = new System.Drawing.Point(Form1_0.CenterX, Form1_0.CenterY);
+                            PlayerPoint = RescaleThisPoint(PlayerPoint);
+
+                            if ((Enums.Area)Form1_0.PlayerScan_0.levelNo == Enums.Area.CanyonOfTheMagi 
+                                && ExitPointDuriel.X != 0 && ExitPointDuriel.Y != 0
+                                && ExitPoints[i].X == ExitPointDuriel.X && ExitPoints[i].Y == ExitPointDuriel.Y)
+                            {
+                                DrawLine(e, redPen, StartPoint, PlayerPoint, false);
+                            }
+                            else if ((Enums.Area)Form1_0.PlayerScan_0.levelNo == Enums.Area.ArcaneSanctuary
+                                && ExitPointSummoner.X != 0 && ExitPointSummoner.Y != 0
+                                && ExitPoints[i].X == ExitPointSummoner.X && ExitPoints[i].Y == ExitPointSummoner.Y)
+                            {
+                                DrawLine(e, redPen, StartPoint, PlayerPoint, false);
+                            }
+                            else
+                            {
+                                if ((Enums.Area)Form1_0.PlayerScan_0.levelNo == Enums.Area.CanyonOfTheMagi)
+                                {
+                                    DrawLine(e, yellowPen, StartPoint, PlayerPoint, false);
+                                }
+                                else
+                                {
+                                    if (ExitIDs[i] > Form1_0.PlayerScan_0.levelNo)
+                                    {
+
+                                        if (ExitIDs[i] == Form1_0.PlayerScan_0.levelNo + 1)
+                                        {
+                                            DrawLine(e, redPen, StartPoint, PlayerPoint, false);
+                                        }
+                                        else
+                                        {
+                                            DrawLine(e, yellowPen, StartPoint, PlayerPoint, false);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (ExitIDs[i] == Form1_0.PlayerScan_0.levelNo - 1)
+                                        {
+                                            DrawLine(e, purplePen, StartPoint, PlayerPoint, false);
+                                        }
+                                        else
+                                        {
+                                            DrawLine(e, cyanPen, StartPoint, PlayerPoint, false);
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }

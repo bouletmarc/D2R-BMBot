@@ -42,6 +42,12 @@ namespace app
         {
             Form1_0.Town_0.ScriptTownAct = 2; //set to town act 5 when running this script
 
+            if (!Form1_0.Running || !Form1_0.GameStruc_0.IsInGame())
+            {
+                ScriptDone = true;
+                return;
+            }
+
             if (Form1_0.Town_0.GetInTown())
             {
                 Form1_0.SetGameStatus("GO TO WP");
@@ -128,6 +134,7 @@ namespace app
                     else
                     {
                         Form1_0.method_1("Duriel location not detected!", Color.Red);
+                        Form1_0.Town_0.FastTowning = false;
                         Form1_0.Town_0.UseLastTP = false;
                         ScriptDone = true;
                         return;
@@ -199,6 +206,7 @@ namespace app
                             Form1_0.ItemsStruc_0.GrabAllItemsForGold();
                             Form1_0.Potions_0.CanUseSkillForRegen = true;
 
+                            Form1_0.Town_0.FastTowning = false;
                             Form1_0.Town_0.UseLastTP = false;
                             ScriptDone = true;
                             return;
@@ -216,6 +224,7 @@ namespace app
                         if (Form1_0.MobsStruc_0.GetMobs("getBossName", "Duriel", false, 200, new List<long>())) return; //redetect baal?
                         Form1_0.Potions_0.CanUseSkillForRegen = true;
 
+                        Form1_0.Town_0.FastTowning = false;
                         Form1_0.Town_0.UseLastTP = false;
                         ScriptDone = true;
                         return;

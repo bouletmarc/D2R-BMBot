@@ -40,7 +40,7 @@ namespace app
         public bool SetUI = false;
 
         public int MaxTryUIOpen = 5;
-        public int MaxWaitingDelayForMenuInteractions = 50;
+        public int MaxWaitingDelayForMenuInteractions = 10;
 
         public void SetForm1(Form1 form1_1)
         {
@@ -49,7 +49,8 @@ namespace app
 
         public void CloseAllUIMenu()
         {
-            if (GetMenuActive("invMenu")) CloseThisMenu("invMenu");
+            CloseAllUIMenuButThisOne("");
+            /*if (GetMenuActive("invMenu")) CloseThisMenu("invMenu");
             if (GetMenuActive("questsMenu")) CloseThisMenu("questsMenu");
             if (GetMenuActive("partyMenu")) CloseThisMenu("partyMenu");
             if (GetMenuActive("mercMenu")) CloseThisMenu("mercMenu");
@@ -58,7 +59,21 @@ namespace app
             if (GetMenuActive("npcShop")) CloseThisMenu("npcShop");
             if (GetMenuActive("tradeMenu")) CloseThisMenu("tradeMenu");
             if (GetMenuActive("cubeMenu")) CloseThisMenu("cubeMenu");
-            if (GetMenuActive("quitMenu")) CloseThisMenu("quitMenu");
+            if (GetMenuActive("quitMenu")) CloseThisMenu("quitMenu");*/
+        }
+
+        public void CloseAllUIMenuButThisOne(string NotThisUIMenu)
+        {
+            if (NotThisUIMenu != "invMenu" && GetMenuActive("invMenu")) CloseThisMenu("invMenu");
+            if (NotThisUIMenu != "questsMenu" && GetMenuActive("questsMenu")) CloseThisMenu("questsMenu");
+            if (NotThisUIMenu != "partyMenu" && GetMenuActive("partyMenu")) CloseThisMenu("partyMenu");
+            if (NotThisUIMenu != "mercMenu" && GetMenuActive("mercMenu")) CloseThisMenu("mercMenu");
+            if (NotThisUIMenu != "stash" && GetMenuActive("stash")) CloseThisMenu("stash");
+            if (NotThisUIMenu != "npcInteract" && GetMenuActive("npcInteract")) CloseThisMenu("npcInteract");
+            if (NotThisUIMenu != "npcShop" && GetMenuActive("npcShop")) CloseThisMenu("npcShop");
+            if (NotThisUIMenu != "tradeMenu" && GetMenuActive("tradeMenu")) CloseThisMenu("tradeMenu");
+            if (NotThisUIMenu != "cubeMenu" && GetMenuActive("cubeMenu")) CloseThisMenu("cubeMenu");
+            if (NotThisUIMenu != "quitMenu" && GetMenuActive("quitMenu")) CloseThisMenu("quitMenu");
         }
 
         public void CloseThisMenu(string UIName)
@@ -127,6 +142,7 @@ namespace app
                     {
                         break;
                     }
+                    CloseAllUIMenuButThisOne(UIName);
                     WaitTime++;
                 }
             }

@@ -172,6 +172,13 @@ namespace app
             SearchSameGamesAsLastOne = false;
             SameGameRetry = 0;
             Form1_0.Town_0.ScriptTownAct = 5; //set to town act 5 when running this script
+
+            if (!Form1_0.Running || !Form1_0.GameStruc_0.IsInGame())
+            {
+                ScriptDone = true;
+                return;
+            }
+
             GetLeechInfo();
             if (Form1_0.Town_0.GetInTown())
             {
@@ -252,6 +259,8 @@ namespace app
                     if (TimeWaitedForTP >= MaxTimeWaitedForTP)
                     {
                         Form1_0.method_1("Leaving reason: Waited too long for tp", Color.Red);
+                        Form1_0.Town_0.FastTowning = false;
+                        Form1_0.Town_0.UseLastTP = false;
                         ScriptDone = true;
                         //Form1_0.LeaveGame(false);
                     }
@@ -269,6 +278,7 @@ namespace app
                             && !Form1_0.PlayerScan_0.HasAnyPlayerInArea(131))//throne chamber
                         {
                             Form1_0.method_1("Leaving reason: Nobody seem to baal run", Color.Red);
+                            Form1_0.Town_0.FastTowning = false;
                             Form1_0.Town_0.UseLastTP = false;
                             ScriptDone = true;
                             //Form1_0.LeaveGame(false);
@@ -506,6 +516,7 @@ namespace app
                             Form1_0.Potions_0.CanUseSkillForRegen = true;
                             SearchSameGamesAsLastOne = true;
                             //Form1_0.LeaveGame(true);
+                            Form1_0.Town_0.FastTowning = false;
                             Form1_0.Town_0.UseLastTP = false;
                             ScriptDone = true;
                             //Form1_0.LeaveGame(false);
@@ -538,6 +549,7 @@ namespace app
                         Form1_0.Potions_0.CanUseSkillForRegen = true;
                         SearchSameGamesAsLastOne = true;
                         //Form1_0.LeaveGame(true);
+                        Form1_0.Town_0.FastTowning = false;
                         Form1_0.Town_0.UseLastTP = false;
                         ScriptDone = true;
                         //Form1_0.LeaveGame(false);

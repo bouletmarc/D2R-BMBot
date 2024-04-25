@@ -86,10 +86,11 @@ namespace app
                     {
                         if (xPosFinal != 0 && yPosFinal != 0)
                         {
-                            //Int64 pUnitDataPtr = BitConverter.ToInt64(Mercdatastruc, 0x10);
+                            Int64 pUnitDataPtr = BitConverter.ToInt64(Mercdatastruc, 0x10);
                             //uint dwOwnerId = Form1_0.Mem_0.ReadUInt32Raw((IntPtr)(pUnitDataPtr + 0x0c));
                             //uint dwOwnerId = BitConverter.ToUInt32(Mercdatastruc, 8);
 
+                            if (Form1_0.Mem_0.ReadByteRaw((IntPtr)(pUnitDataPtr + 0x32)) != 0x0e && Form1_0.Mem_0.ReadByteRaw((IntPtr)(pUnitDataPtr + 0x33)) != 0x04)
                             //if (dwOwnerId == MercOwnerID && MercOwnerID != 0)
                             //{
                                 //SetHPFromStats();
@@ -98,7 +99,7 @@ namespace app
                                 File.WriteAllBytes(SavePathh, Mercdatastruc);*/
 
                                 /*byte[] buffff = new byte[144];
-                                long pStatsListExPtr = BitConverter.ToInt64(Mercdatastruc, 0x88);
+                                long pStatsListExPtr = BitConverter.ToInt64(Mercdatastruc, 0x10);
                                 Form1_0.Mem_0.ReadRawMemory(pStatsListExPtr, ref buffff, 500);
 
                                 //pStatsListExPtr = BitConverter.ToInt64(buffff, 8);

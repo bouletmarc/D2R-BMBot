@@ -51,6 +51,7 @@ namespace app
         public long pRoom2Address = 0;
         public long pLevelAddress = 0;
         public long levelNo = 0;
+        public long LastlevelNo = 0;
         public long pStatsListEx = 0;
         public long statPtr = 0;
         public long statCount = 0;
@@ -236,6 +237,12 @@ namespace app
 
             RoomExit[0] = Form1_0.Mem_0.ReadUInt16Raw((IntPtr)(pRoom1Address + 0x10));
             RoomExit[1] = Form1_0.Mem_0.ReadUInt16Raw((IntPtr)(pRoom1Address + 0x14));
+
+            if (LastlevelNo != levelNo)
+            {
+                Form1_0.overlayForm.ScanningOverlayItems = true; //try rescanning overlay if there was too much lags
+                LastlevelNo = levelNo;
+            }
 
             //; get/check for bad pointer
             if (levelNo == 0 && xPosFinal == 0 && yPosFinal == 0)

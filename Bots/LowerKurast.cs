@@ -37,6 +37,12 @@ namespace app
         {
             Form1_0.Town_0.ScriptTownAct = 5; //set to town act 5 when running this script
 
+            if (!Form1_0.Running || !Form1_0.GameStruc_0.IsInGame())
+            {
+                ScriptDone = true;
+                return;
+            }
+
             if (Form1_0.Town_0.GetInTown())
             {
                 Form1_0.SetGameStatus("GO TO WP");
@@ -91,6 +97,7 @@ namespace app
                             {
                                 Form1_0.Town_0.SelectTownWP();
                                 Form1_0.Town_0.Towning = true;
+                                Form1_0.Town_0.FastTowning = false;
                                 Form1_0.Town_0.UseLastTP = false;
                                 ScriptDone = true;
 
@@ -119,6 +126,12 @@ namespace app
             int Tryy = 0;
             while (ThisChestPos.X != 0 && ThisChestPos.Y != 0 && Tryy < 30)
             {
+                if (!Form1_0.Running || !Form1_0.GameStruc_0.IsInGame())
+                {
+                    ScriptDone = true;
+                    return;
+                }
+
                 if (Form1_0.Mover_0.MoveToLocation(ThisChestPos.X, ThisChestPos.Y))
                 {
                     HasTakenAnyChest = true;

@@ -38,6 +38,12 @@ namespace app
         {
             Form1_0.Town_0.ScriptTownAct = 2; //set to town act 5 when running this script
 
+            if (!Form1_0.Running || !Form1_0.GameStruc_0.IsInGame())
+            {
+                ScriptDone = true;
+                return;
+            }
+
             if (Form1_0.Town_0.GetInTown())
             {
                 Form1_0.SetGameStatus("GO TO WP");
@@ -112,6 +118,7 @@ namespace app
                     else
                     {
                         Form1_0.method_1("Cube location not detected!", Color.Red);
+                        Form1_0.Town_0.FastTowning = false;
                         Form1_0.Town_0.UseLastTP = false;
                         ScriptDone = true;
                         return;
@@ -159,6 +166,7 @@ namespace app
 
                     if (Form1_0.PlayerScan_0.LeechlevelNo == (int)Enums.Area.LutGholein)
                     {
+                        Form1_0.Town_0.FastTowning = false;
                         Form1_0.Town_0.UseLastTP = false;
                         ScriptDone = true;
                     }

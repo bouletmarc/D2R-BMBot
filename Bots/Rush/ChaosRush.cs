@@ -550,6 +550,7 @@ namespace app
 
                             Form1_0.PathFinding_0.AcceptMoveOffset = BufferPathFindingMoveSize;
                             Form1_0.Town_0.UseLastTP = false;
+                            Form1_0.Town_0.FastTowning = false;
                             ScriptDone = true;
                             return;
                             //Form1_0.LeaveGame(true);
@@ -570,6 +571,7 @@ namespace app
 
                         Form1_0.PathFinding_0.AcceptMoveOffset = BufferPathFindingMoveSize;
                         Form1_0.Town_0.UseLastTP = false;
+                        Form1_0.Town_0.FastTowning = false;
                         ScriptDone = true;
                         return;
                         //Form1_0.LeaveGame(true);

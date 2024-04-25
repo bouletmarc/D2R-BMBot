@@ -42,7 +42,7 @@ namespace app
     public partial class Form1 : Form
     {
 
-        public string BotVersion = "V2.6";
+        public string BotVersion = "V2.7";
 
         public string D2_LOD_113C_Path = "";
 
@@ -59,11 +59,12 @@ namespace app
         public bool HasPointers = false;
         public int UnitStrucOffset = -32;
         public int hWnd = 0;
-        public DateTime CheckTime = new DateTime();
         public int LoopDone = 0;
-        public DateTime GameStartedTime = new DateTime();
         public bool CharDied = false;
+
         public bool PrintedGameTime = false;
+        public DateTime CheckTime = new DateTime();
+        public DateTime GameStartedTime = new DateTime();
         public DateTime TimeSinceSearchingForGames = new DateTime();
 
         public Rectangle D2Rect = new Rectangle();
@@ -99,6 +100,11 @@ namespace app
 
         public double FPS = 0;
         public string mS = "";
+
+        public List<double> Averge_FPSList = new List<double>();
+        public List<int> Averge_mSList = new List<int>();
+        public double Average_FPS = 0;
+        public int Average_mS = 0;
 
         public int TotalChickenCount = 0;
         public int TotalDeadCount = 0;
@@ -200,6 +206,14 @@ namespace app
 
         [DllImport("user32.dll")]
         static extern bool ClientToScreen(int hWnd, out Point lpPoint);
+
+        [DllImport("gdi32.dll")]
+        static extern int GetDeviceCaps(IntPtr hdc, int nIndex);
+        public enum DeviceCap
+        {
+            VERTRES = 10,
+            DESKTOPVERTRES = 117,
+        }
 
 
         // REQUIRED STRUCTS
@@ -635,6 +649,20 @@ namespace app
             labelGames.Text = CurrentGameNumberSinceStart.ToString() + " entered. " + CurrentGameNumberFullyDone.ToString() + " fully done";
         }
 
+        private float getScalingFactor()
+        {
+            Graphics g = Graphics.FromHwnd(IntPtr.Zero);
+            IntPtr desktop = g.GetHdc();
+            int LogicalScreenHeight = GetDeviceCaps(desktop, (int)DeviceCap.VERTRES);
+            int PhysicalScreenHeight = GetDeviceCaps(desktop, (int)DeviceCap.DESKTOPVERTRES);
+
+            g.ReleaseHdc(desktop);
+
+            float ScreenScalingFactor = (float)PhysicalScreenHeight / (float)LogicalScreenHeight;
+
+            return ScreenScalingFactor; // 1.25 = 125%
+        }
+
         public void Startt()
         {
             try
@@ -691,6 +719,11 @@ namespace app
                         || CenterY <= ((ScreenY / 2) - 15))
                     {
                         method_1("D2R rect Position is not in the center of screen, might have some issues!", Color.OrangeRed);
+                    }
+
+                    if (getScalingFactor() != 1f)
+                    {
+                        method_1("Windows scale factor is not 100%, might have some issues!", Color.OrangeRed);
                     }
 
                     overlayForm.ScaleScreenSize = (float)Form1_0.D2Widht / 1920f;
@@ -832,6 +865,7 @@ namespace app
             SettingsLoader_0.SaveOthersSettings();
             ItemsStruc_0.BadItemsOnCursorIDList = new List<long>();
             ItemsStruc_0.BadItemsOnGroundPointerList = new List<long>();
+            ItemsStruc_0.AvoidItemsOnGroundPointerList = new List<long>();
             SetDeadCount = false;
             GameStruc_0.ChickenTry = 0;
             MercStruc_0.MercOwnerID = 0;
@@ -879,7 +913,8 @@ namespace app
                         {
                             GameStruc_0.SetNewGame();
                             SetNewGame();
-                            if (!CharConfig.IsRushing) WaitDelay(400); //wait here because 'loading' menu is not correct
+                            //if (!CharConfig.IsRushing) WaitDelay(400); //wait here because 'loading' menu is not correct
+                            if (!CharConfig.IsRushing) WaitDelay(250); //wait here because 'loading' menu is not correct
                             if (CharConfig.IsRushing) PlayerScan_0.ScanForLeecher();
                             Town_0.GetCorpse();
                             ItemsStruc_0.GetBadItemsOnCursor();
@@ -893,7 +928,8 @@ namespace app
                             {
                                 GameStruc_0.SetNewGame();
                                 SetNewGame();
-                                if (!CharConfig.IsRushing) WaitDelay(400); //wait here because 'loading' menu is not correct
+                                //if (!CharConfig.IsRushing) WaitDelay(400); //wait here because 'loading' menu is not correct
+                                if (!CharConfig.IsRushing) WaitDelay(250); //wait here because 'loading' menu is not correct
                                 if (CharConfig.IsRushing) PlayerScan_0.ScanForLeecher();
                                 Town_0.GetCorpse();
                                 ItemsStruc_0.GetBadItemsOnCursor();
@@ -938,13 +974,13 @@ namespace app
                                 {
                                     //MobsStruc_0.GetMobs("", "", true, 200, new List<long>());
                                     //MercStruc_0.GetMercInfos();
-                                    //PlayerScan_0.ScanForLeecher();
                                     //Battle_0.SetSkills();
                                     //Battle_0.CastSkills();
                                     //ItemsStruc_0.GetItems(true);
+
+                                    //Running = false;
+                                    //if (!Running) SetStartButtonEnable(true);
                                     //if (Running) LoopTimer.Start();
-                                    //ItemsStruc_0.GetItems(false);
-                                    //InventoryStruc_0.DumpBadItemsOnGround();
                                     //return;
 
                                     if (CharConfig.RunMapHackOnly)
@@ -965,7 +1001,7 @@ namespace app
                                             }
                                             else
                                             {
-                                                Town_0.FastTowning = false;
+                                                //Town_0.FastTowning = false;
                                                 Town_0.UseLastTP = false;
                                                 Town_0.TPSpawned = false;
 
@@ -1350,7 +1386,7 @@ namespace app
             SetProcessingTime();
 
             if (Running) LoopTimer.Start();
-            //if (!Running) SetStartButtonEnable(true);
+            if (!Running) SetStartButtonEnable(true);
         }
 
         public void GoToNextScript()
@@ -1470,6 +1506,8 @@ namespace app
             long TimeMS = testtime.Milliseconds + (testtime.Seconds * 1000);
             FPS = 1000.0 / (double)TimeMS;
 
+            SetAverageFPSandMS(testtime.Milliseconds);
+
             overlayForm.SetAllOverlay();
 
             mS = TimeStr;
@@ -1490,6 +1528,25 @@ namespace app
             Grid_SetInfos("Equipped", ItemsStruc_0.ItemsEquiped.ToString());
             Grid_SetInfos("InInventory", ItemsStruc_0.ItemsInInventory.ToString());
             Grid_SetInfos("InBelt", ItemsStruc_0.ItemsInBelt.ToString());
+        }
+
+        public void SetAverageFPSandMS(int ThisMSValue)
+        {
+            //Get averag FPS
+            if (Averge_FPSList.Count >= 50) Averge_FPSList.RemoveAt(0);
+            Averge_FPSList.Add(FPS);
+
+            double FullValue = 0.0;
+            for (int i = 0; i < Averge_FPSList.Count; i++) FullValue += Averge_FPSList[i];
+            Average_FPS = FullValue / Averge_FPSList.Count;
+
+            //Get averag mS
+            if (Averge_mSList.Count >= 50) Averge_mSList.RemoveAt(0);
+            Averge_mSList.Add(ThisMSValue);
+
+            int FullMSValue = 0;
+            for (int i = 0; i < Averge_mSList.Count; i++) FullMSValue += Averge_mSList[i];
+            Average_mS = FullMSValue / Averge_mSList.Count;
         }
 
         public string CurrentGameTime = "";
@@ -1606,14 +1663,13 @@ namespace app
             //MapAreaStruc_0.AllMapData.Clear();
             overlayForm.ClearAllOverlay();
             SetGameStatus("STOPPED");
-
-            //SetStartButtonEnable(false);
         }
 
         public void button1_Click(object sender, EventArgs e)
         {
             if (!Running && button1.Enabled)
             {
+                SetStartButtonEnable(false);
                 SetSettingButton(false);
                 SetPlayButtonText("STOP");
                 Running = true;

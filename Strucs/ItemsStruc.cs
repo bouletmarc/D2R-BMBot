@@ -403,8 +403,6 @@ namespace app
                     GetUnitPathData();
                     GetStatsAddr();
 
-                    if (IsIncludedInList(AvoidItemsOnGroundPointerList, ItemPointerLocation)) continue;
-
                     //Form1_0.method_1("ItemType: " + BitConverter.ToUInt32(itemdatastruc, 0).ToString() + ", TxtFileNo: " + BitConverter.ToUInt32(itemdatastruc, 4).ToString() + ", Name: " + ItemNAAME + ", Location: " + GetItemLocation(itemdatastruc[0x0C]));
                     //; itemLoc - 0 in inventory, 1 equipped, 2 in belt, 3 on ground, 4 cursor, 5 dropping, 6 socketed
 
@@ -541,18 +539,19 @@ namespace app
                         ItemsOnGround++;
 
                         //Form1_0.method_1_Items("Ground: " + ItemNAAME, GetColorFromQuality((int)itemQuality));
-
                         if (DebuggingItems)
                         {
-                            //GetAllValuesFromStats();
                             AllItemsOnGround.Add("ID:" + txtFileNo + "(" + ItemNAAME + ") at:" + itemx + ", " + itemy + " - On Ground/Droping - " + Form1_0.ItemsAlert_0.GetItemTypeText() + " && " + GetQualityTextString() + " && " + GetAllFlagsFromItem() + " && " + GetAllValuesFromStats());
                         }
 
+                        if (IsIncludedInList(BadItemsOnGroundPointerList, ItemPointerLocation)) continue;
+                        if (IsIncludedInList(AvoidItemsOnGroundPointerList, ItemPointerLocation)) continue;
+                        if (!IsPickingItem) continue;
+
                         Form1_0.UIScan_0.readUI();
-                        if ((Form1_0.ItemsAlert_0.ShouldPickItem(false) || Form1_0.BeltStruc_0.ItemGrabPotion())
-                            && (!Form1_0.UIScan_0.leftMenu && !Form1_0.UIScan_0.rightMenu && !Form1_0.UIScan_0.fullMenu)
-                            && IsPickingItem
-                            && !IsIncludedInList(BadItemsOnGroundPointerList, ItemPointerLocation))
+                        if (Form1_0.UIScan_0.leftMenu || Form1_0.UIScan_0.rightMenu || Form1_0.UIScan_0.fullMenu) continue;
+
+                        if ((Form1_0.ItemsAlert_0.ShouldPickItem(false) || Form1_0.BeltStruc_0.ItemGrabPotion()))
                         {
                             /*string SavePathh = Form1_0.ThisEndPath + "DumpItempPathStruc";
                             File.Create(SavePathh).Dispose();
@@ -775,7 +774,6 @@ namespace app
                                     }
                                 }
                                 //####
-                                
 
                                 TriesToPickItemCount++;
                                 Form1_0.KeyMouse_0.MouseClicc_RealPos(itemScreenPos.X, itemScreenPos.Y);
@@ -873,9 +871,6 @@ namespace app
         {
             Form1_0.PatternsScan_0.scanForUnitsPointer("item");
 
-            //long ItemPointMaxValue = 0;
-            //int ItemHighestValue = 0;
-
             for (int i = 0; i < Form1_0.PatternsScan_0.AllItemsPointers.Count; i++)
             {
                 ItemPointerLocation = Form1_0.PatternsScan_0.AllItemsPointers[i];
@@ -884,9 +879,9 @@ namespace app
                     itemdatastruc = new byte[144];
                     Form1_0.Mem_0.ReadRawMemory(ItemPointerLocation, ref itemdatastruc, 144);
                     ItemNAAME = Form1_0.ItemsNames_0.getItemBaseName(BitConverter.ToUInt32(itemdatastruc, 4));
-                    GetStatsAddr();
+                    GetUnitData();
                     GetUnitPathData();
-                    //int ItemValue = GetValuesFromStats(Enums.Attribute.Value);
+                    GetStatsAddr();
 
                     //; on ground, dropping
                     if (itemdatastruc[0x0C] == 3 || itemdatastruc[0x0C] == 5)
@@ -907,14 +902,6 @@ namespace app
                                 {
                                     continue;
                                 }
-
-                                //#################
-                                /*if (ItemValue >= ItemHighestValue)
-                                {
-                                    ItemHighestValue = ItemValue;
-                                    ItemPointMaxValue = ItemPointerLocation;
-                                }*/
-                                //#################
 
                                 if (DiffXPlayer > 4
                                     || DiffYPlayer > 4)
@@ -939,58 +926,6 @@ namespace app
                     }
                 }
             }
-
-            //clic highest value item
-            /*if (ItemPointMaxValue > 0)
-            {
-                ItemPointerLocation = ItemPointMaxValue;
-                itemdatastruc = new byte[144];
-                Form1_0.Mem_0.ReadRawMemory(ItemPointerLocation, ref itemdatastruc, 144);
-                ItemNAAME = Form1_0.ItemsNames_0.getItemBaseName(BitConverter.ToUInt32(itemdatastruc, 4));
-                GetUnitPathData();
-                int ItemValue = GetValuesFromStats(Enums.Attribute.Value);
-
-                //; on ground, dropping
-                if (itemdatastruc[0x0C] == 3 || itemdatastruc[0x0C] == 5)
-                {
-                    Form1_0.UIScan_0.readUI();
-                    if (!Form1_0.UIScan_0.leftMenu && !Form1_0.UIScan_0.rightMenu && !Form1_0.UIScan_0.fullMenu)
-                    {
-                        Position itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, itemx, itemy);
-                        if (ShouldPickPos(itemScreenPos))
-                        {
-                            //####
-                            int DiffXPlayer = itemx - Form1_0.PlayerScan_0.xPosFinal;
-                            int DiffYPlayer = itemy - Form1_0.PlayerScan_0.yPosFinal;
-                            if (DiffXPlayer < 0) DiffXPlayer = -DiffXPlayer;
-                            if (DiffYPlayer < 0) DiffYPlayer = -DiffYPlayer;
-
-                            if (DiffXPlayer > 100 || DiffYPlayer > 100)
-                            {
-                                return false;
-                            }
-
-                            if (DiffXPlayer > 4
-                                || DiffYPlayer > 4)
-                            {
-                                Form1_0.Mover_0.MoveToLocation(itemx, itemy);
-                                Form1_0.PlayerScan_0.GetPositions();
-                                GetUnitPathData();
-                                itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, itemx, itemy);
-                            }
-                            //####
-                            Form1_0.KeyMouse_0.MouseClicc(itemScreenPos.X, itemScreenPos.Y);
-
-                            if (ItemNAAME != LastPick)
-                            {
-                                LastPick = ItemNAAME;
-                                Form1_0.method_1("Grabbed for gold: " + ItemNAAME + ", Value: " + ItemValue, GetColorFromQuality((int)itemQuality));
-                            }
-                            return true;
-                        }
-                    }
-                }
-            }*/
 
             return false;
         }

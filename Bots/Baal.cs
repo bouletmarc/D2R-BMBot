@@ -162,6 +162,8 @@ namespace app
                     && CurrentStep >= 7
                     && Form1_0.PublicGame)
                 {
+                    Form1_0.Town_0.FastTowning = false;
+                    Form1_0.Town_0.UseLastTP = false;
                     ScriptDone = true;
                     return;
                 }
@@ -332,7 +334,7 @@ namespace app
                         //DETECT OTHERS WAVES FOR CASTING
                         if (!TimeSinceLastWaveSet && !Form1_0.MobsStruc_0.GetMobs("", "", true, 25, IgnoredMobs))
                         {
-                            if (!Form1_0.PublicGame) Form1_0.Battle_0.CastDefense();
+                            if (!Form1_0.PublicGame || !Form1_0.PlayerScan_0.HasBattleOrderState) Form1_0.Battle_0.CastDefense();
                             TimeSinceLastWaveDone = DateTime.Now;
                             TimeSinceLastWaveSet = true;
                             Form1_0.InventoryStruc_0.DumpBadItemsOnGround();
@@ -414,6 +416,7 @@ namespace app
                         Form1_0.Battle_0.DoingBattle = false;
                         Form1_0.Potions_0.CanUseSkillForRegen = true;
                         //Form1_0.LeaveGame(true);
+                        Form1_0.Town_0.FastTowning = false;
                         Form1_0.Town_0.UseLastTP = false;
                         ScriptDone = true;
                         return;
@@ -489,6 +492,7 @@ namespace app
                         }
                         else
                         {
+                            Form1_0.KeyMouse_0.ReleaseKey(System.Windows.Forms.Keys.E);
                             if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
                             if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
                             if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
@@ -506,6 +510,7 @@ namespace app
                             Form1_0.Battle_0.DoingBattle = false;
                             Form1_0.Potions_0.CanUseSkillForRegen = true;
                             //Form1_0.LeaveGame(true);
+                            Form1_0.Town_0.FastTowning = false;
                             Form1_0.Town_0.UseLastTP = false;
                             ScriptDone = true;
                         }
@@ -575,6 +580,7 @@ namespace app
                                 Form1_0.Battle_0.DoingBattle = false;
                                 Form1_0.Potions_0.CanUseSkillForRegen = true;
                                 //Form1_0.LeaveGame(true);
+                                Form1_0.Town_0.FastTowning = false;
                                 Form1_0.Town_0.UseLastTP = false;
                                 ScriptDone = true;
                             }

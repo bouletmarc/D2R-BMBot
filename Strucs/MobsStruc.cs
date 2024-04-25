@@ -422,6 +422,8 @@ namespace app
                                     LastDiffX = DiffXPlayer;
                                     LastDiffY = DiffYPlayer;
                                 }
+                                xPosFinal = 0;
+                                yPosFinal = 0;
                             }
 
                             if (MobType == "") GoodMob = true;

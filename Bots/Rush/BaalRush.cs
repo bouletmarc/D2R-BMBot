@@ -367,6 +367,7 @@ namespace app
                             Form1_0.ItemsStruc_0.GrabAllItemsForGold();
                             Form1_0.Potions_0.CanUseSkillForRegen = true;
                             //Form1_0.LeaveGame(true);
+                            Form1_0.Town_0.FastTowning = false;
                             Form1_0.Town_0.UseLastTP = false;
                             ScriptDone = true;
                         }
@@ -384,6 +385,7 @@ namespace app
                         Form1_0.Potions_0.CanUseSkillForRegen = true;
                         //Form1_0.LeaveGame(true);
                         Form1_0.Town_0.UseLastTP = false;
+                        Form1_0.Town_0.FastTowning = false;
                         ScriptDone = true;
                     }
                 }

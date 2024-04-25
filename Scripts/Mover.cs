@@ -41,6 +41,8 @@ namespace app
         //This will move to a direct location -> no pathfinding
         public bool MoveToLocation(int ThisX, int ThisY, bool AllowPickingItem = false, bool AllowMoveSideWay = true)
         {
+            if (!Form1_0.Running || !Form1_0.GameStruc_0.IsInGame()) return false;
+
             Form1_0.UIScan_0.readUI();
             if (Form1_0.UIScan_0.leftMenu || Form1_0.UIScan_0.rightMenu) Form1_0.UIScan_0.CloseAllUIMenu();
             if (Form1_0.UIScan_0.quitMenu) Form1_0.UIScan_0.CloseUIMenu("quitMenu");
@@ -92,6 +94,8 @@ namespace app
             }
             while (true)
             {
+                if (!Form1_0.Running || !Form1_0.GameStruc_0.IsInGame()) return false;
+
                 if (Form1_0.Town_0.GetInTown())
                 {
                     Form1_0.KeyMouse_0.PressKey(CharConfig.KeySkillfastMoveAtTown);
@@ -126,6 +130,7 @@ namespace app
                         TimeSpan ThisTimeCheck = DateTime.Now - LastTimeSinceTeleport;
                         while (Form1_0.PlayerScan_0.xPosFinal == LastX && Form1_0.PlayerScan_0.yPosFinal == LastY && ThisTimeCheck.TotalMilliseconds < 200)
                         {
+                            if (!Form1_0.Running || !Form1_0.GameStruc_0.IsInGame()) return false;
                             Application.DoEvents();
                             Form1_0.PlayerScan_0.GetPositions();
                             Form1_0.overlayForm.UpdateOverlay();
@@ -133,6 +138,7 @@ namespace app
                             Form1_0.ItemsStruc_0.GetItems(false);
                             ThisTimeCheck = DateTime.Now - LastTimeSinceTeleport;
                         }
+                        if (!Form1_0.Running || !Form1_0.GameStruc_0.IsInGame()) return false;
                     }
                     else
                     {
@@ -147,7 +153,6 @@ namespace app
                 Form1_0.Potions_0.CheckIfWeUsePotion();
                 itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, ThisX, ThisY);
                 
-
                 Application.DoEvents();
 
                 //######
@@ -168,6 +173,7 @@ namespace app
                 if (Form1_0.PlayerScan_0.levelNo < StartAreaBeforeMoving - 1
                     || Form1_0.PlayerScan_0.levelNo > StartAreaBeforeMoving + 1)
                 {
+                    Form1_0.overlayForm.ScanningOverlayItems = true; //try rescanning overlay if there was too much lags
                     Form1_0.overlayForm.ResetMoveToLocation();
                     Form1_0.KeyMouse_0.ReleaseKey(System.Windows.Forms.Keys.E);
                     return false;
@@ -247,6 +253,7 @@ namespace app
                 LastX = Form1_0.PlayerScan_0.xPosFinal;
                 LastY = Form1_0.PlayerScan_0.yPosFinal;
             }
+            if (!Form1_0.Running || !Form1_0.GameStruc_0.IsInGame()) return false;
 
             bool MovedCorrectly = false;
             if (IsPositionNearOf(ThisX, ThisY, MoveAcceptOffset)) MovedCorrectly = true;
@@ -265,6 +272,8 @@ namespace app
         //This will FAST move to a direct location -> no pathfinding (used for attacking mobs)
         public bool MoveToLocationAttack(int ThisX, int ThisY)
         {
+            if (!Form1_0.Running || !Form1_0.GameStruc_0.IsInGame()) return false;
+
             Form1_0.UIScan_0.readUI();
             if (Form1_0.UIScan_0.leftMenu || Form1_0.UIScan_0.rightMenu) Form1_0.UIScan_0.CloseAllUIMenu();
 
@@ -338,6 +347,7 @@ namespace app
             if (Form1_0.PlayerScan_0.levelNo < StartAreaBeforeMoving - 1
                 || Form1_0.PlayerScan_0.levelNo > StartAreaBeforeMoving + 1)
             {
+                Form1_0.overlayForm.ScanningOverlayItems = true; //try rescanning overlay if there was too much lags
                 Form1_0.overlayForm.ResetMoveToLocation();
                 Form1_0.KeyMouse_0.ReleaseKey(System.Windows.Forms.Keys.E);
                 return false;

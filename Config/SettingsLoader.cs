@@ -30,50 +30,14 @@ namespace app
 
         public void LoadSettings()
         {
-            if (File.Exists(File_CharSettings))
-            {
-                AllLines = File.ReadAllLines(File_CharSettings);
-                LoadCharSettings();
-            }
-            else
-            {
-                Form1_0.method_1("Unable to find 'CharSettings.txt' file!", Color.Red);
-            }
-
+            LoadThisFileSettings(File_CharSettings);
             //###################
             ReloadCharSettings();
             //###################
-
             //#####
-            if (File.Exists(File_BotSettings))
-            {
-                AllLines = File.ReadAllLines(File_BotSettings);
-                LoadBotSettings();
-            }
-            else
-            {
-                Form1_0.method_1("Unable to find 'BotSettings.txt' file!", Color.Red);
-            }
-            //#####
-            if (File.Exists(File_ItemsSettings))
-            {
-                AllLines = File.ReadAllLines(File_ItemsSettings);
-                LoadItemsSettings();
-            }
-            else
-            {
-                Form1_0.method_1("Unable to find 'ItemsSettings.txt' file!", Color.Red);
-            }
-            //#####
-            if (File.Exists(File_CubingSettings))
-            {
-                AllLines = File.ReadAllLines(File_CubingSettings);
-                LoadCubingSettings();
-            }
-            else
-            {
-                Form1_0.method_1("Unable to find 'CubingRecipes.txt' file!", Color.Red);
-            }
+            LoadThisFileSettings(File_BotSettings);
+            LoadThisFileSettings(File_ItemsSettings);
+            LoadThisFileSettings(File_CubingSettings);
             //#####
             if (File.Exists(File_Settings))
             {
@@ -83,6 +47,26 @@ namespace app
             else
             {
                 SaveOthersSettings();
+            }
+        }
+
+        public void LoadThisFileSettings(string ThisFilePath)
+        {
+            if (File.Exists(ThisFilePath))
+            {
+                AllLines = File.ReadAllLines(ThisFilePath);
+                
+                if (Path.GetFileName(ThisFilePath) == "CharSettings.txt") LoadCharSettings();
+                if (Path.GetFileName(ThisFilePath) == "BotSettings.txt") LoadBotSettings();
+                if (Path.GetFileName(ThisFilePath) == "ItemsSettings.txt") LoadCubingSettings();
+                if (Path.GetFileName(ThisFilePath) == "CubingRecipes.txt") LoadCubingSettings();
+
+                if (Path.GetFileName(ThisFilePath) == "PaladinHammer.txt") LoadCurrentCharSettings();
+                if (Path.GetFileName(ThisFilePath) == "SorceressBlizzard.txt") LoadCurrentCharSettings();
+            }
+            else
+            {
+                Form1_0.method_1("Unable to find '" + Path.GetFileName(ThisFilePath) + "' file!", Color.Red);
             }
         }
 
@@ -121,30 +105,13 @@ namespace app
 
         public void ReloadCharSettings()
         {
-            if (CharConfig.RunningOnChar == "PaladinHammer")
-            {
-                if (File.Exists(File_PaladinHammer))
-                {
-                    AllLines = File.ReadAllLines(File_PaladinHammer);
-                    LoadCurrentCharSettings();
-                }
-                else
-                {
-                    Form1_0.method_1("Unable to find 'PaladinHammer.txt' file!", Color.Red);
-                }
-            }
-            else if (CharConfig.RunningOnChar == "SorceressBlizzard")
-            {
-                if (File.Exists(File_SorceressBlizzard))
-                {
-                    AllLines = File.ReadAllLines(File_SorceressBlizzard);
-                    LoadCurrentCharSettings();
-                }
-                else
-                {
-                    Form1_0.method_1("Unable to find 'SorceressBlizzard.txt' file!", Color.Red);
-                }
-            }
+            if (CharConfig.RunningOnChar == "PaladinHammer") LoadThisFileSettings(File_PaladinHammer);
+            else if (CharConfig.RunningOnChar == "SorceressBlizzard") LoadThisFileSettings(File_SorceressBlizzard);
+        }
+
+        public void ReloadCharSettingsFromThisFile(string ThisFilePath)
+        {
+            LoadThisFileSettings(ThisFilePath);
         }
 
         public void SaveCharSettings()
@@ -314,6 +281,8 @@ namespace app
 
             File.Create(File_BotSettings).Dispose();
             File.WriteAllLines(File_BotSettings, AllLines);
+
+            Form1_0.method_1("Saved '" + Path.GetFileName(File_BotSettings) + "' file!", Color.DarkGreen);
         }
 
         public void SaveOthersSettings()

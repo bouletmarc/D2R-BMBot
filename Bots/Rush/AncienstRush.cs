@@ -36,6 +36,12 @@ namespace app
         {
             Form1_0.Town_0.ScriptTownAct = 3; //set to town act 5 when running this script
 
+            if (!Form1_0.Running || !Form1_0.GameStruc_0.IsInGame())
+            {
+                ScriptDone = true;
+                return;
+            }
+
             if (Form1_0.Town_0.GetInTown())
             {
                 Form1_0.SetGameStatus("GO TO WP");
@@ -143,6 +149,7 @@ namespace app
                     else
                     {
                         Form1_0.method_1("Ancients Altar location not detected!", Color.Red);
+                        Form1_0.Town_0.FastTowning = false;
                         ScriptDone = true;
                         Form1_0.Town_0.UseLastTP = false;
                         return;
@@ -189,6 +196,7 @@ namespace app
                                             //Done all killed!
                                             Form1_0.Potions_0.CanUseSkillForRegen = true;
                                             Form1_0.Town_0.UseLastTP = false;
+                                            Form1_0.Town_0.FastTowning = false;
                                             ScriptDone = true;
                                         }
                                     }
@@ -202,6 +210,7 @@ namespace app
 
                         Form1_0.Potions_0.CanUseSkillForRegen = true;
                         Form1_0.Town_0.UseLastTP = false;
+                        Form1_0.Town_0.FastTowning = false;
                         ScriptDone = true;
                     }
                 }

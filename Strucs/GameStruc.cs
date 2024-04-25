@@ -94,6 +94,7 @@ namespace app
             }
 
             Form1_0.SetGameStatus("CREATING GAME");
+            Form1_0.KeyMouse_0.ReleaseKey(System.Windows.Forms.Keys.E);
             Form1_0.KeyMouse_0.MouseClicc(1190, 990); //clic 'salon' if not in server
             Form1_0.KeyMouse_0.MouseClicc(1275, 65);  //clic 'create game' if not in game create area
 
@@ -156,6 +157,7 @@ namespace app
             Form1_0.KeyMouse_0.MouseClicc(1415, 65);  //clic 'join game' if not in game list area
 
             //#####
+            Form1_0.KeyMouse_0.ReleaseKey(System.Windows.Forms.Keys.E);
             Form1_0.KeyMouse_0.MouseClicc(1205, 210); //clic search bar
             //type 'search' type games
             for (int i = 0; i < 16; i++)

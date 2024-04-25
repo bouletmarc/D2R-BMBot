@@ -196,8 +196,8 @@ namespace app
             MouseMoveTo(ThX, ThY);
 
             PressKeyHold(Keys.LShiftKey);
-            PostMessage((int)Form1_0.hWnd, WM_RBUTTONDOWN, 0x00000001, (IntPtr)0);
-            PostMessage((int)Form1_0.hWnd, WM_RBUTTONUP, 0x00000000, (IntPtr)0);
+            SendMessage((int)Form1_0.hWnd, WM_RBUTTONDOWN, 0x00000001, (IntPtr)0);
+            SendMessage((int)Form1_0.hWnd, WM_RBUTTONUP, 0x00000000, (IntPtr)0);
             ReleaseKey(Keys.LShiftKey);
         }
 

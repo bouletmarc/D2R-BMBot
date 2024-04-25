@@ -32,6 +32,12 @@ namespace app
         {
             Form1_0.Town_0.ScriptTownAct = 2; //set to town act 5 when running this script
 
+            if (!Form1_0.Running || !Form1_0.GameStruc_0.IsInGame())
+            {
+                ScriptDone = true;
+                return;
+            }
+
             if (Form1_0.Town_0.GetInTown())
             {
                 Form1_0.SetGameStatus("GO TO WP");
@@ -128,7 +134,8 @@ namespace app
                             Form1_0.ItemsStruc_0.GetItems(true);
                             Form1_0.ItemsStruc_0.GrabAllItemsForGold();
                             Form1_0.Potions_0.CanUseSkillForRegen = true;
-
+                            
+                            Form1_0.Town_0.FastTowning = false;
                             ScriptDone = true;
                             return;
                             //Form1_0.LeaveGame(true);*/
@@ -145,6 +152,7 @@ namespace app
                         if (Form1_0.MobsStruc_0.GetMobs("getBossName", "Summoner", false, 200, new List<long>())) return; //redetect baal?
                         Form1_0.Potions_0.CanUseSkillForRegen = true;
 
+                        Form1_0.Town_0.FastTowning = false;
                         Form1_0.Town_0.UseLastTP = false;
                         ScriptDone = true;
                         return;
@@ -163,6 +171,7 @@ namespace app
 
                     if (Form1_0.PlayerScan_0.LeechlevelNo != (int)Enums.Area.ArcaneSanctuary)
                     {
+                        Form1_0.Town_0.FastTowning = false;
                         Form1_0.Town_0.UseLastTP = false;
                         ScriptDone = true;
                         return;

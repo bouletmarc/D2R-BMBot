@@ -302,5 +302,16 @@ namespace app
         {
             listViewBaalLeaveOnMobs.Items.Clear();
         }
+
+        private void buttonReload_Click(object sender, EventArgs e)
+        {
+            DialogResult result = openFileDialog1.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                Form1_0.SettingsLoader_0.LoadThisFileSettings(openFileDialog1.FileName);
+                LoadSettings();
+                Application.DoEvents();
+            }
+        }
     }
 }

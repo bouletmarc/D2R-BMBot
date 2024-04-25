@@ -474,6 +474,15 @@ namespace app
                     //Form1_0.KeyMouse_0.MouseCliccRight(itemScreenPos["x"], itemScreenPos["y"]);
                     Form1_0.WaitDelay(20);
                     Form1_0.ItemsStruc_0.GetItems(false);   //get inventory
+
+                    //Buy keys again to fill inventory
+                    /*if (StartQty == 0)
+                    {
+                        Form1_0.KeyMouse_0.SendSHIFT_RIGHTCLICK(itemScreenPos["x"], itemScreenPos["y"]);
+                        //Form1_0.KeyMouse_0.MouseCliccRight(itemScreenPos["x"], itemScreenPos["y"]);
+                        Form1_0.WaitDelay(20);
+                        Form1_0.ItemsStruc_0.GetItems(false);   //get inventory
+                    }*/
                 }
 
                 if (Form1_0.InventoryStruc_0.HUDItems_keys == StartQty)

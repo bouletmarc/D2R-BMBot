@@ -406,6 +406,7 @@ namespace app
                             TriedToMoveToMobsCount = 0;
                         }
                     }
+                    Form1_0.KeyMouse_0.ReleaseKey(System.Windows.Forms.Keys.E);
                 }
                 //Form1_0.Mover_0.MoveToLocationAttack(Form1_0.MobsStruc_0.xPosFinal - 1, Form1_0.MobsStruc_0.yPosFinal + 2);
                 Form1_0.Mover_0.MoveAcceptOffset = 4;
@@ -457,6 +458,7 @@ namespace app
                             TriedToMoveToMobsCount = 0;
                         }
                     }
+                    Form1_0.KeyMouse_0.ReleaseKey(System.Windows.Forms.Keys.E);
                 }
                 //Form1_0.Mover_0.MoveToLocationAttack(Form1_0.MobsStruc_0.xPosFinal - 1, Form1_0.MobsStruc_0.yPosFinal + 2);
                 Form1_0.Mover_0.MoveAcceptOffset = 4;
@@ -505,6 +507,7 @@ namespace app
                             TriedToMoveToMobsCount = 0;
                         }
                     }
+                    Form1_0.KeyMouse_0.ReleaseKey(System.Windows.Forms.Keys.E);
                 }
                 //Form1_0.Mover_0.MoveToLocationAttack(Form1_0.MobsStruc_0.xPosFinal - 1, Form1_0.MobsStruc_0.yPosFinal + 2);
                 Form1_0.Mover_0.MoveAcceptOffset = 4;
