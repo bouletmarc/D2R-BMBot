@@ -385,8 +385,8 @@ namespace app
                     //int tryyy = 0;
                     //while (Form1_0.PlayerScan_0.levelNo == ThisPlayerAreaID && tryyy <= 25)
                     //{
-                    Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, ThisFinalPosition.X - PlayerOffsetInCollisiongrid.X, ThisFinalPosition.Y - PlayerOffsetInCollisiongrid.Y);
-                    Form1_0.KeyMouse_0.MouseClicc_RealPos(itemScreenPos["x"], itemScreenPos["y"]);
+                    Position itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, ThisFinalPosition.X - PlayerOffsetInCollisiongrid.X, ThisFinalPosition.Y - PlayerOffsetInCollisiongrid.Y);
+                    Form1_0.KeyMouse_0.MouseClicc_RealPos(itemScreenPos.X, itemScreenPos.Y);
                     Form1_0.PlayerScan_0.GetPositions();
                     //tryyy++;
                     //}

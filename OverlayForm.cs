@@ -426,11 +426,11 @@ namespace app
                 {
                     for (int i = 0; i < PathFindingPoints.Count - 1; i++)
                     {
-                        Dictionary<string, int> itemScreenPosStart = Form1_0.GameStruc_0.World2ScreenDisplay(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, PathFindingPoints[i].X, PathFindingPoints[i].Y);
-                        Dictionary<string, int> itemScreenPosEnd = Form1_0.GameStruc_0.World2ScreenDisplay(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, PathFindingPoints[i + 1].X, PathFindingPoints[i + 1].Y);
+                        Position itemScreenPosStart = Form1_0.GameStruc_0.World2ScreenDisplay(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, PathFindingPoints[i].X, PathFindingPoints[i].Y);
+                        Position itemScreenPosEnd = Form1_0.GameStruc_0.World2ScreenDisplay(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, PathFindingPoints[i + 1].X, PathFindingPoints[i + 1].Y);
 
-                        System.Drawing.Point StartPoint = new System.Drawing.Point(itemScreenPosStart["x"], itemScreenPosStart["y"]);
-                        System.Drawing.Point EndPoint = new System.Drawing.Point(itemScreenPosEnd["x"], itemScreenPosEnd["y"]);
+                        System.Drawing.Point StartPoint = new System.Drawing.Point(itemScreenPosStart.X, itemScreenPosStart.Y);
+                        System.Drawing.Point EndPoint = new System.Drawing.Point(itemScreenPosEnd.X, itemScreenPosEnd.Y);
                         StartPoint = RescaleThisPoint(StartPoint);
                         EndPoint = RescaleThisPoint(EndPoint);
 
@@ -446,8 +446,8 @@ namespace app
 
                     if (MoveToPoint.X != 0 && MoveToPoint.Y != 0)
                     {
-                        Dictionary<string, int> itemScreenPosStart = Form1_0.GameStruc_0.World2ScreenDisplay(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, MoveToPoint.X, MoveToPoint.Y);
-                        System.Drawing.Point StartPoint = new System.Drawing.Point(itemScreenPosStart["x"], itemScreenPosStart["y"]);
+                        Position itemScreenPosStart = Form1_0.GameStruc_0.World2ScreenDisplay(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, MoveToPoint.X, MoveToPoint.Y);
+                        System.Drawing.Point StartPoint = new System.Drawing.Point(itemScreenPosStart.X, itemScreenPosStart.Y);
                         StartPoint = RescaleThisPoint(StartPoint);
                         if (PathFindingPoints.Count == 0)
                         {
@@ -459,8 +459,8 @@ namespace app
 
                     for (int i = 0; i < MobsPoints.Count; i++)
                     {
-                        Dictionary<string, int> itemScreenPosStart = Form1_0.GameStruc_0.World2ScreenDisplay(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, MobsPoints[i].X, MobsPoints[i].Y);
-                        System.Drawing.Point StartPoint = new System.Drawing.Point(itemScreenPosStart["x"], itemScreenPosStart["y"]);
+                        Position itemScreenPosStart = Form1_0.GameStruc_0.World2ScreenDisplay(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, MobsPoints[i].X, MobsPoints[i].Y);
+                        System.Drawing.Point StartPoint = new System.Drawing.Point(itemScreenPosStart.X, itemScreenPosStart.Y);
                         StartPoint = RescaleThisPoint(StartPoint);
                         DrawCrossAtPoint(e, StartPoint, yellowPen, false);
 
@@ -474,8 +474,8 @@ namespace app
 
                     for (int i = 0; i < NPCPoints.Count; i++)
                     {
-                        Dictionary<string, int> itemScreenPosStart = Form1_0.GameStruc_0.World2ScreenDisplay(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, NPCPoints[i].X, NPCPoints[i].Y);
-                        System.Drawing.Point StartPoint = new System.Drawing.Point(itemScreenPosStart["x"], itemScreenPosStart["y"]);
+                        Position itemScreenPosStart = Form1_0.GameStruc_0.World2ScreenDisplay(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, NPCPoints[i].X, NPCPoints[i].Y);
+                        System.Drawing.Point StartPoint = new System.Drawing.Point(itemScreenPosStart.X, itemScreenPosStart.Y);
                         StartPoint = RescaleThisPoint(StartPoint);
                         DrawCrossAtPoint(e, StartPoint, purplePen, false);
 
@@ -489,24 +489,24 @@ namespace app
 
                     for (int i = 0; i < GoodChestsPoints.Count; i++)
                     {
-                        Dictionary<string, int> itemScreenPosStart = Form1_0.GameStruc_0.World2ScreenDisplay(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, GoodChestsPoints[i].X, GoodChestsPoints[i].Y);
-                        System.Drawing.Point StartPoint = new System.Drawing.Point(itemScreenPosStart["x"], itemScreenPosStart["y"]);
+                        Position itemScreenPosStart = Form1_0.GameStruc_0.World2ScreenDisplay(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, GoodChestsPoints[i].X, GoodChestsPoints[i].Y);
+                        System.Drawing.Point StartPoint = new System.Drawing.Point(itemScreenPosStart.X, itemScreenPosStart.Y);
                         StartPoint = RescaleThisPoint(StartPoint);
                         DrawCrossAtPoint(e, StartPoint, greenPen, false);
                     }
 
                     for (int i = 0; i < WPPoints.Count; i++)
                     {
-                        Dictionary<string, int> itemScreenPosStart = Form1_0.GameStruc_0.World2ScreenDisplay(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, WPPoints[i].X, WPPoints[i].Y);
-                        System.Drawing.Point StartPoint = new System.Drawing.Point(itemScreenPosStart["x"], itemScreenPosStart["y"]);
+                        Position itemScreenPosStart = Form1_0.GameStruc_0.World2ScreenDisplay(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, WPPoints[i].X, WPPoints[i].Y);
+                        System.Drawing.Point StartPoint = new System.Drawing.Point(itemScreenPosStart.X, itemScreenPosStart.Y);
                         StartPoint = RescaleThisPoint(StartPoint);
                         DrawCrossAtPoint(e, StartPoint, bluePen, false);
                     }
 
                     for (int i = 0; i < ExitPoints.Count; i++)
                     {
-                        Dictionary<string, int> itemScreenPosStart = Form1_0.GameStruc_0.World2ScreenDisplay(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, ExitPoints[i].X, ExitPoints[i].Y);
-                        System.Drawing.Point StartPoint = new System.Drawing.Point(itemScreenPosStart["x"], itemScreenPosStart["y"]);
+                        Position itemScreenPosStart = Form1_0.GameStruc_0.World2ScreenDisplay(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, ExitPoints[i].X, ExitPoints[i].Y);
+                        System.Drawing.Point StartPoint = new System.Drawing.Point(itemScreenPosStart.X, itemScreenPosStart.Y);
                         StartPoint = RescaleThisPoint(StartPoint);
                         DrawCrossAtPoint(e, StartPoint, cyanPen, false);
                     }

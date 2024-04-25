@@ -22,12 +22,12 @@ namespace app
 
         public void SetSkill(string Direction, int skill)
         {
-            if (Direction.ToLower() == "left")
+            if (Direction == "Left")
             {
                 LeftSkill = skill;
                 LeftSkillName = getSkillName(skill);
             }
-            if (Direction.ToLower() == "right")
+            if (Direction == "Right")
             {
                 RightSkill = skill;
                 RightSkillName = getSkillName(skill);

@@ -165,10 +165,10 @@ namespace app
                             {
                                 if (Form1_0.Mover_0.MoveToLocation(17601, 8070))
                                 {
-                                    Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, 17601, 8070);
-                                    //Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, ThisFinalPosition.X, ThisFinalPosition.Y);
-                                    itemScreenPos = Form1_0.Mover_0.FixMouseYPosition(itemScreenPos);
-                                    Form1_0.KeyMouse_0.MouseClicc_RealPos(itemScreenPos["x"], itemScreenPos["y"] - 15);
+                                    Position itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, 17601, 8070);
+                                    //Position itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, ThisFinalPosition.X, ThisFinalPosition.Y);
+                                    
+                                    Form1_0.KeyMouse_0.MouseClicc_RealPos(itemScreenPos.X, itemScreenPos.Y - 15);
 
                                     Form1_0.PlayerScan_0.GetPositions();
                                 }

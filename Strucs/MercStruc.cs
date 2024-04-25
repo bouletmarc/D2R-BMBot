@@ -88,21 +88,21 @@ namespace app
                         {
                             //Int64 pUnitDataPtr = BitConverter.ToInt64(Mercdatastruc, 0x10);
                             //uint dwOwnerId = Form1_0.Mem_0.ReadUInt32Raw((IntPtr)(pUnitDataPtr + 0x0c));
-                            //uint dwOwnerId = BitConverter.ToUInt32(Mercdatastruc, 8); //Form1_0.Mem_0.ReadUInt32Raw((IntPtr)(pUnitDataPtr + 0x0c)); //GOOD
+                            //uint dwOwnerId = BitConverter.ToUInt32(Mercdatastruc, 8);
 
                             //if (dwOwnerId == MercOwnerID && MercOwnerID != 0)
                             //{
                                 //SetHPFromStats();
                                 /*string SavePathh = Form1_0.ThisEndPath + "DumpMercStruc" + MercCount;
                                 File.Create(SavePathh).Dispose();
-                                File.WriteAllBytes(SavePathh, statBuffer);*/
+                                File.WriteAllBytes(SavePathh, Mercdatastruc);*/
 
                                 /*byte[] buffff = new byte[144];
-                                long pStatsListExPtr = BitConverter.ToInt64(Mercdatastruc, 0x10);
-                                Form1_0.Mem_0.ReadRawMemory(pStatsListExPtr, ref buffff, 144);
+                                long pStatsListExPtr = BitConverter.ToInt64(Mercdatastruc, 0x88);
+                                Form1_0.Mem_0.ReadRawMemory(pStatsListExPtr, ref buffff, 500);
 
-                                pStatsListExPtr = BitConverter.ToInt64(Mercdatastruc, 0x78);
-                                Form1_0.Mem_0.ReadRawMemory(pStatsListExPtr, ref buffff, 144);
+                                //pStatsListExPtr = BitConverter.ToInt64(buffff, 8);
+                                //Form1_0.Mem_0.ReadRawMemory(pStatsListExPtr, ref buffff, 500);
                                 //uint dwOwnerId = BitConverter.ToUInt32(buffff, 0x0c);
                                 //uint flags = BitConverter.ToUInt32(buffff, 0x18);
 
@@ -110,7 +110,7 @@ namespace app
                                 File.Create(SavePathh2).Dispose();
                                 File.WriteAllBytes(SavePathh2, buffff);*/
 
-                                //Console.WriteLine(txtFileNo.ToString() + ", isUnique:" + isUnique + ", ownerID:" + dwOwnerId + ", mode:" + mode + ", pos:" + xPosFinal + ", " + yPosFinal);
+                                //Console.WriteLine(txtFileNo.ToString() + ", isUnique:" + isUnique + ", ownerID:" + dwOwnerId.ToString("X") + ", mode:" + mode + ", pos:" + xPosFinal + ", " + yPosFinal);
                                 //Console.WriteLine(flags);
                                 //MercCount++;
 

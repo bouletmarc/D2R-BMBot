@@ -508,11 +508,11 @@ namespace app
                         }
                         else
                         {
-                            if (dwOwnerId != 0 && Form1_0.MercStruc_0.MercOwnerID == 0)
+                            /*if (dwOwnerId != 0 && Form1_0.MercStruc_0.MercOwnerID == 0)
                             {
-                                Form1_0.MercStruc_0.MercOwnerID = ItemID;
-                                //Form1_0.method_1("owner: " + dwOwnerId + ", ID: " + ItemID + ", name: " + ItemNAAME + " - at: " + itemx + "," + itemy + " - " + equiploc, Color.DarkGreen);
-                            }
+                                //Form1_0.MercStruc_0.MercOwnerID = ItemID;
+                                Form1_0.method_1("owner: " + dwOwnerId.ToString("X") + ", ID: " + ItemID.ToString("X") + ", name: " + ItemNAAME + " - at: " + itemx + "," + itemy + " - " + equiploc, Color.DarkGreen);
+                            }*/
                         }
                     }
                     if (itemdatastruc[0x0C] == 2)
@@ -554,7 +554,7 @@ namespace app
                             File.Create(SavePathh).Dispose();
                             File.WriteAllBytes(SavePathh, itemdatastruc);*/
 
-                            Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, itemx, itemy);
+                            Position itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, itemx, itemy);
                             if (ShouldPickPos(itemScreenPos))
                             {
                                 int DiffXPlayer = itemx - Form1_0.PlayerScan_0.xPosFinal;
@@ -579,13 +579,12 @@ namespace app
                                         itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, itemx, itemy);
                                     }
                                 }
-                                itemScreenPos = Form1_0.Mover_0.FixMouseYPosition(itemScreenPos);
 
                                 //##############################################
                                 //##############################################
                                 //detect bad items??
                                 if (((itemx <= 0 && itemy <= 0)
-                                    || (itemScreenPos["x"] <= 0 && itemScreenPos["y"] <= 0))
+                                    || (itemScreenPos.X <= 0 && itemScreenPos.Y <= 0))
                                     && !IsIncludedInList(BadItemsOnGroundPointerList, ItemPointerLocation))
                                 {
                                     Form1_0.method_1("Added bad item 'OnGround':" + ItemNAAME, Color.OrangeRed);
@@ -603,9 +602,9 @@ namespace app
                                 //####
                                 TriesToPickItemCount++;
                                 Form1_0.KeyMouse_0.PressKeyHold(System.Windows.Forms.Keys.E);
-                                //Form1_0.KeyMouse_0.MouseMoveTo_RealPos(itemScreenPos["x"], itemScreenPos["y"]);
-                                Form1_0.KeyMouse_0.MouseClicc_RealPos(itemScreenPos["x"], itemScreenPos["y"]);
-                                Form1_0.KeyMouse_0.MouseClicc_RealPos(itemScreenPos["x"], itemScreenPos["y"]); //clic twice??
+                                //Form1_0.KeyMouse_0.MouseMoveTo_RealPos(itemScreenPos.X, itemScreenPos.Y);
+                                Form1_0.KeyMouse_0.MouseClicc_RealPos(itemScreenPos.X, itemScreenPos.Y);
+                                Form1_0.KeyMouse_0.MouseClicc_RealPos(itemScreenPos.X, itemScreenPos.Y); //clic twice??
                                 Form1_0.KeyMouse_0.ReleaseKey(System.Windows.Forms.Keys.E);
 
                                 if (ItemNAAME != LastPick)
@@ -617,7 +616,7 @@ namespace app
                                     //##############################################
                                     //detect bad items??
                                     /*if (((itemx <= 0 && itemy <= 0)
-                                        || (itemScreenPos["x"] <= 0 && itemScreenPos["y"] <= 0))
+                                        || (itemScreenPos.X <= 0 && itemScreenPos.Y <= 0))
                                         && !IsIncludedInList(BadItemsOnGroundPointerList, ItemPointerLocation))
                                     {
                                         Form1_0.method_1("Added bad item 'OnGround':" + ItemNAAME, Color.OrangeRed);
@@ -718,7 +717,7 @@ namespace app
                         Form1_0.UIScan_0.readUI();
                         if (ItemNAAME == ThisItemName && (!Form1_0.UIScan_0.leftMenu && !Form1_0.UIScan_0.rightMenu && !Form1_0.UIScan_0.fullMenu))
                         {
-                            Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, itemx, itemy);
+                            Position itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, itemx, itemy);
                             if (ShouldPickPos(itemScreenPos))
                             {
                                 int DiffXPlayer = itemx - Form1_0.PlayerScan_0.xPosFinal;
@@ -744,11 +743,11 @@ namespace app
                                     }
                                 }
                                 //####
-                                itemScreenPos = Form1_0.Mover_0.FixMouseYPosition(itemScreenPos);
+                                
 
                                 TriesToPickItemCount++;
-                                Form1_0.KeyMouse_0.MouseClicc_RealPos(itemScreenPos["x"], itemScreenPos["y"]);
-                                Form1_0.KeyMouse_0.MouseClicc_RealPos(itemScreenPos["x"], itemScreenPos["y"]);
+                                Form1_0.KeyMouse_0.MouseClicc_RealPos(itemScreenPos.X, itemScreenPos.Y);
+                                Form1_0.KeyMouse_0.MouseClicc_RealPos(itemScreenPos.X, itemScreenPos.Y);
 
                                 if (ItemNAAME != LastPick)
                                 {
@@ -863,7 +862,7 @@ namespace app
                         Form1_0.UIScan_0.readUI();
                         if (!Form1_0.UIScan_0.leftMenu && !Form1_0.UIScan_0.rightMenu && !Form1_0.UIScan_0.fullMenu)
                         {
-                            Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, itemx, itemy);
+                            Position itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, itemx, itemy);
                             if (ShouldPickPos(itemScreenPos))
                             {
                                 //####
@@ -894,8 +893,8 @@ namespace app
                                     itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, itemx, itemy);
                                 }
                                 //####
-                                itemScreenPos = Form1_0.Mover_0.FixMouseYPosition(itemScreenPos);
-                                Form1_0.KeyMouse_0.MouseClicc_RealPos(itemScreenPos["x"], itemScreenPos["y"]);
+                                
+                                Form1_0.KeyMouse_0.MouseClicc_RealPos(itemScreenPos.X, itemScreenPos.Y);
 
                                 if (ItemNAAME != LastPick)
                                 {
@@ -925,7 +924,7 @@ namespace app
                     Form1_0.UIScan_0.readUI();
                     if (!Form1_0.UIScan_0.leftMenu && !Form1_0.UIScan_0.rightMenu && !Form1_0.UIScan_0.fullMenu)
                     {
-                        Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, itemx, itemy);
+                        Position itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, itemx, itemy);
                         if (ShouldPickPos(itemScreenPos))
                         {
                             //####
@@ -948,7 +947,7 @@ namespace app
                                 itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, itemx, itemy);
                             }
                             //####
-                            Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"]);
+                            Form1_0.KeyMouse_0.MouseClicc(itemScreenPos.X, itemScreenPos.Y);
 
                             if (ItemNAAME != LastPick)
                             {
@@ -964,18 +963,18 @@ namespace app
             return false;
         }
 
-        public bool ShouldPickPos(Dictionary<string, int> itemScreenPos)
+        public bool ShouldPickPos(Position itemScreenPos)
         {
             if (CharConfig.UseTeleport && !Form1_0.Town_0.GetInTown())
             {
-                if (itemScreenPos["x"] > 0 && itemScreenPos["y"] > 0) return true;
+                if (itemScreenPos.X > 0 && itemScreenPos.Y > 0) return true;
                 return false;
 
             }
             else
             {
-                if (itemScreenPos["x"] > 0 && itemScreenPos["x"] < Form1_0.ScreenX
-                    && itemScreenPos["y"] > 0 && itemScreenPos["y"] < (Form1_0.ScreenY - Form1_0.ScreenYMenu))
+                if (itemScreenPos.X > 0 && itemScreenPos.X < Form1_0.ScreenX
+                    && itemScreenPos.Y > 0 && itemScreenPos.Y < (Form1_0.ScreenY - Form1_0.ScreenYMenu))
                 {
                     return true;
                 }
@@ -1358,34 +1357,34 @@ namespace app
             foreach (int i in Enum.GetValues(typeof(Enums.NonClassSkill)))
             {
                 string EnumStr = Enum.GetName(typeof(Enums.NonClassSkill), i);
-                if (EnumStr.ToLower() == StatNammm.ToLower()) return (ushort)i;
+                if (EnumStr == StatNammm) return (ushort)i;
             }
             foreach (int i in Enum.GetValues(typeof(Enums.AddClassSkills)))
             {
                 string EnumStr = Enum.GetName(typeof(Enums.AddClassSkills), i);
-                if (EnumStr.ToLower() == StatNammm.ToLower()) return (ushort)i;
+                if (EnumStr == StatNammm) return (ushort)i;
             }
             foreach (int i in Enum.GetValues(typeof(Enums.AddSkillTab)))
             {
                 string EnumStr = Enum.GetName(typeof(Enums.AddSkillTab), i);
-                if (EnumStr.ToLower() == StatNammm.ToLower()) return (ushort) i;
+                if (EnumStr == StatNammm) return (ushort) i;
             }
             foreach (int i in Enum.GetValues(typeof(Enums.SingleSkill)))
             {
                 string EnumStr = Enum.GetName(typeof(Enums.SingleSkill), i);
-                if (EnumStr.ToLower() == StatNammm.ToLower()) return (ushort)i;
+                if (EnumStr == StatNammm) return (ushort)i;
             }
             foreach (int i in Enum.GetValues(typeof(Enums.Aura)))
             {
                 string EnumStr = Enum.GetName(typeof(Enums.Aura), i);
-                if (EnumStr.ToLower() == StatNammm.ToLower()) return (ushort)i;
+                if (EnumStr == StatNammm) return (ushort)i;
             }
 
             //Normal Stats
             foreach (int i in Enum.GetValues(typeof(Enums.Attribute)))
             {
                 string EnumStr = Enum.GetName(typeof(Enums.Attribute), i);
-                if (EnumStr.ToLower() == StatNammm.ToLower()) return (ushort) i;
+                if (EnumStr == StatNammm) return (ushort) i;
             }
             return 0;
         }
@@ -1396,7 +1395,7 @@ namespace app
             foreach (int i in Enum.GetValues(typeof(Enums.NonClassSkill)))
             {
                 string EnumStr = Enum.GetName(typeof(Enums.NonClassSkill), i);
-                if (EnumStr.ToLower() == StatNammm.ToLower())
+                if (EnumStr == StatNammm)
                 {
                     return 97;
                 }
@@ -1404,7 +1403,7 @@ namespace app
             foreach (int i in Enum.GetValues(typeof(Enums.AddClassSkills)))
             {
                 string EnumStr = Enum.GetName(typeof(Enums.AddClassSkills), i);
-                if (EnumStr.ToLower() == StatNammm.ToLower())
+                if (EnumStr == StatNammm)
                 {
                     return 83;
                 }
@@ -1412,7 +1411,7 @@ namespace app
             foreach (int i in Enum.GetValues(typeof(Enums.AddSkillTab)))
             {
                 string EnumStr = Enum.GetName(typeof(Enums.AddSkillTab), i);
-                if (EnumStr.ToLower() == StatNammm.ToLower())
+                if (EnumStr == StatNammm)
                 {
                     return 188;
                 }
@@ -1420,7 +1419,7 @@ namespace app
             foreach (int i in Enum.GetValues(typeof(Enums.SingleSkill)))
             {
                 string EnumStr = Enum.GetName(typeof(Enums.SingleSkill), i);
-                if (EnumStr.ToLower() == StatNammm.ToLower())
+                if (EnumStr == StatNammm)
                 {
                     return 107;
                 }
@@ -1428,7 +1427,7 @@ namespace app
             foreach (int i in Enum.GetValues(typeof(Enums.Aura)))
             {
                 string EnumStr = Enum.GetName(typeof(Enums.Aura), i);
-                if (EnumStr.ToLower() == StatNammm.ToLower())
+                if (EnumStr == StatNammm)
                 {
                     return 151;
                 }
@@ -1440,7 +1439,7 @@ namespace app
             foreach (int i in Enum.GetValues(typeof(Enums.Attribute)))
             {
                 string EnumStr = Enum.GetName(typeof(Enums.Attribute), i);
-                if (EnumStr.ToLower() == StatNammm.ToLower())
+                if (EnumStr == StatNammm)
                 {
                     EnumIndex = EnumIndexing;
                     break;

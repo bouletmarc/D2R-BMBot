@@ -57,9 +57,10 @@ namespace app
 
         public bool ShouldPickItem(bool Keeping)
         {
+            string ItemName = Form1_0.ItemsStruc_0.ItemNAAME.Replace(" ", "");
             foreach (var ThisDir in PickItemsRunesKeyGems)
             {
-                if (Form1_0.ItemsStruc_0.ItemNAAME.ToLower().Replace(" ", "") == ThisDir.Key.ToLower().Replace(" ", "") && ThisDir.Value)
+                if (ItemName == ThisDir.Key && ThisDir.Value)
                 {
                     if (Form1_0.ItemsStruc_0.ItemNAAME.Contains("Chipped") || Form1_0.ItemsStruc_0.ItemNAAME.Contains("Flawed")
                         || Form1_0.ItemsStruc_0.ItemNAAME == "Topaz"
@@ -82,10 +83,18 @@ namespace app
                 }
             }
 
+            foreach (var ThisDir in PickItemsPotions)
+            {
+                if (ItemName == Regex.Replace(ThisDir.Key, @"[\d-]", string.Empty) && ThisDir.Value)
+                {
+                    return true;
+                }
+            }
+
             //###############
             foreach (var ThisDir in PickItemsNormal_ByName)
             {
-                if (Form1_0.ItemsStruc_0.ItemNAAME.ToLower().Replace(" ", "") == Regex.Replace(ThisDir.Key.ToLower().Replace(" ", ""), @"[\d-]", string.Empty) && ThisDir.Value)
+                if (ItemName == Regex.Replace(ThisDir.Key, @"[\d-]", string.Empty) && ThisDir.Value)
                 {
                     bool SameQuality = true;
                     if (PickItemsNormal_ByName_Quality.ContainsKey(ThisDir.Key))
@@ -123,6 +132,7 @@ namespace app
                                 if (!Form1_0.ItemsStruc_0.IsItemHaveSameStatMultiCheck(ThisDir2.Key, ThisDir2.Value, PickItemsNormal_ByName_Operators[ThisDir.Key][ThisDir2.Key])) SameStats = false;
                             }
                         }
+                        //Console.WriteLine("---------------------");
 
                         if (SameFlags && SameQuality && SameStats) return true;
                     }
@@ -131,7 +141,7 @@ namespace app
             //###############
             foreach (var ThisDir in PickItemsNormal_ByType)
             {
-                if (IsItemThisType(Regex.Replace(ThisDir.Key.ToLower().Replace(" ", ""), @"[\d-]", string.Empty)) && ThisDir.Value)
+                if (IsItemThisType(Regex.Replace(ThisDir.Key, @"[\d-]", string.Empty)) && ThisDir.Value)
                 {
                     bool SameQuality = true;
                     if (PickItemsNormal_ByType_Quality.ContainsKey(ThisDir.Key))

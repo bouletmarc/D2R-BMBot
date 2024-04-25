@@ -92,9 +92,9 @@ namespace app
                             int Tryyyy = 0;
                             while (Form1_0.PlayerScan_0.levelNo == (int)Enums.Area.CanyonOfTheMagi && Tryyyy <= 25)
                             {
-                                Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, ThisFinalPosition.X, ThisFinalPosition.Y);
-                                itemScreenPos = Form1_0.Mover_0.FixMouseYPosition(itemScreenPos);
-                                Form1_0.KeyMouse_0.MouseClicc_RealPos(itemScreenPos["x"], itemScreenPos["y"]);
+                                Position itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, ThisFinalPosition.X, ThisFinalPosition.Y);
+                                
+                                Form1_0.KeyMouse_0.MouseClicc_RealPos(itemScreenPos.X, itemScreenPos.Y);
                                 Form1_0.PlayerScan_0.GetPositions();
                                 Tryyyy++;
                             }
@@ -102,9 +102,9 @@ namespace app
                             Tryyyy = 0;
                             while (Form1_0.PlayerScan_0.levelNo == (int)Enums.Area.CanyonOfTheMagi && Tryyyy <= 25)
                             {
-                                Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, ThisFinalPosition.X, ThisFinalPosition.Y);
-                                itemScreenPos = Form1_0.Mover_0.FixMouseYPosition(itemScreenPos);
-                                Form1_0.KeyMouse_0.MouseClicc_RealPos(itemScreenPos["x"] - 70, itemScreenPos["y"]);
+                                Position itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, ThisFinalPosition.X, ThisFinalPosition.Y);
+                                
+                                Form1_0.KeyMouse_0.MouseClicc_RealPos(itemScreenPos.X - 70, itemScreenPos.Y);
                                 Form1_0.PlayerScan_0.GetPositions();
                                 Tryyyy++;
                             }
@@ -112,9 +112,9 @@ namespace app
                             Tryyyy = 0;
                             while (Form1_0.PlayerScan_0.levelNo == (int)Enums.Area.CanyonOfTheMagi && Tryyyy <= 25)
                             {
-                                Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, ThisFinalPosition.X, ThisFinalPosition.Y);
-                                itemScreenPos = Form1_0.Mover_0.FixMouseYPosition(itemScreenPos);
-                                Form1_0.KeyMouse_0.MouseClicc_RealPos(itemScreenPos["x"] + 70, itemScreenPos["y"]);
+                                Position itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, ThisFinalPosition.X, ThisFinalPosition.Y);
+                                
+                                Form1_0.KeyMouse_0.MouseClicc_RealPos(itemScreenPos.X + 70, itemScreenPos.Y);
                                 Form1_0.PlayerScan_0.GetPositions();
                                 Tryyyy++;
                             }
@@ -175,8 +175,8 @@ namespace app
                     int StartLevel = (int) Form1_0.PlayerScan_0.levelNo;
                     while ((int) Form1_0.PlayerScan_0.levelNo == StartLevel && Tryyyy <= 25)
                     {
-                        Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, OrificePos.X, OrificePos.Y);
-                        Form1_0.KeyMouse_0.MouseClicc_RealPos(itemScreenPos["x"] - 446, itemScreenPos["y"] - 268);
+                        Position itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, OrificePos.X, OrificePos.Y);
+                        Form1_0.KeyMouse_0.MouseClicc_RealPos(itemScreenPos.X - 446, itemScreenPos.Y - 268);
                         Form1_0.PlayerScan_0.GetPositions();
                         Tryyyy++;
                     }

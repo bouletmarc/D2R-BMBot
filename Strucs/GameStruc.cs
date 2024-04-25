@@ -13,6 +13,7 @@ using System.Windows.Forms;
 using static System.Collections.Specialized.BitVector32;
 using static System.Windows.Forms.AxHost;
 using System.Threading;
+using static app.MapAreaStruc;
 using static app.Enums;
 
 namespace app
@@ -457,7 +458,7 @@ namespace app
             Form1_0.method_1("Game Time: " + ThisTimee.Minutes.ToString("00") + ":" + ThisTimee.Seconds.ToString("00") + ":" + ThisTimee.Milliseconds.ToString("0"), Color.DarkBlue);
         }
 
-        public Dictionary<string, int> World2Screen(long playerX, long playerY, long targetx, long targety)
+        public Position World2Screen(long playerX, long playerY, long targetx, long targety)
         {
             //; scale = 27
             //double scale = Form1_0.centerModeScale * Form1_0.renderScale * 100;
@@ -478,13 +479,10 @@ namespace app
             //int yS = (int) (Form1_0.CenterY + (y * scale * 0.5) - 10);
             int yS = (int) (Form1_0.CenterY + ((y * scale * 0.5) - 30));
 
-            Dictionary<string, int> NewDict = new Dictionary<string, int>();
-            NewDict["x"] = xS;
-            NewDict["y"] = yS;
-            return NewDict;
+            return FixMouseYPosition(new Position { X = xS, Y = yS });
         }
 
-        public Dictionary<string, int> World2ScreenDisplay(long playerX, long playerY, long targetx, long targety)
+        public Position World2ScreenDisplay(long playerX, long playerY, long targetx, long targety)
         {
             //; scale = 27
             //double scale = Form1_0.centerModeScale * Form1_0.renderScale * 100;
@@ -505,10 +503,24 @@ namespace app
             //int yS = (int) (Form1_0.CenterY + (y * scale * 0.5) - 10);
             int yS = (int)(Form1_0.CenterY + ((y * scale * 0.5) - 30));
 
-            Dictionary<string, int> NewDict = new Dictionary<string, int>();
-            NewDict["x"] = xS;
-            NewDict["y"] = yS;
-            return NewDict;
+            //return FixMouseYPosition(new Position { X = xS, Y = yS });
+            return new Position { X = xS, Y = yS };
+        }
+
+        public Position FixMouseYPosition(Position itemScreenPos)
+        {
+            Position itemScreenPos2 = new Position { X = itemScreenPos.X, Y = itemScreenPos.Y };
+
+            //calculate new Y clicking offset, else it will clic on bottom menu items
+            if (itemScreenPos2.Y >= (Form1_0.D2Height + Form1_0.ScreenYOffset - Form1_0.ScreenYMenu))
+            {
+                int DiffX = Form1_0.CenterX - itemScreenPos2.X;
+                itemScreenPos2.X = (int)(itemScreenPos2.X + (DiffX / 6));
+                itemScreenPos2.Y = (Form1_0.D2Height + Form1_0.ScreenYOffset - Form1_0.ScreenYMenu);
+                //Console.WriteLine("corrected pos from: " + Sx + "," + Sy + " to: " + itemScreenPos2.X + "," + itemScreenPos2.Y);
+            }
+
+            return itemScreenPos2;
         }
 
 

@@ -202,14 +202,16 @@ namespace app
             IsItemRVPotion = false;
             IsItemFullRVPotion = false;
 
+            string ThisItemName = Form1_0.ItemsStruc_0.ItemNAAME.Replace(" ", "");
+
             foreach (var ThisDir in Form1_0.ItemsAlert_0.PickItemsPotions)
             {
-                if (Form1_0.ItemsStruc_0.ItemNAAME.ToLower().Replace(" ", "") == Regex.Replace(ThisDir.Key.ToLower().Replace(" ", ""), @"[\d-]", string.Empty) && ThisDir.Value)
+                if (ThisItemName == Regex.Replace(ThisDir.Key.Replace(" ", ""), @"[\d-]", string.Empty) && ThisDir.Value)
                 {
-                    if (Form1_0.ItemsStruc_0.ItemNAAME.ToLower().Contains("healing")) IsItemHPPotion = true;
-                    if (Form1_0.ItemsStruc_0.ItemNAAME.ToLower().Contains("mana")) IsItemManaPotion = true;
-                    if (Form1_0.ItemsStruc_0.ItemNAAME.ToLower().Contains("rejuvenation")) IsItemRVPotion = true;
-                    if (Form1_0.ItemsStruc_0.ItemNAAME.ToLower().Contains("full rejuvenation")) IsItemFullRVPotion = true;
+                    if (ThisItemName.Contains("Healing")) IsItemHPPotion = true;
+                    if (ThisItemName.Contains("Mana")) IsItemManaPotion = true;
+                    if (ThisItemName.Contains("Rejuvenation")) IsItemRVPotion = true;
+                    if (ThisItemName.Contains("Full Rejuvenation")) IsItemFullRVPotion = true;
                 }
             }
 
@@ -221,12 +223,12 @@ namespace app
 
         public int GetPotType()
         {
-            if (Form1_0.ItemsStruc_0.ItemNAAME.ToLower().Contains("healing") ||
-                Form1_0.ItemsStruc_0.ItemNAAME.ToLower() == "potion of life")
+            if (Form1_0.ItemsStruc_0.ItemNAAME.Contains("Healing") ||
+                Form1_0.ItemsStruc_0.ItemNAAME == "Potion of Life")
             {
                 return 0;
             }
-            if (Form1_0.ItemsStruc_0.ItemNAAME.ToLower().Contains("mana"))
+            if (Form1_0.ItemsStruc_0.ItemNAAME.Contains("Mana"))
             {
                 return 1;
             }

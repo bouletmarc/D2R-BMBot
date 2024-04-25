@@ -140,9 +140,9 @@ namespace app
                         Position ThisFinalPosition = Form1_0.MapAreaStruc_0.GetPositionOfObject("object", "WaypointPortal", (int)DoingThisArea, new List<int>() { });
                         if (ThisFinalPosition.X != 0 && ThisFinalPosition.Y != 0)
                         {
-                            Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, ThisFinalPosition.X, ThisFinalPosition.Y);
-                            itemScreenPos = Form1_0.Mover_0.FixMouseYPosition(itemScreenPos);
-                            Form1_0.KeyMouse_0.MouseClicc_RealPos(itemScreenPos["x"], itemScreenPos["y"] - 15);
+                            Position itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, ThisFinalPosition.X, ThisFinalPosition.Y);
+                            
+                            Form1_0.KeyMouse_0.MouseClicc_RealPos(itemScreenPos.X, itemScreenPos.Y - 15);
                             if (Form1_0.UIScan_0.WaitTilUIOpen("waypointMenu"))
                             {
                                 Form1_0.Town_0.SelectTownWP();
@@ -287,9 +287,9 @@ namespace app
                     Position ThisFinalPosition = Form1_0.MapAreaStruc_0.GetPositionOfObject("object", "WaypointPortal", (int) DoingThisArea, new List<int>() { });
                     if (ThisFinalPosition.X != 0 && ThisFinalPosition.Y != 0)
                     {
-                        Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, ThisFinalPosition.X, ThisFinalPosition.Y);
-                        itemScreenPos = Form1_0.Mover_0.FixMouseYPosition(itemScreenPos);
-                        Form1_0.KeyMouse_0.MouseClicc_RealPos(itemScreenPos["x"], itemScreenPos["y"] - 15);
+                        Position itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, ThisFinalPosition.X, ThisFinalPosition.Y);
+                        
+                        Form1_0.KeyMouse_0.MouseClicc_RealPos(itemScreenPos.X, itemScreenPos.Y - 15);
                         if (Form1_0.UIScan_0.WaitTilUIOpen("waypointMenu"))
                         {
                             Form1_0.Town_0.SelectTownWP();

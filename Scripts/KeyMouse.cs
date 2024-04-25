@@ -153,6 +153,12 @@ namespace app
             //PostMessage((int)Form1_0.hWnd, WM_SYSKEYUP, (ushort)ThisK, (IntPtr)0);
         }
 
+        public void PressKey3(System.Windows.Forms.Keys ThisK)
+        {
+            SendMessage((int)Form1_0.hWnd, WM_SYSKEYDOWN, (ushort)ThisK, (IntPtr)0);
+            SendMessage((int)Form1_0.hWnd, WM_SYSKEYUP, (ushort)ThisK, (IntPtr)0);
+        }
+
         public void PressKeyHold(System.Windows.Forms.Keys ThisK)
         {
             SendMessage((int)Form1_0.hWnd, WM_SYSKEYDOWN, (ushort)ThisK, (IntPtr)0);

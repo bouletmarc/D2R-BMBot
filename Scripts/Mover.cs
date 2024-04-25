@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static app.MapAreaStruc;
 
 namespace app
 {
@@ -78,12 +79,14 @@ namespace app
             int TryMove2 = 0;
             int LastX = Form1_0.PlayerScan_0.xPosFinal;
             int LastY = Form1_0.PlayerScan_0.yPosFinal;
-            Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, ThisX, ThisY);
-            itemScreenPos = FixMouseYPosition(itemScreenPos);
+            Position itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, ThisX, ThisY);
+
+            if (Form1_0.Town_0.GetInTown()) Form1_0.KeyMouse_0.PressKey(CharConfig.KeySkillfastMoveAtTown);
+            else Form1_0.KeyMouse_0.PressKey(CharConfig.KeySkillfastMoveOutsideTown);
 
             if (!CharConfig.UseTeleport || (CharConfig.UseTeleport && Form1_0.Town_0.GetInTown()))
             {
-                Form1_0.KeyMouse_0.MouseMoveTo_RealPos(itemScreenPos["x"], itemScreenPos["y"]);
+                Form1_0.KeyMouse_0.MouseMoveTo_RealPos(itemScreenPos.X, itemScreenPos.Y);
                 Form1_0.KeyMouse_0.MouseClicHoldWithoutRelease();
                 Form1_0.KeyMouse_0.PressKeyHold(System.Windows.Forms.Keys.E);
             }
@@ -110,11 +113,11 @@ namespace app
 
                 if (!CharConfig.UseTeleport || (CharConfig.UseTeleport && Form1_0.Town_0.GetInTown()))
                 {
-                    Form1_0.KeyMouse_0.MouseMoveTo_RealPos(itemScreenPos["x"], itemScreenPos["y"]);
+                    Form1_0.KeyMouse_0.MouseMoveTo_RealPos(itemScreenPos.X, itemScreenPos.Y);
                 }
                 if (CharConfig.UseTeleport && !Form1_0.Town_0.GetInTown())
                 {
-                    Form1_0.KeyMouse_0.MouseCliccRight_RealPos(itemScreenPos["x"], itemScreenPos["y"]);
+                    Form1_0.KeyMouse_0.MouseCliccRight_RealPos(itemScreenPos.X, itemScreenPos.Y);
 
                     //#######
                     if (!AllowFastMove)
@@ -143,7 +146,7 @@ namespace app
                 if (AllowPickingItem) Form1_0.ItemsStruc_0.GetItems(true);      //#############
                 Form1_0.Potions_0.CheckIfWeUsePotion();
                 itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, ThisX, ThisY);
-                itemScreenPos = FixMouseYPosition(itemScreenPos);
+                
 
                 Application.DoEvents();
 
@@ -200,8 +203,8 @@ namespace app
                     }
 
                     itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, ThisX, ThisY);
-                    itemScreenPos = FixMouseYPosition(itemScreenPos);
-                    Form1_0.KeyMouse_0.MouseCliccRight_RealPos(itemScreenPos["x"], itemScreenPos["y"]);
+                    
+                    Form1_0.KeyMouse_0.MouseCliccRight_RealPos(itemScreenPos.X, itemScreenPos.Y);
                 }*/
 
                 if (TryMove >= MaxMoveTry  && (!CharConfig.UseTeleport || (CharConfig.UseTeleport && Form1_0.Town_0.GetInTown())))
@@ -289,12 +292,12 @@ namespace app
                 return false;
             }
 
-            Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, ThisX, ThisY);
-            itemScreenPos = FixMouseYPosition(itemScreenPos);
+            Position itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, ThisX, ThisY);
+            
 
             //if (!CharConfig.UseTeleport || (CharConfig.UseTeleport && Form1_0.Town_0.GetInTown()))
             //{
-                Form1_0.KeyMouse_0.MouseMoveTo_RealPos(itemScreenPos["x"], itemScreenPos["y"]);
+                Form1_0.KeyMouse_0.MouseMoveTo_RealPos(itemScreenPos.X, itemScreenPos.Y);
                 Form1_0.KeyMouse_0.MouseClicHoldWithoutRelease();
                 Form1_0.KeyMouse_0.PressKeyHold(System.Windows.Forms.Keys.E);
             //}
@@ -304,8 +307,8 @@ namespace app
 
             Form1_0.WaitDelay(5); //wait a little bit, we just casted attack
 
-            if (!CharConfig.UseTeleport || (CharConfig.UseTeleport && Form1_0.Town_0.GetInTown())) Form1_0.KeyMouse_0.MouseMoveTo_RealPos(itemScreenPos["x"], itemScreenPos["y"]);
-            if (CharConfig.UseTeleport && !Form1_0.Town_0.GetInTown()) Form1_0.KeyMouse_0.MouseCliccRightAttackMove(itemScreenPos["x"], itemScreenPos["y"]);
+            if (!CharConfig.UseTeleport || (CharConfig.UseTeleport && Form1_0.Town_0.GetInTown())) Form1_0.KeyMouse_0.MouseMoveTo_RealPos(itemScreenPos.X, itemScreenPos.Y);
+            if (CharConfig.UseTeleport && !Form1_0.Town_0.GetInTown()) Form1_0.KeyMouse_0.MouseCliccRightAttackMove(itemScreenPos.X, itemScreenPos.Y);
 
             //#######
             Form1_0.PlayerScan_0.GetPositions();
@@ -353,24 +356,6 @@ namespace app
             
             Form1_0.overlayForm.ResetMoveToLocation();
             return MovedCorrectly;
-        }
-
-        public Dictionary<string, int> FixMouseYPosition(Dictionary<string, int> itemScreenPos)
-        {
-            Dictionary<string, int> itemScreenPos2 = new Dictionary<string, int>();
-            itemScreenPos2["x"] = itemScreenPos["x"];
-            itemScreenPos2["y"] = itemScreenPos["y"];
-
-            //calculate new Y clicking offset, else it will clic on bottom menu items
-            if (itemScreenPos2["y"] >= (Form1_0.D2Height + Form1_0.ScreenYOffset - Form1_0.ScreenYMenu))
-            {
-                int DiffX = Form1_0.CenterX - itemScreenPos2["x"];
-                itemScreenPos2["x"] = (int)(itemScreenPos2["x"] + (DiffX / 6));
-                itemScreenPos2["y"] = (Form1_0.D2Height + Form1_0.ScreenYOffset - Form1_0.ScreenYMenu);
-                //Console.WriteLine("corrected pos from: " + Sx + "," + Sy + " to: " + itemScreenPos2["x"] + "," + itemScreenPos2["y"]);
-            }
-
-            return itemScreenPos2;
         }
     }
 }

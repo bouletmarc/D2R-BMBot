@@ -115,7 +115,8 @@ namespace app
 
                     //Console.WriteLine((int)txtFileNo + " at: " + xPosFinal + ", " + yPosFinal);
 
-                    if (((EnumsMobsNPC.MonsterType)((int)txtFileNo)).ToString().ToLower().Contains(MobName.ToLower()))
+                    //if (((EnumsMobsNPC.MonsterType)((int)txtFileNo)).ToString().ToLower().Contains(MobName.ToLower()))
+                    if (((EnumsMobsNPC.MonsterType)((int)txtFileNo)).ToString() == MobName)
                     {
                         if (xPosFinal != 0 && yPosFinal != 0)
                         {

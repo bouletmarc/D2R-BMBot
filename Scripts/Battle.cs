@@ -414,7 +414,7 @@ namespace app
                 FirstAttackCasting();
                 SetSkills();
                 CastSkills();
-                if (CharConfig.RunningOnChar.ToLower().Contains("paladin"))
+                if (CharConfig.RunningOnChar == "PaladinHammer")
                 {
                     CastSkills();
                     CastSkills();
@@ -463,7 +463,7 @@ namespace app
                 FirstAttackCasting();
                 SetSkills();
                 CastSkills();
-                if (CharConfig.RunningOnChar.ToLower().Contains("paladin"))
+                if (CharConfig.RunningOnChar == "PaladinHammer")
                 {
                     CastSkills();
                     CastSkills();
@@ -510,7 +510,7 @@ namespace app
                 FirstAttackCasting();
                 SetSkills();
                 CastSkills();
-                if (CharConfig.RunningOnChar.ToLower().Contains("paladin"))
+                if (CharConfig.RunningOnChar == "PaladinHammer")
                 {
                     CastSkills();
                     CastSkills();
@@ -625,14 +625,14 @@ namespace app
             if (Form1_0.MobsStruc_0.xPosFinal != 0 && Form1_0.MobsStruc_0.yPosFinal != 0)
             {
                 Form1_0.PlayerScan_0.GetPositions();
-                Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, Form1_0.MobsStruc_0.xPosFinal, Form1_0.MobsStruc_0.yPosFinal);
+                Position itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, Form1_0.MobsStruc_0.xPosFinal, Form1_0.MobsStruc_0.yPosFinal);
                 if (!CharConfig.PlayerAttackWithRightHand)
                 {
-                    Form1_0.KeyMouse_0.SendSHIFT_CLICK_ATTACK(itemScreenPos["x"], itemScreenPos["y"] - 30);
+                    Form1_0.KeyMouse_0.SendSHIFT_CLICK_ATTACK(itemScreenPos.X, itemScreenPos.Y - 30);
                 }
                 else
                 {
-                    Form1_0.KeyMouse_0.MouseCliccRightAttackMove(itemScreenPos["x"], itemScreenPos["y"] - 30);
+                    Form1_0.KeyMouse_0.MouseCliccRightAttackMove(itemScreenPos.X, itemScreenPos.Y - 30);
                 }
             }
             else
@@ -655,15 +655,15 @@ namespace app
             if (Form1_0.MobsStruc_0.xPosFinal != 0 && Form1_0.MobsStruc_0.yPosFinal != 0)
             {
                 Form1_0.PlayerScan_0.GetPositions();
-                Dictionary<string, int> itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, Form1_0.MobsStruc_0.xPosFinal, Form1_0.MobsStruc_0.yPosFinal);
+                Position itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, Form1_0.MobsStruc_0.xPosFinal, Form1_0.MobsStruc_0.yPosFinal);
                 if (!CharConfig.PlayerAttackWithRightHand)
                 {
-                    //Form1_0.KeyMouse_0.SendSHIFT_CLICK_ATTACK(itemScreenPos["x"], itemScreenPos["y"] - 30);
-                    Form1_0.KeyMouse_0.SendSHIFT_CLICK_ATTACK_CAST_NO_MOVE(itemScreenPos["x"], itemScreenPos["y"] - 30);
+                    //Form1_0.KeyMouse_0.SendSHIFT_CLICK_ATTACK(itemScreenPos.X, itemScreenPos.Y - 30);
+                    Form1_0.KeyMouse_0.SendSHIFT_CLICK_ATTACK_CAST_NO_MOVE(itemScreenPos.X, itemScreenPos.Y - 30);
                 }
                 else
                 {
-                    Form1_0.KeyMouse_0.MouseCliccRightAttackMove(itemScreenPos["x"], itemScreenPos["y"] - 30);
+                    Form1_0.KeyMouse_0.MouseCliccRightAttackMove(itemScreenPos.X, itemScreenPos.Y - 30);
                 }
             }
             else
@@ -686,7 +686,7 @@ namespace app
         {
             if (!FirstAttackCasted)
             {
-                if (CharConfig.RunningOnChar.ToLower().Contains("sorc"))
+                if (CharConfig.RunningOnChar == "SorceressBlizzard")
                 {
                     Form1_0.KeyMouse_0.PressKey(CharConfig.KeySkillAttack); //select static
 

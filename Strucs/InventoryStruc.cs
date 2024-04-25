@@ -277,6 +277,9 @@ namespace app
             try
             {
                 int FullIndex = ConvertXYToIndex(Form1_0.ItemsStruc_0.itemx, Form1_0.ItemsStruc_0.itemy);
+
+                if (CharConfig.InventoryDontCheckItem[FullIndex] == 1) return;
+
                 InventoryHasItem[FullIndex] = 1;
                 InventoryItemPointers[FullIndex] = Form1_0.ItemsStruc_0.ItemPointerLocation;
                 InventoryItemNames[FullIndex] = Form1_0.ItemsStruc_0.ItemNAAME;
