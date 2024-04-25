@@ -248,6 +248,7 @@ namespace app
 
                         Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"]);
                         Form1_0.WaitDelay(12);
+                        Form1_0.ItemsStruc_0.GetItems(false);
                         //Form1_0.KeyMouse_0.MouseClicc_RealPos(Form1_0.CenterX, Form1_0.CenterY);
                         Form1_0.Stash_0.PlaceItem(Form1_0.CenterX, Form1_0.CenterY);
                         Form1_0.WaitDelay(10);

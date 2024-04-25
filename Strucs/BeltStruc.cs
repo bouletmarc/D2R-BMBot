@@ -211,7 +211,7 @@ namespace app
                     if (ThisItemName.Contains("Healing")) IsItemHPPotion = true;
                     if (ThisItemName.Contains("Mana")) IsItemManaPotion = true;
                     if (ThisItemName.Contains("Rejuvenation")) IsItemRVPotion = true;
-                    if (ThisItemName.Contains("Full Rejuvenation")) IsItemFullRVPotion = true;
+                    if (ThisItemName.Contains("FullRejuvenation")) IsItemFullRVPotion = true;
                 }
             }
 

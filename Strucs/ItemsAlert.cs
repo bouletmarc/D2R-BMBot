@@ -83,14 +83,6 @@ namespace app
                 }
             }
 
-            foreach (var ThisDir in PickItemsPotions)
-            {
-                if (ItemName == Regex.Replace(ThisDir.Key, @"[\d-]", string.Empty) && ThisDir.Value)
-                {
-                    return true;
-                }
-            }
-
             //###############
             foreach (var ThisDir in PickItemsNormal_ByName)
             {

@@ -123,7 +123,7 @@ namespace app
                 int LastItemIdentified = 0;
                 while (Form1_0.InventoryStruc_0.HasUnidItemInInventory() && tries2 < 2)
                 {
-                    Form1_0.SetGameStatus("TOWN-SHOP-ID");
+                    Form1_0.SetGameStatus("TOWN-SHOP-ID ITEMS");
                     Form1_0.SetProcessingTime();
                     if (!Form1_0.Running || !Form1_0.GameStruc_0.IsInGame())
                     {
