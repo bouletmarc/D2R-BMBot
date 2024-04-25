@@ -60,7 +60,7 @@ namespace app
             string ItemName = Form1_0.ItemsStruc_0.ItemNAAME.Replace(" ", "");
             foreach (var ThisDir in PickItemsRunesKeyGems)
             {
-                if (ItemName == ThisDir.Key && ThisDir.Value)
+                if (ItemName == ThisDir.Key.Replace(" ", "") && ThisDir.Value)
                 {
                     if (Form1_0.ItemsStruc_0.ItemNAAME.Contains("Chipped") || Form1_0.ItemsStruc_0.ItemNAAME.Contains("Flawed")
                         || Form1_0.ItemsStruc_0.ItemNAAME == "Topaz"

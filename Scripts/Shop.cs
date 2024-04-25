@@ -195,11 +195,13 @@ namespace app
                     Form1_0.SetGameStatus("TOWN-SHOP-SELL ITEMS");
                     for (int i = 0; i < 40; i++)
                     {
+                        if (CharConfig.InventoryDontCheckItem[i] == 1) continue;
+                        if (Form1_0.InventoryStruc_0.InventoryHasItem[i] == 0) continue;
                         if (ShopForTomeOfPortal && Form1_0.InventoryStruc_0.InventoryItemNames[i] == "Wirt's Leg") continue;
 
-                        if (CharConfig.InventoryDontCheckItem[i] == 0 
-                            && Form1_0.InventoryStruc_0.InventoryHasItem[i] >= 1 
-                            && Form1_0.InventoryStruc_0.InventoryHasStashItem[i] == 0 
+                        //Console.WriteLine("HasStashItem:" + Form1_0.InventoryStruc_0.InventoryHasStashItem[i] + ", HasUnidItem:" + Form1_0.InventoryStruc_0.InventoryHasUnidItem[i]);
+
+                        if (Form1_0.InventoryStruc_0.InventoryHasStashItem[i] == 0 
                             && Form1_0.InventoryStruc_0.InventoryHasUnidItem[i] == 0)
                         {
                             Dictionary<string, int> itemScreenPos = Form1_0.InventoryStruc_0.ConvertIndexToXY(i);

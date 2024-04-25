@@ -104,6 +104,7 @@ namespace app
             //if its not a key at the key location, relocate the item
             if (InventoryItemNames[thisindex] != "Key")
             {
+                //Console.WriteLine("here");
                 int ThisNewIndex = GetNextFreeSpaceInInventory();
 
                 if (ThisNewIndex > -1)
@@ -130,6 +131,7 @@ namespace app
             {
                 if (CharConfig.InventoryDontCheckItem[i] == 0 && InventoryHasItem[i] >= 1 && InventoryItemNames[i] == "Key")
                 {
+                    //Console.WriteLine("hereIndex:" + i);
                     //pick key item from this slot
                     Dictionary<string, int> itemScreenPos = Form1_0.InventoryStruc_0.ConvertIndexToXY(i);
                     itemScreenPos = Form1_0.InventoryStruc_0.ConvertInventoryLocToScreenPos(itemScreenPos["x"], itemScreenPos["y"]);
@@ -279,7 +281,13 @@ namespace app
             {
                 int FullIndex = ConvertXYToIndex(Form1_0.ItemsStruc_0.itemx, Form1_0.ItemsStruc_0.itemy);
 
-                if (CharConfig.InventoryDontCheckItem[FullIndex] == 1) return;
+                if (CharConfig.InventoryDontCheckItem[FullIndex] == 1
+                    && Form1_0.ItemsStruc_0.ItemNAAME != "Key"
+                    && Form1_0.ItemsStruc_0.ItemNAAME != "Tome of Town Portal"
+                    && Form1_0.ItemsStruc_0.ItemNAAME != "Tome of Identify")
+                {
+                    return;
+                }
 
                 InventoryHasItem[FullIndex] = 1;
                 InventoryItemPointers[FullIndex] = Form1_0.ItemsStruc_0.ItemPointerLocation;
@@ -342,7 +350,7 @@ namespace app
         {
             for (int i = 0; i < 40; i++)
             {
-                if (CharConfig.InventoryDontCheckItem[i] == 0 && InventoryHasItem[i] >= 1)
+                if (InventoryHasItem[i] >= 1)
                 {
                     if (InventoryItemNames[i] == ItemmN)
                     {
