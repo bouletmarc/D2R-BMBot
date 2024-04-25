@@ -228,6 +228,7 @@ namespace app
             //place all bad items on ground
             for (int i = 0; i < 40; i++)
             {
+                //Console.WriteLine("toID: " + InventoryHasItemToID[i] + ", tostash: " + InventoryHasStashItem[i]);
                 Form1_0.UIScan_0.OpenUIMenu("invMenu");
                 if (CharConfig.InventoryDontCheckItem[i] == 0 && InventoryHasItem[i] >= 1 && InventoryHasItemToID[i] == 0 && InventoryHasStashItem[i] == 0)
                 {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using static app.EnumsMobsNPC;
 using static System.Diagnostics.DebuggableAttribute;
@@ -114,9 +115,7 @@ namespace app
                     GetUnitPathData();
 
                     //Console.WriteLine((int)txtFileNo + " at: " + xPosFinal + ", " + yPosFinal);
-
-                    //if (((EnumsMobsNPC.MonsterType)((int)txtFileNo)).ToString().ToLower().Contains(MobName.ToLower()))
-                    if (((EnumsMobsNPC.MonsterType)((int)txtFileNo)).ToString() == MobName)
+                    if (Regex.Replace(((EnumsMobsNPC.MonsterType)((int)txtFileNo)).ToString(), @"[\d-]", string.Empty) == MobName)
                     {
                         if (xPosFinal != 0 && yPosFinal != 0)
                         {

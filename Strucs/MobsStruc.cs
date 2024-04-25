@@ -33,6 +33,8 @@ namespace app
         public uint statCountAll = 0;
         public long statPtrAll = 0;
         public byte[] statBufferAll = new byte[] { };
+        public byte[] pPathAll = new byte[144];
+        public long pPathPtrAll = 0;
 
         public uint statCount = 0;
         //public uint statExCount = 0;
@@ -285,15 +287,15 @@ namespace app
             //pPathPtr = BitConverter.ToInt64(mobsdatastruc, 0x38);
             CurrentPointerBytes = new byte[8];
             Form1_0.Mem_0.ReadRawMemory(MobsPointerLocation + 0x38, ref CurrentPointerBytes, CurrentPointerBytes.Length);
-            pPathPtr = BitConverter.ToInt64(CurrentPointerBytes, 0);
+            pPathPtrAll = BitConverter.ToInt64(CurrentPointerBytes, 0);
             //pPath = new byte[144];
-            pPath = new byte[0x08];
-            Form1_0.Mem_0.ReadRawMemory(pPathPtr, ref pPath, pPath.Length);
+            pPathAll = new byte[0x08];
+            Form1_0.Mem_0.ReadRawMemory(pPathPtrAll, ref pPathAll, pPathAll.Length);
 
-            ushort itemx2 = BitConverter.ToUInt16(pPath, 0x02);
-            ushort itemy2 = BitConverter.ToUInt16(pPath, 0x06);
-            ushort xPosOffset = BitConverter.ToUInt16(pPath, 0x00);
-            ushort yPosOffset = BitConverter.ToUInt16(pPath, 0x04);
+            ushort itemx2 = BitConverter.ToUInt16(pPathAll, 0x02);
+            ushort itemy2 = BitConverter.ToUInt16(pPathAll, 0x06);
+            ushort xPosOffset = BitConverter.ToUInt16(pPathAll, 0x00);
+            ushort yPosOffset = BitConverter.ToUInt16(pPathAll, 0x04);
             int xPosOffsetPercent = (xPosOffset / 65536); //get percentage
             int yPosOffsetPercent = (yPosOffset / 65536); //get percentage
             xPosFinalAll = (ushort)(itemx2 + xPosOffsetPercent);

@@ -9,6 +9,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Remoting.Metadata.W3cXsd2001;
 using System.Security.Policy;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -80,8 +81,9 @@ namespace app
         public List<long> BadItemsOnCursorIDList = new List<long>();
         public bool HasGotTheBadItemOnCursor = false;
 
-
         public List<long> BadItemsOnGroundPointerList = new List<long>();
+
+        public List<long> AvoidItemsOnGroundPointerList = new List<long>();
 
         public void SetForm1(Form1 Form1_1)
         {
@@ -401,6 +403,8 @@ namespace app
                     GetUnitPathData();
                     GetStatsAddr();
 
+                    if (IsIncludedInList(AvoidItemsOnGroundPointerList, ItemPointerLocation)) continue;
+
                     //Form1_0.method_1("ItemType: " + BitConverter.ToUInt32(itemdatastruc, 0).ToString() + ", TxtFileNo: " + BitConverter.ToUInt32(itemdatastruc, 4).ToString() + ", Name: " + ItemNAAME + ", Location: " + GetItemLocation(itemdatastruc[0x0C]));
                     //; itemLoc - 0 in inventory, 1 equipped, 2 in belt, 3 on ground, 4 cursor, 5 dropping, 6 socketed
 
@@ -653,6 +657,13 @@ namespace app
                                 return true;
                             }
                         }
+                        else
+                        {
+                            if (!IsItemPickingPotion() && !IsIncludedInList(AvoidItemsOnGroundPointerList, ItemPointerLocation))
+                            {
+                                AvoidItemsOnGroundPointerList.Add(ItemPointerLocation);
+                            }
+                        }
                     }
                 }
             }
@@ -660,6 +671,27 @@ namespace app
             TriesToPickItemCount = 0; //nothing to pick!
             //Form1_0.method_1("-----", Color.Black);
             return false;
+        }
+
+        public bool IsItemPickingPotion()
+        {
+            bool IsItemPickingPotion = false;
+
+            string ThisItemName = Form1_0.ItemsStruc_0.ItemNAAME.Replace(" ", "");
+            foreach (var ThisDir in Form1_0.ItemsAlert_0.PickItemsPotions)
+            {
+                if (ThisItemName == Regex.Replace(ThisDir.Key.Replace(" ", ""), @"[\d-]", string.Empty) && ThisDir.Value)
+                {
+                    if (ThisItemName.Contains("Healing")) IsItemPickingPotion = true;
+                    if (ThisItemName.Contains("Mana")) IsItemPickingPotion = true;
+                    if (ThisItemName.Contains("Rejuvenation")) IsItemPickingPotion = true;
+                    if (ThisItemName.Contains("FullRejuvenation")) IsItemPickingPotion = true;
+
+                    if (IsItemPickingPotion) break;
+                }
+            }
+
+            return IsItemPickingPotion;
         }
 
         public bool IsIncludedInList(List<long> IgnoredIDList, long ThisID)

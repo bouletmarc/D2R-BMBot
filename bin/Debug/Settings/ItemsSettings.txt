@@ -979,7 +979,7 @@ Perfect Diamond
 [Name] == SmallCharm && [Quality] == magic && [ManaMax] >= 17
 //[Name] == SmallCharm && [Quality] == magic && [FasterHitRecovery] >= 5
 [Name] == SmallCharm && [Quality] == magic && [LifeMax]+[ManaMax] >= 20
-[Name] == SmallCharm && [Quality] == magic && [PoisonMindamage] >= 100
+[Name] == SmallCharm && [Quality] == magic && [PoisonMinDamage] >= 100
 [Name] == SmallCharm && [Quality] == magic && [FireResist] >= 5
 [Name] == SmallCharm && [Quality] == magic && [LightningResist] >= 5
 

@@ -80,6 +80,8 @@ namespace app
                     {
                         return true;
                     }
+
+                    break;
                 }
             }
 
@@ -89,45 +91,49 @@ namespace app
                 if (ItemName == Regex.Replace(ThisDir.Key, @"[\d-]", string.Empty) && ThisDir.Value)
                 {
                     bool SameQuality = true;
+                    bool SameFlags = true;
                     if (PickItemsNormal_ByName_Quality.ContainsKey(ThisDir.Key))
                     {
                         if (Form1_0.ItemsStruc_0.quality != Form1_0.ItemsStruc_0.getQuality(PickItemsNormal_ByName_Quality[ThisDir.Key])) SameQuality = false;
                     }
-
-                    if (!Form1_0.ItemsStruc_0.identified)
+                    if (PickItemsNormal_ByName_Flags.ContainsKey(ThisDir.Key))
                     {
-                        if (!Keeping && SameQuality) return true;
+                        uint TotalFlags = 0;
+                        foreach (var ThisList in PickItemsNormal_ByName_Flags[ThisDir.Key])
+                        {
+                            TotalFlags += ThisList.Key;
+                        }
+                        foreach (var ThisList in PickItemsNormal_ByName_Flags[ThisDir.Key])
+                        {
+                            SameFlags = Form1_0.ItemsFlags_0.IsItemSameFlags(ThisList.Value, TotalFlags, Form1_0.ItemsStruc_0.flags);
+                        }
+                        //Console.WriteLine(Form1_0.ItemsStruc_0.ItemNAAME + ":" + SameFlags);
                     }
-                    else
+
+                    if (SameQuality && SameFlags)
                     {
-                        bool SameFlags = true;
-                        bool SameStats = true;
-
-                        if (PickItemsNormal_ByName_Flags.ContainsKey(ThisDir.Key))
+                        if (!Form1_0.ItemsStruc_0.identified)
                         {
-                            uint TotalFlags = 0;
-                            foreach (var ThisList in PickItemsNormal_ByName_Flags[ThisDir.Key])
-                            {
-                                TotalFlags += ThisList.Key;
-                            }
-                            foreach (var ThisList in PickItemsNormal_ByName_Flags[ThisDir.Key])
-                            {
-                                SameStats = Form1_0.ItemsFlags_0.IsItemSameFlags(ThisList.Value, TotalFlags, Form1_0.ItemsStruc_0.flags);
-                            }
-                            //Console.WriteLine(Form1_0.ItemsStruc_0.ItemNAAME + ":" + SameFlags);
+                            if (!Keeping) return true;
                         }
-                        if (PickItemsNormal_ByName_Stats.ContainsKey(ThisDir.Key))
+                        else
                         {
-                            foreach (var ThisDir2 in PickItemsNormal_ByName_Stats[ThisDir.Key])
+                            bool SameStats = true;
+                            if (PickItemsNormal_ByName_Stats.ContainsKey(ThisDir.Key))
                             {
-                                //Console.WriteLine(Form1_0.ItemsStruc_0.ItemNAAME + ":" + ThisDir2.Key + "=" + ThisDir2.Value);
-                                if (!Form1_0.ItemsStruc_0.IsItemHaveSameStatMultiCheck(ThisDir2.Key, ThisDir2.Value, PickItemsNormal_ByName_Operators[ThisDir.Key][ThisDir2.Key])) SameStats = false;
+                                foreach (var ThisDir2 in PickItemsNormal_ByName_Stats[ThisDir.Key])
+                                {
+                                    //Console.WriteLine(Form1_0.ItemsStruc_0.ItemNAAME + ":" + ThisDir2.Key + "=" + ThisDir2.Value);
+                                    if (!Form1_0.ItemsStruc_0.IsItemHaveSameStatMultiCheck(ThisDir2.Key, ThisDir2.Value, PickItemsNormal_ByName_Operators[ThisDir.Key][ThisDir2.Key])) SameStats = false;
+                                }
                             }
-                        }
-                        //Console.WriteLine("---------------------");
+                            //Console.WriteLine("---------------------");
 
-                        if (SameFlags && SameQuality && SameStats) return true;
+                            if (SameStats) return true;
+                        }
                     }
+
+                    //break;
                 }
             }
             //###############
@@ -136,43 +142,47 @@ namespace app
                 if (IsItemThisType(Regex.Replace(ThisDir.Key, @"[\d-]", string.Empty)) && ThisDir.Value)
                 {
                     bool SameQuality = true;
+                    bool SameFlags = true;
                     if (PickItemsNormal_ByType_Quality.ContainsKey(ThisDir.Key))
                     {
                         if (Form1_0.ItemsStruc_0.quality != Form1_0.ItemsStruc_0.getQuality(PickItemsNormal_ByType_Quality[ThisDir.Key])) SameQuality = false;
                     }
-
-                    if (!Form1_0.ItemsStruc_0.identified)
+                    if (PickItemsNormal_ByType_Flags.ContainsKey(ThisDir.Key))
                     {
-                        if (!Keeping && SameQuality) return true;
+                        uint TotalFlags = 0;
+                        foreach (var ThisList in PickItemsNormal_ByType_Flags[ThisDir.Key])
+                        {
+                            TotalFlags += ThisList.Key;
+                        }
+                        foreach (var ThisList in PickItemsNormal_ByType_Flags[ThisDir.Key])
+                        {
+                            SameFlags = Form1_0.ItemsFlags_0.IsItemSameFlags(ThisList.Value, TotalFlags, Form1_0.ItemsStruc_0.flags);
+                        }
+                        //Console.WriteLine(Form1_0.ItemsStruc_0.ItemNAAME + ":" + SameFlags);
                     }
-                    else
+
+                    if (SameQuality && SameFlags)
                     {
-                        bool SameFlags = true;
-                        bool SameStats = true;
-
-                        if (PickItemsNormal_ByType_Flags.ContainsKey(ThisDir.Key))
+                        if (!Form1_0.ItemsStruc_0.identified)
                         {
-                            uint TotalFlags = 0;
-                            foreach (var ThisList in PickItemsNormal_ByType_Flags[ThisDir.Key])
-                            {
-                                TotalFlags += ThisList.Key;
-                            }
-                            foreach (var ThisList in PickItemsNormal_ByType_Flags[ThisDir.Key])
-                            {
-                                SameStats = Form1_0.ItemsFlags_0.IsItemSameFlags(ThisList.Value, TotalFlags, Form1_0.ItemsStruc_0.flags);
-                            }
-                            //Console.WriteLine(Form1_0.ItemsStruc_0.ItemNAAME + ":" + SameFlags);
+                            if (!Keeping) return true;
                         }
-                        if (PickItemsNormal_ByType_Stats.ContainsKey(ThisDir.Key))
+                        else
                         {
-                            foreach (var ThisDir2 in PickItemsNormal_ByType_Stats[ThisDir.Key])
+                            bool SameStats = true;
+                            if (PickItemsNormal_ByType_Stats.ContainsKey(ThisDir.Key))
                             {
-                                if (!Form1_0.ItemsStruc_0.IsItemHaveSameStatMultiCheck(ThisDir2.Key, ThisDir2.Value, PickItemsNormal_ByType_Operators[ThisDir.Key][ThisDir2.Key])) SameStats = false;
+                                foreach (var ThisDir2 in PickItemsNormal_ByType_Stats[ThisDir.Key])
+                                {
+                                    if (!Form1_0.ItemsStruc_0.IsItemHaveSameStatMultiCheck(ThisDir2.Key, ThisDir2.Value, PickItemsNormal_ByType_Operators[ThisDir.Key][ThisDir2.Key])) SameStats = false;
+                                }
                             }
-                        }
 
-                        if (SameFlags && SameQuality && SameStats) return true;
+                            if (SameStats) return true;
+                        }
                     }
+
+                    //break;
                 }
             }
             //###############

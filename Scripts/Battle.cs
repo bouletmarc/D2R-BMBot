@@ -423,6 +423,8 @@ namespace app
             }
             else
             {
+                Form1_0.MobsStruc_0.xPosFinal = 0;
+                Form1_0.MobsStruc_0.yPosFinal = 0;
                 if (CharConfig.RunBaalScript && !Form1_0.Baal_0.ScriptDone && Form1_0.Baal_0.Wave5Detected) Form1_0.Baal_0.Wave5Cleared = true;
                 TriedToMoveToMobsCount = 0;
                 DoingBattle = false;
@@ -472,6 +474,8 @@ namespace app
                 return true;
             }
 
+            Form1_0.MobsStruc_0.xPosFinal = 0;
+            Form1_0.MobsStruc_0.yPosFinal = 0;
             if (CharConfig.RunBaalScript && !Form1_0.Baal_0.ScriptDone && Form1_0.Baal_0.Wave5Detected) Form1_0.Baal_0.Wave5Cleared = true;
             TriedToMoveToMobsCount = 0;
             DoingBattle = false;
@@ -519,6 +523,8 @@ namespace app
             }
             else
             {
+                Form1_0.MobsStruc_0.xPosFinal = 0;
+                Form1_0.MobsStruc_0.yPosFinal = 0;
                 if (CharConfig.RunBaalScript && !Form1_0.Baal_0.ScriptDone && Form1_0.Baal_0.Wave5Detected) Form1_0.Baal_0.Wave5Cleared = true;
                 TriedToMoveToMobsCount = 0;
                 DoingBattle = false;

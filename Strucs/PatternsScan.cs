@@ -33,6 +33,7 @@ namespace app
         public long StartIndexItem = long.MaxValue;
         public long StartIndexItemLast = long.MaxValue;
         public int ScanUnitsNumber = 2600;
+        //public int ScanUnitsNumber = 2048;
         public int ScanUnitsNegativeOffset = 0;
 
 

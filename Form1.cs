@@ -42,7 +42,7 @@ namespace app
     public partial class Form1 : Form
     {
 
-        public string BotVersion = "V2.57";
+        public string BotVersion = "V2.6";
 
         public string D2_LOD_113C_Path = "";
 
@@ -943,6 +943,8 @@ namespace app
                                     //Battle_0.CastSkills();
                                     //ItemsStruc_0.GetItems(true);
                                     //if (Running) LoopTimer.Start();
+                                    //ItemsStruc_0.GetItems(false);
+                                    //InventoryStruc_0.DumpBadItemsOnGround();
                                     //return;
 
                                     if (CharConfig.RunMapHackOnly)

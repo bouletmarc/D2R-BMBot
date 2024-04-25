@@ -14,11 +14,11 @@
 //#######################################
 KeySkillAttack=F1
 KeySkillAura=F2
-KeySkillfastMoveAtTown=F9
+KeySkillfastMoveAtTown=F8
 KeySkillfastMoveOutsideTown=F7
-KeySkillDefenseAura=F7
+KeySkillDefenseAura=F6
 KeySkillCastDefense=F5
-KeySkillLifeAura=F4
+KeySkillLifeAura=F3
 
 PlayerAttackWithRightHand=false
 
@@ -32,10 +32,10 @@ BeltPotTypeToHave=0,0,1,3
 //#######################################
 InventoryDontCheckItem=
 {
-0,0,0,0,0,0,0,1,1,1,
-0,0,0,0,0,0,0,1,1,1,
-0,0,0,0,0,0,0,1,1,1,
-0,0,0,0,0,0,0,1,1,1
+0,0,0,0,1,1,1,1,1,1,
+0,0,0,0,1,1,1,1,1,1,
+0,0,0,0,1,1,1,1,1,1,
+0,0,0,0,1,1,1,1,1,1
 }
 
 //#######################################
@@ -66,5 +66,5 @@ GambleGold=true
 //#######################################
 //MERC SETTINGS
 //#######################################
-UsingMerc=false
+UsingMerc=true
 MercTakeHPPotUnder=40
