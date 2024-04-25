@@ -287,8 +287,9 @@ Perfect Diamond
 //#######################################
 //##### Helms
 [Name] == GrimHelm && [Quality] == unique && [Flag] != ethereal // Vampire Gaze
-[Name] == Shako && [Quality] == unique && [Flag] == ethereal && [Defense] >= 170 // Harlequin Crest
-[Name] == Shako && [Quality] == unique && [Defense] >= 120 // Harlequin Crest
+//[Name] == Shako && [Quality] == unique && [Flag] == ethereal && [Defense] >= 170 // Harlequin Crest
+//[Name] == Shako && [Quality] == unique && [Defense] >= 120 // Harlequin Crest
+[Name] == Shako && [Quality] == unique // Harlequin Crest
 [Name] == Demonhead && [Quality] == unique // Andariel's Visage
 [Name] == Demonhead && [Quality] == unique && [Flag] != ethereal
 [Name] == BoneVisage && [Quality] == unique && [Flag] != ethereal // Giant Skull
@@ -428,33 +429,33 @@ Perfect Diamond
 [Name] == Diadem && [Quality] == unique && [Defense] >= 160 && [PassiveMagicMastery]+[PassiveMagicPierce] >= 25 // Griffon's Eye
 
 //##### Rings
-[Type] == ring && [Quality] == unique && [MagicFind] == 30 // Nagelring
-//[Type] == ring && [Quality] == unique && [ManaLeech] >= 7 // Manald Heal
-[Type] == ring && [Quality] == unique && [MaxManaPercent] == 25 // Stone of Jordan
-[Type] == ring && [Quality] == unique && [LifeMax] == 40 // Dwarf Star
-[Type] == ring && [Quality] == unique && [AttackRating] >= 230 && [Dexterity] >= 18 // Raven Frost
-[Type] == ring && [Quality] == unique && [LifeLeech] >= 1 && [AllSkills] == 1 // Bul-Kathos' Wedding Band
-[Type] == ring && [Quality] == unique && [LifeLeech] >= 9 // Carrion Wind
-[Type] == ring && [Quality] == unique && [PoisonResist] >= 30 && [NormalDamageReduction] >= 11 // Nature's Peace
-[Type] == ring && [Quality] == unique && [AbsorbLightningPercent] >= 20 // Wisp Projector
+[Type] == Ring && [Quality] == unique && [MagicFind] == 30 // Nagelring
+//[Type] == Ring && [Quality] == unique && [ManaLeech] >= 7 // Manald Heal
+[Type] == Ring && [Quality] == unique && [MaxManaPercent] == 25 // Stone of Jordan
+[Type] == Ring && [Quality] == unique && [LifeMax] == 40 // Dwarf Star
+[Type] == Ring && [Quality] == unique && [AttackRating] >= 230 && [Dexterity] >= 18 // Raven Frost
+[Type] == Ring && [Quality] == unique && [LifeLeech] >= 1 && [AllSkills] == 1 // Bul-Kathos' Wedding Band
+[Type] == Ring && [Quality] == unique && [LifeLeech] >= 9 // Carrion Wind
+[Type] == Ring && [Quality] == unique && [PoisonResist] >= 30 && [NormalDamageReduction] >= 11 // Nature's Peace
+[Type] == Ring && [Quality] == unique && [AbsorbLightningPercent] >= 20 // Wisp Projector
 
 //##### Amulets
-[Type] == amulet && [Quality] == unique && [Strength] == 12 && [ColdResist] >= 25 // Saracen's Chance
-[Type] == amulet && [Quality] == unique && [Dexterity] == 25 // The Cat's Eye
-[Type] == amulet && [Quality] == unique && [LifeLeech] >= 6 && [ManaLeech] >= 15 // Crescent Moon
-[Type] == amulet && [Quality] == unique && [PoisonResist] == 75 // Atma's Scarab
-[Type] == amulet && [Quality] == unique && [HPRegen] == 10 // The Rising Sun
-//[Type] == amulet && [Quality] == unique && [LightResist] == 35 // Highlord's Wrath
-[Type] == amulet && [Quality] == unique && [Strength] == 5 && [ColdResist] >= 20 // Mara's Kaleidoscope
-//[Type] == amulet && [Quality] == unique && [DefensiveAurasSkillTab] == 1 // Seraph's Hymn
-[Type] == amulet && [Quality] == unique && [AttackRating] >= 430 && [ColdResist] >= 30 // Metalgrid
+[Type] == Amulet && [Quality] == unique && [Strength] == 12 && [ColdResist] >= 25 // Saracen's Chance
+[Type] == Amulet && [Quality] == unique && [Dexterity] == 25 // The Cat's Eye
+[Type] == Amulet && [Quality] == unique && [LifeLeech] >= 6 && [ManaLeech] >= 15 // Crescent Moon
+[Type] == Amulet && [Quality] == unique && [PoisonResist] == 75 // Atma's Scarab
+[Type] == Amulet && [Quality] == unique && [HPRegen] == 10 // The Rising Sun
+//[Type] == Amulet && [Quality] == unique && [LightResist] == 35 // Highlord's Wrath
+[Type] == Amulet && [Quality] == unique && [Strength] == 5 && [ColdResist] >= 20 // Mara's Kaleidoscope
+//[Type] == Amulet && [Quality] == unique && [DefensiveAurasSkillTab] == 1 // Seraph's Hymn
+[Type] == Amulet && [Quality] == unique && [AttackRating] >= 430 && [ColdResist] >= 30 // Metalgrid
 
 //##### Jewels
-[Type] == jewel && [Quality] == unique && [PassiveMagicMastery]+[PassiveMagicPierce] >= 10 // Rainbow Facet
-//[Type] == jewel && [Quality] == unique && [PassiveFireMastery]+[PassiveFirePierce] >= 10 // Rainbow Facet
-//[Type] == jewel && [Quality] == unique && [PassiveLtngMastery]+[PassiveLtngPierce] >= 10 // Rainbow Facet
-//[Type] == jewel && [Quality] == unique && [PassiveColdMastery]+[PassiveColdPierce] >= 10 // Rainbow Facet
-//[Type] == jewel && [Quality] == unique && [PassivePoisMastery]+[PassivePoisPierce] >= 10 // Rainbow Facet
+[Type] == Jewel && [Quality] == unique && [PassiveMagicMastery]+[PassiveMagicPierce] >= 10 // Rainbow Facet
+//[Type] == Jewel && [Quality] == unique && [PassiveFireMastery]+[PassiveFirePierce] >= 10 // Rainbow Facet
+//[Type] == Jewel && [Quality] == unique && [PassiveLtngMastery]+[PassiveLtngPierce] >= 10 // Rainbow Facet
+//[Type] == Jewel && [Quality] == unique && [PassiveColdMastery]+[PassiveColdPierce] >= 10 // Rainbow Facet
+//[Type] == Jewel && [Quality] == unique && [PassivePoisMastery]+[PassivePoisPierce] >= 10 // Rainbow Facet
 
 //##### Small Charms
 [Name] == SmallCharm && [Quality] == unique // Annihilus
@@ -494,11 +495,11 @@ Perfect Diamond
 //##### Angelic Raiment
 //[Name] == RingMail && [Quality] == set // Angelic Mantle
 //[Name] == Sabre && [Quality] == set // Angelic Sickle
-//[Type] == ring && [Quality] == set && [LifeMax] == 20 // Angelic Halo
-//[Type] == amulet && [Quality] == set && [LightRadius] == 3 && [DamageTakenGoesToMana] == 20 // Angelic Wings
+//[Type] == Ring && [Quality] == set && [LifeMax] == 20 // Angelic Halo
+//[Type] == Amulet && [Quality] == set && [LightRadius] == 3 && [DamageTakenGoesToMana] == 20 // Angelic Wings
 
 //##### Arcanna's Tricks
-//[Type] == amulet && [Quality] == set && [MaxMana] == 15 // Arcanna's Sign
+//[Type] == Amulet && [Quality] == set && [MaxMana] == 15 // Arcanna's Sign
 //[Name] == SkullCap && [Quality] == set // Arcanna's Head
 //[Name] == LightPlate && [Quality] == set // Arcanna's Flesh
 //[Name] == WarStaff && [Quality] == set // Arcanna's Deathwand
@@ -515,14 +516,14 @@ Perfect Diamond
 //[Name] == DoubleAxe && [Quality] == set // Berserker's Hatchet
 
 //##### Cathan's Traps
-//[Type] == ring && [Quality] == set && [LifeLeech] == 6 && [NormalDamageReduction] == 2 // Cathan's Seal
-//[Type] == amulet && [Quality] == set && [FHR] == 10 && [LightningMaxDamage] == 5 // Cathan's Sigil
+//[Type] == Ring && [Quality] == set && [LifeLeech] == 6 && [NormalDamageReduction] == 2 // Cathan's Seal
+//[Type] == Amulet && [Quality] == set && [FHR] == 10 && [LightningMaxDamage] == 5 // Cathan's Sigil
 //[Name] == ChainMail && [Quality] == set // Cathan's Mesh
 //[Name] == Mask && [Quality] == set // Cathan's Visage
 
 //##### Civerb's Vestment
 //[Name] == GrandScepter && [Quality] == set // Civerb's Cudgel
-//[Type] == amulet && [Quality] == set && [ManaRecovery] == 40 && [HPRegen] == 4 // Civerb's Icon
+//[Type] == Amulet && [Quality] == set && [ManaRecovery] == 40 && [HPRegen] == 4 // Civerb's Icon
 //[Name] == LargeShield && [Quality] == set // Civerb's Ward
 
 //##### Cleglaw's Brace
@@ -548,7 +549,7 @@ Perfect Diamond
 //##### Iratha's Finery
 //[Name] == HeavyBelt && [Quality] == set && [MinDamage] == 5 // Iratha's Cord
 //[Name] == Crown && [Quality] == set && [FireResist] == 30 && [LightResist] == 30 // Iratha's Coil
-//[Type] == amulet && [Quality] == set && [PoisonResist] == 30 && [PoisonLength] == -75 // Iratha's Collar
+//[Type] == Amulet && [Quality] == set && [PoisonResist] == 30 && [PoisonLength] == -75 // Iratha's Collar
 //[Name] == LightGauntlets && [Quality] == set && [ColdResist] == 30 // Iratha's Cuff
 
 //##### Isenhart's Armory
@@ -576,10 +577,10 @@ Perfect Diamond
 //[Name] == FullPlateMail && [Quality] == set // Tancred's Spine
 //[Name] == Boots && [Quality] == set && [StaminaRecoveryBonus] == 25 && [Dexterity] == 10 // Tancred's Hobnails
 //[Name] == MilitaryPick && [Quality] == set // Tancred's Crowbill
-//[Type] == amulet && [Quality] == set && [MagicDamageReduction] == 1 && [NormalDamageReduction] == 2 // Tancred's Weird
+//[Type] == Amulet && [Quality] == set && [MagicDamageReduction] == 1 && [NormalDamageReduction] == 2 // Tancred's Weird
 
 //##### Vidala's Rig
-//[Type] == amulet && [Quality] == set && [ColdResist] == 20 && [MaxMana] == 15 // Vidala's Snare
+//[Type] == Amulet && [Quality] == set && [ColdResist] == 20 && [MaxMana] == 15 // Vidala's Snare
 //[Name] == LongBattleBow && [Quality] == set // Vidala's Barb
 //[Name] == LeatherArmor && [Quality] == set // Vidala's Ambush
 //[Name] == LightPlatedBoots && [Quality] == set // Vidala's Fetlock
@@ -600,7 +601,7 @@ Perfect Diamond
 //[Name] == HeavyBoots && [Quality] == set && [Dexterity] == 20 && [MagicFind] == 25 // Cow King's Hooves
 
 //##### The Disciple
-//[Type] == amulet && [Quality] == set && [AllSkills] == 1 && [ColdResist] == 18 // Telling of Beads
+//[Type] == Amulet && [Quality] == set && [AllSkills] == 1 && [ColdResist] == 18 // Telling of Beads
 //[Name] == BrambleMitts && [Quality] == set // Laying of Hands
 //[Name] == DuskShroud && [Quality] == set // Dark Adherent
 //[Name] == DemonhideBoots && [Quality] == set // Rite of Passage
@@ -671,7 +672,7 @@ Perfect Diamond
 [Name] == SwirlingCrystal && [Quality] == set // Tal Rasha's Lidless Eye
 [Name] == DeathMask && [Quality] == set // Tal Rasha's Horadric Crest
 [Name] == LacqueredPlate && [Quality] == set && [Defense] >= 900 // Tal Rasha's Guardianship
-//[Type] == amulet && [Quality] == set && [SorceressSkills] == 2 // Tal Rasha's Adjucation
+//[Type] == Amulet && [Quality] == set && [SorceressSkills] == 2 // Tal Rasha's Adjucation
 [Name] == MeshBelt && [Quality] == set && [MagicFind] >= 15 // Tal Rasha's Fine-Spun Cloth
 
 //##### Trang-Oul's Avatar
@@ -882,60 +883,60 @@ Perfect Diamond
 [Type] == circlet && [Quality] == rare && [Flag] != ethereal && [Sockets] >= 2 && [AddClassSkills] >= 2 && [Dexterity] >= 10 && [FasterCastRate] >= 20
 
 //##### Rings
-[Type] == ring && [Quality] == magic && [FasterCastRate] >= 10 && [FireResist] >= 14 && [LightningResist] >= 14
-[Type] == ring && [Quality] == magic && [MagicFind] >= 15 && [FireResist] >= 14 && [LightningResist] >= 14
-[Type] == ring && [Quality] == magic && [FasterCastRate] >= 10 && [ManaMax] >= 100
-[Type] == ring && [Quality] == magic && [MagicFind] >= 15 && [ManaMax] >= 100
-[Type] == ring && [Quality] == rare && [FasterCastRate] >= 10 && [FireResist]+[LightningResist]+[ColdResist]+[PoisonResist] >= 30 && [ManaMax] >= 60 && [Strength]+[Dexterity] >= 25
-[Type] == ring && [Quality] == rare && [FasterCastRate] >= 10 && [FireResist]+[LightningResist]+[ColdResist]+[PoisonResist] >= 30 && [ManaMax] >= 60 && [LifeMax] >= 20 && [Strength] >= 10
-[Type] == ring && [Quality] == rare && [FasterCastRate] >= 10 && [FireResist]+[LightningResist]+[ColdResist]+[PoisonResist] >= 30 && [ManaMax] >= 60 && [LifeMax] >= 20 && [Dexterity] >= 5
-[Type] == ring && [Quality] == rare && [AttackRating] >= 90 && [FireResist]+[LightningResist]+[ColdResist]+[PoisonResist] >= 36 && [LifeLeech]+[ManaLeech] >= 11
-[Type] == ring && [Quality] == rare && [AttackRating] >= 90 && [FireResist]+[LightningResist]+[ColdResist]+[PoisonResist] >= 36 && [LifeLeech] >= 7 && [Strength] >= 10
-[Type] == ring && [Quality] == rare && [AttackRating] >= 90 && [FireResist]+[LightningResist]+[ColdResist]+[PoisonResist] >= 36 && [ManaLeech] >= 5 && [Strength] >= 10
-[Type] == ring && [Quality] == rare && [AttackRating] >= 90 && [FireResist]+[LightningResist]+[ColdResist]+[PoisonResist] >= 36 && [LifeLeech] >= 7 && [Dexterity] >= 5
-[Type] == ring && [Quality] == rare && [AttackRating] >= 90 && [FireResist]+[LightningResist]+[ColdResist]+[PoisonResist] >= 36 && [ManaLeech] >= 5 && [Dexterity] >= 5
+[Type] == Ring && [Quality] == magic && [FasterCastRate] >= 10 && [FireResist] >= 14 && [LightningResist] >= 14
+[Type] == Ring && [Quality] == magic && [MagicFind] >= 15 && [FireResist] >= 14 && [LightningResist] >= 14
+[Type] == Ring && [Quality] == magic && [FasterCastRate] >= 10 && [ManaMax] >= 100
+[Type] == Ring && [Quality] == magic && [MagicFind] >= 15 && [ManaMax] >= 100
+[Type] == Ring && [Quality] == rare && [FasterCastRate] >= 10 && [FireResist]+[LightningResist]+[ColdResist]+[PoisonResist] >= 30 && [ManaMax] >= 60 && [Strength]+[Dexterity] >= 25
+[Type] == Ring && [Quality] == rare && [FasterCastRate] >= 10 && [FireResist]+[LightningResist]+[ColdResist]+[PoisonResist] >= 30 && [ManaMax] >= 60 && [LifeMax] >= 20 && [Strength] >= 10
+[Type] == Ring && [Quality] == rare && [FasterCastRate] >= 10 && [FireResist]+[LightningResist]+[ColdResist]+[PoisonResist] >= 30 && [ManaMax] >= 60 && [LifeMax] >= 20 && [Dexterity] >= 5
+[Type] == Ring && [Quality] == rare && [AttackRating] >= 90 && [FireResist]+[LightningResist]+[ColdResist]+[PoisonResist] >= 36 && [LifeLeech]+[ManaLeech] >= 11
+[Type] == Ring && [Quality] == rare && [AttackRating] >= 90 && [FireResist]+[LightningResist]+[ColdResist]+[PoisonResist] >= 36 && [LifeLeech] >= 7 && [Strength] >= 10
+[Type] == Ring && [Quality] == rare && [AttackRating] >= 90 && [FireResist]+[LightningResist]+[ColdResist]+[PoisonResist] >= 36 && [ManaLeech] >= 5 && [Strength] >= 10
+[Type] == Ring && [Quality] == rare && [AttackRating] >= 90 && [FireResist]+[LightningResist]+[ColdResist]+[PoisonResist] >= 36 && [LifeLeech] >= 7 && [Dexterity] >= 5
+[Type] == Ring && [Quality] == rare && [AttackRating] >= 90 && [FireResist]+[LightningResist]+[ColdResist]+[PoisonResist] >= 36 && [ManaLeech] >= 5 && [Dexterity] >= 5
 
 //##### Amulets
-[Type] == amulet && [Quality] == magic && [AddSkillTab] >= 3 && [FasterCastRate] >= 10
-[Type] == amulet && [Quality] == magic && [AddSkillTab] >= 3 && [Strength] >= 26
-[Type] == amulet && [Quality] == magic && [AddClassSkills] >= 2 && [LifeMax] >= 85
-[Type] == amulet && [Quality] == magic && [AddSkillTab] >= 3 && [LifeMax] >= 85
-[Type] == amulet && [Quality] == magic && [AddClassSkills] >= 2 && [Dexterity] >= 26
-[Type] == amulet && [Quality] == magic && [AddSkillTab] >= 3 && [Dexterity] >= 26
-[Type] == amulet && [Quality] == rare && [AddClassSkills] >= 2 && [FasterCastRate] >= 10 && [FireResist]+[LightningResist]+[ColdResist]+[PoisonResist] >= 60 && [ManaMax] >= 70 && [Strength]+[Dexterity] >= 35
-[Type] == amulet && [Quality] == rare && [AddClassSkills] >= 2 && [FasterCastRate] >= 10 && [FireResist]+[LightningResist]+[ColdResist]+[PoisonResist] >= 60 && [ManaMax] >= 70 && [LifeMax] >= 40 && [Strength] >= 20
-[Type] == amulet && [Quality] == rare && [AddClassSkills] >= 2 && [FasterCastRate] >= 10 && [FireResist]+[LightningResist]+[ColdResist]+[PoisonResist] >= 60 && [ManaMax] >= 70 && [LifeMax] >= 40 && [Dexterity] >= 10
-[Type] == amulet && [Quality] == rare && [AddClassSkills] >= 2 && [FireResist]+[LightningResist]+[ColdResist]+[PoisonResist] >= 60 && [LifeLeech]+[ManaLeech] >= 11
-[Type] == amulet && [Quality] == rare && [AddClassSkills] >= 2 && [FireResist]+[LightningResist]+[ColdResist]+[PoisonResist] >= 60 && [Strength]+[Dexterity] >= 35
-[Type] == amulet && [Quality] == rare && [AddClassSkills] >= 2 && [FireResist]+[LightningResist]+[ColdResist]+[PoisonResist] >= 60 && [LifeLeech] >= 5 && [Strength] >= 20
-[Type] == amulet && [Quality] == rare && [AddClassSkills] >= 2 && [FireResist]+[LightningResist]+[ColdResist]+[PoisonResist] >= 60 && [ManaLeech] >= 7 && [Strength] >= 20
-[Type] == amulet && [Quality] == rare && [AddClassSkills] >= 2 && [FireResist]+[LightningResist]+[ColdResist]+[PoisonResist] >= 60 && [LifeLeech] >= 5  && [Dexterity] >= 10
-[Type] == amulet && [Quality] == rare && [AddClassSkills] >= 2 && [FireResist]+[LightningResist]+[ColdResist]+[PoisonResist] >= 60 && [ManaLeech] >= 7 && [Dexterity] >= 10
+[Type] == Amulet && [Quality] == magic && [AddSkillTab] >= 3 && [FasterCastRate] >= 10
+[Type] == Amulet && [Quality] == magic && [AddSkillTab] >= 3 && [Strength] >= 26
+[Type] == Amulet && [Quality] == magic && [AddClassSkills] >= 2 && [LifeMax] >= 85
+[Type] == Amulet && [Quality] == magic && [AddSkillTab] >= 3 && [LifeMax] >= 85
+[Type] == Amulet && [Quality] == magic && [AddClassSkills] >= 2 && [Dexterity] >= 26
+[Type] == Amulet && [Quality] == magic && [AddSkillTab] >= 3 && [Dexterity] >= 26
+[Type] == Amulet && [Quality] == rare && [AddClassSkills] >= 2 && [FasterCastRate] >= 10 && [FireResist]+[LightningResist]+[ColdResist]+[PoisonResist] >= 60 && [ManaMax] >= 70 && [Strength]+[Dexterity] >= 35
+[Type] == Amulet && [Quality] == rare && [AddClassSkills] >= 2 && [FasterCastRate] >= 10 && [FireResist]+[LightningResist]+[ColdResist]+[PoisonResist] >= 60 && [ManaMax] >= 70 && [LifeMax] >= 40 && [Strength] >= 20
+[Type] == Amulet && [Quality] == rare && [AddClassSkills] >= 2 && [FasterCastRate] >= 10 && [FireResist]+[LightningResist]+[ColdResist]+[PoisonResist] >= 60 && [ManaMax] >= 70 && [LifeMax] >= 40 && [Dexterity] >= 10
+[Type] == Amulet && [Quality] == rare && [AddClassSkills] >= 2 && [FireResist]+[LightningResist]+[ColdResist]+[PoisonResist] >= 60 && [LifeLeech]+[ManaLeech] >= 11
+[Type] == Amulet && [Quality] == rare && [AddClassSkills] >= 2 && [FireResist]+[LightningResist]+[ColdResist]+[PoisonResist] >= 60 && [Strength]+[Dexterity] >= 35
+[Type] == Amulet && [Quality] == rare && [AddClassSkills] >= 2 && [FireResist]+[LightningResist]+[ColdResist]+[PoisonResist] >= 60 && [LifeLeech] >= 5 && [Strength] >= 20
+[Type] == Amulet && [Quality] == rare && [AddClassSkills] >= 2 && [FireResist]+[LightningResist]+[ColdResist]+[PoisonResist] >= 60 && [ManaLeech] >= 7 && [Strength] >= 20
+[Type] == Amulet && [Quality] == rare && [AddClassSkills] >= 2 && [FireResist]+[LightningResist]+[ColdResist]+[PoisonResist] >= 60 && [LifeLeech] >= 5  && [Dexterity] >= 10
+[Type] == Amulet && [Quality] == rare && [AddClassSkills] >= 2 && [FireResist]+[LightningResist]+[ColdResist]+[PoisonResist] >= 60 && [ManaLeech] >= 7 && [Dexterity] >= 10
 
 //##### Jewels
-//[Type] == jewel && [Quality] == magic && [EnhancedDamage] >= 36 && [IncreasedAttackSpeed] >= 15
-//[Type] == jewel && [Quality] == magic && [EnhancedDamage] >= 36 && [RequirementPercent] <= -15
-//[Type] == jewel && [Quality] == magic && [EnhancedDamage] >= 36 && [Strength] >= 7
-//[Type] == jewel && [Quality] == magic && [EnhancedDamage] >= 36 && [Dexterity] >= 7
-//[Type] == jewel && [Quality] == magic && [EnhancedDamage] >= 36 && [MinDamage] >= 8
-//[Type] == jewel && [Quality] == magic && [EnhancedDamage] >= 36 && [MaxDamage] >= 12
-//[Type] == jewel && [Quality] == magic && [FireResist] >= 13 && [LightningResist] >= 13 && [IncreasedAttackSpeed] >= 15
-//[Type] == jewel && [Quality] == magic && [FireResist] >= 13 && [LightningResist] >= 13 && [RequirementPercent] <= -15
-//[Type] == jewel && [Quality] == magic && [FireResist] >= 13 && [LightningResist] >= 13 && [Strength] >= 7
-//[Type] == jewel && [Quality] == magic && [FireResist] >= 13 && [LightningResist] >= 13 && [Dexterity] >= 7
-//[Type] == jewel && [Quality] == magic && [MaxDamage] == 20
-//[Type] == jewel && [Quality] == magic && [IncreasedAttackSpeed] >= 15
-//[Type] == jewel && [Quality] == rare && [EnhancedDamage] >= 26 && [MinDamage]+[MaxDamage] >= 20
-//[Type] == jewel && [Quality] == rare && [EnhancedDamage] >= 26 && [MinDamage]+[MaxDamage] >= 10 && [Strength] >= 7
-//[Type] == jewel && [Quality] == rare && [EnhancedDamage] >= 26 && [MinDamage]+[MaxDamage] >= 10 && [Dexterity] >= 7
-//[Type] == jewel && [Quality] == rare && [EnhancedDamage] >= 26 && [MinDamage] >= 6 && [Strength]+[Dexterity] >= 13
-//[Type] == jewel && [Quality] == rare && [EnhancedDamage] >= 26 && [MaxDamage] >= 6 && [Strength]+[Dexterity] >= 13
-//[Type] == jewel && [Quality] == rare && [EnhancedDamage] >= 26 && [FasterHitRecovery] >= 7 && [MinDamage] >= 6 && [Strength] >= 7
-//[Type] == jewel && [Quality] == rare && [EnhancedDamage] >= 26 && [FasterHitRecovery] >= 7 && [MaxDamage] >= 6 && [Strength] >= 7
-//[Type] == jewel && [Quality] == rare && [EnhancedDamage] >= 26 && [FasterHitRecovery] >= 7 && [MinDamage] >= 6 && [Dexterity] >= 7
-//[Type] == jewel && [Quality] == rare && [EnhancedDamage] >= 26 && [FasterHitRecovery] >= 7 && [MaxDamage] >= 6 && [Dexterity] >= 7
-//[Type] == jewel && [Quality] == rare && [FireResist]+[LightningResist]+[ColdResist]+[PoisonResist] >= 28 && [FasterHitRecovery] >= 7 && [RequirementPercent] <= -15
-//[Type] == jewel && [Quality] == rare && [DamageToMana] >= 10 && [FasterHitRecovery] >= 7 && [RequirementPercent] <= -15
+//[Type] == Jewel && [Quality] == magic && [EnhancedDamage] >= 36 && [IncreasedAttackSpeed] >= 15
+//[Type] == Jewel && [Quality] == magic && [EnhancedDamage] >= 36 && [RequirementPercent] <= -15
+//[Type] == Jewel && [Quality] == magic && [EnhancedDamage] >= 36 && [Strength] >= 7
+//[Type] == Jewel && [Quality] == magic && [EnhancedDamage] >= 36 && [Dexterity] >= 7
+//[Type] == Jewel && [Quality] == magic && [EnhancedDamage] >= 36 && [MinDamage] >= 8
+//[Type] == Jewel && [Quality] == magic && [EnhancedDamage] >= 36 && [MaxDamage] >= 12
+//[Type] == Jewel && [Quality] == magic && [FireResist] >= 13 && [LightningResist] >= 13 && [IncreasedAttackSpeed] >= 15
+//[Type] == Jewel && [Quality] == magic && [FireResist] >= 13 && [LightningResist] >= 13 && [RequirementPercent] <= -15
+//[Type] == Jewel && [Quality] == magic && [FireResist] >= 13 && [LightningResist] >= 13 && [Strength] >= 7
+//[Type] == Jewel && [Quality] == magic && [FireResist] >= 13 && [LightningResist] >= 13 && [Dexterity] >= 7
+//[Type] == Jewel && [Quality] == magic && [MaxDamage] == 20
+//[Type] == Jewel && [Quality] == magic && [IncreasedAttackSpeed] >= 15
+//[Type] == Jewel && [Quality] == rare && [EnhancedDamage] >= 26 && [MinDamage]+[MaxDamage] >= 20
+//[Type] == Jewel && [Quality] == rare && [EnhancedDamage] >= 26 && [MinDamage]+[MaxDamage] >= 10 && [Strength] >= 7
+//[Type] == Jewel && [Quality] == rare && [EnhancedDamage] >= 26 && [MinDamage]+[MaxDamage] >= 10 && [Dexterity] >= 7
+//[Type] == Jewel && [Quality] == rare && [EnhancedDamage] >= 26 && [MinDamage] >= 6 && [Strength]+[Dexterity] >= 13
+//[Type] == Jewel && [Quality] == rare && [EnhancedDamage] >= 26 && [MaxDamage] >= 6 && [Strength]+[Dexterity] >= 13
+//[Type] == Jewel && [Quality] == rare && [EnhancedDamage] >= 26 && [FasterHitRecovery] >= 7 && [MinDamage] >= 6 && [Strength] >= 7
+//[Type] == Jewel && [Quality] == rare && [EnhancedDamage] >= 26 && [FasterHitRecovery] >= 7 && [MaxDamage] >= 6 && [Strength] >= 7
+//[Type] == Jewel && [Quality] == rare && [EnhancedDamage] >= 26 && [FasterHitRecovery] >= 7 && [MinDamage] >= 6 && [Dexterity] >= 7
+//[Type] == Jewel && [Quality] == rare && [EnhancedDamage] >= 26 && [FasterHitRecovery] >= 7 && [MaxDamage] >= 6 && [Dexterity] >= 7
+//[Type] == Jewel && [Quality] == rare && [FireResist]+[LightningResist]+[ColdResist]+[PoisonResist] >= 28 && [FasterHitRecovery] >= 7 && [RequirementPercent] <= -15
+//[Type] == Jewel && [Quality] == rare && [DamageToMana] >= 10 && [FasterHitRecovery] >= 7 && [RequirementPercent] <= -15
 
 //##### Small Charms
 [Name] == SmallCharm && [Quality] == magic && [MaxDamage] >= 3 && [AttackRating] >= 12 && [LifeMax] >= 12

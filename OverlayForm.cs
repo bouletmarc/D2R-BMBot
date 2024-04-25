@@ -422,11 +422,11 @@ namespace app
                 DrawString(e, Form1_0.CurrentGameTime, drawFontBold, drawBrushYellow, 990, 935, true);
                 
                 //Print mS Delay
-                string ThisMSStr = Form1_0.mS + "(~" + Form1_0.Average_mS + ")";
+                string ThisMSStr = "~" + Form1_0.Average_mS + "(" + Form1_0.mS + ")";
                 DrawString(e, ThisMSStr, drawFontBold, drawBrushYellow, 1090, 910, true);
 
                 //Print FPS Delay
-                string ThisFPSStr = Form1_0.FPS.ToString("00") + "Fps(~" + Form1_0.Average_FPS.ToString("00") + ")";
+                string ThisFPSStr = "~" + Form1_0.Average_FPS.ToString("00") + "Fps(" + Form1_0.FPS.ToString("00") + ")";
                 DrawString(e, ThisFPSStr, drawFontBold, drawBrushYellow, 1090, 935, true);
 
                 string OtherInfosTxt = Form1_0.TotalChickenCount + " ChickensByHP, " + Form1_0.TotalChickenByTimeCount + " ChickensByTime";

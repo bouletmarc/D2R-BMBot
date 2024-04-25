@@ -58,7 +58,7 @@ namespace app
                 
                 if (Path.GetFileName(ThisFilePath) == "CharSettings.txt") LoadCharSettings();
                 if (Path.GetFileName(ThisFilePath) == "BotSettings.txt") LoadBotSettings();
-                if (Path.GetFileName(ThisFilePath) == "ItemsSettings.txt") LoadCubingSettings();
+                if (Path.GetFileName(ThisFilePath) == "ItemsSettings.txt") LoadItemsSettings();
                 if (Path.GetFileName(ThisFilePath) == "CubingRecipes.txt") LoadCubingSettings();
 
                 if (Path.GetFileName(ThisFilePath) == "PaladinHammer.txt") LoadCurrentCharSettings();
@@ -301,7 +301,7 @@ namespace app
         {
             try
             {
-                bool DoingKeysRune = false;
+                bool DoingKeysRune = true;
                 bool DoingNormal = false;
 
                 Dictionary<string, bool> AllKeys = new Dictionary<string, bool>();
@@ -569,7 +569,10 @@ namespace app
                 }
 
                 Form1_0.ItemsAlert_0.PickItemsRunesKeyGems.Clear();
-                foreach (var ThisDir in AllKeys) Form1_0.ItemsAlert_0.PickItemsRunesKeyGems.Add(ThisDir.Key, ThisDir.Value);
+                foreach (var ThisDir in AllKeys)
+                {
+                    Form1_0.ItemsAlert_0.PickItemsRunesKeyGems.Add(ThisDir.Key, ThisDir.Value);
+                }
 
                 Form1_0.ItemsAlert_0.PickItemsPotions.Clear();
 

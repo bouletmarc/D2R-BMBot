@@ -180,6 +180,7 @@ namespace app
             //loop thru all recipes
             for (int i = 0; i < CubingRecipes.Count; i++)
             {
+                if (CubingRecipes[i] == "") continue;
                 if (!CubingRecipesEnabled[i]) continue;
 
                 if (!Form1_0.Running || !Form1_0.GameStruc_0.IsInGame())

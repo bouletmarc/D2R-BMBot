@@ -308,6 +308,8 @@ namespace app
                 {
                     InventoryHasUnidItem[FullIndex] = 1;
                 }
+
+                //if (Form1_0.ItemsStruc_0.ItemNAAME == "Flawless Amethyst") Console.WriteLine(Form1_0.ItemsStruc_0.ItemNAAME + ", StashItem:" + InventoryHasStashItem[FullIndex] + ", ItemToID:" + InventoryHasItemToID[FullIndex] + ", UnidItem:" + InventoryHasUnidItem[FullIndex]);
             }
             catch { }
         }

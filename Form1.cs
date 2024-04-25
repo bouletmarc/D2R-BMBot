@@ -42,7 +42,7 @@ namespace app
     public partial class Form1 : Form
     {
 
-        public string BotVersion = "V2.7";
+        public string BotVersion = "V2.71";
 
         public string D2_LOD_113C_Path = "";
 
@@ -726,6 +726,11 @@ namespace app
                         method_1("Windows scale factor is not 100%, might have some issues!", Color.OrangeRed);
                     }
 
+                    if (ScreenX > 1920)
+                    {
+                        method_1("Screen Resolution is bigger than 1920x1080, might have some issues!", Color.OrangeRed);
+                    }
+
                     overlayForm.ScaleScreenSize = (float)Form1_0.D2Widht / 1920f;
                     overlayForm.ScaleScreenSizeInverted = 1920f / (float)Form1_0.D2Widht;
                     overlayForm.ResetScaleForDisplay();
@@ -976,6 +981,7 @@ namespace app
                                     //MercStruc_0.GetMercInfos();
                                     //Battle_0.SetSkills();
                                     //Battle_0.CastSkills();
+                                    //ItemsStruc_0.GetItems(false);
                                     //ItemsStruc_0.GetItems(true);
 
                                     //Running = false;
