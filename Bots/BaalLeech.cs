@@ -502,24 +502,8 @@ namespace app
                                 Form1_0.method_1("Killed Baal Manually!", Color.DarkMagenta);
                             }
 
-                            if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
-                            if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
-                            if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
-                            if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
-                            if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
-                            if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
-                            if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
-                            if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
-                            if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
-                            if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
-                            Form1_0.ItemsStruc_0.GrabAllItemsForGold();
-                            Form1_0.Potions_0.CanUseSkillForRegen = true;
                             SearchSameGamesAsLastOne = true;
-                            //Form1_0.LeaveGame(true);
-                            Form1_0.Town_0.FastTowning = false;
-                            Form1_0.Town_0.UseLastTP = false;
-                            ScriptDone = true;
-                            //Form1_0.LeaveGame(false);
+                            if (Form1_0.Battle_0.EndBossBattle()) ScriptDone = true;
                         }
                     }
                     else
@@ -548,11 +532,7 @@ namespace app
                         if (Form1_0.MobsStruc_0.GetMobs("getBossName", "Baal", false, 200, new List<long>())) return; //redetect baal?
                         Form1_0.Potions_0.CanUseSkillForRegen = true;
                         SearchSameGamesAsLastOne = true;
-                        //Form1_0.LeaveGame(true);
-                        Form1_0.Town_0.FastTowning = false;
-                        Form1_0.Town_0.UseLastTP = false;
-                        ScriptDone = true;
-                        //Form1_0.LeaveGame(false);
+                        if (Form1_0.Battle_0.EndBossBattle()) ScriptDone = true;
                     }
                 }
             }

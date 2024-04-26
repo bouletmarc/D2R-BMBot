@@ -42,7 +42,7 @@ namespace app
     public partial class Form1 : Form
     {
 
-        public string BotVersion = "V2.71";
+        public string BotVersion = "V2.8";
 
         public string D2_LOD_113C_Path = "";
 
@@ -61,6 +61,7 @@ namespace app
         public int hWnd = 0;
         public int LoopDone = 0;
         public bool CharDied = false;
+        public bool RestartingBot = false;
 
         public bool PrintedGameTime = false;
         public DateTime CheckTime = new DateTime();
@@ -783,17 +784,17 @@ namespace app
         {
             Form1_0.SetGameStatus("NEW GAME STARTED");
 
-            //PatternsScan_0.StartIndexItem = long.MaxValue;
             PublicGame = (CharConfig.GamePass == "");
             if (!PublicGame && CharConfig.IsRushing) PublicGame = true;
             if (!PublicGame && !CharConfig.RunGameMakerScript) PublicGame = true;
             if (PublicGame) KeyMouse_0.ProcessingDelay = 5;
             else KeyMouse_0.ProcessingDelay = 2;
             GameStruc_0.AlreadyChickening = false;
-            //PatternsScan_0.StartIndexItemLast = long.MaxValue;
-            PatternsScan_0.ScanUnitsNumber = 2600;
+            //PatternsScan_0.ScanUnitsNumber = 2600;
             //PatternsScan_0.ScanUnitsNumber = 2400;
             //PatternsScan_0.ScanUnitsNumber = 2048;
+            PatternsScan_0.StartIndexItem_V2 = long.MaxValue;
+            PatternsScan_0.StartIndexItemLast_V2 = long.MaxValue;
             Town_0.TriedToShopCount = 0;
             Town_0.TriedToShopCount2 = 0;
             Town_0.TriedToMercCount = 0;
@@ -875,6 +876,8 @@ namespace app
             GameStruc_0.ChickenTry = 0;
             MercStruc_0.MercOwnerID = 0;
 
+            ItemsAlert_0.CheckItemNames();
+
             //##############################
             MapAreaStruc_0.ScanMapStruc();
         }
@@ -921,6 +924,7 @@ namespace app
                             //if (!CharConfig.IsRushing) WaitDelay(400); //wait here because 'loading' menu is not correct
                             if (!CharConfig.IsRushing) WaitDelay(250); //wait here because 'loading' menu is not correct
                             if (CharConfig.IsRushing) PlayerScan_0.ScanForLeecher();
+                            if (PatternsScan_0.StartIndexItem_V2 == long.MaxValue) PatternsScan_0.DetectFirstUnitPointer();
                             Town_0.GetCorpse();
                             ItemsStruc_0.GetBadItemsOnCursor();
                             HasPointers = true;
@@ -936,6 +940,7 @@ namespace app
                                 //if (!CharConfig.IsRushing) WaitDelay(400); //wait here because 'loading' menu is not correct
                                 if (!CharConfig.IsRushing) WaitDelay(250); //wait here because 'loading' menu is not correct
                                 if (CharConfig.IsRushing) PlayerScan_0.ScanForLeecher();
+                                if (PatternsScan_0.StartIndexItem_V2 == long.MaxValue) PatternsScan_0.DetectFirstUnitPointer();
                                 Town_0.GetCorpse();
                                 ItemsStruc_0.GetBadItemsOnCursor();
                                 HasPointers = true;
@@ -983,9 +988,9 @@ namespace app
                                     //Battle_0.CastSkills();
                                     //ItemsStruc_0.GetItems(false);
                                     //ItemsStruc_0.GetItems(true);
+                                    //overlayForm.SetAllOverlay();
 
                                     //Running = false;
-                                    //if (!Running) SetStartButtonEnable(true);
                                     //if (Running) LoopTimer.Start();
                                     //return;
 
@@ -1391,8 +1396,18 @@ namespace app
 
             SetProcessingTime();
 
+            if (!Running && RestartingBot)
+            {
+                StartBot();
+                RestartingBot = false;
+            }
+
             if (Running) LoopTimer.Start();
-            if (!Running) SetStartButtonEnable(true);
+            if (!Running)
+            {
+                method_1("Bot stopped!", Color.DarkGreen);
+                overlayForm.SetAllOverlay();
+            }
         }
 
         public void GoToNextScript()
@@ -1637,6 +1652,7 @@ namespace app
             //}
             //catch { }
         }
+
         public void SetItemsButton(bool Enabledd)
         {
             //try
@@ -1658,6 +1674,7 @@ namespace app
 
         public void StopBot()
         {
+            RestartingBot = false;
             SetPlayButtonText("START");
             Running = false;
             HasPointers = false;
@@ -1671,19 +1688,31 @@ namespace app
             SetGameStatus("STOPPED");
         }
 
+        public void StartBot()
+        {
+            method_1("Bot started!", Color.DarkGreen);
+            SetSettingButton(false);
+            SetPlayButtonText("STOP");
+            Running = true;
+            BotJustStarted = true;
+            Startt();
+        }
+
         public void button1_Click(object sender, EventArgs e)
         {
             if (!Running && button1.Enabled)
             {
-                SetStartButtonEnable(false);
-                SetSettingButton(false);
-                SetPlayButtonText("STOP");
-                Running = true;
-                BotJustStarted = true;
-                Startt();
+                method_1("Bot will start!", Color.DarkGreen);
+                StartBot();
+            }
+            else if (!Running && !button1.Enabled)
+            {
+                method_1("Bot will reastart!", Color.DarkGreen);
+                RestartingBot = true;
             }
             else if (Running)
             {
+                method_1("Bot will stop!", Color.DarkGreen);
                 StopBot();
             }
         }

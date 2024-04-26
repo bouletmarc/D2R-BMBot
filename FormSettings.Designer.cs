@@ -104,6 +104,7 @@
             this.buttonBaalAddMob = new System.Windows.Forms.Button();
             this.buttonBaalClearMob = new System.Windows.Forms.Button();
             this.label13 = new System.Windows.Forms.Label();
+            this.buttonReload = new System.Windows.Forms.Button();
             this.panelBaalFeature = new System.Windows.Forms.Panel();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.listViewBaalLeaveOnMobs = new System.Windows.Forms.ListView();
@@ -114,8 +115,21 @@
             this.label9 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
-            this.buttonReload = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.panelOverlay = new System.Windows.Forms.Panel();
+            this.button3 = new System.Windows.Forms.Button();
+            this.label14 = new System.Windows.Forms.Label();
+            this.checkBoxOverlayShowMobs = new System.Windows.Forms.CheckBox();
+            this.checkBoxOverlayShowWP = new System.Windows.Forms.CheckBox();
+            this.checkBoxOverlayShowGoodChest = new System.Windows.Forms.CheckBox();
+            this.checkBoxOverlayShowLogs = new System.Windows.Forms.CheckBox();
+            this.checkBoxOverlayShowBotInfos = new System.Windows.Forms.CheckBox();
+            this.checkBoxOverlayShowUnitsCount = new System.Windows.Forms.CheckBox();
+            this.checkBoxOverlayShowMH = new System.Windows.Forms.CheckBox();
+            this.checkBoxOverlayShowExits = new System.Windows.Forms.CheckBox();
+            this.checkBoxOverlayShowPath = new System.Windows.Forms.CheckBox();
+            this.checkBoxOverlayShowNPC = new System.Windows.Forms.CheckBox();
+            this.buttonOverlaySettings = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownRunNumber)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMaxTime)).BeginInit();
@@ -124,6 +138,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownBaalMobCount)).BeginInit();
             this.panelBaalFeature.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            this.panelOverlay.SuspendLayout();
             this.SuspendLayout();
             // 
             // listViewRunScripts
@@ -612,6 +627,19 @@
             this.label13.Text = "!";
             this.toolTip1.SetToolTip(this.label13, "Double Clic on a Run script to edit it\'s features (if there is any)");
             // 
+            // buttonReload
+            // 
+            this.buttonReload.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonReload.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.buttonReload.Image = global::app.Properties.Resources.Load;
+            this.buttonReload.Location = new System.Drawing.Point(12, 6);
+            this.buttonReload.Name = "buttonReload";
+            this.buttonReload.Size = new System.Drawing.Size(34, 29);
+            this.buttonReload.TabIndex = 17;
+            this.toolTip1.SetToolTip(this.buttonReload, "Load from a previous Settings File");
+            this.buttonReload.UseVisualStyleBackColor = true;
+            this.buttonReload.Click += new System.EventHandler(this.buttonReload_Click);
+            // 
             // panelBaalFeature
             // 
             this.panelBaalFeature.Controls.Add(this.groupBox2);
@@ -717,24 +745,173 @@
             this.label7.TabIndex = 0;
             this.label7.Text = "Baal Run Features";
             // 
-            // buttonReload
-            // 
-            this.buttonReload.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonReload.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.buttonReload.Image = global::app.Properties.Resources.Load;
-            this.buttonReload.Location = new System.Drawing.Point(12, 6);
-            this.buttonReload.Name = "buttonReload";
-            this.buttonReload.Size = new System.Drawing.Size(34, 29);
-            this.buttonReload.TabIndex = 17;
-            this.toolTip1.SetToolTip(this.buttonReload, "Load from a previous Settings File");
-            this.buttonReload.UseVisualStyleBackColor = true;
-            this.buttonReload.Click += new System.EventHandler(this.buttonReload_Click);
-            // 
             // openFileDialog1
             // 
             this.openFileDialog1.DefaultExt = "*.txt";
             this.openFileDialog1.Filter = "BotSettings|*.txt";
             this.openFileDialog1.Title = "Open \'BotSettings.txt\'";
+            // 
+            // panelOverlay
+            // 
+            this.panelOverlay.Controls.Add(this.checkBoxOverlayShowUnitsCount);
+            this.panelOverlay.Controls.Add(this.checkBoxOverlayShowMH);
+            this.panelOverlay.Controls.Add(this.checkBoxOverlayShowExits);
+            this.panelOverlay.Controls.Add(this.checkBoxOverlayShowPath);
+            this.panelOverlay.Controls.Add(this.checkBoxOverlayShowNPC);
+            this.panelOverlay.Controls.Add(this.checkBoxOverlayShowBotInfos);
+            this.panelOverlay.Controls.Add(this.checkBoxOverlayShowLogs);
+            this.panelOverlay.Controls.Add(this.checkBoxOverlayShowGoodChest);
+            this.panelOverlay.Controls.Add(this.checkBoxOverlayShowWP);
+            this.panelOverlay.Controls.Add(this.checkBoxOverlayShowMobs);
+            this.panelOverlay.Controls.Add(this.label14);
+            this.panelOverlay.Controls.Add(this.button3);
+            this.panelOverlay.Location = new System.Drawing.Point(523, 12);
+            this.panelOverlay.Name = "panelOverlay";
+            this.panelOverlay.Size = new System.Drawing.Size(203, 275);
+            this.panelOverlay.TabIndex = 18;
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(61, 246);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(75, 23);
+            this.button3.TabIndex = 12;
+            this.button3.Text = "Apply";
+            this.toolTip1.SetToolTip(this.button3, "Apply and Leave this menu");
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label14.ForeColor = System.Drawing.Color.Blue;
+            this.label14.Location = new System.Drawing.Point(50, 11);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(103, 13);
+            this.label14.TabIndex = 12;
+            this.label14.Text = "Overlay Features";
+            // 
+            // checkBoxOverlayShowMobs
+            // 
+            this.checkBoxOverlayShowMobs.AutoSize = true;
+            this.checkBoxOverlayShowMobs.Location = new System.Drawing.Point(14, 33);
+            this.checkBoxOverlayShowMobs.Name = "checkBoxOverlayShowMobs";
+            this.checkBoxOverlayShowMobs.Size = new System.Drawing.Size(82, 17);
+            this.checkBoxOverlayShowMobs.TabIndex = 12;
+            this.checkBoxOverlayShowMobs.Text = "Show Mobs";
+            this.toolTip1.SetToolTip(this.checkBoxOverlayShowMobs, "Enable this to Kill Baal");
+            this.checkBoxOverlayShowMobs.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxOverlayShowWP
+            // 
+            this.checkBoxOverlayShowWP.AutoSize = true;
+            this.checkBoxOverlayShowWP.Location = new System.Drawing.Point(14, 50);
+            this.checkBoxOverlayShowWP.Name = "checkBoxOverlayShowWP";
+            this.checkBoxOverlayShowWP.Size = new System.Drawing.Size(79, 17);
+            this.checkBoxOverlayShowWP.TabIndex = 13;
+            this.checkBoxOverlayShowWP.Text = "Show WPs";
+            this.toolTip1.SetToolTip(this.checkBoxOverlayShowWP, "Enable this to Kill Baal");
+            this.checkBoxOverlayShowWP.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxOverlayShowGoodChest
+            // 
+            this.checkBoxOverlayShowGoodChest.AutoSize = true;
+            this.checkBoxOverlayShowGoodChest.Location = new System.Drawing.Point(14, 67);
+            this.checkBoxOverlayShowGoodChest.Name = "checkBoxOverlayShowGoodChest";
+            this.checkBoxOverlayShowGoodChest.Size = new System.Drawing.Size(117, 17);
+            this.checkBoxOverlayShowGoodChest.TabIndex = 14;
+            this.checkBoxOverlayShowGoodChest.Text = "Show Good Chests";
+            this.toolTip1.SetToolTip(this.checkBoxOverlayShowGoodChest, "Enable this to Kill Baal");
+            this.checkBoxOverlayShowGoodChest.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxOverlayShowLogs
+            // 
+            this.checkBoxOverlayShowLogs.AutoSize = true;
+            this.checkBoxOverlayShowLogs.Location = new System.Drawing.Point(14, 84);
+            this.checkBoxOverlayShowLogs.Name = "checkBoxOverlayShowLogs";
+            this.checkBoxOverlayShowLogs.Size = new System.Drawing.Size(79, 17);
+            this.checkBoxOverlayShowLogs.TabIndex = 15;
+            this.checkBoxOverlayShowLogs.Text = "Show Logs";
+            this.toolTip1.SetToolTip(this.checkBoxOverlayShowLogs, "Enable this to Kill Baal");
+            this.checkBoxOverlayShowLogs.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxOverlayShowBotInfos
+            // 
+            this.checkBoxOverlayShowBotInfos.AutoSize = true;
+            this.checkBoxOverlayShowBotInfos.Location = new System.Drawing.Point(14, 101);
+            this.checkBoxOverlayShowBotInfos.Name = "checkBoxOverlayShowBotInfos";
+            this.checkBoxOverlayShowBotInfos.Size = new System.Drawing.Size(132, 17);
+            this.checkBoxOverlayShowBotInfos.TabIndex = 16;
+            this.checkBoxOverlayShowBotInfos.Text = "Show Bot Informations";
+            this.toolTip1.SetToolTip(this.checkBoxOverlayShowBotInfos, "Enable this to Kill Baal");
+            this.checkBoxOverlayShowBotInfos.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxOverlayShowUnitsCount
+            // 
+            this.checkBoxOverlayShowUnitsCount.AutoSize = true;
+            this.checkBoxOverlayShowUnitsCount.Location = new System.Drawing.Point(14, 186);
+            this.checkBoxOverlayShowUnitsCount.Name = "checkBoxOverlayShowUnitsCount";
+            this.checkBoxOverlayShowUnitsCount.Size = new System.Drawing.Size(139, 17);
+            this.checkBoxOverlayShowUnitsCount.TabIndex = 21;
+            this.checkBoxOverlayShowUnitsCount.Text = "Show Units Scan Count";
+            this.toolTip1.SetToolTip(this.checkBoxOverlayShowUnitsCount, "Enable this to Kill Baal");
+            this.checkBoxOverlayShowUnitsCount.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxOverlayShowMH
+            // 
+            this.checkBoxOverlayShowMH.AutoSize = true;
+            this.checkBoxOverlayShowMH.Location = new System.Drawing.Point(14, 169);
+            this.checkBoxOverlayShowMH.Name = "checkBoxOverlayShowMH";
+            this.checkBoxOverlayShowMH.Size = new System.Drawing.Size(179, 17);
+            this.checkBoxOverlayShowMH.TabIndex = 20;
+            this.checkBoxOverlayShowMH.Text = "Show Maphack Lines (MH Only)";
+            this.toolTip1.SetToolTip(this.checkBoxOverlayShowMH, "Enable this to Kill Baal");
+            this.checkBoxOverlayShowMH.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxOverlayShowExits
+            // 
+            this.checkBoxOverlayShowExits.AutoSize = true;
+            this.checkBoxOverlayShowExits.Location = new System.Drawing.Point(14, 152);
+            this.checkBoxOverlayShowExits.Name = "checkBoxOverlayShowExits";
+            this.checkBoxOverlayShowExits.Size = new System.Drawing.Size(78, 17);
+            this.checkBoxOverlayShowExits.TabIndex = 19;
+            this.checkBoxOverlayShowExits.Text = "Show Exits";
+            this.toolTip1.SetToolTip(this.checkBoxOverlayShowExits, "Enable this to Kill Baal");
+            this.checkBoxOverlayShowExits.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxOverlayShowPath
+            // 
+            this.checkBoxOverlayShowPath.AutoSize = true;
+            this.checkBoxOverlayShowPath.Location = new System.Drawing.Point(14, 135);
+            this.checkBoxOverlayShowPath.Name = "checkBoxOverlayShowPath";
+            this.checkBoxOverlayShowPath.Size = new System.Drawing.Size(115, 17);
+            this.checkBoxOverlayShowPath.TabIndex = 18;
+            this.checkBoxOverlayShowPath.Text = "Show Path Finding";
+            this.toolTip1.SetToolTip(this.checkBoxOverlayShowPath, "Enable this to Kill Baal");
+            this.checkBoxOverlayShowPath.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxOverlayShowNPC
+            // 
+            this.checkBoxOverlayShowNPC.AutoSize = true;
+            this.checkBoxOverlayShowNPC.Location = new System.Drawing.Point(14, 118);
+            this.checkBoxOverlayShowNPC.Name = "checkBoxOverlayShowNPC";
+            this.checkBoxOverlayShowNPC.Size = new System.Drawing.Size(85, 17);
+            this.checkBoxOverlayShowNPC.TabIndex = 17;
+            this.checkBoxOverlayShowNPC.Text = "Show NPC\'s";
+            this.toolTip1.SetToolTip(this.checkBoxOverlayShowNPC, "Enable this to Kill Baal");
+            this.checkBoxOverlayShowNPC.UseVisualStyleBackColor = true;
+            // 
+            // buttonOverlaySettings
+            // 
+            this.buttonOverlaySettings.Image = global::app.Properties.Resources.Application;
+            this.buttonOverlaySettings.Location = new System.Drawing.Point(184, 605);
+            this.buttonOverlaySettings.Name = "buttonOverlaySettings";
+            this.buttonOverlaySettings.Size = new System.Drawing.Size(32, 25);
+            this.buttonOverlaySettings.TabIndex = 9;
+            this.toolTip1.SetToolTip(this.buttonOverlaySettings, "Edit Overlay Settings");
+            this.buttonOverlaySettings.UseVisualStyleBackColor = true;
+            this.buttonOverlaySettings.Click += new System.EventHandler(this.buttonOverlaySettings_Click);
             // 
             // FormSettings
             // 
@@ -742,6 +919,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlDark;
             this.ClientSize = new System.Drawing.Size(251, 656);
+            this.Controls.Add(this.buttonOverlaySettings);
+            this.Controls.Add(this.panelOverlay);
             this.Controls.Add(this.buttonReload);
             this.Controls.Add(this.label13);
             this.Controls.Add(this.panelBaalFeature);
@@ -780,6 +959,8 @@
             this.panelBaalFeature.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            this.panelOverlay.ResumeLayout(false);
+            this.panelOverlay.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -837,5 +1018,19 @@
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Button buttonReload;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.Panel panelOverlay;
+        private System.Windows.Forms.CheckBox checkBoxOverlayShowBotInfos;
+        private System.Windows.Forms.CheckBox checkBoxOverlayShowLogs;
+        private System.Windows.Forms.CheckBox checkBoxOverlayShowGoodChest;
+        private System.Windows.Forms.CheckBox checkBoxOverlayShowWP;
+        private System.Windows.Forms.CheckBox checkBoxOverlayShowMobs;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.CheckBox checkBoxOverlayShowUnitsCount;
+        private System.Windows.Forms.CheckBox checkBoxOverlayShowMH;
+        private System.Windows.Forms.CheckBox checkBoxOverlayShowExits;
+        private System.Windows.Forms.CheckBox checkBoxOverlayShowPath;
+        private System.Windows.Forms.CheckBox checkBoxOverlayShowNPC;
+        private System.Windows.Forms.Button buttonOverlaySettings;
     }
 }

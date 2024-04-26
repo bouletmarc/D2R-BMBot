@@ -45,6 +45,7 @@ RunEldritchScript=false
 RunShenkScript=false
 RunNihlatakScript=false
 RunItemGrabScriptOnly=false
+ClearAfterBoss=false
 
 //#######################################
 //NOT IN GAME SCRIPT (SEARCH GAMES OR CREATE A NEW GAME)
@@ -64,3 +65,18 @@ LeaveIfMobsIsPresent_ID=
 LeaveIfMobsIsPresent_Count=
 LeaveIfMobsCountIsAbove=0
 SafeHealingStrat=false
+
+
+//#######################################
+//SPECIALS OVERLAY FEATURES
+//#######################################
+ShowMobs=true
+ShowWPs=true
+ShowGoodChests=true
+ShowLogs=true
+ShowBotInfos=true
+ShowNPC=true
+ShowPathFinding=true
+ShowExits=true
+ShowMapHackShowLines=true
+ShowUnitsScanCount=false

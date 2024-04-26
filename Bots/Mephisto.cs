@@ -120,42 +120,32 @@ namespace app
                         }
                         else
                         {
-                            if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
-                            if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
-                            if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
-                            if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
-                            if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
-                            if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
-                            if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
-                            if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
-                            if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
-                            if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
-                            Form1_0.ItemsStruc_0.GrabAllItemsForGold();
-                            Form1_0.Potions_0.CanUseSkillForRegen = true;
-
-                            //Position ThisFinalPosition = Form1_0.MapAreaStruc_0.GetPositionOfObject("object", "portal", 102 - 1, new List<int>() { });
-                            //if (Form1_0.Mover_0.MoveToLocation(ThisFinalPosition.X, ThisFinalPosition.Y))
-                            while (Form1_0.PlayerScan_0.levelNo == (int)Enums.Area.DuranceOfHateLevel3)
+                            if (Form1_0.Battle_0.EndBossBattle())
                             {
-                                Form1_0.ItemsStruc_0.GetItems(true);
-                                if (Form1_0.Mover_0.MoveToLocation(17601, 8070))
+                                //Position ThisFinalPosition = Form1_0.MapAreaStruc_0.GetPositionOfObject("object", "portal", 102 - 1, new List<int>() { });
+                                //if (Form1_0.Mover_0.MoveToLocation(ThisFinalPosition.X, ThisFinalPosition.Y))
+                                while (Form1_0.PlayerScan_0.levelNo == (int)Enums.Area.DuranceOfHateLevel3)
                                 {
-                                    Position itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, 17601, 8070);
-                                    //Position itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, ThisFinalPosition.X, ThisFinalPosition.Y);
-                                    
-                                    Form1_0.KeyMouse_0.MouseClicc_RealPos(itemScreenPos.X, itemScreenPos.Y - 15);
+                                    Form1_0.ItemsStruc_0.GetItems(true);
+                                    if (Form1_0.Mover_0.MoveToLocation(17601, 8070))
+                                    {
+                                        Position itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, 17601, 8070);
+                                        //Position itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, ThisFinalPosition.X, ThisFinalPosition.Y);
 
-                                    Form1_0.PlayerScan_0.GetPositions();
+                                        Form1_0.KeyMouse_0.MouseClicc_RealPos(itemScreenPos.X, itemScreenPos.Y - 15);
+
+                                        Form1_0.PlayerScan_0.GetPositions();
+                                    }
                                 }
+
+                                Form1_0.WaitDelay(700);
+
+                                Form1_0.Town_0.FastTowning = false;
+                                Form1_0.Town_0.UseLastTP = false;
+                                ScriptDone = true;
+                                return;
+                                //Form1_0.LeaveGame(true);
                             }
-
-                            Form1_0.WaitDelay(700);
-
-                            Form1_0.Town_0.FastTowning = false;
-                            Form1_0.Town_0.UseLastTP = false;
-                            ScriptDone = true;
-                            return;
-                            //Form1_0.LeaveGame(true);
                         }
                     }
                     else
@@ -169,11 +159,8 @@ namespace app
                         if (Form1_0.MobsStruc_0.GetMobs("getBossName", "Mephisto", false, 200, new List<long>())) return; //redetect baal?
                         Form1_0.Potions_0.CanUseSkillForRegen = true;
 
-                        Form1_0.Town_0.FastTowning = false;
-                        Form1_0.Town_0.UseLastTP = false;
-                        ScriptDone = true;
+                        if (Form1_0.Battle_0.EndBossBattle()) ScriptDone = true;
                         return;
-                        //Form1_0.LeaveGame(true);
                     }
                 }
             }

@@ -158,9 +158,12 @@ namespace app
                                     Form1_0.WaitDelay(100);
                                     PlaceItem(itemScreenPos["x"], itemScreenPos["y"]);
                                     IdentifiedItem = true;
-                                    if (k == LastItemIdentified)
+                                    Form1_0.ItemsStruc_0.GetItems(false);   //get inventory again
+
+                                    //#########################
+                                    //try selling this bad item
+                                    if (k == LastItemIdentified && Form1_0.InventoryStruc_0.InventoryHasStashItem[i] == 0)
                                     {
-                                        //try selling this bad item
                                         Form1_0.KeyMouse_0.SendCTRL_CLICK(itemScreenPos["x"], itemScreenPos["y"]);
                                         Form1_0.WaitDelay(5);
                                         Form1_0.ItemsStruc_0.GetItems(false);   //get inventory again
@@ -171,6 +174,7 @@ namespace app
                                         }
                                     }
                                     LastItemIdentified = k;
+                                    //#########################
                                     break;
                                 }
                             }
@@ -184,7 +188,9 @@ namespace app
                     else tries2 = 0;
                 }
 
+                Form1_0.ItemsStruc_0.GetItems(false);   //get inventory
                 if (Form1_0.InventoryStruc_0.HasUnidItemInInventory()) HasUnidItem = true;
+                Form1_0.ItemsStruc_0.GetItems(false);   //get inventory
             }
 
             //sell items
@@ -456,40 +462,43 @@ namespace app
             }
 
             //buy key
-            Form1_0.InventoryStruc_0.VerifyKeysInventory();
-            tries = 0;
-            StartQty = Form1_0.InventoryStruc_0.HUDItems_keys;
-            while (Form1_0.InventoryStruc_0.HUDItems_keys <= 8 && tries < 1)
+            if (CharConfig.UseKeys)
             {
-                Form1_0.SetGameStatus("TOWN-SHOP-BUY KEYS");
-                if (!Form1_0.Running || !Form1_0.GameStruc_0.IsInGame())
+                Form1_0.InventoryStruc_0.VerifyKeysInventory();
+                tries = 0;
+                StartQty = Form1_0.InventoryStruc_0.HUDItems_keys;
+                while (Form1_0.InventoryStruc_0.HUDItems_keys <= 8 && tries < 1)
                 {
-                    break;
-                }
-                if (Form1_0.ItemsStruc_0.GetShopItem("Key"))
-                {
-                    Dictionary<string, int> itemScreenPos = ConvertShopLocToScreenPos(Form1_0.ItemsStruc_0.itemx, Form1_0.ItemsStruc_0.itemy);
-
-                    Form1_0.KeyMouse_0.SendSHIFT_RIGHTCLICK(itemScreenPos["x"], itemScreenPos["y"]);
-                    //Form1_0.KeyMouse_0.MouseCliccRight(itemScreenPos["x"], itemScreenPos["y"]);
-                    Form1_0.WaitDelay(20);
-                    Form1_0.ItemsStruc_0.GetItems(false);   //get inventory
-
-                    //Buy keys again to fill inventory
-                    /*if (StartQty == 0)
+                    Form1_0.SetGameStatus("TOWN-SHOP-BUY KEYS");
+                    if (!Form1_0.Running || !Form1_0.GameStruc_0.IsInGame())
                     {
+                        break;
+                    }
+                    if (Form1_0.ItemsStruc_0.GetShopItem("Key"))
+                    {
+                        Dictionary<string, int> itemScreenPos = ConvertShopLocToScreenPos(Form1_0.ItemsStruc_0.itemx, Form1_0.ItemsStruc_0.itemy);
+
                         Form1_0.KeyMouse_0.SendSHIFT_RIGHTCLICK(itemScreenPos["x"], itemScreenPos["y"]);
                         //Form1_0.KeyMouse_0.MouseCliccRight(itemScreenPos["x"], itemScreenPos["y"]);
                         Form1_0.WaitDelay(20);
                         Form1_0.ItemsStruc_0.GetItems(false);   //get inventory
-                    }*/
-                }
 
-                if (Form1_0.InventoryStruc_0.HUDItems_keys == StartQty)
-                {
-                    tries++;
+                        //Buy keys again to fill inventory
+                        /*if (StartQty == 0)
+                        {
+                            Form1_0.KeyMouse_0.SendSHIFT_RIGHTCLICK(itemScreenPos["x"], itemScreenPos["y"]);
+                            //Form1_0.KeyMouse_0.MouseCliccRight(itemScreenPos["x"], itemScreenPos["y"]);
+                            Form1_0.WaitDelay(20);
+                            Form1_0.ItemsStruc_0.GetItems(false);   //get inventory
+                        }*/
+                    }
+
+                    if (Form1_0.InventoryStruc_0.HUDItems_keys == StartQty)
+                    {
+                        tries++;
+                    }
+                    StartQty = Form1_0.InventoryStruc_0.HUDItems_keys;
                 }
-                StartQty = Form1_0.InventoryStruc_0.HUDItems_keys;
             }
 
             //buy tome of portal for cows level

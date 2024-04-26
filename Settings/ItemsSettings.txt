@@ -291,10 +291,10 @@ Perfect Diamond
 //[Name] == Shako && [Quality] == unique && [Defense] >= 120 // Harlequin Crest
 [Name] == Shako && [Quality] == unique // Harlequin Crest
 [Name] == Demonhead && [Quality] == unique // Andariel's Visage
-[Name] == Demonhead && [Quality] == unique && [Flag] != ethereal
+//[Name] == Demonhead && [Quality] == unique && [Flag] != ethereal
 [Name] == BoneVisage && [Quality] == unique && [Flag] != ethereal // Giant Skull
 [Name] == SpiredHelm && [Quality] == unique && [Flag] != ethereal// Nightwing's Veil
-[Name] == Corona && [Quality] == unique && [Flag] != ethereal // Crown of ages
+//[Name] == Corona && [Quality] == unique && [Flag] != ethereal // Crown of ages
 [Name] == Corona && [Quality] == unique // Crown of ages
 
 //##### Armor

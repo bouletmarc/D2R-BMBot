@@ -226,6 +226,7 @@ namespace app
             {
                 case 0: return 1; //UNKOWN
                 case 1: return 1; //Skeleton
+                case 3: return 1; //UNKOWN
                 //case 23: return 1; //WarpedFallen
                 case 149: return 1; //Chicken
                 case 151: return 1; //Rat

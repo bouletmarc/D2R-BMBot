@@ -68,7 +68,7 @@ namespace app
             }
         }
 
-        public void MoveToNextArea(Area ThisID, int AcceptOffset = 4, bool ClearAreaOnMoving = false)
+        public bool MoveToNextArea(Area ThisID, int AcceptOffset = 4, bool ClearAreaOnMoving = false)
         {
             Form1_0.PlayerScan_0.GetPositions();
             IsMovingToNextArea = true;
@@ -89,12 +89,14 @@ namespace app
                 if (ThisFinalPosition.X == 0 && ThisFinalPosition.Y == 0) ThisFinalPosition = Form1_0.MapAreaStruc_0.GetPositionOfObject("object", Form1_0.Town_0.getAreaName((int)ThisID), (int)ThisID, new List<int>() { }, true);
 
                 //Console.WriteLine("Going to Pos: " + ThisFinalPosition.X + ", " + ThisFinalPosition.Y);
-                Form1_0.PathFinding_0.GetPathFinding(AcceptOffset, ClearAreaOnMoving);
+                return Form1_0.PathFinding_0.GetPathFinding(AcceptOffset, ClearAreaOnMoving);
             }
             catch { }
+
+            return false;
         }
 
-        public void MoveToExit(Area ThisID, int AcceptOffset = 4, bool ClearAreaOnMoving = false)
+        public bool MoveToExit(Area ThisID, int AcceptOffset = 4, bool ClearAreaOnMoving = false)
         {
             Form1_0.PlayerScan_0.GetPositions();
             IsMovingToNextArea = false;
@@ -120,12 +122,14 @@ namespace app
                 TargetOffsetInCollisiongrid = new Position { X = 0, Y = 0 };
 
                 //Console.WriteLine("Going to Pos: " + ThisFinalPosition.X + ", " + ThisFinalPosition.Y);
-                Form1_0.PathFinding_0.GetPathFinding(AcceptOffset, ClearAreaOnMoving);
+                return Form1_0.PathFinding_0.GetPathFinding(AcceptOffset, ClearAreaOnMoving);
             }
             catch { }
+
+            return false;
         }
 
-        public void MoveToNPC(string NPCName, int AcceptOffset = 4, bool ClearAreaOnMoving = false)
+        public bool MoveToNPC(string NPCName, int AcceptOffset = 4, bool ClearAreaOnMoving = false)
         {
             Form1_0.PlayerScan_0.GetPositions();
             IsMovingToNextArea = false;
@@ -145,12 +149,14 @@ namespace app
                 PlayerOffsetInCollisiongrid = new Position { X = 0, Y = 0 };
                 TargetOffsetInCollisiongrid = new Position { X = 0, Y = 0 };
 
-                Form1_0.PathFinding_0.GetPathFinding(AcceptOffset, ClearAreaOnMoving);
+                return Form1_0.PathFinding_0.GetPathFinding(AcceptOffset, ClearAreaOnMoving);
             }
             catch { }
+
+            return false;
         }
 
-        public void MoveToObject(string ObjectName, int AcceptOffset = 4, bool ClearAreaOnMoving = false)
+        public bool MoveToObject(string ObjectName, int AcceptOffset = 4, bool ClearAreaOnMoving = false)
         {
             Form1_0.PlayerScan_0.GetPositions();
             IsMovingToNextArea = false;
@@ -170,12 +176,14 @@ namespace app
                 PlayerOffsetInCollisiongrid = new Position { X = 0, Y = 0 };
                 TargetOffsetInCollisiongrid = new Position { X = 0, Y = 0 };
 
-                Form1_0.PathFinding_0.GetPathFinding(AcceptOffset, ClearAreaOnMoving);
+                return Form1_0.PathFinding_0.GetPathFinding(AcceptOffset, ClearAreaOnMoving);
             }
             catch { }
+
+            return false;
         }
 
-        public void MoveToThisPos(Position ThisPositionn, int AcceptOffset = 4, bool ClearAreaOnMoving = false)
+        public bool MoveToThisPos(Position ThisPositionn, int AcceptOffset = 4, bool ClearAreaOnMoving = false)
         {
             if (Form1_0.PlayerScan_0.levelNo == 0) Form1_0.PlayerScan_0.GetPositions();
             IsMovingToNextArea = false;
@@ -195,13 +203,17 @@ namespace app
                 PlayerOffsetInCollisiongrid = new Position { X = 0, Y = 0 };
                 TargetOffsetInCollisiongrid = new Position { X = 0, Y = 0 };
 
-                GetPathFinding(AcceptOffset, ClearAreaOnMoving);
+                return GetPathFinding(AcceptOffset, ClearAreaOnMoving);
             }
             catch { }
+
+            return false;
         }
 
-        public void GetPathFinding(int AcceptOffset = 4, bool ClearAreaOnMoving = false)
+        public bool GetPathFinding(int AcceptOffset = 4, bool ClearAreaOnMoving = false)
         {
+            bool MovedCorrectly = false;
+
             Point startPos = new Point(Form1_0.PlayerScan_0.xPos - ThisOffsetPosition.X, Form1_0.PlayerScan_0.yPos - ThisOffsetPosition.Y);
             Point targetPos = new Point(ThisFinalPosition.X - ThisOffsetPosition.X, ThisFinalPosition.Y - ThisOffsetPosition.Y);
             //Point startPos = new Point(115, 579);
@@ -228,7 +240,7 @@ namespace app
                     && startPos.Y >= (targetPos.Y - Form1_0.Mover_0.MoveAcceptOffset)
                     && startPos.Y <= (targetPos.Y + Form1_0.Mover_0.MoveAcceptOffset))
                 {
-                    return;
+                    return true;
                 }
             }
 
@@ -242,7 +254,7 @@ namespace app
             if (targetPos.X <= 0 || targetPos.Y <= 0)
             {
                 Form1_0.method_1("Target pos are bad: " + targetPos.X + ", " + targetPos.Y, Color.OrangeRed);
-                return;
+                return false;
             }
 
             path = FindPath(startPos, targetPos);
@@ -265,7 +277,7 @@ namespace app
                 Form1_0.method_1("No path found.", Color.Red);
                 //Form1_0.MapAreaStruc_0.DumpMap();
                 Form1_0.GoToNextScript();
-                return;
+                return false;
             }
 
             //################################################
@@ -391,12 +403,18 @@ namespace app
                     //tryyy++;
                     //}
                 }
+
+                int FinalX = path[path.Count - 1].X + ThisOffsetPosition.X - PlayerOffsetInCollisiongrid.X;
+                int FinalY = path[path.Count - 1].Y + ThisOffsetPosition.Y - PlayerOffsetInCollisiongrid.Y;
+                if (Form1_0.Mover_0.IsPositionNearOf(FinalX, FinalY, AcceptOffset)) MovedCorrectly = true;
             }
             else
             {
                 Form1_0.method_1("No path found.", Color.Red);
                 Form1_0.GoToNextScript();
             }
+
+            return MovedCorrectly;
         }
 
         public void DetectCloserPathPositions()

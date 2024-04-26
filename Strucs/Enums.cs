@@ -153,17 +153,35 @@ namespace app
             Assassin = 6,
         }
 
-        public enum NpcFlag
+        public enum MonsterType
         {
             None = 0,
-            SuperUnique = 1 << 1,
-            Champion = 1 << 2,
-            Unique = 1 << 3,
-            Minion = 1 << 4,
-            Possessed = 1 << 5,
-            Ghostly = 1 << 6,
-            Multishot = 1 << 7,
+            SuperUnique = 1,
+            Champion = 2,
+            Unique = 3,
+            Minion = 4,
+            Possessed = 5,
+            Ghostly = 6,
+            Multishot = 7,
         }
+
+        public enum StatResist
+        {
+            ColdImmune,
+            FireImmune,
+            LightImmune,
+            PoisonImmune,
+            MagicImmune
+        }
+
+        /*public enum MonsterType
+        {
+            None,
+            SuperUnique,
+            Champion,
+            Unique,
+            Minion
+        }*/
 
         /** Extra Skills NPC's can have */
         public enum NpcEnchant

@@ -37,6 +37,40 @@ namespace app
             Form1_0 = form1_1;
         }
 
+        public bool EndBossBattle()
+        {
+            Form1_0.KeyMouse_0.ReleaseKey(System.Windows.Forms.Keys.E);
+            if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
+            if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
+            if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
+            if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
+            if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
+            if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
+            if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
+            if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
+            if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
+            if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
+
+            if (CharConfig.ClearAfterBoss)
+            {
+                if (Form1_0.MobsStruc_0.GetMobs("", "", true, 30, new List<long>()))
+                {
+                    Form1_0.Battle_0.DoBattleScript(30);
+                    return false;
+                }
+            }
+
+            Form1_0.ItemsStruc_0.GrabAllItemsForGold();
+
+            Form1_0.Battle_0.ClearingArea = false;
+            Form1_0.Battle_0.DoingBattle = false;
+            Form1_0.Potions_0.CanUseSkillForRegen = true;
+            Form1_0.Town_0.FastTowning = false;
+            Form1_0.Town_0.UseLastTP = false;
+
+            return true;
+        }
+
         public int[] FindBestPositionNoMobsArround(int playerX, int playerY, List<int[]> monsterPositions, int maxDisplacement)
         {
             // Create a list to store all possible positions around the player
@@ -245,7 +279,8 @@ namespace app
                             //no atack pos found??
                             AttackPosFound = true;
                             ChoosenAttackLocation++; //return attack pos = 4 (for error)
-                            ReturnPos = new Position { X = 0, Y = 0 };
+                            ReturnPos = new Position { X = ThisAttackPos.X, Y = ThisAttackPos.Y };
+                            //ReturnPos = new Position { X = 0, Y = 0 };
                         }
                     }
                 }
@@ -264,12 +299,12 @@ namespace app
 
                 Form1_0.KeyMouse_0.PressKey(Keys.W);
                 Form1_0.WaitDelay(15);
-                //Form1_0.KeyMouse_0.PressKey(Keys.F4);
-                //Form1_0.WaitDelay(15);
-                Form1_0.KeyMouse_0.MouseClicc(1025, 1025);
+                Form1_0.KeyMouse_0.PressKey(CharConfig.KeySkillBattleOrder);
+                Form1_0.WaitDelay(10);
+                /*Form1_0.KeyMouse_0.MouseClicc(1025, 1025);
                 Form1_0.WaitDelay(5);
                 Form1_0.KeyMouse_0.MouseClicc(1095, 610);
-                Form1_0.WaitDelay(5);
+                Form1_0.WaitDelay(5);*/
                 Form1_0.PlayerScan_0.GetPositions();
 
                 //press W again to switch weapon again
@@ -277,12 +312,12 @@ namespace app
                 {
                     Form1_0.KeyMouse_0.PressKey(Keys.W);
                     Form1_0.WaitDelay(15);
-                    //Form1_0.KeyMouse_0.PressKey(Keys.F4);
-                    //Form1_0.WaitDelay(15);
-                    Form1_0.KeyMouse_0.MouseClicc(1025, 1025);
+                    Form1_0.KeyMouse_0.PressKey(CharConfig.KeySkillBattleOrder);
+                    Form1_0.WaitDelay(10);
+                    /*Form1_0.KeyMouse_0.MouseClicc(1025, 1025);
                     Form1_0.WaitDelay(5);
                     Form1_0.KeyMouse_0.MouseClicc(1095, 610);
-                    Form1_0.WaitDelay(5);
+                    Form1_0.WaitDelay(5);*/
                     Form1_0.PlayerScan_0.GetPositions();
                 }
 
@@ -290,19 +325,23 @@ namespace app
                 Form1_0.WaitDelay(30);
 
                 //select battle command
-                Form1_0.KeyMouse_0.MouseClicc(1025, 1025);
+                Form1_0.KeyMouse_0.PressKey(CharConfig.KeySkillBattleCommand);
+                Form1_0.WaitDelay(10);
+                /*Form1_0.KeyMouse_0.MouseClicc(1025, 1025);
                 Form1_0.WaitDelay(5);
                 Form1_0.KeyMouse_0.MouseClicc(1025, 610);
-                Form1_0.WaitDelay(5);
+                Form1_0.WaitDelay(5);*/
                 Form1_0.KeyMouse_0.MouseCliccRight_RealPos(Form1_0.CenterX, Form1_0.CenterY);
                 Form1_0.WaitDelay(30); //60 <-
                 Form1_0.Potions_0.CheckIfWeUsePotion();
 
                 //select battle cry
-                Form1_0.KeyMouse_0.MouseClicc(1025, 1025);
+                Form1_0.KeyMouse_0.PressKey(CharConfig.KeySkillBattleCry);
+                Form1_0.WaitDelay(10);
+                /*Form1_0.KeyMouse_0.MouseClicc(1025, 1025);
                 Form1_0.WaitDelay(5);
                 Form1_0.KeyMouse_0.MouseClicc(1165, 610);
-                Form1_0.WaitDelay(5);
+                Form1_0.WaitDelay(5);*/
                 Form1_0.KeyMouse_0.MouseCliccRight_RealPos(Form1_0.CenterX, Form1_0.CenterY);
                 Form1_0.WaitDelay(60);
 

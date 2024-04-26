@@ -257,30 +257,29 @@ namespace app
                     if (CornerClearedIndex == 0)
                     {
                         if (LeaveOnMobs()) return;
-                        Form1_0.PathFinding_0.MoveToThisPos(ThroneCorner1Pos, 4, true);
+                        if (Form1_0.PathFinding_0.MoveToThisPos(ThroneCorner1Pos, 4, true)) CornerClearedIndex++;
                         if (LeaveOnMobs()) return;
-                        CornerClearedIndex++;
                     }
                     else if (CornerClearedIndex == 1)
                     {
                         if (LeaveOnMobs()) return;
-                        Form1_0.PathFinding_0.MoveToThisPos(ThroneCorner2Pos, 4, true);
+                        if (Form1_0.PathFinding_0.MoveToThisPos(ThroneCorner1Pos, 4, true)) CornerClearedIndex++;
                         if (LeaveOnMobs()) return;
-                        CornerClearedIndex++;
+                        //CornerClearedIndex++;
                     }
                     else if (CornerClearedIndex == 2)
                     {
                         if (LeaveOnMobs()) return;
-                        Form1_0.PathFinding_0.MoveToThisPos(ThroneCorner4Pos, 4, true);
+                        if (Form1_0.PathFinding_0.MoveToThisPos(ThroneCorner1Pos, 4, true)) CornerClearedIndex++;
                         if (LeaveOnMobs()) return;
-                        CornerClearedIndex++;
+                        //CornerClearedIndex++;
                     }
                     else if (CornerClearedIndex == 3)
                     {
                         if (LeaveOnMobs()) return;
-                        Form1_0.PathFinding_0.MoveToThisPos(ThroneCorner3Pos, 4, true);
+                        if (Form1_0.PathFinding_0.MoveToThisPos(ThroneCorner1Pos, 4, true)) CornerClearedIndex++;
                         if (LeaveOnMobs()) return;
-                        CornerClearedIndex++;
+                        //CornerClearedIndex++;
                     }
                     if (CornerClearedIndex == 4)
                     {
@@ -492,27 +491,7 @@ namespace app
                         }
                         else
                         {
-                            Form1_0.KeyMouse_0.ReleaseKey(System.Windows.Forms.Keys.E);
-                            if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
-                            if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
-                            if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
-                            if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
-                            if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
-                            if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
-                            if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
-                            if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
-                            if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
-                            if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
-                            //if (!Form1_0.PublicGame) Form1_0.ItemsStruc_0.GrabAllItemsForGold();
-                            Form1_0.ItemsStruc_0.GrabAllItemsForGold();
-
-                            Form1_0.Battle_0.ClearingArea = false;
-                            Form1_0.Battle_0.DoingBattle = false;
-                            Form1_0.Potions_0.CanUseSkillForRegen = true;
-                            //Form1_0.LeaveGame(true);
-                            Form1_0.Town_0.FastTowning = false;
-                            Form1_0.Town_0.UseLastTP = false;
-                            ScriptDone = true;
+                            if (Form1_0.Battle_0.EndBossBattle()) ScriptDone = true;
                         }
                     }
                     else
@@ -575,14 +554,7 @@ namespace app
                                 if (Form1_0.MobsStruc_0.GetMobs("getBossName", "Baal", false, 200, new List<long>())) return; //redetect baal?
                                 //if (!Form1_0.PublicGame) Form1_0.ItemsStruc_0.GrabAllItemsForGold();
 
-                                Form1_0.ItemsStruc_0.GrabAllItemsForGold();
-                                Form1_0.Battle_0.ClearingArea = false;
-                                Form1_0.Battle_0.DoingBattle = false;
-                                Form1_0.Potions_0.CanUseSkillForRegen = true;
-                                //Form1_0.LeaveGame(true);
-                                Form1_0.Town_0.FastTowning = false;
-                                Form1_0.Town_0.UseLastTP = false;
-                                ScriptDone = true;
+                                if (Form1_0.Battle_0.EndBossBattle()) ScriptDone = true;
                             }
                         }
                     }

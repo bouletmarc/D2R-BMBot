@@ -49,6 +49,54 @@ namespace app
             Form1_0 = form1_1;
         }
 
+        public void CheckItemNames()
+        {
+            foreach (var ThisDir in PickItemsRunesKeyGems)
+            {
+                if (ThisDir.Value)
+                {
+                    bool FoundItemName = false;
+                    string CheckName = ThisDir.Key.Replace(" ", "");
+
+                    for (int i = 0; i < 659; i++ )
+                    {
+                        if (Form1_0.ItemsNames_0.getItemBaseName(i).Replace(" ", "") == CheckName)
+                        {
+                            FoundItemName = true;
+                            break;
+                        }
+                    }
+
+                    if (!FoundItemName)
+                    {
+                        Form1_0.method_1("Item '" + ThisDir.Key + "' from the pickit doesn't exist", Color.Red);
+                    }
+                }
+            }
+            foreach (var ThisDir in PickItemsNormal_ByName)
+            {
+                if (ThisDir.Value)
+                {
+                    bool FoundItemName = false;
+                    string CheckName = Regex.Replace(ThisDir.Key, @"[\d-]", string.Empty);
+
+                    for (int i = 0; i < 659; i++)
+                    {
+                        if (Form1_0.ItemsNames_0.getItemBaseName(i).Replace(" ", "") == CheckName)
+                        {
+                            FoundItemName = true;
+                            break;
+                        }
+                    }
+
+                    if (!FoundItemName)
+                    {
+                        Form1_0.method_1("Item '" + CheckName + "' from the pickit doesn't exist", Color.Red);
+                    }
+                }
+            }
+        }
+
         public bool ShouldKeepItem()
         {
             return ShouldPickItem(true);

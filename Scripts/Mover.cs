@@ -74,7 +74,7 @@ namespace app
             //fix town act5 stuck near bolder
             if (Form1_0.Town_0.GetInTown() && IsPositionNearOf(5093, 5034, 2))
             {
-                MoveToLocationAttack(5098, 5022);
+                MoveToLocationAttack(5100, 5021);
             }
 
             int TryMove = 0;

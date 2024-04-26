@@ -7,6 +7,8 @@ using System.Text;
 using System.Threading.Tasks;
 using static System.Windows.Forms.AxHost;
 using static app.MapAreaStruc;
+using static app.EnumsMobsNPC;
+using static app.EnumsStates;
 
 namespace app
 {
@@ -209,6 +211,7 @@ namespace app
         }
 
         public List<int> monsterIDs = new List<int>();
+        public List<int> monsterTypes = new List<int>();
 
         public List<int[]> GetAllMobsNearby()
         {
@@ -216,6 +219,7 @@ namespace app
 
             List<int[]> monsterPositions2 = new List<int[]>();
             monsterIDs = new List<int>();
+            monsterTypes = new List<int>();
 
             try
             {
@@ -232,6 +236,12 @@ namespace app
                         CurrentPointerBytes = new byte[4];
                         Form1_0.Mem_0.ReadRawMemory(MobsPointerLocation + 4, ref CurrentPointerBytes, CurrentPointerBytes.Length);
                         uint txtFileNo2 = BitConverter.ToUInt32(CurrentPointerBytes, 0);
+
+
+                        CurrentPointerBytes = new byte[8];
+                        Form1_0.Mem_0.ReadRawMemory(MobsPointerLocation + 0x10, ref CurrentPointerBytes, CurrentPointerBytes.Length);
+                        long unitDataPtr = BitConverter.ToInt64(CurrentPointerBytes, 0);
+                        byte flag = Form1_0.Mem_0.ReadByteRaw((IntPtr) (unitDataPtr + 0x1A));
 
                         //long pStatsListExPtr = BitConverter.ToInt64(mobsdatastruc, 0x88);
                         CurrentPointerBytes = new byte[8];
@@ -250,8 +260,8 @@ namespace app
                             && !Form1_0.PlayerScan_0.HasState(EnumsStates.State.Revive, MobsStatesAll)
                             && !DebuggingMobs)
                             || DebuggingMobs)
-                        //&& IsThisMobInBound())
-                        //&& !ShouldBeIgnored(txtFileNo2))
+                            //&& IsThisMobInBound())
+                            //&& !ShouldBeIgnored(txtFileNo2))
                         {
                             GetUnitPathDataAll();
                             GetStatsAddrAll();
@@ -268,6 +278,7 @@ namespace app
                                 {
                                     monsterPositions2.Add(new int[2] { (int)xPosFinalAll, (int)yPosFinalAll });
                                     monsterIDs.Add((int)txtFileNo2);
+                                    monsterTypes.Add(GetMonsterType(flag));
                                 }
                             }
                         }
@@ -280,6 +291,66 @@ namespace app
             }
 
             return monsterPositions2;
+        }
+
+        public int GetMonsterType(byte typeFlag)
+        {
+            switch (typeFlag)
+            {
+                case 10:
+                    return (int) Enums.MonsterType.SuperUnique;
+                case 1 << 2:
+                    return (int)Enums.MonsterType.Champion;
+                case 1 << 3:
+                    return (int)Enums.MonsterType.Unique;
+                case 1 << 4:
+                    return (int)Enums.MonsterType.Minion;
+                case 1 << 5:
+                    return (int)Enums.MonsterType.Possessed;
+                case 1 << 6:
+                    return (int)Enums.MonsterType.Ghostly;
+                case 1 << 7:
+                    return (int)Enums.MonsterType.Multishot;
+                default:
+                    return (int) Enums.MonsterType.None;
+            }
+        }
+
+        public bool IsImmune(Enums.StatResist resist)
+        {
+            if (this.statCount < 100)
+            {
+                Form1_0.Mem_0.ReadRawMemory(this.statPtr, ref statBuffer, (int)(this.statCount * 10));
+                for (int i = 0; i < this.statCount; i++)
+                {
+                    int offset = i * 8;
+                    short statLayer = BitConverter.ToInt16(statBuffer, offset);
+                    ushort statEnum = BitConverter.ToUInt16(statBuffer, offset + 0x2);
+                    int statValue = BitConverter.ToInt32(statBuffer, offset + 0x4);
+
+                    if (resist == Enums.StatResist.ColdImmune && (Enums.Attribute) statEnum == Enums.Attribute.ColdResist)
+                    {
+                        return true;
+                    }
+                    if (resist == Enums.StatResist.FireImmune && (Enums.Attribute) statEnum == Enums.Attribute.FireResist)
+                    {
+                        return true;
+                    }
+                    if (resist == Enums.StatResist.LightImmune && (Enums.Attribute) statEnum == Enums.Attribute.LightningResist)
+                    {
+                        return true;
+                    }
+                    if (resist == Enums.StatResist.PoisonImmune && (Enums.Attribute) statEnum == Enums.Attribute.PoisonResist)
+                    {
+                        return true;
+                    }
+                    if (resist == Enums.StatResist.MagicImmune && (Enums.Attribute) statEnum == Enums.Attribute.MagicResist)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
         }
 
         public void GetUnitPathDataAll()
@@ -391,6 +462,23 @@ namespace app
                         GetUnitPathData();
                         GetStatsAddr();
                         int MobHPBuffer = GetHPFromStats();
+
+                        //Avoid Immunes
+                        if (CharConfig.AvoidColdImmune
+                            || CharConfig.AvoidFireImmune
+                            || CharConfig.AvoidLightImmune
+                            || CharConfig.AvoidPoisonImmune
+                            || CharConfig.AvoidMagicImmune)
+                        {
+                            if (IsImmune(Enums.StatResist.ColdImmune) && CharConfig.AvoidColdImmune
+                                || IsImmune(Enums.StatResist.FireImmune) && CharConfig.AvoidFireImmune
+                                || IsImmune(Enums.StatResist.LightImmune) && CharConfig.AvoidLightImmune
+                                || IsImmune(Enums.StatResist.PoisonImmune) && CharConfig.AvoidPoisonImmune
+                                || IsImmune(Enums.StatResist.MagicImmune) && CharConfig.AvoidMagicImmune)
+                            {
+                                continue; //go to next mobs
+                            }
+                        }
 
                         //Console.WriteLine("found near mob " + txtFileNo + " at: " + xPosFinal + ", " + yPosFinal + " HP:" + MobHPBuffer);
                         if ((MobHPBuffer > 0 || (MobHPBuffer == 0 && MobName != ""))

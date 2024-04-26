@@ -99,10 +99,12 @@ namespace app
 
         public void VerifyKeysInventory()
         {
+            if (!CharConfig.UseKeys) return;
+
             int thisindex = CharConfig.KeysLocationInInventory.Item1 + (CharConfig.KeysLocationInInventory.Item2 * 10);
 
             //if its not a key at the key location, relocate the item
-            if (InventoryItemNames[thisindex] != "Key")
+            if (InventoryItemNames[thisindex] != "Key" && InventoryItemNames[thisindex] != "" && InventoryHasItem[thisindex] > 0)
             {
                 //Console.WriteLine("here");
                 int ThisNewIndex = GetNextFreeSpaceInInventory();
@@ -309,7 +311,7 @@ namespace app
                     InventoryHasUnidItem[FullIndex] = 1;
                 }
 
-                //if (Form1_0.ItemsStruc_0.ItemNAAME == "Flawless Amethyst") Console.WriteLine(Form1_0.ItemsStruc_0.ItemNAAME + ", StashItem:" + InventoryHasStashItem[FullIndex] + ", ItemToID:" + InventoryHasItemToID[FullIndex] + ", UnidItem:" + InventoryHasUnidItem[FullIndex]);
+                //Console.WriteLine(Form1_0.ItemsStruc_0.ItemNAAME + ", StashItem:" + InventoryHasStashItem[FullIndex] + ", ItemToID:" + InventoryHasItemToID[FullIndex] + ", UnidItem:" + InventoryHasUnidItem[FullIndex]);
             }
             catch { }
         }

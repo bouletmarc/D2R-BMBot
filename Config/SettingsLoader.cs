@@ -133,6 +133,9 @@ namespace app
                     if (Splitted[0] == "KeySkillDefenseAura") AllLines[i] = "KeySkillDefenseAura=" + CharConfig.KeySkillDefenseAura;
                     if (Splitted[0] == "KeySkillCastDefense") AllLines[i] = "KeySkillCastDefense=" + CharConfig.KeySkillCastDefense;
                     if (Splitted[0] == "KeySkillLifeAura") AllLines[i] = "KeySkillLifeAura=" + CharConfig.KeySkillLifeAura;
+                    if (Splitted[0] == "KeySkillBattleOrder") AllLines[i] = "KeySkillBattleOrder=" + CharConfig.KeySkillBattleOrder;
+                    if (Splitted[0] == "KeySkillBattleCommand") AllLines[i] = "KeySkillBattleCommand=" + CharConfig.KeySkillBattleCommand;
+                    if (Splitted[0] == "KeySkillBattleCry") AllLines[i] = "KeySkillBattleCry=" + CharConfig.KeySkillBattleCry;
 
                     if (Splitted[0] == "BeltPotTypeToHave") AllLines[i] = "BeltPotTypeToHave=" + CharConfig.BeltPotTypeToHave[0] + "," + CharConfig.BeltPotTypeToHave[1] + "," + CharConfig.BeltPotTypeToHave[2] + "," + CharConfig.BeltPotTypeToHave[3];
 
@@ -167,6 +170,7 @@ namespace app
                     if (Splitted[0] == "GrabForGold") AllLines[i] = "GrabForGold=" + CharConfig.GrabForGold;
                     if (Splitted[0] == "LeaveDiabloClone") AllLines[i] = "LeaveDiabloClone=" + CharConfig.LeaveDiabloClone;
                     if (Splitted[0] == "GambleGold") AllLines[i] = "GambleGold=" + CharConfig.GambleGold;
+                    if (Splitted[0] == "UseKeys") AllLines[i] = "UseKeys=" + CharConfig.UseKeys;
                     if (Splitted[0] == "ChickenHP") AllLines[i] = "ChickenHP=" + CharConfig.ChickenHP;
                     if (Splitted[0] == "TakeHPPotUnder" && !Splitted[0].Contains("MercTakeHPPotUnder")) AllLines[i] = "TakeHPPotUnder=" + CharConfig.TakeHPPotUnder;
                     if (Splitted[0] == "TakeRVPotUnder") AllLines[i] = "TakeRVPotUnder=" + CharConfig.TakeRVPotUnder;
@@ -179,6 +183,12 @@ namespace app
 
                     if (Splitted[0] == "UsingMerc") AllLines[i] = "UsingMerc=" + CharConfig.UsingMerc;
                     if (Splitted[0] == "MercTakeHPPotUnder") AllLines[i] = "MercTakeHPPotUnder=" + CharConfig.MercTakeHPPotUnder;
+
+                    if (Splitted[0] == "AvoidColdImmune") AllLines[i] = "AvoidColdImmune=" + CharConfig.AvoidColdImmune;
+                    if (Splitted[0] == "AvoidFireImmune") AllLines[i] = "AvoidFireImmune=" + CharConfig.AvoidFireImmune;
+                    if (Splitted[0] == "AvoidLightImmune") AllLines[i] = "AvoidLightImmune=" + CharConfig.AvoidLightImmune;
+                    if (Splitted[0] == "AvoidPoisonImmune") AllLines[i] = "AvoidPoisonImmune=" + CharConfig.AvoidPoisonImmune;
+                    if (Splitted[0] == "AvoidMagicImmune") AllLines[i] = "AvoidMagicImmune=" + CharConfig.AvoidMagicImmune;
                 }
             }
 
@@ -205,6 +215,7 @@ namespace app
                     if (Splitted[0] == "RushLeecherName") AllLines[i] = "RushLeecherName=" + CharConfig.RushLeecherName;
 
                     //#########
+                    //SPECIAL BAAL FEATURES
                     if (Splitted[0] == "KillBaal") AllLines[i] = "KillBaal=" + Form1_0.Baal_0.KillBaal;
                     if (Splitted[0] == "LeaveIfMobsIsPresent_ID")
                     {
@@ -226,6 +237,18 @@ namespace app
                     }
                     if (Splitted[0] == "LeaveIfMobsCountIsAbove") AllLines[i] = "LeaveIfMobsCountIsAbove=" + Form1_0.Baal_0.LeaveIfMobsCountIsAbove;
                     if (Splitted[0] == "SafeHealingStrat") AllLines[i] = "SafeHealingStrat=" + Form1_0.Baal_0.SafeYoloStrat;
+                    //#########
+                    //SPECIAL OVERLAY FEATURES
+                    if (Splitted[0] == "ShowMobs") AllLines[i] = "ShowMobs=" + Form1_0.overlayForm.ShowMobs;
+                    if (Splitted[0] == "ShowWPs") AllLines[i] = "ShowWPs=" +Form1_0.overlayForm.ShowWPs;
+                    if (Splitted[0] == "ShowGoodChests") AllLines[i] = "ShowGoodChests=" +Form1_0.overlayForm.ShowGoodChests;
+                    if (Splitted[0] == "ShowLogs") AllLines[i] = "ShowLogs=" +Form1_0.overlayForm.ShowLogs;
+                    if (Splitted[0] == "ShowBotInfos") AllLines[i] = "ShowBotInfos=" +Form1_0.overlayForm.ShowBotInfos;
+                    if (Splitted[0] == "ShowNPC") AllLines[i] = "ShowNPC=" +Form1_0.overlayForm.ShowNPC;
+                    if (Splitted[0] == "ShowPathFinding") AllLines[i] = "ShowPathFinding=" +Form1_0.overlayForm.ShowPathFinding;
+                    if (Splitted[0] == "ShowExits") AllLines[i] = "ShowExits=" +Form1_0.overlayForm.ShowExits;
+                    if (Splitted[0] == "ShowMapHackShowLines") AllLines[i] = "ShowMapHackShowLines=" +Form1_0.overlayForm.ShowMapHackShowLines;
+                    if (Splitted[0] == "ShowUnitsScanCount") AllLines[i] = "ShowUnitsScanCount=" +Form1_0.overlayForm.ShowUnitsScanCount;
                     //#########
 
                     if (Splitted[0] == "RunMapHackOnly") AllLines[i] = "RunMapHackOnly=" + CharConfig.RunMapHackOnly;
@@ -271,6 +294,9 @@ namespace app
                     if (Splitted[0] == "RunChaosSearchGameScript") AllLines[i] = "RunChaosSearchGameScript=" + CharConfig.RunChaosSearchGameScript;
                     if (Splitted[0] == "RunBaalSearchGameScript") AllLines[i] = "RunBaalSearchGameScript=" + CharConfig.RunBaalSearchGameScript;
                     if (Splitted[0] == "RunGameMakerScript") AllLines[i] = "RunGameMakerScript=" + CharConfig.RunGameMakerScript;
+
+                    if (Splitted[0] == "ClearAfterBoss") AllLines[i] = "ClearAfterBoss=" + CharConfig.ClearAfterBoss;
+
                     if (Splitted[0] == "GameName") AllLines[i] = "GameName=" + CharConfig.GameName;
                     if (Splitted[0] == "GameDifficulty") AllLines[i] = "GameDifficulty=" + CharConfig.GameDifficulty;
                     if (Splitted[0] == "GamePass") AllLines[i] = "GamePass=" + CharConfig.GamePass;
@@ -896,7 +922,18 @@ namespace app
                                     Form1_0.Baal_0.SafeYoloStrat = bool.Parse(Params[1].ToLower());
                                 }
                                 //#########
-
+                                //SPECIAL OVERLAY FEATURES
+                                if (Params[0].Contains("ShowMobs")) Form1_0.overlayForm.ShowMobs = bool.Parse(Params[1].ToLower());
+                                if (Params[0].Contains("ShowWPs")) Form1_0.overlayForm.ShowWPs = bool.Parse(Params[1].ToLower());
+                                if (Params[0].Contains("ShowGoodChests")) Form1_0.overlayForm.ShowGoodChests = bool.Parse(Params[1].ToLower());
+                                if (Params[0].Contains("ShowLogs")) Form1_0.overlayForm.ShowLogs = bool.Parse(Params[1].ToLower());
+                                if (Params[0].Contains("ShowBotInfos")) Form1_0.overlayForm.ShowBotInfos = bool.Parse(Params[1].ToLower());
+                                if (Params[0].Contains("ShowNPC")) Form1_0.overlayForm.ShowNPC = bool.Parse(Params[1].ToLower());
+                                if (Params[0].Contains("ShowPathFinding")) Form1_0.overlayForm.ShowPathFinding = bool.Parse(Params[1].ToLower());
+                                if (Params[0].Contains("ShowExits")) Form1_0.overlayForm.ShowExits = bool.Parse(Params[1].ToLower());
+                                if (Params[0].Contains("ShowMapHackShowLines")) Form1_0.overlayForm.ShowMapHackShowLines = bool.Parse(Params[1].ToLower());
+                                if (Params[0].Contains("ShowUnitsScanCount")) Form1_0.overlayForm.ShowUnitsScanCount = bool.Parse(Params[1].ToLower());
+                                //#########
 
                                 if (Params[0].Contains("RunMapHackOnly"))
                                 {
@@ -1061,6 +1098,10 @@ namespace app
                                 {
                                     CharConfig.RunGameMakerScript = bool.Parse(Params[1].ToLower());
                                 }
+                                if (Params[0].Contains("ClearAfterBoss"))
+                                {
+                                    CharConfig.ClearAfterBoss = bool.Parse(Params[1].ToLower());
+                                }
                                 if (Params[0].Contains("GameName"))
                                 {
                                     CharConfig.GameName = Params[1];
@@ -1216,6 +1257,18 @@ namespace app
                                 {
                                     Enum.TryParse(Params[1], out CharConfig.KeySkillLifeAura);
                                 }
+                                if (Params[0].Contains("KeySkillBattleOrder"))
+                                {
+                                    Enum.TryParse(Params[1], out CharConfig.KeySkillBattleOrder);
+                                }
+                                if (Params[0].Contains("KeySkillBattleCommand"))
+                                {
+                                    Enum.TryParse(Params[1], out CharConfig.KeySkillBattleCommand);
+                                }
+                                if (Params[0].Contains("KeySkillBattleCry"))
+                                {
+                                    Enum.TryParse(Params[1], out CharConfig.KeySkillBattleCry);
+                                }
                                 //######
                                 if (Params[0].Contains("BeltPotTypeToHave") && Params[1].Contains(","))
                                 {
@@ -1298,6 +1351,10 @@ namespace app
                                 {
                                     CharConfig.GambleGold = bool.Parse(Params[1].ToLower());
                                 }
+                                if (Params[0].Contains("UseKeys"))
+                                {
+                                    CharConfig.UseKeys = bool.Parse(Params[1].ToLower());
+                                }
                                 if (Params[0].Contains("ChickenHP"))
                                 {
                                     CharConfig.ChickenHP = int.Parse(Params[1]);
@@ -1344,7 +1401,26 @@ namespace app
                                     CharConfig.MercTakeHPPotUnder = int.Parse(Params[1]);
                                 }
                                 //#####
-
+                                if (Params[0].Contains("AvoidColdImmune"))
+                                {
+                                    CharConfig.AvoidColdImmune = bool.Parse(Params[1].ToLower());
+                                }
+                                if (Params[0].Contains("AvoidFireImmune"))
+                                {
+                                    CharConfig.AvoidFireImmune = bool.Parse(Params[1].ToLower());
+                                }
+                                if (Params[0].Contains("AvoidLightImmune"))
+                                {
+                                    CharConfig.AvoidLightImmune = bool.Parse(Params[1].ToLower());
+                                }
+                                if (Params[0].Contains("AvoidPoisonImmune"))
+                                {
+                                    CharConfig.AvoidPoisonImmune = bool.Parse(Params[1].ToLower());
+                                }
+                                if (Params[0].Contains("AvoidMagicImmune"))
+                                {
+                                    CharConfig.AvoidMagicImmune = bool.Parse(Params[1].ToLower());
+                                }
                                 //#####
                             }
                         }

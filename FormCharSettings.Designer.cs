@@ -33,6 +33,12 @@
             this.label1 = new System.Windows.Forms.Label();
             this.comboBoxType = new System.Windows.Forms.ComboBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.textBoxBattleCry = new System.Windows.Forms.TextBox();
+            this.label27 = new System.Windows.Forms.Label();
+            this.textBoxBattleCommand = new System.Windows.Forms.TextBox();
+            this.label26 = new System.Windows.Forms.Label();
+            this.textBoxBattleOrder = new System.Windows.Forms.TextBox();
+            this.label25 = new System.Windows.Forms.Label();
             this.checkBoxAttachRightHand = new System.Windows.Forms.CheckBox();
             this.textBoxLifeSkill = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
@@ -62,6 +68,7 @@
             this.textBoxCharName = new System.Windows.Forms.TextBox();
             this.label14 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.numericUpDownKeyYPos = new System.Windows.Forms.NumericUpDown();
             this.numericUpDownKeyXPos = new System.Windows.Forms.NumericUpDown();
             this.label21 = new System.Windows.Forms.Label();
@@ -85,17 +92,20 @@
             this.label22 = new System.Windows.Forms.Label();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.checkBoxClearAfterBoss = new System.Windows.Forms.CheckBox();
+            this.comboBoxAvoidImmune = new System.Windows.Forms.ComboBox();
+            this.label24 = new System.Windows.Forms.Label();
             this.checkBoxGamble = new System.Windows.Forms.CheckBox();
             this.checkBoxDClone = new System.Windows.Forms.CheckBox();
             this.checkBoxIDAtShop = new System.Windows.Forms.CheckBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.label23 = new System.Windows.Forms.Label();
-            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
-            this.panelHelpKeys = new System.Windows.Forms.Panel();
             this.buttonReload = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
+            this.label23 = new System.Windows.Forms.Label();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.panelHelpKeys = new System.Windows.Forms.Panel();
             this.button2 = new System.Windows.Forms.Button();
+            this.checkBoxUseKeys = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -136,6 +146,12 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.textBoxBattleCry);
+            this.groupBox1.Controls.Add(this.label27);
+            this.groupBox1.Controls.Add(this.textBoxBattleCommand);
+            this.groupBox1.Controls.Add(this.label26);
+            this.groupBox1.Controls.Add(this.textBoxBattleOrder);
+            this.groupBox1.Controls.Add(this.label25);
             this.groupBox1.Controls.Add(this.checkBoxAttachRightHand);
             this.groupBox1.Controls.Add(this.textBoxLifeSkill);
             this.groupBox1.Controls.Add(this.label8);
@@ -153,10 +169,61 @@
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Location = new System.Drawing.Point(5, 36);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(171, 207);
+            this.groupBox1.Size = new System.Drawing.Size(171, 273);
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Skills Shortcuts Keys";
+            // 
+            // textBoxBattleCry
+            // 
+            this.textBoxBattleCry.Location = new System.Drawing.Point(123, 244);
+            this.textBoxBattleCry.Name = "textBoxBattleCry";
+            this.textBoxBattleCry.Size = new System.Drawing.Size(37, 20);
+            this.textBoxBattleCry.TabIndex = 23;
+            this.toolTip1.SetToolTip(this.textBoxBattleCry, "Battle Cry (if using CTA, else set to nothing)");
+            // 
+            // label27
+            // 
+            this.label27.AutoSize = true;
+            this.label27.Location = new System.Drawing.Point(10, 247);
+            this.label27.Name = "label27";
+            this.label27.Size = new System.Drawing.Size(77, 13);
+            this.label27.TabIndex = 22;
+            this.label27.Text = "Battle Cry Skill:";
+            // 
+            // textBoxBattleCommand
+            // 
+            this.textBoxBattleCommand.Location = new System.Drawing.Point(123, 222);
+            this.textBoxBattleCommand.Name = "textBoxBattleCommand";
+            this.textBoxBattleCommand.Size = new System.Drawing.Size(37, 20);
+            this.textBoxBattleCommand.TabIndex = 21;
+            this.toolTip1.SetToolTip(this.textBoxBattleCommand, "Battle Command (if using CTA, else set to nothing)");
+            // 
+            // label26
+            // 
+            this.label26.AutoSize = true;
+            this.label26.Location = new System.Drawing.Point(10, 225);
+            this.label26.Name = "label26";
+            this.label26.Size = new System.Drawing.Size(109, 13);
+            this.label26.TabIndex = 20;
+            this.label26.Text = "Battle Command Skill:";
+            // 
+            // textBoxBattleOrder
+            // 
+            this.textBoxBattleOrder.Location = new System.Drawing.Point(123, 200);
+            this.textBoxBattleOrder.Name = "textBoxBattleOrder";
+            this.textBoxBattleOrder.Size = new System.Drawing.Size(37, 20);
+            this.textBoxBattleOrder.TabIndex = 19;
+            this.toolTip1.SetToolTip(this.textBoxBattleOrder, "Battle Orders (BO) (if using CTA, else set to nothing)");
+            // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.Location = new System.Drawing.Point(10, 203);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(88, 13);
+            this.label25.TabIndex = 18;
+            this.label25.Text = "Battle Order Skill:";
             // 
             // checkBoxAttachRightHand
             // 
@@ -297,9 +364,9 @@
             this.groupBox2.Controls.Add(this.comboBoxBelt3);
             this.groupBox2.Controls.Add(this.comboBoxBelt2);
             this.groupBox2.Controls.Add(this.comboBoxBelt1);
-            this.groupBox2.Location = new System.Drawing.Point(201, 249);
+            this.groupBox2.Location = new System.Drawing.Point(182, 245);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(245, 64);
+            this.groupBox2.Size = new System.Drawing.Size(284, 64);
             this.groupBox2.TabIndex = 3;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Belt Potions Type";
@@ -307,7 +374,7 @@
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(193, 22);
+            this.label12.Location = new System.Drawing.Point(214, 20);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(34, 13);
             this.label12.TabIndex = 7;
@@ -316,7 +383,7 @@
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(136, 22);
+            this.label11.Location = new System.Drawing.Point(157, 20);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(34, 13);
             this.label11.TabIndex = 6;
@@ -325,7 +392,7 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(78, 22);
+            this.label10.Location = new System.Drawing.Point(99, 20);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(34, 13);
             this.label10.TabIndex = 5;
@@ -334,7 +401,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(21, 22);
+            this.label9.Location = new System.Drawing.Point(42, 20);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(34, 13);
             this.label9.TabIndex = 4;
@@ -348,7 +415,7 @@
             "Mana",
             "RV",
             "Full RV"});
-            this.comboBoxBelt4.Location = new System.Drawing.Point(180, 38);
+            this.comboBoxBelt4.Location = new System.Drawing.Point(201, 36);
             this.comboBoxBelt4.Name = "comboBoxBelt4";
             this.comboBoxBelt4.Size = new System.Drawing.Size(58, 21);
             this.comboBoxBelt4.TabIndex = 3;
@@ -361,7 +428,7 @@
             "Mana",
             "RV",
             "Full RV"});
-            this.comboBoxBelt3.Location = new System.Drawing.Point(122, 38);
+            this.comboBoxBelt3.Location = new System.Drawing.Point(143, 36);
             this.comboBoxBelt3.Name = "comboBoxBelt3";
             this.comboBoxBelt3.Size = new System.Drawing.Size(58, 21);
             this.comboBoxBelt3.TabIndex = 2;
@@ -374,7 +441,7 @@
             "Mana",
             "RV",
             "Full RV"});
-            this.comboBoxBelt2.Location = new System.Drawing.Point(64, 38);
+            this.comboBoxBelt2.Location = new System.Drawing.Point(85, 36);
             this.comboBoxBelt2.Name = "comboBoxBelt2";
             this.comboBoxBelt2.Size = new System.Drawing.Size(58, 21);
             this.comboBoxBelt2.TabIndex = 1;
@@ -387,16 +454,16 @@
             "Mana",
             "RV",
             "Full RV"});
-            this.comboBoxBelt1.Location = new System.Drawing.Point(6, 38);
+            this.comboBoxBelt1.Location = new System.Drawing.Point(27, 36);
             this.comboBoxBelt1.Name = "comboBoxBelt1";
             this.comboBoxBelt1.Size = new System.Drawing.Size(58, 21);
             this.comboBoxBelt1.TabIndex = 0;
             // 
             // groupBoxInventory
             // 
-            this.groupBoxInventory.Location = new System.Drawing.Point(5, 319);
+            this.groupBoxInventory.Location = new System.Drawing.Point(182, 357);
             this.groupBoxInventory.Name = "groupBoxInventory";
-            this.groupBoxInventory.Size = new System.Drawing.Size(282, 101);
+            this.groupBoxInventory.Size = new System.Drawing.Size(284, 101);
             this.groupBoxInventory.TabIndex = 4;
             this.groupBoxInventory.TabStop = false;
             this.groupBoxInventory.Text = "Inventory Slots (Checked mean this slot is NOT FREE)";
@@ -405,7 +472,7 @@
             // 
             this.label13.AutoSize = true;
             this.label13.ForeColor = System.Drawing.Color.Red;
-            this.label13.Location = new System.Drawing.Point(74, 443);
+            this.label13.Location = new System.Drawing.Point(252, 481);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(137, 39);
             this.label13.TabIndex = 5;
@@ -450,10 +517,22 @@
             this.groupBox3.Controls.Add(this.textBoxCharName);
             this.groupBox3.Location = new System.Drawing.Point(182, 36);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(264, 207);
+            this.groupBox3.Size = new System.Drawing.Size(284, 207);
             this.groupBox3.TabIndex = 20;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Char Parameters";
+            // 
+            // linkLabel1
+            // 
+            this.linkLabel1.AutoSize = true;
+            this.linkLabel1.Location = new System.Drawing.Point(243, 170);
+            this.linkLabel1.Name = "linkLabel1";
+            this.linkLabel1.Size = new System.Drawing.Size(13, 13);
+            this.linkLabel1.TabIndex = 35;
+            this.linkLabel1.TabStop = true;
+            this.linkLabel1.Text = "?";
+            this.toolTip1.SetToolTip(this.linkLabel1, "Help for Keys location");
+            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
             // 
             // numericUpDownKeyYPos
             // 
@@ -601,7 +680,7 @@
             // checkBoxGrabGold
             // 
             this.checkBoxGrabGold.AutoSize = true;
-            this.checkBoxGrabGold.Location = new System.Drawing.Point(6, 51);
+            this.checkBoxGrabGold.Location = new System.Drawing.Point(13, 51);
             this.checkBoxGrabGold.Name = "checkBoxGrabGold";
             this.checkBoxGrabGold.Size = new System.Drawing.Size(89, 17);
             this.checkBoxGrabGold.TabIndex = 36;
@@ -612,7 +691,7 @@
             // checkBoxUseBO
             // 
             this.checkBoxUseBO.AutoSize = true;
-            this.checkBoxUseBO.Location = new System.Drawing.Point(6, 35);
+            this.checkBoxUseBO.Location = new System.Drawing.Point(13, 35);
             this.checkBoxUseBO.Name = "checkBoxUseBO";
             this.checkBoxUseBO.Size = new System.Drawing.Size(63, 17);
             this.checkBoxUseBO.TabIndex = 35;
@@ -623,7 +702,7 @@
             // checkBoxUseTeleport
             // 
             this.checkBoxUseTeleport.AutoSize = true;
-            this.checkBoxUseTeleport.Location = new System.Drawing.Point(6, 19);
+            this.checkBoxUseTeleport.Location = new System.Drawing.Point(13, 19);
             this.checkBoxUseTeleport.Name = "checkBoxUseTeleport";
             this.checkBoxUseTeleport.Size = new System.Drawing.Size(87, 17);
             this.checkBoxUseTeleport.TabIndex = 18;
@@ -633,7 +712,7 @@
             // checkBoxUseMerc
             // 
             this.checkBoxUseMerc.AutoSize = true;
-            this.checkBoxUseMerc.Location = new System.Drawing.Point(46, 16);
+            this.checkBoxUseMerc.Location = new System.Drawing.Point(10, 16);
             this.checkBoxUseMerc.Name = "checkBoxUseMerc";
             this.checkBoxUseMerc.Size = new System.Drawing.Size(72, 17);
             this.checkBoxUseMerc.TabIndex = 35;
@@ -642,15 +721,15 @@
             // 
             // numericUpDownMercTakeHPUnder
             // 
-            this.numericUpDownMercTakeHPUnder.Location = new System.Drawing.Point(128, 37);
+            this.numericUpDownMercTakeHPUnder.Location = new System.Drawing.Point(216, 13);
             this.numericUpDownMercTakeHPUnder.Name = "numericUpDownMercTakeHPUnder";
-            this.numericUpDownMercTakeHPUnder.Size = new System.Drawing.Size(53, 20);
+            this.numericUpDownMercTakeHPUnder.Size = new System.Drawing.Size(41, 20);
             this.numericUpDownMercTakeHPUnder.TabIndex = 36;
             // 
             // label22
             // 
             this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(7, 39);
+            this.label22.Location = new System.Drawing.Point(99, 17);
             this.label22.Name = "label22";
             this.label22.Size = new System.Drawing.Size(115, 13);
             this.label22.TabIndex = 35;
@@ -661,32 +740,71 @@
             this.groupBox4.Controls.Add(this.checkBoxUseMerc);
             this.groupBox4.Controls.Add(this.numericUpDownMercTakeHPUnder);
             this.groupBox4.Controls.Add(this.label22);
-            this.groupBox4.Location = new System.Drawing.Point(5, 249);
+            this.groupBox4.Location = new System.Drawing.Point(182, 310);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(190, 64);
+            this.groupBox4.Size = new System.Drawing.Size(284, 41);
             this.groupBox4.TabIndex = 37;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Merc Parameters";
             // 
             // groupBox5
             // 
+            this.groupBox5.Controls.Add(this.checkBoxUseKeys);
+            this.groupBox5.Controls.Add(this.checkBoxClearAfterBoss);
+            this.groupBox5.Controls.Add(this.comboBoxAvoidImmune);
+            this.groupBox5.Controls.Add(this.label24);
             this.groupBox5.Controls.Add(this.checkBoxGamble);
             this.groupBox5.Controls.Add(this.checkBoxDClone);
             this.groupBox5.Controls.Add(this.checkBoxIDAtShop);
             this.groupBox5.Controls.Add(this.checkBoxGrabGold);
             this.groupBox5.Controls.Add(this.checkBoxUseTeleport);
             this.groupBox5.Controls.Add(this.checkBoxUseBO);
-            this.groupBox5.Location = new System.Drawing.Point(293, 319);
+            this.groupBox5.Location = new System.Drawing.Point(5, 315);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(153, 168);
+            this.groupBox5.Size = new System.Drawing.Size(171, 201);
             this.groupBox5.TabIndex = 5;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Extras";
             // 
+            // checkBoxClearAfterBoss
+            // 
+            this.checkBoxClearAfterBoss.AutoSize = true;
+            this.checkBoxClearAfterBoss.Location = new System.Drawing.Point(13, 115);
+            this.checkBoxClearAfterBoss.Name = "checkBoxClearAfterBoss";
+            this.checkBoxClearAfterBoss.Size = new System.Drawing.Size(117, 17);
+            this.checkBoxClearAfterBoss.TabIndex = 42;
+            this.checkBoxClearAfterBoss.Text = "Clear After Boss Kill";
+            this.toolTip1.SetToolTip(this.checkBoxClearAfterBoss, "Enable this to clear the area after a Boss is killed");
+            this.checkBoxClearAfterBoss.UseVisualStyleBackColor = true;
+            // 
+            // comboBoxAvoidImmune
+            // 
+            this.comboBoxAvoidImmune.FormattingEnabled = true;
+            this.comboBoxAvoidImmune.Items.AddRange(new object[] {
+            "None",
+            "Cold Immune",
+            "Fire Immune",
+            "Light Immune",
+            "Poison Immune",
+            "Magic Immune"});
+            this.comboBoxAvoidImmune.Location = new System.Drawing.Point(13, 174);
+            this.comboBoxAvoidImmune.Name = "comboBoxAvoidImmune";
+            this.comboBoxAvoidImmune.Size = new System.Drawing.Size(139, 21);
+            this.comboBoxAvoidImmune.TabIndex = 41;
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Location = new System.Drawing.Point(44, 158);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(77, 13);
+            this.label24.TabIndex = 40;
+            this.label24.Text = "Avoid Immune:";
+            // 
             // checkBoxGamble
             // 
             this.checkBoxGamble.AutoSize = true;
-            this.checkBoxGamble.Location = new System.Drawing.Point(6, 99);
+            this.checkBoxGamble.Location = new System.Drawing.Point(13, 99);
             this.checkBoxGamble.Name = "checkBoxGamble";
             this.checkBoxGamble.Size = new System.Drawing.Size(87, 17);
             this.checkBoxGamble.TabIndex = 39;
@@ -698,7 +816,7 @@
             // checkBoxDClone
             // 
             this.checkBoxDClone.AutoSize = true;
-            this.checkBoxDClone.Location = new System.Drawing.Point(6, 83);
+            this.checkBoxDClone.Location = new System.Drawing.Point(13, 83);
             this.checkBoxDClone.Name = "checkBoxDClone";
             this.checkBoxDClone.Size = new System.Drawing.Size(109, 17);
             this.checkBoxDClone.TabIndex = 38;
@@ -709,52 +827,13 @@
             // checkBoxIDAtShop
             // 
             this.checkBoxIDAtShop.AutoSize = true;
-            this.checkBoxIDAtShop.Location = new System.Drawing.Point(6, 67);
+            this.checkBoxIDAtShop.Location = new System.Drawing.Point(13, 67);
             this.checkBoxIDAtShop.Name = "checkBoxIDAtShop";
             this.checkBoxIDAtShop.Size = new System.Drawing.Size(78, 17);
             this.checkBoxIDAtShop.TabIndex = 37;
             this.checkBoxIDAtShop.Text = "ID At Shop";
             this.toolTip1.SetToolTip(this.checkBoxIDAtShop, "Disabled will ID at Cain");
             this.checkBoxIDAtShop.UseVisualStyleBackColor = true;
-            // 
-            // label23
-            // 
-            this.label23.AutoSize = true;
-            this.label23.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label23.ForeColor = System.Drawing.Color.Red;
-            this.label23.Location = new System.Drawing.Point(8, 425);
-            this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(277, 13);
-            this.label23.TabIndex = 39;
-            this.label23.Text = "Put theses dummy items inside the shared stash";
-            // 
-            // openFileDialog1
-            // 
-            this.openFileDialog1.DefaultExt = "*.txt";
-            this.openFileDialog1.Filter = "\'Char\' Settings|*.txt";
-            this.openFileDialog1.Title = "Open \'PaladinHammer.txt\' or \'SorceressBlizzard.txt\'";
-            // 
-            // linkLabel1
-            // 
-            this.linkLabel1.AutoSize = true;
-            this.linkLabel1.Location = new System.Drawing.Point(243, 170);
-            this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(13, 13);
-            this.linkLabel1.TabIndex = 35;
-            this.linkLabel1.TabStop = true;
-            this.linkLabel1.Text = "?";
-            this.toolTip1.SetToolTip(this.linkLabel1, "Help for Keys location");
-            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
-            // 
-            // panelHelpKeys
-            // 
-            this.panelHelpKeys.BackgroundImage = global::app.Properties.Resources.BMBot10;
-            this.panelHelpKeys.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.panelHelpKeys.Controls.Add(this.button2);
-            this.panelHelpKeys.Location = new System.Drawing.Point(4, 248);
-            this.panelHelpKeys.Name = "panelHelpKeys";
-            this.panelHelpKeys.Size = new System.Drawing.Size(441, 190);
-            this.panelHelpKeys.TabIndex = 41;
             // 
             // buttonReload
             // 
@@ -782,6 +861,34 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label23.ForeColor = System.Drawing.Color.Red;
+            this.label23.Location = new System.Drawing.Point(186, 463);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(277, 13);
+            this.label23.TabIndex = 39;
+            this.label23.Text = "Put theses dummy items inside the shared stash";
+            // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.DefaultExt = "*.txt";
+            this.openFileDialog1.Filter = "\'Char\' Settings|*.txt";
+            this.openFileDialog1.Title = "Open \'PaladinHammer.txt\' or \'SorceressBlizzard.txt\'";
+            // 
+            // panelHelpKeys
+            // 
+            this.panelHelpKeys.BackgroundImage = global::app.Properties.Resources.BMBot10;
+            this.panelHelpKeys.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.panelHelpKeys.Controls.Add(this.button2);
+            this.panelHelpKeys.Location = new System.Drawing.Point(472, 248);
+            this.panelHelpKeys.Name = "panelHelpKeys";
+            this.panelHelpKeys.Size = new System.Drawing.Size(441, 190);
+            this.panelHelpKeys.TabIndex = 41;
+            this.panelHelpKeys.Visible = false;
+            // 
             // button2
             // 
             this.button2.Image = global::app.Properties.Resources.Delete;
@@ -792,12 +899,25 @@
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
+            // checkBoxUseKeys
+            // 
+            this.checkBoxUseKeys.AutoSize = true;
+            this.checkBoxUseKeys.Location = new System.Drawing.Point(13, 131);
+            this.checkBoxUseKeys.Name = "checkBoxUseKeys";
+            this.checkBoxUseKeys.Size = new System.Drawing.Size(136, 17);
+            this.checkBoxUseKeys.TabIndex = 43;
+            this.checkBoxUseKeys.Text = "Have Keys in Inventory";
+            this.toolTip1.SetToolTip(this.checkBoxUseKeys, "Enable this if you have Keys in your inventory and want to purchase Keys at Shop " +
+        " for Chest opening");
+            this.checkBoxUseKeys.UseVisualStyleBackColor = true;
+            this.checkBoxUseKeys.CheckedChanged += new System.EventHandler(this.checkBoxUseKeys_CheckedChanged);
+            // 
             // FormCharSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.ClientSize = new System.Drawing.Size(452, 487);
+            this.ClientSize = new System.Drawing.Size(469, 528);
             this.Controls.Add(this.panelHelpKeys);
             this.Controls.Add(this.buttonReload);
             this.Controls.Add(this.label23);
@@ -910,5 +1030,15 @@
         private System.Windows.Forms.LinkLabel linkLabel1;
         private System.Windows.Forms.Panel panelHelpKeys;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.ComboBox comboBoxAvoidImmune;
+        private System.Windows.Forms.Label label24;
+        private System.Windows.Forms.TextBox textBoxBattleCry;
+        private System.Windows.Forms.Label label27;
+        private System.Windows.Forms.TextBox textBoxBattleCommand;
+        private System.Windows.Forms.Label label26;
+        private System.Windows.Forms.TextBox textBoxBattleOrder;
+        private System.Windows.Forms.Label label25;
+        private System.Windows.Forms.CheckBox checkBoxClearAfterBoss;
+        private System.Windows.Forms.CheckBox checkBoxUseKeys;
     }
 }

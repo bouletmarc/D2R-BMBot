@@ -5467,7 +5467,7 @@ namespace app
                 case 371:
                     return "Chaos Armor";
                 case 372:
-                    return "Ornate Armor";
+                    return "Ornate Plate";
                 case 373:
                     return "Mage Plate";
                 case 374:
@@ -6029,17 +6029,17 @@ namespace app
                 case 652:
                     return "Mephisto's Brain";
                 case 653:
-                    return "Token of Absolution";
+                    return "Token Of Absolution";
                 case 654:
-                    return "Twisted Essence of Suffering";
+                    return "Twisted Essence Of Suffering";
                 case 655:
-                    return "Charged Essense of Hatred";
+                    return "Charged Essence Of Hatred";
                 case 656:
-                    return "Burning Essence of Terror";
+                    return "Burning Essence Of Terror";
                 case 657:
-                    return "Festering Essence of Destruction";
+                    return "Festering Essence Of Destruction";
                 case 658:
-                    return "Standard of Heroes";
+                    return "Standard Of Heroes";
                 default:
                     return "";
             }

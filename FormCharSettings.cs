@@ -21,6 +21,11 @@ namespace app
             Form1_0 = form1_1;
             InitializeComponent();
 
+            panelHelpKeys.Location = new Point(4, 248);
+            panelHelpKeys.Visible = false;
+
+            comboBoxAvoidImmune.SelectedIndex = 0;
+
             for (int i = 0; i < 40; i++)
             {
                 CheckBox CheckBox_0 = new CheckBox();
@@ -74,6 +79,9 @@ namespace app
             textBoxDefenseSkill.Text = CharConfig.KeySkillDefenseAura.ToString();
             textBoxCastDefenseSkill.Text = CharConfig.KeySkillCastDefense.ToString();
             textBoxLifeSkill.Text = CharConfig.KeySkillLifeAura.ToString();
+            textBoxBattleOrder.Text = CharConfig.KeySkillBattleOrder.ToString();
+            textBoxBattleCommand.Text = CharConfig.KeySkillBattleCommand.ToString();
+            textBoxBattleCry.Text = CharConfig.KeySkillBattleCry.ToString();
 
             checkBoxAttachRightHand.Checked = CharConfig.PlayerAttackWithRightHand;
 
@@ -115,6 +123,16 @@ namespace app
                 if (CharConfig.InventoryDontCheckItem[i] == 1) AvailableSlotList[i].Checked = true;
             }
 
+            if (CharConfig.AvoidColdImmune) comboBoxAvoidImmune.SelectedIndex = 1;
+            if (CharConfig.AvoidFireImmune) comboBoxAvoidImmune.SelectedIndex = 2;
+            if (CharConfig.AvoidLightImmune) comboBoxAvoidImmune.SelectedIndex = 3;
+            if (CharConfig.AvoidPoisonImmune) comboBoxAvoidImmune.SelectedIndex = 4;
+            if (CharConfig.AvoidMagicImmune) comboBoxAvoidImmune.SelectedIndex = 5;
+
+            checkBoxClearAfterBoss.Checked = CharConfig.ClearAfterBoss;
+            checkBoxUseKeys.Checked = CharConfig.UseKeys;
+            SetUsingKeys();
+
             CanReloadSettings = true;
         }
 
@@ -130,6 +148,9 @@ namespace app
             Enum.TryParse(textBoxDefenseSkill.Text, out CharConfig.KeySkillDefenseAura);
             Enum.TryParse(textBoxCastDefenseSkill.Text, out CharConfig.KeySkillCastDefense);
             Enum.TryParse(textBoxLifeSkill.Text, out CharConfig.KeySkillLifeAura);
+            Enum.TryParse(textBoxBattleOrder.Text, out CharConfig.KeySkillBattleOrder);
+            Enum.TryParse(textBoxBattleCommand.Text, out CharConfig.KeySkillBattleCommand);
+            Enum.TryParse(textBoxBattleCry.Text, out CharConfig.KeySkillBattleCry);
 
             CharConfig.PlayerAttackWithRightHand = checkBoxAttachRightHand.Checked;
 
@@ -163,6 +184,74 @@ namespace app
             {
                 if (!AvailableSlotList[i].Checked) CharConfig.InventoryDontCheckItem[i] = 0;
                 if (AvailableSlotList[i].Checked) CharConfig.InventoryDontCheckItem[i] = 1;
+            }
+
+            if (comboBoxAvoidImmune.SelectedIndex == 0)
+            {
+                CharConfig.AvoidColdImmune = false;
+                CharConfig.AvoidFireImmune = false;
+                CharConfig.AvoidLightImmune = false;
+                CharConfig.AvoidPoisonImmune = false;
+                CharConfig.AvoidMagicImmune = false;
+            }
+            else if (comboBoxAvoidImmune.SelectedIndex == 1)
+            {
+                CharConfig.AvoidColdImmune = true;
+                CharConfig.AvoidFireImmune = false;
+                CharConfig.AvoidLightImmune = false;
+                CharConfig.AvoidPoisonImmune = false;
+                CharConfig.AvoidMagicImmune = false;
+            }
+            else if (comboBoxAvoidImmune.SelectedIndex == 2)
+            {
+                CharConfig.AvoidColdImmune = false;
+                CharConfig.AvoidFireImmune = true;
+                CharConfig.AvoidLightImmune = false;
+                CharConfig.AvoidPoisonImmune = false;
+                CharConfig.AvoidMagicImmune = false;
+            }
+            else if (comboBoxAvoidImmune.SelectedIndex == 3)
+            {
+                CharConfig.AvoidColdImmune = false;
+                CharConfig.AvoidFireImmune = false;
+                CharConfig.AvoidLightImmune = true;
+                CharConfig.AvoidPoisonImmune = false;
+                CharConfig.AvoidMagicImmune = false;
+            }
+            else if (comboBoxAvoidImmune.SelectedIndex == 4)
+            {
+                CharConfig.AvoidColdImmune = false;
+                CharConfig.AvoidFireImmune = false;
+                CharConfig.AvoidLightImmune = false;
+                CharConfig.AvoidPoisonImmune = true;
+                CharConfig.AvoidMagicImmune = false;
+            }
+            else if (comboBoxAvoidImmune.SelectedIndex == 5)
+            {
+                CharConfig.AvoidColdImmune = false;
+                CharConfig.AvoidFireImmune = false;
+                CharConfig.AvoidLightImmune = false;
+                CharConfig.AvoidPoisonImmune = false;
+                CharConfig.AvoidMagicImmune = true;
+            }
+
+            CharConfig.ClearAfterBoss = checkBoxClearAfterBoss.Checked;
+            CharConfig.UseKeys = checkBoxUseKeys.Checked;
+        }
+
+        public void SetUsingKeys()
+        {
+            if (checkBoxUseKeys.Checked)
+            {
+                numericUpDownKeyXPos.Enabled = true;
+                numericUpDownKeyYPos.Enabled = true;
+                linkLabel1.Enabled = true;
+            }
+            else
+            {
+                numericUpDownKeyXPos.Enabled = false;
+                numericUpDownKeyYPos.Enabled = false;
+                linkLabel1.Enabled = false;
             }
         }
 
@@ -223,6 +312,11 @@ namespace app
         private void button2_Click(object sender, EventArgs e)
         {
             panelHelpKeys.Visible = false;
+        }
+
+        private void checkBoxUseKeys_CheckedChanged(object sender, EventArgs e)
+        {
+            SetUsingKeys();
         }
     }
 }

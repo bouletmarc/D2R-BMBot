@@ -21,6 +21,9 @@ namespace app
             panelBaalFeature.Visible = false;
             panelBaalFeature.Location = new System.Drawing.Point(23, 197);
 
+            panelOverlay.Visible = false;
+            panelOverlay.Location = new System.Drawing.Point(23, 197);
+
             LoadSettings();
         }
 
@@ -87,6 +90,7 @@ namespace app
             numericUpDownRunNumber.Value = Form1_0.CurrentGameNumber;
 
             //###################
+            //SPECIALS BAAL FEATURES
             checkBoxKillBaal.Checked = Form1_0.Baal_0.KillBaal;
             checkBoxBaalSafeHealing.Checked = Form1_0.Baal_0.SafeYoloStrat;
             numericUpDownBaalLeaveMobsCount.Value = Form1_0.Baal_0.LeaveIfMobsCountIsAbove;
@@ -99,6 +103,18 @@ namespace app
 
                 listViewBaalLeaveOnMobs.Items.Add(item);
             }
+            //###################
+            //SPECIALS OVERLAY FEATURES
+            checkBoxOverlayShowMobs.Checked = Form1_0.overlayForm.ShowMobs;
+            checkBoxOverlayShowWP.Checked = Form1_0.overlayForm.ShowWPs;
+            checkBoxOverlayShowGoodChest.Checked = Form1_0.overlayForm.ShowGoodChests;
+            checkBoxOverlayShowLogs.Checked = Form1_0.overlayForm.ShowLogs;
+            checkBoxOverlayShowBotInfos.Checked = Form1_0.overlayForm.ShowBotInfos;
+            checkBoxOverlayShowNPC.Checked = Form1_0.overlayForm.ShowNPC;
+            checkBoxOverlayShowPath.Checked = Form1_0.overlayForm.ShowPathFinding;
+            checkBoxOverlayShowExits.Checked = Form1_0.overlayForm.ShowExits;
+            checkBoxOverlayShowMH.Checked = Form1_0.overlayForm.ShowMapHackShowLines;
+            checkBoxOverlayShowUnitsCount.Checked = Form1_0.overlayForm.ShowUnitsScanCount;
             //###################
 
             SetCreateGameGroupbox();
@@ -220,6 +236,18 @@ namespace app
                 Form1_0.Baal_0.LeaveIfMobsIsPresent_Count.Add(int.Parse(listViewBaalLeaveOnMobs.Items[i].SubItems[1].Text));
             }
             //###################
+            //SPECIALS OVERLAY FEATURES
+            Form1_0.overlayForm.ShowMobs = checkBoxOverlayShowMobs.Checked;
+            Form1_0.overlayForm.ShowWPs = checkBoxOverlayShowWP.Checked;
+            Form1_0.overlayForm.ShowGoodChests = checkBoxOverlayShowGoodChest.Checked;
+            Form1_0.overlayForm.ShowLogs = checkBoxOverlayShowLogs.Checked;
+            Form1_0.overlayForm.ShowBotInfos = checkBoxOverlayShowBotInfos.Checked;
+            Form1_0.overlayForm.ShowNPC = checkBoxOverlayShowNPC.Checked;
+            Form1_0.overlayForm.ShowPathFinding = checkBoxOverlayShowPath.Checked;
+            Form1_0.overlayForm.ShowExits = checkBoxOverlayShowExits.Checked;
+            Form1_0.overlayForm.ShowMapHackShowLines = checkBoxOverlayShowMH.Checked;
+            Form1_0.overlayForm.ShowUnitsScanCount = checkBoxOverlayShowUnitsCount.Checked;
+            //###################
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -267,9 +295,12 @@ namespace app
             listViewRunScripts.SelectedItems[0].Checked = !listViewRunScripts.SelectedItems[0].Checked;
             if (listViewRunScripts.SelectedItems[0].Text == "Baal")
             {
-                Form1_0.Baal_0.KillBaal = checkBoxKillBaal.Checked = Form1_0.Baal_0.KillBaal;
-
+                checkBoxKillBaal.Checked = Form1_0.Baal_0.KillBaal;
                 panelBaalFeature.Visible = true;
+            }
+            if (listViewRunScripts.SelectedItems[0].Text == "Maphack ONLY (no script running)")
+            {
+                panelOverlay.Visible = true;
             }
             else
             {
@@ -312,6 +343,16 @@ namespace app
                 LoadSettings();
                 Application.DoEvents();
             }
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            panelOverlay.Visible = false;
+        }
+
+        private void buttonOverlaySettings_Click(object sender, EventArgs e)
+        {
+            panelOverlay.Visible = true;
         }
     }
 }

@@ -25,6 +25,9 @@ namespace app
         public static System.Windows.Forms.Keys KeySkillDefenseAura = Keys.F6;          //defiance
         public static System.Windows.Forms.Keys KeySkillCastDefense = Keys.F5;          //sacred shield
         public static System.Windows.Forms.Keys KeySkillLifeAura = Keys.F3;             //prayer
+        public static System.Windows.Forms.Keys KeySkillBattleOrder = Keys.D5;          //BO - BattleOrder
+        public static System.Windows.Forms.Keys KeySkillBattleCommand = Keys.D6;        //BattleCommand
+        public static System.Windows.Forms.Keys KeySkillBattleCry = Keys.D7;            //BattleCry
 
         //#######################################
         //BELT AND INVENTORY SETTINGS
@@ -59,6 +62,7 @@ namespace app
         public static bool IDAtShop = true;
         public static bool LeaveDiabloClone = true;
         public static bool GambleGold = true;
+        public static bool UseKeys = true;
 
         //#######################################
         //MERC SETTINGS
@@ -73,6 +77,7 @@ namespace app
         public static bool IsRushing = false;
         public static string RunningOnChar = "";
         public static string RushLeecherName = "";
+        public static bool ClearAfterBoss = false;
         public static bool ShowOverlay = true;
         public static bool RunWPTaker = false;
         public static bool RunMapHackOnly = false;
@@ -118,6 +123,15 @@ namespace app
         public static string GameName = "LOWERKTEST";         //SET GAME NAME, IF USING GAME MAKER
         public static string GamePass = "33";               //SET GAME PASS, IF USING GAME MAKER
         public static int GameDifficulty = 2;      //0 = normal, 1 = nighmare, 2 = hell
+
+        //#######################################
+        //AVOID IMMUNE SETTINGS
+        //#######################################
+        public static bool AvoidColdImmune = false;
+        public static bool AvoidFireImmune = false;
+        public static bool AvoidLightImmune = false;
+        public static bool AvoidPoisonImmune = false;
+        public static bool AvoidMagicImmune = false;
 
         //#######################################
         //GAME/PC SCREEN SETTINGS

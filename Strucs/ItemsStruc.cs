@@ -323,6 +323,20 @@ namespace app
             }
         }
 
+        public string GetItemsStashInfosTxt()
+        {
+            string ThisInfos = ", StashItem:";
+            if (Form1_0.ItemsAlert_0.ShouldKeepItem()) ThisInfos += "true";
+            else ThisInfos += "false";
+
+            ThisInfos += ", ItemToID:";
+            if (Form1_0.ItemsAlert_0.ShouldPickItem(false)) ThisInfos += "true";
+            else ThisInfos += "false";
+
+            //Console.WriteLine(Form1_0.ItemsStruc_0.ItemNAAME + ", StashItem:" + InventoryHasStashItem[FullIndex] + ", ItemToID:" + InventoryHasItemToID[FullIndex] + ", UnidItem:" + InventoryHasUnidItem[FullIndex]);
+            return ThisInfos;
+        }
+
         public bool DebuggingItems = false;
 
         public List<string> AllItemsOnCursor = new List<string>();
@@ -423,7 +437,7 @@ namespace app
 
                             if (DebuggingItems)
                             {
-                                AllItemsOnCursor.Add("ID:" + txtFileNo + "(" + ItemNAAME + ") at:" + itemx + ", " + itemy + " - On Cursor - " + Form1_0.ItemsAlert_0.GetItemTypeText() + " && " + GetQualityTextString() + " && " + GetAllFlagsFromItem() + " && " + GetAllValuesFromStats());
+                                AllItemsOnCursor.Add("ID:" + txtFileNo + "(" + ItemNAAME + ") at:" + itemx + ", " + itemy + " - On Cursor - " + Form1_0.ItemsAlert_0.GetItemTypeText() + " && " + GetQualityTextString() + " && " + GetAllFlagsFromItem() + " && " + GetAllValuesFromStats() + GetItemsStashInfosTxt());
                             }
                         }
                     }
@@ -444,7 +458,7 @@ namespace app
 
                             if (DebuggingItems)
                             {
-                                AllItemsInInventory.Add("ID:" + txtFileNo + "(" + ItemNAAME + ") at:" + itemx + ", " + itemy + " - In Inventory - " + Form1_0.ItemsAlert_0.GetItemTypeText() + " && " + GetQualityTextString() + " && " + GetAllFlagsFromItem() + " && " + GetAllValuesFromStats());
+                                AllItemsInInventory.Add("ID:" + txtFileNo + "(" + ItemNAAME + ") at:" + itemx + ", " + itemy + " - In Inventory - " + Form1_0.ItemsAlert_0.GetItemTypeText() + " && " + GetQualityTextString() + " && " + GetAllFlagsFromItem() + " && " + GetAllValuesFromStats() + GetItemsStashInfosTxt());
                             }
                         }
 
@@ -456,7 +470,7 @@ namespace app
 
                             if (DebuggingItems)
                             {
-                                AllItemsInStash.Add("ID:" + txtFileNo + "(" + ItemNAAME + ") at:" + itemx + ", " + itemy + " - In Stash - " + Form1_0.ItemsAlert_0.GetItemTypeText() + " && " + GetQualityTextString() + " && " + GetAllFlagsFromItem() + " && " + GetAllValuesFromStats());
+                                AllItemsInStash.Add("ID:" + txtFileNo + "(" + ItemNAAME + ") at:" + itemx + ", " + itemy + " - In Stash - " + Form1_0.ItemsAlert_0.GetItemTypeText() + " && " + GetQualityTextString() + " && " + GetAllFlagsFromItem() + " && " + GetAllValuesFromStats() + GetItemsStashInfosTxt());
                             }
                         }
                         if (dwOwnerId != Form1_0.PlayerScan_0.unitId && equiploc == 4)
@@ -472,9 +486,9 @@ namespace app
                                 if (dwOwnerId == dwOwnerId_Shared3) StashNum = 4;
                                 Form1_0.StashStruc_0.AddStashItem(itemx, itemy, StashNum);
 
-                                if (dwOwnerId == dwOwnerId_Shared1 && DebuggingItems) AllItemsInSharedStash1.Add("ID:" + txtFileNo + "(" + ItemNAAME + ") at:" + itemx + ", " + itemy + " - In Shared Stash1 - " + Form1_0.ItemsAlert_0.GetItemTypeText() + " && " + GetQualityTextString() + " && " + GetAllFlagsFromItem() + " && " + GetAllValuesFromStats());
-                                if (dwOwnerId == dwOwnerId_Shared2 && DebuggingItems) AllItemsInSharedStash2.Add("ID:" + txtFileNo + "(" + ItemNAAME + ") at:" + itemx + ", " + itemy + " - In Shared Stash2 - " + Form1_0.ItemsAlert_0.GetItemTypeText() + " && " + GetQualityTextString() + " && " + GetAllFlagsFromItem() + " && " + GetAllValuesFromStats());
-                                if (dwOwnerId == dwOwnerId_Shared3 && DebuggingItems) AllItemsInSharedStash3.Add("ID:" + txtFileNo + "(" + ItemNAAME + ") at:" + itemx + ", " + itemy + " - In Shared Stash3 - " + Form1_0.ItemsAlert_0.GetItemTypeText() + " && " + GetQualityTextString() + " && " + GetAllFlagsFromItem() + " && " + GetAllValuesFromStats());
+                                if (dwOwnerId == dwOwnerId_Shared1 && DebuggingItems) AllItemsInSharedStash1.Add("ID:" + txtFileNo + "(" + ItemNAAME + ") at:" + itemx + ", " + itemy + " - In Shared Stash1 - " + Form1_0.ItemsAlert_0.GetItemTypeText() + " && " + GetQualityTextString() + " && " + GetAllFlagsFromItem() + " && " + GetAllValuesFromStats() + GetItemsStashInfosTxt());
+                                if (dwOwnerId == dwOwnerId_Shared2 && DebuggingItems) AllItemsInSharedStash2.Add("ID:" + txtFileNo + "(" + ItemNAAME + ") at:" + itemx + ", " + itemy + " - In Shared Stash2 - " + Form1_0.ItemsAlert_0.GetItemTypeText() + " && " + GetQualityTextString() + " && " + GetAllFlagsFromItem() + " && " + GetAllValuesFromStats() + GetItemsStashInfosTxt());
+                                if (dwOwnerId == dwOwnerId_Shared3 && DebuggingItems) AllItemsInSharedStash3.Add("ID:" + txtFileNo + "(" + ItemNAAME + ") at:" + itemx + ", " + itemy + " - In Shared Stash3 - " + Form1_0.ItemsAlert_0.GetItemTypeText() + " && " + GetQualityTextString() + " && " + GetAllFlagsFromItem() + " && " + GetAllValuesFromStats() + GetItemsStashInfosTxt());
                             }
                         }
                         if (dwOwnerId == Form1_0.PlayerScan_0.unitId && equiploc == 3)
@@ -485,7 +499,7 @@ namespace app
 
                             if (DebuggingItems)
                             {
-                                AllItemsIncube.Add("ID:" + txtFileNo + "(" + ItemNAAME + ") at:" + itemx + ", " + itemy + " - In Cube - " + Form1_0.ItemsAlert_0.GetItemTypeText() + " && " + GetQualityTextString() + " && " + GetAllFlagsFromItem() + " && " + GetAllValuesFromStats());
+                                AllItemsIncube.Add("ID:" + txtFileNo + "(" + ItemNAAME + ") at:" + itemx + ", " + itemy + " - In Cube - " + Form1_0.ItemsAlert_0.GetItemTypeText() + " && " + GetQualityTextString() + " && " + GetAllFlagsFromItem() + " && " + GetAllValuesFromStats() + GetItemsStashInfosTxt());
                             }
                         }
                     }
@@ -505,7 +519,7 @@ namespace app
 
                             if (DebuggingItems)
                             {
-                                AllItemsEquipped.Add("ID:" + txtFileNo + "(" + ItemNAAME + ") at:" + itemx + ", " + itemy + " - Equipped - " + Form1_0.ItemsAlert_0.GetItemTypeText() + " && " + GetQualityTextString() + " && " + GetAllFlagsFromItem() + " && " + GetAllValuesFromStats());
+                                AllItemsEquipped.Add("ID:" + txtFileNo + "(" + ItemNAAME + ") at:" + itemx + ", " + itemy + " - Equipped - " + Form1_0.ItemsAlert_0.GetItemTypeText() + " && " + GetQualityTextString() + " && " + GetAllFlagsFromItem() + " && " + GetAllValuesFromStats() + GetItemsStashInfosTxt());
                             }
                         }
                         else
@@ -515,8 +529,8 @@ namespace app
                                 //Form1_0.MercStruc_0.MercOwnerID = ItemID;
                                 Form1_0.method_1("owner: " + dwOwnerId.ToString("X") + ", ID: " + ItemID.ToString("X") + ", name: " + ItemNAAME + " - at: " + itemx + "," + itemy + " - " + equiploc, Color.DarkGreen);
                             }*/
-                        }
-                    }
+    }
+}
                     if (itemdatastruc[0x0C] == 2)
                     {
                         if (dwOwnerId == Form1_0.PlayerScan_0.unitId)
@@ -529,7 +543,7 @@ namespace app
 
                             if (DebuggingItems)
                             {
-                                AllItemsInBelt.Add("ID:" + txtFileNo + "(" + ItemNAAME + ") at:" + itemx + ", " + itemy + " - In Belt - " + Form1_0.ItemsAlert_0.GetItemTypeText() + " && " + GetQualityTextString() + " && " + GetAllFlagsFromItem() + " && " + GetAllValuesFromStats());
+                                AllItemsInBelt.Add("ID:" + txtFileNo + "(" + ItemNAAME + ") at:" + itemx + ", " + itemy + " - In Belt - " + Form1_0.ItemsAlert_0.GetItemTypeText() + " && " + GetQualityTextString() + " && " + GetAllFlagsFromItem() + " && " + GetAllValuesFromStats() + GetItemsStashInfosTxt());
                             }
                         }
                     }
@@ -541,7 +555,7 @@ namespace app
                         //Form1_0.method_1_Items("Ground: " + ItemNAAME, GetColorFromQuality((int)itemQuality));
                         if (DebuggingItems)
                         {
-                            AllItemsOnGround.Add("ID:" + txtFileNo + "(" + ItemNAAME + ") at:" + itemx + ", " + itemy + " - On Ground/Droping - " + Form1_0.ItemsAlert_0.GetItemTypeText() + " && " + GetQualityTextString() + " && " + GetAllFlagsFromItem() + " && " + GetAllValuesFromStats());
+                            AllItemsOnGround.Add("ID:" + txtFileNo + "(" + ItemNAAME + ") at:" + itemx + ", " + itemy + " - On Ground/Droping - " + Form1_0.ItemsAlert_0.GetItemTypeText() + " && " + GetQualityTextString() + " && " + GetAllFlagsFromItem() + " && " + GetAllValuesFromStats() + GetItemsStashInfosTxt());
                         }
 
                         if (IsIncludedInList(BadItemsOnGroundPointerList, ItemPointerLocation)) continue;

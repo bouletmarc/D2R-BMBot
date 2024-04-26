@@ -474,9 +474,12 @@ namespace app
 
                 if (CurrentStep == 8)
                 {
-                    Form1_0.PathFinding_0.MoveToThisPos(DiabloSpawnPos, 4, true);
-                    Form1_0.Battle_0.CastDefense();
-                    CurrentStep++;
+                    if (Form1_0.PathFinding_0.MoveToThisPos(DiabloSpawnPos, 4, true))
+                    {
+                        //Form1_0.PathFinding_0.MoveToThisPos(DiabloSpawnPos, 4, true);
+                        Form1_0.Battle_0.CastDefense();
+                        CurrentStep++;
+                    }
                 }
 
                 if (CurrentStep == 9)
@@ -531,23 +534,8 @@ namespace app
                                 Form1_0.Battle_0.DoBattleScript(15);
                             }
 
-                            if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
-                            if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
-                            if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
-                            if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
-                            if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
-                            if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
-                            if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
-                            if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
-                            if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
-                            if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
-                            Form1_0.ItemsStruc_0.GrabAllItemsForGold();
-                            Form1_0.Potions_0.CanUseSkillForRegen = true;
-
                             Form1_0.PathFinding_0.AcceptMoveOffset = BufferPathFindingMoveSize;
-                            Form1_0.Town_0.FastTowning = false;
-                            Form1_0.Town_0.UseLastTP = false;
-                            ScriptDone = true;
+                            if (Form1_0.Battle_0.EndBossBattle()) ScriptDone = true;
                             return;
                             //Form1_0.LeaveGame(true);
                         }
@@ -566,9 +554,7 @@ namespace app
                         Form1_0.Potions_0.CanUseSkillForRegen = true;
 
                         Form1_0.PathFinding_0.AcceptMoveOffset = BufferPathFindingMoveSize;
-                        Form1_0.Town_0.FastTowning = false;
-                        Form1_0.Town_0.UseLastTP = false;
-                        ScriptDone = true;
+                        if (Form1_0.Battle_0.EndBossBattle()) ScriptDone = true;
                         return;
                         //Form1_0.LeaveGame(true);
                     }

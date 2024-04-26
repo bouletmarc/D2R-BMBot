@@ -19,6 +19,9 @@ KeySkillfastMoveOutsideTown=F7
 KeySkillDefenseAura=F7
 KeySkillCastDefense=F5
 KeySkillLifeAura=F4
+KeySkillBattleOrder=D5
+KeySkillBattleCommand=D6
+KeySkillBattleCry=D7
 
 PlayerAttackWithRightHand=true
 
@@ -62,9 +65,19 @@ GrabForGold=true
 IDAtShop=true
 LeaveDiabloClone=true
 GambleGold=true
+UseKeys=true
 
 //#######################################
 //MERC SETTINGS
 //#######################################
 UsingMerc=false
 MercTakeHPPotUnder=40
+
+//#######################################
+//AVOID IMMUNE SETTINGS
+//#######################################
+AvoidColdImmune=false
+AvoidFireImmune=false
+AvoidLightImmune=false
+AvoidPoisonImmune=false
+AvoidMagicImmune=false

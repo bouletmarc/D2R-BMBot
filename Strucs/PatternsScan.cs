@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -20,6 +21,8 @@ namespace app
         public List<long> AllPlayersPointers = new List<long>();
         public List<long> AllNPCPointers = new List<long>();
 
+        public List<long> AllPossiblePointers = new List<long>();
+
         public List<long> AllPossibleItemsPointers = new List<long>();
         public List<long> AllPossiblePlayerPointers = new List<long>();
         public List<long> AllPossibleObjectsPointers = new List<long>();
@@ -32,9 +35,13 @@ namespace app
 
         public long StartIndexItem = long.MaxValue;
         public long StartIndexItemLast = long.MaxValue;
-        public int ScanUnitsNumber = 2600;
+        public int ScanUnitsNumber = 2100;
         //public int ScanUnitsNumber = 2048;
-        public int ScanUnitsNegativeOffset = 0;
+        public int ScanUnitsNegativeOffset = 30;
+
+
+        public long StartIndexItem_V2 = long.MaxValue;
+        public long StartIndexItemLast_V2 = long.MaxValue;
 
 
         public void SetForm1(Form1 form1_1)
@@ -248,19 +255,99 @@ namespace app
             //DetectFirstUnitPointer();
         }
 
-
-        /*public void scanForUnitsPointer(string SearchUnitsType)
+        //########################################################################################################################################
+        //########################################################################################################################################
+        //########################################################################################################################################
+        //ALL VERSIONS
+        public void unitPatternScan(long AtPoiinter, string SearchType)
         {
-            UnitPatternScan(SearchUnitsType);
-            //checkForMissingPointers(SearchUnitsType);
+            long SearchOffset = 0;
+            long ThisAddrF = Search(UnitBuffer, ThisCheckbytes, SearchOffset, SearchType);
+
+            //while (ThisAddrF >= 0)
+            if (ThisAddrF >= 0)
+            {
+                AddPointerToList(AtPoiinter + ThisAddrF, SearchType);
+            }
+        }
+
+        public int ScannedItemsCount = 0;
+        public int ScannedPlayerCount = 0;
+        public int ScannedObjectsCount = 0;
+        public int ScannedNPCCount = 0;
+
+        public int GetUnitsScannedCount(int ThisVersion)
+        {
+            ScannedItemsCount = 0;
+            ScannedPlayerCount = 0;
+            ScannedObjectsCount = 0;
+            ScannedNPCCount = 0;
+
+            if (ThisVersion == 1) scanForUnitsPointerV1("item");
+
+            int UnitsScannedCount = 0;
+            long CheckThisI = StartIndexItem;
+            if (ThisVersion == 2) CheckThisI = StartIndexItem_V2;
+
+            CheckThisI -= (0x48 + 0x170) * ScanUnitsNegativeOffset;  //offseting in negative here
+            UnitBuffer = new byte[9];
+
+            //string SavePathh = Form1_0.ThisEndPath + "DumpHexUnits";
+            //File.Create(SavePathh).Dispose();
+
+            for (int i = 0; i < ScanUnitsNumber; i++)
+            {
+                if ((i % 2) == 1) CheckThisI += 0x48;
+                else CheckThisI += 0x170;
+
+                /*byte[] CurrentUnitBuff = new byte[(0x48 + 0x170)];
+                Form1_0.Mem_0.ReadRawMemory(CheckThisI, ref CurrentUnitBuff, CurrentUnitBuff.Length);
+                AppendAllBytes(SavePathh, CurrentUnitBuff);*/
+
+                ThisCheckbytes = new byte[] { (byte)UnitType.Item, 0x00, 0x00, 0x00, 0xff, 0xff, 0x00, 0x00 };
+                Form1_0.Mem_0.ReadRawMemory(CheckThisI, ref UnitBuffer, UnitBuffer.Length);
+                long SearchOffset = 0;
+                if (Search(UnitBuffer, ThisCheckbytes, SearchOffset, "item") >= 0) { UnitsScannedCount++; ScannedItemsCount++; }
+
+                ThisCheckbytes = new byte[] { (byte)UnitType.Player, 0x00, 0x00, 0x00, 0xff, 0xff, 0x00, 0x00 };
+                Form1_0.Mem_0.ReadRawMemory(CheckThisI, ref UnitBuffer, UnitBuffer.Length);
+                SearchOffset = 0;
+                if (Search(UnitBuffer, ThisCheckbytes, SearchOffset, "player") >= 0) { UnitsScannedCount++; ScannedPlayerCount++; }
+
+                ThisCheckbytes = new byte[] { (byte)UnitType.GameObject, 0x00, 0x00, 0x00, 0xff, 0xff, 0x00, 0x00 };
+                Form1_0.Mem_0.ReadRawMemory(CheckThisI, ref UnitBuffer, UnitBuffer.Length);
+                SearchOffset = 0;
+                if (Search(UnitBuffer, ThisCheckbytes, SearchOffset, "objects") >= 0) { UnitsScannedCount++; ScannedObjectsCount++; }
+
+                ThisCheckbytes = new byte[] { (byte)UnitType.NPC, 0x00, 0x00, 0x00, 0xff, 0xff, 0x00, 0x00 };
+                Form1_0.Mem_0.ReadRawMemory(CheckThisI, ref UnitBuffer, UnitBuffer.Length);
+                SearchOffset = 0;
+                if (Search(UnitBuffer, ThisCheckbytes, SearchOffset, "NPC") >= 0) { UnitsScannedCount++; ScannedNPCCount++; }
+            }
+
+            return UnitsScannedCount;
+        }
+
+        public static void AppendAllBytes(string path, byte[] bytes)
+        {
+            using (var stream = new FileStream(path, FileMode.Append))
+            {
+                stream.Write(bytes, 0, bytes.Length);
+            }
+        }
+
+        //########################################################################################################################################
+        //########################################################################################################################################
+        //########################################################################################################################################
+        //VERSION 2 UNITS SCAN
+        public void scanForUnitsPointer(string SearchUnitsType)
+        {
+            UnitPatternScanV2(SearchUnitsType);
         }
 
         public void DetectFirstUnitPointer()
         {
-            long UnitOffset = 0;
-            //try
-            //{
-            UnitOffset = (long)Form1_0.BaseAddress + (long)Form1_0.offsets["unitTable"] + Form1_0.UnitStrucOffset;
+            long UnitOffset = (long)Form1_0.BaseAddress + (long)Form1_0.offsets["unitTable"] + Form1_0.UnitStrucOffset;
 
             AllPossiblePointers = new List<long>();
             for (int i = 0; i < ((128 + 516) * 10); i += 8)
@@ -272,19 +359,18 @@ namespace app
             //set start index for searching
             for (int i = 0; i < AllPossiblePointers.Count; i++)
             {
-                if (AllPossiblePointers[i] < StartIndexItem) StartIndexItem = AllPossiblePointers[i];
+                if (AllPossiblePointers[i] < StartIndexItem_V2) StartIndexItem_V2 = AllPossiblePointers[i];
             }
 
             //(byte)UnitType.Item, 0x00, 0x00, 0x00, 0xff, 0xff, 0x00, 0x00
             //1C 00 00 00 0C 00 00 00 21 00 00 00 1D 00 00 00
             //04 00 00 00 1F 00 00 00 06 00 00 00 00 00 00 00
 
-            if (StartIndexItem == long.MaxValue) return;
+            if (StartIndexItem_V2 == long.MaxValue) return;
 
             int BadCount = 0;
-            long CheckThisI = StartIndexItem;
-            //CheckThisI -= (0x48 + 0x170) * 100;  //offseting in negative here
-            for (int i = 100; i >= 0; i--)
+            long CheckThisI = StartIndexItem_V2;
+            for (int i = 250; i >= 0; i--)
             {
                 //if ((i % 2) == 1) CheckThisI -= 0x48;
                 //else CheckThisI -= 0x170;
@@ -299,7 +385,7 @@ namespace app
                 if (CurrentUnitBuff[6] == 0 && CurrentUnitBuff[7] == 0)
                 {
                     BadCount = 0;
-                    StartIndexItem = CheckThisI;
+                    StartIndexItem_V2 = CheckThisI;
                 }
                 else
                 {
@@ -308,12 +394,11 @@ namespace app
                         BadCount++;
                         if (BadCount >= 3)
                         {
-                            if (StartIndexItem != LastStartIndexItem)
+                            if (StartIndexItem_V2 != StartIndexItemLast_V2)
                             {
-                                LastStartIndexItem = StartIndexItem;
+                                StartIndexItemLast_V2 = StartIndexItem_V2;
                                 //ScanUnitsNumber += i;
-                                Form1_0.method_1("Units pointer start at: 0x" + StartIndexItem.ToString("X"), Color.Black);
-                                //Form1_0.method_1("BAD Units pointer start at: 0x" + CheckThisI.ToString("X"), Color.Black);
+                                Form1_0.method_1("Units pointer start at: 0x" + StartIndexItem_V2.ToString("X"), Color.Black);
                             }
                             return;
                         }
@@ -324,57 +409,61 @@ namespace app
                     }
                 }
             }
-            //}
-            //catch
-            //{
-            //    return;
-            //}
-        }*/
+        }
 
-        public int GetUnitsScannedCount()
+        public void UnitPatternScanV2(string SearchUnitsType)
         {
-            int UnitsScannedCount = 0;
-            long CheckThisI = StartIndexItem;
-            CheckThisI -= (0x48 + 0x170) * ScanUnitsNegativeOffset;  //offseting in negative here
-            UnitBuffer = new byte[9];
+            if (StartIndexItem_V2 == long.MaxValue) DetectFirstUnitPointer();
 
-            //string SavePathh = Form1_0.ThisEndPath + "DumpHexUnits";
-            //File.Create(SavePathh).Dispose();
+            //search
+            long CheckThisI = StartIndexItem_V2;
+            UnitBuffer = new byte[9];
+            CheckThisI -= (0x48 + 0x170) * ScanUnitsNegativeOffset;  //offseting in negative here
+
+            //Console.WriteLine("Unit start: 0x" + CheckThisI.ToString("X"));
+            //Console.WriteLine("Unit end: 0x" + (CheckThisI + ((0x48 * ScanUnitsNumber / 2)) + ((0x170 * ScanUnitsNumber / 2))).ToString("X"));
 
             for (int i = 0; i < ScanUnitsNumber; i++)
             {
                 if ((i % 2) == 1) CheckThisI += 0x48;
                 else CheckThisI += 0x170;
 
-                //byte[] CurrentUnitBuff = new byte[(0x48 + 0x170)];
-                //Form1_0.Mem_0.ReadRawMemory(CheckThisI, ref CurrentUnitBuff, CurrentUnitBuff.Length);
-                //AppendAllBytes(SavePathh, CurrentUnitBuff);
+                if (SearchUnitsType == "item")
+                {
+                    ThisCheckbytes = new byte[] { (byte)UnitType.Item, 0x00, 0x00, 0x00, 0xff, 0xff, 0x00, 0x00 };
+                    Form1_0.Mem_0.ReadRawMemory(CheckThisI, ref UnitBuffer, UnitBuffer.Length);
+                    unitPatternScan(CheckThisI, "item");
+                }
 
-                ThisCheckbytes = new byte[] { (byte)UnitType.Item, 0x00, 0x00, 0x00, 0xff, 0xff, 0x00, 0x00 };
-                Form1_0.Mem_0.ReadRawMemory(CheckThisI, ref UnitBuffer, UnitBuffer.Length);
-                long SearchOffset = 0;
-                if (Search(UnitBuffer, ThisCheckbytes, SearchOffset, "item") >= 0) UnitsScannedCount++;
+                if (SearchUnitsType == "player")
+                {
+                    ThisCheckbytes = new byte[] { (byte)UnitType.Player, 0x00, 0x00, 0x00, 0xff, 0xff, 0x00, 0x00 };
+                    Form1_0.Mem_0.ReadRawMemory(CheckThisI, ref UnitBuffer, UnitBuffer.Length);
+                    unitPatternScan(CheckThisI, "player");
+                }
 
-                ThisCheckbytes = new byte[] { (byte)UnitType.Player, 0x00, 0x00, 0x00, 0xff, 0xff, 0x00, 0x00 };
-                Form1_0.Mem_0.ReadRawMemory(CheckThisI, ref UnitBuffer, UnitBuffer.Length);
-                SearchOffset = 0;
-                if (Search(UnitBuffer, ThisCheckbytes, SearchOffset, "item") >= 0) UnitsScannedCount++;
+                if (SearchUnitsType == "objects")
+                {
+                    ThisCheckbytes = new byte[] { (byte)UnitType.GameObject, 0x00, 0x00, 0x00, 0xff, 0xff, 0x00, 0x00 };
+                    Form1_0.Mem_0.ReadRawMemory(CheckThisI, ref UnitBuffer, UnitBuffer.Length);
+                    unitPatternScan(CheckThisI, "objects");
+                }
 
-                ThisCheckbytes = new byte[] { (byte)UnitType.GameObject, 0x00, 0x00, 0x00, 0xff, 0xff, 0x00, 0x00 };
-                Form1_0.Mem_0.ReadRawMemory(CheckThisI, ref UnitBuffer, UnitBuffer.Length);
-                SearchOffset = 0;
-                if (Search(UnitBuffer, ThisCheckbytes, SearchOffset, "item") >= 0) UnitsScannedCount++;
-
-                ThisCheckbytes = new byte[] { (byte)UnitType.NPC, 0x00, 0x00, 0x00, 0xff, 0xff, 0x00, 0x00 };
-                Form1_0.Mem_0.ReadRawMemory(CheckThisI, ref UnitBuffer, UnitBuffer.Length);
-                SearchOffset = 0;
-                if (Search(UnitBuffer, ThisCheckbytes, SearchOffset, "item") >= 0) UnitsScannedCount++;
+                if (SearchUnitsType == "NPC")
+                {
+                    ThisCheckbytes = new byte[] { (byte)UnitType.NPC, 0x00, 0x00, 0x00, 0xff, 0xff, 0x00, 0x00 };
+                    Form1_0.Mem_0.ReadRawMemory(CheckThisI, ref UnitBuffer, UnitBuffer.Length);
+                    unitPatternScan(CheckThisI, "NPC");
+                }
             }
-
-            return UnitsScannedCount;
         }
 
-        public void scanForUnitsPointer(string SearchUnitsType)
+
+        //########################################################################################################################################
+        //########################################################################################################################################
+        //########################################################################################################################################
+        //VERSION 1 UNITS SCAN
+        public void scanForUnitsPointerV1(string SearchUnitsType)
         {
             long UnitOffset = 0;
             try
@@ -431,15 +520,12 @@ namespace app
                 }
             }
 
-            UnitPatternScan(SearchUnitsType);
+            UnitPatternScanV1(SearchUnitsType);
             checkForMissingPointers(SearchUnitsType);
         }
 
-        public void UnitPatternScan(string SearchUnitsType)
+        public void UnitPatternScanV1(string SearchUnitsType)
         {
-            //DetectFirstUnitPointer();
-            //if (StartIndexItem == long.MaxValue) DetectFirstUnitPointer();
-
             if (SearchUnitsType == "item") AllItemsPointers = new List<long>();
             if (SearchUnitsType == "player") AllPlayersPointers = new List<long>();
             if (SearchUnitsType == "objects") AllObjectsPointers = new List<long>();
@@ -505,8 +591,11 @@ namespace app
             //search
             long CheckThisI = StartIndexItem;
             UnitBuffer = new byte[9];
-
             CheckThisI -= (0x48 + 0x170) * ScanUnitsNegativeOffset;  //offseting in negative here
+
+            //Console.WriteLine("Unit start: 0x" + CheckThisI.ToString("X"));
+            //Console.WriteLine("Unit end: 0x" + (CheckThisI + ((0x48 * ScanUnitsNumber / 2)) + ((0x170 * ScanUnitsNumber / 2))).ToString("X"));
+
             for (int i = 0; i < ScanUnitsNumber; i++)
             {
                 if ((i % 2) == 1) CheckThisI += 0x48;
@@ -559,18 +648,6 @@ namespace app
             if (SearchUnitsType == "NPC")
             {
                 for (int i = 0; i < AllPossibleNPCPointers.Count; i++) AddPointerToList(AllPossibleNPCPointers[i], "NPC");
-            }
-        }
-
-        public void unitPatternScan(long AtPoiinter, string SearchType)
-        {
-            long SearchOffset = 0;
-            long ThisAddrF = Search(UnitBuffer, ThisCheckbytes, SearchOffset, SearchType);
-
-            //while (ThisAddrF >= 0)
-            if (ThisAddrF >= 0)
-            {
-                AddPointerToList(AtPoiinter + ThisAddrF, SearchType);
             }
         }
 
@@ -652,22 +729,5 @@ namespace app
                 }
             }
         }
-
-
-        /*public const long OneKB = 1024;
-        public const long OneMB = OneKB * OneKB;
-        public const long OneGB = OneMB * OneKB;
-        public const long OneTB = OneGB * OneKB;
-
-        public string BytesToHumanReadable(long bytes)
-        {
-            if (bytes < 0) return "ERROR";
-            if (bytes < OneKB) return $"{bytes}B";
-            if (bytes >= OneKB && bytes < OneMB) return $"{bytes / OneKB}KB";
-            if (bytes >= OneMB && bytes < OneGB) return $"{bytes / OneMB}MB";
-            if (bytes >= OneGB && bytes < OneTB) return $"{bytes / OneMB}GB";
-            if (bytes >= OneTB) return $"{bytes / OneTB}";
-            return "TOO BIG";
-        }*/
     }
 }

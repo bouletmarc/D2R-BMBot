@@ -35,7 +35,7 @@ namespace app
         public void AddCubeItem(int PosX, int PosY)
         {
             int AtI = ConvertXYToFullCubeIndex(PosX, PosY);
-            Cube_ItemTxtNoList[AtI] = Form1_0.ItemsStruc_0.txtFileNo;
+            if (AtI < Cube_ItemTxtNoList.Length) Cube_ItemTxtNoList[AtI] = Form1_0.ItemsStruc_0.txtFileNo;
         }
 
         public int ConvertXYToFullCubeIndex(int PosX, int PosY)
