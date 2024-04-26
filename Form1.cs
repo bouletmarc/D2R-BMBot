@@ -42,7 +42,7 @@ namespace app
     public partial class Form1 : Form
     {
 
-        public string BotVersion = "V2.8";
+        public string BotVersion = "V2.81";
 
         public string D2_LOD_113C_Path = "";
 

@@ -40,22 +40,22 @@ namespace app
             {
                 if (i < 10)
                 {
-                    ThisXPos = groupBoxInventory.Location.X + 5 + (i * 18);
+                    ThisXPos = this.Location.X + 5 + (i * 18);
                     ThixYPos = 20;
                 }
                 if (i >= 10 && i < 20)
                 {
-                    ThisXPos = groupBoxInventory.Location.X + 5 + ((i - 10) * 18);
+                    ThisXPos = this.Location.X + 5 + ((i - 10) * 18);
                     ThixYPos = 20 + (18 * 1);
                 }
                 if (i >= 20 && i < 30)
                 {
-                    ThisXPos = groupBoxInventory.Location.X + 5 + ((i - 20) * 18);
+                    ThisXPos = this.Location.X + 5 + ((i - 20) * 18);
                     ThixYPos = 20 + (18 * 2);
                 }
                 if (i >= 30 && i < 40)
                 {
-                    ThisXPos = groupBoxInventory.Location.X + 5 + ((i - 30) * 18);
+                    ThisXPos = this.Location.X + 5 + ((i - 30) * 18);
                     ThixYPos = 20 + (18 * 3);
                 }
 

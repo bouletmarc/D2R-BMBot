@@ -558,9 +558,16 @@ namespace app
                             AllItemsOnGround.Add("ID:" + txtFileNo + "(" + ItemNAAME + ") at:" + itemx + ", " + itemy + " - On Ground/Droping - " + Form1_0.ItemsAlert_0.GetItemTypeText() + " && " + GetQualityTextString() + " && " + GetAllFlagsFromItem() + " && " + GetAllValuesFromStats() + GetItemsStashInfosTxt());
                         }
 
-                        if (IsIncludedInList(BadItemsOnGroundPointerList, ItemPointerLocation)) continue;
-                        if (IsIncludedInList(AvoidItemsOnGroundPointerList, ItemPointerLocation)) continue;
                         if (!IsPickingItem) continue;
+                        if (IsIncludedInList(BadItemsOnGroundPointerList, ItemPointerLocation)) continue;
+                        if (IsIncludedInList(AvoidItemsOnGroundPointerList, ItemPointerLocation))
+                        {
+                            if (!IsItemPickingPotion())
+                            {
+                                continue;
+                                //if (!Form1_0.ItemsAlert_0.ShouldPickItem(false)) continue;
+                            }
+                        }
 
                         Form1_0.UIScan_0.readUI();
                         if (Form1_0.UIScan_0.leftMenu || Form1_0.UIScan_0.rightMenu || Form1_0.UIScan_0.fullMenu) continue;
@@ -674,6 +681,7 @@ namespace app
                         {
                             if (!IsItemPickingPotion() && !IsIncludedInList(AvoidItemsOnGroundPointerList, ItemPointerLocation))
                             {
+                                //Form1_0.method_1("Added avoid item 'OnGround':" + ItemNAAME, Color.OrangeRed);
                                 AvoidItemsOnGroundPointerList.Add(ItemPointerLocation);
                             }
                         }

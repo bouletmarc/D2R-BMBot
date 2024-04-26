@@ -34,7 +34,7 @@ namespace app
             _kooloMapPath = Application.StartupPath + @"\map.exe";
         }
 
-        public Position GetAreaOfObject(string ObjectType, string ObjectName, List<int> IgnoreTheseIndex, int StartAreaIndexToSearch = 0, int EndAreaIndexToSearch = 1)
+        public Position GetAreaOfObject(string ObjectType, string ObjectName, List<int> IgnoreTheseIndex, int StartAreaIndexToSearch = 0, int EndAreaIndexToSearch = 1, bool ForOverlay = false)
         {
             Position ThisPos = new Position();
             ThisPos.X = 0;
@@ -51,8 +51,8 @@ namespace app
             {
                 //ExitType = "exit" or "exit_area"
 
-                CurrentObjectIndex = 0;
-                CurrentObjectAreaIndex = 0;
+                if (!ForOverlay) CurrentObjectIndex = 0;
+                if (!ForOverlay) CurrentObjectAreaIndex = 0;
 
                 for (int i = StartAreaIndexToSearch; i < EndAreaIndexToSearch; i++)
                 {
@@ -69,8 +69,8 @@ namespace app
                                 {
                                     ThisPos.X = AllMapData[i].Offset.X + AllMapData[i].Objects[k].X;
                                     ThisPos.Y = AllMapData[i].Offset.Y + AllMapData[i].Objects[k].Y;
-                                    CurrentObjectIndex = k;
-                                    CurrentObjectAreaIndex = i;
+                                    if (!ForOverlay) CurrentObjectIndex = k;
+                                    if (!ForOverlay) CurrentObjectAreaIndex = i;
                                 }
                             }
                             if (AllMapData[i].Objects[k].Type == "exit_area" && ObjectType == "exit_area")
@@ -79,8 +79,8 @@ namespace app
                                 {
                                     ThisPos.X = AllMapData[i].Offset.X + AllMapData[i].Objects[k].X;
                                     ThisPos.Y = AllMapData[i].Offset.Y + AllMapData[i].Objects[k].Y;
-                                    CurrentObjectIndex = k;
-                                    CurrentObjectAreaIndex = i;
+                                    if (!ForOverlay) CurrentObjectIndex = k;
+                                    if (!ForOverlay) CurrentObjectAreaIndex = i;
                                 }
                             }
                             if (AllMapData[i].Objects[k].Type == "object" && ObjectType == "object")
@@ -90,8 +90,8 @@ namespace app
                                 {
                                     ThisPos.X = AllMapData[i].Offset.X + AllMapData[i].Objects[k].X;
                                     ThisPos.Y = AllMapData[i].Offset.Y + AllMapData[i].Objects[k].Y;
-                                    CurrentObjectIndex = k;
-                                    CurrentObjectAreaIndex = i;
+                                    if (!ForOverlay) CurrentObjectIndex = k;
+                                    if (!ForOverlay) CurrentObjectAreaIndex = i;
                                 }
                             }
                             if (AllMapData[i].Objects[k].Type == "npc" && ObjectType == "npc")
@@ -100,8 +100,8 @@ namespace app
                                 {
                                     ThisPos.X = AllMapData[i].Offset.X + AllMapData[i].Objects[k].X;
                                     ThisPos.Y = AllMapData[i].Offset.Y + AllMapData[i].Objects[k].Y;
-                                    CurrentObjectIndex = k;
-                                    CurrentObjectAreaIndex = i;
+                                    if (!ForOverlay) CurrentObjectIndex = k;
+                                    if (!ForOverlay) CurrentObjectAreaIndex = i;
                                 }
                             }
                         }
@@ -115,7 +115,7 @@ namespace app
             return ThisPos;
         }
 
-        public Position GetPositionOfObject(string ObjectType, string ObjectName, int AreaID, List<int> IgnoreTheseIndex, bool IgnoreName = false)
+        public Position GetPositionOfObject(string ObjectType, string ObjectName, int AreaID, List<int> IgnoreTheseIndex, bool IgnoreName = false, bool ForOverlay = false)
         {
             Position ThisPos = new Position();
             ThisPos.X = 0;
@@ -127,8 +127,8 @@ namespace app
             {
                 //ExitType = "exit" or "exit_area"
 
-                CurrentObjectIndex = 0;
-                CurrentObjectAreaIndex = 0;
+                if (!ForOverlay) CurrentObjectIndex = 0;
+                if (!ForOverlay) CurrentObjectAreaIndex = 0;
 
                 //for (int i = 0; i < AllMapData.Count; i++)
                 //{
@@ -149,8 +149,8 @@ namespace app
                             {
                                 ThisPos.X = AllMapData[i].Offset.X + AllMapData[i].Objects[k].X;
                                 ThisPos.Y = AllMapData[i].Offset.Y + AllMapData[i].Objects[k].Y;
-                                CurrentObjectIndex = k;
-                                CurrentObjectAreaIndex = i;
+                                if (!ForOverlay) CurrentObjectIndex = k;
+                                if (!ForOverlay) CurrentObjectAreaIndex = i;
                             }
                         }
                         if (AllMapData[i].Objects[k].Type == "exit_area" && ObjectType == "exit_area")
@@ -160,8 +160,8 @@ namespace app
                             {
                                 ThisPos.X = AllMapData[i].Offset.X + AllMapData[i].Objects[k].X;
                                 ThisPos.Y = AllMapData[i].Offset.Y + AllMapData[i].Objects[k].Y;
-                                CurrentObjectIndex = k;
-                                CurrentObjectAreaIndex = i;
+                                if (!ForOverlay) CurrentObjectIndex = k;
+                                if (!ForOverlay) CurrentObjectAreaIndex = i;
                             }
                         }
                         if (AllMapData[i].Objects[k].Type == "object" && ObjectType == "object")
@@ -173,8 +173,8 @@ namespace app
                                 {
                                     ThisPos.X = AllMapData[i].Offset.X + AllMapData[i].Objects[k].X;
                                     ThisPos.Y = AllMapData[i].Offset.Y + AllMapData[i].Objects[k].Y;
-                                    CurrentObjectIndex = k;
-                                    CurrentObjectAreaIndex = i;
+                                    if (!ForOverlay) CurrentObjectIndex = k;
+                                    if (!ForOverlay) CurrentObjectAreaIndex = i;
                                 }
                             }
                             else
@@ -184,8 +184,8 @@ namespace app
                                 {
                                     ThisPos.X = AllMapData[i].Offset.X + AllMapData[i].Objects[k].X;
                                     ThisPos.Y = AllMapData[i].Offset.Y + AllMapData[i].Objects[k].Y;
-                                    CurrentObjectIndex = k;
-                                    CurrentObjectAreaIndex = i;
+                                    if (!ForOverlay) CurrentObjectIndex = k;
+                                    if (!ForOverlay) CurrentObjectAreaIndex = i;
                                 }
                             }
                         }
@@ -197,8 +197,8 @@ namespace app
                             {
                                 ThisPos.X = AllMapData[i].Offset.X + AllMapData[i].Objects[k].X;
                                 ThisPos.Y = AllMapData[i].Offset.Y + AllMapData[i].Objects[k].Y;
-                                CurrentObjectIndex = k;
-                                CurrentObjectAreaIndex = i;
+                                if (!ForOverlay) CurrentObjectIndex = k;
+                                if (!ForOverlay) CurrentObjectAreaIndex = i;
                             }
                         }
                     }

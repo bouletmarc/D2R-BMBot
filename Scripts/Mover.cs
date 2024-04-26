@@ -155,6 +155,8 @@ namespace app
                 
                 Application.DoEvents();
 
+                Form1_0.ItemsStruc_0.AvoidItemsOnGroundPointerList.Clear();
+
                 //######
                 //moving location is way to far away something might be wrong!
                 if (!IsPositionNearOf(ThisX, ThisY, 300))
@@ -217,6 +219,7 @@ namespace app
                 {
                     if (!AllowMoveSideWay)
                     {
+                        Form1_0.ItemsStruc_0.AvoidItemsOnGroundPointerList.Clear();
                         Form1_0.overlayForm.ResetMoveToLocation();
                         Form1_0.KeyMouse_0.ReleaseKey(System.Windows.Forms.Keys.E);
                         return false;
@@ -265,6 +268,7 @@ namespace app
             }
             Form1_0.KeyMouse_0.PressKey(CharConfig.KeySkillDefenseAura);
 
+            Form1_0.ItemsStruc_0.AvoidItemsOnGroundPointerList.Clear();
             Form1_0.overlayForm.ResetMoveToLocation();
             return MovedCorrectly;
         }
@@ -347,6 +351,7 @@ namespace app
             if (Form1_0.PlayerScan_0.levelNo < StartAreaBeforeMoving - 1
                 || Form1_0.PlayerScan_0.levelNo > StartAreaBeforeMoving + 1)
             {
+                Form1_0.ItemsStruc_0.AvoidItemsOnGroundPointerList.Clear();
                 Form1_0.overlayForm.ScanningOverlayItems = true; //try rescanning overlay if there was too much lags
                 Form1_0.overlayForm.ResetMoveToLocation();
                 Form1_0.KeyMouse_0.ReleaseKey(System.Windows.Forms.Keys.E);
@@ -363,7 +368,7 @@ namespace app
             //}
             //Form1_0.KeyMouse_0.PressKey(CharConfig.KeySkillDefenseAura);
 
-            
+            Form1_0.ItemsStruc_0.AvoidItemsOnGroundPointerList.Clear();
             Form1_0.overlayForm.ResetMoveToLocation();
             return MovedCorrectly;
         }

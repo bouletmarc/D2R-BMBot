@@ -226,18 +226,18 @@ namespace app
             }
 
             //Set duriel tomb exit
-            Position OrificePos = Form1_0.MapAreaStruc_0.GetAreaOfObject("object", "HoradricOrifice", new List<int>(), 65, 72);
+            Position OrificePos = Form1_0.MapAreaStruc_0.GetAreaOfObject("object", "HoradricOrifice", new List<int>(), 65, 72, true);
             if (OrificePos.X != 0 && OrificePos.Y != 0)
             {
                 //"id":71, "type":"exit", "x":214, "y":25, "isGoodExit":true}
                 //Form1_0.method_1("Moving to: " + ((Enums.Area)(Form1_0.MapAreaStruc_0.CurrentObjectAreaIndex + 1)), Color.Red);
-                Position ThisFinalPosition = Form1_0.MapAreaStruc_0.GetPositionOfObject("exit", Form1_0.Town_0.getAreaName((int)Form1_0.MapAreaStruc_0.CurrentObjectAreaIndex + 1), (int)Form1_0.PlayerScan_0.levelNo, new List<int>() { });
+                Position ThisFinalPosition = Form1_0.MapAreaStruc_0.GetPositionOfObject("exit", Form1_0.Town_0.getAreaName((int)Form1_0.MapAreaStruc_0.CurrentObjectAreaIndex + 1), (int)Form1_0.PlayerScan_0.levelNo, new List<int>() { }, true);
                 ExitPointDuriel.X = ThisFinalPosition.X;
                 ExitPointDuriel.Y = ThisFinalPosition.Y;
             }
 
             //Set Summoner Pos
-            Position ThisFinalPositionArcane = Form1_0.MapAreaStruc_0.GetPositionOfObject("npc", "Summoner", (int) Enums.Area.ArcaneSanctuary, new List<int>() { });
+            Position ThisFinalPositionArcane = Form1_0.MapAreaStruc_0.GetPositionOfObject("npc", "Summoner", (int) Enums.Area.ArcaneSanctuary, new List<int>() { }, true);
             ExitPointSummoner.X = ThisFinalPositionArcane.X;
             ExitPointSummoner.Y = ThisFinalPositionArcane.Y;
             if (ExitPointSummoner.X != 0 && ExitPointSummoner.Y != 0)

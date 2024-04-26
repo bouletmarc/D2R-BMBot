@@ -123,6 +123,7 @@ namespace app
             //JungleMediumChestLeft ####
 
             MapAreaStruc.Position ThisChestPos = Form1_0.MapAreaStruc_0.GetPositionOfObject("object", "GoodChest", (int)Enums.Area.LowerKurast, IgnoredChestList);
+            int ChestObject = Form1_0.MapAreaStruc_0.CurrentObjectIndex;
             int Tryy = 0;
             while (ThisChestPos.X != 0 && ThisChestPos.Y != 0 && Tryy < 30)
             {
@@ -153,10 +154,11 @@ namespace app
                         Form1_0.Potions_0.CheckIfWeUsePotion();
                         tryy2++;
                     }
-                    IgnoredChestList.Add(Form1_0.MapAreaStruc_0.CurrentObjectIndex);
+                    IgnoredChestList.Add(ChestObject);
                 }
 
                 ThisChestPos = Form1_0.MapAreaStruc_0.GetPositionOfObject("object", "GoodChest", (int) Enums.Area.LowerKurast, IgnoredChestList);
+                ChestObject = Form1_0.MapAreaStruc_0.CurrentObjectIndex;
 
                 Tryy++;
             }

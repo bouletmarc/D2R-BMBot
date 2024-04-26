@@ -833,62 +833,33 @@ namespace app
 
         public Point TeleportPoint = new Point(0, 0);
 
-        private bool CanTeleport(Point next)
+        /*private List<Node> GetNeighbors(Node node, int teleportDistance)
         {
-            /*for (int dx = -TeleportAcceptSize; dx <= TeleportAcceptSize; dx++)
-            {
-                for (int dy = -TeleportAcceptSize; dy <= TeleportAcceptSize; dy++)
-                {
-                    int nx = current.X + dx;
-                    int ny = current.Y + dy;
+            List<Node> neighbors = new List<Node>();
 
-                    if (nx >= 0 && nx < ThisCollisionGrid.GetLength(0) && ny >= 0 && ny < ThisCollisionGrid.GetLength(1))
-                    {
-                        double distance = Math.Sqrt(dx * dx + dy * dy);
-                        if (distance <= TeleportAcceptSize && ThisCollisionGrid[nx, ny])
-                        {
-                            TeleportPoint.X = nx;
-                            TeleportPoint.Y = ny;
-                            return true;
-                        }
-                    }
+            // Assuming a 2D grid, iterate over all nodes and check if they are within the teleport distance
+            foreach (Node otherNode in allNodes)
+            {
+                if (otherNode != node && IsWithinTeleportDistance(node, otherNode, teleportDistance))
+                {
+                    neighbors.Add(otherNode);
                 }
             }
-            return false;*/
 
-            for (int dir = 0; dir < 8; dir++)
-            {
-                for (int i = TeleportAcceptSize - 1; i > 0; i--)
-                {
-                    int XAdder = 0;
-                    int YAdder = 0;
-                    if (dir == 0) XAdder = i;
-                    if (dir == 1) XAdder = -i;
-                    if (dir == 2) YAdder = i;
-                    if (dir == 3) YAdder = -i;
-                    if (dir == 4) { XAdder = i; YAdder = i; }
-                    if (dir == 5) { XAdder = -i; YAdder = -i; }
-                    if (dir == 6) { XAdder = i; YAdder = -i; }
-                    if (dir == 7) { XAdder = -i; YAdder = i; }
-
-                    if (ThisCollisionGrid[next.X + XAdder, next.Y + YAdder])
-                    {
-                        // Check if the target point is walkable and within teleportSize range
-                        //return IsWalkable(next) && Math.Abs(next.X - current.X) <= TeleportAcceptSize && Math.Abs(next.Y - current.Y) <= TeleportAcceptSize;
-                        //return IsWalkable(next) && (Math.Abs(next.X - current.X) <= TeleportAcceptSize || Math.Abs(next.Y - current.Y) <= TeleportAcceptSize);
-
-                        //double distance = Math.Sqrt(Math.Pow(next.X - current.X, 2) + Math.Pow(next.Y - current.Y, 2));
-                        //return IsWalkable(next) && distance <= TeleportAcceptSize;
-
-                        TeleportPoint.X = next.X + XAdder;
-                        TeleportPoint.Y = next.Y + YAdder;
-                        return true;
-                        //return IsWalkable(next);
-                    }
-                }
-            }
-            return false;
+            return neighbors;
         }
+
+        private bool IsWithinTeleportDistance(Node nodeA, Node nodeB, int teleportDistance)
+        {
+            int distanceX = Math.Abs(nodeA.x - nodeB.x);
+            int distanceY = Math.Abs(nodeA.y - nodeB.y);
+
+            // Calculate the Euclidean distance between the two nodes
+            double distance = Math.Sqrt(distanceX * distanceX + distanceY * distanceY);
+
+            // Return true if the distance is within the teleport distance limit
+            return distance <= teleportDistance;
+        }*/
 
         private bool IsWalkable(Point point)
         {
