@@ -120,7 +120,7 @@ namespace app
             if (CharConfig.IDAtShop)
             {
                 int tries2 = 0;
-                int LastItemIdentified = 0;
+                int LastItemIdentified = 999;
                 while (Form1_0.InventoryStruc_0.HasUnidItemInInventory() && tries2 < 2)
                 {
                     Form1_0.SetGameStatus("TOWN-SHOP-ID ITEMS");
@@ -150,7 +150,7 @@ namespace app
 
                             for (int k = 0; k < 40; k++)
                             {
-                                if (Form1_0.InventoryStruc_0.InventoryHasUnidItem[k] == 1)
+                                if (Form1_0.InventoryStruc_0.InventoryHasUnidItem[k] == 1 && CharConfig.InventoryDontCheckItem[i] == 0)
                                 {
                                     itemScreenPos = Form1_0.InventoryStruc_0.ConvertIndexToXY(k);
                                     itemScreenPos = Form1_0.InventoryStruc_0.ConvertInventoryLocToScreenPos(itemScreenPos["x"], itemScreenPos["y"]);

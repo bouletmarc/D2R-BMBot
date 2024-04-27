@@ -215,6 +215,7 @@ namespace app
                 case 266: return "navi";
                 case 408: return "Malachai";
                 case 406: return "Izual";
+                case 803: return "Nihlatak";
             }
             return "";
         }

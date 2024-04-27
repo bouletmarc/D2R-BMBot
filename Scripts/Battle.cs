@@ -322,7 +322,7 @@ namespace app
                 }
 
                 Form1_0.KeyMouse_0.MouseCliccRight_RealPos(Form1_0.CenterX, Form1_0.CenterY);
-                Form1_0.WaitDelay(30);
+                Form1_0.WaitDelay(35);
 
                 //select battle command
                 Form1_0.KeyMouse_0.PressKey(CharConfig.KeySkillBattleCommand);
@@ -332,7 +332,7 @@ namespace app
                 Form1_0.KeyMouse_0.MouseClicc(1025, 610);
                 Form1_0.WaitDelay(5);*/
                 Form1_0.KeyMouse_0.MouseCliccRight_RealPos(Form1_0.CenterX, Form1_0.CenterY);
-                Form1_0.WaitDelay(30); //60 <-
+                Form1_0.WaitDelay(35); //60 <-
                 Form1_0.Potions_0.CheckIfWeUsePotion();
 
                 //select battle cry

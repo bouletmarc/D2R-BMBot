@@ -107,10 +107,12 @@ namespace app
         public long MaxManaValueWithBO = 0;
         List<EnumsStates.State> PlayerStates = new List<EnumsStates.State>();
 
-        public int SameHPCount = 0;
         public long LastPlayerHP = 0;
 
         public int[] RoomExit = new int[2];
+
+        public DateTime TimeSinceSameHP = DateTime.MaxValue;
+        public bool TimeSinceSameHPSet = false;
 
         // REQUIRED METHODS
         //[DllImport("checkmem.dll")]
@@ -413,6 +415,8 @@ namespace app
             if (PlayerHP > PlayerMaxHP) PlayerMaxHP = PlayerHP;
             if (PlayerMana > PlayerMaxMana) PlayerMaxMana = PlayerMana;
 
+            //TimeSinceSameHP = DateTime.MaxValue;
+        //public bool TimeSinceSameHPSet = false;
             //Set Max HP With BattleOrder State
             if (HasBattleOrderState)
             {
@@ -420,8 +424,12 @@ namespace app
                 //Check if Max HP/Mana remain the same, that BO 'power' level didn't changed
                 if (PlayerHP == LastPlayerHP)
                 {
-                    SameHPCount++;
-                    if (SameHPCount >= 30 && MaxHPValueWithBO != PlayerMaxHP)
+                    if (!TimeSinceSameHPSet)
+                    {
+                        TimeSinceSameHP = DateTime.Now;
+                        TimeSinceSameHPSet = true;
+                    }
+                    if ((DateTime.Now - TimeSinceSameHP).TotalSeconds > 2 && MaxHPValueWithBO != PlayerMaxHP)
                     {
                         MaxHPValueWithBO = PlayerMaxHP;
                         MaxManaValueWithBO = PlayerMaxMana;
@@ -429,13 +437,16 @@ namespace app
                         PlayerMaxHP = MaxHPValueWithBO;
                         PlayerMaxMana = MaxManaValueWithBO;
 
-                        SameHPCount = 0;
+                        //TimeSinceSameHP = DateTime.Now;
+                        TimeSinceSameHP = DateTime.MaxValue;
+                        TimeSinceSameHPSet = false;
                     }
                 }
                 else
                 {
+                    TimeSinceSameHP = DateTime.MaxValue;
+                    TimeSinceSameHPSet = false;
                     LastPlayerHP = PlayerHP;
-                    SameHPCount = 0;
                 }
                 //#####
 

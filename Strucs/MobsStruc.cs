@@ -752,6 +752,7 @@ namespace app
                 case 707: return "Uber Andariel";
                 case 708: return "Uber Duriel";
                 case 709: return "Uber Baal";
+                case 803: return "Nihlathak";
             }
             return "";
         }
@@ -846,6 +847,7 @@ namespace app
                 case 571: return "Baal Subject 5";
                 case 735: return "The Cow King";
                 case 736: return "Dark Elder";
+                case 803: return "Nihlathak";
             }
             return "";
         }

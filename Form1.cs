@@ -42,7 +42,7 @@ namespace app
     public partial class Form1 : Form
     {
 
-        public string BotVersion = "V2.81";
+        public string BotVersion = "V2.9";
 
         public string D2_LOD_113C_Path = "";
 
@@ -702,11 +702,26 @@ namespace app
                     CenterX = (D2Widht / 2) + ScreenXOffset;
                     CenterY = (D2Height / 2) + ScreenYOffset;
 
+                    if (IsWindowOnSecondaryMonitor(D2Rect))
+                    {
+                        int FirstMonitorScreenX = Screen.PrimaryScreen.Bounds.Width;
+                        int FirstMonitorScreenY = Screen.PrimaryScreen.Bounds.Height;
+                        ScreenX = Screen.AllScreens[1].Bounds.Width;
+                        ScreenY = Screen.AllScreens[1].Bounds.Height;
+                        ScreenXOffset += FirstMonitorScreenX;
+                        ScreenYOffset += FirstMonitorScreenY;
+
+                        CenterX = (D2Widht / 2) + ScreenXOffset;
+                        CenterY = (D2Height / 2) + ScreenYOffset;
+                        //Console.WriteLine("is on the secondary monitor.");
+                    }
+
                     method_1("Screen Specs:", Color.DarkBlue);
                     method_1("-> Screen size: " + ScreenX + ", " + ScreenY, Color.DarkBlue);
                     method_1("-> D2R rect Size: " + D2Widht + ", " + D2Height, Color.DarkBlue);
                     method_1("-> D2R rect offset: " + ScreenXOffset + ", " + ScreenYOffset, Color.DarkBlue);
                     method_1("-> D2R Center Position: " + CenterX + ", " + CenterY, Color.DarkBlue);
+                    if (IsWindowOnSecondaryMonitor(D2Rect)) method_1("-> **D2R On Secondary Monitor**!", Color.DarkBlue);
 
                     double screenRatio = (double)D2Widht / D2Height;
 
@@ -778,6 +793,21 @@ namespace app
                 return;
 
             }
+        }
+        private static bool IsWindowOnSecondaryMonitor(Rectangle windowRect)
+        {
+            foreach (Screen screen in Screen.AllScreens)
+            {
+                if (screen.WorkingArea.Contains(windowRect))
+                {
+                    // Check if the window is on a secondary monitor
+                    if (screen != Screen.PrimaryScreen)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
         }
 
         public void SetNewGame()

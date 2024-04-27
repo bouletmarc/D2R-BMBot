@@ -93,7 +93,8 @@ namespace app
                     }
                     //####
 
-                    Form1_0.PathFinding_0.MoveToNPC("Nihlatak");
+                    //Form1_0.PathFinding_0.MoveToNPC("Nihlathak");
+                    Form1_0.PathFinding_0.MoveToObject("NihlathakWildernessStartPosition");
                     CurrentStep++;
                 }
 

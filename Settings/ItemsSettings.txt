@@ -130,25 +130,25 @@ Perfect Diamond
 //###### NORMAL ITEMS
 //#######################################
 ﻿//##### Helms
-//[Type] == helm && [Class] >= exceptional && [Quality] == superior && [Flag] != ethereal && [Sockets] == 3 && [EnhancedDefense] >= 10 // Delirium or Dream
+[Type] == helm && [Class] >= exceptional && [Quality] == superior && [Flag] != ethereal && [Sockets] == 3 && [EnhancedDefense] >= 10 // Delirium or Dream
 
 //##### Armor
 //[Name] == MagePlate && [Quality] == superior && [Flag] != ethereal && [Sockets] == 3 && [EnhancedDefense] >= 10 // Enigma
 //[Type] == armor && [Class] == elite && [Quality] == superior && [Flag] != ethereal && [Sockets] >= 3 && [EnhancedDefense] >= 10 // Variable
 //[Name] == SacredArmor && [Quality] == normal && [Flag] != ethereal && [Defense] >= 600 && [Sockets] == 4 // Cubing
 //[Type] == armor && [Quality] == normal && [Flag] != ethereal && [Defense] >= 500 && [Sockets] >= 3 // Variable
-//[Type] == armor && [Class] == elite && [Quality] == superior && [Flag] == ethereal && [Defense] >= 700
-//[Name] == ArchonPlate && [Quality] == normal && [Flag] != ethereal && [Sockets] == 3
-//[Name] == ArchonPlate && [Quality] == normal && [Flag] != ethereal && [Sockets] == 4
+[Type] == armor && [Class] == elite && [Quality] == superior && [Flag] == ethereal && [Defense] >= 700
+[Name] == ArchonPlate && [Quality] == normal && [Flag] != ethereal && [Sockets] == 3
+[Name] == ArchonPlate && [Quality] == normal && [Flag] != ethereal && [Sockets] == 4
 //[Name] == ArchonPlate && [Quality] == normal && [Flag] == ethereal
 
 //##### Shields
 //[Type] == shield && [Class] == elite && [Quality] == superior && [Flag] != ethereal && [Sockets] == 3 && [EnhancedDefense] >= 10 // Dream
 //[Name] == Monarch && [Quality] == superior && [Sockets] == 0 // Phoenix or Spirit
-//[Name] == Monarch && [Quality] == superior && [Sockets] == 4 // Phoenix or Spirit
+[Name] == Monarch && [Quality] == superior && [Sockets] == 4 // Phoenix or Spirit
 [Name] == Vortex Shield && [Quality] == superior && [Flag] == ethereal && [Sockets] == 4
 [Name] == Vortex Shield && [Quality] == superior && [Flag] == ethereal
-//[Type] == auricshields && [Class] == elite && [Sockets] == 4
+[Type] == auricshields && [Class] == elite && [Sockets] == 4
 
 //##### Gloves
 
@@ -165,13 +165,13 @@ Perfect Diamond
 //[Type] == primalhelm && [Class] == elite && [Quality] == normal && [Flag] != ethereal && [Sockets] == 3 && [SkillBattleOrders]+[SkillShout] >= 5 // Delirium
 
 //##### Druid Pelts
-//[Type] == pelt && [Class] == elite && [Quality] == superior && [Flag] != ethereal && [Sockets] == 3 && [SkillHurricane]+[SkillTornado] >= 5 // Delirium
+[Type] == pelt && [Class] == elite && [Quality] == superior && [Flag] != ethereal && [Sockets] == 3 && [SkillHurricane]+[SkillTornado] >= 5 // Delirium
 //[Type] == pelt && [Class] == elite && [Quality] == normal && [Flag] != ethereal && [Sockets] == 3 && [SkillHurricane]+[SkillTornado] >= 5 // Delirium
 
 //##### Paladin Shields
-//[Type] == auricshields && [Class] == elite && [Quality] == superior && [Flag] != ethereal && [Sockets] >= 3 && [EnhancedDefense] >= 10 && [FireResist] >= 30 // Dream or Spirit
+[Type] == auricshields && [Class] == elite && [Quality] == superior && [Flag] != ethereal && [Sockets] >= 3 && [EnhancedDefense] >= 10 && [FireResist] >= 30 // Dream or Spirit
 //[Type] == auricshields && [Class] == elite && [Quality] == superior && [Flag] != ethereal && [Sockets] == 4 && [EnhancedDefense] >= 10 && [EnhancedDamage] >= 45 // Phoenix
-//[Type] == auricshields && [Quality] == normal && [Defense] >= 250 && [Sockets] == 4 && [FireResist] >= 30 // Exile
+[Type] == auricshields && [Quality] == normal && [Defense] >= 250 && [Sockets] == 4 && [FireResist] >= 30 // Exile
 
 //##### Necromancer Shrunken Heads
 //[Type] == voodooheads && [Class] == elite && [Quality] == superior && [Flag] != ethereal && [Sockets] == 2 && [SkillBoneSpear]+[SkillBoneSpirit] >= 5 // Splender
@@ -207,9 +207,9 @@ Perfect Diamond
 
 //##### Polearms
 //[Type] == polearm && [Class] == normal && [Quality] == normal && [Flag] != ethereal && [Sockets] == 4 // Insight for Chaos
-//[Name] >= Thresher && [Quality] == normal && [Flag] == ethereal && [Sockets] == 0 // Cubing
-//[Name] <= GiantThresher && [Quality] == normal && [Flag] == ethereal && [Sockets] == 0 // Cubing
-//[Type] == polearm && [Class] == elite && [Quality] == superior && [Flag] == ethereal && [Sockets] >= 4 // Variable
+//[Name] == Thresher && [Quality] == normal && [Flag] == ethereal && [Sockets] == 0 // Cubing
+//[Name] == GiantThresher && [Quality] == normal && [Flag] == ethereal && [Sockets] == 0 // Cubing
+[Type] == polearm && [Class] == elite && [Quality] == superior && [Flag] == ethereal && [Sockets] >= 4 // Variable
 //[Type] == polearm && [Class] == elite && [Quality] == normal && [Flag] == ethereal && [Sockets] >= 4 // Variable
 
 //##### Scepters
@@ -238,9 +238,9 @@ Perfect Diamond
 //[Name] == MatriarchalPike && [Quality] == normal && [Flag] == ethereal && [Sockets] == 5
 //[Name] == MatriarchalPike && [Quality] == superior && [Flag] == ethereal
 //[Name] == MatriarchalPike && [Quality] == normal && [Flag] == ethereal
-//[Name] == GhostSpear && [Quality] == superior && [Flag] == ethereal && [Sockets] == 6
+[Name] == GhostSpear && [Quality] == superior && [Flag] == ethereal && [Sockets] == 6
 //[Name] == GhostSpear && [Quality] == normal && [Flag] == ethereal && [Sockets] == 6
-//[Name] == GhostSpear && [Quality] == superior && [Flag] == ethereal && [Sockets] == 5
+[Name] == GhostSpear && [Quality] == superior && [Flag] == ethereal && [Sockets] == 5
 //[Name] == GhostSpear && [Quality] == normal && [Flag] == ethereal && [Sockets] == 5
 //[Name] == GhostSpear && [Quality] == superior && [Flag] == ethereal
 //[Name] == GhostSpear && [Quality] == normal && [Flag] == ethereal
@@ -248,15 +248,15 @@ Perfect Diamond
 //##### Staves
 
 //##### Swords
-//[Name] == CrystalSword && [Quality] == superior && [Sockets] == 5 // Call to Arms
+[Name] == CrystalSword && [Quality] == superior && [Sockets] == 5 // Call to Arms
 //[Name] == CrystalSword && [Quality] == normal && [Sockets] == 5 // Call to Arms
-//[Name] == Zweihander && [Quality] == superior && [Sockets] == 5 // Grief
-//[Name] == ColossusBlade && [Quality] == superior && [Sockets] == 5 // Grief
-//[Name] == ColossusBlade && [Quality] == superior && [Flag] == ethereal && [Sockets] == 0 && [EnhancedDamage] >= 10 // Breath of the Dying
-//[Name] == ColossusBlade && [Quality] == superior && [Flag] == ethereal && [Sockets] == 6 && [EnhancedDamage] >= 10 // Breath of the Dying
-//[Name] == PhaseBlade && [Quality] == superior && [Sockets] == 0 && [EnhancedDamage] >= 10 // Last Wish
-//[Name] == PhaseBlade && [Quality] == superior && [Sockets] == 6 && [EnhancedDamage] >= 10 // Last Wish
-//[Name] == PhaseBlade && [Quality] == superior && [Sockets] == 5
+[Name] == Zweihander && [Quality] == superior && [Sockets] == 5 // Grief
+[Name] == ColossusBlade && [Quality] == superior && [Sockets] == 5 // Grief
+[Name] == ColossusBlade && [Quality] == superior && [Flag] == ethereal && [Sockets] == 0 && [EnhancedDamage] >= 10 // Breath of the Dying
+[Name] == ColossusBlade && [Quality] == superior && [Flag] == ethereal && [Sockets] == 6 && [EnhancedDamage] >= 10 // Breath of the Dying
+[Name] == PhaseBlade && [Quality] == superior && [Sockets] == 0 && [EnhancedDamage] >= 10 // Last Wish
+[Name] == PhaseBlade && [Quality] == superior && [Sockets] == 6 && [EnhancedDamage] >= 10 // Last Wish
+[Name] == PhaseBlade && [Quality] == superior && [Sockets] == 5
 
 //##### Throwing
 
@@ -265,7 +265,7 @@ Perfect Diamond
 //[Type] == wand && [Quality] == normal && [Sockets] != 1 && [SkillBoneSpear]+[SkillBoneSpirit] >= 5 // White
 
 //##### Amazon Weapons
-//[Type] == amazonbow && [Class] == elite && [Quality] == superior && [Sockets] == 4 && [EnhancedDamage] >= 10 && [BowAndCrossbowSkillTab] >= 2 // Faith
+[Type] == amazonbow && [Class] == elite && [Quality] == superior && [Sockets] == 4 && [EnhancedDamage] >= 10 && [BowAndCrossbowSkillTab] >= 2 // Faith
 
 //##### Assassin Katars
 //[Name] == Suwayyah && [Quality] == superior && [Flag] != ethereal && [Sockets] == 0 && [EnhancedDamage] >= 10 // Chaos
@@ -298,8 +298,8 @@ Perfect Diamond
 [Name] == Corona && [Quality] == unique // Crown of ages
 
 //##### Armor
-//[Name] == SerpentskinArmor && [Quality] == unique && [Flag] != ethereal && [FireResist] >= 30 // Skin of the Vipermagi
-//[Name] == Wyrmhide && [Quality] == unique && [Flag] != ethereal && [Defense] >= 900 && [FireResist] >= 30 // Skin of the Vipermagi
+[Name] == SerpentskinArmor && [Quality] == unique && [Flag] != ethereal && [FireResist] >= 30 // Skin of the Vipermagi
+[Name] == Wyrmhide && [Quality] == unique && [Flag] != ethereal && [Defense] >= 900 && [FireResist] >= 30 // Skin of the Vipermagi
 [Name] == MeshArmor && [Quality] == unique && [EnhancedDefense] >= 200 // Shaftstop
 [Name] == RussetArmor && [Quality] == unique && [Flag] == ethereal && [EnhancedDefense] >= 180 // Skullder's Ire
 //[Name] == TemplarCoat && [Quality] == unique && [Flag] != ethereal && [EnhancedDefense] >= 200 // Guardian Angel
@@ -384,7 +384,7 @@ Perfect Diamond
 //[Name] == CrypticAxe && [Quality] == unique && [Flag] == ethereal && [Sockets] >= 3 && [EnhancedDamage] >= 230 // Tomb Reaver
 
 //##### Scepters
-//[Name] == MightyScepter && [Quality] == unique && [Sockets] >= 2 && [EnhancedDamage] >= 270 && [PaladinSkills] >= 3 && [IAS] >= 20 // Heaven's Light
+//[Name] == MightyScepter && [Quality] == unique && [Sockets] >= 2 && [EnhancedDamage] >= 270 && [AddPaladinSkills] >= 3 && [IAS] >= 20 // Heaven's Light
 //[Name] == MightyScepter && [Quality] == unique && [EnhancedDamage] >= 270 && [NormalDamage] >= 90 && [RequirementPercent] <= -60 // The Redeemer
 //[Name] == Caduceus && [Quality] == unique && [EnhancedDamage] >= 260 && [PalidinCombatSkillTab] >= 3 // Astreon's Iron Ward
 
@@ -418,15 +418,18 @@ Perfect Diamond
 
 //##### Sorceress Orbs
 [Name] == SwirlingCrystal && [Quality] == unique // The Oculus
-//[Name] == EldritchOrb && [Quality] == unique && [SorceressSkills] >= 3 && [PassiveFireMastery] >= 10 // Eschuta's Temper
-//[Name] == EldritchOrb && [Quality] == unique && [SorceressSkills] >= 3 && [PassiveLtngMastery] >= 10 // Eschuta's Temper
-[Name] == EldritchOrb && [Quality] == unique && [SorceressSkills] >= 3 && [PassiveMagicMastery] >= 10 // Eschuta's Temper
-[Name] == DimensionalShard && [Quality] == unique && [PassiveColdMastery] >= 10 // Death's Fathom
+//[Name] == EldritchOrb && [Quality] == unique && [AddSorceressSkills] >= 3 && [PassiveFireMastery] >= 10 // Eschuta's Temper
+//[Name] == EldritchOrb && [Quality] == unique && [AddSorceressSkills] >= 3 && [PassiveLtngMastery] >= 10 // Eschuta's Temper
+//[Name] == EldritchOrb && [Quality] == unique && [AddSorceressSkills] >= 3 && [PassiveMagicMastery] >= 10 // Eschuta's Temper
+[Name] == EldritchOrb && [Quality] == unique && [AddSorceressSkills] >= 3 // Eschuta's Temper
+//[Name] == DimensionalShard && [Quality] == unique && [PassiveColdMastery] >= 10 // Death's Fathom
+[Name] == DimensionalShard && [Quality] == unique // Death's Fathom
 
 //##### Circlets
 [Name] == Tiara && [Quality] == unique && [Flag] != ethereal && [Defense] >= 110 && [FireResist] >= 50 // Kira's Guardian
 //[Name] == Diadem && [Quality] == unique && [Defense] >= 160 && [PassiveLtngMastery]+[PassiveLtngPierce] >= 25 // Griffon's Eye
-[Name] == Diadem && [Quality] == unique && [Defense] >= 160 && [PassiveMagicMastery]+[PassiveMagicPierce] >= 25 // Griffon's Eye
+//[Name] == Diadem && [Quality] == unique && [Defense] >= 160 && [PassiveMagicMastery]+[PassiveMagicPierce] >= 25 // Griffon's Eye
+[Name] == Diadem && [Quality] == unique && [Defense] >= 160 // Griffon's Eye
 
 //##### Rings
 [Type] == Ring && [Quality] == unique && [MagicFind] == 30 // Nagelring
@@ -451,7 +454,8 @@ Perfect Diamond
 [Type] == Amulet && [Quality] == unique && [AttackRating] >= 430 && [ColdResist] >= 30 // Metalgrid
 
 //##### Jewels
-[Type] == Jewel && [Quality] == unique && [PassiveMagicMastery]+[PassiveMagicPierce] >= 10 // Rainbow Facet
+[Type] == Jewel && [Quality] == unique // Rainbow Facet
+//[Type] == Jewel && [Quality] == unique && [PassiveMagicMastery]+[PassiveMagicPierce] >= 10 // Rainbow Facet
 //[Type] == Jewel && [Quality] == unique && [PassiveFireMastery]+[PassiveFirePierce] >= 10 // Rainbow Facet
 //[Type] == Jewel && [Quality] == unique && [PassiveLtngMastery]+[PassiveLtngPierce] >= 10 // Rainbow Facet
 //[Type] == Jewel && [Quality] == unique && [PassiveColdMastery]+[PassiveColdPierce] >= 10 // Rainbow Facet
@@ -672,7 +676,7 @@ Perfect Diamond
 [Name] == SwirlingCrystal && [Quality] == set // Tal Rasha's Lidless Eye
 [Name] == DeathMask && [Quality] == set // Tal Rasha's Horadric Crest
 [Name] == LacqueredPlate && [Quality] == set && [Defense] >= 900 // Tal Rasha's Guardianship
-//[Type] == Amulet && [Quality] == set && [SorceressSkills] == 2 // Tal Rasha's Adjucation
+//[Type] == Amulet && [Quality] == set && [AddSorceressSkills] == 2 // Tal Rasha's Adjucation
 [Name] == MeshBelt && [Quality] == set && [MagicFind] >= 15 // Tal Rasha's Fine-Spun Cloth
 
 //##### Trang-Oul's Avatar
@@ -688,9 +692,9 @@ Perfect Diamond
 //##### Helms
 
 //##### Armor
-//[Type] == armor && [Class] == elite && [Quality] == magic && [Flag] != ethereal && [Sockets] >= 4 && [LifeMax] >= 80
-//[Type] == armor && [Class] == elite && [Quality] == magic && [Flag] != ethereal && [Sockets] >= 4 && [FasterHitRecovery] >= 24
-//[Type] == armor && [Class] == elite && [Quality] == magic && [Flag] != ethereal && [Sockets] >= 4 && [PoisonLengthResist] >= 75
+[Type] == armor && [Class] == elite && [Quality] == magic && [Flag] != ethereal && [Sockets] >= 3 && [LifeMax] >= 80
+[Type] == armor && [Class] == elite && [Quality] == magic && [Flag] != ethereal && [Sockets] >= 3 && [FasterHitRecovery] >= 24
+[Type] == armor && [Class] == elite && [Quality] == magic && [Flag] != ethereal && [Sockets] >= 3 && [PoisonLengthResist] >= 75
 [Name] == ArchonPlate && [Quality] == magic && [Sockets] == 4
 [Name] == ArchonPlate && [Quality] == magic && [LifeMax] >= 80 && [Sockets] == 4
 [Name] == ArchonPlate && [Quality] == magic && [Strength] >= 20 && [Sockets] == 4
@@ -744,10 +748,10 @@ Perfect Diamond
 
 //##### Shields
 //[Name] == Monarch && [Quality] == magic && [Flag] != ethereal && [Sockets] >= 4 && [Defense] >= 140 && [FBR] >= 30
-//[Type] == auricshields && [Class] == elite && [Quality] == magic && [Flag] != ethereal && [PaladinSkills] == 2 && [FBR] == 30 && [FireResist] >= 30
+//[Type] == auricshields && [Class] == elite && [Quality] == magic && [Flag] != ethereal && [AddPaladinSkills] == 2 && [FBR] == 30 && [FireResist] >= 30
 //[Type] == auricshields && [Class] == elite && [Quality] == magic && [Flag] != ethereal && [PalidinCombatSkillTab] == 3 && [FBR] == 30 && [FireResist] >= 30
 //[Type] == auricshields && [Class] == elite && [Quality] == magic && [Flag] != ethereal && [Sockets] == 4 && [FBR] == 30 && [FireResist] >= 30
-//[Type] == auricshields && [Class] == elite && [Quality] == magic && [Flag] != ethereal && [PaladinSkills] == 2 && [FBR] == 30 && [EnhancedDamage] >= 60 && [AttackRating] >= 120
+//[Type] == auricshields && [Class] == elite && [Quality] == magic && [Flag] != ethereal && [AddPaladinSkills] == 2 && [FBR] == 30 && [EnhancedDamage] >= 60 && [AttackRating] >= 120
 //[Type] == auricshields && [Class] == elite && [Quality] == magic && [Flag] != ethereal && [PalidinCombatSkillTab] == 3 && [FBR] == 30 && [EnhancedDamage] >= 60 && [AttackRating] >= 120
 //[Type] == auricshields && [Class] == elite && [Quality] == magic && [Flag] != ethereal && [Sockets] == 4 && [FBR] == 30 && [EnhancedDamage] >= 60 && [AttackRating] >= 120
 //[Type] == auricshields && [Class] == elite && [Quality] == magic && [Flag] != ethereal && [Sockets] == 4 && [FBR] == 30
@@ -779,27 +783,27 @@ Perfect Diamond
 //[Type] == belt && [Quality] == rare && [Flag] != ethereal && [FasterHitRecovery] >= 24 && [Strength] >= 20 && [GoldFind] >= 60
 
 //##### Barbarian Helms
-//[Type] == primalhelm && [Class] >= exceptional && [Quality] == magic && [Flag] != ethereal && [BarbarianSkills] >= 2 && [SkillBattleOrders] >= 3
+//[Type] == primalhelm && [Class] >= exceptional && [Quality] == magic && [Flag] != ethereal && [AddBarbarianSkills] >= 2 && [SkillBattleOrders] >= 3
 //[Type] == primalhelm && [Class] >= exceptional && [Quality] == magic && [Flag] != ethereal && [WarCriesSkillTab] >= 3 && [SkillBattleOrders] >= 3
-//[Type] == primalhelm && [Class] >= exceptional && [Quality] == magic && [Flag] != ethereal && [BarbarianSkills] >= 2 && [GoldFind] >= 60
+//[Type] == primalhelm && [Class] >= exceptional && [Quality] == magic && [Flag] != ethereal && [AddBarbarianSkills] >= 2 && [GoldFind] >= 60
 //[Type] == primalhelm && [Class] >= exceptional && [Quality] == magic && [Flag] != ethereal && [WarCriesSkillTab] >= 3 && [GoldFind] >= 60
-//[Type] == primalhelm && [Quality] == rare && [Flag] != ethereal && [Sockets] >= 2 && [BarbarianSkills] >= 2 && [SkillBattleOrders] >= 3
-//[Type] == primalhelm && [Quality] == rare && [Flag] != ethereal && [Sockets] >= 2 && [BarbarianSkills] >= 2 && [GoldFind] >= 60
+//[Type] == primalhelm && [Quality] == rare && [Flag] != ethereal && [Sockets] >= 2 && [AddBarbarianSkills] >= 2 && [SkillBattleOrders] >= 3
+//[Type] == primalhelm && [Quality] == rare && [Flag] != ethereal && [Sockets] >= 2 && [AddBarbarianSkills] >= 2 && [GoldFind] >= 60
 
 //##### Druid Pelts
-//[Type] == pelt && [Class] >= exceptional && [Quality] == magic && [Flag] != ethereal && [DruidSkills] >= 2 && [SkillTornado] >= 3
+//[Type] == pelt && [Class] >= exceptional && [Quality] == magic && [Flag] != ethereal && [AddDruidSkills] >= 2 && [SkillTornado] >= 3
 //[Type] == pelt && [Class] >= exceptional && [Quality] == magic && [Flag] != ethereal && [ElementalSkillTab] >= 3 && [SkillTornado] >= 3
-//[Type] == pelt && [Quality] == rare && [Flag] != ethereal && [Sockets] >= 2 && [DruidSkills] >= 2 && [SkillTornado] >= 3
+//[Type] == pelt && [Quality] == rare && [Flag] != ethereal && [Sockets] >= 2 && [AddDruidSkills] >= 2 && [SkillTornado] >= 3
 
 //##### Paladin Shields
 //[Type] == auricshields && [Class] == elite && [Quality] == magic && [Flag] != ethereal && [Sockets] == 4 && [FBR] >= 30
-//[Type] == auricshields && [Class] == elite && [Quality] == magic && [Flag] != ethereal && [PaladinSkills] >= 2 && [FBR] >= 30
-//[Type] == auricshields && [Quality] == rare && [Flag] != ethereal && [Sockets] >= 2 && [PaladinSkills] >= 2 && [FBR] >= 30
+//[Type] == auricshields && [Class] == elite && [Quality] == magic && [Flag] != ethereal && [AddPaladinSkills] >= 2 && [FBR] >= 30
+//[Type] == auricshields && [Quality] == rare && [Flag] != ethereal && [Sockets] >= 2 && [AddPaladinSkills] >= 2 && [FBR] >= 30
 
 //##### Necromancer Shrunken Heads
-//[Type] == voodooheads && [Class] >= exceptional && [Quality] == magic && [Flag] != ethereal && [NecromancerSkills] >= 2 && [SkillBoneSpear]+[SkillBoneSpirit]+[SkillPoisonNova] >= 4
+//[Type] == voodooheads && [Class] >= exceptional && [Quality] == magic && [Flag] != ethereal && [AddNecromancerSkillss] >= 2 && [SkillBoneSpear]+[SkillBoneSpirit]+[SkillPoisonNova] >= 4
 //[Type] == voodooheads && [Class] >= exceptional && [Quality] == magic && [Flag] != ethereal && [PoisonAndBoneSkillTab] >= 3 && [SkillBoneSpear]+[SkillBoneSpirit]+[SkillPoisonNova] >= 4
-//[Type] == voodooheads && [Quality] == rare && [Flag] != ethereal && [Sockets] >= 2 && [NecromancerSkills] >= 2 && [SkillBoneSpear]+[SkillBoneSpirit]+[SkillPoisonNova] >= 4
+//[Type] == voodooheads && [Quality] == rare && [Flag] != ethereal && [Sockets] >= 2 && [AddNecromancerSkillss] >= 2 && [SkillBoneSpear]+[SkillBoneSpirit]+[SkillPoisonNova] >= 4
 
 //##### Axes
 //[Type] == axe && [Quality] == rare && [Flag] == ethereal && [Sockets] >= 2 && [EnhancedDamage] >= 250 && [MaxDamagePerLevel] >= 4 && [AttackRatingPerLevel] >= 33 && [IncreasedAttackSpeed] >= 20
@@ -914,29 +918,29 @@ Perfect Diamond
 [Type] == Amulet && [Quality] == rare && [AddClassSkills] >= 2 && [FireResist]+[LightningResist]+[ColdResist]+[PoisonResist] >= 60 && [ManaLeech] >= 7 && [Dexterity] >= 10
 
 //##### Jewels
-//[Type] == Jewel && [Quality] == magic && [EnhancedDamage] >= 36 && [IncreasedAttackSpeed] >= 15
-//[Type] == Jewel && [Quality] == magic && [EnhancedDamage] >= 36 && [RequirementPercent] <= -15
-//[Type] == Jewel && [Quality] == magic && [EnhancedDamage] >= 36 && [Strength] >= 7
-//[Type] == Jewel && [Quality] == magic && [EnhancedDamage] >= 36 && [Dexterity] >= 7
-//[Type] == Jewel && [Quality] == magic && [EnhancedDamage] >= 36 && [MinDamage] >= 8
-//[Type] == Jewel && [Quality] == magic && [EnhancedDamage] >= 36 && [MaxDamage] >= 12
-//[Type] == Jewel && [Quality] == magic && [FireResist] >= 13 && [LightningResist] >= 13 && [IncreasedAttackSpeed] >= 15
-//[Type] == Jewel && [Quality] == magic && [FireResist] >= 13 && [LightningResist] >= 13 && [RequirementPercent] <= -15
-//[Type] == Jewel && [Quality] == magic && [FireResist] >= 13 && [LightningResist] >= 13 && [Strength] >= 7
-//[Type] == Jewel && [Quality] == magic && [FireResist] >= 13 && [LightningResist] >= 13 && [Dexterity] >= 7
-//[Type] == Jewel && [Quality] == magic && [MaxDamage] == 20
-//[Type] == Jewel && [Quality] == magic && [IncreasedAttackSpeed] >= 15
-//[Type] == Jewel && [Quality] == rare && [EnhancedDamage] >= 26 && [MinDamage]+[MaxDamage] >= 20
-//[Type] == Jewel && [Quality] == rare && [EnhancedDamage] >= 26 && [MinDamage]+[MaxDamage] >= 10 && [Strength] >= 7
-//[Type] == Jewel && [Quality] == rare && [EnhancedDamage] >= 26 && [MinDamage]+[MaxDamage] >= 10 && [Dexterity] >= 7
-//[Type] == Jewel && [Quality] == rare && [EnhancedDamage] >= 26 && [MinDamage] >= 6 && [Strength]+[Dexterity] >= 13
-//[Type] == Jewel && [Quality] == rare && [EnhancedDamage] >= 26 && [MaxDamage] >= 6 && [Strength]+[Dexterity] >= 13
-//[Type] == Jewel && [Quality] == rare && [EnhancedDamage] >= 26 && [FasterHitRecovery] >= 7 && [MinDamage] >= 6 && [Strength] >= 7
-//[Type] == Jewel && [Quality] == rare && [EnhancedDamage] >= 26 && [FasterHitRecovery] >= 7 && [MaxDamage] >= 6 && [Strength] >= 7
-//[Type] == Jewel && [Quality] == rare && [EnhancedDamage] >= 26 && [FasterHitRecovery] >= 7 && [MinDamage] >= 6 && [Dexterity] >= 7
-//[Type] == Jewel && [Quality] == rare && [EnhancedDamage] >= 26 && [FasterHitRecovery] >= 7 && [MaxDamage] >= 6 && [Dexterity] >= 7
-//[Type] == Jewel && [Quality] == rare && [FireResist]+[LightningResist]+[ColdResist]+[PoisonResist] >= 28 && [FasterHitRecovery] >= 7 && [RequirementPercent] <= -15
-//[Type] == Jewel && [Quality] == rare && [DamageToMana] >= 10 && [FasterHitRecovery] >= 7 && [RequirementPercent] <= -15
+[Type] == Jewel && [Quality] == magic && [EnhancedDamage] >= 36 && [IncreasedAttackSpeed] >= 15
+[Type] == Jewel && [Quality] == magic && [EnhancedDamage] >= 36 && [RequirementPercent] <= -15
+[Type] == Jewel && [Quality] == magic && [EnhancedDamage] >= 36 && [Strength] >= 7
+[Type] == Jewel && [Quality] == magic && [EnhancedDamage] >= 36 && [Dexterity] >= 7
+[Type] == Jewel && [Quality] == magic && [EnhancedDamage] >= 36 && [MinDamage] >= 8
+[Type] == Jewel && [Quality] == magic && [EnhancedDamage] >= 36 && [MaxDamage] >= 12
+[Type] == Jewel && [Quality] == magic && [FireResist] >= 13 && [LightningResist] >= 13 && [IncreasedAttackSpeed] >= 15
+[Type] == Jewel && [Quality] == magic && [FireResist] >= 13 && [LightningResist] >= 13 && [RequirementPercent] <= -15
+[Type] == Jewel && [Quality] == magic && [FireResist] >= 13 && [LightningResist] >= 13 && [Strength] >= 7
+[Type] == Jewel && [Quality] == magic && [FireResist] >= 13 && [LightningResist] >= 13 && [Dexterity] >= 7
+[Type] == Jewel && [Quality] == magic && [MaxDamage] == 20
+[Type] == Jewel && [Quality] == magic && [IncreasedAttackSpeed] >= 15
+[Type] == Jewel && [Quality] == rare && [EnhancedDamage] >= 26 && [MinDamage]+[MaxDamage] >= 20
+[Type] == Jewel && [Quality] == rare && [EnhancedDamage] >= 26 && [MinDamage]+[MaxDamage] >= 10 && [Strength] >= 7
+[Type] == Jewel && [Quality] == rare && [EnhancedDamage] >= 26 && [MinDamage]+[MaxDamage] >= 10 && [Dexterity] >= 7
+[Type] == Jewel && [Quality] == rare && [EnhancedDamage] >= 26 && [MinDamage] >= 6 && [Strength]+[Dexterity] >= 13
+[Type] == Jewel && [Quality] == rare && [EnhancedDamage] >= 26 && [MaxDamage] >= 6 && [Strength]+[Dexterity] >= 13
+[Type] == Jewel && [Quality] == rare && [EnhancedDamage] >= 26 && [FasterHitRecovery] >= 7 && [MinDamage] >= 6 && [Strength] >= 7
+[Type] == Jewel && [Quality] == rare && [EnhancedDamage] >= 26 && [FasterHitRecovery] >= 7 && [MaxDamage] >= 6 && [Strength] >= 7
+[Type] == Jewel && [Quality] == rare && [EnhancedDamage] >= 26 && [FasterHitRecovery] >= 7 && [MinDamage] >= 6 && [Dexterity] >= 7
+[Type] == Jewel && [Quality] == rare && [EnhancedDamage] >= 26 && [FasterHitRecovery] >= 7 && [MaxDamage] >= 6 && [Dexterity] >= 7
+[Type] == Jewel && [Quality] == rare && [FireResist]+[LightningResist]+[ColdResist]+[PoisonResist] >= 28 && [FasterHitRecovery] >= 7 && [RequirementPercent] <= -15
+[Type] == Jewel && [Quality] == rare && [DamageToMana] >= 10 && [FasterHitRecovery] >= 7 && [RequirementPercent] <= -15
 
 //##### Small Charms
 [Name] == SmallCharm && [Quality] == magic && [MaxDamage] >= 3 && [AttackRating] >= 12 && [LifeMax] >= 12

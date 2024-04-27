@@ -255,7 +255,7 @@ namespace app
 
                                 if (DebuggingMapData)
                                 {
-                                    Form1_0.AppendTextDebugMapData("ID:" + AllMapData[i].Objects[k].ID + "(" + Form1_0.Town_0.getAreaName(int.Parse(AllMapData[i].Objects[k].ID)) + ") at:" + (AllMapData[i].Offset.X + AllMapData[i].Objects[k].X) + ", " + (AllMapData[i].Offset.Y + AllMapData[i].Objects[k].Y) + Environment.NewLine);
+                                    Form1_0.AppendTextDebugMapData("exit, ID:" + AllMapData[i].Objects[k].ID + "(" + Form1_0.Town_0.getAreaName(int.Parse(AllMapData[i].Objects[k].ID)) + ") at:" + (AllMapData[i].Offset.X + AllMapData[i].Objects[k].X) + ", " + (AllMapData[i].Offset.Y + AllMapData[i].Objects[k].Y) + Environment.NewLine);
                                 }
                             }
                         }
@@ -269,7 +269,7 @@ namespace app
 
                                 if (DebuggingMapData)
                                 {
-                                    Form1_0.AppendTextDebugMapData("ID:" + AllMapData[i].Objects[k].ID + "(" + Form1_0.Town_0.getAreaName(int.Parse(AllMapData[i].Objects[k].ID)) + ") at:" + (AllMapData[i].Offset.X + AllMapData[i].Objects[k].X) + ", " + (AllMapData[i].Offset.Y + AllMapData[i].Objects[k].Y) + Environment.NewLine);
+                                    Form1_0.AppendTextDebugMapData("exit_area, ID:" + AllMapData[i].Objects[k].ID + "(" + Form1_0.Town_0.getAreaName(int.Parse(AllMapData[i].Objects[k].ID)) + ") at:" + (AllMapData[i].Offset.X + AllMapData[i].Objects[k].X) + ", " + (AllMapData[i].Offset.Y + AllMapData[i].Objects[k].Y) + Environment.NewLine);
                                 }
                             }
                         }
@@ -284,7 +284,7 @@ namespace app
 
                                     if (DebuggingMapData)
                                     {
-                                        Form1_0.AppendTextDebugMapData("ID:" + AllMapData[i].Objects[k].ID + "(" + Form1_0.ObjectsStruc_0.getObjectName(int.Parse(AllMapData[i].Objects[k].ID)) + ") at:" + (AllMapData[i].Offset.X + AllMapData[i].Objects[k].X) + ", " + (AllMapData[i].Offset.Y + AllMapData[i].Objects[k].Y) + Environment.NewLine);
+                                        Form1_0.AppendTextDebugMapData("object-waypoint, ID:" + AllMapData[i].Objects[k].ID + "(" + Form1_0.ObjectsStruc_0.getObjectName(int.Parse(AllMapData[i].Objects[k].ID)) + ") at:" + (AllMapData[i].Offset.X + AllMapData[i].Objects[k].X) + ", " + (AllMapData[i].Offset.Y + AllMapData[i].Objects[k].Y) + Environment.NewLine);
                                     }
                                 }
                             }
@@ -297,7 +297,7 @@ namespace app
 
                                     if (DebuggingMapData)
                                     {
-                                        Form1_0.AppendTextDebugMapData("ID:" + AllMapData[i].Objects[k].ID + "(" + Form1_0.ObjectsStruc_0.getObjectName(int.Parse(AllMapData[i].Objects[k].ID)) + ") at:" + (AllMapData[i].Offset.X + AllMapData[i].Objects[k].X) + ", " + (AllMapData[i].Offset.Y + AllMapData[i].Objects[k].Y) + Environment.NewLine);
+                                        Form1_0.AppendTextDebugMapData("object, ID:" + AllMapData[i].Objects[k].ID + "(" + Form1_0.ObjectsStruc_0.getObjectName(int.Parse(AllMapData[i].Objects[k].ID)) + ") at:" + (AllMapData[i].Offset.X + AllMapData[i].Objects[k].X) + ", " + (AllMapData[i].Offset.Y + AllMapData[i].Objects[k].Y) + Environment.NewLine);
                                     }
                                 }
                             }
@@ -311,7 +311,7 @@ namespace app
 
                                 if (DebuggingMapData)
                                 {
-                                    Form1_0.AppendTextDebugMapData("ID:" + AllMapData[i].Objects[k].ID + "(" + (EnumsMobsNPC.MonsterType)(int.Parse(AllMapData[i].Objects[k].ID)) + ") at:" + (AllMapData[i].Offset.X + AllMapData[i].Objects[k].X) + ", " + (AllMapData[i].Offset.Y + AllMapData[i].Objects[k].Y) + Environment.NewLine);
+                                    Form1_0.AppendTextDebugMapData("npc, ID:" + AllMapData[i].Objects[k].ID + "(" + (EnumsMobsNPC.MonsterType)(int.Parse(AllMapData[i].Objects[k].ID)) + ") at:" + (AllMapData[i].Offset.X + AllMapData[i].Objects[k].X) + ", " + (AllMapData[i].Offset.Y + AllMapData[i].Objects[k].Y) + Environment.NewLine);
                                 }
                             }
                         }

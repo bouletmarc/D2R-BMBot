@@ -38,18 +38,28 @@ namespace app
 
             if (Form1_0.Town_0.GetInTown())
             {
-                Form1_0.SetGameStatus("GO TO WP");
+                Form1_0.SetGameStatus("GO TO RED PORTAL");
                 CurrentStep = 0;
+
+                if (Form1_0.Town_0.TownAct != 5)
+                {
+                    Form1_0.Town_0.ScriptTownAct = 5;
+                    Form1_0.Town_0.Towning = true;
+                    return;
+                }
 
                 Form1_0.PathFinding_0.MoveToThisPos(new Position { X = 5130, Y = 5120 });
 
-                if (Form1_0.ObjectsStruc_0.GetObjects("PermanentTownPortal", true, new List<uint>()))
-                {
-                    Position itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, Form1_0.ObjectsStruc_0.itemx, Form1_0.ObjectsStruc_0.itemy);
-                    
+                //5119,5121
+
+                //if (Form1_0.ObjectsStruc_0.GetObjects("PermanentTownPortal", true, new List<uint>()))
+                //{
+                    //Position itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, Form1_0.ObjectsStruc_0.itemx, Form1_0.ObjectsStruc_0.itemy);
+                    Position itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, 5119, 5121);
+
                     Form1_0.KeyMouse_0.MouseClicc_RealPos(itemScreenPos.X, itemScreenPos.Y - 15);
                     Form1_0.WaitDelay(100);
-                }
+                //}
                 //Form1_0.Town_0.GoToWPArea(3, 8);
             }
             else

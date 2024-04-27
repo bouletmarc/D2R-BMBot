@@ -106,9 +106,11 @@ namespace app
         public bool ShouldPickItem(bool Keeping)
         {
             string ItemName = Form1_0.ItemsStruc_0.ItemNAAME.Replace(" ", "");
-            foreach (var ThisDir in PickItemsRunesKeyGems)
+            //foreach (var ThisDir in PickItemsRunesKeyGems)
+            if (PickItemsRunesKeyGems.ContainsKey(ItemName))
             {
-                if (ItemName == ThisDir.Key.Replace(" ", "") && ThisDir.Value)
+                //if (ItemName == ThisDir.Key.Replace(" ", "") && ThisDir.Value)
+                if (PickItemsRunesKeyGems[ItemName])
                 {
                     if (Form1_0.ItemsStruc_0.ItemNAAME.Contains("Chipped") || Form1_0.ItemsStruc_0.ItemNAAME.Contains("Flawed")
                         || Form1_0.ItemsStruc_0.ItemNAAME == "Topaz"
@@ -129,61 +131,72 @@ namespace app
                         return true;
                     }
 
-                    break;
+                    //break;
                 }
             }
 
             //###############
-            foreach (var ThisDir in PickItemsNormal_ByName)
-            {
-                if (ItemName == Regex.Replace(ThisDir.Key, @"[\d-]", string.Empty) && ThisDir.Value)
+            //for (int i = 0; i < 20; i++)
+            //{
+                string ThisNamee = ItemName;
+                //if (i > 0) ThisNamee = ItemName + (i + 1);
+                //foreach (var ThisDir in PickItemsNormal_ByName)
+                int ThisIndex = 2;
+                while (PickItemsNormal_ByName.ContainsKey(ThisNamee))
                 {
-                    bool SameQuality = true;
-                    bool SameFlags = true;
-                    if (PickItemsNormal_ByName_Quality.ContainsKey(ThisDir.Key))
+                    if (PickItemsNormal_ByName[ThisNamee])
+                    //if (ItemName == Regex.Replace(ThisDir.Key, @"[\d-]", string.Empty) && ThisDir.Value)
                     {
-                        if (Form1_0.ItemsStruc_0.quality != Form1_0.ItemsStruc_0.getQuality(PickItemsNormal_ByName_Quality[ThisDir.Key])) SameQuality = false;
-                    }
-                    if (PickItemsNormal_ByName_Flags.ContainsKey(ThisDir.Key))
-                    {
-                        uint TotalFlags = 0;
-                        foreach (var ThisList in PickItemsNormal_ByName_Flags[ThisDir.Key])
+                        bool SameQuality = true;
+                        bool SameFlags = true;
+                        if (PickItemsNormal_ByName_Quality.ContainsKey(ThisNamee))
                         {
-                            TotalFlags += ThisList.Key;
+                            if (Form1_0.ItemsStruc_0.quality != Form1_0.ItemsStruc_0.getQuality(PickItemsNormal_ByName_Quality[ThisNamee])) SameQuality = false;
                         }
-                        foreach (var ThisList in PickItemsNormal_ByName_Flags[ThisDir.Key])
+                        if (PickItemsNormal_ByName_Flags.ContainsKey(ThisNamee))
                         {
-                            SameFlags = Form1_0.ItemsFlags_0.IsItemSameFlags(ThisList.Value, TotalFlags, Form1_0.ItemsStruc_0.flags);
-                        }
-                        //Console.WriteLine(Form1_0.ItemsStruc_0.ItemNAAME + ":" + SameFlags);
-                    }
-
-                    if (SameQuality && SameFlags)
-                    {
-                        if (!Form1_0.ItemsStruc_0.identified)
-                        {
-                            if (!Keeping) return true;
-                        }
-                        else
-                        {
-                            bool SameStats = true;
-                            if (PickItemsNormal_ByName_Stats.ContainsKey(ThisDir.Key))
+                            uint TotalFlags = 0;
+                            foreach (var ThisList in PickItemsNormal_ByName_Flags[ThisNamee])
                             {
-                                foreach (var ThisDir2 in PickItemsNormal_ByName_Stats[ThisDir.Key])
-                                {
-                                    //Console.WriteLine(Form1_0.ItemsStruc_0.ItemNAAME + ":" + ThisDir2.Key + "=" + ThisDir2.Value);
-                                    if (!Form1_0.ItemsStruc_0.IsItemHaveSameStatMultiCheck(ThisDir2.Key, ThisDir2.Value, PickItemsNormal_ByName_Operators[ThisDir.Key][ThisDir2.Key])) SameStats = false;
-                                }
+                                TotalFlags += ThisList.Key;
                             }
-                            //Console.WriteLine("---------------------");
-
-                            if (SameStats) return true;
+                            foreach (var ThisList in PickItemsNormal_ByName_Flags[ThisNamee])
+                            {
+                                SameFlags = Form1_0.ItemsFlags_0.IsItemSameFlags(ThisList.Value, TotalFlags, Form1_0.ItemsStruc_0.flags);
+                            }
+                            //Console.WriteLine(Form1_0.ItemsStruc_0.ItemNAAME + ":" + SameFlags);
                         }
+
+                        if (SameQuality && SameFlags)
+                        {
+                            if (!Form1_0.ItemsStruc_0.identified)
+                            {
+                                if (!Keeping) return true;
+                            }
+                            else
+                            {
+                                bool SameStats = true;
+                                if (PickItemsNormal_ByName_Stats.ContainsKey(ThisNamee))
+                                {
+                                    foreach (var ThisDir2 in PickItemsNormal_ByName_Stats[ThisNamee])
+                                    {
+                                        //Console.WriteLine(Form1_0.ItemsStruc_0.ItemNAAME + ":" + ThisDir2.Key + "=" + ThisDir2.Value);
+                                        if (!Form1_0.ItemsStruc_0.IsItemHaveSameStatMultiCheck(ThisDir2.Key, ThisDir2.Value, PickItemsNormal_ByName_Operators[ThisNamee][ThisDir2.Key])) SameStats = false;
+                                    }
+                                }
+                                //Console.WriteLine("---------------------");
+
+                                if (SameStats) return true;
+                            }
+                        }
+
+                        //break;
                     }
 
-                    //break;
+                    ThisNamee = ItemName + ThisIndex;
+                    ThisIndex++;
                 }
-            }
+            //}
             //###############
             foreach (var ThisDir in PickItemsNormal_ByType)
             {

@@ -285,11 +285,24 @@ namespace app
             int ThisOffsetToUse = AcceptMoveOffset;
             if (Form1_0.Town_0.IsInTown) ThisOffsetToUse = 5;
             else if (!CharConfig.UseTeleport) ThisOffsetToUse = 5;
+            //else if (CharConfig.UseTeleport && !Form1_0.Town_0.GetInTown() && (Enums.Area) Form1_0.PlayerScan_0.levelNo == Enums.Area.ArcaneSanctuary) ThisOffsetToUse = 1;
+            else if (CharConfig.UseTeleport && !Form1_0.Town_0.GetInTown()) ThisOffsetToUse = 1;
 
             List<Point> pathShortened = new List<Point>();
             int LastPathAdded = 0;
+            Point LastPoint = new Point();
             for (int i = 0; i < path.Count; i += ThisOffsetToUse)
             {
+                if (ThisOffsetToUse == 1)
+                {
+                    if (path[i].X >= LastPoint.X - 2 && path[i].X <= LastPoint.X + 2
+                        && path[i].Y >= LastPoint.Y - 2 && path[i].Y <= LastPoint.Y + 2)
+                    {
+                        LastPoint = path[i];
+                        continue;
+                    }
+                }
+                LastPoint = path[i];
                 pathShortened.Add(path[i]);
                 LastPathAdded = i;
             }
@@ -691,29 +704,6 @@ namespace app
             int width = ThisCollisionGrid.GetLength(0);
             int height = ThisCollisionGrid.GetLength(1);
 
-            // Add some padding to the origin/destination, sometimes when the origin or destination are close to a non-walkable
-            // area, pather is not able to calculate the path, so we add some padding around origin/dest to avoid this
-            // If character can not teleport if apply this hacky thing it will try to kill monsters across walls
-            /*if (CharConfig.UseTeleport && !Form1_0.Town_0.IsInTown)
-            {
-                for (int i = -3; i < 4; i++)
-                {
-                    for (int k = -3; k < 4; k++)
-                    {
-                        if (i == 0 && k == 0) continue;
-                        ThisCollisionGrid[i + targetPos.X, k + targetPos.Y] = true;
-                    }
-                }
-                for (int i = -3; i < 4; i++)
-                {
-                    for (int k = -3; k < 4; k++)
-                    {
-                        if (i == 0 && k == 0) continue;
-                        ThisCollisionGrid[i + startPos.X, k + startPos.Y] = true;
-                    }
-                }
-            }*/
-
             bool[,] closedSet = new bool[width, height];
             List<Node> openSet = new List<Node>();
 
@@ -740,52 +730,11 @@ namespace app
                             if (nx < ThisCollisionGrid.GetLength(0) && ny < ThisCollisionGrid.GetLength(1)
                                 && nx < closedSet.GetLength(0) && ny < closedSet.GetLength(1))
                             {
-                                // Check if teleportation is possible
-                                /*bool canTeleport = CanTeleport(current.Position, new Point(nx, ny));
-                                if (canTeleport)
-                                {
-                                    Point teleportTarget = new Point(nx, ny);
-                                    double teleportCost = Heuristic(current.Position, teleportTarget);
-                                    double tentativeG = current.G + teleportCost;
-
-                                    Node teleportNode = new Node(teleportTarget, current, tentativeG, Heuristic(teleportTarget, targetPos));
-                                    openSet.Add(teleportNode);
-                                    continue; // Skip regular movement check
-                                }*/
-
-                                /*if (!ThisCollisionGrid[nx, ny])
-                                {
-                                    bool canTeleportTo = CanTeleport(new Point(nx, ny));
-                                    if (canTeleportTo)
-                                    {
-                                        ThisCollisionGrid[nx,ny] = true;
-                                        nx = TeleportPoint.X;
-                                        ny = TeleportPoint.Y;
-
-                                        //#########################################
-                                        /*Point teleportTarget = new Point(nx, ny);
-                                        //if (closedSet[nx, ny]) continue; //#####
-
-                                        double teleportCost = Heuristic(current.Position, teleportTarget);
-                                        double tentativeG = current.G + teleportCost;
-
-                                        Node teleportNode = new Node(teleportTarget, current, tentativeG, Heuristic(teleportTarget, targetPos));
-                                        openSet.Add(teleportNode);
-                                        continue; // Skip regular movement check*/
-                                //#########################################
-                                /*
-                                        //if (ny >= 338 && ny <= 348) Console.WriteLine("Can tel from: " + current.Position.X + ", " + current.Position.Y + " to: " + nx + ", " + ny);
-                                    }
-                                }*/
-
-                                //if (ThisCollisionGrid[nx, ny] && !closedSet[nx, ny])
                                 if (ThisCollisionGrid[nx, ny])
                                 {
                                     Point neighborPos = new Point(nx, ny);
-                                    //Point neighborPos = new Point(nxTeleport, nyTeleport);
 
                                     if (closedSet[nx, ny]) continue;
-                                    //if (closedSet[nxTeleport, nyTeleport]) continue;
 
                                     double tentativeG = current.G + 1;
                                     if (p > 3) tentativeG += 1;
@@ -802,6 +751,44 @@ namespace app
                                         neighbor.Parent = current;
                                         neighbor.G = tentativeG;
                                         neighbor.H = Heuristic(neighborPos, targetPos);
+                                    }
+                                }
+                            }
+                        }
+
+                        //if (CharConfig.UseTeleport && !Form1_0.Town_0.GetInTown() && (Enums.Area)Form1_0.PlayerScan_0.levelNo == Enums.Area.ArcaneSanctuary)
+                        if (CharConfig.UseTeleport && !Form1_0.Town_0.GetInTown())
+                        {
+                            nx = current.Position.X + (dx[p] * AcceptMoveOffset);
+                            ny = current.Position.Y + (dy[p] * AcceptMoveOffset);
+
+                            if (nx >= 0 && nx < width && ny >= 0 && ny < height)
+                            {
+                                if (nx < ThisCollisionGrid.GetLength(0) && ny < ThisCollisionGrid.GetLength(1)
+                                    && nx < closedSet.GetLength(0) && ny < closedSet.GetLength(1))
+                                {
+                                    if (ThisCollisionGrid[nx, ny])
+                                    {
+                                        Point neighborPos = new Point(nx, ny);
+
+                                        if (closedSet[nx, ny]) continue;
+
+                                        double tentativeG = current.G + 2;
+                                        if (p > 3) tentativeG += 1;
+
+                                        Node neighbor = openSet.FirstOrDefault(node => node.Position.Equals(neighborPos));
+                                        if (neighbor == null || tentativeG < neighbor.G)
+                                        {
+                                            if (neighbor == null)
+                                            {
+                                                neighbor = new Node(neighborPos);
+                                                openSet.Add(neighbor);
+                                            }
+
+                                            neighbor.Parent = current;
+                                            neighbor.G = tentativeG;
+                                            neighbor.H = Heuristic(neighborPos, targetPos);
+                                        }
                                     }
                                 }
                             }

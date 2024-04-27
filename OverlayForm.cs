@@ -422,12 +422,14 @@ namespace app
 
                         //Print HP/Mana
                         int Percent = (int)((Form1_0.PlayerScan_0.PlayerHP * 100.0) / Form1_0.PlayerScan_0.PlayerMaxHP);
+                        if (Form1_0.PlayerScan_0.PlayerHP == 0 && Form1_0.PlayerScan_0.PlayerMaxHP == 0) Percent = 0;
                         string HPTxt = Form1_0.PlayerScan_0.PlayerHP.ToString() + "/" + Form1_0.PlayerScan_0.PlayerMaxHP.ToString() + " (" + Percent + "%)";
                         SizeF ThisS2 = e.Graphics.MeasureString(HPTxt, drawFontBold);
                         FillRectangle(e, drawBrushDark, 560, 960, ThisS2.Width, 22, true);
                         DrawString(e, HPTxt, drawFontBold, drawBrushRed, 560, 960, true);
 
                         int PercentMana = (int)((Form1_0.PlayerScan_0.PlayerMana * 100.0) / Form1_0.PlayerScan_0.PlayerMaxMana);
+                        if (Form1_0.PlayerScan_0.PlayerMana == 0 && Form1_0.PlayerScan_0.PlayerMaxMana == 0) PercentMana = 0;
                         string ManaTxt = Form1_0.PlayerScan_0.PlayerMana.ToString() + "/" + Form1_0.PlayerScan_0.PlayerMaxMana.ToString() + " (" + PercentMana + "%)";
                         ThisS2 = e.Graphics.MeasureString(ManaTxt, drawFontBold);
                         FillRectangle(e, drawBrushDark, 1360 - (ThisS2.Width * ScaleScreenSizeInverted), 960, ThisS2.Width, 22, true);
@@ -482,6 +484,7 @@ namespace app
                             {
 
                                 int PercentMerc = (int)((Form1_0.MercStruc_0.MercHP * 100.0) / Form1_0.MercStruc_0.MercMaxHP);
+                                if (Form1_0.MercStruc_0.MercHP == 0 && Form1_0.MercStruc_0.MercMaxHP == 0) PercentMerc = 0;
                                 ThisMercTxt = "Merc:" + Form1_0.MercStruc_0.MercHP.ToString() + "/" + Form1_0.MercStruc_0.MercMaxHP.ToString() + " (" + PercentMerc + "%)";
                             }
                             ThisS2 = e.Graphics.MeasureString(ThisMercTxt, drawFontBold);
@@ -498,7 +501,7 @@ namespace app
                             UnitsStr += ", Objects:" + Form1_0.PatternsScan_0.ScannedObjectsCount;
                             UnitsStr += ", NPC:" + Form1_0.PatternsScan_0.ScannedNPCCount;
                             UnitsStr += ")";
-                            DrawString(e, UnitsStr, drawFontBold, drawBrushGreen, 560, 860, true);
+                            DrawString(e, UnitsStr, drawFontBold10, drawBrushGreen, 560, 860, true);
 
                             //Show values of the V1 Units Scan
                             /*UnitsStr = "Units Scan V1:" + Form1_0.PatternsScan_0.GetUnitsScannedCount(1).ToString();

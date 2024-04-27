@@ -35,7 +35,7 @@ namespace app
 
         public long StartIndexItem = long.MaxValue;
         public long StartIndexItemLast = long.MaxValue;
-        public int ScanUnitsNumber = 2100;
+        public int ScanUnitsNumber = 2600;
         //public int ScanUnitsNumber = 2048;
         public int ScanUnitsNegativeOffset = 30;
 
@@ -261,9 +261,27 @@ namespace app
         //ALL VERSIONS
         public void unitPatternScan(long AtPoiinter, string SearchType)
         {
-            long SearchOffset = 0;
-            long ThisAddrF = Search(UnitBuffer, ThisCheckbytes, SearchOffset, SearchType);
+            /*StringBuilder builder = new StringBuilder();
+            for (int i = 0; i < UnitBuffer.Length; i++) builder.Append(UnitBuffer[i].ToString("x2"));
+            StringBuilder builder2 = new StringBuilder();
+            for (int i = 0; i < ThisCheckbytes.Length; i++) builder2.Append(ThisCheckbytes[i].ToString("x2"));
+            Console.WriteLine("search:" + builder + ", pattern:" + builder2);*/
 
+            //byte[] ThisCheckbytes = new byte[] { 0x04, 0x00, 0x00, 0x00, 0xff, 0xff, 0x00, 0x00 };
+            //public int[] DontCheckUnitIndexes = new int[] { 0, 0, 0, 0, 1, 1, 0, 0 };
+            long ThisAddrF = -1;
+            if (UnitBuffer[0] == ThisCheckbytes[0]
+                && UnitBuffer[1] == ThisCheckbytes[1]
+                && UnitBuffer[2] == ThisCheckbytes[2]
+                && UnitBuffer[3] == ThisCheckbytes[3]
+                && UnitBuffer[6] == ThisCheckbytes[6]
+                && UnitBuffer[7] == ThisCheckbytes[7])
+            {
+                ThisAddrF = 0;
+            }
+
+            /*long SearchOffset = 0;
+            long ThisAddrF = Search(UnitBuffer, ThisCheckbytes, SearchOffset, SearchType);*/
             //while (ThisAddrF >= 0)
             if (ThisAddrF >= 0)
             {
@@ -370,7 +388,7 @@ namespace app
 
             int BadCount = 0;
             long CheckThisI = StartIndexItem_V2;
-            for (int i = 250; i >= 0; i--)
+            for (int i = 300; i >= 0; i--)
             {
                 //if ((i % 2) == 1) CheckThisI -= 0x48;
                 //else CheckThisI -= 0x170;
@@ -392,7 +410,7 @@ namespace app
                     if (CurrentUnitBuff[6] != 0xff && CurrentUnitBuff[7] != 0xff && CurrentUnitBuff[7] != 0x80)
                     {
                         BadCount++;
-                        if (BadCount >= 3)
+                        if (BadCount >= 6)
                         {
                             if (StartIndexItem_V2 != StartIndexItemLast_V2)
                             {

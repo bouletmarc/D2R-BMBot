@@ -515,7 +515,7 @@ namespace app
                 {
                     Position itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, ThisFinalPosition.X, ThisFinalPosition.Y);
                     
-                    Form1_0.KeyMouse_0.MouseClicc_RealPos(itemScreenPos.X - 100, itemScreenPos.Y - 15);
+                    Form1_0.KeyMouse_0.MouseClicc_RealPos(itemScreenPos.X, itemScreenPos.Y - 15);
                     if (Form1_0.UIScan_0.WaitTilUIOpen("waypointMenu"))
                     {
                         if (SelectWPIndex == -1)
@@ -542,7 +542,7 @@ namespace app
                 {
                     Position itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, ThisFinalPosition.X, ThisFinalPosition.Y);
                     
-                    Form1_0.KeyMouse_0.MouseClicc_RealPos(itemScreenPos.X - 100, itemScreenPos.Y - 15);
+                    Form1_0.KeyMouse_0.MouseClicc_RealPos(itemScreenPos.X, itemScreenPos.Y - 15);
                     if (Form1_0.UIScan_0.WaitTilUIOpen("waypointMenu"))
                     {
                         if (SelectWPIndex == -1)
@@ -569,7 +569,7 @@ namespace app
                 {
                     Position itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, ThisFinalPosition.X, ThisFinalPosition.Y);
                     
-                    Form1_0.KeyMouse_0.MouseClicc_RealPos(itemScreenPos.X - 100, itemScreenPos.Y - 15);
+                    Form1_0.KeyMouse_0.MouseClicc_RealPos(itemScreenPos.X, itemScreenPos.Y - 15);
                     if (Form1_0.UIScan_0.WaitTilUIOpen("waypointMenu"))
                     {
                         if (SelectWPIndex == -1)
@@ -596,7 +596,7 @@ namespace app
                 {
                     Position itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, ThisFinalPosition.X, ThisFinalPosition.Y);
                     
-                    Form1_0.KeyMouse_0.MouseClicc_RealPos(itemScreenPos.X - 100, itemScreenPos.Y - 15);
+                    Form1_0.KeyMouse_0.MouseClicc_RealPos(itemScreenPos.X, itemScreenPos.Y - 15);
                     if (Form1_0.UIScan_0.WaitTilUIOpen("waypointMenu"))
                     {
                         if (SelectWPIndex == -1)
@@ -623,7 +623,7 @@ namespace app
                 {
                     Position itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, ThisFinalPosition.X, ThisFinalPosition.Y);
                     
-                    Form1_0.KeyMouse_0.MouseClicc_RealPos(itemScreenPos.X - 100, itemScreenPos.Y - 15);
+                    Form1_0.KeyMouse_0.MouseClicc_RealPos(itemScreenPos.X, itemScreenPos.Y - 15);
                     if (Form1_0.UIScan_0.WaitTilUIOpen("waypointMenu"))
                     {
                         if (SelectWPIndex == -1)

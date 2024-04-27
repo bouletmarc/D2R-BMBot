@@ -810,7 +810,11 @@ namespace app
             AchmeltheCursed = 796,
             BartuctheBloody = 797,
             VentartheUnholy = 798,
-            ListertheTormentor = 799
+            ListertheTormentor = 799,
+            Unknown = 800,
+            Unknown2 = 801,
+            Unknown3 = 802,
+            Nihlathak3 = 803,
         }
 
 

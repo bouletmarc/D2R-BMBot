@@ -485,7 +485,14 @@ namespace app
 
                                             if (ThisParam.ToLower() == "name")
                                             {
-                                                currentName = ThisValue + CurrentNameIndex;
+                                                currentName = ThisValue;
+                                                CurrentNameIndex = 2;
+                                                while (AllNormall_ByName.ContainsKey(currentName))
+                                                {
+                                                    currentName = ThisValue + CurrentNameIndex;
+                                                    CurrentNameIndex++;
+                                                }
+                                                //currentName = ThisValue + CurrentNameIndex;
                                                 AllNormall_ByName.Add(currentName, PickItem);
                                                 NormalNameDesc.Add(currentName, Desc);
                                                 CurrentNameIndex++;
@@ -493,7 +500,14 @@ namespace app
                                             }
                                             else if (ThisParam.ToLower() == "type")
                                             {
-                                                currentName = ThisValue + CurrentTypeIndex;
+                                                currentName = ThisValue;
+                                                CurrentTypeIndex = 2;
+                                                while (AllNormall_ByType.ContainsKey(currentName))
+                                                {
+                                                    currentName = ThisValue + CurrentTypeIndex;
+                                                    CurrentTypeIndex++;
+                                                }
+                                                //currentName = ThisValue + CurrentTypeIndex;
                                                 AllNormall_ByType.Add(currentName, PickItem);
                                                 NormalTypeDesc.Add(currentName, Desc);
                                                 CurrentTypeIndex++;
@@ -573,7 +587,7 @@ namespace app
 
                                 //##########################################################################################################################
 
-                                if (DoingKeysRune) AllKeys.Add(ThisItem, PickItem);
+                                if (DoingKeysRune) AllKeys.Add(ThisItem.Replace(" ", ""), PickItem);
                             }
 
                             if (AllLines[i].Contains("KEYS/GEMS/RUNES ITEMS"))
