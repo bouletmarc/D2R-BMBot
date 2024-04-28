@@ -771,11 +771,13 @@ namespace app
                                             if (ThisItemBuf == ThisItem) Count++;
                                         }
                                     }
-                                    ThisItem += Count;
+                                    if (Count > 1) ThisItem += Count;
                                 }
                                 if (ThisItem.Replace(" ", "").ToLower().Contains("[name]=="))
                                 {
                                     DoingName = true;
+
+                                    //Console.WriteLine("doing: " + ThisItem);
 
                                     if (ThisItem.Contains('&'))
                                     {
@@ -797,13 +799,16 @@ namespace app
                                                 if (ThisItemBuf == ThisItem) Count++;
                                             }
                                         }
-                                        ThisItem += Count;
+                                        if (Count > 1) ThisItem += Count;
                                     }
                                     else
                                     {
                                         ThisItem = ThisItem.Replace(" ", "").Substring(ThisItem.IndexOf('=') + 1);
                                         if (ThisItem.Contains('/')) ThisItem = ThisItem.Substring(0, ThisItem.IndexOf('/'));
                                     }
+
+
+                                    //Console.WriteLine("end: " + ThisItem);
                                 }
                             }
                             //##########
@@ -823,24 +828,30 @@ namespace app
                             {
                                 if (DoingName)
                                 {
-                                    foreach (var ThisDir in Form1_0.ItemsAlert_0.PickItemsNormal_ByName)
+                                    if (Form1_0.ItemsAlert_0.PickItemsNormal_ByName.ContainsKey(ThisItem))
+                                    //foreach (var ThisDir in Form1_0.ItemsAlert_0.PickItemsNormal_ByName)
                                     {
-                                        if (ThisDir.Key == ThisItem)
+                                        if (!PickItem && Form1_0.ItemsAlert_0.PickItemsNormal_ByName[ThisItem]) AllLines[i] = FullLine + ThisDesc;
+                                        if (PickItem && !Form1_0.ItemsAlert_0.PickItemsNormal_ByName[ThisItem]) AllLines[i] = "//" + FullLine + ThisDesc;
+                                        /*if (ThisDir.Key == ThisItem)
                                         {
                                             if (!PickItem && ThisDir.Value) AllLines[i] = FullLine + ThisDesc;
                                             if (PickItem && !ThisDir.Value) AllLines[i] = "//" + FullLine + ThisDesc;
-                                        }
+                                        }*/
                                     }
                                 }
                                 else
                                 {
-                                    foreach (var ThisDir in Form1_0.ItemsAlert_0.PickItemsNormal_ByType)
+                                    if (Form1_0.ItemsAlert_0.PickItemsNormal_ByType.ContainsKey(ThisItem))
+                                    //foreach (var ThisDir in Form1_0.ItemsAlert_0.PickItemsNormal_ByType)
                                     {
-                                        if (ThisDir.Key == ThisItem)
+                                        if (!PickItem && Form1_0.ItemsAlert_0.PickItemsNormal_ByType[ThisItem]) AllLines[i] = FullLine + ThisDesc;
+                                        if (PickItem && !Form1_0.ItemsAlert_0.PickItemsNormal_ByType[ThisItem]) AllLines[i] = "//" + FullLine + ThisDesc;
+                                        /*if (ThisDir.Key == ThisItem)
                                         {
                                             if (!PickItem && ThisDir.Value) AllLines[i] = FullLine + ThisDesc;
                                             if (PickItem && !ThisDir.Value) AllLines[i] = "//" + FullLine + ThisDesc;
-                                        }
+                                        }*/
                                     }
                                 }
                             }

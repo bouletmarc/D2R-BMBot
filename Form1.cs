@@ -42,7 +42,7 @@ namespace app
     public partial class Form1 : Form
     {
 
-        public string BotVersion = "V2.9";
+        public string BotVersion = "V2.91";
 
         public string D2_LOD_113C_Path = "";
 
@@ -814,6 +814,9 @@ namespace app
         {
             Form1_0.SetGameStatus("NEW GAME STARTED");
 
+            InventoryStruc_0.HUDItems_tpscrolls_locx = -1;
+            InventoryStruc_0.HUDItems_tpscrolls_locy = -1;
+
             PublicGame = (CharConfig.GamePass == "");
             if (!PublicGame && CharConfig.IsRushing) PublicGame = true;
             if (!PublicGame && !CharConfig.RunGameMakerScript) PublicGame = true;
@@ -823,8 +826,8 @@ namespace app
             //PatternsScan_0.ScanUnitsNumber = 2600;
             //PatternsScan_0.ScanUnitsNumber = 2400;
             //PatternsScan_0.ScanUnitsNumber = 2048;
-            PatternsScan_0.StartIndexItem_V2 = long.MaxValue;
-            PatternsScan_0.StartIndexItemLast_V2 = long.MaxValue;
+            PatternsScan_0.StartIndexItem_V2 = long.MaxValue;     //UNITS SCAN V2
+            PatternsScan_0.StartIndexItemLast_V2 = long.MaxValue; //UNITS SCAN V2
             Town_0.TriedToShopCount = 0;
             Town_0.TriedToShopCount2 = 0;
             Town_0.TriedToMercCount = 0;
@@ -954,7 +957,7 @@ namespace app
                             //if (!CharConfig.IsRushing) WaitDelay(400); //wait here because 'loading' menu is not correct
                             if (!CharConfig.IsRushing) WaitDelay(250); //wait here because 'loading' menu is not correct
                             if (CharConfig.IsRushing) PlayerScan_0.ScanForLeecher();
-                            if (PatternsScan_0.StartIndexItem_V2 == long.MaxValue) PatternsScan_0.DetectFirstUnitPointer();
+                            if (PatternsScan_0.StartIndexItem_V2 == long.MaxValue) PatternsScan_0.DetectFirstUnitPointer(); //UNITS SCAN V2
                             Town_0.GetCorpse();
                             ItemsStruc_0.GetBadItemsOnCursor();
                             HasPointers = true;
@@ -970,7 +973,7 @@ namespace app
                                 //if (!CharConfig.IsRushing) WaitDelay(400); //wait here because 'loading' menu is not correct
                                 if (!CharConfig.IsRushing) WaitDelay(250); //wait here because 'loading' menu is not correct
                                 if (CharConfig.IsRushing) PlayerScan_0.ScanForLeecher();
-                                if (PatternsScan_0.StartIndexItem_V2 == long.MaxValue) PatternsScan_0.DetectFirstUnitPointer();
+                                if (PatternsScan_0.StartIndexItem_V2 == long.MaxValue) PatternsScan_0.DetectFirstUnitPointer(); //UNITS SCAN V2
                                 Town_0.GetCorpse();
                                 ItemsStruc_0.GetBadItemsOnCursor();
                                 HasPointers = true;

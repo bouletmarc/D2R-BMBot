@@ -494,8 +494,8 @@ namespace app
                         //Print Units Scanned Count
                         if (ShowUnitsScanCount || (Form1_0.DebugMenuStyle > 0 && !ShowUnitsScanCount))
                         {
-                            //Show values of the V2 Units Scan
-                            string UnitsStr = "Units Scan:" + Form1_0.PatternsScan_0.GetUnitsScannedCount(2).ToString();
+                            //Show values of the V3 Units Scan
+                            string UnitsStr = "Units Scan V3:" + Form1_0.PatternsScan_0.GetUnitsScannedCount(3).ToString();
                             UnitsStr += " (Items:" + Form1_0.PatternsScan_0.ScannedItemsCount;
                             UnitsStr += ", Player:" + Form1_0.PatternsScan_0.ScannedPlayerCount;
                             UnitsStr += ", Objects:" + Form1_0.PatternsScan_0.ScannedObjectsCount;
@@ -503,14 +503,23 @@ namespace app
                             UnitsStr += ")";
                             DrawString(e, UnitsStr, drawFontBold10, drawBrushGreen, 560, 860, true);
 
-                            //Show values of the V1 Units Scan
-                            /*UnitsStr = "Units Scan V1:" + Form1_0.PatternsScan_0.GetUnitsScannedCount(1).ToString();
+                            //Show values of the V2 Units Scan
+                            UnitsStr = "Units Scan V2:" + Form1_0.PatternsScan_0.GetUnitsScannedCount(2).ToString();
                             UnitsStr += " (Items:" + Form1_0.PatternsScan_0.ScannedItemsCount;
                             UnitsStr += ", Player:" + Form1_0.PatternsScan_0.ScannedPlayerCount;
                             UnitsStr += ", Objects:" + Form1_0.PatternsScan_0.ScannedObjectsCount;
                             UnitsStr += ", NPC:" + Form1_0.PatternsScan_0.ScannedNPCCount;
                             UnitsStr += ")";
-                            DrawString(e, UnitsStr, drawFontBold, drawBrushGreen, 560, 835, true);*/
+                            DrawString(e, UnitsStr, drawFontBold10, drawBrushGreen, 560, 835, true);
+
+                            //Show values of the V1 Units Scan
+                            UnitsStr = "Units Scan V1:" + Form1_0.PatternsScan_0.GetUnitsScannedCount(1).ToString();
+                            UnitsStr += " (Items:" + Form1_0.PatternsScan_0.ScannedItemsCount;
+                            UnitsStr += ", Player:" + Form1_0.PatternsScan_0.ScannedPlayerCount;
+                            UnitsStr += ", Objects:" + Form1_0.PatternsScan_0.ScannedObjectsCount;
+                            UnitsStr += ", NPC:" + Form1_0.PatternsScan_0.ScannedNPCCount;
+                            UnitsStr += ")";
+                            DrawString(e, UnitsStr, drawFontBold10, drawBrushGreen, 560, 810, true);
                         }
                     }
 

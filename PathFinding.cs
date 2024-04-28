@@ -285,8 +285,8 @@ namespace app
             int ThisOffsetToUse = AcceptMoveOffset;
             if (Form1_0.Town_0.IsInTown) ThisOffsetToUse = 5;
             else if (!CharConfig.UseTeleport) ThisOffsetToUse = 5;
-            //else if (CharConfig.UseTeleport && !Form1_0.Town_0.GetInTown() && (Enums.Area) Form1_0.PlayerScan_0.levelNo == Enums.Area.ArcaneSanctuary) ThisOffsetToUse = 1;
-            else if (CharConfig.UseTeleport && !Form1_0.Town_0.GetInTown()) ThisOffsetToUse = 1;
+            else if (CharConfig.UseTeleport && !Form1_0.Town_0.GetInTown() && (Enums.Area) Form1_0.PlayerScan_0.levelNo == Enums.Area.ArcaneSanctuary) ThisOffsetToUse = 1;
+            //else if(CharConfig.UseTeleport && !Form1_0.Town_0.GetInTown()) ThisOffsetToUse = 1;
 
             List<Point> pathShortened = new List<Point>();
             int LastPathAdded = 0;
@@ -756,8 +756,8 @@ namespace app
                             }
                         }
 
-                        //if (CharConfig.UseTeleport && !Form1_0.Town_0.GetInTown() && (Enums.Area)Form1_0.PlayerScan_0.levelNo == Enums.Area.ArcaneSanctuary)
-                        if (CharConfig.UseTeleport && !Form1_0.Town_0.GetInTown())
+                        if (CharConfig.UseTeleport && !Form1_0.Town_0.GetInTown() && (Enums.Area)Form1_0.PlayerScan_0.levelNo == Enums.Area.ArcaneSanctuary)
+                        //if (CharConfig.UseTeleport && !Form1_0.Town_0.GetInTown())
                         {
                             nx = current.Position.X + (dx[p] * AcceptMoveOffset);
                             ny = current.Position.Y + (dy[p] * AcceptMoveOffset);
@@ -773,8 +773,10 @@ namespace app
 
                                         if (closedSet[nx, ny]) continue;
 
-                                        double tentativeG = current.G + 2;
-                                        if (p > 3) tentativeG += 1;
+                                        double tentativeG = current.G + AcceptMoveOffset + 1;
+                                        //double tentativeG = current.G + AcceptMoveOffset;
+                                        //double tentativeG = current.G + 2;
+                                        //if (p > 3) tentativeG += 1;
 
                                         Node neighbor = openSet.FirstOrDefault(node => node.Position.Equals(neighborPos));
                                         if (neighbor == null || tentativeG < neighbor.G)

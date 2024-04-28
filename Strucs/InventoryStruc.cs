@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Principal;
@@ -25,8 +26,8 @@ namespace app
         public int HUDItems_tpscrolls = 0;
         public int HUDItems_keys = 0;
 
-        public int HUDItems_tpscrolls_locx = 0;
-        public int HUDItems_tpscrolls_locy = 0;
+        public int HUDItems_tpscrolls_locx = -1;
+        public int HUDItems_tpscrolls_locy = -1;
         public int HUDItems_idscrolls_locx = 0;
         public int HUDItems_idscrolls_locy = 0;
 
@@ -40,8 +41,15 @@ namespace app
 
         public void UseTP()
         {
-            Dictionary<string, int> itemScreenPos = ConvertInventoryLocToScreenPos(HUDItems_tpscrolls_locx, HUDItems_tpscrolls_locy);
-            Form1_0.KeyMouse_0.MouseCliccRight(itemScreenPos["x"], itemScreenPos["y"]);
+            if (HUDItems_tpscrolls_locx != -1 && HUDItems_tpscrolls_locy != -1)
+            {
+                Dictionary<string, int> itemScreenPos = ConvertInventoryLocToScreenPos(HUDItems_tpscrolls_locx, HUDItems_tpscrolls_locy);
+                Form1_0.KeyMouse_0.MouseCliccRight(itemScreenPos["x"], itemScreenPos["y"]);
+            }
+            else
+            {
+                Form1_0.method_1("Tome of Town Portal not found in the Inventory!", Color.Red);
+            }
         }
 
         public Dictionary<string, int> ConvertInventoryLocToScreenPos(int ThisX, int ThisY)
