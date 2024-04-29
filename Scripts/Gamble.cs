@@ -23,7 +23,7 @@ namespace app
             {
                  return (Form1_0.PlayerScan_0.PlayerGoldInStash >= CharConfig.GambleAboveGoldAmount + 50000); //gamble ring
             }
-            if (GambleType == 1)
+            if (GambleType >= 1)
             {
                 return (Form1_0.PlayerScan_0.PlayerGoldInStash >= CharConfig.GambleAboveGoldAmount + 63000); //gamble ammy
             }
@@ -36,7 +36,7 @@ namespace app
             {
                 return (Form1_0.PlayerScan_0.PlayerGoldInStash >= CharConfig.GambleUntilGoldAmount + 50000); //gamble ring
             }
-            if (GambleType == 1)
+            if (GambleType >= 1)
             {
                 return (Form1_0.PlayerScan_0.PlayerGoldInStash >= CharConfig.GambleUntilGoldAmount + 63000); //gamble ammy
             }
@@ -47,35 +47,21 @@ namespace app
         {
             int tries = 0;
             bool Gambling = true;
+            GambleType = 0;
             while (Gambling && tries < 6)
             {
-                if (GambleType == 0)
+                string GambleThisItem = CharConfig.GambleItems[GambleType];
+                if (Form1_0.ItemsStruc_0.GetShopItem(GambleThisItem))
                 {
-                    //if (Form1_0.ItemsStruc_0.GetShopItem("Ring"))
-                    //{
-                        //Dictionary<string, int> itemScreenPos = Form1_0.Shop_0.ConvertShopLocToScreenPos(Form1_0.ItemsStruc_0.itemx, Form1_0.ItemsStruc_0.itemy);
-                        Dictionary<string, int> itemScreenPos = Form1_0.Shop_0.ConvertShopLocToScreenPos(9, 0);
-                        Form1_0.KeyMouse_0.MouseCliccRight(itemScreenPos["x"], itemScreenPos["y"]);
-                        Form1_0.WaitDelay(100);
-                        Form1_0.PlayerScan_0.GetPositions();
-                        Form1_0.ItemsStruc_0.GetItems(false);   //get inventory
-                    //}
-                }
-                if (GambleType == 1)
-                {
-                    //if (Form1_0.ItemsStruc_0.GetShopItem("Amulet"))
-                    //{
-                        //Dictionary<string, int> itemScreenPos = Form1_0.Shop_0.ConvertShopLocToScreenPos(Form1_0.ItemsStruc_0.itemx, Form1_0.ItemsStruc_0.itemy);
-                        Dictionary<string, int> itemScreenPos = Form1_0.Shop_0.ConvertShopLocToScreenPos(9, 1);
-                        Form1_0.KeyMouse_0.MouseCliccRight(itemScreenPos["x"], itemScreenPos["y"]);
-                        Form1_0.WaitDelay(100);
-                        Form1_0.PlayerScan_0.GetPositions();
-                        Form1_0.ItemsStruc_0.GetItems(false);   //get inventory
-                    //}
+                    Dictionary<string, int> itemScreenPos = Form1_0.Shop_0.ConvertShopLocToScreenPos(Form1_0.ItemsStruc_0.itemx, Form1_0.ItemsStruc_0.itemy);
+                    Form1_0.KeyMouse_0.MouseCliccRight(itemScreenPos["x"], itemScreenPos["y"]);
+                    Form1_0.WaitDelay(100);
+                    Form1_0.PlayerScan_0.GetPositions();
+                    Form1_0.ItemsStruc_0.GetItems(false);   //get inventory
                 }
 
                 GambleType++;
-                if (GambleType == 2) GambleType = 0;
+                if (GambleType > CharConfig.GambleItems.Count - 1) GambleType = 0;
 
                 Gambling = CanStillGamble();
                 tries++;

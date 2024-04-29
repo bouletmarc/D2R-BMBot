@@ -416,7 +416,6 @@ namespace app
             if (PlayerMana > PlayerMaxMana) PlayerMaxMana = PlayerMana;
 
             //TimeSinceSameHP = DateTime.MaxValue;
-        //public bool TimeSinceSameHPSet = false;
             //Set Max HP With BattleOrder State
             if (HasBattleOrderState)
             {

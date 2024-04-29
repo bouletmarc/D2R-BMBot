@@ -204,6 +204,7 @@ namespace app
                 {
                     Form1_0.Potions_0.CanUseSkillForRegen = false;
                     Form1_0.SetGameStatus("KILLING COUNTESS");
+                    Form1_0.MobsStruc_0.DetectThisMob("getSuperUniqueName", "The Countess", false, 200, new List<long>());
                     if (Form1_0.MobsStruc_0.GetMobs("getSuperUniqueName", "The Countess", false, 200, new List<long>()))
                     {
                         if (Form1_0.MobsStruc_0.MobsHP > 0)

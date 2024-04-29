@@ -74,6 +74,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Bots\Act3Sewers.cs" />
+    <Compile Include="Bots\Frozenstein.cs" />
+    <Compile Include="Bots\Rush\AnyaRush.cs" />
+    <Compile Include="Bots\UpperKurast.cs" />
     <Compile Include="Bots\Rush\ChaosRush.cs" />
     <Compile Include="Bots\Rush\BaalRush.cs" />
     <Compile Include="Bots\Baal.cs" />

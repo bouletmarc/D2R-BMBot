@@ -149,18 +149,44 @@ namespace app
                     if (Splitted[0] == "InventoryDontCheckItem")
                     {
                         string InventoryTxtt = "";
-                        InventoryTxtt += Environment.NewLine + "{" + Environment.NewLine;
-                        for (int w = 0; w < 40; w++)
+                        for (int w = 0; w < 10; w++)
                         {
-                            if (w == 10) InventoryTxtt += Environment.NewLine;
-                            if (w == 20) InventoryTxtt += Environment.NewLine;
-                            if (w == 30) InventoryTxtt += Environment.NewLine;
-
+                            //if (w == 10) InventoryTxtt += Environment.NewLine;
                             InventoryTxtt += CharConfig.InventoryDontCheckItem[w];
+                            if (w < 10 - 1) InventoryTxtt += ",";
+                        }
+                        i += 2;
+                        AllLines[i] = InventoryTxtt;
 
+                        InventoryTxtt = "";
+                        for (int w = 10; w < 20; w++)
+                        {
+                            InventoryTxtt += CharConfig.InventoryDontCheckItem[w];
+                            if (w < 20 - 1) InventoryTxtt += ",";
+                        }
+                        i++;
+                        AllLines[i] = InventoryTxtt;
+
+
+                        InventoryTxtt = "";
+                        for (int w = 20; w < 30; w++)
+                        {
+                            InventoryTxtt += CharConfig.InventoryDontCheckItem[w];
+                            if (w < 30 - 1) InventoryTxtt += ",";
+                        }
+                        i++;
+                        AllLines[i] = InventoryTxtt;
+
+
+                        InventoryTxtt = "";
+                        for (int w = 30; w < 40; w++)
+                        {
+                            InventoryTxtt += CharConfig.InventoryDontCheckItem[w];
                             if (w < 40 - 1) InventoryTxtt += ",";
                         }
-                        AllLines[i] = "InventoryDontCheckItem=" + InventoryTxtt;
+                        i++;
+                        AllLines[i] = InventoryTxtt;
+
                     }
 
                     if (Splitted[0] == "PlayerCharName") AllLines[i] = "PlayerCharName=" + CharConfig.PlayerCharName;
@@ -178,6 +204,17 @@ namespace app
                     if (Splitted[0] == "GambleAboveGoldAmount") AllLines[i] = "GambleAboveGoldAmount=" + CharConfig.GambleAboveGoldAmount;
                     if (Splitted[0] == "GambleUntilGoldAmount") AllLines[i] = "GambleUntilGoldAmount=" + CharConfig.GambleUntilGoldAmount;
                     if (Splitted[0] == "PlayerAttackWithRightHand") AllLines[i] = "PlayerAttackWithRightHand=" + CharConfig.PlayerAttackWithRightHand;
+
+                    if (Splitted[0] == "GambleItems")
+                    {
+                        string AllItems = "";
+                        for (int k = 0; k < CharConfig.GambleItems.Count; k++)
+                        {
+                            AllItems += CharConfig.GambleItems[k];
+                            if (k < CharConfig.GambleItems.Count - 1) AllItems += ",";
+                        }
+                        AllLines[i] = "GambleItems=" + AllItems;
+                    }
 
                     if (Splitted[0] == "KeysLocationInInventory") AllLines[i] = "KeysLocationInInventory=" + CharConfig.KeysLocationInInventory.Item1 + "," + CharConfig.KeysLocationInInventory.Item2;
 
@@ -252,6 +289,7 @@ namespace app
                     //#########
 
                     if (Splitted[0] == "RunMapHackOnly") AllLines[i] = "RunMapHackOnly=" + CharConfig.RunMapHackOnly;
+                    if (Splitted[0] == "RunAnyaRush") AllLines[i] = "RunAnyaRush=" + CharConfig.RunAnyaRush;
                     if (Splitted[0] == "RunDarkWoodRush") AllLines[i] = "RunDarkWoodRush=" + CharConfig.RunDarkWoodRush;
                     if (Splitted[0] == "RunTristramRush") AllLines[i] = "RunTristramRush=" + CharConfig.RunTristramRush;
                     if (Splitted[0] == "RunAndarielRush") AllLines[i] = "RunAndarielRush=" + CharConfig.RunAndarielRush;
@@ -283,6 +321,8 @@ namespace app
                     if (Splitted[0] == "RunChaosScript") AllLines[i] = "RunChaosScript=" + CharConfig.RunChaosScript;
                     if (Splitted[0] == "RunChaosLeechScript") AllLines[i] = "RunChaosLeechScript=" + CharConfig.RunChaosLeechScript;
                     if (Splitted[0] == "RunLowerKurastScript") AllLines[i] = "RunLowerKurastScript=" + CharConfig.RunLowerKurastScript;
+                    if (Splitted[0] == "RunUpperKurastScript") AllLines[i] = "RunUpperKurastScript=" + CharConfig.RunUpperKurastScript;
+                    if (Splitted[0] == "RunA3SewersScript") AllLines[i] = "RunA3SewersScript=" + CharConfig.RunA3SewersScript;
                     if (Splitted[0] == "RunBaalScript") AllLines[i] = "RunBaalScript=" + CharConfig.RunBaalScript;
                     if (Splitted[0] == "RunBaalLeechScript") AllLines[i] = "RunBaalLeechScript=" + CharConfig.RunBaalLeechScript;
                     if (Splitted[0] == "RunItemGrabScriptOnly") AllLines[i] = "RunItemGrabScriptOnly=" + CharConfig.RunItemGrabScriptOnly;
@@ -290,6 +330,7 @@ namespace app
                     if (Splitted[0] == "RunEldritchScript") AllLines[i] = "RunEldritchScript=" + CharConfig.RunEldritchScript;
                     if (Splitted[0] == "RunShenkScript") AllLines[i] = "RunShenkScript=" + CharConfig.RunShenkScript;
                     if (Splitted[0] == "RunNihlatakScript") AllLines[i] = "RunNihlatakScript=" + CharConfig.RunNihlatakScript;
+                    if (Splitted[0] == "RunFrozensteinScript") AllLines[i] = "RunFrozensteinScript=" + CharConfig.RunFrozensteinScript;
 
                     if (Splitted[0] == "RunChaosSearchGameScript") AllLines[i] = "RunChaosSearchGameScript=" + CharConfig.RunChaosSearchGameScript;
                     if (Splitted[0] == "RunBaalSearchGameScript") AllLines[i] = "RunBaalSearchGameScript=" + CharConfig.RunBaalSearchGameScript;
@@ -337,6 +378,7 @@ namespace app
                 Dictionary<string, bool> AllNormall_ByName = new Dictionary<string, bool>();
                 Dictionary<string, Dictionary<uint, string>> AllNormall_ByName_Flags = new Dictionary<string, Dictionary<uint, string>>();
                 Dictionary<string, int> AllNormall_ByName_Quality = new Dictionary<string, int>();
+                Dictionary<string, int> AllNormall_ByName_Class = new Dictionary<string, int>();
                 Dictionary<string, Dictionary<string, int>> AllNormall_ByName_Stats = new Dictionary<string, Dictionary<string, int>>();
                 Dictionary<string, Dictionary<string, string>> AllNormall_ByName_Operators = new Dictionary<string, Dictionary<string, string>>();
                 Dictionary<string, string> NormalNameDesc = new Dictionary<string, string>();
@@ -344,6 +386,7 @@ namespace app
                 Dictionary<string, bool> AllNormall_ByType = new Dictionary<string, bool>();
                 Dictionary<string, Dictionary<uint, string>> AllNormall_ByType_Flags = new Dictionary<string, Dictionary<uint, string>>();
                 Dictionary<string, int> AllNormall_ByType_Quality = new Dictionary<string, int>();
+                Dictionary<string, int> AllNormall_ByType_Class = new Dictionary<string, int>();
                 Dictionary<string, Dictionary<string, int>> AllNormall_ByType_Stats = new Dictionary<string, Dictionary<string, int>>();
                 Dictionary<string, Dictionary<string, string>> AllNormal_ByType_Operators = new Dictionary<string, Dictionary<string, string>>();
                 Dictionary<string, string> NormalTypeDesc = new Dictionary<string, string>();
@@ -529,6 +572,16 @@ namespace app
                                                 if (GoingByName) AllNormall_ByName_Quality.Add(currentName, QualityValue);
                                                 else AllNormall_ByType_Quality.Add(currentName, QualityValue);
                                             }
+                                            else if (ThisParam.ToLower() == "class")
+                                            {
+                                                int ClassValue = 0;
+                                                if (ThisValue.ToLower() == "normal") ClassValue = 0;
+                                                if (ThisValue.ToLower() == "exceptional") ClassValue = 1;
+                                                if (ThisValue.ToLower() == "elite") ClassValue = 2;
+
+                                                if (GoingByName) AllNormall_ByName_Class.Add(currentName, ClassValue);
+                                                else AllNormall_ByType_Class.Add(currentName, ClassValue);
+                                            }
                                             else if (ThisParam.ToLower() == "flag")
                                             {
                                                 uint ThisFlagss = 0;
@@ -620,6 +673,7 @@ namespace app
                 Form1_0.ItemsAlert_0.PickItemsNormal_ByName.Clear();
                 Form1_0.ItemsAlert_0.PickItemsNormal_ByName_Flags.Clear();
                 Form1_0.ItemsAlert_0.PickItemsNormal_ByName_Quality.Clear();
+                Form1_0.ItemsAlert_0.PickItemsNormal_ByName_Class.Clear();
                 Form1_0.ItemsAlert_0.PickItemsNormal_ByName_Stats.Clear();
                 Form1_0.ItemsAlert_0.PickItemsNormal_ByName_Operators.Clear();
                 Form1_0.ItemsAlert_0.PickItemsNormal_ByNameDesc.Clear();
@@ -635,6 +689,7 @@ namespace app
                         Form1_0.ItemsAlert_0.PickItemsNormal_ByName.Add(ThisDir.Key, ThisDir.Value);
                         if (AllNormall_ByName_Flags.ContainsKey(ThisDir.Key)) Form1_0.ItemsAlert_0.PickItemsNormal_ByName_Flags.Add(ThisDir.Key, AllNormall_ByName_Flags[ThisDir.Key]);
                         if (AllNormall_ByName_Quality.ContainsKey(ThisDir.Key)) Form1_0.ItemsAlert_0.PickItemsNormal_ByName_Quality.Add(ThisDir.Key, AllNormall_ByName_Quality[ThisDir.Key]);
+                        if (AllNormall_ByName_Class.ContainsKey(ThisDir.Key)) Form1_0.ItemsAlert_0.PickItemsNormal_ByName_Class.Add(ThisDir.Key, AllNormall_ByName_Class[ThisDir.Key]);
                         if (AllNormall_ByName_Stats.ContainsKey(ThisDir.Key)) Form1_0.ItemsAlert_0.PickItemsNormal_ByName_Stats.Add(ThisDir.Key, AllNormall_ByName_Stats[ThisDir.Key]);
                         if (AllNormall_ByName_Operators.ContainsKey(ThisDir.Key)) Form1_0.ItemsAlert_0.PickItemsNormal_ByName_Operators.Add(ThisDir.Key, AllNormall_ByName_Operators[ThisDir.Key]);
                         Form1_0.ItemsAlert_0.PickItemsNormal_ByNameDesc.Add(ThisDir.Key, NormalNameDesc[ThisDir.Key]);
@@ -646,6 +701,7 @@ namespace app
                 Form1_0.ItemsAlert_0.PickItemsNormal_ByType.Clear();
                 Form1_0.ItemsAlert_0.PickItemsNormal_ByType_Flags.Clear();
                 Form1_0.ItemsAlert_0.PickItemsNormal_ByType_Quality.Clear();
+                Form1_0.ItemsAlert_0.PickItemsNormal_ByType_Class.Clear();
                 Form1_0.ItemsAlert_0.PickItemsNormal_ByType_Stats.Clear();
                 Form1_0.ItemsAlert_0.PickItemsNormal_ByType_Operators.Clear();
                 Form1_0.ItemsAlert_0.PickItemsNormal_ByTypeDesc.Clear();
@@ -655,6 +711,7 @@ namespace app
                     Form1_0.ItemsAlert_0.PickItemsNormal_ByType.Add(ThisDir.Key, ThisDir.Value);
                     if (AllNormall_ByType_Flags.ContainsKey(ThisDir.Key)) Form1_0.ItemsAlert_0.PickItemsNormal_ByType_Flags.Add(ThisDir.Key, AllNormall_ByType_Flags[ThisDir.Key]);
                     if (AllNormall_ByType_Quality.ContainsKey(ThisDir.Key)) Form1_0.ItemsAlert_0.PickItemsNormal_ByType_Quality.Add(ThisDir.Key, AllNormall_ByType_Quality[ThisDir.Key]);
+                    if (AllNormall_ByType_Class.ContainsKey(ThisDir.Key)) Form1_0.ItemsAlert_0.PickItemsNormal_ByType_Class.Add(ThisDir.Key, AllNormall_ByType_Class[ThisDir.Key]);
                     if (AllNormall_ByType_Stats.ContainsKey(ThisDir.Key)) Form1_0.ItemsAlert_0.PickItemsNormal_ByType_Stats.Add(ThisDir.Key, AllNormall_ByType_Stats[ThisDir.Key]);
                     if (AllNormal_ByType_Operators.ContainsKey(ThisDir.Key)) Form1_0.ItemsAlert_0.PickItemsNormal_ByType_Operators.Add(ThisDir.Key, AllNormal_ByType_Operators[ThisDir.Key]);
                     Form1_0.ItemsAlert_0.PickItemsNormal_ByTypeDesc.Add(ThisDir.Key, NormalTypeDesc[ThisDir.Key]);
@@ -964,7 +1021,10 @@ namespace app
                                 {
                                     CharConfig.RunMapHackOnly = bool.Parse(Params[1].ToLower());
                                 }
-
+                                if (Params[0].Contains("RunAnyaRush"))
+                                {
+                                    CharConfig.RunAnyaRush = bool.Parse(Params[1].ToLower());
+                                }
                                 if (Params[0].Contains("RunDarkWoodRush"))
                                 {
                                     CharConfig.RunDarkWoodRush = bool.Parse(Params[1].ToLower());
@@ -1081,6 +1141,14 @@ namespace app
                                 {
                                     CharConfig.RunLowerKurastScript = bool.Parse(Params[1].ToLower());
                                 }
+                                if (Params[0].Contains("RunUpperKurastScript"))
+                                {
+                                    CharConfig.RunUpperKurastScript = bool.Parse(Params[1].ToLower());
+                                }
+                                if (Params[0].Contains("RunA3SewersScript"))
+                                {
+                                    CharConfig.RunA3SewersScript = bool.Parse(Params[1].ToLower());
+                                }
                                 if (Params[0].Contains("RunBaalScript"))
                                 {
                                     CharConfig.RunBaalScript = bool.Parse(Params[1].ToLower());
@@ -1104,6 +1172,10 @@ namespace app
                                 if (Params[0].Contains("RunNihlatakScript"))
                                 {
                                     CharConfig.RunNihlatakScript = bool.Parse(Params[1].ToLower());
+                                }
+                                if (Params[0].Contains("RunFrozensteinScript"))
+                                {
+                                    CharConfig.RunFrozensteinScript = bool.Parse(Params[1].ToLower());
                                 }
                                 //########
 
@@ -1415,6 +1487,17 @@ namespace app
                                     string KeyValue2 = Params[1].ToLower().Substring(Params[1].IndexOf(",") + 1);
                                     CharConfig.KeysLocationInInventory.Item1 = int.Parse(KeyValue1);
                                     CharConfig.KeysLocationInInventory.Item2 = int.Parse(KeyValue2);
+                                }
+                                if (Params[0].Contains("GambleItems"))
+                                {
+                                    CharConfig.GambleItems.Clear();
+                                    if (Params[1].Contains(","))
+                                    {
+                                        string[] AllItems = Params[1].Split(',');
+                                        for (int k = 0; k < AllItems.Length; k++) CharConfig.GambleItems.Add(AllItems[k]);
+
+                                    }
+                                    if (Params[1] != "") CharConfig.GambleItems.Add(Params[1]);
                                 }
                                 //#####
                                 if (Params[0].Contains("UsingMerc"))

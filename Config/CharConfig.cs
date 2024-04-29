@@ -63,6 +63,7 @@ namespace app
         public static bool LeaveDiabloClone = true;
         public static bool GambleGold = true;
         public static bool UseKeys = true;
+        public static List<string> GambleItems = new List<string> { "Amulet", "Ring" };
 
         //#######################################
         //MERC SETTINGS
@@ -81,6 +82,7 @@ namespace app
         public static bool ShowOverlay = true;
         public static bool RunWPTaker = false;
         public static bool RunMapHackOnly = false;
+        public static bool RunAnyaRush = false;
         public static bool RunDarkWoodRush = false;
         public static bool RunTristramRush = false;
         public static bool RunAndarielRush = false;
@@ -103,6 +105,7 @@ namespace app
         public static bool RunEldritchScript = false;
         public static bool RunShenkScript = false;
         public static bool RunNihlatakScript = false;
+        public static bool RunFrozensteinScript = false;
         public static bool RunPindleskinScript = false;
         public static bool RunTravincalScript = false;
         public static bool RunMephistoScript = false;
@@ -113,6 +116,8 @@ namespace app
         public static bool RunChaosScript = false;
         public static bool RunChaosLeechScript = false;          //CHAOS LEECH SCRIPT **NOT FINISHED**
         public static bool RunLowerKurastScript = false;     //LOWER KURAST SCRIPT
+        public static bool RunUpperKurastScript = false;
+        public static bool RunA3SewersScript = false;
         public static bool RunBaalScript = true;
         public static bool RunBaalLeechScript = true;       //BAAL LEECH SCRIPT
         public static bool RunItemGrabScriptOnly = false;

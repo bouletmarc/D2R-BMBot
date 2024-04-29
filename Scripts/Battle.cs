@@ -32,6 +32,9 @@ namespace app
 
         public int TriedToMoveToMobsCount = 0;
 
+        public string LastMobName = "";
+        public string LastMobType = "";
+
         public void SetForm1(Form1 form1_1)
         {
             Form1_0 = form1_1;
@@ -524,47 +527,62 @@ namespace app
             return false;
         }
 
-        public void RunBattleScriptOnThisMob(string MobType, string MobName)
+        public void RunBattleScriptOnLastMob()
         {
-            if (Form1_0.MobsStruc_0.GetMobs(MobType, MobName, false, 200, new List<long>()))
+            if (Form1_0.MobsStruc_0.GetMobs(LastMobType, LastMobName, false, 200, new List<long>()))
             {
                 if (CharConfig.RunBaalScript && !Form1_0.Baal_0.ScriptDone && Form1_0.MobsStruc_0.MobsName == "BaalSubject5") Form1_0.Baal_0.Wave5Detected = true;
-
-                DoingBattle = true;
-                SetBattleMoveAcceptOffset();
-                Form1_0.Mover_0.MoveAcceptOffset = 2;
-                Position ThisAttackPos = GetBestAttackLocation(new Position { X = Form1_0.MobsStruc_0.xPosFinal + 1, Y = Form1_0.MobsStruc_0.yPosFinal + 5 });
-                if (ThisAttackPos.X != 0 && ThisAttackPos.Y != 0)
+                if (Form1_0.MobsStruc_0.MobsHP > 0)
                 {
-                    if (!Form1_0.Mover_0.MoveToLocationAttack(ThisAttackPos.X, ThisAttackPos.Y))
+                    DoingBattle = true;
+                    SetBattleMoveAcceptOffset();
+                    Form1_0.Mover_0.MoveAcceptOffset = 2;
+                    Position ThisAttackPos = GetBestAttackLocation(new Position { X = Form1_0.MobsStruc_0.xPosFinal + 1, Y = Form1_0.MobsStruc_0.yPosFinal + 5 });
+                    if (ThisAttackPos.X != 0 && ThisAttackPos.Y != 0)
                     {
-                        TriedToMoveToMobsCount++;
-                        if (TriedToMoveToMobsCount >= 2)
+                        if (!Form1_0.Mover_0.MoveToLocationAttack(ThisAttackPos.X, ThisAttackPos.Y))
                         {
-                            ThisAttackPos = ResetMovePostionInBetween(ThisAttackPos);
-                            Form1_0.Mover_0.MoveToLocationAttack(ThisAttackPos.X, ThisAttackPos.Y);
-                            TriedToMoveToMobsCount = 0;
+                            TriedToMoveToMobsCount++;
+                            if (TriedToMoveToMobsCount >= 2)
+                            {
+                                ThisAttackPos = ResetMovePostionInBetween(ThisAttackPos);
+                                Form1_0.Mover_0.MoveToLocationAttack(ThisAttackPos.X, ThisAttackPos.Y);
+                                TriedToMoveToMobsCount = 0;
+                            }
                         }
+                        Form1_0.KeyMouse_0.ReleaseKey(System.Windows.Forms.Keys.E);
                     }
-                    Form1_0.KeyMouse_0.ReleaseKey(System.Windows.Forms.Keys.E);
-                }
-                //Form1_0.Mover_0.MoveToLocationAttack(Form1_0.MobsStruc_0.xPosFinal - 1, Form1_0.MobsStruc_0.yPosFinal + 2);
-                Form1_0.Mover_0.MoveAcceptOffset = 4;
-                ResetBattleMoveAcceptOffset();
+                    //Form1_0.Mover_0.MoveToLocationAttack(Form1_0.MobsStruc_0.xPosFinal - 1, Form1_0.MobsStruc_0.yPosFinal + 2);
+                    Form1_0.Mover_0.MoveAcceptOffset = 4;
+                    ResetBattleMoveAcceptOffset();
 
-                
-                FirstAttackCasting();
-                SetSkills();
-                CastSkills();
-                if (CharConfig.RunningOnChar == "PaladinHammer")
-                {
+
+                    FirstAttackCasting();
+                    SetSkills();
                     CastSkills();
-                    CastSkills();
+                    if (CharConfig.RunningOnChar == "PaladinHammer")
+                    {
+                        CastSkills();
+                        CastSkills();
+                    }
+                    AttackTryCheck();
                 }
-                AttackTryCheck();
+                else
+                {
+                    //LastMobType = "";
+                    //LastMobName = "";
+                    Form1_0.MobsStruc_0.xPosFinal = 0;
+                    Form1_0.MobsStruc_0.yPosFinal = 0;
+                    if (CharConfig.RunBaalScript && !Form1_0.Baal_0.ScriptDone && Form1_0.Baal_0.Wave5Detected) Form1_0.Baal_0.Wave5Cleared = true;
+                    TriedToMoveToMobsCount = 0;
+                    DoingBattle = false;
+                    FirstAttackCasted = false;
+                }
             }
             else
             {
+                //LastMobType = "";
+                //LastMobName = "";
                 Form1_0.MobsStruc_0.xPosFinal = 0;
                 Form1_0.MobsStruc_0.yPosFinal = 0;
                 if (CharConfig.RunBaalScript && !Form1_0.Baal_0.ScriptDone && Form1_0.Baal_0.Wave5Detected) Form1_0.Baal_0.Wave5Cleared = true;
@@ -572,6 +590,13 @@ namespace app
                 DoingBattle = false;
                 FirstAttackCasted = false;
             }
+        }
+
+        public void RunBattleScriptOnThisMob(string MobType, string MobName)
+        {
+            LastMobType = MobType;
+            LastMobName = MobName;
+            RunBattleScriptOnLastMob();
         }
 
         public Position ResetMovePostionInBetween(Position ThisPos)

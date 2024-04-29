@@ -657,45 +657,15 @@ namespace app
             // Lut Gholein map is a bit bugged, we should close this fake path to avoid pathing issues
             if (area == Enums.Area.LutGholein) cg[13, 210] = false;
 
-            // Fix for Summonner map (when the summoner is located in the area that have tons of teleportation pads)
-            //XX-----XXXXXXXXXXXXXXXXXXXX-----XX
-            if (area == Enums.Area.ArcaneSanctuary)
+            // Kurast Docks
+            if (area == Enums.Area.KurastDocks)
             {
-                for (int x = 0; x < cg.GetLength(0) - 35; x++)
-                {
-                    for (int y = 0; y < cg.GetLength(0); y++)
-                    {
-                        if (!cg[x, y] && !cg[x + 1, y]
-                            && cg[x + 2, y] && cg[x + 3, y] && cg[x + 4, y] && cg[x + 5, y] && cg[x + 6, y]
-                            && !cg[x + 7, y] && !cg[x + 8, y] && !cg[x + 9, y] && !cg[x + 10, y] && !cg[x + 11, y] && !cg[x + 12, y] && !cg[x + 13, y] && !cg[x + 14, y] && !cg[x + 15, y] && !cg[x + 16, y]
-                            && !cg[x + 17, y] && !cg[x + 18, y] && !cg[x + 19, y] && !cg[x + 20, y] && !cg[x + 21, y] && !cg[x + 22, y] && !cg[x + 23, y] && !cg[x + 24, y] && !cg[x + 25, y] && !cg[x + 26, y]
-                            && cg[x + 27, y] && cg[x + 28, y] && cg[x + 29, y] && cg[x + 30, y] && cg[x + 31, y]
-                            && !cg[x + 32, y] && !cg[x + 33, y])
-                        {
-                            //Console.WriteLine("CorrectPath1!");
-                            cg[x + 7, y] = true;
-                            cg[x + 26, y] = true;
-                        }
-                    }
-                }
-                for (int x = 0; x < cg.GetLength(0); x++)
-                {
-                    for (int y = 0; y < cg.GetLength(0) - 35; y++)
-                    {
-                        if (!cg[x, y] && !cg[x, y + 1]
-                            && cg[x, y + 2] && cg[x, y + 3] && cg[x, y + 4] && cg[x, y + 5] && cg[x, y + 6]
-                            && !cg[x, y + 7] && !cg[x, y + 8] && !cg[x, y + 9] && !cg[x, y + 10] && !cg[x, y + 11] && !cg[x, y + 12] && !cg[x, y + 13] && !cg[x, y + 14] && !cg[x, y + 15] && !cg[x, y + 16]
-                            && !cg[x, y + 17] && !cg[x, y + 18] && !cg[x, y + 19] && !cg[x, y + 20] && !cg[x, y + 21] && !cg[x, y + 22] && !cg[x, y + 23] && !cg[x, y + 24] && !cg[x, y + 25] && !cg[x, y + 26]
-                            && cg[x, y + 27] && cg[x, y + 28] && cg[x, y + 29] && cg[x, y + 30] && cg[x, y + 31]
-                            && !cg[x, y + 32] && !cg[x, y + 33])
-                        {
-                            //Console.WriteLine("CorrectPath2!");
-                            cg[x, y + 7] = true;
-                            cg[x, y + 26] = true;
-                        }
-                    }
-                }
+                cg[140, 85] = false;
+                cg[141, 85] = false;
+                cg[142, 85] = false;
+                cg[143, 85] = false;
             }
+
 
             //dump data to txt file
             /*string ColisionMapTxt = "";

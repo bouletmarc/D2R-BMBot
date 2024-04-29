@@ -37,6 +37,9 @@ namespace app
         public List<string> AllGamesTriedNames = new List<string>();
         public bool AlreadyChickening = false;
 
+
+        public bool TypedSearchGames = false;
+
         [DllImport("user32.dll")] static extern short VkKeyScan(char ch);
 
         [StructLayout(LayoutKind.Explicit)]
@@ -157,24 +160,29 @@ namespace app
             Form1_0.KeyMouse_0.MouseClicc(1415, 65);  //clic 'join game' if not in game list area
 
             //#####
-            Form1_0.KeyMouse_0.ReleaseKey(System.Windows.Forms.Keys.E);
-            Form1_0.KeyMouse_0.MouseClicc(1205, 210); //clic search bar
-            //type 'search' type games
-            for (int i = 0; i < 16; i++)
+            if (!TypedSearchGames)
             {
-                Form1_0.KeyMouse_0.PressKey(Keys.Back);
+                Form1_0.KeyMouse_0.ReleaseKey(System.Windows.Forms.Keys.E);
+                Form1_0.KeyMouse_0.ReleaseKey(System.Windows.Forms.Keys.E);
+                Form1_0.KeyMouse_0.MouseClicc(1205, 210); //clic search bar
+                                                          //type 'search' type games
+                for (int i = 0; i < 16; i++)
+                {
+                    Form1_0.KeyMouse_0.PressKey(Keys.Back);
+                    Thread.Sleep(3);
+                }
                 Thread.Sleep(3);
-            }
-            Thread.Sleep(3);
-            string GameName = "";
-            if (CharConfig.RunBaalSearchGameScript && !CharConfig.RunItemGrabScriptOnly) GameName = "baal";
-            if (CharConfig.RunChaosSearchGameScript && !CharConfig.RunItemGrabScriptOnly) GameName = "chaos";
-            for (int i = 0; i < GameName.Length; i++)
-            {
-                var helper = new Helper { Value = VkKeyScan(GameName[i]) };
-                byte virtualKeyCode = helper.Low;
-                Form1_0.KeyMouse_0.PressKey2((Keys)virtualKeyCode);
-                Thread.Sleep(3);
+                string GameName = "";
+                if (CharConfig.RunBaalSearchGameScript && !CharConfig.RunItemGrabScriptOnly) GameName = "baal";
+                if (CharConfig.RunChaosSearchGameScript && !CharConfig.RunItemGrabScriptOnly) GameName = "chaos";
+                for (int i = 0; i < GameName.Length; i++)
+                {
+                    var helper = new Helper { Value = VkKeyScan(GameName[i]) };
+                    byte virtualKeyCode = helper.Low;
+                    Form1_0.KeyMouse_0.PressKey2((Keys)virtualKeyCode);
+                    Thread.Sleep(3);
+                }
+                TypedSearchGames = true;
             }
             //#####
 

@@ -416,6 +416,19 @@ namespace app
 
         public bool DebuggingMobs = false;
 
+        public void DetectThisMob(string MobType, string MobName, bool Nearest, int MaxMobDistance, List<long> IgnoredListPointers)
+        {
+            bool FoundMob = GetMobs(MobType, MobName, Nearest, MaxMobDistance, IgnoredListPointers);
+            int IncreaseCount = 0;
+            while (!FoundMob && IncreaseCount < 5)
+            {
+                Form1_0.PatternsScan_0.IncreaseV1Scanning();
+                IncreaseCount++;
+
+                FoundMob = GetMobs(MobType, MobName, Nearest, MaxMobDistance, IgnoredListPointers);
+            }
+        }
+
         public bool GetMobs(string MobType, string MobName, bool Nearest, int MaxMobDistance, List<long> IgnoredListPointers)
         {
             txtFileNo = 0;

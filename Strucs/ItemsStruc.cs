@@ -140,9 +140,9 @@ namespace app
         {
             pUnitDataPtr = BitConverter.ToInt64(itemdatastruc, 0x10);
 
-            /*pUnitData = new byte[0x56];
+            pUnitData = new byte[0x56];
             Form1_0.Mem_0.ReadRawMemory(pUnitDataPtr, ref pUnitData, pUnitData.Length);
-            itemQuality = BitConverter.ToUInt32(pUnitData, 0x00);
+            /*itemQuality = BitConverter.ToUInt32(pUnitData, 0x00);
             setQuality((int)itemQuality);
             //uint SeedL = BitConverter.ToUInt32(pUnitData, 0x04);
             //uint SeedH = BitConverter.ToUInt32(pUnitData, 0x08);
@@ -162,6 +162,9 @@ namespace app
             //uint uniqueOrSetId = Form1_0.Mem_0.ReadUInt32Raw((IntPtr)(pUnitDataPtr + 0x34));
             equiploc = Form1_0.Mem_0.ReadByteRaw((IntPtr)(pUnitDataPtr + 0x55));
             itemLoc = Form1_0.Mem_0.ReadByteRaw((IntPtr)(pUnitDataPtr + 0x54));
+
+            //byte Thb = Form1_0.Mem_0.ReadByteRaw((IntPtr)(pUnitDataPtr + 0x04));
+            //Console.WriteLine(ItemNAAME + ", class: " + Thb.ToString("X"));
 
             /*0 = INVPAGE_INVENTORY
               3 = INVPAGE_HORADRIC_CUBE
@@ -521,6 +524,13 @@ namespace app
                             {
                                 AllItemsEquipped.Add("ID:" + txtFileNo + "(" + ItemNAAME + ") at:" + itemx + ", " + itemy + " - Equipped - " + Form1_0.ItemsAlert_0.GetItemTypeText() + " && " + GetQualityTextString() + " && " + GetAllFlagsFromItem() + " && " + GetAllValuesFromStats() + GetItemsStashInfosTxt());
                             }
+
+                            /*if (ItemNAAME == "Crusader Gauntlets")
+                            {
+                                string SavePathh = Form1_0.ThisEndPath + "DumpItempUnitDataStruc";
+                                File.Create(SavePathh).Dispose();
+                                File.WriteAllBytes(SavePathh, pUnitData);
+                            }*/
                         }
                         else
                         {
@@ -689,7 +699,7 @@ namespace app
                 }
             }
 
-            TriesToPickItemCount = 0; //nothing to pick!
+            if (IsPickingItem) TriesToPickItemCount = 0; //nothing to pick!
             //Form1_0.method_1("-----", Color.Black);
             return false;
         }

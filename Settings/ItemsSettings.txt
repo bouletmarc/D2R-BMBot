@@ -136,8 +136,9 @@ Perfect Diamond
 //[Name] == MagePlate && [Quality] == superior && [Flag] != ethereal && [Sockets] == 3 && [EnhancedDefense] >= 10 // Enigma
 //[Type] == armor && [Class] == elite && [Quality] == superior && [Flag] != ethereal && [Sockets] >= 3 && [EnhancedDefense] >= 10 // Variable
 //[Name] == SacredArmor && [Quality] == normal && [Flag] != ethereal && [Defense] >= 600 && [Sockets] == 4 // Cubing
+[Name] == SacredArmor && [Flag] == ethereal && [Defense] >= 700 // Merc Fort
 //[Type] == armor && [Quality] == normal && [Flag] != ethereal && [Defense] >= 500 && [Sockets] >= 3 // Variable
-[Type] == armor && [Class] == elite && [Quality] == superior && [Flag] == ethereal && [Defense] >= 700
+//[Type] == armor && [Class] == elite && [Quality] == superior && [Flag] == ethereal && [Defense] >= 700
 [Name] == ArchonPlate && [Quality] == normal && [Flag] != ethereal && [Sockets] == 3
 [Name] == ArchonPlate && [Quality] == normal && [Flag] != ethereal && [Sockets] == 4
 //[Name] == ArchonPlate && [Quality] == normal && [Flag] == ethereal
@@ -200,10 +201,10 @@ Perfect Diamond
 //##### Javelins
 
 //##### Maces
-[Name] == Flail && [Quality] == superior && [Sockets] == 4 // Heart of the Oak
-//[Name] == Flail && [Quality] == normal && [Sockets] == 4 // Heart of the Oak
-[Name] == Flail && [Quality] == superior && [Sockets] == 5 // Call to Arms
-//[Name] == Flail && [Quality] == normal && [Sockets] == 5 // Call to Arms
+[Name] == Flail && [Quality] == superior && [Flag] != ethereal  && [Sockets] == 4 // Heart of the Oak
+//[Name] == Flail && [Quality] == normal && [Flag] != ethereal  && [Sockets] == 4 // Heart of the Oak
+[Name] == Flail && [Quality] == superior && [Flag] != ethereal  && [Sockets] == 5 // Call to Arms
+//[Name] == Flail && [Quality] == normal && [Flag] != ethereal  && [Sockets] == 5 // Call to Arms
 
 //##### Polearms
 //[Type] == polearm && [Class] == normal && [Quality] == normal && [Flag] != ethereal && [Sockets] == 4 // Insight for Chaos
@@ -692,59 +693,59 @@ Perfect Diamond
 //##### Helms
 
 //##### Armor
-[Type] == armor && [Class] == elite && [Quality] == magic && [Flag] != ethereal && [Sockets] >= 3 && [LifeMax] >= 80
-[Type] == armor && [Class] == elite && [Quality] == magic && [Flag] != ethereal && [Sockets] >= 3 && [FasterHitRecovery] >= 24
-[Type] == armor && [Class] == elite && [Quality] == magic && [Flag] != ethereal && [Sockets] >= 3 && [PoisonLengthResist] >= 75
-[Name] == ArchonPlate && [Quality] == magic && [Sockets] == 4
-[Name] == ArchonPlate && [Quality] == magic && [LifeMax] >= 80 && [Sockets] == 4
-[Name] == ArchonPlate && [Quality] == magic && [Strength] >= 20 && [Sockets] == 4
-[Name] == ArchonPlate && [Quality] == magic && [Dexterity] >= 15 && [Sockets] == 4
-[Name] == ArchonPlate && [Quality] == magic && [FasterHitRecovery] >= 24 && [Sockets] == 4
-[Name] == ArchonPlate && [Quality] == magic && [Flag] == ethereal && [Sockets] == 4 && [ReplenishDurability] >= 1
-[Name] == ArchonPlate && [Quality] == magic && [Flag] == ethereal && [Sockets] == 4 && [Durability] == 0
-[Name] == SacredArmor && [Quality] == magic && [LifeMax] >= 80 && [Sockets] == 4
-[Name] == SacredArmor && [Quality] == magic && [Flag] == ethereal && [Sockets] == 4 && [ReplenishDurability] >= 1
-[Name] == SacredArmor && [Quality] == magic && [Flag] == ethereal && [Sockets] == 4 && [Durability] == 0
-[Name] == WireFleece && [Quality] == magic && [Strength] >= 20 && [Sockets] == 4
-[Name] == WireFleece && [Quality] == magic && [Dexterity] >= 15 && [Sockets] == 4
-[Name] == WireFleece && [Quality] == magic && [FasterHitRecovery] >= 24 && [Sockets] == 4
-[Name] == WireFleece && [Quality] == magic && [LifeMax] >= 90 && [Sockets] == 4
-[Name] == DuskShroud && [Quality] == magic && [Strength] >= 20 && [Sockets] == 4
-[Name] == DuskShroud && [Quality] == magic && [Dexterity] >= 15 && [Sockets] == 4
-[Name] == DuskShroud && [Quality] == magic && [FasterHitRecovery] >= 24 && [Sockets] == 4
-[Name] == DuskShroud && [Quality] == magic && [LifeMax] >= 90 && [Sockets] == 4
-[Name] == BalrogSkin && [Quality] == magic && [LifeMax] >= 90 && [Sockets] == 4
-[Name] == Wyrmhide && [Quality] == magic && [Strength] >= 20 && [Sockets] == 4
-[Name] == Wyrmhide && [Quality] == magic && [Dexterity] >= 15 && [Sockets] == 4
-[Name] == Wyrmhide && [Quality] == magic && [FasterHitRecovery] >= 24 && [Sockets] == 4
-[Name] == Wyrmhide && [Quality] == magic && [LifeMax] >= 90 && [Sockets] == 4
-[Name] == ScarabHusk && [Quality] == magic && [Strength] >= 20 && [Sockets] == 4
-[Name] == ScarabHusk && [Quality] == magic && [Dexterity] >= 15 && [Sockets] == 4
-[Name] == ScarabHusk && [Quality] == magic && [FasterHitRecovery] >= 24 && [Sockets] == 4
-[Name] == ScarabHusk && [Quality] == magic && [LifeMax] >= 90 && [Sockets] == 4
-[Name] == Boneweave && [Quality] == magic && [LifeMax] >= 90 && [Sockets] == 4
-[Name] == GreatHauberk && [Quality] == magic && [LifeMax] >= 90 && [Sockets] == 4
-[Name] == GothicPlate && [Quality] == magic && [LifeMax] >= 90 && [Sockets] == 4
-[Name] == FullPlateMail && [Quality] == magic && [LifeMax] >= 90 && [Sockets] == 4
-[Name] == AncientArmor && [Quality] == magic && [LifeMax] >= 90 && [Sockets] == 4
-[Name] == ChaosArmor && [Quality] == magic && [LifeMax] >= 90 && [Sockets] == 4
-[Name] == OrnatePlate && [Quality] == magic && [LifeMax] >= 90 && [Sockets] == 4
+//[Type] == armor && [Class] == elite && [Quality] == magic && [Flag] != ethereal && [Sockets] >= 3 && [LifeMax] >= 80
+//[Type] == armor && [Class] == elite && [Quality] == magic && [Flag] != ethereal && [Sockets] >= 3 && [FasterHitRecovery] >= 24
+//[Type] == armor && [Class] == elite && [Quality] == magic && [Flag] != ethereal && [Sockets] >= 3 && [PoisonLengthResist] >= 75
+//[Name] == ArchonPlate && [Quality] == magic && [Sockets] == 4
+//[Name] == ArchonPlate && [Quality] == magic && [LifeMax] >= 80 && [Sockets] == 4
+//[Name] == ArchonPlate && [Quality] == magic && [Strength] >= 20 && [Sockets] == 4
+//[Name] == ArchonPlate && [Quality] == magic && [Dexterity] >= 15 && [Sockets] == 4
+//[Name] == ArchonPlate && [Quality] == magic && [FasterHitRecovery] >= 24 && [Sockets] == 4
+//[Name] == ArchonPlate && [Quality] == magic && [Flag] == ethereal && [Sockets] == 4 && [ReplenishDurability] >= 1
+//[Name] == ArchonPlate && [Quality] == magic && [Flag] == ethereal && [Sockets] == 4 && [Durability] == 0
+//[Name] == SacredArmor && [Quality] == magic && [LifeMax] >= 80 && [Sockets] == 4
+//[Name] == SacredArmor && [Quality] == magic && [Flag] == ethereal && [Sockets] == 4 && [ReplenishDurability] >= 1
+//[Name] == SacredArmor && [Quality] == magic && [Flag] == ethereal && [Sockets] == 4 && [Durability] == 0
+//[Name] == WireFleece && [Quality] == magic && [Strength] >= 20 && [Sockets] == 4
+//[Name] == WireFleece && [Quality] == magic && [Dexterity] >= 15 && [Sockets] == 4
+//[Name] == WireFleece && [Quality] == magic && [FasterHitRecovery] >= 24 && [Sockets] == 4
+//[Name] == WireFleece && [Quality] == magic && [LifeMax] >= 90 && [Sockets] == 4
+//[Name] == DuskShroud && [Quality] == magic && [Strength] >= 20 && [Sockets] == 4
+//[Name] == DuskShroud && [Quality] == magic && [Dexterity] >= 15 && [Sockets] == 4
+//[Name] == DuskShroud && [Quality] == magic && [FasterHitRecovery] >= 24 && [Sockets] == 4
+//[Name] == DuskShroud && [Quality] == magic && [LifeMax] >= 90 && [Sockets] == 4
+//[Name] == BalrogSkin && [Quality] == magic && [LifeMax] >= 90 && [Sockets] == 4
+//[Name] == Wyrmhide && [Quality] == magic && [Strength] >= 20 && [Sockets] == 4
+//[Name] == Wyrmhide && [Quality] == magic && [Dexterity] >= 15 && [Sockets] == 4
+//[Name] == Wyrmhide && [Quality] == magic && [FasterHitRecovery] >= 24 && [Sockets] == 4
+//[Name] == Wyrmhide && [Quality] == magic && [LifeMax] >= 90 && [Sockets] == 4
+//[Name] == ScarabHusk && [Quality] == magic && [Strength] >= 20 && [Sockets] == 4
+//[Name] == ScarabHusk && [Quality] == magic && [Dexterity] >= 15 && [Sockets] == 4
+//[Name] == ScarabHusk && [Quality] == magic && [FasterHitRecovery] >= 24 && [Sockets] == 4
+//[Name] == ScarabHusk && [Quality] == magic && [LifeMax] >= 90 && [Sockets] == 4
+//[Name] == Boneweave && [Quality] == magic && [LifeMax] >= 90 && [Sockets] == 4
+//[Name] == GreatHauberk && [Quality] == magic && [LifeMax] >= 90 && [Sockets] == 4
+//[Name] == GothicPlate && [Quality] == magic && [LifeMax] >= 90 && [Sockets] == 4
+//[Name] == FullPlateMail && [Quality] == magic && [LifeMax] >= 90 && [Sockets] == 4
+//[Name] == AncientArmor && [Quality] == magic && [LifeMax] >= 90 && [Sockets] == 4
+//[Name] == ChaosArmor && [Quality] == magic && [LifeMax] >= 90 && [Sockets] == 4
+//[Name] == OrnatePlate && [Quality] == magic && [LifeMax] >= 90 && [Sockets] == 4
 
-[Name] == SacredArmor && [Quality] == magic && [LifeMax] >= 99 && [Sockets] == 4
-[Name] == SacredArmor && [Quality] == magic && [Flag] == ethereal && [Sockets] == 4 && [ReplenishDurability] >= 1
-[Name] == SacredArmor && [Quality] == magic && [Flag] == ethereal && [Sockets] == 4 && [Durability] == 0 
-[Name] == DuskShroud && [Quality] == magic && [Strength] >= 20 && [Sockets] == 4
-[Name] == DuskShroud && [Quality] == magic && [Dexterity] >= 15 && [Sockets] == 4
-[Name] == DuskShroud && [Quality] == magic && [FasterHitRecovery] >= 24 && [Sockets] == 4
-[Name] == DuskShroud && [Quality] == magic && [LifeMax] >= 90 && [Sockets] == 4
-[Name] == ArchonPlate && [Quality] == magic && [Sockets] == 3
-[Name] == SacredArmor && [Quality] == magic && [LifeMax] >= 99 && [Sockets] == 3
-[Name] == SacredArmor && [Quality] == magic && [Flag] == ethereal && [Sockets] == 3 && [ReplenishDurability] >= 1
-[Name] == SacredArmor && [Quality] == magic && [Flag] == ethereal && [Sockets] == 3 && [Durability] == 0 
-[Name] == DuskShroud && [Quality] == magic && [Strength] >= 20 && [Sockets] == 3
-[Name] == DuskShroud && [Quality] == magic && [Dexterity] >= 15 && [Sockets] == 3
-[Name] == DuskShroud && [Quality] == magic && [FasterHitRecovery] >= 24 && [Sockets] == 3
-[Name] == DuskShroud && [Quality] == magic && [LifeMax] >= 90 && [Sockets] == 3 
+//[Name] == SacredArmor && [Quality] == magic && [LifeMax] >= 99 && [Sockets] == 4
+//[Name] == SacredArmor && [Quality] == magic && [Flag] == ethereal && [Sockets] == 4 && [ReplenishDurability] >= 1
+//[Name] == SacredArmor && [Quality] == magic && [Flag] == ethereal && [Sockets] == 4 && [Durability] == 0 
+//[Name] == DuskShroud && [Quality] == magic && [Strength] >= 20 && [Sockets] == 4
+//[Name] == DuskShroud && [Quality] == magic && [Dexterity] >= 15 && [Sockets] == 4
+//[Name] == DuskShroud && [Quality] == magic && [FasterHitRecovery] >= 24 && [Sockets] == 4
+//[Name] == DuskShroud && [Quality] == magic && [LifeMax] >= 90 && [Sockets] == 4
+//[Name] == ArchonPlate && [Quality] == magic && [Sockets] == 3
+//[Name] == SacredArmor && [Quality] == magic && [LifeMax] >= 99 && [Sockets] == 3
+//[Name] == SacredArmor && [Quality] == magic && [Flag] == ethereal && [Sockets] == 3 && [ReplenishDurability] >= 1
+//[Name] == SacredArmor && [Quality] == magic && [Flag] == ethereal && [Sockets] == 3 && [Durability] == 0 
+//[Name] == DuskShroud && [Quality] == magic && [Strength] >= 20 && [Sockets] == 3
+//[Name] == DuskShroud && [Quality] == magic && [Dexterity] >= 15 && [Sockets] == 3
+//[Name] == DuskShroud && [Quality] == magic && [FasterHitRecovery] >= 24 && [Sockets] == 3
+//[Name] == DuskShroud && [Quality] == magic && [LifeMax] >= 90 && [Sockets] == 3 
 
 //##### Shields
 //[Name] == Monarch && [Quality] == magic && [Flag] != ethereal && [Sockets] >= 4 && [Defense] >= 140 && [FBR] >= 30

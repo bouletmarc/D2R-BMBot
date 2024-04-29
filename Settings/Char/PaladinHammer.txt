@@ -66,6 +66,7 @@ IDAtShop=true
 LeaveDiabloClone=true
 GambleGold=true
 UseKeys=true
+GambleItems=Amulet,Ring
 
 //#######################################
 //MERC SETTINGS

@@ -15,6 +15,13 @@ namespace app
 
             InitializeComponent();
 
+            textBoxStartKey.Items.Clear();
+            string[] names = Enum.GetNames(typeof(System.Windows.Forms.Keys));
+            for (int i = 0; i < names.Length; i++)
+            {
+                textBoxStartKey.Items.Add(names[i]);
+            }
+
             listViewRush.Visible = false;
             listViewRush.Location = new System.Drawing.Point(listViewRunScripts.Location.X, listViewRunScripts.Location.Y);
 
@@ -47,12 +54,15 @@ namespace app
             listViewRunScripts.Items[CurrI++].Checked = CharConfig.RunSummonerScript;
             listViewRunScripts.Items[CurrI++].Checked = CharConfig.RunDurielScript;
             listViewRunScripts.Items[CurrI++].Checked = CharConfig.RunLowerKurastScript;
+            listViewRunScripts.Items[CurrI++].Checked = CharConfig.RunA3SewersScript;
+            listViewRunScripts.Items[CurrI++].Checked = CharConfig.RunUpperKurastScript;
             listViewRunScripts.Items[CurrI++].Checked = CharConfig.RunTravincalScript;
             listViewRunScripts.Items[CurrI++].Checked = CharConfig.RunMephistoScript;
             listViewRunScripts.Items[CurrI++].Checked = CharConfig.RunChaosScript;
             listViewRunScripts.Items[CurrI++].Checked = CharConfig.RunChaosLeechScript;
             listViewRunScripts.Items[CurrI++].Checked = CharConfig.RunEldritchScript;
             listViewRunScripts.Items[CurrI++].Checked = CharConfig.RunShenkScript;
+            listViewRunScripts.Items[CurrI++].Checked = CharConfig.RunFrozensteinScript;
             listViewRunScripts.Items[CurrI++].Checked = CharConfig.RunPindleskinScript;
             listViewRunScripts.Items[CurrI++].Checked = CharConfig.RunNihlatakScript;
             listViewRunScripts.Items[CurrI++].Checked = CharConfig.RunBaalScript;
@@ -75,6 +85,7 @@ namespace app
             listViewRush.Items[CurrI++].Checked = CharConfig.RunTravincalRush;
             listViewRush.Items[CurrI++].Checked = CharConfig.RunMephistoRush;
             listViewRush.Items[CurrI++].Checked = CharConfig.RunChaosRush;
+            listViewRush.Items[CurrI++].Checked = CharConfig.RunAnyaRush;
             listViewRush.Items[CurrI++].Checked = CharConfig.RunAncientsRush;
             listViewRush.Items[CurrI++].Checked = CharConfig.RunBaalRush;
 
@@ -182,12 +193,15 @@ namespace app
             CharConfig.RunSummonerScript = listViewRunScripts.Items[CurrI++].Checked;
             CharConfig.RunDurielScript = listViewRunScripts.Items[CurrI++].Checked;
             CharConfig.RunLowerKurastScript = listViewRunScripts.Items[CurrI++].Checked;
+            CharConfig.RunA3SewersScript = listViewRunScripts.Items[CurrI++].Checked;
+            CharConfig.RunUpperKurastScript = listViewRunScripts.Items[CurrI++].Checked;
             CharConfig.RunTravincalScript = listViewRunScripts.Items[CurrI++].Checked;
             CharConfig.RunMephistoScript = listViewRunScripts.Items[CurrI++].Checked;
             CharConfig.RunChaosScript = listViewRunScripts.Items[CurrI++].Checked;
             CharConfig.RunChaosLeechScript = listViewRunScripts.Items[CurrI++].Checked;
             CharConfig.RunEldritchScript = listViewRunScripts.Items[CurrI++].Checked;
             CharConfig.RunShenkScript = listViewRunScripts.Items[CurrI++].Checked;
+            CharConfig.RunFrozensteinScript = listViewRunScripts.Items[CurrI++].Checked;
             CharConfig.RunPindleskinScript = listViewRunScripts.Items[CurrI++].Checked;
             CharConfig.RunNihlatakScript = listViewRunScripts.Items[CurrI++].Checked;
             CharConfig.RunBaalScript = listViewRunScripts.Items[CurrI++].Checked;
@@ -210,6 +224,7 @@ namespace app
             CharConfig.RunTravincalRush = listViewRush.Items[CurrI++].Checked;
             CharConfig.RunMephistoRush = listViewRush.Items[CurrI++].Checked;
             CharConfig.RunChaosRush = listViewRush.Items[CurrI++].Checked;
+            CharConfig.RunAnyaRush = listViewRush.Items[CurrI++].Checked;
             CharConfig.RunAncientsRush = listViewRush.Items[CurrI++].Checked;
             CharConfig.RunBaalRush = listViewRush.Items[CurrI++].Checked;
 

@@ -33,6 +33,7 @@ namespace app
         public Dictionary<string, bool> PickItemsNormal_ByName = new Dictionary<string, bool>();
         public Dictionary<string, Dictionary<uint, string>> PickItemsNormal_ByName_Flags = new Dictionary<string, Dictionary<uint, string>>();
         public Dictionary<string, int> PickItemsNormal_ByName_Quality = new Dictionary<string, int>();
+        public Dictionary<string, int> PickItemsNormal_ByName_Class = new Dictionary<string, int>();
         public Dictionary<string, Dictionary<string, int>> PickItemsNormal_ByName_Stats = new Dictionary<string, Dictionary<string, int>>();
         public Dictionary<string, Dictionary<string, string>> PickItemsNormal_ByName_Operators = new Dictionary<string, Dictionary<string, string>>();
         public Dictionary<string, string> PickItemsNormal_ByNameDesc = new Dictionary<string, string>();
@@ -40,6 +41,7 @@ namespace app
         public Dictionary<string, bool> PickItemsNormal_ByType = new Dictionary<string, bool>();
         public Dictionary<string, Dictionary<uint, string>> PickItemsNormal_ByType_Flags = new Dictionary<string, Dictionary<uint, string>>();
         public Dictionary<string, int> PickItemsNormal_ByType_Quality = new Dictionary<string, int>();
+        public Dictionary<string, int> PickItemsNormal_ByType_Class = new Dictionary<string, int>();
         public Dictionary<string, Dictionary<string, int>> PickItemsNormal_ByType_Stats = new Dictionary<string, Dictionary<string, int>>();
         public Dictionary<string, Dictionary<string, string>> PickItemsNormal_ByType_Operators = new Dictionary<string, Dictionary<string, string>>();
         public Dictionary<string, string> PickItemsNormal_ByTypeDesc = new Dictionary<string, string>();

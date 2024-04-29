@@ -512,6 +512,7 @@ namespace app
 
                     if (TimeSinceDetecting.TotalSeconds >= 12)
                     {
+                        Form1_0.MobsStruc_0.DetectThisMob("getBossName", "Diablo", false, 200, new List<long>());
                         Form1_0.method_1("Waited too long for Diablo repoping the seals!", Color.OrangeRed);
                         CurrentStep = 3;
                         return;

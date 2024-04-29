@@ -160,6 +160,7 @@ namespace app
                 {
                     Form1_0.Potions_0.CanUseSkillForRegen = false;
                     Form1_0.SetGameStatus("KILLING ANCIENTS");
+                    Form1_0.MobsStruc_0.DetectThisMob("getSuperUniqueName", "Ancient Barbarian 1", false, 200, new List<long>());
                     if (Form1_0.MobsStruc_0.GetMobs("getSuperUniqueName", "Ancient Barbarian 1", false, 200, IgnoredMembers))
                     {
                         if (Form1_0.MobsStruc_0.MobsHP > 0)

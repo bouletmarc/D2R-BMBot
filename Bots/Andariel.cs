@@ -128,6 +128,7 @@ namespace app
                     Form1_0.SetGameStatus("KILLING ANDARIEL");
 
                     //#############
+                    Form1_0.MobsStruc_0.DetectThisMob("getBossName", "Andariel", false, 200, new List<long>());
                     bool DetectedAndy = Form1_0.MobsStruc_0.GetMobs("getBossName", "Andariel", false, 200, new List<long>());
                     DateTime StartTime = DateTime.Now;
                     TimeSpan TimeSinceDetecting = DateTime.Now - StartTime;

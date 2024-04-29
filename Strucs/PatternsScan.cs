@@ -580,6 +580,19 @@ namespace app
         //########################################################################################################################################
         //########################################################################################################################################
         //VERSION 1 UNITS SCAN
+        public void IncreaseV1Scanning()
+        {
+            ScanUnitsNumber += 100;
+            ScanUnitsNegativeOffset += 25;
+            Form1_0.method_1("Units Scan have increased trying to detect more Units, but glitch may happend too!", Color.OrangeRed);
+        }
+
+        public void ResetV1Scanning()
+        {
+            ScanUnitsNumber = 2600;
+            ScanUnitsNegativeOffset = 150;
+        }
+
         public void scanForUnitsPointerV1(string SearchUnitsType)
         {
             long UnitOffset = 0;

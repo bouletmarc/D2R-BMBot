@@ -218,6 +218,7 @@ namespace app
                             return;
                         }
                     }
+                    Form1_0.MobsStruc_0.DetectThisMob("getBossName", "Duriel", false, 200, new List<long>());
                     if (Form1_0.MobsStruc_0.GetMobs("getBossName", "Duriel", false, 200, new List<long>()))
                     {
                         if (Form1_0.MobsStruc_0.MobsHP > 0)

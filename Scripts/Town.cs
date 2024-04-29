@@ -83,7 +83,16 @@ namespace app
         {
             if (!ShouldBeInTown())
             {
-                return;
+                if (!FastTowning) return;
+                else
+                {
+                    if (MoveToTPOrWPSpot())
+                    {
+                        GetCorpse();
+                        Form1_0.Stash_0.RunningScriptCount = 0;
+                        StopTowningReturn();
+                    }
+                }
             }
 
             Form1_0.SetGameStatus("TOWN");
@@ -1341,6 +1350,14 @@ namespace app
                 {
                     Towning = true;
                     ForcedTowning = true;
+                }
+            }
+            else
+            {
+                if (EnterTP)
+                {
+                    Form1_0.method_1("Leaving because TP quantity equal 0, cannot spawn a TP and go to Town!", Color.Red);
+                    Form1_0.LeaveGame(false);
                 }
             }
         }

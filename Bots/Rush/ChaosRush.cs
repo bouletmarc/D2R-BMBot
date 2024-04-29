@@ -489,6 +489,7 @@ namespace app
                     Form1_0.SetGameStatus("KILLING DIABLO");
 
                     //#############
+                    Form1_0.MobsStruc_0.DetectThisMob("getBossName", "Diablo", false, 200, new List<long>());
                     bool DetectedDiablo = Form1_0.MobsStruc_0.GetMobs("getBossName", "Diablo", false, 200, new List<long>());
                     DateTime StartTime = DateTime.Now;
                     TimeSpan TimeSinceDetecting = DateTime.Now - StartTime;

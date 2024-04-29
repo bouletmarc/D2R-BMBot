@@ -54,11 +54,11 @@ namespace app
             {
                 if (CurrentStep == 0)
                 {
-                    Form1_0.SetGameStatus("DOING KURAST");
+                    Form1_0.SetGameStatus("DOING LOWER KURAST");
                     Form1_0.Battle_0.CastDefense();
                     Form1_0.WaitDelay(15);
 
-                    if (Form1_0.PlayerScan_0.levelNo == 79)
+                    if ((Enums.Area)Form1_0.PlayerScan_0.levelNo == Enums.Area.LowerKurast)
                     {
                         WP_X = Form1_0.PlayerScan_0.xPos - 3;
                         WP_Y = Form1_0.PlayerScan_0.yPos - 3;

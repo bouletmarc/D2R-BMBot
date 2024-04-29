@@ -131,12 +131,12 @@ namespace app
 
             foreach (var ThisDir in Form1_0.ItemsAlert_0.PickItemsRunesKeyGems)
             {
-                if (ThisDir.Key.Contains("Key of ")
+                if (ThisDir.Key.Contains("Keyof")
                     || ThisDir.Key.Contains("Essence")
                     || ThisDir.Key.Contains("Token")
-                    || ThisDir.Key.Contains("Mephisto's Brain")
-                    || ThisDir.Key.Contains("Baal's Eye")
-                    || ThisDir.Key.Contains("Diablo's Horn"))
+                    || ThisDir.Key.Contains("Mephisto'sBrain")
+                    || ThisDir.Key.Contains("Baal'sEye")
+                    || ThisDir.Key.Contains("Diablo'sHorn"))
                 {
                     listViewKeys.Items.Add(ThisDir.Key);
                     listViewKeys.Items[listViewKeys.Items.Count - 1].Checked = ThisDir.Value;
@@ -389,12 +389,12 @@ namespace app
         {
             foreach (var ThisDir in Form1_0.ItemsAlert_0.PickItemsRunesKeyGems)
             {
-                if (ThisDir.Key.Contains("Key of ")
+                if (ThisDir.Key.Contains("Keyof")
                     || ThisDir.Key.Contains("Essence")
                     || ThisDir.Key.Contains("Token")
-                    || ThisDir.Key.Contains("Mephisto's Brain")
-                    || ThisDir.Key.Contains("Baal's Eye")
-                    || ThisDir.Key.Contains("Diablo's Horn"))
+                    || ThisDir.Key.Contains("Mephisto'sBrain")
+                    || ThisDir.Key.Contains("Baal'sEye")
+                    || ThisDir.Key.Contains("Diablo'sHorn"))
                 {
                     for (int i = 0; i < listViewKeys.Items.Count; i++)
                     {

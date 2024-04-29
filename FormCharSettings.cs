@@ -26,6 +26,36 @@ namespace app
 
             comboBoxAvoidImmune.SelectedIndex = 0;
 
+            comboBoxItemsNames.Items.Clear();
+            for (int i = 0; i <= 658; i++) comboBoxItemsNames.Items.Add(Form1_0.ItemsNames_0.getItemBaseName(i));
+
+            panelGamble.Location = new Point(136, 73);
+
+            textBoxLeftSkill.Items.Clear();
+            textBoxRightSkill.Items.Clear();
+            textBoxFastMoveTown.Items.Clear();
+            textBoxFastMoveTeleport.Items.Clear();
+            textBoxDefenseSkill.Items.Clear();
+            textBoxCastDefenseSkill.Items.Clear();
+            textBoxLifeSkill.Items.Clear();
+            textBoxBattleOrder.Items.Clear();
+            textBoxBattleCommand.Items.Clear();
+            textBoxBattleCry.Items.Clear();
+            string[] names = Enum.GetNames(typeof(System.Windows.Forms.Keys));
+            for (int i = 0; i < names.Length; i++)
+            {
+                textBoxLeftSkill.Items.Add(names[i]);
+                textBoxRightSkill.Items.Add(names[i]);
+                textBoxFastMoveTown.Items.Add(names[i]);
+                textBoxFastMoveTeleport.Items.Add(names[i]);
+                textBoxDefenseSkill.Items.Add(names[i]);
+                textBoxCastDefenseSkill.Items.Add(names[i]);
+                textBoxLifeSkill.Items.Add(names[i]);
+                textBoxBattleOrder.Items.Add(names[i]);
+                textBoxBattleCommand.Items.Add(names[i]);
+                textBoxBattleCry.Items.Add(names[i]);
+            }
+
             for (int i = 0; i < 40; i++)
             {
                 CheckBox CheckBox_0 = new CheckBox();
@@ -133,6 +163,9 @@ namespace app
             checkBoxUseKeys.Checked = CharConfig.UseKeys;
             SetUsingKeys();
 
+            listViewGambleItems.Items.Clear();
+            for (int i = 0; i < CharConfig.GambleItems.Count; i++) listViewGambleItems.Items.Add(CharConfig.GambleItems[i]);
+
             CanReloadSettings = true;
         }
 
@@ -237,6 +270,9 @@ namespace app
 
             CharConfig.ClearAfterBoss = checkBoxClearAfterBoss.Checked;
             CharConfig.UseKeys = checkBoxUseKeys.Checked;
+
+            CharConfig.GambleItems.Clear();
+            for (int i = 0; i < listViewGambleItems.Items.Count; i++) CharConfig.GambleItems.Add(listViewGambleItems.Items[i].Text);
         }
 
         public void SetUsingKeys()
@@ -285,11 +321,13 @@ namespace app
             {
                 numericUpDownGambleAbove.Enabled = false;
                 numericUpDownGambleUntil.Enabled = false;
+                buttonGambleSettings.Enabled = false;
             }
             else
             {
                 numericUpDownGambleAbove.Enabled = true;
                 numericUpDownGambleUntil.Enabled = true;
+                buttonGambleSettings.Enabled = true;
             }
         }
 
@@ -317,6 +355,26 @@ namespace app
         private void checkBoxUseKeys_CheckedChanged(object sender, EventArgs e)
         {
             SetUsingKeys();
+        }
+
+        private void buttonGambleAddItem_Click(object sender, EventArgs e)
+        {
+            listViewGambleItems.Items.Add(comboBoxItemsNames.Text);
+        }
+
+        private void buttonGambleClearItems_Click(object sender, EventArgs e)
+        {
+            listViewGambleItems.Items.Clear();
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            panelGamble.Visible = false;
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            panelGamble.Visible = true;
         }
     }
 }

@@ -293,6 +293,13 @@ namespace app
             Crafted = 8,
         }
 
+        public enum ItemClass
+        {
+            Normal = 0,
+            Exceptional = 1,
+            Elite = 2
+        }
+
         public enum ItemContainer
         {
             Equipment = 0x00, // Player or Merc Equipment
@@ -589,7 +596,7 @@ namespace app
             DefensiveAurasSkillTab = 26,
             BarbarianCombatSkillTab = 32,
             MasteriesSkillTab = 33,
-            WarcriesSkillTab = 34,
+            WarCriesSkillTab = 34,
             DruidSummoningSkillTab = 40,
             ShapeShiftingSkillTab = 41,
             ElementalSkillTab = 42,

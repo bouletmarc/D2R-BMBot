@@ -442,7 +442,7 @@ namespace app
                         DrawString(e, CordsTxt, drawFontBold, drawBrushWhite, 990, 960, true);
 
                         //Print Infos
-                        DrawString(e, "Mobs:" + MobsPoints.Count, drawFontBold, drawBrushWhite, 790, 960, true);
+                        if (ShowMobs) DrawString(e, "Mobs:" + MobsPoints.Count, drawFontBold, drawBrushWhite, 790, 960, true);
                         string MapTxt = "Map Level:" + Form1_0.PlayerScan_0.levelNo;
                         ThisS2 = e.Graphics.MeasureString(MapTxt, drawFontBold);
                         DrawString(e, MapTxt, drawFontBold, drawBrushWhite, 1360 - (ThisS2.Width * ScaleScreenSizeInverted), 935, true);
@@ -495,16 +495,16 @@ namespace app
                         if (ShowUnitsScanCount || (Form1_0.DebugMenuStyle > 0 && !ShowUnitsScanCount))
                         {
                             //Show values of the V3 Units Scan
-                            string UnitsStr = "Units Scan V3:" + Form1_0.PatternsScan_0.GetUnitsScannedCount(3).ToString();
+                            /*string UnitsStr = "Units Scan V3:" + Form1_0.PatternsScan_0.GetUnitsScannedCount(3).ToString();
                             UnitsStr += " (Items:" + Form1_0.PatternsScan_0.ScannedItemsCount;
                             UnitsStr += ", Player:" + Form1_0.PatternsScan_0.ScannedPlayerCount;
                             UnitsStr += ", Objects:" + Form1_0.PatternsScan_0.ScannedObjectsCount;
                             UnitsStr += ", NPC:" + Form1_0.PatternsScan_0.ScannedNPCCount;
                             UnitsStr += ")";
-                            DrawString(e, UnitsStr, drawFontBold10, drawBrushGreen, 560, 860, true);
+                            DrawString(e, UnitsStr, drawFontBold10, drawBrushGreen, 560, 860, true);*/
 
                             //Show values of the V2 Units Scan
-                            UnitsStr = "Units Scan V2:" + Form1_0.PatternsScan_0.GetUnitsScannedCount(2).ToString();
+                            string UnitsStr = "Units Scan V2:" + Form1_0.PatternsScan_0.GetUnitsScannedCount(2).ToString();
                             UnitsStr += " (Items:" + Form1_0.PatternsScan_0.ScannedItemsCount;
                             UnitsStr += ", Player:" + Form1_0.PatternsScan_0.ScannedPlayerCount;
                             UnitsStr += ", Objects:" + Form1_0.PatternsScan_0.ScannedObjectsCount;

@@ -102,6 +102,7 @@ namespace app
                 {
                     Form1_0.Potions_0.CanUseSkillForRegen = false;
                     Form1_0.SetGameStatus("KILLING NIHLATAK");
+                    Form1_0.MobsStruc_0.DetectThisMob("getSuperUniqueName", "Nihlatak", false, 200, new List<long>());
                     if (Form1_0.MobsStruc_0.GetMobs("getSuperUniqueName", "Nihlatak", false, 200, new List<long>()))
                     {
                         if (Form1_0.MobsStruc_0.MobsHP > 0)
