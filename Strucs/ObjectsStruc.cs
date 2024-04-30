@@ -133,7 +133,10 @@ namespace app
 
                     if (DebuggingObjects)
                     {
-                        Form1_0.AppendTextDebugObjects("ID:" + txtFileNo + "(" + getObjectName((int)txtFileNo) + ") at:" + itemx + ", " + itemy + Environment.NewLine);
+                        if ((itemx != 0 && itemy != 0 && Form1_0.checkBoxShowValidObjectOnly.Checked) || !Form1_0.checkBoxShowValidObjectOnly.Checked)
+                        {
+                            Form1_0.AppendTextDebugObjects("ID:" + txtFileNo + "(" + getObjectName((int)txtFileNo) + ") at:" + itemx + ", " + itemy + Environment.NewLine);
+                        }
                     }
 
                     if (ObjectType == "TownPortal")

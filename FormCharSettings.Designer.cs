@@ -55,6 +55,10 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.comboBoxPot4 = new System.Windows.Forms.ComboBox();
+            this.comboBoxPot3 = new System.Windows.Forms.ComboBox();
+            this.comboBoxPot2 = new System.Windows.Forms.ComboBox();
+            this.comboBoxPot1 = new System.Windows.Forms.ComboBox();
             this.label12 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
@@ -68,6 +72,7 @@
             this.textBoxCharName = new System.Windows.Forms.TextBox();
             this.label14 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.buttonGambleSettings = new System.Windows.Forms.Button();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.numericUpDownKeyYPos = new System.Windows.Forms.NumericUpDown();
             this.numericUpDownKeyXPos = new System.Windows.Forms.NumericUpDown();
@@ -102,21 +107,20 @@
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.buttonReload = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
+            this.button4 = new System.Windows.Forms.Button();
+            this.buttonGambleClearItems = new System.Windows.Forms.Button();
+            this.buttonGambleAddItem = new System.Windows.Forms.Button();
             this.label23 = new System.Windows.Forms.Label();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.panelHelpKeys = new System.Windows.Forms.Panel();
             this.button2 = new System.Windows.Forms.Button();
-            this.buttonGambleSettings = new System.Windows.Forms.Button();
             this.panelGamble = new System.Windows.Forms.Panel();
-            this.label28 = new System.Windows.Forms.Label();
-            this.button4 = new System.Windows.Forms.Button();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.comboBoxItemsNames = new System.Windows.Forms.ComboBox();
             this.listViewGambleItems = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.buttonGambleClearItems = new System.Windows.Forms.Button();
-            this.buttonGambleAddItem = new System.Windows.Forms.Button();
             this.label29 = new System.Windows.Forms.Label();
-            this.comboBoxItemsNames = new System.Windows.Forms.ComboBox();
+            this.label28 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -379,6 +383,10 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.comboBoxPot4);
+            this.groupBox2.Controls.Add(this.comboBoxPot3);
+            this.groupBox2.Controls.Add(this.comboBoxPot2);
+            this.groupBox2.Controls.Add(this.comboBoxPot1);
             this.groupBox2.Controls.Add(this.label12);
             this.groupBox2.Controls.Add(this.label11);
             this.groupBox2.Controls.Add(this.label10);
@@ -389,10 +397,46 @@
             this.groupBox2.Controls.Add(this.comboBoxBelt1);
             this.groupBox2.Location = new System.Drawing.Point(207, 245);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(284, 64);
+            this.groupBox2.Size = new System.Drawing.Size(284, 85);
             this.groupBox2.TabIndex = 3;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Belt Potions Type";
+            // 
+            // comboBoxPot4
+            // 
+            this.comboBoxPot4.FormattingEnabled = true;
+            this.comboBoxPot4.Location = new System.Drawing.Point(211, 57);
+            this.comboBoxPot4.Name = "comboBoxPot4";
+            this.comboBoxPot4.Size = new System.Drawing.Size(67, 21);
+            this.comboBoxPot4.TabIndex = 46;
+            this.toolTip1.SetToolTip(this.comboBoxPot4, "Shortcut Use Potion in Slot4");
+            // 
+            // comboBoxPot3
+            // 
+            this.comboBoxPot3.FormattingEnabled = true;
+            this.comboBoxPot3.Location = new System.Drawing.Point(144, 57);
+            this.comboBoxPot3.Name = "comboBoxPot3";
+            this.comboBoxPot3.Size = new System.Drawing.Size(67, 21);
+            this.comboBoxPot3.TabIndex = 45;
+            this.toolTip1.SetToolTip(this.comboBoxPot3, "Shortcut Use Potion in Slot3");
+            // 
+            // comboBoxPot2
+            // 
+            this.comboBoxPot2.FormattingEnabled = true;
+            this.comboBoxPot2.Location = new System.Drawing.Point(77, 57);
+            this.comboBoxPot2.Name = "comboBoxPot2";
+            this.comboBoxPot2.Size = new System.Drawing.Size(67, 21);
+            this.comboBoxPot2.TabIndex = 44;
+            this.toolTip1.SetToolTip(this.comboBoxPot2, "Shortcut Use Potion in Slot2");
+            // 
+            // comboBoxPot1
+            // 
+            this.comboBoxPot1.FormattingEnabled = true;
+            this.comboBoxPot1.Location = new System.Drawing.Point(10, 57);
+            this.comboBoxPot1.Name = "comboBoxPot1";
+            this.comboBoxPot1.Size = new System.Drawing.Size(67, 21);
+            this.comboBoxPot1.TabIndex = 43;
+            this.toolTip1.SetToolTip(this.comboBoxPot1, "Shortcut Use Potion in Slot1");
             // 
             // label12
             // 
@@ -438,9 +482,9 @@
             "Mana",
             "RV",
             "Full RV"});
-            this.comboBoxBelt4.Location = new System.Drawing.Point(201, 36);
+            this.comboBoxBelt4.Location = new System.Drawing.Point(211, 35);
             this.comboBoxBelt4.Name = "comboBoxBelt4";
-            this.comboBoxBelt4.Size = new System.Drawing.Size(58, 21);
+            this.comboBoxBelt4.Size = new System.Drawing.Size(67, 21);
             this.comboBoxBelt4.TabIndex = 3;
             // 
             // comboBoxBelt3
@@ -451,9 +495,9 @@
             "Mana",
             "RV",
             "Full RV"});
-            this.comboBoxBelt3.Location = new System.Drawing.Point(143, 36);
+            this.comboBoxBelt3.Location = new System.Drawing.Point(144, 35);
             this.comboBoxBelt3.Name = "comboBoxBelt3";
-            this.comboBoxBelt3.Size = new System.Drawing.Size(58, 21);
+            this.comboBoxBelt3.Size = new System.Drawing.Size(67, 21);
             this.comboBoxBelt3.TabIndex = 2;
             // 
             // comboBoxBelt2
@@ -464,9 +508,9 @@
             "Mana",
             "RV",
             "Full RV"});
-            this.comboBoxBelt2.Location = new System.Drawing.Point(85, 36);
+            this.comboBoxBelt2.Location = new System.Drawing.Point(77, 35);
             this.comboBoxBelt2.Name = "comboBoxBelt2";
-            this.comboBoxBelt2.Size = new System.Drawing.Size(58, 21);
+            this.comboBoxBelt2.Size = new System.Drawing.Size(67, 21);
             this.comboBoxBelt2.TabIndex = 1;
             // 
             // comboBoxBelt1
@@ -477,14 +521,14 @@
             "Mana",
             "RV",
             "Full RV"});
-            this.comboBoxBelt1.Location = new System.Drawing.Point(27, 36);
+            this.comboBoxBelt1.Location = new System.Drawing.Point(10, 35);
             this.comboBoxBelt1.Name = "comboBoxBelt1";
-            this.comboBoxBelt1.Size = new System.Drawing.Size(58, 21);
+            this.comboBoxBelt1.Size = new System.Drawing.Size(67, 21);
             this.comboBoxBelt1.TabIndex = 0;
             // 
             // groupBoxInventory
             // 
-            this.groupBoxInventory.Location = new System.Drawing.Point(207, 357);
+            this.groupBoxInventory.Location = new System.Drawing.Point(207, 381);
             this.groupBoxInventory.Name = "groupBoxInventory";
             this.groupBoxInventory.Size = new System.Drawing.Size(284, 101);
             this.groupBoxInventory.TabIndex = 4;
@@ -495,7 +539,7 @@
             // 
             this.label13.AutoSize = true;
             this.label13.ForeColor = System.Drawing.Color.Red;
-            this.label13.Location = new System.Drawing.Point(252, 481);
+            this.label13.Location = new System.Drawing.Point(279, 503);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(137, 39);
             this.label13.TabIndex = 5;
@@ -545,6 +589,19 @@
             this.groupBox3.TabIndex = 20;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Char Parameters";
+            // 
+            // buttonGambleSettings
+            // 
+            this.buttonGambleSettings.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonGambleSettings.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.buttonGambleSettings.Image = global::app.Properties.Resources.Application;
+            this.buttonGambleSettings.Location = new System.Drawing.Point(250, 131);
+            this.buttonGambleSettings.Name = "buttonGambleSettings";
+            this.buttonGambleSettings.Size = new System.Drawing.Size(31, 25);
+            this.buttonGambleSettings.TabIndex = 42;
+            this.toolTip1.SetToolTip(this.buttonGambleSettings, "Gamble Settings");
+            this.buttonGambleSettings.UseVisualStyleBackColor = true;
+            this.buttonGambleSettings.Click += new System.EventHandler(this.button3_Click);
             // 
             // linkLabel1
             // 
@@ -764,7 +821,7 @@
             this.groupBox4.Controls.Add(this.checkBoxUseMerc);
             this.groupBox4.Controls.Add(this.numericUpDownMercTakeHPUnder);
             this.groupBox4.Controls.Add(this.label22);
-            this.groupBox4.Location = new System.Drawing.Point(207, 310);
+            this.groupBox4.Location = new System.Drawing.Point(207, 334);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(284, 41);
             this.groupBox4.TabIndex = 37;
@@ -785,7 +842,7 @@
             this.groupBox5.Controls.Add(this.checkBoxUseBO);
             this.groupBox5.Location = new System.Drawing.Point(5, 315);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(196, 201);
+            this.groupBox5.Size = new System.Drawing.Size(196, 227);
             this.groupBox5.TabIndex = 5;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Extras";
@@ -824,7 +881,7 @@
             "Light Immune",
             "Poison Immune",
             "Magic Immune"});
-            this.comboBoxAvoidImmune.Location = new System.Drawing.Point(13, 174);
+            this.comboBoxAvoidImmune.Location = new System.Drawing.Point(26, 170);
             this.comboBoxAvoidImmune.Name = "comboBoxAvoidImmune";
             this.comboBoxAvoidImmune.Size = new System.Drawing.Size(139, 21);
             this.comboBoxAvoidImmune.TabIndex = 41;
@@ -832,7 +889,7 @@
             // label24
             // 
             this.label24.AutoSize = true;
-            this.label24.Location = new System.Drawing.Point(44, 158);
+            this.label24.Location = new System.Drawing.Point(57, 154);
             this.label24.Name = "label24";
             this.label24.Size = new System.Drawing.Size(77, 13);
             this.label24.TabIndex = 40;
@@ -881,7 +938,7 @@
             this.buttonReload.Name = "buttonReload";
             this.buttonReload.Size = new System.Drawing.Size(31, 25);
             this.buttonReload.TabIndex = 40;
-            this.toolTip1.SetToolTip(this.buttonReload, "Load from a previous Settings File");
+            this.toolTip1.SetToolTip(this.buttonReload, "Load/Import from a previous Settings File");
             this.buttonReload.UseVisualStyleBackColor = true;
             this.buttonReload.Click += new System.EventHandler(this.buttonReload_Click);
             // 
@@ -898,12 +955,45 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // button4
+            // 
+            this.button4.Location = new System.Drawing.Point(61, 246);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(75, 23);
+            this.button4.TabIndex = 12;
+            this.button4.Text = "Apply";
+            this.toolTip1.SetToolTip(this.button4, "Apply and Leave this menu");
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
+            // 
+            // buttonGambleClearItems
+            // 
+            this.buttonGambleClearItems.Location = new System.Drawing.Point(104, 40);
+            this.buttonGambleClearItems.Name = "buttonGambleClearItems";
+            this.buttonGambleClearItems.Size = new System.Drawing.Size(66, 23);
+            this.buttonGambleClearItems.TabIndex = 12;
+            this.buttonGambleClearItems.Text = "Clear List";
+            this.toolTip1.SetToolTip(this.buttonGambleClearItems, "Clear All the Mobs ID and Counts from the Checking List");
+            this.buttonGambleClearItems.UseVisualStyleBackColor = true;
+            this.buttonGambleClearItems.Click += new System.EventHandler(this.buttonGambleClearItems_Click);
+            // 
+            // buttonGambleAddItem
+            // 
+            this.buttonGambleAddItem.Location = new System.Drawing.Point(36, 40);
+            this.buttonGambleAddItem.Name = "buttonGambleAddItem";
+            this.buttonGambleAddItem.Size = new System.Drawing.Size(66, 23);
+            this.buttonGambleAddItem.TabIndex = 11;
+            this.buttonGambleAddItem.Text = "Add";
+            this.toolTip1.SetToolTip(this.buttonGambleAddItem, "Add the Mob ID and Count to the Checking list");
+            this.buttonGambleAddItem.UseVisualStyleBackColor = true;
+            this.buttonGambleAddItem.Click += new System.EventHandler(this.buttonGambleAddItem_Click);
+            // 
             // label23
             // 
             this.label23.AutoSize = true;
             this.label23.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label23.ForeColor = System.Drawing.Color.Red;
-            this.label23.Location = new System.Drawing.Point(186, 463);
+            this.label23.Location = new System.Drawing.Point(213, 485);
             this.label23.Name = "label23";
             this.label23.Size = new System.Drawing.Size(277, 13);
             this.label23.TabIndex = 39;
@@ -936,19 +1026,6 @@
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
-            // buttonGambleSettings
-            // 
-            this.buttonGambleSettings.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonGambleSettings.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.buttonGambleSettings.Image = global::app.Properties.Resources.Application;
-            this.buttonGambleSettings.Location = new System.Drawing.Point(250, 131);
-            this.buttonGambleSettings.Name = "buttonGambleSettings";
-            this.buttonGambleSettings.Size = new System.Drawing.Size(31, 25);
-            this.buttonGambleSettings.TabIndex = 42;
-            this.toolTip1.SetToolTip(this.buttonGambleSettings, "Gamble Settings");
-            this.buttonGambleSettings.UseVisualStyleBackColor = true;
-            this.buttonGambleSettings.Click += new System.EventHandler(this.button3_Click);
-            // 
             // panelGamble
             // 
             this.panelGamble.Controls.Add(this.groupBox6);
@@ -959,28 +1036,6 @@
             this.panelGamble.Size = new System.Drawing.Size(203, 275);
             this.panelGamble.TabIndex = 42;
             this.panelGamble.Visible = false;
-            // 
-            // label28
-            // 
-            this.label28.AutoSize = true;
-            this.label28.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label28.ForeColor = System.Drawing.Color.Blue;
-            this.label28.Location = new System.Drawing.Point(50, 11);
-            this.label28.Name = "label28";
-            this.label28.Size = new System.Drawing.Size(83, 13);
-            this.label28.TabIndex = 12;
-            this.label28.Text = "Gamble Items";
-            // 
-            // button4
-            // 
-            this.button4.Location = new System.Drawing.Point(61, 246);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(75, 23);
-            this.button4.TabIndex = 12;
-            this.button4.Text = "Apply";
-            this.toolTip1.SetToolTip(this.button4, "Apply and Leave this menu");
-            this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // groupBox6
             // 
@@ -995,6 +1050,14 @@
             this.groupBox6.TabIndex = 43;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Add/Remove Items to Gamble";
+            // 
+            // comboBoxItemsNames
+            // 
+            this.comboBoxItemsNames.FormattingEnabled = true;
+            this.comboBoxItemsNames.Location = new System.Drawing.Point(36, 16);
+            this.comboBoxItemsNames.Name = "comboBoxItemsNames";
+            this.comboBoxItemsNames.Size = new System.Drawing.Size(134, 21);
+            this.comboBoxItemsNames.TabIndex = 13;
             // 
             // listViewGambleItems
             // 
@@ -1017,28 +1080,6 @@
             this.columnHeader1.Text = "Items Name";
             this.columnHeader1.Width = 155;
             // 
-            // buttonGambleClearItems
-            // 
-            this.buttonGambleClearItems.Location = new System.Drawing.Point(104, 40);
-            this.buttonGambleClearItems.Name = "buttonGambleClearItems";
-            this.buttonGambleClearItems.Size = new System.Drawing.Size(66, 23);
-            this.buttonGambleClearItems.TabIndex = 12;
-            this.buttonGambleClearItems.Text = "Clear List";
-            this.toolTip1.SetToolTip(this.buttonGambleClearItems, "Clear All the Mobs ID and Counts from the Checking List");
-            this.buttonGambleClearItems.UseVisualStyleBackColor = true;
-            this.buttonGambleClearItems.Click += new System.EventHandler(this.buttonGambleClearItems_Click);
-            // 
-            // buttonGambleAddItem
-            // 
-            this.buttonGambleAddItem.Location = new System.Drawing.Point(36, 40);
-            this.buttonGambleAddItem.Name = "buttonGambleAddItem";
-            this.buttonGambleAddItem.Size = new System.Drawing.Size(66, 23);
-            this.buttonGambleAddItem.TabIndex = 11;
-            this.buttonGambleAddItem.Text = "Add";
-            this.toolTip1.SetToolTip(this.buttonGambleAddItem, "Add the Mob ID and Count to the Checking list");
-            this.buttonGambleAddItem.UseVisualStyleBackColor = true;
-            this.buttonGambleAddItem.Click += new System.EventHandler(this.buttonGambleAddItem_Click);
-            // 
             // label29
             // 
             this.label29.AutoSize = true;
@@ -1048,20 +1089,23 @@
             this.label29.TabIndex = 7;
             this.label29.Text = "Item:";
             // 
-            // comboBoxItemsNames
+            // label28
             // 
-            this.comboBoxItemsNames.FormattingEnabled = true;
-            this.comboBoxItemsNames.Location = new System.Drawing.Point(36, 16);
-            this.comboBoxItemsNames.Name = "comboBoxItemsNames";
-            this.comboBoxItemsNames.Size = new System.Drawing.Size(134, 21);
-            this.comboBoxItemsNames.TabIndex = 13;
+            this.label28.AutoSize = true;
+            this.label28.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label28.ForeColor = System.Drawing.Color.Blue;
+            this.label28.Location = new System.Drawing.Point(50, 11);
+            this.label28.Name = "label28";
+            this.label28.Size = new System.Drawing.Size(83, 13);
+            this.label28.TabIndex = 12;
+            this.label28.Text = "Gamble Items";
             // 
             // FormCharSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.ClientSize = new System.Drawing.Size(497, 528);
+            this.ClientSize = new System.Drawing.Size(497, 548);
             this.Controls.Add(this.panelGamble);
             this.Controls.Add(this.panelHelpKeys);
             this.Controls.Add(this.buttonReload);
@@ -1200,5 +1244,9 @@
         private System.Windows.Forms.Button buttonGambleAddItem;
         private System.Windows.Forms.Label label29;
         private System.Windows.Forms.ComboBox comboBoxItemsNames;
+        private System.Windows.Forms.ComboBox comboBoxPot4;
+        private System.Windows.Forms.ComboBox comboBoxPot3;
+        private System.Windows.Forms.ComboBox comboBoxPot2;
+        private System.Windows.Forms.ComboBox comboBoxPot1;
     }
 }

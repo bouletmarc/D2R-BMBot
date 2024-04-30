@@ -35,6 +35,10 @@ namespace app
         public string LastMobName = "";
         public string LastMobType = "";
 
+        public List<Room> AllRooms_InArea = new List<Room>();
+        public int DoingRoomIndex = 0;
+        public bool LeftToRight = true;
+
         public void SetForm1(Form1 form1_1)
         {
             Form1_0 = form1_1;
@@ -397,8 +401,13 @@ namespace app
             MoveTryCount = 0;
             ClearingSize = 500;
             ClearingFullArea = true;
+            DoingRoomIndex = 0;
 
-            if (Form1_0.MobsStruc_0.GetMobs("", "", true, ClearingSize, IgnoredMobsPointer)) ClearingArea = true;
+            AllRooms_InArea = new List<Room>();
+            for (int i = 0; i < Form1_0.MapAreaStruc_0.AllMapData[(int) (Form1_0.PlayerScan_0.levelNo - 1)].Rooms.Count; i++) AllRooms_InArea.Add(Form1_0.MapAreaStruc_0.AllMapData[(int)(Form1_0.PlayerScan_0.levelNo - 1)].Rooms[i]);
+
+            //if (Form1_0.MobsStruc_0.GetMobs("", "", true, ClearingSize, IgnoredMobsPointer)) ClearingArea = true;
+            ClearingArea = true;
         }
 
         public void SetBattleMoveAcceptOffset()
@@ -410,6 +419,21 @@ namespace app
         public void ResetBattleMoveAcceptOffset()
         {
             //Form1_0.Mover_0.MoveAcceptOffset = 4; //default
+        }
+
+        public void RemoveCurrentRoomFromClearing()
+        {
+            //Remove the Rooms we just done clearing
+            for (int i = 0; i < AllRooms_InArea.Count; i++)
+            {
+                if (Form1_0.PlayerScan_0.xPosFinal >= AllRooms_InArea[i].X && Form1_0.PlayerScan_0.xPosFinal <= AllRooms_InArea[i].X + AllRooms_InArea[i].Width
+                    && Form1_0.PlayerScan_0.yPosFinal >= AllRooms_InArea[i].Y && Form1_0.PlayerScan_0.yPosFinal <= AllRooms_InArea[i].Y + AllRooms_InArea[i].Height)
+                {
+                    DoingRoomIndex = i;
+                    AllRooms_InArea.RemoveAt(i);
+                    break;
+                }
+            }
         }
 
         public void RunBattleScript()
@@ -463,19 +487,104 @@ namespace app
                     CastSkills();
                 }
                 AttackTryCheck();
+
+                if (ClearingFullArea && AllRooms_InArea.Count > 0)
+                {
+                    //Remove the Rooms we just done clearing
+                    RemoveCurrentRoomFromClearing();
+                }
             }
             else
             {
-                Form1_0.MobsStruc_0.xPosFinal = 0;
-                Form1_0.MobsStruc_0.yPosFinal = 0;
-                if (CharConfig.RunBaalScript && !Form1_0.Baal_0.ScriptDone && Form1_0.Baal_0.Wave5Detected) Form1_0.Baal_0.Wave5Cleared = true;
-                TriedToMoveToMobsCount = 0;
-                DoingBattle = false;
-                FirstAttackCasted = false;
-                ResetBattleMoveAcceptOffset();
-                if (!ClearingFullArea) Form1_0.PathFinding_0.MoveToThisPos(new Position { X = AreaX, Y = AreaY });
-                //Form1_0.Mover_0.MoveToLocation(AreaX, AreaY);
-                ClearingArea = false;
+                if (ClearingFullArea && AllRooms_InArea.Count > 0)
+                {
+                    //"x":25320, "y":6100, "width":40, "height":40
+
+                    //Remove the Rooms we just done clearing
+                    RemoveCurrentRoomFromClearing();
+
+                    if (DoingRoomIndex > 0 && LeftToRight) DoingRoomIndex--;
+                    /*if (DoingRoomIndex < AllRooms_InArea.Count - 2 && !LeftToRight) DoingRoomIndex++;
+
+                    //#######
+                    List<Room> AllRooms = Form1_0.MapAreaStruc_0.AllMapData[(int)(Form1_0.PlayerScan_0.levelNo - 1)].Rooms;
+                    int LastRoomXIndex = 0;
+                    for (int i = 0; i < AllRooms.Count; i++)
+                    {
+                        if (AllRooms[i].X == AllRooms[0].X) break;
+                        LastRoomXIndex++;
+                    }
+                    int RoomXIndex = 0;
+                    for (int i = 0; i < AllRooms.Count; i++)
+                    {
+                        if (AllRooms[i].X == AllRooms[0].X) RoomXIndex = 0;
+
+                        if (Form1_0.PlayerScan_0.xPosFinal >= AllRooms[i].X && Form1_0.PlayerScan_0.xPosFinal <= AllRooms[i].X + AllRooms[i].Width
+                            && Form1_0.PlayerScan_0.yPosFinal >= AllRooms[i].Y && Form1_0.PlayerScan_0.yPosFinal <= AllRooms[i].Y + AllRooms[i].Height)
+                        {
+                            break;
+                        }
+                        RoomXIndex++;
+                    }
+
+                    //
+                    Form1_0.method_1("rows:" + RoomXIndex, Color.Red);
+                    if (RoomXIndex == LastRoomXIndex) 
+                    {
+                        LeftToRight = !LeftToRight;
+                        Form1_0.method_1("Last rows", Color.Red);
+                    }
+                    else if (RoomXIndex == 0)
+                    {
+                        LeftToRight = !LeftToRight;
+                        Form1_0.method_1("First rows", Color.Red);
+                    }*/
+
+                    //Go to next room
+                    bool[,] ThisCollisionGrid = Form1_0.MapAreaStruc_0.CollisionGrid((Enums.Area)Form1_0.PlayerScan_0.levelNo);
+                    int RoomStartX = AllRooms_InArea[DoingRoomIndex].X - Form1_0.MapAreaStruc_0.AllMapData[(int)(Form1_0.PlayerScan_0.levelNo - 1)].Offset.X;
+                    int RoomStartY = AllRooms_InArea[DoingRoomIndex].Y - Form1_0.MapAreaStruc_0.AllMapData[(int)(Form1_0.PlayerScan_0.levelNo - 1)].Offset.Y;
+                    int RoomSizeX = AllRooms_InArea[DoingRoomIndex].Width;
+                    int RoomSizeY = AllRooms_InArea[DoingRoomIndex].Height;
+
+                    Position MovingToPos = new Position { X = AllRooms_InArea[DoingRoomIndex].X, Y = AllRooms_InArea[DoingRoomIndex].Y };
+                    bool FoundWalkablePath = false;
+                    //Form1_0.method_1("Check:" + RoomStartX + ", " + RoomStartY, Color.Red);
+                    //Form1_0.method_1("Check size:" + RoomSizeX + ", " + RoomSizeY, Color.Red);
+                    for (int i = RoomStartX; i < RoomStartX + RoomSizeX; i++)
+                    {
+                        for (int k = RoomStartY; k < RoomStartY + RoomSizeY; k++)
+                        {
+                            if (ThisCollisionGrid[i, k])
+                            {
+                                FoundWalkablePath = true;
+                                MovingToPos = new Position { X = i + Form1_0.MapAreaStruc_0.AllMapData[(int)(Form1_0.PlayerScan_0.levelNo - 1)].Offset.X, Y = k + Form1_0.MapAreaStruc_0.AllMapData[(int)(Form1_0.PlayerScan_0.levelNo - 1)].Offset.Y };
+                            }
+                        }
+                    }
+                    if (FoundWalkablePath)
+                    {
+                        Form1_0.PathFinding_0.MoveToThisPos(MovingToPos);
+                        //Form1_0.PathFinding_0.MoveToThisPos(MovingToPos, 4, true);
+                    }
+                    else
+                    {
+                        AllRooms_InArea.RemoveAt(DoingRoomIndex);
+                    }
+                }
+                else
+                {
+                    Form1_0.MobsStruc_0.xPosFinal = 0;
+                    Form1_0.MobsStruc_0.yPosFinal = 0;
+                    //if (CharConfig.RunBaalScript && !Form1_0.Baal_0.ScriptDone && Form1_0.Baal_0.Wave5Detected) Form1_0.Baal_0.Wave5Cleared = true;
+                    TriedToMoveToMobsCount = 0;
+                    DoingBattle = false;
+                    FirstAttackCasted = false;
+                    ResetBattleMoveAcceptOffset();
+                    if (!ClearingFullArea) Form1_0.PathFinding_0.MoveToThisPos(new Position { X = AreaX, Y = AreaY });
+                    //Form1_0.Mover_0.MoveToLocation(AreaX, AreaY);
+                    ClearingArea = false;
+                }
             }
         }
 
@@ -520,7 +629,7 @@ namespace app
 
             Form1_0.MobsStruc_0.xPosFinal = 0;
             Form1_0.MobsStruc_0.yPosFinal = 0;
-            if (CharConfig.RunBaalScript && !Form1_0.Baal_0.ScriptDone && Form1_0.Baal_0.Wave5Detected) Form1_0.Baal_0.Wave5Cleared = true;
+            //if (CharConfig.RunBaalScript && !Form1_0.Baal_0.ScriptDone && Form1_0.Baal_0.Wave5Detected) Form1_0.Baal_0.Wave5Cleared = true;
             TriedToMoveToMobsCount = 0;
             DoingBattle = false;
             FirstAttackCasted = false;
@@ -573,7 +682,7 @@ namespace app
                     //LastMobName = "";
                     Form1_0.MobsStruc_0.xPosFinal = 0;
                     Form1_0.MobsStruc_0.yPosFinal = 0;
-                    if (CharConfig.RunBaalScript && !Form1_0.Baal_0.ScriptDone && Form1_0.Baal_0.Wave5Detected) Form1_0.Baal_0.Wave5Cleared = true;
+                    //if (CharConfig.RunBaalScript && !Form1_0.Baal_0.ScriptDone && Form1_0.Baal_0.Wave5Detected) Form1_0.Baal_0.Wave5Cleared = true;
                     TriedToMoveToMobsCount = 0;
                     DoingBattle = false;
                     FirstAttackCasted = false;
@@ -585,7 +694,7 @@ namespace app
                 //LastMobName = "";
                 Form1_0.MobsStruc_0.xPosFinal = 0;
                 Form1_0.MobsStruc_0.yPosFinal = 0;
-                if (CharConfig.RunBaalScript && !Form1_0.Baal_0.ScriptDone && Form1_0.Baal_0.Wave5Detected) Form1_0.Baal_0.Wave5Cleared = true;
+                //if (CharConfig.RunBaalScript && !Form1_0.Baal_0.ScriptDone && Form1_0.Baal_0.Wave5Detected) Form1_0.Baal_0.Wave5Cleared = true;
                 TriedToMoveToMobsCount = 0;
                 DoingBattle = false;
                 FirstAttackCasted = false;
@@ -695,6 +804,7 @@ namespace app
 
         public void CastSkills()
         {
+            Form1_0.KeyMouse_0.ReleaseKey(System.Windows.Forms.Keys.E);
             if (Form1_0.MobsStruc_0.xPosFinal != 0 && Form1_0.MobsStruc_0.yPosFinal != 0)
             {
                 Form1_0.PlayerScan_0.GetPositions();
@@ -719,6 +829,7 @@ namespace app
                     Form1_0.KeyMouse_0.MouseCliccRightAttackMove(Form1_0.CenterX, Form1_0.CenterY - 1);
                 }
             }
+            Form1_0.KeyMouse_0.ReleaseKey(System.Windows.Forms.Keys.E);
             //Form1_0.WaitDelay(5);
             //Form1_0.WaitDelay(1);
         }

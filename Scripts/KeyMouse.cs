@@ -326,6 +326,10 @@ namespace app
                 {
                     Form1_0.button1_Click(null, null);
                 }
+                else if (vkCode == (int)CharConfig.PauseResumeKey) //numpad6
+                {
+                    Form1_0.buttonPauseResume_Click(null, null);
+                }
             }
             return CallNextHookEx(hookID, nCode, wParam, lParam);
         }

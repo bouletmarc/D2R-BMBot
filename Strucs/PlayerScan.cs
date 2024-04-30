@@ -127,6 +127,15 @@ namespace app
         {
             Form1_0.SetProcessingTime();
 
+
+            long QuestOffset = (long)Form1_0.BaseAddress + 0x230E9A8;
+            long QuestAddress = Form1_0.Mem_0.ReadInt64Raw((IntPtr)(QuestOffset));
+            byte Q1 = Form1_0.Mem_0.ReadByteRaw((IntPtr)QuestAddress);
+            byte Q2 = Form1_0.Mem_0.ReadByteRaw((IntPtr) (QuestAddress + 1));
+
+            //byte[] Buffer = new byte[2] { 0, 0};
+            //Form1_0.Mem_0.WriteRawMemory((IntPtr)QuestAddress, Buffer, Buffer.Length);
+
             pathAddress = Form1_0.Mem_0.ReadInt64Raw((IntPtr) (PlayerPointer + 0x38));
             xPos = Form1_0.Mem_0.ReadUInt16Raw((IntPtr) (pathAddress + 0x02));
             yPos = Form1_0.Mem_0.ReadUInt16Raw((IntPtr) (pathAddress + 0x06));

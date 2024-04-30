@@ -395,6 +395,16 @@ namespace app
                                 }
                             }
                         }
+                        else
+                        {
+                            if (Wave5Detected)
+                            {
+                                if (!Form1_0.MobsStruc_0.GetMobs("", "", true, 30, IgnoredMobs))
+                                {
+                                    Wave5Cleared = true;
+                                }
+                            }
+                        }
                         //####
                     }
                     else

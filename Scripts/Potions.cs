@@ -247,23 +247,23 @@ namespace app
         {
             if (i == 0)
             {
-                if (SendToMerc) Form1_0.KeyMouse_0.PressPotionKeyMerc(System.Windows.Forms.Keys.D1);
-                else Form1_0.KeyMouse_0.PressPotionKey(System.Windows.Forms.Keys.D1);
+                if (SendToMerc) Form1_0.KeyMouse_0.PressPotionKeyMerc(CharConfig.KeyPotion1);
+                else Form1_0.KeyMouse_0.PressPotionKey(CharConfig.KeyPotion1);
             }
             if (i == 1)
             {
-                if (SendToMerc) Form1_0.KeyMouse_0.PressPotionKeyMerc(System.Windows.Forms.Keys.D2);
-                else Form1_0.KeyMouse_0.PressPotionKey(System.Windows.Forms.Keys.D2);
+                if (SendToMerc) Form1_0.KeyMouse_0.PressPotionKeyMerc(CharConfig.KeyPotion2);
+                else Form1_0.KeyMouse_0.PressPotionKey(CharConfig.KeyPotion2);
             }
             if (i == 2)
             {
-                if (SendToMerc) Form1_0.KeyMouse_0.PressPotionKeyMerc(System.Windows.Forms.Keys.D3);
-                else Form1_0.KeyMouse_0.PressPotionKey(System.Windows.Forms.Keys.D3);
+                if (SendToMerc) Form1_0.KeyMouse_0.PressPotionKeyMerc(CharConfig.KeyPotion3);
+                else Form1_0.KeyMouse_0.PressPotionKey(CharConfig.KeyPotion3);
             }
             if (i == 3)
             {
-                if (SendToMerc) Form1_0.KeyMouse_0.PressPotionKeyMerc(System.Windows.Forms.Keys.D4);
-                else Form1_0.KeyMouse_0.PressPotionKey(System.Windows.Forms.Keys.D4);
+                if (SendToMerc) Form1_0.KeyMouse_0.PressPotionKeyMerc(CharConfig.KeyPotion4);
+                else Form1_0.KeyMouse_0.PressPotionKey(CharConfig.KeyPotion4);
             }
         }
 

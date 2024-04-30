@@ -327,8 +327,7 @@ namespace app
                     }
 
                     if (!ShouldReliveMerc || TriedToMercCount >= 3
-                        || (Form1_0.PlayerScan_0.PlayerGoldInventory + Form1_0.PlayerScan_0.PlayerGoldInStash) < 75000
-                        || FastTowning)
+                        || (Form1_0.PlayerScan_0.PlayerGoldInventory + Form1_0.PlayerScan_0.PlayerGoldInStash) < 75000)
                     {
                         CurrentScript++;
                     }
@@ -336,8 +335,7 @@ namespace app
                     if (CurrentScript == 2)
                     {
                         if (ShouldReliveMerc && TriedToMercCount < 3
-                        && (Form1_0.PlayerScan_0.PlayerGoldInventory + Form1_0.PlayerScan_0.PlayerGoldInStash) >= 75000
-                        && !FastTowning)
+                            && (Form1_0.PlayerScan_0.PlayerGoldInventory + Form1_0.PlayerScan_0.PlayerGoldInStash) >= 75000)
                         {
                             Form1_0.SetGameStatus("TOWN-MERC");
                             MoveToMerc();
@@ -708,7 +706,7 @@ namespace app
             {
                 ShouldBe = true;
             }
-            if (Form1_0.Gamble_0.CanGamble() && !FastTowning)
+            if (Form1_0.Gamble_0.CanGamble() && !FastTowning && TownAct == 5)
             {
                 ShouldBe = true;
             }

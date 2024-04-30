@@ -48,14 +48,14 @@ namespace app
                     return;
                 }
 
-                Form1_0.PathFinding_0.MoveToThisPos(new Position { X = 5130, Y = 5120 });
+                Form1_0.PathFinding_0.MoveToThisPos(new Position { X = 5121, Y = 5123 });
 
                 //5119,5121
 
                 //if (Form1_0.ObjectsStruc_0.GetObjects("PermanentTownPortal", true, new List<uint>()))
                 //{
                     //Position itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, Form1_0.ObjectsStruc_0.itemx, Form1_0.ObjectsStruc_0.itemy);
-                    Position itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, 5119, 5121);
+                    Position itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, 5117, 5120);
 
                     Form1_0.KeyMouse_0.MouseClicc_RealPos(itemScreenPos.X, itemScreenPos.Y - 15);
                     Form1_0.WaitDelay(100);

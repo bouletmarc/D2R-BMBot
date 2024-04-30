@@ -250,7 +250,7 @@ namespace app
             }
         }
 
-        public bool GetShopItem(string ShopItemName)
+        public bool GetShopItem(string ShopItemName, bool GetGambleShopItem = false)
         {
             Form1_0.PatternsScan_0.scanForUnitsPointer("item");
             for (int i = 0; i < Form1_0.PatternsScan_0.AllItemsPointers.Count; i++)
@@ -273,12 +273,16 @@ namespace app
                     if (itemdatastruc[0x0C] == 0)
                     {
                         //if (dwOwnerId == Form1_0.PlayerScan_0.unitId)
-                        if (dwOwnerId != Form1_0.PlayerScan_0.unitId && equiploc == 3)
+                        if (dwOwnerId != Form1_0.PlayerScan_0.unitId)
                         {
-                            if (ItemNAAME == ShopItemName)
+                            if ((GetGambleShopItem && equiploc == 0)
+                                || (!GetGambleShopItem && equiploc == 3))
                             {
-                                //SetStats();
-                                return true;
+                                if (ItemNAAME == ShopItemName)
+                                {
+                                    //SetStats();
+                                    return true;
+                                }
                             }
                         }
                     }
@@ -299,25 +303,29 @@ namespace app
             AllItemsInSharedStash2 = new List<string>();
             AllItemsInSharedStash3 = new List<string>();
             AllItemsIncube = new List<string>();
+            AllItemsInShop = new List<string>();
             AllItemsEquipped = new List<string>();
             AllItemsInBelt = new List<string>();
             AllItemsOnGround = new List<string>();
+            AllItemsOthers = new List<string>();
 
             DebuggingItems = true;
             GetItems(false);
             DebuggingItems = false;
 
             string CurrentAllItemsText = "";
-            for (int i = 0; i < AllItemsOnCursor.Count; i++) CurrentAllItemsText += AllItemsOnCursor[i] + Environment.NewLine;
-            for (int i = 0; i < AllItemsInInventory.Count; i++) CurrentAllItemsText += AllItemsInInventory[i] + Environment.NewLine;
-            for (int i = 0; i < AllItemsInStash.Count; i++) CurrentAllItemsText += AllItemsInStash[i] + Environment.NewLine;
-            for (int i = 0; i < AllItemsInSharedStash1.Count; i++) CurrentAllItemsText += AllItemsInSharedStash1[i] + Environment.NewLine;
-            for (int i = 0; i < AllItemsInSharedStash2.Count; i++) CurrentAllItemsText += AllItemsInSharedStash2[i] + Environment.NewLine;
-            for (int i = 0; i < AllItemsInSharedStash3.Count; i++) CurrentAllItemsText += AllItemsInSharedStash3[i] + Environment.NewLine;
-            for (int i = 0; i < AllItemsIncube.Count; i++) CurrentAllItemsText += AllItemsIncube[i] + Environment.NewLine;
-            for (int i = 0; i < AllItemsEquipped.Count; i++) CurrentAllItemsText += AllItemsEquipped[i] + Environment.NewLine;
-            for (int i = 0; i < AllItemsInBelt.Count; i++) CurrentAllItemsText += AllItemsInBelt[i] + Environment.NewLine;
-            for (int i = 0; i < AllItemsOnGround.Count; i++) CurrentAllItemsText += AllItemsOnGround[i] + Environment.NewLine;
+            if (Form1_0.comboBoxItemsCategory.SelectedIndex == 0 || Form1_0.comboBoxItemsCategory.SelectedIndex == 1) for (int i = 0; i < AllItemsOnCursor.Count; i++) CurrentAllItemsText += AllItemsOnCursor[i] + Environment.NewLine;
+            if (Form1_0.comboBoxItemsCategory.SelectedIndex == 0 || Form1_0.comboBoxItemsCategory.SelectedIndex == 2) for (int i = 0; i < AllItemsInInventory.Count; i++) CurrentAllItemsText += AllItemsInInventory[i] + Environment.NewLine;
+            if (Form1_0.comboBoxItemsCategory.SelectedIndex == 0 || Form1_0.comboBoxItemsCategory.SelectedIndex == 3) for (int i = 0; i < AllItemsInStash.Count; i++) CurrentAllItemsText += AllItemsInStash[i] + Environment.NewLine;
+            if (Form1_0.comboBoxItemsCategory.SelectedIndex == 0 || Form1_0.comboBoxItemsCategory.SelectedIndex == 4) for (int i = 0; i < AllItemsInSharedStash1.Count; i++) CurrentAllItemsText += AllItemsInSharedStash1[i] + Environment.NewLine;
+            if (Form1_0.comboBoxItemsCategory.SelectedIndex == 0 || Form1_0.comboBoxItemsCategory.SelectedIndex == 5) for (int i = 0; i < AllItemsInSharedStash2.Count; i++) CurrentAllItemsText += AllItemsInSharedStash2[i] + Environment.NewLine;
+            if (Form1_0.comboBoxItemsCategory.SelectedIndex == 0 || Form1_0.comboBoxItemsCategory.SelectedIndex == 6) for (int i = 0; i < AllItemsInSharedStash3.Count; i++) CurrentAllItemsText += AllItemsInSharedStash3[i] + Environment.NewLine;
+            if (Form1_0.comboBoxItemsCategory.SelectedIndex == 0 || Form1_0.comboBoxItemsCategory.SelectedIndex == 7) for (int i = 0; i < AllItemsIncube.Count; i++) CurrentAllItemsText += AllItemsIncube[i] + Environment.NewLine;
+            if (Form1_0.comboBoxItemsCategory.SelectedIndex == 0 || Form1_0.comboBoxItemsCategory.SelectedIndex == 8) for (int i = 0; i < AllItemsEquipped.Count; i++) CurrentAllItemsText += AllItemsEquipped[i] + Environment.NewLine;
+            if (Form1_0.comboBoxItemsCategory.SelectedIndex == 0 || Form1_0.comboBoxItemsCategory.SelectedIndex == 9) for (int i = 0; i < AllItemsInBelt.Count; i++) CurrentAllItemsText += AllItemsInBelt[i] + Environment.NewLine;
+            if (Form1_0.comboBoxItemsCategory.SelectedIndex == 0 || Form1_0.comboBoxItemsCategory.SelectedIndex == 10) for (int i = 0; i < AllItemsOnGround.Count; i++) CurrentAllItemsText += AllItemsOnGround[i] + Environment.NewLine;
+            if (Form1_0.comboBoxItemsCategory.SelectedIndex == 0 || Form1_0.comboBoxItemsCategory.SelectedIndex == 11) for (int i = 0; i < AllItemsInShop.Count; i++) CurrentAllItemsText += AllItemsInShop[i] + Environment.NewLine;
+            if (Form1_0.comboBoxItemsCategory.SelectedIndex == 0 || Form1_0.comboBoxItemsCategory.SelectedIndex == 12) for (int i = 0; i < AllItemsOthers.Count; i++) CurrentAllItemsText += AllItemsOthers[i] + Environment.NewLine;
 
             if (CurrentAllItemsText != AllItemsText && CurrentAllItemsText != "")
             {
@@ -349,9 +357,11 @@ namespace app
         public List<string> AllItemsInSharedStash2 = new List<string>();
         public List<string> AllItemsInSharedStash3 = new List<string>();
         public List<string> AllItemsIncube = new List<string>();
+        public List<string> AllItemsInShop = new List<string>();
         public List<string> AllItemsEquipped = new List<string>();
         public List<string> AllItemsInBelt = new List<string>();
         public List<string> AllItemsOnGround = new List<string>();
+        public List<string> AllItemsOthers = new List<string>();
 
         public string AllItemsText = "";
 
@@ -465,7 +475,7 @@ namespace app
                             }
                         }
 
-                        if (dwOwnerId == Form1_0.PlayerScan_0.unitId && equiploc == 4)
+                        else if (dwOwnerId == Form1_0.PlayerScan_0.unitId && equiploc == 4)
                         {
                             //here for items in stash
                             //Form1_0.method_1("name: " + ItemNAAME + " - at: " + itemx + "," + itemy, Color.DarkGreen);
@@ -476,7 +486,7 @@ namespace app
                                 AllItemsInStash.Add("ID:" + txtFileNo + "(" + ItemNAAME + ") at:" + itemx + ", " + itemy + " - In Stash - " + Form1_0.ItemsAlert_0.GetItemTypeText() + " && " + GetQualityTextString() + " && " + GetAllFlagsFromItem() + " && " + GetAllValuesFromStats() + GetItemsStashInfosTxt());
                             }
                         }
-                        if (dwOwnerId != Form1_0.PlayerScan_0.unitId && equiploc == 4)
+                        else if (dwOwnerId != Form1_0.PlayerScan_0.unitId && equiploc == 4)
                         {
                             //here for items in shared stash
                             //Form1_0.method_1("name: " + ItemNAAME + " - at: " + itemx + "," + itemy + " - " + dwOwnerId, Color.DarkGreen);
@@ -494,7 +504,7 @@ namespace app
                                 if (dwOwnerId == dwOwnerId_Shared3 && DebuggingItems) AllItemsInSharedStash3.Add("ID:" + txtFileNo + "(" + ItemNAAME + ") at:" + itemx + ", " + itemy + " - In Shared Stash3 - " + Form1_0.ItemsAlert_0.GetItemTypeText() + " && " + GetQualityTextString() + " && " + GetAllFlagsFromItem() + " && " + GetAllValuesFromStats() + GetItemsStashInfosTxt());
                             }
                         }
-                        if (dwOwnerId == Form1_0.PlayerScan_0.unitId && equiploc == 3)
+                        else if (dwOwnerId == Form1_0.PlayerScan_0.unitId && equiploc == 3)
                         {
                             //here for items in cube
                             //Form1_0.method_1("name: " + ItemNAAME + " - at: " + itemx + "," + itemy, Color.DarkGreen);
@@ -504,6 +514,26 @@ namespace app
                             {
                                 AllItemsIncube.Add("ID:" + txtFileNo + "(" + ItemNAAME + ") at:" + itemx + ", " + itemy + " - In Cube - " + Form1_0.ItemsAlert_0.GetItemTypeText() + " && " + GetQualityTextString() + " && " + GetAllFlagsFromItem() + " && " + GetAllValuesFromStats() + GetItemsStashInfosTxt());
                             }
+                        }
+                        else if (dwOwnerId != Form1_0.PlayerScan_0.unitId && equiploc == 3)
+                        {
+                            //Shop Items
+                            if (DebuggingItems)
+                            {
+                                AllItemsInShop.Add("ID:" + txtFileNo + "(" + ItemNAAME + ") at:" + itemx + ", " + itemy + " - In Shop - " + Form1_0.ItemsAlert_0.GetItemTypeText() + " && " + GetQualityTextString() + " && " + GetAllFlagsFromItem() + " && " + GetAllValuesFromStats() + GetItemsStashInfosTxt());
+                            }
+                        }
+                        else if (dwOwnerId != Form1_0.PlayerScan_0.unitId && equiploc == 0)
+                        {
+                            //Shop Gamble Items
+                            if (DebuggingItems)
+                            {
+                                AllItemsInShop.Add("ID:" + txtFileNo + "(" + ItemNAAME + ") at:" + itemx + ", " + itemy + " - In Shop(Gamble) - " + Form1_0.ItemsAlert_0.GetItemTypeText() + " && " + GetQualityTextString() + " && " + GetAllFlagsFromItem() + " && " + GetAllValuesFromStats() + GetItemsStashInfosTxt());
+                            }
+                        }
+                        else
+                        {
+                            AllItemsOthers.Add("ID:" + txtFileNo + "(" + ItemNAAME + ") at:" + itemx + ", " + itemy + " - Others - EquipLocation:" + equiploc + " - SelfOwner:" + (dwOwnerId == Form1_0.PlayerScan_0.unitId) + " - " + Form1_0.ItemsAlert_0.GetItemTypeText() + " && " + GetQualityTextString() + " && " + GetAllFlagsFromItem() + " && " + GetAllValuesFromStats() + GetItemsStashInfosTxt());
                         }
                     }
                     if (itemdatastruc[0x0C] == 1)
@@ -671,13 +701,13 @@ namespace app
                                 }
 
                                 //after a lot of try picking item, inventory might be full, dump bad item to ground
-                                if (TriesToPickItemCount == 7)
+                                if (TriesToPickItemCount >= 7)
                                 {
                                     Form1_0.InventoryStruc_0.DumpBadItemsOnGround();
                                 }
 
                                 //after a lot of try picking item, inventory might be full, go to town
-                                if (TriesToPickItemCount >= 15)
+                                if (TriesToPickItemCount >= 50)
                                 {
                                     Form1_0.InventoryStruc_0.DumpBadItemsOnGround();
                                     TriesToPickItemCount = 0;

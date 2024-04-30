@@ -42,7 +42,7 @@ namespace app
     public partial class Form1 : Form
     {
 
-        public string BotVersion = "V2.92";
+        public string BotVersion = "V2.93";
 
         public string D2_LOD_113C_Path = "";
 
@@ -62,6 +62,8 @@ namespace app
         public int LoopDone = 0;
         public bool CharDied = false;
         public bool RestartingBot = false;
+        public bool BotPaused = false;
+        public bool BotResuming = false;
 
         public bool PrintedGameTime = false;
         public DateTime CheckTime = new DateTime();
@@ -98,6 +100,7 @@ namespace app
 
         public bool BotJustStarted = true;
         public bool SetDeadCount = false;
+        public bool LoadingBot = true;
 
         public double FPS = 0;
         public string mS = "";
@@ -261,6 +264,8 @@ namespace app
             //richTextBox2.Visible = false;
 
             //ModifyMonsterList();
+
+            comboBoxItemsCategory.SelectedIndex = 0;
 
             LabelChickenCount.Text = TotalChickenCount.ToString();
             LabelDeadCount.Text = TotalDeadCount.ToString();
@@ -467,6 +472,8 @@ namespace app
             dataGridView1.Rows.Add("Full Open", "Unknown");
 
             CheckForUpdates();
+
+            LoadingBot = false;
         }
 
         public void CheckForUpdates()
@@ -825,6 +832,12 @@ namespace app
 
         public void SetNewGame()
         {
+            if (BotResuming)
+            {
+                BotResuming = false;
+                return;
+            }
+
             Form1_0.SetGameStatus("NEW GAME STARTED");
 
             InventoryStruc_0.HUDItems_tpscrolls_locx = -1;
@@ -1494,48 +1507,55 @@ namespace app
 
         public void GoToNextScript()
         {
-            if (!CharConfig.IsRushing && !Town_0.GetInTown())
+            if (Battle_0.ClearingFullArea && Battle_0.ClearingArea)
             {
-                if (CharConfig.RunWPTaker && !WPTaker_0.ScriptDone) WPTaker_0.ScriptDone = true;
-                else if (CharConfig.RunCowsScript && !Cows_0.ScriptDone) Cows_0.ScriptDone = true;
-                else if (CharConfig.RunAndarielScript && !Andariel_0.ScriptDone) Andariel_0.ScriptDone = true;
-                else if (CharConfig.RunCountessScript && !Countess_0.ScriptDone) Countess_0.ScriptDone = true;
-                else if (CharConfig.RunSummonerScript && !Summoner_0.ScriptDone) Summoner_0.ScriptDone = true;
-                else if (CharConfig.RunDurielScript && !Duriel_0.ScriptDone) Duriel_0.ScriptDone = true;
-                else if (CharConfig.RunLowerKurastScript && !LowerKurast_0.ScriptDone) LowerKurast_0.ScriptDone = true;
-                else if (CharConfig.RunLowerKurastScript && !Act3Sewers_0.ScriptDone) Act3Sewers_0.ScriptDone = true;
-                else if (CharConfig.RunLowerKurastScript && !UpperKurast_0.ScriptDone) UpperKurast_0.ScriptDone = true;
-                else if (CharConfig.RunTravincalScript && !Travincal_0.ScriptDone) Travincal_0.ScriptDone = true;
-                else if (CharConfig.RunMephistoScript && !Mephisto_0.ScriptDone) Mephisto_0.ScriptDone = true;
-                else if (CharConfig.RunChaosScript && !Chaos_0.ScriptDone) Chaos_0.ScriptDone = true;
-                else if (CharConfig.RunChaosLeechScript && !ChaosLeech_0.ScriptDone) ChaosLeech_0.ScriptDone = true;
-                else if (CharConfig.RunEldritchScript && !Eldritch_0.ScriptDone) Eldritch_0.ScriptDone = true;
-                else if (CharConfig.RunShenkScript && !Shenk_0.ScriptDone) Shenk_0.ScriptDone = true;
-                else if (CharConfig.RunFrozensteinScript && !Frozenstein_0.ScriptDone) Frozenstein_0.ScriptDone = true;
-                else if (CharConfig.RunPindleskinScript && !Pindleskin_0.ScriptDone) Pindleskin_0.ScriptDone = true;
-                else if (CharConfig.RunNihlatakScript && !Nihlatak_0.ScriptDone) Nihlatak_0.ScriptDone = true;
-                else if (CharConfig.RunBaalScript && !Baal_0.ScriptDone) Baal_0.ScriptDone = true;
-                else if (CharConfig.RunBaalLeechScript && !BaalLeech_0.ScriptDone) BaalLeech_0.ScriptDone = true;
+                Battle_0.AllRooms_InArea.RemoveAt(Battle_0.DoingRoomIndex);
             }
             else
             {
-                if (CharConfig.RunDarkWoodRush && !DarkWoodRush_0.ScriptDone) DarkWoodRush_0.ScriptDone = true;
-                else if (CharConfig.RunTristramRush && !TristramRush_0.ScriptDone) TristramRush_0.ScriptDone = true;
-                else if (CharConfig.RunAndarielRush && !AndarielRush_0.ScriptDone) AndarielRush_0.ScriptDone = true;
-                else if (CharConfig.RunHallOfDeadRush && !HallOfDeadRushCube_0.ScriptDone) HallOfDeadRushCube_0.ScriptDone = true;
-                else if (CharConfig.RunFarOasisRush && !FarOasisRush_0.ScriptDone) FarOasisRush_0.ScriptDone = true;
-                else if (CharConfig.RunLostCityRush && !LostCityRush_0.ScriptDone) LostCityRush_0.ScriptDone = true;
-                else if (CharConfig.RunSummonerRush && !SummonerRush_0.ScriptDone) SummonerRush_0.ScriptDone = true;
-                else if (CharConfig.RunDurielRush && !DurielRush_0.ScriptDone) DurielRush_0.ScriptDone = true;
-                else if (CharConfig.RunKahlimEyeRush && !KahlimEyeRush_0.ScriptDone) KahlimEyeRush_0.ScriptDone = true;
-                else if (CharConfig.RunKahlimBrainRush && !KahlimBrainRush_0.ScriptDone) KahlimBrainRush_0.ScriptDone = true;
-                else if (CharConfig.RunKahlimHeartRush && !KahlimHeartRush_0.ScriptDone) KahlimHeartRush_0.ScriptDone = true;
-                else if (CharConfig.RunTravincalRush && !TravincalRush_0.ScriptDone) TravincalRush_0.ScriptDone = true;
-                else if (CharConfig.RunMephistoRush && !MephistoRush_0.ScriptDone) MephistoRush_0.ScriptDone = true;
-                else if (CharConfig.RunChaosRush && !ChaosRush_0.ScriptDone) ChaosRush_0.ScriptDone = true;
-                else if (CharConfig.RunAncientsRush && !AncientsRush_0.ScriptDone) AncientsRush_0.ScriptDone = true;
-                else if (CharConfig.RunAnyaRush && !AnyaRush_0.ScriptDone) AnyaRush_0.ScriptDone = true;
-                else if (CharConfig.RunBaalRush && !BaalRush_0.ScriptDone) BaalRush_0.ScriptDone = true;
+                if (!CharConfig.IsRushing && !Town_0.GetInTown())
+                {
+                    if (CharConfig.RunWPTaker && !WPTaker_0.ScriptDone) WPTaker_0.ScriptDone = true;
+                    else if (CharConfig.RunCowsScript && !Cows_0.ScriptDone) Cows_0.ScriptDone = true;
+                    else if (CharConfig.RunAndarielScript && !Andariel_0.ScriptDone) Andariel_0.ScriptDone = true;
+                    else if (CharConfig.RunCountessScript && !Countess_0.ScriptDone) Countess_0.ScriptDone = true;
+                    else if (CharConfig.RunSummonerScript && !Summoner_0.ScriptDone) Summoner_0.ScriptDone = true;
+                    else if (CharConfig.RunDurielScript && !Duriel_0.ScriptDone) Duriel_0.ScriptDone = true;
+                    else if (CharConfig.RunLowerKurastScript && !LowerKurast_0.ScriptDone) LowerKurast_0.ScriptDone = true;
+                    else if (CharConfig.RunLowerKurastScript && !Act3Sewers_0.ScriptDone) Act3Sewers_0.ScriptDone = true;
+                    else if (CharConfig.RunLowerKurastScript && !UpperKurast_0.ScriptDone) UpperKurast_0.ScriptDone = true;
+                    else if (CharConfig.RunTravincalScript && !Travincal_0.ScriptDone) Travincal_0.ScriptDone = true;
+                    else if (CharConfig.RunMephistoScript && !Mephisto_0.ScriptDone) Mephisto_0.ScriptDone = true;
+                    else if (CharConfig.RunChaosScript && !Chaos_0.ScriptDone) Chaos_0.ScriptDone = true;
+                    else if (CharConfig.RunChaosLeechScript && !ChaosLeech_0.ScriptDone) ChaosLeech_0.ScriptDone = true;
+                    else if (CharConfig.RunEldritchScript && !Eldritch_0.ScriptDone) Eldritch_0.ScriptDone = true;
+                    else if (CharConfig.RunShenkScript && !Shenk_0.ScriptDone) Shenk_0.ScriptDone = true;
+                    else if (CharConfig.RunFrozensteinScript && !Frozenstein_0.ScriptDone) Frozenstein_0.ScriptDone = true;
+                    else if (CharConfig.RunPindleskinScript && !Pindleskin_0.ScriptDone) Pindleskin_0.ScriptDone = true;
+                    else if (CharConfig.RunNihlatakScript && !Nihlatak_0.ScriptDone) Nihlatak_0.ScriptDone = true;
+                    else if (CharConfig.RunBaalScript && !Baal_0.ScriptDone) Baal_0.ScriptDone = true;
+                    else if (CharConfig.RunBaalLeechScript && !BaalLeech_0.ScriptDone) BaalLeech_0.ScriptDone = true;
+                }
+                else
+                {
+                    if (CharConfig.RunDarkWoodRush && !DarkWoodRush_0.ScriptDone) DarkWoodRush_0.ScriptDone = true;
+                    else if (CharConfig.RunTristramRush && !TristramRush_0.ScriptDone) TristramRush_0.ScriptDone = true;
+                    else if (CharConfig.RunAndarielRush && !AndarielRush_0.ScriptDone) AndarielRush_0.ScriptDone = true;
+                    else if (CharConfig.RunHallOfDeadRush && !HallOfDeadRushCube_0.ScriptDone) HallOfDeadRushCube_0.ScriptDone = true;
+                    else if (CharConfig.RunFarOasisRush && !FarOasisRush_0.ScriptDone) FarOasisRush_0.ScriptDone = true;
+                    else if (CharConfig.RunLostCityRush && !LostCityRush_0.ScriptDone) LostCityRush_0.ScriptDone = true;
+                    else if (CharConfig.RunSummonerRush && !SummonerRush_0.ScriptDone) SummonerRush_0.ScriptDone = true;
+                    else if (CharConfig.RunDurielRush && !DurielRush_0.ScriptDone) DurielRush_0.ScriptDone = true;
+                    else if (CharConfig.RunKahlimEyeRush && !KahlimEyeRush_0.ScriptDone) KahlimEyeRush_0.ScriptDone = true;
+                    else if (CharConfig.RunKahlimBrainRush && !KahlimBrainRush_0.ScriptDone) KahlimBrainRush_0.ScriptDone = true;
+                    else if (CharConfig.RunKahlimHeartRush && !KahlimHeartRush_0.ScriptDone) KahlimHeartRush_0.ScriptDone = true;
+                    else if (CharConfig.RunTravincalRush && !TravincalRush_0.ScriptDone) TravincalRush_0.ScriptDone = true;
+                    else if (CharConfig.RunMephistoRush && !MephistoRush_0.ScriptDone) MephistoRush_0.ScriptDone = true;
+                    else if (CharConfig.RunChaosRush && !ChaosRush_0.ScriptDone) ChaosRush_0.ScriptDone = true;
+                    else if (CharConfig.RunAncientsRush && !AncientsRush_0.ScriptDone) AncientsRush_0.ScriptDone = true;
+                    else if (CharConfig.RunAnyaRush && !AnyaRush_0.ScriptDone) AnyaRush_0.ScriptDone = true;
+                    else if (CharConfig.RunBaalRush && !BaalRush_0.ScriptDone) BaalRush_0.ScriptDone = true;
+                }
             }
         }
 
@@ -1758,10 +1778,29 @@ namespace app
             //catch { }
         }
 
+        public void SetPauseResumeButton(bool Enabledd)
+        {
+            //try
+            //{
+            if (buttonPauseResume.InvokeRequired)
+            {
+                // Call this same method but append THREAD2 to the text
+                Action safeWrite = delegate { SetPauseResumeButton(Enabledd); };
+                buttonPauseResume.Invoke(safeWrite);
+            }
+            else
+            {
+                buttonPauseResume.Enabled = Enabledd;
+                Application.DoEvents();
+            }
+            //}
+            //catch { }
+        }
+
         public void StopBot()
         {
             RestartingBot = false;
-            SetPlayButtonText("START");
+            //SetPlayButtonText("START");
             Running = false;
             HasPointers = false;
             PlayerScan_0.FoundPlayer = false;
@@ -1778,7 +1817,8 @@ namespace app
         {
             method_1("Bot started!", Color.DarkGreen);
             SetSettingButton(false);
-            SetPlayButtonText("STOP");
+            SetPauseResumeButton(true);
+            //SetPlayButtonText("STOP");
             Running = true;
             BotJustStarted = true;
             Startt();
@@ -1788,18 +1828,59 @@ namespace app
         {
             if (!Running && button1.Enabled)
             {
+                BotPaused = false;
+                BotResuming = false;
                 method_1("Bot will start!", Color.DarkGreen);
+                this.button1.Image = global::app.Properties.Resources.control_stop_square_green;
+                this.buttonPauseResume.Image = global::app.Properties.Resources.control_pause;
                 StartBot();
             }
             else if (!Running && !button1.Enabled)
             {
-                method_1("Bot will reastart!", Color.DarkGreen);
+                method_1("Bot will restart!", Color.DarkGreen);
+                this.button1.Image = global::app.Properties.Resources.control_stop_square_green;
+                this.buttonPauseResume.Image = global::app.Properties.Resources.control_pause;
+                BotPaused = false;
+                BotResuming = false;
                 RestartingBot = true;
             }
             else if (Running)
             {
                 method_1("Bot will stop!", Color.DarkGreen);
+                this.button1.Image = global::app.Properties.Resources.control;
+                this.buttonPauseResume.Image = global::app.Properties.Resources.control_pause;
+                SetPauseResumeButton(false);
                 StopBot();
+            }
+        }
+
+        public void buttonPauseResume_Click(object sender, EventArgs e)
+        {
+            if (Running && !BotPaused)
+            {
+                if (!BotPaused)
+                {
+                    method_1("Bot will pause!", Color.DarkGreen);
+                    this.buttonPauseResume.Image = global::app.Properties.Resources.control;
+                    StopBot();
+                    BotPaused = true;
+                }
+            }
+            else if (!Running && button1.Enabled)
+            {
+                method_1("Bot will resume!", Color.DarkGreen);
+                this.buttonPauseResume.Image = global::app.Properties.Resources.control_pause;
+                BotPaused = false;
+                BotResuming = true;
+                StartBot();
+            }
+            else if (!Running && !button1.Enabled)
+            {
+                method_1("Bot will resume!", Color.DarkGreen);
+                this.buttonPauseResume.Image = global::app.Properties.Resources.control_pause;
+                BotPaused = false;
+                BotResuming = true;
+                RestartingBot = true;
             }
         }
 
@@ -2134,6 +2215,11 @@ namespace app
         private void buttonUpdate_Click(object sender, EventArgs e)
         {
             System.Diagnostics.Process.Start("https://github.com/bouletmarc/D2R-BMBot/releases");
+        }
+
+        private void comboBoxItemsCategory_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!LoadingBot) ItemsStruc_0.DebugItems();
         }
     }
 }

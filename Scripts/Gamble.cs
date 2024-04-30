@@ -48,10 +48,12 @@ namespace app
             int tries = 0;
             bool Gambling = true;
             GambleType = 0;
-            while (Gambling && tries < 6)
+            while (Gambling && tries < 3)
             {
+                int ThisStartCount = Form1_0.ItemsStruc_0.ItemsInInventory;
+
                 string GambleThisItem = CharConfig.GambleItems[GambleType];
-                if (Form1_0.ItemsStruc_0.GetShopItem(GambleThisItem))
+                if (Form1_0.ItemsStruc_0.GetShopItem(GambleThisItem, true))
                 {
                     Dictionary<string, int> itemScreenPos = Form1_0.Shop_0.ConvertShopLocToScreenPos(Form1_0.ItemsStruc_0.itemx, Form1_0.ItemsStruc_0.itemy);
                     Form1_0.KeyMouse_0.MouseCliccRight(itemScreenPos["x"], itemScreenPos["y"]);
@@ -64,7 +66,9 @@ namespace app
                 if (GambleType > CharConfig.GambleItems.Count - 1) GambleType = 0;
 
                 Gambling = CanStillGamble();
-                tries++;
+
+                if (Form1_0.ItemsStruc_0.ItemsInInventory == ThisStartCount) tries++;
+                ThisStartCount = Form1_0.ItemsStruc_0.ItemsInInventory;
             }
         }
     }

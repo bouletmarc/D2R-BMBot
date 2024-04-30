@@ -360,7 +360,7 @@ namespace app
             return false;
         }
 
-        public bool HasInventoryItemName(string ItemmN)
+        public bool HasInventoryItemName(string ItemmN, bool OnlyFreeSpot = false)
         {
             for (int i = 0; i < 40; i++)
             {
@@ -368,7 +368,14 @@ namespace app
                 {
                     if (InventoryItemNames[i] == ItemmN)
                     {
-                        return true;
+                        if (OnlyFreeSpot)
+                        {
+                            if (CharConfig.InventoryDontCheckItem[i] == 0)
+                            {
+                                return true;
+                            }
+                        }
+                        else return true;
                     }
                 }
             }

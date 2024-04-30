@@ -45,7 +45,7 @@ namespace app
                 Form1_0.SetGameStatus("GO TO WP");
                 CurrentStep = 0;
 
-                Form1_0.Town_0.GoToWPArea(2, 7);
+                Form1_0.Town_0.GoToWPArea(3, 7);
             }
             else
             {

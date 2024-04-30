@@ -215,6 +215,7 @@
             this.listViewUnique.TabIndex = 3;
             this.listViewUnique.UseCompatibleStateImageBehavior = false;
             this.listViewUnique.View = System.Windows.Forms.View.Details;
+            this.listViewUnique.Click += new System.EventHandler(this.listViewUnique_Click);
             // 
             // columnHeader1
             // 
@@ -268,6 +269,7 @@
             this.listViewKeys.TabIndex = 1;
             this.listViewKeys.UseCompatibleStateImageBehavior = false;
             this.listViewKeys.View = System.Windows.Forms.View.Details;
+            this.listViewKeys.Click += new System.EventHandler(this.listViewUnique_Click);
             // 
             // columnHeader2
             // 
@@ -305,6 +307,7 @@
             this.listViewGems.TabIndex = 1;
             this.listViewGems.UseCompatibleStateImageBehavior = false;
             this.listViewGems.View = System.Windows.Forms.View.Details;
+            this.listViewGems.Click += new System.EventHandler(this.listViewUnique_Click);
             // 
             // columnHeader3
             // 
@@ -342,6 +345,7 @@
             this.listViewRunes.TabIndex = 1;
             this.listViewRunes.UseCompatibleStateImageBehavior = false;
             this.listViewRunes.View = System.Windows.Forms.View.Details;
+            this.listViewRunes.Click += new System.EventHandler(this.listViewUnique_Click);
             // 
             // columnHeader4
             // 
@@ -389,6 +393,7 @@
             this.listViewSet.TabIndex = 3;
             this.listViewSet.UseCompatibleStateImageBehavior = false;
             this.listViewSet.View = System.Windows.Forms.View.Details;
+            this.listViewSet.Click += new System.EventHandler(this.listViewUnique_Click);
             // 
             // columnHeader5
             // 
@@ -451,6 +456,7 @@
             this.listViewNormal.TabIndex = 2;
             this.listViewNormal.UseCompatibleStateImageBehavior = false;
             this.listViewNormal.View = System.Windows.Forms.View.Details;
+            this.listViewNormal.Click += new System.EventHandler(this.listViewUnique_Click);
             // 
             // columnHeader11
             // 
@@ -513,6 +519,7 @@
             this.listViewSuperior.TabIndex = 4;
             this.listViewSuperior.UseCompatibleStateImageBehavior = false;
             this.listViewSuperior.View = System.Windows.Forms.View.Details;
+            this.listViewSuperior.Click += new System.EventHandler(this.listViewUnique_Click);
             // 
             // columnHeader24
             // 
@@ -575,6 +582,7 @@
             this.listViewRare.TabIndex = 3;
             this.listViewRare.UseCompatibleStateImageBehavior = false;
             this.listViewRare.View = System.Windows.Forms.View.Details;
+            this.listViewRare.Click += new System.EventHandler(this.listViewUnique_Click);
             // 
             // columnHeader18
             // 
@@ -637,6 +645,7 @@
             this.listViewMagic.TabIndex = 4;
             this.listViewMagic.UseCompatibleStateImageBehavior = false;
             this.listViewMagic.View = System.Windows.Forms.View.Details;
+            this.listViewMagic.Click += new System.EventHandler(this.listViewUnique_Click);
             // 
             // columnHeader29
             // 
@@ -689,6 +698,7 @@
             this.listViewPotions.TabIndex = 1;
             this.listViewPotions.UseCompatibleStateImageBehavior = false;
             this.listViewPotions.View = System.Windows.Forms.View.Details;
+            this.listViewPotions.Click += new System.EventHandler(this.listViewUnique_Click);
             // 
             // columnHeader16
             // 
@@ -725,6 +735,7 @@
             this.listViewCubingRecipes.TabIndex = 2;
             this.listViewCubingRecipes.UseCompatibleStateImageBehavior = false;
             this.listViewCubingRecipes.View = System.Windows.Forms.View.Details;
+            this.listViewCubingRecipes.Click += new System.EventHandler(this.listViewUnique_Click);
             // 
             // columnHeader23
             // 
@@ -1099,7 +1110,7 @@
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(34, 25);
             this.button4.TabIndex = 19;
-            this.toolTip1.SetToolTip(this.button4, "Load from a previous Settings File");
+            this.toolTip1.SetToolTip(this.button4, "Load/Import from a previous Settings File");
             this.button4.UseVisualStyleBackColor = true;
             this.button4.Click += new System.EventHandler(this.button4_Click);
             // 

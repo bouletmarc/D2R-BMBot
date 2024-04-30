@@ -41,6 +41,11 @@ namespace app
             textBoxBattleOrder.Items.Clear();
             textBoxBattleCommand.Items.Clear();
             textBoxBattleCry.Items.Clear();
+
+            comboBoxPot1.Items.Clear();
+            comboBoxPot2.Items.Clear();
+            comboBoxPot3.Items.Clear();
+            comboBoxPot4.Items.Clear();
             string[] names = Enum.GetNames(typeof(System.Windows.Forms.Keys));
             for (int i = 0; i < names.Length; i++)
             {
@@ -54,6 +59,11 @@ namespace app
                 textBoxBattleOrder.Items.Add(names[i]);
                 textBoxBattleCommand.Items.Add(names[i]);
                 textBoxBattleCry.Items.Add(names[i]);
+
+                comboBoxPot1.Items.Add(names[i]);
+                comboBoxPot2.Items.Add(names[i]);
+                comboBoxPot3.Items.Add(names[i]);
+                comboBoxPot4.Items.Add(names[i]);
             }
 
             for (int i = 0; i < 40; i++)
@@ -112,6 +122,11 @@ namespace app
             textBoxBattleOrder.Text = CharConfig.KeySkillBattleOrder.ToString();
             textBoxBattleCommand.Text = CharConfig.KeySkillBattleCommand.ToString();
             textBoxBattleCry.Text = CharConfig.KeySkillBattleCry.ToString();
+
+            comboBoxPot1.Text = CharConfig.KeyPotion1.ToString();
+            comboBoxPot2.Text = CharConfig.KeyPotion2.ToString();
+            comboBoxPot3.Text = CharConfig.KeyPotion3.ToString();
+            comboBoxPot4.Text = CharConfig.KeyPotion4.ToString();
 
             checkBoxAttachRightHand.Checked = CharConfig.PlayerAttackWithRightHand;
 
@@ -184,6 +199,11 @@ namespace app
             Enum.TryParse(textBoxBattleOrder.Text, out CharConfig.KeySkillBattleOrder);
             Enum.TryParse(textBoxBattleCommand.Text, out CharConfig.KeySkillBattleCommand);
             Enum.TryParse(textBoxBattleCry.Text, out CharConfig.KeySkillBattleCry);
+
+            Enum.TryParse(comboBoxPot1.Text, out CharConfig.KeyPotion1);
+            Enum.TryParse(comboBoxPot2.Text, out CharConfig.KeyPotion2);
+            Enum.TryParse(comboBoxPot3.Text, out CharConfig.KeyPotion3);
+            Enum.TryParse(comboBoxPot4.Text, out CharConfig.KeyPotion4);
 
             CharConfig.PlayerAttackWithRightHand = checkBoxAttachRightHand.Checked;
 

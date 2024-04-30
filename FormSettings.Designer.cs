@@ -134,6 +134,8 @@
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.panelOverlay = new System.Windows.Forms.Panel();
             this.label14 = new System.Windows.Forms.Label();
+            this.comboBoxPauseResume = new System.Windows.Forms.ComboBox();
+            this.label15 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownRunNumber)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMaxTime)).BeginInit();
@@ -249,14 +251,14 @@
             this.groupBox1.Controls.Add(this.textBoxGameName);
             this.groupBox1.Location = new System.Drawing.Point(3, 481);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(244, 122);
+            this.groupBox1.Size = new System.Drawing.Size(244, 113);
             this.groupBox1.TabIndex = 4;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Game Maker Settings";
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(180, 65);
+            this.button1.Location = new System.Drawing.Point(180, 60);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(54, 23);
             this.button1.TabIndex = 8;
@@ -266,7 +268,7 @@
             // 
             // numericUpDownRunNumber
             // 
-            this.numericUpDownRunNumber.Location = new System.Drawing.Point(85, 67);
+            this.numericUpDownRunNumber.Location = new System.Drawing.Point(85, 62);
             this.numericUpDownRunNumber.Maximum = new decimal(new int[] {
             99999,
             0,
@@ -290,7 +292,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(9, 69);
+            this.label6.Location = new System.Drawing.Point(9, 64);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(70, 13);
             this.label6.TabIndex = 6;
@@ -299,7 +301,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(9, 94);
+            this.label5.Location = new System.Drawing.Point(9, 87);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(50, 13);
             this.label5.TabIndex = 5;
@@ -312,7 +314,7 @@
             "Normal",
             "Nightmare",
             "Hell"});
-            this.comboBoxDifficulty.Location = new System.Drawing.Point(85, 91);
+            this.comboBoxDifficulty.Location = new System.Drawing.Point(85, 84);
             this.comboBoxDifficulty.Name = "comboBoxDifficulty";
             this.comboBoxDifficulty.Size = new System.Drawing.Size(149, 21);
             this.comboBoxDifficulty.TabIndex = 4;
@@ -321,7 +323,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(9, 46);
+            this.label4.Location = new System.Drawing.Point(9, 43);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(64, 13);
             this.label4.TabIndex = 3;
@@ -329,7 +331,7 @@
             // 
             // textBoxGamePass
             // 
-            this.textBoxGamePass.Location = new System.Drawing.Point(85, 43);
+            this.textBoxGamePass.Location = new System.Drawing.Point(85, 40);
             this.textBoxGamePass.Name = "textBoxGamePass";
             this.textBoxGamePass.Size = new System.Drawing.Size(149, 20);
             this.textBoxGamePass.TabIndex = 2;
@@ -384,7 +386,8 @@
             this.comboBoxLobby.Items.AddRange(new object[] {
             "Game Create/Maker",
             "Chaos Search (Leech)",
-            "Baal Search (Leech)"});
+            "Baal Search (Leech)",
+            "No Lobby Script"});
             this.comboBoxLobby.Location = new System.Drawing.Point(12, 105);
             this.comboBoxLobby.Name = "comboBoxLobby";
             this.comboBoxLobby.Size = new System.Drawing.Size(226, 21);
@@ -505,7 +508,7 @@
             this.checkBoxShowOverlay.AutoSize = true;
             this.checkBoxShowOverlay.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.checkBoxShowOverlay.ForeColor = System.Drawing.Color.Red;
-            this.checkBoxShowOverlay.Location = new System.Drawing.Point(55, 609);
+            this.checkBoxShowOverlay.Location = new System.Drawing.Point(55, 602);
             this.checkBoxShowOverlay.Name = "checkBoxShowOverlay";
             this.checkBoxShowOverlay.Size = new System.Drawing.Size(110, 17);
             this.checkBoxShowOverlay.TabIndex = 14;
@@ -529,7 +532,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 635);
+            this.label1.Location = new System.Drawing.Point(8, 631);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(102, 13);
             this.label1.TabIndex = 10;
@@ -640,7 +643,7 @@
             this.buttonReload.Name = "buttonReload";
             this.buttonReload.Size = new System.Drawing.Size(34, 29);
             this.buttonReload.TabIndex = 17;
-            this.toolTip1.SetToolTip(this.buttonReload, "Load from a previous Settings File");
+            this.toolTip1.SetToolTip(this.buttonReload, "Load/Import from a previous Settings File");
             this.buttonReload.UseVisualStyleBackColor = true;
             this.buttonReload.Click += new System.EventHandler(this.buttonReload_Click);
             // 
@@ -768,7 +771,7 @@
             // buttonOverlaySettings
             // 
             this.buttonOverlaySettings.Image = global::app.Properties.Resources.Application;
-            this.buttonOverlaySettings.Location = new System.Drawing.Point(172, 605);
+            this.buttonOverlaySettings.Location = new System.Drawing.Point(172, 598);
             this.buttonOverlaySettings.Name = "buttonOverlaySettings";
             this.buttonOverlaySettings.Size = new System.Drawing.Size(31, 25);
             this.buttonOverlaySettings.TabIndex = 9;
@@ -779,7 +782,7 @@
             // textBoxStartKey
             // 
             this.textBoxStartKey.FormattingEnabled = true;
-            this.textBoxStartKey.Location = new System.Drawing.Point(120, 632);
+            this.textBoxStartKey.Location = new System.Drawing.Point(141, 628);
             this.textBoxStartKey.Name = "textBoxStartKey";
             this.textBoxStartKey.Size = new System.Drawing.Size(96, 21);
             this.textBoxStartKey.TabIndex = 25;
@@ -926,12 +929,32 @@
             this.label14.TabIndex = 12;
             this.label14.Text = "Overlay Features";
             // 
+            // comboBoxPauseResume
+            // 
+            this.comboBoxPauseResume.FormattingEnabled = true;
+            this.comboBoxPauseResume.Location = new System.Drawing.Point(141, 651);
+            this.comboBoxPauseResume.Name = "comboBoxPauseResume";
+            this.comboBoxPauseResume.Size = new System.Drawing.Size(96, 21);
+            this.comboBoxPauseResume.TabIndex = 27;
+            this.toolTip1.SetToolTip(this.comboBoxPauseResume, "Set the Shortcut Key for Pausing/Resuming the Bot");
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(8, 654);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(127, 13);
+            this.label15.TabIndex = 26;
+            this.label15.Text = "Pause/Resume Shortcut:";
+            // 
             // FormSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.ClientSize = new System.Drawing.Size(250, 656);
+            this.ClientSize = new System.Drawing.Size(250, 677);
+            this.Controls.Add(this.comboBoxPauseResume);
+            this.Controls.Add(this.label15);
             this.Controls.Add(this.textBoxStartKey);
             this.Controls.Add(this.buttonOverlaySettings);
             this.Controls.Add(this.panelOverlay);
@@ -1045,5 +1068,7 @@
         private System.Windows.Forms.CheckBox checkBoxOverlayShowNPC;
         private System.Windows.Forms.Button buttonOverlaySettings;
         private System.Windows.Forms.ComboBox textBoxStartKey;
+        private System.Windows.Forms.ComboBox comboBoxPauseResume;
+        private System.Windows.Forms.Label label15;
     }
 }

@@ -16,10 +16,12 @@ namespace app
             InitializeComponent();
 
             textBoxStartKey.Items.Clear();
+            comboBoxPauseResume.Items.Clear();
             string[] names = Enum.GetNames(typeof(System.Windows.Forms.Keys));
             for (int i = 0; i < names.Length; i++)
             {
                 textBoxStartKey.Items.Add(names[i]);
+                comboBoxPauseResume.Items.Add(names[i]);
             }
 
             listViewRush.Visible = false;
@@ -44,6 +46,7 @@ namespace app
             textBox1LeechName.Text = CharConfig.RushLeecherName;
 
             textBoxStartKey.Text = CharConfig.StartStopKey.ToString();
+            comboBoxPauseResume.Text = CharConfig.PauseResumeKey.ToString();
 
             int CurrI = 0;
             listViewRunScripts.Items[CurrI++].Checked = CharConfig.RunMapHackOnly;
@@ -92,6 +95,7 @@ namespace app
             if (CharConfig.RunGameMakerScript) comboBoxLobby.SelectedIndex = 0;
             if (CharConfig.RunChaosSearchGameScript) comboBoxLobby.SelectedIndex = 1;
             if (CharConfig.RunBaalSearchGameScript) comboBoxLobby.SelectedIndex = 2;
+            if (CharConfig.RunNoLobbyScript) comboBoxLobby.SelectedIndex = 3;
 
             textBoxGameName.Text = CharConfig.GameName;
             textBoxGamePass.Text = CharConfig.GamePass;
@@ -183,6 +187,7 @@ namespace app
             CharConfig.IsRushing = checkBoxRush.Checked;
             CharConfig.RushLeecherName = textBox1LeechName.Text;
             Enum.TryParse(textBoxStartKey.Text, out CharConfig.StartStopKey);
+            Enum.TryParse(comboBoxPauseResume.Text, out CharConfig.PauseResumeKey);
 
             int CurrI = 0;
             CharConfig.RunMapHackOnly = listViewRunScripts.Items[CurrI++].Checked;
@@ -231,6 +236,7 @@ namespace app
             CharConfig.RunGameMakerScript = (comboBoxLobby.SelectedIndex == 0);
             CharConfig.RunChaosSearchGameScript = (comboBoxLobby.SelectedIndex == 1);
             CharConfig.RunBaalSearchGameScript = (comboBoxLobby.SelectedIndex == 2);
+            CharConfig.RunNoLobbyScript = (comboBoxLobby.SelectedIndex == 3);
 
             CharConfig.GameName = textBoxGameName.Text;
             CharConfig.GamePass = textBoxGamePass.Text;
@@ -307,6 +313,8 @@ namespace app
 
         private void listViewRunScripts_DoubleClick(object sender, EventArgs e)
         {
+            if (listViewRunScripts.SelectedItems.Count == 0) return;
+
             listViewRunScripts.SelectedItems[0].Checked = !listViewRunScripts.SelectedItems[0].Checked;
             if (listViewRunScripts.SelectedItems[0].Text == "Baal")
             {

@@ -269,7 +269,10 @@ namespace app
 
                             if (DebuggingMobs)
                             {
-                                Form1_0.AppendTextDebugMobs("ID:" + txtFileNo2 + "(" + (EnumsMobsNPC.MonsterType)((int)txtFileNo2) + ") at:" + xPosFinalAll + ", " + yPosFinalAll + " - HP:" + MobsHPAll + Environment.NewLine);
+                                if ((xPosFinalAll != 0 && yPosFinalAll != 0 && Form1_0.checkBoxShowOnlyValidMobs.Checked) || !Form1_0.checkBoxShowOnlyValidMobs.Checked)
+                                {
+                                    Form1_0.AppendTextDebugMobs("ID:" + txtFileNo2 + "(" + (EnumsMobsNPC.MonsterType)((int)txtFileNo2) + ") at:" + xPosFinalAll + ", " + yPosFinalAll + " - HP:" + MobsHPAll + Environment.NewLine);
+                                }
                             }
 
                             if (xPosFinalAll != 0 && yPosFinalAll != 0)

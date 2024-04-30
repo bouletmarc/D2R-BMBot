@@ -242,6 +242,10 @@
     <None Include="Resources\Load.png" />
     <None Include="Resources\Save.png" />
     <None Include="Resources\BMBot10.png" />
+    <None Include="Resources\control.png" />
+    <None Include="Resources\control-pause.png" />
+    <None Include="Resources\control-stop-square.png" />
+    <None Include="Resources\control-stop-square_green.png" />
     <Content Include="Settings\Char\PaladinHammer.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

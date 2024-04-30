@@ -137,6 +137,11 @@ namespace app
                     if (Splitted[0] == "KeySkillBattleCommand") AllLines[i] = "KeySkillBattleCommand=" + CharConfig.KeySkillBattleCommand;
                     if (Splitted[0] == "KeySkillBattleCry") AllLines[i] = "KeySkillBattleCry=" + CharConfig.KeySkillBattleCry;
 
+                    if (Splitted[0] == "KeyPotion1") AllLines[i] = "KeyPotion1=" + CharConfig.KeyPotion1;
+                    if (Splitted[0] == "KeyPotion2") AllLines[i] = "KeyPotion2=" + CharConfig.KeyPotion2;
+                    if (Splitted[0] == "KeyPotion3") AllLines[i] = "KeyPotion3=" + CharConfig.KeyPotion3;
+                    if (Splitted[0] == "KeyPotion4") AllLines[i] = "KeyPotion4=" + CharConfig.KeyPotion4;
+
                     if (Splitted[0] == "BeltPotTypeToHave") AllLines[i] = "BeltPotTypeToHave=" + CharConfig.BeltPotTypeToHave[0] + "," + CharConfig.BeltPotTypeToHave[1] + "," + CharConfig.BeltPotTypeToHave[2] + "," + CharConfig.BeltPotTypeToHave[3];
 
                     /*InventoryDontCheckItem=
@@ -335,6 +340,7 @@ namespace app
                     if (Splitted[0] == "RunChaosSearchGameScript") AllLines[i] = "RunChaosSearchGameScript=" + CharConfig.RunChaosSearchGameScript;
                     if (Splitted[0] == "RunBaalSearchGameScript") AllLines[i] = "RunBaalSearchGameScript=" + CharConfig.RunBaalSearchGameScript;
                     if (Splitted[0] == "RunGameMakerScript") AllLines[i] = "RunGameMakerScript=" + CharConfig.RunGameMakerScript;
+                    if (Splitted[0] == "RunNoLobbyScript") AllLines[i] = "RunNoLobbyScript=" + CharConfig.RunNoLobbyScript;
 
                     if (Splitted[0] == "ClearAfterBoss") AllLines[i] = "ClearAfterBoss=" + CharConfig.ClearAfterBoss;
 
@@ -343,6 +349,7 @@ namespace app
                     if (Splitted[0] == "GamePass") AllLines[i] = "GamePass=" + CharConfig.GamePass;
 
                     if (Splitted[0] == "StartStopKey") AllLines[i] = "StartStopKey=" + CharConfig.StartStopKey;
+                    if (Splitted[0] == "PauseResumeKey") AllLines[i] = "PauseResumeKey=" + CharConfig.PauseResumeKey;
                 }
             }
 
@@ -874,7 +881,15 @@ namespace app
                             {
                                 foreach (var ThisDir in Form1_0.ItemsAlert_0.PickItemsRunesKeyGems)
                                 {
-                                    if (ThisDir.Key == ThisItem)
+                                    if (ThisDir.Key == ThisItem.Replace(" ", ""))
+                                    {
+                                        if (!PickItem && ThisDir.Value) AllLines[i] = ThisItem + ThisDesc;
+                                        if (PickItem && !ThisDir.Value) AllLines[i] = "//" + ThisItem + ThisDesc;
+                                    }
+                                }
+                                foreach (var ThisDir in Form1_0.ItemsAlert_0.PickItemsPotions)
+                                {
+                                    if (ThisDir.Key == ThisItem.Replace(" ", ""))
                                     {
                                         if (!PickItem && ThisDir.Value) AllLines[i] = ThisItem + ThisDesc;
                                         if (PickItem && !ThisDir.Value) AllLines[i] = "//" + ThisItem + ThisDesc;
@@ -1216,6 +1231,10 @@ namespace app
                                 {
                                     Enum.TryParse(Params[1], out CharConfig.StartStopKey);
                                 }
+                                if (Params[0].Contains("PauseResumeKey"))
+                                {
+                                    Enum.TryParse(Params[1], out CharConfig.PauseResumeKey);
+                                }
                             }
                         }
                     }
@@ -1366,6 +1385,11 @@ namespace app
                                 {
                                     Enum.TryParse(Params[1], out CharConfig.KeySkillBattleCry);
                                 }
+
+                                if (Params[0].Contains("KeyPotion1")) Enum.TryParse(Params[1], out CharConfig.KeyPotion1);
+                                if (Params[0].Contains("KeyPotion2")) Enum.TryParse(Params[1], out CharConfig.KeyPotion2);
+                                if (Params[0].Contains("KeyPotion3")) Enum.TryParse(Params[1], out CharConfig.KeyPotion3);
+                                if (Params[0].Contains("KeyPotion4")) Enum.TryParse(Params[1], out CharConfig.KeyPotion4);
                                 //######
                                 if (Params[0].Contains("BeltPotTypeToHave") && Params[1].Contains(","))
                                 {
@@ -1497,7 +1521,7 @@ namespace app
                                         for (int k = 0; k < AllItems.Length; k++) CharConfig.GambleItems.Add(AllItems[k]);
 
                                     }
-                                    if (Params[1] != "") CharConfig.GambleItems.Add(Params[1]);
+                                    else if (Params[1] != "") CharConfig.GambleItems.Add(Params[1]);
                                 }
                                 //#####
                                 if (Params[0].Contains("UsingMerc"))

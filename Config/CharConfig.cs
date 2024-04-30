@@ -14,7 +14,8 @@ namespace app
         //SHORTCUT KEY TO START/STOP BOT
         //#######################################
         public static System.Windows.Forms.Keys StartStopKey = Keys.NumPad5;   //numpad5 -> refer to virtual key code (vkcode)
-        
+        public static System.Windows.Forms.Keys PauseResumeKey = Keys.NumPad6;   //numpad6 -> refer to virtual key code (vkcode)
+
         //#######################################
         //SHORTCUT KEYS SETTINGS (FOR PALADIN)
         //#######################################
@@ -32,6 +33,10 @@ namespace app
         //#######################################
         //BELT AND INVENTORY SETTINGS
         //#######################################
+        public static System.Windows.Forms.Keys KeyPotion1 = Keys.D1;
+        public static System.Windows.Forms.Keys KeyPotion2 = Keys.D2;
+        public static System.Windows.Forms.Keys KeyPotion3 = Keys.D3;
+        public static System.Windows.Forms.Keys KeyPotion4 = Keys.D4;
         public static int[] BeltPotTypeToHave = new int[4] { 0, 0, 1, 3 };  //HP-HP-MANA-FULL RV -> 0=HP, 1=MANA, 2=RV, 3=FULL RV
         public static int[] InventoryDontCheckItem = new int[40]
         {
@@ -81,6 +86,7 @@ namespace app
         public static bool ClearAfterBoss = false;
         public static bool ShowOverlay = true;
         public static bool RunWPTaker = false;
+        public static bool RunNoLobbyScript = false;
         public static bool RunMapHackOnly = false;
         public static bool RunAnyaRush = false;
         public static bool RunDarkWoodRush = false;

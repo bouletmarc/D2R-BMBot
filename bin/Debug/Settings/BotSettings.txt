@@ -2,6 +2,7 @@
 //SHORTCUT KEY TO START/STOP BOT
 //#######################################
 StartStopKey=101
+PauseResumeKey=102
 
 //#######################################
 //BOT SETTINGS (USE ONLY CHAOS OR BAAL, NOT BOTH AT SAME TIME)
@@ -11,6 +12,7 @@ IsRushing=false
 RushLeecherName=
 ShowOverlay=true
 RunWPTaker=false
+RunNoLobbyScript=false
 RunMapHackOnly=false
 RunAnyaRush=false
 RunDarkWoodRush=false

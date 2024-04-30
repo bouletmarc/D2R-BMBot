@@ -275,6 +275,14 @@ namespace app
             //buy potions
             int tries = 0;
             int StartQty = Form1_0.BeltStruc_0.HPQuantity;
+
+            string BuyingThisPotion = "Super Healing Potion";
+            if (!Form1_0.ItemsStruc_0.GetShopItem("Super Healing Potion")) BuyingThisPotion = "Greater Healing Potion";
+            if (!Form1_0.ItemsStruc_0.GetShopItem("Greater Healing Potion")) BuyingThisPotion = "Healing Potion";
+            if (!Form1_0.ItemsStruc_0.GetShopItem("Healing Potion")) BuyingThisPotion = "Light Healing Potion";
+            if (!Form1_0.ItemsStruc_0.GetShopItem("Light Healing Potion")) BuyingThisPotion = "Minor Healing Potion";
+            if (!Form1_0.ItemsStruc_0.GetShopItem("Minor Healing Potion")) BuyingThisPotion = "Potion of Life";
+
             while (Form1_0.BeltStruc_0.MissingHPPot && tries < 2)
             {
                 Form1_0.SetGameStatus("TOWN-SHOP-BUY HP POTIONS");
@@ -282,7 +290,7 @@ namespace app
                 {
                     break;
                 }
-                if (Form1_0.ItemsStruc_0.GetShopItem("Super Healing Potion"))
+                if (Form1_0.ItemsStruc_0.GetShopItem(BuyingThisPotion))
                 {
                     Dictionary<string, int> itemScreenPos = ConvertShopLocToScreenPos(Form1_0.ItemsStruc_0.itemx, Form1_0.ItemsStruc_0.itemy);
 
@@ -307,7 +315,7 @@ namespace app
                     Form1_0.ItemsStruc_0.GetItems(false);   //get inventory
 
                     //####
-                    if (Form1_0.InventoryStruc_0.HasInventoryItemName("Super Healing Potion") || Form1_0.BeltStruc_0.HasPotInBadSpot)
+                    if (Form1_0.InventoryStruc_0.HasInventoryItemName(BuyingThisPotion) || Form1_0.BeltStruc_0.HasPotInBadSpot)
                     {
                         //Form1_0.method_1("FORCING HP POT QTY: " + Form1_0.BeltStruc_0.HPQuantity, Color.Red);
                         Form1_0.BeltStruc_0.ForceHPPotionQty = Form1_0.BeltStruc_0.HPQuantity; //reset qty in belt
@@ -338,6 +346,13 @@ namespace app
             //buy mana
             tries = 0;
             StartQty = Form1_0.BeltStruc_0.ManyQuantity;
+
+            BuyingThisPotion = "Super Mana Potion";
+            if (!Form1_0.ItemsStruc_0.GetShopItem("Super Mana Potion")) BuyingThisPotion = "Greater Mana Potion";
+            if (!Form1_0.ItemsStruc_0.GetShopItem("Greater Mana Potion")) BuyingThisPotion = "Mana Potion";
+            if (!Form1_0.ItemsStruc_0.GetShopItem("Mana Potion")) BuyingThisPotion = "Light Mana Potion";
+            if (!Form1_0.ItemsStruc_0.GetShopItem("Light Mana Potion")) BuyingThisPotion = "Minor Mana Potion";
+
             while (Form1_0.BeltStruc_0.MissingManaPot && tries < 2)
             {
                 Form1_0.SetGameStatus("TOWN-SHOP-BUY MANA POTIONS");
@@ -345,7 +360,7 @@ namespace app
                 {
                     break;
                 }
-                if (Form1_0.ItemsStruc_0.GetShopItem("Super Mana Potion"))
+                if (Form1_0.ItemsStruc_0.GetShopItem(BuyingThisPotion))
                 {
                     Dictionary<string, int> itemScreenPos = ConvertShopLocToScreenPos(Form1_0.ItemsStruc_0.itemx, Form1_0.ItemsStruc_0.itemy);
 
@@ -370,7 +385,7 @@ namespace app
                     Form1_0.ItemsStruc_0.GetItems(false);   //get inventory
 
                     //####
-                    if (Form1_0.InventoryStruc_0.HasInventoryItemName("Super Mana Potion") || Form1_0.BeltStruc_0.HasPotInBadSpot)
+                    if (Form1_0.InventoryStruc_0.HasInventoryItemName(BuyingThisPotion) || Form1_0.BeltStruc_0.HasPotInBadSpot)
                     {
                         Form1_0.BeltStruc_0.ForceMANAPotionQty = Form1_0.BeltStruc_0.ManyQuantity; //reset qty in belt
                         if (Form1_0.BeltStruc_0.HasPotInBadSpot)
@@ -504,7 +519,7 @@ namespace app
             //buy tome of portal for cows level
             if (ShopForTomeOfPortal)
             {
-                bool HasTownPortal = Form1_0.InventoryStruc_0.HasInventoryItemName("Tome of Town Portal");
+                bool HasTownPortal = Form1_0.InventoryStruc_0.HasInventoryItemName("Tome of Town Portal", true);
                 tries = 0;
                 while (!HasTownPortal && tries < 1)
                 {
@@ -524,7 +539,7 @@ namespace app
                         Form1_0.ItemsStruc_0.GetItems(false);   //get inventory
                     }
 
-                    HasTownPortal = Form1_0.InventoryStruc_0.HasInventoryItemName("Tome of Town Portal");
+                    HasTownPortal = Form1_0.InventoryStruc_0.HasInventoryItemName("Tome of Town Portal", true);
                     if (!HasTownPortal) tries++;
                 }
 

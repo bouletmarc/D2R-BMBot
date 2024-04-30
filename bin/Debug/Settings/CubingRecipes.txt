@@ -35,6 +35,6 @@ Pul Rune+Pul Rune+Flawed Diamond=Um Rune
 Um Rune+Um Rune+Topaz=Mal Rune
 Mal Rune+Mal Rune+Amethyst=Ist Rune
 
-Twisted Essence of Suffering+Charged Essense of Hatred+Burning Essence of Terror+Festering Essence of Destruction=Token of Absolution
+Twisted Essence Of Suffering+Charged Essence Of Hatred+Burning Essence Of Terror+Festering Essence Of Destruction=Token Of Absolution
 
 Tome of Town Portal+Wirt's Leg=Cow Portal

@@ -29,6 +29,10 @@ PlayerAttackWithRightHand=true
 //BELT SETTINGS   HP-HP-MANA-FULL RV -> 0=HP,1=MANA,2=RV,3=FULL RV
 //#######################################
 BeltPotTypeToHave=0,0,1,3
+KeyPotion1=D1
+KeyPotion2=D2
+KeyPotion3=D3
+KeyPotion4=D4
 
 //#######################################
 //INVENTORY SETTINGS   -> IF EQUAL 0,WE CAN USE THIS SPOT FOR BOT

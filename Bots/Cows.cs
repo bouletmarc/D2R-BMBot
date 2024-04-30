@@ -17,7 +17,9 @@ namespace app
         public Position TristramPos = new Position { X = 0, Y = 0 };
 
         public bool HasWirtsLeg = false;
+        public bool HadWirtsLeg = false;
 
+        public bool HadTomeOfPortal = false;
 
         public void SetForm1(Form1 form1_1)
         {
@@ -29,6 +31,8 @@ namespace app
             CurrentStep = 0;
             ScriptDone = false;
             HasWirtsLeg = false;
+            HadWirtsLeg = false;
+            HadTomeOfPortal = false;
         }
 
         public void DetectCurrentStep()
@@ -96,6 +100,8 @@ namespace app
                 {
                     Form1_0.SetGameStatus("Tristram waiting for Tristram portal");
 
+                    Form1_0.Battle_0.DoBattleScript(5);
+
                     if (Form1_0.ObjectsStruc_0.GetObjects("PermanentTownPortal", true, new List<uint>(), 60))
                     {
                         Form1_0.Mover_0.MoveToLocation(Form1_0.ObjectsStruc_0.itemx, Form1_0.ObjectsStruc_0.itemy);
@@ -128,6 +134,8 @@ namespace app
                     {
                         if (Form1_0.Mover_0.MoveToLocation(Form1_0.ObjectsStruc_0.itemx, Form1_0.ObjectsStruc_0.itemy))
                         {
+                            Form1_0.InventoryStruc_0.DumpBadItemsOnGround();
+
                             //repeat clic on WirtCorpse
                             int tryyy = 0;
                             while (tryyy <= 15)
@@ -158,6 +166,7 @@ namespace app
 
                     if (HasWirtsLeg)
                     {
+                        HadWirtsLeg = true;
                         CurrentStep = 0; //go to next script for cow
                         Form1_0.Town_0.GoToTown();
                     }
@@ -182,8 +191,8 @@ namespace app
                 Form1_0.SetGameStatus("GO TO SHOP");
                 CurrentStep = 0;
 
-                bool HasTownPortal = Form1_0.InventoryStruc_0.HasInventoryItemName("Tome of Town Portal");
-                if (!HasTownPortal)
+                bool HasTownPortal = Form1_0.InventoryStruc_0.HasInventoryItemName("Tome of Town Portal", true);
+                if (!HasTownPortal && !HadTomeOfPortal)
                 {
                     //buy tome of portal in store
                     Form1_0.Shop_0.ShopForTomeOfPortal = true;
@@ -191,6 +200,8 @@ namespace app
                 }
                 else
                 {
+                    HadTomeOfPortal = true;
+
                     if (Form1_0.ObjectsStruc_0.GetObjects("PermanentTownPortal", true, new List<uint>()))
                     {
                         Position itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, Form1_0.ObjectsStruc_0.itemx, Form1_0.ObjectsStruc_0.itemy);
@@ -249,10 +260,10 @@ namespace app
             }
 
             Form1_0.ItemsStruc_0.GetItems(false); //get inventory
-            HasWirtsLeg = Form1_0.InventoryStruc_0.HasInventoryItemName("Wirt's Leg");
+            HasWirtsLeg = Form1_0.InventoryStruc_0.HasInventoryItemName("Wirt's Leg", true);
             if ((Enums.Area)Form1_0.PlayerScan_0.levelNo == Enums.Area.MooMooFarm) HasWirtsLeg = true;
 
-            if (HasWirtsLeg)
+            if (HasWirtsLeg || HadWirtsLeg)
             {
                 RunScriptCow();
             }

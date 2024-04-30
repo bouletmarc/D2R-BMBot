@@ -25,6 +25,8 @@ namespace app
 
         public string CurrentNewItemTxt = "";
 
+        public bool SettingsChanged = false;
+
         public FormItems(Form1 form1_1)
         {
             Form1_0 = form1_1;
@@ -387,63 +389,72 @@ namespace app
 
         public void SaveSettings()
         {
-            foreach (var ThisDir in Form1_0.ItemsAlert_0.PickItemsRunesKeyGems)
+            for (int i = 0; i < listViewKeys.Items.Count; i++)
             {
-                if (ThisDir.Key.Contains("Keyof")
-                    || ThisDir.Key.Contains("Essence")
-                    || ThisDir.Key.Contains("Token")
-                    || ThisDir.Key.Contains("Mephisto'sBrain")
-                    || ThisDir.Key.Contains("Baal'sEye")
-                    || ThisDir.Key.Contains("Diablo'sHorn"))
+                foreach (var ThisDir in Form1_0.ItemsAlert_0.PickItemsRunesKeyGems)
                 {
-                    for (int i = 0; i < listViewKeys.Items.Count; i++)
+                    if (ThisDir.Key.Contains("Keyof")
+                        || ThisDir.Key.Contains("Essence")
+                        || ThisDir.Key.Contains("Token")
+                        || ThisDir.Key.Contains("Mephisto'sBrain")
+                        || ThisDir.Key.Contains("Baal'sEye")
+                        || ThisDir.Key.Contains("Diablo'sHorn"))
                     {
-                        if (ThisDir.Key == listViewKeys.Items[i].SubItems[0].ToString())
+                        if (ThisDir.Key == listViewKeys.Items[i].SubItems[0].Text.ToString())
                         {
                             Form1_0.ItemsAlert_0.PickItemsRunesKeyGems[ThisDir.Key] = listViewKeys.Items[i].Checked;
+                            break;
                         }
                     }
                 }
+            }
 
-                if (ThisDir.Key.Contains("Topaz")
-                    || ThisDir.Key.Contains("Amethyst")
-                    || ThisDir.Key.Contains("Sapphire")
-                    || ThisDir.Key.Contains("Ruby")
-                    || ThisDir.Key.Contains("Emerald")
-                    || ThisDir.Key.Contains("Diamond"))
+            for (int i = 0; i < listViewGems.Items.Count; i++)
+            {
+                foreach (var ThisDir in Form1_0.ItemsAlert_0.PickItemsRunesKeyGems)
                 {
-                    for (int i = 0; i < listViewGems.Items.Count; i++)
+                    if (ThisDir.Key.Contains("Topaz")
+                        || ThisDir.Key.Contains("Amethyst")
+                        || ThisDir.Key.Contains("Sapphire")
+                        || ThisDir.Key.Contains("Ruby")
+                        || ThisDir.Key.Contains("Emerald")
+                        || ThisDir.Key.Contains("Diamond"))
                     {
-                        if (ThisDir.Key == listViewGems.Items[i].SubItems[0].ToString())
+                        if (ThisDir.Key == listViewGems.Items[i].SubItems[0].Text.ToString())
                         {
                             Form1_0.ItemsAlert_0.PickItemsRunesKeyGems[ThisDir.Key] = listViewGems.Items[i].Checked;
+                            break;
                         }
                     }
                 }
+            }
 
-                if (ThisDir.Key.Contains("Rune"))
+            for (int i = 0; i < listViewRunes.Items.Count; i++)
+            {
+                foreach (var ThisDir in Form1_0.ItemsAlert_0.PickItemsRunesKeyGems)
                 {
-                    for (int i = 0; i < listViewRunes.Items.Count; i++)
+                    if (ThisDir.Key.Contains("Rune"))
                     {
-                        if (ThisDir.Key == listViewRunes.Items[i].SubItems[0].ToString())
+                        if (ThisDir.Key == listViewRunes.Items[i].SubItems[0].Text.ToString())
                         {
                             Form1_0.ItemsAlert_0.PickItemsRunesKeyGems[ThisDir.Key] = listViewRunes.Items[i].Checked;
+                            break;
                         }
                     }
                 }
             }
 
-            foreach (var ThisDir in Form1_0.ItemsAlert_0.PickItemsPotions)
+            for (int i = 0; i < listViewPotions.Items.Count; i++)
             {
-                for (int i = 0; i < listViewPotions.Items.Count; i++)
+                foreach (var ThisDir in Form1_0.ItemsAlert_0.PickItemsPotions)
                 {
-                    if (ThisDir.Key == listViewPotions.Items[i].SubItems[1].Text)
+                    if (ThisDir.Key == listViewPotions.Items[i].SubItems[0].Text.ToString())
                     {
-                        Form1_0.ItemsAlert_0.PickItemsNormal_ByName[ThisDir.Key] = listViewPotions.Items[i].Checked;
+                        Form1_0.ItemsAlert_0.PickItemsPotions[ThisDir.Key] = listViewPotions.Items[i].Checked;
+                        break;
                     }
                 }
             }
-
 
             //###########################
             //###########################
@@ -556,10 +567,17 @@ namespace app
 
             Form1_0.SettingsLoader_0.SaveItemsSettings();
             Form1_0.SettingsLoader_0.SaveCubingSettings();
+
+            SettingsChanged = false;
         }
 
         private void FormSettings_FormClosing(object sender, FormClosingEventArgs e)
         {
+            if (SettingsChanged)
+            {
+                DialogResult result = MessageBox.Show("Do you want to save items settings?", "Unsaved changes!", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result == DialogResult.Yes) SaveSettings();
+            }
             //SaveSettings();
         }
 
@@ -721,6 +739,11 @@ namespace app
                 LoadSettings();
                 Application.DoEvents();
             }
+        }
+
+        private void listViewUnique_Click(object sender, EventArgs e)
+        {
+            SettingsChanged = true;
         }
     }
 }
