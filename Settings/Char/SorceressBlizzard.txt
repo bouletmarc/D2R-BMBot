@@ -76,6 +76,7 @@ GambleItems=Amulet,Ring
 //MERC SETTINGS
 //#######################################
 UsingMerc=false
+TownIfMercDead=false
 MercTakeHPPotUnder=40
 
 //#######################################

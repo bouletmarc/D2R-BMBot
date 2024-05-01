@@ -1,74 +1,74 @@
-﻿namespace app
+﻿
+partial class FormSettings
 {
-    partial class FormSettings
+    /// <summary>
+    /// Required designer variable.
+    /// </summary>
+    private System.ComponentModel.IContainer components = null;
+
+    /// <summary>
+    /// Clean up any resources being used.
+    /// </summary>
+    /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+    protected override void Dispose(bool disposing)
     {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
-        private System.ComponentModel.IContainer components = null;
-
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-        protected override void Dispose(bool disposing)
+        if (disposing && (components != null))
         {
-            if (disposing && (components != null))
-            {
-                components.Dispose();
-            }
-            base.Dispose(disposing);
+            components.Dispose();
         }
+        base.Dispose(disposing);
+    }
 
-        #region Windows Form Designer generated code
+    #region Windows Form Designer generated code
 
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
-        private void InitializeComponent()
-        {
+    /// <summary>
+    /// Required method for Designer support - do not modify
+    /// the contents of this method with the code editor.
+    /// </summary>
+    private void InitializeComponent()
+    {
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("Maphack ONLY (no script running)");
             System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("Item Grab ONLY");
-            System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem("Cows");
-            System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem("Countess");
-            System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem("Andariel");
-            System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem("Summoner");
-            System.Windows.Forms.ListViewItem listViewItem7 = new System.Windows.Forms.ListViewItem("Duriel");
-            System.Windows.Forms.ListViewItem listViewItem8 = new System.Windows.Forms.ListViewItem("Lower Kurast (Chests)");
-            System.Windows.Forms.ListViewItem listViewItem9 = new System.Windows.Forms.ListViewItem("Act3 Sewers (Chests)");
-            System.Windows.Forms.ListViewItem listViewItem10 = new System.Windows.Forms.ListViewItem("Upper Kurast (Chests)");
-            System.Windows.Forms.ListViewItem listViewItem11 = new System.Windows.Forms.ListViewItem("Travincal");
-            System.Windows.Forms.ListViewItem listViewItem12 = new System.Windows.Forms.ListViewItem("Mephisto");
-            System.Windows.Forms.ListViewItem listViewItem13 = new System.Windows.Forms.ListViewItem("Chaos");
-            System.Windows.Forms.ListViewItem listViewItem14 = new System.Windows.Forms.ListViewItem("Chaos Leech");
-            System.Windows.Forms.ListViewItem listViewItem15 = new System.Windows.Forms.ListViewItem("Eldritch");
-            System.Windows.Forms.ListViewItem listViewItem16 = new System.Windows.Forms.ListViewItem("Shenk");
-            System.Windows.Forms.ListViewItem listViewItem17 = new System.Windows.Forms.ListViewItem("Frozenstein (Anya)");
-            System.Windows.Forms.ListViewItem listViewItem18 = new System.Windows.Forms.ListViewItem("Pindleskin");
-            System.Windows.Forms.ListViewItem listViewItem19 = new System.Windows.Forms.ListViewItem("Nihlatak");
-            System.Windows.Forms.ListViewItem listViewItem20 = new System.Windows.Forms.ListViewItem("Baal");
-            System.Windows.Forms.ListViewItem listViewItem21 = new System.Windows.Forms.ListViewItem("Baal Leech");
-            System.Windows.Forms.ListViewItem listViewItem22 = new System.Windows.Forms.ListViewItem("Waypoint Taker");
-            System.Windows.Forms.ListViewItem listViewItem23 = new System.Windows.Forms.ListViewItem("Dark Wood");
-            System.Windows.Forms.ListViewItem listViewItem24 = new System.Windows.Forms.ListViewItem("Tristram");
-            System.Windows.Forms.ListViewItem listViewItem25 = new System.Windows.Forms.ListViewItem("Andariel");
-            System.Windows.Forms.ListViewItem listViewItem26 = new System.Windows.Forms.ListViewItem("Radament");
-            System.Windows.Forms.ListViewItem listViewItem27 = new System.Windows.Forms.ListViewItem("Hall of the Dead (Cube)");
-            System.Windows.Forms.ListViewItem listViewItem28 = new System.Windows.Forms.ListViewItem("Far Oasis (Staff)");
-            System.Windows.Forms.ListViewItem listViewItem29 = new System.Windows.Forms.ListViewItem("Lost City (Ammy)");
-            System.Windows.Forms.ListViewItem listViewItem30 = new System.Windows.Forms.ListViewItem("Summoner");
-            System.Windows.Forms.ListViewItem listViewItem31 = new System.Windows.Forms.ListViewItem("Duriel");
-            System.Windows.Forms.ListViewItem listViewItem32 = new System.Windows.Forms.ListViewItem("Kahlim Eye");
-            System.Windows.Forms.ListViewItem listViewItem33 = new System.Windows.Forms.ListViewItem("Kahlim Brain");
-            System.Windows.Forms.ListViewItem listViewItem34 = new System.Windows.Forms.ListViewItem("Kahlim Heart");
-            System.Windows.Forms.ListViewItem listViewItem35 = new System.Windows.Forms.ListViewItem("Travincal");
-            System.Windows.Forms.ListViewItem listViewItem36 = new System.Windows.Forms.ListViewItem("Mephisto");
-            System.Windows.Forms.ListViewItem listViewItem37 = new System.Windows.Forms.ListViewItem("Chaos");
-            System.Windows.Forms.ListViewItem listViewItem38 = new System.Windows.Forms.ListViewItem("Anya");
-            System.Windows.Forms.ListViewItem listViewItem39 = new System.Windows.Forms.ListViewItem("Ancients");
-            System.Windows.Forms.ListViewItem listViewItem40 = new System.Windows.Forms.ListViewItem("Baal");
+            System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem("Maphack & Item Grab ONLY");
+            System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem("Cows");
+            System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem("Countess");
+            System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem("Andariel");
+            System.Windows.Forms.ListViewItem listViewItem7 = new System.Windows.Forms.ListViewItem("Summoner");
+            System.Windows.Forms.ListViewItem listViewItem8 = new System.Windows.Forms.ListViewItem("Duriel");
+            System.Windows.Forms.ListViewItem listViewItem9 = new System.Windows.Forms.ListViewItem("Lower Kurast (Chests)");
+            System.Windows.Forms.ListViewItem listViewItem10 = new System.Windows.Forms.ListViewItem("Act3 Sewers (Chests)");
+            System.Windows.Forms.ListViewItem listViewItem11 = new System.Windows.Forms.ListViewItem("Upper Kurast (Chests)");
+            System.Windows.Forms.ListViewItem listViewItem12 = new System.Windows.Forms.ListViewItem("Travincal");
+            System.Windows.Forms.ListViewItem listViewItem13 = new System.Windows.Forms.ListViewItem("Mephisto");
+            System.Windows.Forms.ListViewItem listViewItem14 = new System.Windows.Forms.ListViewItem("Chaos");
+            System.Windows.Forms.ListViewItem listViewItem15 = new System.Windows.Forms.ListViewItem("Chaos Leech");
+            System.Windows.Forms.ListViewItem listViewItem16 = new System.Windows.Forms.ListViewItem("Eldritch");
+            System.Windows.Forms.ListViewItem listViewItem17 = new System.Windows.Forms.ListViewItem("Shenk");
+            System.Windows.Forms.ListViewItem listViewItem18 = new System.Windows.Forms.ListViewItem("Frozenstein (Anya)");
+            System.Windows.Forms.ListViewItem listViewItem19 = new System.Windows.Forms.ListViewItem("Pindleskin");
+            System.Windows.Forms.ListViewItem listViewItem20 = new System.Windows.Forms.ListViewItem("Nihlatak");
+            System.Windows.Forms.ListViewItem listViewItem21 = new System.Windows.Forms.ListViewItem("Baal");
+            System.Windows.Forms.ListViewItem listViewItem22 = new System.Windows.Forms.ListViewItem("Baal Leech");
+            System.Windows.Forms.ListViewItem listViewItem23 = new System.Windows.Forms.ListViewItem("Waypoint Taker");
+            System.Windows.Forms.ListViewItem listViewItem24 = new System.Windows.Forms.ListViewItem("Dark Wood");
+            System.Windows.Forms.ListViewItem listViewItem25 = new System.Windows.Forms.ListViewItem("Tristram");
+            System.Windows.Forms.ListViewItem listViewItem26 = new System.Windows.Forms.ListViewItem("Andariel");
+            System.Windows.Forms.ListViewItem listViewItem27 = new System.Windows.Forms.ListViewItem("Radament");
+            System.Windows.Forms.ListViewItem listViewItem28 = new System.Windows.Forms.ListViewItem("Hall of the Dead (Cube)");
+            System.Windows.Forms.ListViewItem listViewItem29 = new System.Windows.Forms.ListViewItem("Far Oasis (Staff)");
+            System.Windows.Forms.ListViewItem listViewItem30 = new System.Windows.Forms.ListViewItem("Lost City (Ammy)");
+            System.Windows.Forms.ListViewItem listViewItem31 = new System.Windows.Forms.ListViewItem("Summoner");
+            System.Windows.Forms.ListViewItem listViewItem32 = new System.Windows.Forms.ListViewItem("Duriel");
+            System.Windows.Forms.ListViewItem listViewItem33 = new System.Windows.Forms.ListViewItem("Kahlim Eye");
+            System.Windows.Forms.ListViewItem listViewItem34 = new System.Windows.Forms.ListViewItem("Kahlim Brain");
+            System.Windows.Forms.ListViewItem listViewItem35 = new System.Windows.Forms.ListViewItem("Kahlim Heart");
+            System.Windows.Forms.ListViewItem listViewItem36 = new System.Windows.Forms.ListViewItem("Travincal");
+            System.Windows.Forms.ListViewItem listViewItem37 = new System.Windows.Forms.ListViewItem("Mephisto");
+            System.Windows.Forms.ListViewItem listViewItem38 = new System.Windows.Forms.ListViewItem("Chaos");
+            System.Windows.Forms.ListViewItem listViewItem39 = new System.Windows.Forms.ListViewItem("Anya");
+            System.Windows.Forms.ListViewItem listViewItem40 = new System.Windows.Forms.ListViewItem("Ancients");
+            System.Windows.Forms.ListViewItem listViewItem41 = new System.Windows.Forms.ListViewItem("Baal");
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormSettings));
             this.listViewRunScripts = new System.Windows.Forms.ListView();
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -121,6 +121,8 @@
             this.checkBoxOverlayShowNPC = new System.Windows.Forms.CheckBox();
             this.buttonOverlaySettings = new System.Windows.Forms.Button();
             this.textBoxStartKey = new System.Windows.Forms.ComboBox();
+            this.comboBoxPauseResume = new System.Windows.Forms.ComboBox();
+            this.checkBoxLogOrangeError = new System.Windows.Forms.CheckBox();
             this.panelBaalFeature = new System.Windows.Forms.Panel();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.listViewBaalLeaveOnMobs = new System.Windows.Forms.ListView();
@@ -134,7 +136,6 @@
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.panelOverlay = new System.Windows.Forms.Panel();
             this.label14 = new System.Windows.Forms.Label();
-            this.comboBoxPauseResume = new System.Windows.Forms.ComboBox();
             this.label15 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownRunNumber)).BeginInit();
@@ -158,9 +159,9 @@
             listViewItem1.StateImageIndex = 0;
             listViewItem2.StateImageIndex = 0;
             listViewItem3.StateImageIndex = 0;
-            listViewItem4.Checked = true;
-            listViewItem4.StateImageIndex = 1;
-            listViewItem5.StateImageIndex = 0;
+            listViewItem4.StateImageIndex = 0;
+            listViewItem5.Checked = true;
+            listViewItem5.StateImageIndex = 1;
             listViewItem6.StateImageIndex = 0;
             listViewItem7.StateImageIndex = 0;
             listViewItem8.StateImageIndex = 0;
@@ -178,6 +179,7 @@
             listViewItem20.StateImageIndex = 0;
             listViewItem21.StateImageIndex = 0;
             listViewItem22.StateImageIndex = 0;
+            listViewItem23.StateImageIndex = 0;
             this.listViewRunScripts.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
             listViewItem1,
             listViewItem2,
@@ -200,7 +202,8 @@
             listViewItem19,
             listViewItem20,
             listViewItem21,
-            listViewItem22});
+            listViewItem22,
+            listViewItem23});
             this.listViewRunScripts.Location = new System.Drawing.Point(12, 168);
             this.listViewRunScripts.Name = "listViewRunScripts";
             this.listViewRunScripts.Size = new System.Drawing.Size(225, 276);
@@ -387,7 +390,8 @@
             "Game Create/Maker",
             "Chaos Search (Leech)",
             "Baal Search (Leech)",
-            "No Lobby Script"});
+            "No Lobby Script",
+            "Single Player Script"});
             this.comboBoxLobby.Location = new System.Drawing.Point(12, 105);
             this.comboBoxLobby.Name = "comboBoxLobby";
             this.comboBoxLobby.Size = new System.Drawing.Size(226, 21);
@@ -422,7 +426,6 @@
             this.listViewRush.FullRowSelect = true;
             this.listViewRush.GridLines = true;
             this.listViewRush.HideSelection = false;
-            listViewItem23.StateImageIndex = 0;
             listViewItem24.StateImageIndex = 0;
             listViewItem25.StateImageIndex = 0;
             listViewItem26.StateImageIndex = 0;
@@ -440,8 +443,8 @@
             listViewItem38.StateImageIndex = 0;
             listViewItem39.StateImageIndex = 0;
             listViewItem40.StateImageIndex = 0;
+            listViewItem41.StateImageIndex = 0;
             this.listViewRush.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem23,
             listViewItem24,
             listViewItem25,
             listViewItem26,
@@ -458,7 +461,8 @@
             listViewItem37,
             listViewItem38,
             listViewItem39,
-            listViewItem40});
+            listViewItem40,
+            listViewItem41});
             this.listViewRush.Location = new System.Drawing.Point(279, 168);
             this.listViewRush.Name = "listViewRush";
             this.listViewRush.Size = new System.Drawing.Size(225, 270);
@@ -508,7 +512,7 @@
             this.checkBoxShowOverlay.AutoSize = true;
             this.checkBoxShowOverlay.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.checkBoxShowOverlay.ForeColor = System.Drawing.Color.Red;
-            this.checkBoxShowOverlay.Location = new System.Drawing.Point(55, 602);
+            this.checkBoxShowOverlay.Location = new System.Drawing.Point(55, 599);
             this.checkBoxShowOverlay.Name = "checkBoxShowOverlay";
             this.checkBoxShowOverlay.Size = new System.Drawing.Size(110, 17);
             this.checkBoxShowOverlay.TabIndex = 14;
@@ -532,7 +536,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(8, 631);
+            this.label1.Location = new System.Drawing.Point(8, 646);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(102, 13);
             this.label1.TabIndex = 10;
@@ -771,7 +775,7 @@
             // buttonOverlaySettings
             // 
             this.buttonOverlaySettings.Image = global::app.Properties.Resources.Application;
-            this.buttonOverlaySettings.Location = new System.Drawing.Point(172, 598);
+            this.buttonOverlaySettings.Location = new System.Drawing.Point(172, 595);
             this.buttonOverlaySettings.Name = "buttonOverlaySettings";
             this.buttonOverlaySettings.Size = new System.Drawing.Size(31, 25);
             this.buttonOverlaySettings.TabIndex = 9;
@@ -782,11 +786,33 @@
             // textBoxStartKey
             // 
             this.textBoxStartKey.FormattingEnabled = true;
-            this.textBoxStartKey.Location = new System.Drawing.Point(141, 628);
+            this.textBoxStartKey.Location = new System.Drawing.Point(141, 643);
             this.textBoxStartKey.Name = "textBoxStartKey";
             this.textBoxStartKey.Size = new System.Drawing.Size(96, 21);
             this.textBoxStartKey.TabIndex = 25;
             this.toolTip1.SetToolTip(this.textBoxStartKey, "Set the Shortcut Key for Starting/Stopping the Bot");
+            // 
+            // comboBoxPauseResume
+            // 
+            this.comboBoxPauseResume.FormattingEnabled = true;
+            this.comboBoxPauseResume.Location = new System.Drawing.Point(141, 666);
+            this.comboBoxPauseResume.Name = "comboBoxPauseResume";
+            this.comboBoxPauseResume.Size = new System.Drawing.Size(96, 21);
+            this.comboBoxPauseResume.TabIndex = 27;
+            this.toolTip1.SetToolTip(this.comboBoxPauseResume, "Set the Shortcut Key for Pausing/Resuming the Bot");
+            // 
+            // checkBoxLogOrangeError
+            // 
+            this.checkBoxLogOrangeError.AutoSize = true;
+            this.checkBoxLogOrangeError.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.checkBoxLogOrangeError.ForeColor = System.Drawing.Color.Red;
+            this.checkBoxLogOrangeError.Location = new System.Drawing.Point(4, 622);
+            this.checkBoxLogOrangeError.Name = "checkBoxLogOrangeError";
+            this.checkBoxLogOrangeError.Size = new System.Drawing.Size(244, 17);
+            this.checkBoxLogOrangeError.TabIndex = 28;
+            this.checkBoxLogOrangeError.Text = "Logs less useful Errors (Orange Errors)";
+            this.toolTip1.SetToolTip(this.checkBoxLogOrangeError, "Show Graphics Overlay (Maphack, Bot Infos, Etc..)");
+            this.checkBoxLogOrangeError.UseVisualStyleBackColor = true;
             // 
             // panelBaalFeature
             // 
@@ -929,19 +955,10 @@
             this.label14.TabIndex = 12;
             this.label14.Text = "Overlay Features";
             // 
-            // comboBoxPauseResume
-            // 
-            this.comboBoxPauseResume.FormattingEnabled = true;
-            this.comboBoxPauseResume.Location = new System.Drawing.Point(141, 651);
-            this.comboBoxPauseResume.Name = "comboBoxPauseResume";
-            this.comboBoxPauseResume.Size = new System.Drawing.Size(96, 21);
-            this.comboBoxPauseResume.TabIndex = 27;
-            this.toolTip1.SetToolTip(this.comboBoxPauseResume, "Set the Shortcut Key for Pausing/Resuming the Bot");
-            // 
             // label15
             // 
             this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(8, 654);
+            this.label15.Location = new System.Drawing.Point(8, 669);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(127, 13);
             this.label15.TabIndex = 26;
@@ -952,7 +969,8 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.ClientSize = new System.Drawing.Size(250, 677);
+            this.ClientSize = new System.Drawing.Size(250, 691);
+            this.Controls.Add(this.checkBoxLogOrangeError);
             this.Controls.Add(this.comboBoxPauseResume);
             this.Controls.Add(this.label15);
             this.Controls.Add(this.textBoxStartKey);
@@ -1000,75 +1018,75 @@
             this.ResumeLayout(false);
             this.PerformLayout();
 
-        }
-
-        #endregion
-
-        private System.Windows.Forms.ListView listViewRunScripts;
-        private System.Windows.Forms.Label label1Run;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.ComboBox comboBoxDifficulty;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox textBoxGamePass;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox textBoxGameName;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.NumericUpDown numericUpDownRunNumber;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.NumericUpDown numericUpDownMaxTime;
-        private System.Windows.Forms.Label label7MaxTime;
-        private System.Windows.Forms.ComboBox comboBoxLobby;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.TextBox textBoxD2Path;
-        private System.Windows.Forms.ListView listViewRush;
-        private System.Windows.Forms.ColumnHeader columnHeader2;
-        private System.Windows.Forms.CheckBox checkBoxRush;
-        private System.Windows.Forms.Label label1LeechName;
-        private System.Windows.Forms.TextBox textBox1LeechName;
-        private System.Windows.Forms.CheckBox checkBoxShowOverlay;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ColumnHeader columnHeader3;
-        private System.Windows.Forms.ToolTip toolTip1;
-        private System.Windows.Forms.Panel panelBaalFeature;
-        private System.Windows.Forms.CheckBox checkBoxKillBaal;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Button buttonBaalApply;
-        private System.Windows.Forms.CheckBox checkBoxBaalSafeHealing;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.NumericUpDown numericUpDownBaalLeaveMobsCount;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.NumericUpDown numericUpDownBaalMobID;
-        private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.NumericUpDown numericUpDownBaalMobCount;
-        private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.Button buttonBaalAddMob;
-        private System.Windows.Forms.Button buttonBaalClearMob;
-        private System.Windows.Forms.ListView listViewBaalLeaveOnMobs;
-        private System.Windows.Forms.ColumnHeader columnHeader1;
-        private System.Windows.Forms.ColumnHeader columnHeader4;
-        private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.Button buttonReload;
-        private System.Windows.Forms.OpenFileDialog openFileDialog1;
-        private System.Windows.Forms.Panel panelOverlay;
-        private System.Windows.Forms.CheckBox checkBoxOverlayShowBotInfos;
-        private System.Windows.Forms.CheckBox checkBoxOverlayShowLogs;
-        private System.Windows.Forms.CheckBox checkBoxOverlayShowGoodChest;
-        private System.Windows.Forms.CheckBox checkBoxOverlayShowWP;
-        private System.Windows.Forms.CheckBox checkBoxOverlayShowMobs;
-        private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.CheckBox checkBoxOverlayShowUnitsCount;
-        private System.Windows.Forms.CheckBox checkBoxOverlayShowMH;
-        private System.Windows.Forms.CheckBox checkBoxOverlayShowExits;
-        private System.Windows.Forms.CheckBox checkBoxOverlayShowPath;
-        private System.Windows.Forms.CheckBox checkBoxOverlayShowNPC;
-        private System.Windows.Forms.Button buttonOverlaySettings;
-        private System.Windows.Forms.ComboBox textBoxStartKey;
-        private System.Windows.Forms.ComboBox comboBoxPauseResume;
-        private System.Windows.Forms.Label label15;
     }
+
+    #endregion
+
+    private System.Windows.Forms.ListView listViewRunScripts;
+    private System.Windows.Forms.Label label1Run;
+    private System.Windows.Forms.Label label2;
+    private System.Windows.Forms.GroupBox groupBox1;
+    private System.Windows.Forms.Label label5;
+    private System.Windows.Forms.ComboBox comboBoxDifficulty;
+    private System.Windows.Forms.Label label4;
+    private System.Windows.Forms.TextBox textBoxGamePass;
+    private System.Windows.Forms.Label label3;
+    private System.Windows.Forms.TextBox textBoxGameName;
+    private System.Windows.Forms.Button button1;
+    private System.Windows.Forms.NumericUpDown numericUpDownRunNumber;
+    private System.Windows.Forms.Label label6;
+    private System.Windows.Forms.NumericUpDown numericUpDownMaxTime;
+    private System.Windows.Forms.Label label7MaxTime;
+    private System.Windows.Forms.ComboBox comboBoxLobby;
+    private System.Windows.Forms.Label label8;
+    private System.Windows.Forms.TextBox textBoxD2Path;
+    private System.Windows.Forms.ListView listViewRush;
+    private System.Windows.Forms.ColumnHeader columnHeader2;
+    private System.Windows.Forms.CheckBox checkBoxRush;
+    private System.Windows.Forms.Label label1LeechName;
+    private System.Windows.Forms.TextBox textBox1LeechName;
+    private System.Windows.Forms.CheckBox checkBoxShowOverlay;
+    private System.Windows.Forms.Button button2;
+    private System.Windows.Forms.Label label1;
+    private System.Windows.Forms.ColumnHeader columnHeader3;
+    private System.Windows.Forms.ToolTip toolTip1;
+    private System.Windows.Forms.Panel panelBaalFeature;
+    private System.Windows.Forms.CheckBox checkBoxKillBaal;
+    private System.Windows.Forms.Label label7;
+    private System.Windows.Forms.Button buttonBaalApply;
+    private System.Windows.Forms.CheckBox checkBoxBaalSafeHealing;
+    private System.Windows.Forms.Label label9;
+    private System.Windows.Forms.NumericUpDown numericUpDownBaalLeaveMobsCount;
+    private System.Windows.Forms.Label label10;
+    private System.Windows.Forms.NumericUpDown numericUpDownBaalMobID;
+    private System.Windows.Forms.Label label11;
+    private System.Windows.Forms.NumericUpDown numericUpDownBaalMobCount;
+    private System.Windows.Forms.Label label12;
+    private System.Windows.Forms.GroupBox groupBox2;
+    private System.Windows.Forms.Button buttonBaalAddMob;
+    private System.Windows.Forms.Button buttonBaalClearMob;
+    private System.Windows.Forms.ListView listViewBaalLeaveOnMobs;
+    private System.Windows.Forms.ColumnHeader columnHeader1;
+    private System.Windows.Forms.ColumnHeader columnHeader4;
+    private System.Windows.Forms.Label label13;
+    private System.Windows.Forms.Button buttonReload;
+    private System.Windows.Forms.OpenFileDialog openFileDialog1;
+    private System.Windows.Forms.Panel panelOverlay;
+    private System.Windows.Forms.CheckBox checkBoxOverlayShowBotInfos;
+    private System.Windows.Forms.CheckBox checkBoxOverlayShowLogs;
+    private System.Windows.Forms.CheckBox checkBoxOverlayShowGoodChest;
+    private System.Windows.Forms.CheckBox checkBoxOverlayShowWP;
+    private System.Windows.Forms.CheckBox checkBoxOverlayShowMobs;
+    private System.Windows.Forms.Label label14;
+    private System.Windows.Forms.Button button3;
+    private System.Windows.Forms.CheckBox checkBoxOverlayShowUnitsCount;
+    private System.Windows.Forms.CheckBox checkBoxOverlayShowMH;
+    private System.Windows.Forms.CheckBox checkBoxOverlayShowExits;
+    private System.Windows.Forms.CheckBox checkBoxOverlayShowPath;
+    private System.Windows.Forms.CheckBox checkBoxOverlayShowNPC;
+    private System.Windows.Forms.Button buttonOverlaySettings;
+    private System.Windows.Forms.ComboBox textBoxStartKey;
+    private System.Windows.Forms.ComboBox comboBoxPauseResume;
+    private System.Windows.Forms.Label label15;
+    private System.Windows.Forms.CheckBox checkBoxLogOrangeError;
 }

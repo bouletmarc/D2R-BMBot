@@ -1,33 +1,32 @@
-﻿namespace app
+﻿
+partial class Form1
 {
-    partial class Form1
+    /// <summary>
+    /// Variable nécessaire au concepteur.
+    /// </summary>
+    private System.ComponentModel.IContainer components = null;
+
+    /// <summary>
+    /// Nettoyage des ressources utilisées.
+    /// </summary>
+    /// <param name="disposing">true si les ressources managées doivent être supprimées ; sinon, false.</param>
+    protected override void Dispose(bool disposing)
     {
-        /// <summary>
-        /// Variable nécessaire au concepteur.
-        /// </summary>
-        private System.ComponentModel.IContainer components = null;
-
-        /// <summary>
-        /// Nettoyage des ressources utilisées.
-        /// </summary>
-        /// <param name="disposing">true si les ressources managées doivent être supprimées ; sinon, false.</param>
-        protected override void Dispose(bool disposing)
+        if (disposing && (components != null))
         {
-            if (disposing && (components != null))
-            {
-                components.Dispose();
-            }
-            base.Dispose(disposing);
+            components.Dispose();
         }
+        base.Dispose(disposing);
+    }
 
-        #region Code généré par le Concepteur Windows Form
+    #region Code généré par le Concepteur Windows Form
 
-        /// <summary>
-        /// Méthode requise pour la prise en charge du concepteur - ne modifiez pas
-        /// le contenu de cette méthode avec l'éditeur de code.
-        /// </summary>
-        private void InitializeComponent()
-        {
+    /// <summary>
+    /// Méthode requise pour la prise en charge du concepteur - ne modifiez pas
+    /// le contenu de cette méthode avec l'éditeur de code.
+    /// </summary>
+    private void InitializeComponent()
+    {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.button1 = new System.Windows.Forms.Button();
@@ -51,8 +50,10 @@
             this.label1 = new System.Windows.Forms.Label();
             this.richTextBoxDebugItems = new System.Windows.Forms.RichTextBox();
             this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.checkBoxShowOnlyValidMobs = new System.Windows.Forms.CheckBox();
             this.richTextBoxDebugMobs = new System.Windows.Forms.RichTextBox();
             this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.checkBoxShowValidObjectOnly = new System.Windows.Forms.CheckBox();
             this.richTextBoxDebugObjects = new System.Windows.Forms.RichTextBox();
             this.tabPage6 = new System.Windows.Forms.TabPage();
             this.richTextBoxDebugMapData = new System.Windows.Forms.RichTextBox();
@@ -69,14 +70,13 @@
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.LabelDeadCount = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.checkBoxShowOnlyValidMobs = new System.Windows.Forms.CheckBox();
-            this.checkBoxShowValidObjectOnly = new System.Windows.Forms.CheckBox();
             this.buttonPauseResume = new System.Windows.Forms.Button();
             this.buttonUpdate = new System.Windows.Forms.Button();
             this.buttonD2LOD = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
+            this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -333,6 +333,16 @@
             this.tabPage4.TabIndex = 1;
             this.tabPage4.Text = "Mobs/NPC";
             // 
+            // checkBoxShowOnlyValidMobs
+            // 
+            this.checkBoxShowOnlyValidMobs.AutoSize = true;
+            this.checkBoxShowOnlyValidMobs.Location = new System.Drawing.Point(6, 6);
+            this.checkBoxShowOnlyValidMobs.Name = "checkBoxShowOnlyValidMobs";
+            this.checkBoxShowOnlyValidMobs.Size = new System.Drawing.Size(220, 17);
+            this.checkBoxShowOnlyValidMobs.TabIndex = 22;
+            this.checkBoxShowOnlyValidMobs.Text = "Show Mobs/NPC with valid Position Only";
+            this.checkBoxShowOnlyValidMobs.UseVisualStyleBackColor = true;
+            // 
             // richTextBoxDebugMobs
             // 
             this.richTextBoxDebugMobs.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -357,6 +367,16 @@
             this.tabPage5.Size = new System.Drawing.Size(536, 202);
             this.tabPage5.TabIndex = 5;
             this.tabPage5.Text = "Objects";
+            // 
+            // checkBoxShowValidObjectOnly
+            // 
+            this.checkBoxShowValidObjectOnly.AutoSize = true;
+            this.checkBoxShowValidObjectOnly.Location = new System.Drawing.Point(3, 5);
+            this.checkBoxShowValidObjectOnly.Name = "checkBoxShowValidObjectOnly";
+            this.checkBoxShowValidObjectOnly.Size = new System.Drawing.Size(203, 17);
+            this.checkBoxShowValidObjectOnly.TabIndex = 23;
+            this.checkBoxShowValidObjectOnly.Text = "Show Objects with valid Position Only";
+            this.checkBoxShowValidObjectOnly.UseVisualStyleBackColor = true;
             // 
             // richTextBoxDebugObjects
             // 
@@ -494,26 +514,6 @@
             this.LabelDeadCount.Text = "Dead";
             this.LabelDeadCount.ToolTipText = "Deads Count";
             // 
-            // checkBoxShowOnlyValidMobs
-            // 
-            this.checkBoxShowOnlyValidMobs.AutoSize = true;
-            this.checkBoxShowOnlyValidMobs.Location = new System.Drawing.Point(6, 6);
-            this.checkBoxShowOnlyValidMobs.Name = "checkBoxShowOnlyValidMobs";
-            this.checkBoxShowOnlyValidMobs.Size = new System.Drawing.Size(220, 17);
-            this.checkBoxShowOnlyValidMobs.TabIndex = 22;
-            this.checkBoxShowOnlyValidMobs.Text = "Show Mobs/NPC with valid Position Only";
-            this.checkBoxShowOnlyValidMobs.UseVisualStyleBackColor = true;
-            // 
-            // checkBoxShowValidObjectOnly
-            // 
-            this.checkBoxShowValidObjectOnly.AutoSize = true;
-            this.checkBoxShowValidObjectOnly.Location = new System.Drawing.Point(3, 5);
-            this.checkBoxShowValidObjectOnly.Name = "checkBoxShowValidObjectOnly";
-            this.checkBoxShowValidObjectOnly.Size = new System.Drawing.Size(203, 17);
-            this.checkBoxShowValidObjectOnly.TabIndex = 23;
-            this.checkBoxShowValidObjectOnly.Text = "Show Objects with valid Position Only";
-            this.checkBoxShowValidObjectOnly.UseVisualStyleBackColor = true;
-            // 
             // buttonPauseResume
             // 
             this.buttonPauseResume.Enabled = false;
@@ -595,6 +595,10 @@
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click_1);
             // 
+            // folderBrowserDialog1
+            // 
+            this.folderBrowserDialog1.Description = "Select the folder where D2 LOD 1.13C is located";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -639,57 +643,57 @@
             this.ResumeLayout(false);
             this.PerformLayout();
 
-        }
-
-        #endregion
-
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.ColorDialog colorDialog1;
-        private System.Windows.Forms.RichTextBox richTextBox1;
-        private System.Windows.Forms.RichTextBox richTextBox2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
-        private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.TabPage tabPage2;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.TabControl tabControl2;
-        private System.Windows.Forms.TabPage tabPage3;
-        private System.Windows.Forms.TabPage tabPage6;
-        private System.Windows.Forms.TabPage tabPage7;
-        public System.Windows.Forms.RichTextBox richTextBoxDebugMobs;
-        private System.Windows.Forms.TabPage tabPage5;
-        public System.Windows.Forms.RichTextBox richTextBoxDebugMapData;
-        public System.Windows.Forms.RichTextBox richTextBoxDebugMapCollision;
-        public System.Windows.Forms.RichTextBox richTextBoxDebugObjects;
-        public System.Windows.Forms.RichTextBox richTextBoxDebugItems;
-        private System.Windows.Forms.TabPage tabPage4;
-        private System.Windows.Forms.StatusStrip statusStrip1;
-        public System.Windows.Forms.ToolStripStatusLabel labelGameName;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
-        public System.Windows.Forms.ToolStripStatusLabel labelGames;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
-        public System.Windows.Forms.ToolStripStatusLabel labelGameTime;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
-        public System.Windows.Forms.ToolStripStatusLabel LabelChickenCount;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
-        public System.Windows.Forms.ToolStripStatusLabel LabelDeadCount;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.TabPage tabPage8;
-        private System.Windows.Forms.RichTextBox richTextBoxErrorLogs;
-        private System.Windows.Forms.TabPage tabPage9;
-        private System.Windows.Forms.RichTextBox richTextBoxGamesLogs;
-        private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.Button button5;
-        private System.Windows.Forms.ToolTip toolTip1;
-        private System.Windows.Forms.Button buttonD2LOD;
-        private System.Windows.Forms.Button buttonUpdate;
-        private System.Windows.Forms.Label label1;
-        public System.Windows.Forms.ComboBox comboBoxItemsCategory;
-        public System.Windows.Forms.CheckBox checkBoxShowOnlyValidMobs;
-        public System.Windows.Forms.CheckBox checkBoxShowValidObjectOnly;
-        private System.Windows.Forms.Button buttonPauseResume;
     }
+
+    #endregion
+
+    private System.Windows.Forms.Button button1;
+    private System.Windows.Forms.DataGridView dataGridView1;
+    private System.Windows.Forms.ColorDialog colorDialog1;
+    private System.Windows.Forms.RichTextBox richTextBox1;
+    private System.Windows.Forms.RichTextBox richTextBox2;
+    private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
+    private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
+    private System.Windows.Forms.TabControl tabControl1;
+    private System.Windows.Forms.TabPage tabPage1;
+    private System.Windows.Forms.TabPage tabPage2;
+    private System.Windows.Forms.Button button2;
+    private System.Windows.Forms.TabControl tabControl2;
+    private System.Windows.Forms.TabPage tabPage3;
+    private System.Windows.Forms.TabPage tabPage6;
+    private System.Windows.Forms.TabPage tabPage7;
+    public System.Windows.Forms.RichTextBox richTextBoxDebugMobs;
+    private System.Windows.Forms.TabPage tabPage5;
+    public System.Windows.Forms.RichTextBox richTextBoxDebugMapData;
+    public System.Windows.Forms.RichTextBox richTextBoxDebugMapCollision;
+    public System.Windows.Forms.RichTextBox richTextBoxDebugObjects;
+    public System.Windows.Forms.RichTextBox richTextBoxDebugItems;
+    private System.Windows.Forms.TabPage tabPage4;
+    private System.Windows.Forms.StatusStrip statusStrip1;
+    public System.Windows.Forms.ToolStripStatusLabel labelGameName;
+    private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+    public System.Windows.Forms.ToolStripStatusLabel labelGames;
+    private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+    public System.Windows.Forms.ToolStripStatusLabel labelGameTime;
+    private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+    public System.Windows.Forms.ToolStripStatusLabel LabelChickenCount;
+    private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
+    public System.Windows.Forms.ToolStripStatusLabel LabelDeadCount;
+    private System.Windows.Forms.Button button3;
+    private System.Windows.Forms.TabPage tabPage8;
+    private System.Windows.Forms.RichTextBox richTextBoxErrorLogs;
+    private System.Windows.Forms.TabPage tabPage9;
+    private System.Windows.Forms.RichTextBox richTextBoxGamesLogs;
+    private System.Windows.Forms.Button button4;
+    private System.Windows.Forms.Button button5;
+    private System.Windows.Forms.ToolTip toolTip1;
+    private System.Windows.Forms.Button buttonD2LOD;
+    private System.Windows.Forms.Button buttonUpdate;
+    private System.Windows.Forms.Label label1;
+    public System.Windows.Forms.ComboBox comboBoxItemsCategory;
+    public System.Windows.Forms.CheckBox checkBoxShowOnlyValidMobs;
+    public System.Windows.Forms.CheckBox checkBoxShowValidObjectOnly;
+    private System.Windows.Forms.Button buttonPauseResume;
+    private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
 }
 

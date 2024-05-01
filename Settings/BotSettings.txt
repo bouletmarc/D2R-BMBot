@@ -8,12 +8,15 @@ PauseResumeKey=102
 //BOT SETTINGS (USE ONLY CHAOS OR BAAL, NOT BOTH AT SAME TIME)
 //#######################################
 MaxGameTime=7
+LogNotUsefulErrors=false
 IsRushing=false
 RushLeecherName=
 ShowOverlay=true
 RunWPTaker=false
+RunSinglePlayerScript=false
 RunNoLobbyScript=false
 RunMapHackOnly=false
+RunMapHackPickitOnly=false
 RunAnyaRush=false
 RunDarkWoodRush=false
 RunTristramRush=false

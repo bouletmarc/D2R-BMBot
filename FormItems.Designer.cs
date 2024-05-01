@@ -1,33 +1,32 @@
-﻿namespace app
+﻿
+partial class FormItems
 {
-    partial class FormItems
+    /// <summary>
+    /// Required designer variable.
+    /// </summary>
+    private System.ComponentModel.IContainer components = null;
+
+    /// <summary>
+    /// Clean up any resources being used.
+    /// </summary>
+    /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+    protected override void Dispose(bool disposing)
     {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
-        private System.ComponentModel.IContainer components = null;
-
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-        protected override void Dispose(bool disposing)
+        if (disposing && (components != null))
         {
-            if (disposing && (components != null))
-            {
-                components.Dispose();
-            }
-            base.Dispose(disposing);
+            components.Dispose();
         }
+        base.Dispose(disposing);
+    }
 
-        #region Windows Form Designer generated code
+    #region Windows Form Designer generated code
 
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
-        private void InitializeComponent()
-        {
+    /// <summary>
+    /// Required method for Designer support - do not modify
+    /// the contents of this method with the code editor.
+    /// </summary>
+    private void InitializeComponent()
+    {
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.ListViewGroup listViewGroup1 = new System.Windows.Forms.ListViewGroup("By Name", System.Windows.Forms.HorizontalAlignment.Left);
             System.Windows.Forms.ListViewGroup listViewGroup2 = new System.Windows.Forms.ListViewGroup("By Type", System.Windows.Forms.HorizontalAlignment.Left);
@@ -53,14 +52,17 @@
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.listViewKeys = new System.Windows.Forms.ListView();
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader40 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader9 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.listViewGems = new System.Windows.Forms.ListView();
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader41 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader8 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.listViewRunes = new System.Windows.Forms.ListView();
             this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader42 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader7 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tabPage5 = new System.Windows.Forms.TabPage();
             this.listViewSet = new System.Windows.Forms.ListView();
@@ -140,6 +142,13 @@
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.button4 = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.panelItemQty = new System.Windows.Forms.Panel();
+            this.button5 = new System.Windows.Forms.Button();
+            this.labelItemNameEdit = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.numericUpDownItemMaxQty = new System.Windows.Forms.NumericUpDown();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -156,6 +165,8 @@
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownValue)).BeginInit();
+            this.panelItemQty.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownItemMaxQty)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -258,6 +269,7 @@
             this.listViewKeys.CheckBoxes = true;
             this.listViewKeys.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader2,
+            this.columnHeader40,
             this.columnHeader9});
             this.listViewKeys.Dock = System.Windows.Forms.DockStyle.Fill;
             this.listViewKeys.FullRowSelect = true;
@@ -270,11 +282,17 @@
             this.listViewKeys.UseCompatibleStateImageBehavior = false;
             this.listViewKeys.View = System.Windows.Forms.View.Details;
             this.listViewKeys.Click += new System.EventHandler(this.listViewUnique_Click);
+            this.listViewKeys.DoubleClick += new System.EventHandler(this.listViewKeys_DoubleClick);
             // 
             // columnHeader2
             // 
             this.columnHeader2.Text = "Item Name";
             this.columnHeader2.Width = 193;
+            // 
+            // columnHeader40
+            // 
+            this.columnHeader40.Text = "Max Quantity";
+            this.columnHeader40.Width = 90;
             // 
             // columnHeader9
             // 
@@ -296,6 +314,7 @@
             this.listViewGems.CheckBoxes = true;
             this.listViewGems.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader3,
+            this.columnHeader41,
             this.columnHeader8});
             this.listViewGems.Dock = System.Windows.Forms.DockStyle.Fill;
             this.listViewGems.FullRowSelect = true;
@@ -308,11 +327,17 @@
             this.listViewGems.UseCompatibleStateImageBehavior = false;
             this.listViewGems.View = System.Windows.Forms.View.Details;
             this.listViewGems.Click += new System.EventHandler(this.listViewUnique_Click);
+            this.listViewGems.DoubleClick += new System.EventHandler(this.listViewGems_DoubleClick);
             // 
             // columnHeader3
             // 
             this.columnHeader3.Text = "Item Name";
             this.columnHeader3.Width = 163;
+            // 
+            // columnHeader41
+            // 
+            this.columnHeader41.Text = "Max Quantity";
+            this.columnHeader41.Width = 90;
             // 
             // columnHeader8
             // 
@@ -334,6 +359,7 @@
             this.listViewRunes.CheckBoxes = true;
             this.listViewRunes.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader4,
+            this.columnHeader42,
             this.columnHeader7});
             this.listViewRunes.Dock = System.Windows.Forms.DockStyle.Fill;
             this.listViewRunes.FullRowSelect = true;
@@ -346,11 +372,17 @@
             this.listViewRunes.UseCompatibleStateImageBehavior = false;
             this.listViewRunes.View = System.Windows.Forms.View.Details;
             this.listViewRunes.Click += new System.EventHandler(this.listViewUnique_Click);
+            this.listViewRunes.DoubleClick += new System.EventHandler(this.listViewRunes_DoubleClick);
             // 
             // columnHeader4
             // 
             this.columnHeader4.Text = "Item Name";
             this.columnHeader4.Width = 163;
+            // 
+            // columnHeader42
+            // 
+            this.columnHeader42.Text = "Max Quantity";
+            this.columnHeader42.Width = 90;
             // 
             // columnHeader7
             // 
@@ -1120,6 +1152,75 @@
             this.openFileDialog1.Filter = "Items Settings|*.txt";
             this.openFileDialog1.Title = "Open \'ItemsSettings.txt\'";
             // 
+            // panelItemQty
+            // 
+            this.panelItemQty.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.panelItemQty.Controls.Add(this.label12);
+            this.panelItemQty.Controls.Add(this.button5);
+            this.panelItemQty.Controls.Add(this.labelItemNameEdit);
+            this.panelItemQty.Controls.Add(this.label11);
+            this.panelItemQty.Controls.Add(this.numericUpDownItemMaxQty);
+            this.panelItemQty.Controls.Add(this.label2);
+            this.panelItemQty.Location = new System.Drawing.Point(6, 88);
+            this.panelItemQty.Name = "panelItemQty";
+            this.panelItemQty.Size = new System.Drawing.Size(200, 100);
+            this.panelItemQty.TabIndex = 2;
+            this.panelItemQty.Visible = false;
+            // 
+            // button5
+            // 
+            this.button5.Location = new System.Drawing.Point(63, 71);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(75, 23);
+            this.button5.TabIndex = 4;
+            this.button5.Text = "Apply";
+            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
+            // 
+            // labelItemNameEdit
+            // 
+            this.labelItemNameEdit.AutoSize = true;
+            this.labelItemNameEdit.Location = new System.Drawing.Point(103, 12);
+            this.labelItemNameEdit.Name = "labelItemNameEdit";
+            this.labelItemNameEdit.Size = new System.Drawing.Size(30, 13);
+            this.labelItemNameEdit.TabIndex = 3;
+            this.labelItemNameEdit.Text = "Item:";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(9, 12);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(30, 13);
+            this.label11.TabIndex = 2;
+            this.label11.Text = "Item:";
+            // 
+            // numericUpDownItemMaxQty
+            // 
+            this.numericUpDownItemMaxQty.Location = new System.Drawing.Point(106, 29);
+            this.numericUpDownItemMaxQty.Name = "numericUpDownItemMaxQty";
+            this.numericUpDownItemMaxQty.Size = new System.Drawing.Size(48, 20);
+            this.numericUpDownItemMaxQty.TabIndex = 1;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(9, 31);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(91, 13);
+            this.label2.TabIndex = 0;
+            this.label2.Text = "Set Max Quantity:";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.ForeColor = System.Drawing.Color.Red;
+            this.label12.Location = new System.Drawing.Point(12, 54);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(169, 13);
+            this.label12.TabIndex = 5;
+            this.label12.Text = "*Set to 0 for no quantity checking*";
+            // 
             // FormItems
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1129,6 +1230,7 @@
             this.Controls.Add(this.button4);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.panel_NewItem);
+            this.Controls.Add(this.panelItemQty);
             this.Controls.Add(this.buttonCreateNewItem);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.tabControl1);
@@ -1158,108 +1260,120 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownValue)).EndInit();
+            this.panelItemQty.ResumeLayout(false);
+            this.panelItemQty.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownItemMaxQty)).EndInit();
             this.ResumeLayout(false);
 
-        }
-
-        #endregion
-        private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.TabPage tabPage2;
-        private System.Windows.Forms.ListView listViewKeys;
-        private System.Windows.Forms.ColumnHeader columnHeader2;
-        private System.Windows.Forms.TabPage tabPage3;
-        private System.Windows.Forms.ListView listViewGems;
-        private System.Windows.Forms.ColumnHeader columnHeader3;
-        private System.Windows.Forms.TabPage tabPage4;
-        private System.Windows.Forms.ListView listViewRunes;
-        private System.Windows.Forms.ColumnHeader columnHeader4;
-        private System.Windows.Forms.TabPage tabPage5;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.ColumnHeader columnHeader9;
-        private System.Windows.Forms.ColumnHeader columnHeader8;
-        private System.Windows.Forms.ColumnHeader columnHeader7;
-        private System.Windows.Forms.TabPage tabPage6;
-        private System.Windows.Forms.TabPage tabPage7;
-        private System.Windows.Forms.ListView listViewNormal;
-        private System.Windows.Forms.ColumnHeader columnHeader11;
-        private System.Windows.Forms.ColumnHeader columnHeader13;
-        private System.Windows.Forms.ColumnHeader columnHeader14;
-        private System.Windows.Forms.ColumnHeader columnHeader15;
-        private System.Windows.Forms.ColumnHeader columnHeader12;
-        private System.Windows.Forms.Button buttonCreateNewItem;
-        private System.Windows.Forms.Panel panel_NewItem;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.NumericUpDown numericUpDownValue;
-        private System.Windows.Forms.ComboBox comboBoxOperator;
-        private System.Windows.Forms.ComboBox comboBoxStats;
-        private System.Windows.Forms.ComboBox comboBoxQuality;
-        private System.Windows.Forms.ComboBox comboBoxFlags;
-        private System.Windows.Forms.ComboBox comboBoxName;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.ComboBox comboBoxNameOrType;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button buttonResetStats;
-        private System.Windows.Forms.Button buttonRemoveStat;
-        private System.Windows.Forms.Button buttonRemoveFlag;
-        private System.Windows.Forms.Button buttonAddStat;
-        private System.Windows.Forms.Button buttonAddFlag;
-        private System.Windows.Forms.Label labelCurrentPreview;
-        private System.Windows.Forms.Button buttonResetFlags;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.ComboBox comboBoxOperatorFlag;
-        private System.Windows.Forms.Button buttonClose;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.TextBox textBoxDesc;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.TabPage tabPage8;
-        private System.Windows.Forms.ListView listViewPotions;
-        private System.Windows.Forms.ColumnHeader columnHeader16;
-        private System.Windows.Forms.ColumnHeader columnHeader17;
-        private System.Windows.Forms.ListView listViewRare;
-        private System.Windows.Forms.ColumnHeader columnHeader18;
-        private System.Windows.Forms.ColumnHeader columnHeader19;
-        private System.Windows.Forms.ColumnHeader columnHeader20;
-        private System.Windows.Forms.ColumnHeader columnHeader21;
-        private System.Windows.Forms.ColumnHeader columnHeader22;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.TabPage tabPage9;
-        private System.Windows.Forms.ListView listViewCubingRecipes;
-        private System.Windows.Forms.ColumnHeader columnHeader23;
-        private System.Windows.Forms.TabPage tabPage10;
-        private System.Windows.Forms.ListView listViewSuperior;
-        private System.Windows.Forms.ColumnHeader columnHeader24;
-        private System.Windows.Forms.ColumnHeader columnHeader25;
-        private System.Windows.Forms.ColumnHeader columnHeader26;
-        private System.Windows.Forms.ColumnHeader columnHeader27;
-        private System.Windows.Forms.ColumnHeader columnHeader28;
-        private System.Windows.Forms.TabPage tabPage11;
-        private System.Windows.Forms.ListView listViewMagic;
-        private System.Windows.Forms.ColumnHeader columnHeader29;
-        private System.Windows.Forms.ColumnHeader columnHeader30;
-        private System.Windows.Forms.ColumnHeader columnHeader31;
-        private System.Windows.Forms.ColumnHeader columnHeader32;
-        private System.Windows.Forms.ColumnHeader columnHeader33;
-        private System.Windows.Forms.ListView listViewUnique;
-        private System.Windows.Forms.ColumnHeader columnHeader1;
-        private System.Windows.Forms.ColumnHeader columnHeader10;
-        private System.Windows.Forms.ColumnHeader columnHeader34;
-        private System.Windows.Forms.ColumnHeader columnHeader35;
-        private System.Windows.Forms.ColumnHeader columnHeader36;
-        private System.Windows.Forms.ListView listViewSet;
-        private System.Windows.Forms.ColumnHeader columnHeader5;
-        private System.Windows.Forms.ColumnHeader columnHeader6;
-        private System.Windows.Forms.ColumnHeader columnHeader37;
-        private System.Windows.Forms.ColumnHeader columnHeader38;
-        private System.Windows.Forms.ColumnHeader columnHeader39;
-        private System.Windows.Forms.ToolTip toolTip1;
-        private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.OpenFileDialog openFileDialog1;
     }
+
+    #endregion
+    private System.Windows.Forms.TabControl tabControl1;
+    private System.Windows.Forms.TabPage tabPage1;
+    private System.Windows.Forms.TabPage tabPage2;
+    private System.Windows.Forms.ListView listViewKeys;
+    private System.Windows.Forms.ColumnHeader columnHeader2;
+    private System.Windows.Forms.TabPage tabPage3;
+    private System.Windows.Forms.ListView listViewGems;
+    private System.Windows.Forms.ColumnHeader columnHeader3;
+    private System.Windows.Forms.TabPage tabPage4;
+    private System.Windows.Forms.ListView listViewRunes;
+    private System.Windows.Forms.ColumnHeader columnHeader4;
+    private System.Windows.Forms.TabPage tabPage5;
+    private System.Windows.Forms.Button button3;
+    private System.Windows.Forms.ColumnHeader columnHeader9;
+    private System.Windows.Forms.ColumnHeader columnHeader8;
+    private System.Windows.Forms.ColumnHeader columnHeader7;
+    private System.Windows.Forms.TabPage tabPage6;
+    private System.Windows.Forms.TabPage tabPage7;
+    private System.Windows.Forms.ListView listViewNormal;
+    private System.Windows.Forms.ColumnHeader columnHeader11;
+    private System.Windows.Forms.ColumnHeader columnHeader13;
+    private System.Windows.Forms.ColumnHeader columnHeader14;
+    private System.Windows.Forms.ColumnHeader columnHeader15;
+    private System.Windows.Forms.ColumnHeader columnHeader12;
+    private System.Windows.Forms.Button buttonCreateNewItem;
+    private System.Windows.Forms.Panel panel_NewItem;
+    private System.Windows.Forms.Label label8;
+    private System.Windows.Forms.Label label7;
+    private System.Windows.Forms.Label label6;
+    private System.Windows.Forms.Label label5;
+    private System.Windows.Forms.Label label4;
+    private System.Windows.Forms.NumericUpDown numericUpDownValue;
+    private System.Windows.Forms.ComboBox comboBoxOperator;
+    private System.Windows.Forms.ComboBox comboBoxStats;
+    private System.Windows.Forms.ComboBox comboBoxQuality;
+    private System.Windows.Forms.ComboBox comboBoxFlags;
+    private System.Windows.Forms.ComboBox comboBoxName;
+    private System.Windows.Forms.Label label3;
+    private System.Windows.Forms.ComboBox comboBoxNameOrType;
+    private System.Windows.Forms.Label label1;
+    private System.Windows.Forms.Button buttonResetStats;
+    private System.Windows.Forms.Button buttonRemoveStat;
+    private System.Windows.Forms.Button buttonRemoveFlag;
+    private System.Windows.Forms.Button buttonAddStat;
+    private System.Windows.Forms.Button buttonAddFlag;
+    private System.Windows.Forms.Label labelCurrentPreview;
+    private System.Windows.Forms.Button buttonResetFlags;
+    private System.Windows.Forms.Label label10;
+    private System.Windows.Forms.ComboBox comboBoxOperatorFlag;
+    private System.Windows.Forms.Button buttonClose;
+    private System.Windows.Forms.Button button2;
+    private System.Windows.Forms.GroupBox groupBox2;
+    private System.Windows.Forms.GroupBox groupBox1;
+    private System.Windows.Forms.TextBox textBoxDesc;
+    private System.Windows.Forms.Label label9;
+    private System.Windows.Forms.TabPage tabPage8;
+    private System.Windows.Forms.ListView listViewPotions;
+    private System.Windows.Forms.ColumnHeader columnHeader16;
+    private System.Windows.Forms.ColumnHeader columnHeader17;
+    private System.Windows.Forms.ListView listViewRare;
+    private System.Windows.Forms.ColumnHeader columnHeader18;
+    private System.Windows.Forms.ColumnHeader columnHeader19;
+    private System.Windows.Forms.ColumnHeader columnHeader20;
+    private System.Windows.Forms.ColumnHeader columnHeader21;
+    private System.Windows.Forms.ColumnHeader columnHeader22;
+    private System.Windows.Forms.Button button1;
+    private System.Windows.Forms.TabPage tabPage9;
+    private System.Windows.Forms.ListView listViewCubingRecipes;
+    private System.Windows.Forms.ColumnHeader columnHeader23;
+    private System.Windows.Forms.TabPage tabPage10;
+    private System.Windows.Forms.ListView listViewSuperior;
+    private System.Windows.Forms.ColumnHeader columnHeader24;
+    private System.Windows.Forms.ColumnHeader columnHeader25;
+    private System.Windows.Forms.ColumnHeader columnHeader26;
+    private System.Windows.Forms.ColumnHeader columnHeader27;
+    private System.Windows.Forms.ColumnHeader columnHeader28;
+    private System.Windows.Forms.TabPage tabPage11;
+    private System.Windows.Forms.ListView listViewMagic;
+    private System.Windows.Forms.ColumnHeader columnHeader29;
+    private System.Windows.Forms.ColumnHeader columnHeader30;
+    private System.Windows.Forms.ColumnHeader columnHeader31;
+    private System.Windows.Forms.ColumnHeader columnHeader32;
+    private System.Windows.Forms.ColumnHeader columnHeader33;
+    private System.Windows.Forms.ListView listViewUnique;
+    private System.Windows.Forms.ColumnHeader columnHeader1;
+    private System.Windows.Forms.ColumnHeader columnHeader10;
+    private System.Windows.Forms.ColumnHeader columnHeader34;
+    private System.Windows.Forms.ColumnHeader columnHeader35;
+    private System.Windows.Forms.ColumnHeader columnHeader36;
+    private System.Windows.Forms.ListView listViewSet;
+    private System.Windows.Forms.ColumnHeader columnHeader5;
+    private System.Windows.Forms.ColumnHeader columnHeader6;
+    private System.Windows.Forms.ColumnHeader columnHeader37;
+    private System.Windows.Forms.ColumnHeader columnHeader38;
+    private System.Windows.Forms.ColumnHeader columnHeader39;
+    private System.Windows.Forms.ToolTip toolTip1;
+    private System.Windows.Forms.Button button4;
+    private System.Windows.Forms.OpenFileDialog openFileDialog1;
+    private System.Windows.Forms.ColumnHeader columnHeader40;
+    private System.Windows.Forms.ColumnHeader columnHeader41;
+    private System.Windows.Forms.ColumnHeader columnHeader42;
+    private System.Windows.Forms.Panel panelItemQty;
+    private System.Windows.Forms.NumericUpDown numericUpDownItemMaxQty;
+    private System.Windows.Forms.Label label2;
+    private System.Windows.Forms.Button button5;
+    private System.Windows.Forms.Label labelItemNameEdit;
+    private System.Windows.Forms.Label label11;
+    private System.Windows.Forms.Label label12;
 }

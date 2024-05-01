@@ -82,26 +82,26 @@ Token Of Absolution
 //#######################################
 //###### Gems
 //#######################################
-Chipped Topaz
-Chipped Amethyst
-Chipped Sapphire
-Chipped Ruby
-Chipped Emerald
-Chipped Diamond
+Chipped Topaz && [Quantity] == 2
+Chipped Amethyst && [Quantity] == 2
+Chipped Sapphire && [Quantity] == 2
+Chipped Ruby && [Quantity] == 2
+Chipped Emerald && [Quantity] == 2
+Chipped Diamond && [Quantity] == 2
 
-Flawed Topaz
-Flawed Amethyst
-Flawed Sapphire
-Flawed Ruby
-Flawed Emerald
-Flawed Diamond
+Flawed Topaz && [Quantity] == 2
+Flawed Amethyst && [Quantity] == 2
+Flawed Sapphire && [Quantity] == 2
+Flawed Ruby && [Quantity] == 2
+Flawed Emerald && [Quantity] == 2
+Flawed Diamond && [Quantity] == 2
 
-Topaz
-Amethyst
-//Sapphire
-//Ruby
-//Emerald
-//Diamond
+Topaz && [Quantity] == 2
+Amethyst && [Quantity] == 2
+//Sapphire && [Quantity] == 2
+//Ruby && [Quantity] == 2
+//Emerald && [Quantity] == 2
+//Diamond && [Quantity] == 2
 
 Flawless Topaz
 Flawless Amethyst

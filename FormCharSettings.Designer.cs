@@ -1,33 +1,32 @@
-﻿namespace app
+﻿
+partial class FormCharSettings
 {
-    partial class FormCharSettings
+    /// <summary>
+    /// Required designer variable.
+    /// </summary>
+    private System.ComponentModel.IContainer components = null;
+
+    /// <summary>
+    /// Clean up any resources being used.
+    /// </summary>
+    /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+    protected override void Dispose(bool disposing)
     {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
-        private System.ComponentModel.IContainer components = null;
-
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-        protected override void Dispose(bool disposing)
+        if (disposing && (components != null))
         {
-            if (disposing && (components != null))
-            {
-                components.Dispose();
-            }
-            base.Dispose(disposing);
+            components.Dispose();
         }
+        base.Dispose(disposing);
+    }
 
-        #region Windows Form Designer generated code
+    #region Windows Form Designer generated code
 
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
-        private void InitializeComponent()
-        {
+    /// <summary>
+    /// Required method for Designer support - do not modify
+    /// the contents of this method with the code editor.
+    /// </summary>
+    private void InitializeComponent()
+    {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormCharSettings));
             this.label1 = new System.Windows.Forms.Label();
@@ -72,7 +71,6 @@
             this.textBoxCharName = new System.Windows.Forms.TextBox();
             this.label14 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.buttonGambleSettings = new System.Windows.Forms.Button();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.numericUpDownKeyYPos = new System.Windows.Forms.NumericUpDown();
             this.numericUpDownKeyXPos = new System.Windows.Forms.NumericUpDown();
@@ -96,6 +94,7 @@
             this.numericUpDownMercTakeHPUnder = new System.Windows.Forms.NumericUpDown();
             this.label22 = new System.Windows.Forms.Label();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.checkBoxTownMercDead = new System.Windows.Forms.CheckBox();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.checkBoxUseKeys = new System.Windows.Forms.CheckBox();
             this.checkBoxClearAfterBoss = new System.Windows.Forms.CheckBox();
@@ -105,15 +104,11 @@
             this.checkBoxDClone = new System.Windows.Forms.CheckBox();
             this.checkBoxIDAtShop = new System.Windows.Forms.CheckBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.buttonReload = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.buttonGambleClearItems = new System.Windows.Forms.Button();
             this.buttonGambleAddItem = new System.Windows.Forms.Button();
             this.label23 = new System.Windows.Forms.Label();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.panelHelpKeys = new System.Windows.Forms.Panel();
-            this.button2 = new System.Windows.Forms.Button();
             this.panelGamble = new System.Windows.Forms.Panel();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.comboBoxItemsNames = new System.Windows.Forms.ComboBox();
@@ -121,6 +116,13 @@
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.label29 = new System.Windows.Forms.Label();
             this.label28 = new System.Windows.Forms.Label();
+            this.buttonSaveAsChar = new System.Windows.Forms.Button();
+            this.panelHelpKeys = new System.Windows.Forms.Panel();
+            this.button2 = new System.Windows.Forms.Button();
+            this.buttonReload = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
+            this.buttonGambleSettings = new System.Windows.Forms.Button();
+            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -135,9 +137,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMercTakeHPUnder)).BeginInit();
             this.groupBox4.SuspendLayout();
             this.groupBox5.SuspendLayout();
-            this.panelHelpKeys.SuspendLayout();
             this.panelGamble.SuspendLayout();
             this.groupBox6.SuspendLayout();
+            this.panelHelpKeys.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -395,7 +397,7 @@
             this.groupBox2.Controls.Add(this.comboBoxBelt3);
             this.groupBox2.Controls.Add(this.comboBoxBelt2);
             this.groupBox2.Controls.Add(this.comboBoxBelt1);
-            this.groupBox2.Location = new System.Drawing.Point(207, 245);
+            this.groupBox2.Location = new System.Drawing.Point(207, 236);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(284, 85);
             this.groupBox2.TabIndex = 3;
@@ -585,23 +587,10 @@
             this.groupBox3.Controls.Add(this.textBoxCharName);
             this.groupBox3.Location = new System.Drawing.Point(207, 36);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(284, 207);
+            this.groupBox3.Size = new System.Drawing.Size(284, 194);
             this.groupBox3.TabIndex = 20;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Char Parameters";
-            // 
-            // buttonGambleSettings
-            // 
-            this.buttonGambleSettings.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonGambleSettings.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.buttonGambleSettings.Image = global::app.Properties.Resources.Application;
-            this.buttonGambleSettings.Location = new System.Drawing.Point(250, 131);
-            this.buttonGambleSettings.Name = "buttonGambleSettings";
-            this.buttonGambleSettings.Size = new System.Drawing.Size(31, 25);
-            this.buttonGambleSettings.TabIndex = 42;
-            this.toolTip1.SetToolTip(this.buttonGambleSettings, "Gamble Settings");
-            this.buttonGambleSettings.UseVisualStyleBackColor = true;
-            this.buttonGambleSettings.Click += new System.EventHandler(this.button3_Click);
             // 
             // linkLabel1
             // 
@@ -793,7 +782,7 @@
             // checkBoxUseMerc
             // 
             this.checkBoxUseMerc.AutoSize = true;
-            this.checkBoxUseMerc.Location = new System.Drawing.Point(10, 16);
+            this.checkBoxUseMerc.Location = new System.Drawing.Point(10, 14);
             this.checkBoxUseMerc.Name = "checkBoxUseMerc";
             this.checkBoxUseMerc.Size = new System.Drawing.Size(72, 17);
             this.checkBoxUseMerc.TabIndex = 35;
@@ -802,7 +791,7 @@
             // 
             // numericUpDownMercTakeHPUnder
             // 
-            this.numericUpDownMercTakeHPUnder.Location = new System.Drawing.Point(216, 13);
+            this.numericUpDownMercTakeHPUnder.Location = new System.Drawing.Point(235, 11);
             this.numericUpDownMercTakeHPUnder.Name = "numericUpDownMercTakeHPUnder";
             this.numericUpDownMercTakeHPUnder.Size = new System.Drawing.Size(41, 20);
             this.numericUpDownMercTakeHPUnder.TabIndex = 36;
@@ -810,7 +799,7 @@
             // label22
             // 
             this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(99, 17);
+            this.label22.Location = new System.Drawing.Point(118, 15);
             this.label22.Name = "label22";
             this.label22.Size = new System.Drawing.Size(115, 13);
             this.label22.TabIndex = 35;
@@ -818,15 +807,27 @@
             // 
             // groupBox4
             // 
+            this.groupBox4.Controls.Add(this.checkBoxTownMercDead);
             this.groupBox4.Controls.Add(this.checkBoxUseMerc);
             this.groupBox4.Controls.Add(this.numericUpDownMercTakeHPUnder);
             this.groupBox4.Controls.Add(this.label22);
-            this.groupBox4.Location = new System.Drawing.Point(207, 334);
+            this.groupBox4.Location = new System.Drawing.Point(207, 325);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(284, 41);
+            this.groupBox4.Size = new System.Drawing.Size(284, 50);
             this.groupBox4.TabIndex = 37;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Merc Parameters";
+            // 
+            // checkBoxTownMercDead
+            // 
+            this.checkBoxTownMercDead.AutoSize = true;
+            this.checkBoxTownMercDead.Location = new System.Drawing.Point(10, 31);
+            this.checkBoxTownMercDead.Name = "checkBoxTownMercDead";
+            this.checkBoxTownMercDead.Size = new System.Drawing.Size(117, 17);
+            this.checkBoxTownMercDead.TabIndex = 37;
+            this.checkBoxTownMercDead.Text = "Town if Merc Dead";
+            this.toolTip1.SetToolTip(this.checkBoxTownMercDead, "Go back to Town if the Merc is Dead");
+            this.checkBoxTownMercDead.UseVisualStyleBackColor = true;
             // 
             // groupBox5
             // 
@@ -929,32 +930,6 @@
             this.toolTip1.SetToolTip(this.checkBoxIDAtShop, "Disabled will ID at Cain");
             this.checkBoxIDAtShop.UseVisualStyleBackColor = true;
             // 
-            // buttonReload
-            // 
-            this.buttonReload.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonReload.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.buttonReload.Image = global::app.Properties.Resources.Load;
-            this.buttonReload.Location = new System.Drawing.Point(5, 6);
-            this.buttonReload.Name = "buttonReload";
-            this.buttonReload.Size = new System.Drawing.Size(31, 25);
-            this.buttonReload.TabIndex = 40;
-            this.toolTip1.SetToolTip(this.buttonReload, "Load/Import from a previous Settings File");
-            this.buttonReload.UseVisualStyleBackColor = true;
-            this.buttonReload.Click += new System.EventHandler(this.buttonReload_Click);
-            // 
-            // button1
-            // 
-            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.button1.Image = global::app.Properties.Resources.Save;
-            this.button1.Location = new System.Drawing.Point(364, 6);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 25);
-            this.button1.TabIndex = 38;
-            this.toolTip1.SetToolTip(this.button1, "Save current Settings");
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
             // button4
             // 
             this.button4.Location = new System.Drawing.Point(61, 246);
@@ -1004,27 +979,6 @@
             this.openFileDialog1.DefaultExt = "*.txt";
             this.openFileDialog1.Filter = "\'Char\' Settings|*.txt";
             this.openFileDialog1.Title = "Open \'PaladinHammer.txt\' or \'SorceressBlizzard.txt\'";
-            // 
-            // panelHelpKeys
-            // 
-            this.panelHelpKeys.BackgroundImage = global::app.Properties.Resources.BMBot10;
-            this.panelHelpKeys.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.panelHelpKeys.Controls.Add(this.button2);
-            this.panelHelpKeys.Location = new System.Drawing.Point(518, 248);
-            this.panelHelpKeys.Name = "panelHelpKeys";
-            this.panelHelpKeys.Size = new System.Drawing.Size(441, 190);
-            this.panelHelpKeys.TabIndex = 41;
-            this.panelHelpKeys.Visible = false;
-            // 
-            // button2
-            // 
-            this.button2.Image = global::app.Properties.Resources.Delete;
-            this.button2.Location = new System.Drawing.Point(416, 0);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(25, 25);
-            this.button2.TabIndex = 0;
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // panelGamble
             // 
@@ -1100,12 +1054,92 @@
             this.label28.TabIndex = 12;
             this.label28.Text = "Gamble Items";
             // 
+            // buttonSaveAsChar
+            // 
+            this.buttonSaveAsChar.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonSaveAsChar.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.buttonSaveAsChar.Image = global::app.Properties.Resources.SaveAs;
+            this.buttonSaveAsChar.Location = new System.Drawing.Point(386, 6);
+            this.buttonSaveAsChar.Name = "buttonSaveAsChar";
+            this.buttonSaveAsChar.Size = new System.Drawing.Size(31, 25);
+            this.buttonSaveAsChar.TabIndex = 43;
+            this.toolTip1.SetToolTip(this.buttonSaveAsChar, "Save as/Save current Settings to a New File");
+            this.buttonSaveAsChar.UseVisualStyleBackColor = true;
+            this.buttonSaveAsChar.Click += new System.EventHandler(this.buttonSaveAsChar_Click);
+            // 
+            // panelHelpKeys
+            // 
+            this.panelHelpKeys.BackgroundImage = global::app.Properties.Resources.BMBot10;
+            this.panelHelpKeys.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.panelHelpKeys.Controls.Add(this.button2);
+            this.panelHelpKeys.Location = new System.Drawing.Point(518, 248);
+            this.panelHelpKeys.Name = "panelHelpKeys";
+            this.panelHelpKeys.Size = new System.Drawing.Size(441, 190);
+            this.panelHelpKeys.TabIndex = 41;
+            this.panelHelpKeys.Visible = false;
+            // 
+            // button2
+            // 
+            this.button2.Image = global::app.Properties.Resources.Delete;
+            this.button2.Location = new System.Drawing.Point(416, 0);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(25, 25);
+            this.button2.TabIndex = 0;
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // buttonReload
+            // 
+            this.buttonReload.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonReload.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.buttonReload.Image = global::app.Properties.Resources.Load;
+            this.buttonReload.Location = new System.Drawing.Point(5, 6);
+            this.buttonReload.Name = "buttonReload";
+            this.buttonReload.Size = new System.Drawing.Size(31, 25);
+            this.buttonReload.TabIndex = 40;
+            this.toolTip1.SetToolTip(this.buttonReload, "Load/Import from a previous Settings File");
+            this.buttonReload.UseVisualStyleBackColor = true;
+            this.buttonReload.Click += new System.EventHandler(this.buttonReload_Click);
+            // 
+            // button1
+            // 
+            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button1.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.button1.Image = global::app.Properties.Resources.Save;
+            this.button1.Location = new System.Drawing.Point(416, 6);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 25);
+            this.button1.TabIndex = 38;
+            this.toolTip1.SetToolTip(this.button1, "Save current Settings");
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // buttonGambleSettings
+            // 
+            this.buttonGambleSettings.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonGambleSettings.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.buttonGambleSettings.Image = global::app.Properties.Resources.Application;
+            this.buttonGambleSettings.Location = new System.Drawing.Point(250, 131);
+            this.buttonGambleSettings.Name = "buttonGambleSettings";
+            this.buttonGambleSettings.Size = new System.Drawing.Size(31, 25);
+            this.buttonGambleSettings.TabIndex = 42;
+            this.toolTip1.SetToolTip(this.buttonGambleSettings, "Gamble Settings");
+            this.buttonGambleSettings.UseVisualStyleBackColor = true;
+            this.buttonGambleSettings.Click += new System.EventHandler(this.button3_Click);
+            // 
+            // saveFileDialog1
+            // 
+            this.saveFileDialog1.DefaultExt = "txt";
+            this.saveFileDialog1.Filter = "Char Settings|*.txt";
+            this.saveFileDialog1.Title = "Open Current Char Settings to a New File";
+            // 
             // FormCharSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlDark;
             this.ClientSize = new System.Drawing.Size(497, 548);
+            this.Controls.Add(this.buttonSaveAsChar);
             this.Controls.Add(this.panelGamble);
             this.Controls.Add(this.panelHelpKeys);
             this.Controls.Add(this.buttonReload);
@@ -1145,108 +1179,110 @@
             this.groupBox4.PerformLayout();
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
-            this.panelHelpKeys.ResumeLayout(false);
             this.panelGamble.ResumeLayout(false);
             this.panelGamble.PerformLayout();
             this.groupBox6.ResumeLayout(false);
             this.groupBox6.PerformLayout();
+            this.panelHelpKeys.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
-        }
-
-        #endregion
-
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ComboBox comboBoxType;
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.CheckBox checkBoxAttachRightHand;
-        private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.ComboBox comboBoxBelt2;
-        private System.Windows.Forms.ComboBox comboBoxBelt1;
-        private System.Windows.Forms.ComboBox comboBoxBelt4;
-        private System.Windows.Forms.ComboBox comboBoxBelt3;
-        private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.GroupBox groupBoxInventory;
-        private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.TextBox textBoxCharName;
-        private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.CheckBox checkBoxUseTeleport;
-        private System.Windows.Forms.NumericUpDown numericUpDownTakeRV;
-        private System.Windows.Forms.Label label18;
-        private System.Windows.Forms.NumericUpDown numericUpDownTakeMana;
-        private System.Windows.Forms.Label label17;
-        private System.Windows.Forms.NumericUpDown numericUpDownTakeHP;
-        private System.Windows.Forms.Label label16;
-        private System.Windows.Forms.NumericUpDown numericUpDownChickenHP;
-        private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.NumericUpDown numericUpDownGambleUntil;
-        private System.Windows.Forms.Label label20;
-        private System.Windows.Forms.NumericUpDown numericUpDownGambleAbove;
-        private System.Windows.Forms.Label label19;
-        private System.Windows.Forms.NumericUpDown numericUpDownKeyYPos;
-        private System.Windows.Forms.NumericUpDown numericUpDownKeyXPos;
-        private System.Windows.Forms.Label label21;
-        private System.Windows.Forms.CheckBox checkBoxUseMerc;
-        private System.Windows.Forms.NumericUpDown numericUpDownMercTakeHPUnder;
-        private System.Windows.Forms.Label label22;
-        private System.Windows.Forms.GroupBox groupBox4;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.CheckBox checkBoxUseBO;
-        private System.Windows.Forms.CheckBox checkBoxGrabGold;
-        private System.Windows.Forms.ToolTip toolTip1;
-        private System.Windows.Forms.GroupBox groupBox5;
-        private System.Windows.Forms.CheckBox checkBoxIDAtShop;
-        private System.Windows.Forms.CheckBox checkBoxDClone;
-        private System.Windows.Forms.CheckBox checkBoxGamble;
-        private System.Windows.Forms.Label label23;
-        private System.Windows.Forms.Button buttonReload;
-        private System.Windows.Forms.OpenFileDialog openFileDialog1;
-        private System.Windows.Forms.LinkLabel linkLabel1;
-        private System.Windows.Forms.Panel panelHelpKeys;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.ComboBox comboBoxAvoidImmune;
-        private System.Windows.Forms.Label label24;
-        private System.Windows.Forms.Label label27;
-        private System.Windows.Forms.Label label26;
-        private System.Windows.Forms.Label label25;
-        private System.Windows.Forms.CheckBox checkBoxClearAfterBoss;
-        private System.Windows.Forms.CheckBox checkBoxUseKeys;
-        private System.Windows.Forms.ComboBox textBoxLeftSkill;
-        private System.Windows.Forms.ComboBox textBoxBattleOrder;
-        private System.Windows.Forms.ComboBox textBoxLifeSkill;
-        private System.Windows.Forms.ComboBox textBoxCastDefenseSkill;
-        private System.Windows.Forms.ComboBox textBoxDefenseSkill;
-        private System.Windows.Forms.ComboBox textBoxFastMoveTeleport;
-        private System.Windows.Forms.ComboBox textBoxFastMoveTown;
-        private System.Windows.Forms.ComboBox textBoxRightSkill;
-        private System.Windows.Forms.ComboBox textBoxBattleCommand;
-        private System.Windows.Forms.ComboBox textBoxBattleCry;
-        private System.Windows.Forms.Button buttonGambleSettings;
-        private System.Windows.Forms.Panel panelGamble;
-        private System.Windows.Forms.Label label28;
-        private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.GroupBox groupBox6;
-        private System.Windows.Forms.ListView listViewGambleItems;
-        private System.Windows.Forms.ColumnHeader columnHeader1;
-        private System.Windows.Forms.Button buttonGambleClearItems;
-        private System.Windows.Forms.Button buttonGambleAddItem;
-        private System.Windows.Forms.Label label29;
-        private System.Windows.Forms.ComboBox comboBoxItemsNames;
-        private System.Windows.Forms.ComboBox comboBoxPot4;
-        private System.Windows.Forms.ComboBox comboBoxPot3;
-        private System.Windows.Forms.ComboBox comboBoxPot2;
-        private System.Windows.Forms.ComboBox comboBoxPot1;
     }
+
+    #endregion
+
+    private System.Windows.Forms.Label label1;
+    private System.Windows.Forms.ComboBox comboBoxType;
+    private System.Windows.Forms.GroupBox groupBox1;
+    private System.Windows.Forms.Label label4;
+    private System.Windows.Forms.Label label3;
+    private System.Windows.Forms.Label label2;
+    private System.Windows.Forms.Label label8;
+    private System.Windows.Forms.Label label7;
+    private System.Windows.Forms.Label label6;
+    private System.Windows.Forms.Label label5;
+    private System.Windows.Forms.CheckBox checkBoxAttachRightHand;
+    private System.Windows.Forms.GroupBox groupBox2;
+    private System.Windows.Forms.ComboBox comboBoxBelt2;
+    private System.Windows.Forms.ComboBox comboBoxBelt1;
+    private System.Windows.Forms.ComboBox comboBoxBelt4;
+    private System.Windows.Forms.ComboBox comboBoxBelt3;
+    private System.Windows.Forms.Label label12;
+    private System.Windows.Forms.Label label11;
+    private System.Windows.Forms.Label label10;
+    private System.Windows.Forms.Label label9;
+    private System.Windows.Forms.GroupBox groupBoxInventory;
+    private System.Windows.Forms.Label label13;
+    private System.Windows.Forms.TextBox textBoxCharName;
+    private System.Windows.Forms.Label label14;
+    private System.Windows.Forms.GroupBox groupBox3;
+    private System.Windows.Forms.CheckBox checkBoxUseTeleport;
+    private System.Windows.Forms.NumericUpDown numericUpDownTakeRV;
+    private System.Windows.Forms.Label label18;
+    private System.Windows.Forms.NumericUpDown numericUpDownTakeMana;
+    private System.Windows.Forms.Label label17;
+    private System.Windows.Forms.NumericUpDown numericUpDownTakeHP;
+    private System.Windows.Forms.Label label16;
+    private System.Windows.Forms.NumericUpDown numericUpDownChickenHP;
+    private System.Windows.Forms.Label label15;
+    private System.Windows.Forms.NumericUpDown numericUpDownGambleUntil;
+    private System.Windows.Forms.Label label20;
+    private System.Windows.Forms.NumericUpDown numericUpDownGambleAbove;
+    private System.Windows.Forms.Label label19;
+    private System.Windows.Forms.NumericUpDown numericUpDownKeyYPos;
+    private System.Windows.Forms.NumericUpDown numericUpDownKeyXPos;
+    private System.Windows.Forms.Label label21;
+    private System.Windows.Forms.CheckBox checkBoxUseMerc;
+    private System.Windows.Forms.NumericUpDown numericUpDownMercTakeHPUnder;
+    private System.Windows.Forms.Label label22;
+    private System.Windows.Forms.GroupBox groupBox4;
+    private System.Windows.Forms.Button button1;
+    private System.Windows.Forms.CheckBox checkBoxUseBO;
+    private System.Windows.Forms.CheckBox checkBoxGrabGold;
+    private System.Windows.Forms.ToolTip toolTip1;
+    private System.Windows.Forms.GroupBox groupBox5;
+    private System.Windows.Forms.CheckBox checkBoxIDAtShop;
+    private System.Windows.Forms.CheckBox checkBoxDClone;
+    private System.Windows.Forms.CheckBox checkBoxGamble;
+    private System.Windows.Forms.Label label23;
+    private System.Windows.Forms.Button buttonReload;
+    private System.Windows.Forms.OpenFileDialog openFileDialog1;
+    private System.Windows.Forms.LinkLabel linkLabel1;
+    private System.Windows.Forms.Panel panelHelpKeys;
+    private System.Windows.Forms.Button button2;
+    private System.Windows.Forms.ComboBox comboBoxAvoidImmune;
+    private System.Windows.Forms.Label label24;
+    private System.Windows.Forms.Label label27;
+    private System.Windows.Forms.Label label26;
+    private System.Windows.Forms.Label label25;
+    private System.Windows.Forms.CheckBox checkBoxClearAfterBoss;
+    private System.Windows.Forms.CheckBox checkBoxUseKeys;
+    private System.Windows.Forms.ComboBox textBoxLeftSkill;
+    private System.Windows.Forms.ComboBox textBoxBattleOrder;
+    private System.Windows.Forms.ComboBox textBoxLifeSkill;
+    private System.Windows.Forms.ComboBox textBoxCastDefenseSkill;
+    private System.Windows.Forms.ComboBox textBoxDefenseSkill;
+    private System.Windows.Forms.ComboBox textBoxFastMoveTeleport;
+    private System.Windows.Forms.ComboBox textBoxFastMoveTown;
+    private System.Windows.Forms.ComboBox textBoxRightSkill;
+    private System.Windows.Forms.ComboBox textBoxBattleCommand;
+    private System.Windows.Forms.ComboBox textBoxBattleCry;
+    private System.Windows.Forms.Button buttonGambleSettings;
+    private System.Windows.Forms.Panel panelGamble;
+    private System.Windows.Forms.Label label28;
+    private System.Windows.Forms.Button button4;
+    private System.Windows.Forms.GroupBox groupBox6;
+    private System.Windows.Forms.ListView listViewGambleItems;
+    private System.Windows.Forms.ColumnHeader columnHeader1;
+    private System.Windows.Forms.Button buttonGambleClearItems;
+    private System.Windows.Forms.Button buttonGambleAddItem;
+    private System.Windows.Forms.Label label29;
+    private System.Windows.Forms.ComboBox comboBoxItemsNames;
+    private System.Windows.Forms.ComboBox comboBoxPot4;
+    private System.Windows.Forms.ComboBox comboBoxPot3;
+    private System.Windows.Forms.ComboBox comboBoxPot2;
+    private System.Windows.Forms.ComboBox comboBoxPot1;
+    private System.Windows.Forms.CheckBox checkBoxTownMercDead;
+    private System.Windows.Forms.Button buttonSaveAsChar;
+    private System.Windows.Forms.SaveFileDialog saveFileDialog1;
 }
