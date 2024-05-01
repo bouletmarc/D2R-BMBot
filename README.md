@@ -28,10 +28,10 @@ I accept no responsibility for any outcomes for the usage of this tool.
 
 1. Download this [DIABLO2 - LOD TORRENT][1]
 2. Extract 'Diablo II.7z' contents somewhere like on your desktop, create a new folder called 'DiabloII'
-3. Download the [1.13C patch][2]
-4. Install the 1.13C over Diablo2
-5. You don't need to open D2-LOD 1.13C when it's done, you can leave it like this
-6. Add the path of the folder 'DiabloII' from your desktop to the bot Settings.txt
+3. Open the 'DiabloII' folder, go into 'Stuff/Updates'
+4. Open the file 'LoDPatch1.13c.rar'
+5. Extract the Files inside the 'DiabloII' folder
+6. Add the path of the folder 'DiabloII' to the bot Settings.txt
 
 *IMPORTANT, THE PATH WHERE 'DIABLO2' MUST NOT CONTAIN ANY WHITESPACE IN IT!*
 
@@ -115,4 +115,3 @@ I accept no responsibility for any outcomes for the usage of this tool.
   - Cubing script
 
 [1]: https://ia903402.us.archive.org/5/items/diablo-ii-lod/diablo-ii-lod_archive.torrent
-[2]: https://www.moddb.com/games/diablo-2-lod/downloads/lod-patch-113c-for-windows
