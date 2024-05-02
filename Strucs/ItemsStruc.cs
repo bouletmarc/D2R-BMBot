@@ -80,10 +80,10 @@ public class ItemsStruc
 
     public List<long> BadItemsOnCursorIDList = new List<long>();
     public bool HasGotTheBadItemOnCursor = false;
-
     public List<long> BadItemsOnGroundPointerList = new List<long>();
-
     public List<long> AvoidItemsOnGroundPointerList = new List<long>();
+
+    public bool AlreadyEmptyedInventory = false;
 
     public void SetForm1(Form1 Form1_1)
     {
@@ -410,6 +410,10 @@ public class ItemsStruc
             ItemOnCursor = false;
             ItemOnCursorName = "";
         }
+        else
+        {
+            if (TriesToPickItemCount >= 50) return false;
+        }
 
         Form1_0.PatternsScan_0.scanForUnitsPointer("item");
 
@@ -733,6 +737,7 @@ public class ItemsStruc
 
         if (IsPickingItem) TriesToPickItemCount = 0; //nothing to pick!
         if (IsPickingItem) IsGrabbingItemOnGround = false;
+        if (IsPickingItem) AlreadyEmptyedInventory = false;
         //Form1_0.method_1("-----", Color.Black);
 
         return false;

@@ -288,7 +288,7 @@ Perfect Diamond
 //#######################################
 //##### Helms
 [Name] == GrimHelm && [Quality] == unique && [Flag] != ethereal // Vampire Gaze
-//[Name] == Shako && [Quality] == unique && [Flag] == ethereal && [Defense] >= 170 // Harlequin Crest
+//[Name] == Shako && [Quality] == unique && [Flag] == ethereal && [Defense] >= 170 // Harlequin Crest 
 //[Name] == Shako && [Quality] == unique && [Defense] >= 120 // Harlequin Crest
 [Name] == Shako && [Quality] == unique // Harlequin Crest
 [Name] == Demonhead && [Quality] == unique // Andariel's Visage

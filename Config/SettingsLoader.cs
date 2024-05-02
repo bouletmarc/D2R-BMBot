@@ -803,6 +803,9 @@ public class SettingsLoader
             bool DoingName = true;
             int NormalStartAt = 0;
 
+            List<string> AllNormalByNamePickit = new List<string>();
+            List<string> AllNormalByTypePickit = new List<string>();
+
             AllLines = File.ReadAllLines(File_ItemsSettings);
             for (int i = 0; i < AllLines.Length; i++)
             {
@@ -916,43 +919,62 @@ public class SettingsLoader
                                     }
                                 }
                             }
-                            foreach (var ThisDir in Form1_0.ItemsAlert_0.PickItemsPotions)
-                            {
-                                if (ThisDir.Key == ThisItem.Replace(" ", ""))
-                                {
-                                    if (!PickItem && ThisDir.Value) AllLines[i] = ThisItem + ThisDesc;
-                                    if (PickItem && !ThisDir.Value) AllLines[i] = "//" + ThisItem + ThisDesc;
-                                }
-                            }
                         }
                         if (DoingNormal)
                         {
                             if (DoingName)
                             {
+                                AllNormalByNamePickit.Add(ThisItem);
+                                int ItemIndex = 1;
+                                for (int k = 0; k < AllNormalByNamePickit.Count - 1; k++)
+                                {
+                                    if (AllNormalByNamePickit[k] == ThisItem) ItemIndex++;
+                                }
+                                if (ItemIndex > 1) ThisItem = ThisItem + ItemIndex;
                                 if (Form1_0.ItemsAlert_0.PickItemsNormal_ByName.ContainsKey(ThisItem))
-                                //foreach (var ThisDir in Form1_0.ItemsAlert_0.PickItemsNormal_ByName)
                                 {
                                     if (!PickItem && Form1_0.ItemsAlert_0.PickItemsNormal_ByName[ThisItem]) AllLines[i] = FullLine + ThisDesc;
                                     if (PickItem && !Form1_0.ItemsAlert_0.PickItemsNormal_ByName[ThisItem]) AllLines[i] = "//" + FullLine + ThisDesc;
-                                    /*if (ThisDir.Key == ThisItem)
+                                }
+                                else
+                                {
+                                    if (ThisItem.Contains("Potion"))
                                     {
-                                        if (!PickItem && ThisDir.Value) AllLines[i] = FullLine + ThisDesc;
-                                        if (PickItem && !ThisDir.Value) AllLines[i] = "//" + FullLine + ThisDesc;
-                                    }*/
+                                        //Console.WriteLine("Doing: " + ThisItem);
+                                        foreach (var ThisDir in Form1_0.ItemsAlert_0.PickItemsPotions)
+                                        {
+                                            if (ThisDir.Key == ThisItem.Replace(" ", ""))
+                                            {
+                                                //Console.WriteLine("Doing: " + ThisItem);
+                                                if (!PickItem && ThisDir.Value) AllLines[i] = "[Name] == " + ThisItem + ThisDesc;
+                                                if (PickItem && !ThisDir.Value) AllLines[i] = "//[Name] == " + ThisItem + ThisDesc;
+                                                break;
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        Form1_0.method_1("Error saving item (by name): " + ThisItem, Color.Red);
+                                    }
                                 }
                             }
                             else
                             {
+                                AllNormalByTypePickit.Add(ThisItem);
+                                int ItemIndex = 1;
+                                for (int k = 0; k < AllNormalByTypePickit.Count - 1; k++)
+                                {
+                                    if (AllNormalByTypePickit[k] == ThisItem) ItemIndex++;
+                                }
+                                if (ItemIndex > 1) ThisItem = ThisItem + ItemIndex;
                                 if (Form1_0.ItemsAlert_0.PickItemsNormal_ByType.ContainsKey(ThisItem))
-                                //foreach (var ThisDir in Form1_0.ItemsAlert_0.PickItemsNormal_ByType)
                                 {
                                     if (!PickItem && Form1_0.ItemsAlert_0.PickItemsNormal_ByType[ThisItem]) AllLines[i] = FullLine + ThisDesc;
                                     if (PickItem && !Form1_0.ItemsAlert_0.PickItemsNormal_ByType[ThisItem]) AllLines[i] = "//" + FullLine + ThisDesc;
-                                    /*if (ThisDir.Key == ThisItem)
-                                    {
-                                        if (!PickItem && ThisDir.Value) AllLines[i] = FullLine + ThisDesc;
-                                        if (PickItem && !ThisDir.Value) AllLines[i] = "//" + FullLine + ThisDesc;
-                                    }*/
+                                }
+                                else
+                                {
+                                    Form1_0.method_1("Error saving item (by type): " + ThisItem, Color.Red);
                                 }
                             }
                         }
@@ -1301,7 +1323,7 @@ public class SettingsLoader
         {
             for (int i = 0; i < AllLines.Length; i++)
             {
-                if (AllLines[i].Length > 0)
+                if (AllLines[i].Length > 3)
                 {
                     if (AllLines[i][0] != '/' && AllLines[i][0] != '#')
                     {
@@ -1313,7 +1335,7 @@ public class SettingsLoader
                     }
                     else
                     {
-                        if (AllLines[i][0] != '/' && AllLines[i][2] != '#')
+                        if (AllLines[i][2] != '#')
                         {
                             AllLines[i] = AllLines[i].Substring(2);
                             if (AllLines[i].Contains("="))

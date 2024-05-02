@@ -17,27 +17,26 @@ public class Gamble
 
     public bool CanGamble()
     {
-        if (GambleType == 0)
-        {
-            return (Form1_0.PlayerScan_0.PlayerGoldInStash >= CharConfig.GambleAboveGoldAmount + 50000); //gamble ring
-        }
-        if (GambleType >= 1)
-        {
-            return (Form1_0.PlayerScan_0.PlayerGoldInStash >= CharConfig.GambleAboveGoldAmount + 63000); //gamble ammy
-        }
-        return false;
+        return (Form1_0.PlayerScan_0.PlayerGoldInStash >= CharConfig.GambleAboveGoldAmount);
     }
 
     public bool CanStillGamble()
     {
-        if (GambleType == 0)
+        string GambleThisItem = CharConfig.GambleItems[GambleType];
+        if (Form1_0.ItemsStruc_0.GetShopItem(GambleThisItem, true))
+        {
+            return (Form1_0.PlayerScan_0.PlayerGoldInStash >= CharConfig.GambleUntilGoldAmount + Form1_0.ItemsStruc_0.GetValuesFromStats(Enums.Attribute.Value));
+        }
+
+        //#######
+        /*if (GambleType == 0)
         {
             return (Form1_0.PlayerScan_0.PlayerGoldInStash >= CharConfig.GambleUntilGoldAmount + 50000); //gamble ring
         }
         if (GambleType >= 1)
         {
             return (Form1_0.PlayerScan_0.PlayerGoldInStash >= CharConfig.GambleUntilGoldAmount + 63000); //gamble ammy
-        }
+        }*/
         return false;
     }
 

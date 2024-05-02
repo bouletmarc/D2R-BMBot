@@ -7,7 +7,7 @@
 //#######	KeySkillfastMoveOutsideTown=Teleport
 //#######	KeySkillDefenseAura=Teleport
 //#######	KeySkillCastDefense=Frozen Armor
-//#######	KeySkillLifeAura=Energy Shield
+//#######	KeySkillLifeAura=Energy Shield 
 //#######################################
 //#######################################
 //SKILLS KEYS SETTINGS (FOR BLIZZARD SORCERESS)

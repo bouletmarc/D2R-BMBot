@@ -464,6 +464,12 @@ public class Chaos
                                     CurrentStep++;
                                 }
                             }
+                            else
+                            {
+                                Form1_0.InventoryStruc_0.DumpBadItemsOnGround();
+                                TimeSetForWaitingUniqueBoss = false;
+                                CurrentStep++;
+                            }
                         }
                     }
                     //######

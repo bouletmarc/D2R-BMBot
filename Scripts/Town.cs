@@ -227,7 +227,7 @@ public class Town
             Form1_0.Battle_0.ClearingArea = false;
             Form1_0.Battle_0.MoveTryCount = 0;
 
-            Console.WriteLine("town... " + CurrentScript);
+            //Console.WriteLine("town... " + CurrentScript);
 
             //switch town
             if (CurrentScript == 0)

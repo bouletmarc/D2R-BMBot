@@ -40,7 +40,7 @@ using static MapAreaStruc;
 public partial class Form1 : Form
 {
 
-    public string BotVersion = "V2.94";
+    public string BotVersion = "V2.95";
 
     public string D2_LOD_113C_Path = "";
 
@@ -111,6 +111,8 @@ public partial class Form1 : Form
     public int TotalChickenCount = 0;
     public int TotalDeadCount = 0;
     public int TotalChickenByTimeCount = 0;
+
+    public List<object> AllClassInstances = new List<object>();
 
     public ItemsStruc ItemsStruc_0;
     public Mem Mem_0;
@@ -223,6 +225,10 @@ public partial class Form1 : Form
         DESKTOPVERTRES = 117,
     }
 
+    /*public void TestMethod()
+    {
+        Console.WriteLine("Executing MyMethod from script #3...");
+    }*/
 
     // REQUIRED STRUCTS
     public struct MEMORY_BASIC_INFORMATION
@@ -264,6 +270,13 @@ public partial class Form1 : Form
                                            //richTextBox2.Visible = false;
 
         //ModifyMonsterList();
+
+        //overlay graphics
+        if (overlayForm == null || overlayForm.IsDisposed)
+        {
+            overlayForm = new OverlayForm(Form1_0);
+        }
+        overlayForm.Show();
 
         comboBoxItemsCategory.SelectedIndex = 0;
 
@@ -356,9 +369,10 @@ public partial class Form1 : Form
         ChaosRush_0 = new ChaosRush();
         BaalRush_0 = new BaalRush();
 
+        AllClassInstances = new List<object>();
         //ScriptsLoader_0 = new ScriptsLoader();
         //ScriptsLoader_0.SetForm1(Form1_0);
-        //ScriptsLoader_0.LoadScripts();
+        //ScriptsLoader_0.LoadScripts(Application.StartupPath + @"\Scripts\Andariel.cs");
 
         ItemsStruc_0.SetForm1(Form1_0);
         Mem_0.SetForm1(Form1_0);
@@ -429,13 +443,6 @@ public partial class Form1 : Form
         AnyaRush_0.SetForm1(Form1_0);
         ChaosRush_0.SetForm1(Form1_0);
         BaalRush_0.SetForm1(Form1_0);
-
-        //overlay graphics
-        if (overlayForm == null || overlayForm.IsDisposed)
-        {
-            overlayForm = new OverlayForm(Form1_0);
-        }
-        overlayForm.Show();
 
         SettingsLoader_0.LoadSettings();
 
@@ -1091,6 +1098,7 @@ public partial class Form1 : Form
 
                                 if (CharConfig.RunMapHackOnly)
                                 {
+                                    ItemsStruc_0.GetItems(false);
                                     SetProcessingTime();
                                     if (!Running && RestartingBot)
                                     {
@@ -1107,6 +1115,7 @@ public partial class Form1 : Form
                                 {
                                     if (CharConfig.RunMapHackPickitOnly)
                                     {
+                                        ItemsStruc_0.GetItems(false);
                                         SetProcessingTime();
                                         if (!Running && RestartingBot)
                                         {

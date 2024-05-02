@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WindowsInput;
 
 public class KeyMouse
 {
@@ -66,12 +67,16 @@ public class KeyMouse
     [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
     private static extern IntPtr GetModuleHandle(string lpModuleName);
 
+    InputSimulator sim;
+
     //###############################################
     //###############################################
 
     public void SetForm1(Form1 form1_1)
     {
         Form1_0 = form1_1;
+
+        sim = new InputSimulator();
     }
 
     private static IntPtr CreateLParam(int LoWord, int HiWord)
@@ -179,6 +184,7 @@ public class KeyMouse
         keybd_event(VK_CONTROL, 0, 0, 0);
         //PressKeyHold(Keys.LControlKey);
         SendMessage((int)Form1_0.hWnd, WM_SYSKEYDOWN, (ushort)Keys.LControlKey, (IntPtr)0);
+        sim.Keyboard.KeyDown(WindowsInput.Native.VirtualKeyCode.CONTROL);
 
         PostMessage((int)Form1_0.hWnd, WM_LBUTTONDOWN, 0x00000001, (IntPtr)0);
         PostMessage((int)Form1_0.hWnd, WM_LBUTTONUP, 0x00000000, (IntPtr)0);
@@ -187,6 +193,7 @@ public class KeyMouse
         keybd_event(VK_CONTROL, 0, KEYEVENTF_KEYUP, 0);
         //ReleaseKey(Keys.LControlKey);
         SendMessage((int)Form1_0.hWnd, WM_SYSKEYUP, (ushort)Keys.LControlKey, (IntPtr)0);
+        sim.Keyboard.KeyUp(WindowsInput.Native.VirtualKeyCode.CONTROL);
     }
 
     public void SendSHIFT_RIGHTCLICK(int ThX, int ThY)
@@ -194,9 +201,13 @@ public class KeyMouse
         MouseMoveTo(ThX, ThY);
 
         PressKeyHold(Keys.LShiftKey);
+        sim.Keyboard.KeyDown(WindowsInput.Native.VirtualKeyCode.SHIFT);
+
         SendMessage((int)Form1_0.hWnd, WM_RBUTTONDOWN, 0x00000001, (IntPtr)0);
         SendMessage((int)Form1_0.hWnd, WM_RBUTTONUP, 0x00000000, (IntPtr)0);
+
         ReleaseKey(Keys.LShiftKey);
+        sim.Keyboard.KeyUp(WindowsInput.Native.VirtualKeyCode.SHIFT);
     }
 
     public void SendSHIFT_CLICK(int ThX, int ThY)
@@ -205,10 +216,14 @@ public class KeyMouse
 
         //ReleaseKey(Keys.LShiftKey);
         PressKeyHold(Keys.LShiftKey);
+        sim.Keyboard.KeyDown(WindowsInput.Native.VirtualKeyCode.SHIFT);
+
         //PostMessage((int)Form1_0.hWnd, WM_LBUTTONUP, 0x00000000, (IntPtr)0);
         PostMessage((int)Form1_0.hWnd, WM_LBUTTONDOWN, 0x00000001, (IntPtr)0);
         PostMessage((int)Form1_0.hWnd, WM_LBUTTONUP, 0x00000000, (IntPtr)0);
+
         ReleaseKey(Keys.LShiftKey);
+        sim.Keyboard.KeyUp(WindowsInput.Native.VirtualKeyCode.SHIFT);
     }
 
     public void SendSHIFT_CLICK_ATTACK(int ThX, int ThY)
@@ -217,13 +232,17 @@ public class KeyMouse
 
         //ReleaseKey(Keys.LShiftKey);
         PressKeyHold(Keys.LShiftKey);
+        sim.Keyboard.KeyDown(WindowsInput.Native.VirtualKeyCode.SHIFT);
+
         //PostMessage((int)Form1_0.hWnd, WM_LBUTTONDOWN, 0x00000001, (IntPtr)0);
         //PostMessage((int)Form1_0.hWnd, WM_LBUTTONUP, 0x00000000, (IntPtr)0);
         SendMessage((int)Form1_0.hWnd, WM_LBUTTONDOWN, 0x00000001, (IntPtr)0);
         //SendMessage((int)Form1_0.hWnd, WM_LBUTTONDOWN, 0x00000001, CreateLParam(150, 150));
         //PostMessage((int)Form1_0.hWnd, WM_LBUTTONUP, 0x00000000, (IntPtr)0);
         //SendMessage((int)Form1_0.hWnd, WM_LBUTTONUP, 0x00000000, CreateLParam(150, 150));
+
         ReleaseKey(Keys.LShiftKey);
+        sim.Keyboard.KeyUp(WindowsInput.Native.VirtualKeyCode.SHIFT);
     }
 
     public void SendSHIFT_CLICK_ATTACK_CAST_NO_MOVE(int ThX, int ThY)
@@ -232,13 +251,17 @@ public class KeyMouse
 
         //ReleaseKey(Keys.LShiftKey);
         PressKeyHold(Keys.LShiftKey);
+        sim.Keyboard.KeyDown(WindowsInput.Native.VirtualKeyCode.SHIFT);
+
         PostMessage((int)Form1_0.hWnd, WM_LBUTTONDOWN, 0x00000001, (IntPtr)0);
         //PostMessage((int)Form1_0.hWnd, WM_LBUTTONUP, 0x00000000, (IntPtr)0);
         //SendMessage((int)Form1_0.hWnd, WM_LBUTTONDOWN, 0x00000001, (IntPtr)0);
         //SendMessage((int)Form1_0.hWnd, WM_LBUTTONDOWN, 0x00000001, CreateLParam(150, 150));
         PostMessage((int)Form1_0.hWnd, WM_LBUTTONUP, 0x00000000, (IntPtr)0);
         //SendMessage((int)Form1_0.hWnd, WM_LBUTTONUP, 0x00000000, CreateLParam(150, 150));
+
         ReleaseKey(Keys.LShiftKey);
+        sim.Keyboard.KeyUp(WindowsInput.Native.VirtualKeyCode.SHIFT);
     }
 
     public void PressPotionKey(System.Windows.Forms.Keys ThisK)
@@ -250,9 +273,13 @@ public class KeyMouse
     public void PressPotionKeyMerc(System.Windows.Forms.Keys ThisK)
     {
         PressKeyHold(Keys.LShiftKey);
+        sim.Keyboard.KeyDown(WindowsInput.Native.VirtualKeyCode.SHIFT);
+
         PostMessage((int)Form1_0.hWnd, WM_SYSKEYDOWN, (ushort)ThisK, (IntPtr)0);
         PostMessage((int)Form1_0.hWnd, WM_SYSKEYUP, (ushort)ThisK, (IntPtr)0);
+
         ReleaseKey(Keys.LShiftKey);
+        sim.Keyboard.KeyUp(WindowsInput.Native.VirtualKeyCode.SHIFT);
     }
 
     public void MouseMoveTo(int ThX, int ThY)

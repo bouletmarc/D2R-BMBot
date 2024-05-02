@@ -54,14 +54,14 @@ public class Shop
         ShopForHP = Form1_0.BeltStruc_0.MissingHPPot;
         ShopForMana = Form1_0.BeltStruc_0.MissingManaPot;
         ShopForTP = (Form1_0.InventoryStruc_0.HUDItems_tpscrolls <= 2);
-        ShopForKey = (Form1_0.InventoryStruc_0.HUDItems_keys <= 3);
+        ShopForKey = (Form1_0.InventoryStruc_0.HUDItems_keys <= 3) && CharConfig.UseKeys;
         ShopForRegainHP = Form1_0.PlayerScan_0.ShouldSeeShopForHP();
 
         if (Form1_0.InventoryStruc_0.HasInventoryItemsForShop()
             || Form1_0.BeltStruc_0.MissingHPPot
             || Form1_0.BeltStruc_0.MissingManaPot
             || Form1_0.InventoryStruc_0.HUDItems_tpscrolls <= 2
-            || Form1_0.InventoryStruc_0.HUDItems_keys <= 3
+            || (Form1_0.InventoryStruc_0.HUDItems_keys <= 3 && CharConfig.UseKeys)
             || Form1_0.PlayerScan_0.ShouldSeeShopForHP())
         {
             return true;

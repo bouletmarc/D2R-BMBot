@@ -7,7 +7,7 @@
 //#######	KeySkillfastMoveOutsideTown=Teleport if have Teleport else Vigor
 //#######	KeySkillDefenseAura=Defiance
 //#######	KeySkillCastDefense=Sacred Shield
-//#######	KeySkillLifeAura=Payer
+//#######	KeySkillLifeAura=Payer 
 //#######################################
 //#######################################
 //SKILLS KEYS SETTINGS (FOR HAMMER PALADIN)

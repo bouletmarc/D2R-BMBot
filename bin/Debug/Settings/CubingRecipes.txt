@@ -1,5 +1,5 @@
 //########################################
-//SET ALL CUBING RECIPES TO PERFORM
+//SET ALL CUBING RECIPES TO PERFORM 
 //########################################
 Flawless Emerald+Flawless Emerald+Flawless Emerald=Perfect Emerald
 Flawless Sapphire+Flawless Sapphire+Flawless Sapphire=Perfect Sapphire

@@ -5,7 +5,7 @@ StartStopKey=101
 PauseResumeKey=102
 
 //#######################################
-//BOT SETTINGS (USE ONLY CHAOS OR BAAL, NOT BOTH AT SAME TIME)
+//BOT SETTINGS (USE ONLY CHAOS OR BAAL, NOT BOTH AT SAME TIME) 
 //#######################################
 MaxGameTime=7
 LogNotUsefulErrors=false

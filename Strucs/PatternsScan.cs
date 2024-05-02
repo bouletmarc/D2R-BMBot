@@ -26,6 +26,8 @@ public class PatternsScan
     public List<long> AllPossibleObjectsPointers = new List<long>();
     public List<long> AllPossibleNPCPointers = new List<long>();
 
+    public List<long> AllScannedPointers = new List<long>();
+
     //"04 00 00 00 ?? ?? 00 00";
     byte[] ThisCheckbytes = new byte[] { 0x04, 0x00, 0x00, 0x00, 0xff, 0xff, 0x00, 0x00 };
     public int[] DontCheckUnitIndexes = new int[] { 0, 0, 0, 0, 1, 1, 0, 0 };
@@ -648,8 +650,8 @@ public class PatternsScan
             }
         }
 
-        UnitPatternScanV1(SearchUnitsType);
         checkForMissingPointers(SearchUnitsType);
+        UnitPatternScanV1(SearchUnitsType);
     }
 
     public void UnitPatternScanV1(string SearchUnitsType)
@@ -723,11 +725,13 @@ public class PatternsScan
 
         //Console.WriteLine("Unit start: 0x" + CheckThisI.ToString("X"));
         //Console.WriteLine("Unit end: 0x" + (CheckThisI + ((0x48 * ScanUnitsNumber / 2)) + ((0x170 * ScanUnitsNumber / 2))).ToString("X"));
-
+        AllScannedPointers = new List<long>();
         for (int i = 0; i < ScanUnitsNumber; i++)
         {
             if ((i % 2) == 1) CheckThisI += 0x48;
             else CheckThisI += 0x170;
+
+            AllScannedPointers.Add(CheckThisI);
 
             if (SearchUnitsType == "item")
             {
@@ -755,6 +759,75 @@ public class PatternsScan
                 ThisCheckbytes = new byte[] { (byte)UnitType.NPC, 0x00, 0x00, 0x00, 0xff, 0xff, 0x00, 0x00 };
                 Form1_0.Mem_0.ReadRawMemory(CheckThisI, ref UnitBuffer, UnitBuffer.Length);
                 unitPatternScan(CheckThisI, "NPC");
+            }
+        }
+
+        if (SearchUnitsType == "item")
+        {
+            for (int i = 0; i < AllItemsPointers.Count; i++)
+            {
+                CheckThisI = AllItemsPointers[i];
+
+                if (!Form1_0.ItemsStruc_0.IsIncludedInList(AllScannedPointers, CheckThisI))
+                {
+                    //AllScannedPointers.Add(CheckThisI);
+                    //Form1_0.method_1("Missed item pointer: " + CheckThisI.ToString("X"), Color.Red);
+
+                    ThisCheckbytes = new byte[] { (byte)UnitType.Item, 0x00, 0x00, 0x00, 0xff, 0xff, 0x00, 0x00 };
+                    Form1_0.Mem_0.ReadRawMemory(CheckThisI, ref UnitBuffer, UnitBuffer.Length);
+                    unitPatternScan(CheckThisI, "item");
+                }
+            }
+        }
+        if (SearchUnitsType == "player")
+        {
+            for (int i = 0; i < AllPlayersPointers.Count; i++)
+            {
+                CheckThisI = AllPlayersPointers[i];
+
+                if (!Form1_0.ItemsStruc_0.IsIncludedInList(AllScannedPointers, CheckThisI))
+                {
+                    //AllScannedPointers.Add(CheckThisI);
+                    //Form1_0.method_1("Missed player pointer: " + CheckThisI.ToString("X"), Color.Red);
+
+                    ThisCheckbytes = new byte[] { (byte)UnitType.Player, 0x00, 0x00, 0x00, 0xff, 0xff, 0x00, 0x00 };
+                    Form1_0.Mem_0.ReadRawMemory(CheckThisI, ref UnitBuffer, UnitBuffer.Length);
+                    unitPatternScan(CheckThisI, "player");
+                }
+            }
+        }
+        if (SearchUnitsType == "objects")
+        {
+            for (int i = 0; i < AllObjectsPointers.Count; i++)
+            {
+                CheckThisI = AllObjectsPointers[i];
+
+                if (!Form1_0.ItemsStruc_0.IsIncludedInList(AllScannedPointers, CheckThisI))
+                {
+                    //AllScannedPointers.Add(CheckThisI);
+                    //Form1_0.method_1("Missed object pointer: " + CheckThisI.ToString("X"), Color.Red);
+
+                    ThisCheckbytes = new byte[] { (byte)UnitType.GameObject, 0x00, 0x00, 0x00, 0xff, 0xff, 0x00, 0x00 };
+                    Form1_0.Mem_0.ReadRawMemory(CheckThisI, ref UnitBuffer, UnitBuffer.Length);
+                    unitPatternScan(CheckThisI, "objects");
+                }
+            }
+        }
+        if (SearchUnitsType == "NPC")
+        {
+            for (int i = 0; i < AllNPCPointers.Count; i++)
+            {
+                CheckThisI = AllNPCPointers[i];
+
+                if (!Form1_0.ItemsStruc_0.IsIncludedInList(AllScannedPointers, CheckThisI))
+                {
+                    //AllScannedPointers.Add(CheckThisI);
+                    //Form1_0.method_1("Missed npc pointer: " + CheckThisI.ToString("X"), Color.Red);
+
+                    ThisCheckbytes = new byte[] { (byte)UnitType.NPC, 0x00, 0x00, 0x00, 0xff, 0xff, 0x00, 0x00 };
+                    Form1_0.Mem_0.ReadRawMemory(CheckThisI, ref UnitBuffer, UnitBuffer.Length);
+                    unitPatternScan(CheckThisI, "NPC");
+                }
             }
         }
     }

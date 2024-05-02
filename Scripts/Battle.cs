@@ -486,7 +486,7 @@ public class Battle
                     if (!IsIncludedInList(IgnoredRooms_InArea, RemovingRoomsAt[i]))
                     {
                         IgnoredRooms_InArea.Add(RemovingRoomsAt[i]);
-                        Form1_0.method_1("Removed Room: " + RemovingRoomsAt[i] + ", remaining: " + (AllRooms_InArea.Count - IgnoredRooms_InArea.Count), Color.Red);
+                        //Form1_0.method_1("Removed Room: " + RemovingRoomsAt[i] + ", remaining: " + (AllRooms_InArea.Count - IgnoredRooms_InArea.Count), Color.Red);
                     }
                 }
                 catch { }

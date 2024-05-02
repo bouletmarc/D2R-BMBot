@@ -240,7 +240,11 @@ public class InventoryStruc
                 break;
             }
         }
-        if (!HasItemItemInInventory) Form1_0.ItemsStruc_0.TriesToPickItemCount = 0;
+        if (!HasItemItemInInventory && !Form1_0.ItemsStruc_0.AlreadyEmptyedInventory)
+        {
+            Form1_0.ItemsStruc_0.TriesToPickItemCount = 0;
+            Form1_0.ItemsStruc_0.AlreadyEmptyedInventory = true;
+        }
         //#########################################
 
         bool HasAnyItemToDump = false;

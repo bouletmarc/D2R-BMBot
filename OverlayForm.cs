@@ -456,15 +456,18 @@ public partial class OverlayForm : Form
                     DrawString(e, MapTxt, drawFontBold, drawBrushWhite, 1360 - (ThisS2.Width * ScaleScreenSizeInverted), 935, true);
 
                     //Print Items Grab/Battle Infos
-                    if (Form1_0.ItemsStruc_0.IsGrabbingItemOnGround)
+                    if (!CharConfig.RunMapHackOnly && !CharConfig.RunMapHackPickitOnly && !CharConfig.RunItemGrabScriptOnly)
                     {
-                        string ItemTxt = Form1_0.ItemsStruc_0.ItemNAAME + "(" + Form1_0.ItemsStruc_0.txtFileNo + "), Pos:" + Form1_0.ItemsStruc_0.itemx + ", " + Form1_0.ItemsStruc_0.itemy + " (tries:" + (Form1_0.ItemsStruc_0.TriesToPickItemCount + 1) + "/50)";
-                        DrawString(e, ItemTxt, drawFontBold, drawBrushWhite, 560, 910, true);
-                    }
-                    else if (Form1_0.Battle_0.DoingBattle || Form1_0.Battle_0.ClearingArea)
-                    {
-                        string MobsTxt = (EnumsMobsNPC.MonsterType)((int)Form1_0.MobsStruc_0.txtFileNo) + "(" + Form1_0.MobsStruc_0.txtFileNo + "), HP:" + Form1_0.MobsStruc_0.MobsHP + ", Pos:" + Form1_0.MobsStruc_0.xPosFinal + ", " + Form1_0.MobsStruc_0.yPosFinal;
-                        DrawString(e, MobsTxt, drawFontBold, drawBrushWhite, 560, 910, true);
+                        if (Form1_0.ItemsStruc_0.IsGrabbingItemOnGround)
+                        {
+                            string ItemTxt = Form1_0.ItemsStruc_0.ItemNAAME + "(" + Form1_0.ItemsStruc_0.txtFileNo + "), Pos:" + Form1_0.ItemsStruc_0.itemx + ", " + Form1_0.ItemsStruc_0.itemy + " (tries:" + (Form1_0.ItemsStruc_0.TriesToPickItemCount + 1) + "/50)";
+                            DrawString(e, ItemTxt, drawFontBold, drawBrushWhite, 560, 910, true);
+                        }
+                        else if (Form1_0.Battle_0.DoingBattle || Form1_0.Battle_0.ClearingArea)
+                        {
+                            string MobsTxt = (EnumsMobsNPC.MonsterType)((int)Form1_0.MobsStruc_0.txtFileNo) + "(" + Form1_0.MobsStruc_0.txtFileNo + "), HP:" + Form1_0.MobsStruc_0.MobsHP + ", Pos:" + Form1_0.MobsStruc_0.xPosFinal + ", " + Form1_0.MobsStruc_0.yPosFinal;
+                            DrawString(e, MobsTxt, drawFontBold, drawBrushWhite, 560, 910, true);
+                        }
                     }
 
                     //Print Status
@@ -481,16 +484,19 @@ public partial class OverlayForm : Form
                     string ThisFPSStr = "~" + Form1_0.Average_FPS.ToString("00") + "Fps(" + Form1_0.FPS.ToString("00") + ")";
                     DrawString(e, ThisFPSStr, drawFontBold, drawBrushYellow, 1090, 935, true);
 
-                    string OtherInfosTxt = Form1_0.TotalChickenCount + " ChickensByHP, " + Form1_0.TotalChickenByTimeCount + " ChickensByTime";
-                    ThisS2 = e.Graphics.MeasureString(OtherInfosTxt, drawFontBold);
-                    DrawString(e, OtherInfosTxt, drawFontBold, drawBrushWhite, 1360 - (ThisS2.Width * ScaleScreenSizeInverted), 885, true);
+                    if (!CharConfig.RunMapHackOnly && !CharConfig.RunMapHackPickitOnly && !CharConfig.RunItemGrabScriptOnly)
+                    {
+                        string OtherInfosTxt = Form1_0.TotalChickenCount + " ChickensByHP, " + Form1_0.TotalChickenByTimeCount + " ChickensByTime";
+                        ThisS2 = e.Graphics.MeasureString(OtherInfosTxt, drawFontBold);
+                        DrawString(e, OtherInfosTxt, drawFontBold, drawBrushWhite, 1360 - (ThisS2.Width * ScaleScreenSizeInverted), 885, true);
 
-                    string OtherInfosTxt2 = Form1_0.CurrentGameNumberFullyDone.ToString() + " Done, " + Form1_0.TotalDeadCount + " Dead";
-                    ThisS2 = e.Graphics.MeasureString(OtherInfosTxt2, drawFontBold);
-                    DrawString(e, OtherInfosTxt2, drawFontBold, drawBrushWhite, 1360 - (ThisS2.Width * ScaleScreenSizeInverted), 910, true);
+                        string OtherInfosTxt2 = Form1_0.CurrentGameNumberFullyDone.ToString() + " Done, " + Form1_0.TotalDeadCount + " Dead";
+                        ThisS2 = e.Graphics.MeasureString(OtherInfosTxt2, drawFontBold);
+                        DrawString(e, OtherInfosTxt2, drawFontBold, drawBrushWhite, 1360 - (ThisS2.Width * ScaleScreenSizeInverted), 910, true);
+                    }
 
                     //Print Merc
-                    if (CharConfig.UsingMerc)
+                    if (CharConfig.UsingMerc && !CharConfig.RunMapHackOnly && !CharConfig.RunMapHackPickitOnly && !CharConfig.RunItemGrabScriptOnly)
                     {
                         string ThisMercTxt = "Merc not alive";
                         if (Form1_0.MercStruc_0.MercAlive)
@@ -621,7 +627,7 @@ public partial class OverlayForm : Form
                             StartPoint = RescaleThisPoint(StartPoint);
                             DrawCrossAtPoint(e, StartPoint, greenPen, false);
 
-                            if (CharConfig.RunMapHackOnly && ShowMapHackShowLines)
+                            if ((CharConfig.RunMapHackOnly || CharConfig.RunMapHackPickitOnly) && ShowMapHackShowLines)
                             {
                                 System.Drawing.Point PlayerPoint = new System.Drawing.Point(Form1_0.CenterX, Form1_0.CenterY);
                                 PlayerPoint = RescaleThisPoint(PlayerPoint);
@@ -639,7 +645,7 @@ public partial class OverlayForm : Form
                             StartPoint = RescaleThisPoint(StartPoint);
                             DrawCrossAtPoint(e, StartPoint, bluePen, false);
 
-                            if (CharConfig.RunMapHackOnly && ShowMapHackShowLines)
+                            if ((CharConfig.RunMapHackOnly || CharConfig.RunMapHackPickitOnly) && ShowMapHackShowLines)
                             {
                                 System.Drawing.Point PlayerPoint = new System.Drawing.Point(Form1_0.CenterX, Form1_0.CenterY);
                                 PlayerPoint = RescaleThisPoint(PlayerPoint);
@@ -649,7 +655,7 @@ public partial class OverlayForm : Form
                     }
 
 
-                    if (CharConfig.RunMapHackOnly && ShowMapHackShowLines)
+                    if ((CharConfig.RunMapHackOnly || CharConfig.RunMapHackPickitOnly) && ShowMapHackShowLines)
                     {
                         FillRectangle(e, drawBrushDark, 1398, 5, 270, 119, true);
                         DrawString(e, "Green: Good Chest", drawFontBold10, drawBrushGreen, 1400, 5, true);
@@ -669,7 +675,7 @@ public partial class OverlayForm : Form
                             StartPoint = RescaleThisPoint(StartPoint);
                             DrawCrossAtPoint(e, StartPoint, cyanPen, false);
 
-                            if (CharConfig.RunMapHackOnly && ShowMapHackShowLines)
+                            if ((CharConfig.RunMapHackOnly || CharConfig.RunMapHackPickitOnly) && ShowMapHackShowLines)
                             {
                                 System.Drawing.Point PlayerPoint = new System.Drawing.Point(Form1_0.CenterX, Form1_0.CenterY);
                                 PlayerPoint = RescaleThisPoint(PlayerPoint);
