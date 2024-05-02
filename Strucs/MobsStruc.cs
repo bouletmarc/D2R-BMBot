@@ -421,7 +421,7 @@ public class MobsStruc
     {
         bool FoundMob = GetMobs(MobType, MobName, Nearest, MaxMobDistance, IgnoredListPointers);
         int IncreaseCount = 0;
-        while (!FoundMob && IncreaseCount < 5)
+        while (!FoundMob && IncreaseCount < 15)
         {
             Form1_0.PatternsScan_0.IncreaseV1Scanning();
             IncreaseCount++;
@@ -490,14 +490,20 @@ public class MobsStruc
                             || IsImmune(Enums.StatResist.PoisonImmune) && CharConfig.AvoidPoisonImmune
                             || IsImmune(Enums.StatResist.MagicImmune) && CharConfig.AvoidMagicImmune)
                         {
-                            continue; //go to next mobs
+                            //Form1_0.method_1(MobName + ", isImmune", Color.Red);
+                            if (MobType != "getBossName" && MobType != "getSuperUniqueName") continue; //go to next mobs
                         }
                     }
+
+                    bool IsMobInBound = true;
+                    if (MobType != "getBossName" && MobType != "getSuperUniqueName") IsMobInBound = IsThisMobInBound();
+
+                    //Form1_0.method_1(MobName + ", isInBound: " + IsMobInBound + ", HP Buffer: " + MobHPBuffer, Color.Red);
 
                     //Console.WriteLine("found near mob " + txtFileNo + " at: " + xPosFinal + ", " + yPosFinal + " HP:" + MobHPBuffer);
                     if ((MobHPBuffer > 0 || (MobHPBuffer == 0 && MobName != ""))
                         && (xPosFinal != 0 && yPosFinal != 0)//)
-                        && IsThisMobInBound())
+                        && IsMobInBound)
                     {
                         if (CharConfig.LeaveDiabloClone && (EnumsMobsNPC.MonsterType)txtFileNo == EnumsMobsNPC.MonsterType.Diabloclone)
                         {
@@ -592,6 +598,7 @@ public class MobsStruc
                 }
             }
         }
+        //Form1_0.method_1("Nearest: " + Nearest + ", NearestMobPointer: 0x" + NearestMobPointer.ToString("X") + ", GoodMob:" + GoodMob, Color.Red);
 
         //load nearest mobs
         if (Nearest && NearestMobPointer != 0 && GoodMob)

@@ -93,15 +93,7 @@ public class ChaosLeech
                 else
                 {
                     if (Form1_0.GameStruc_0.AllGamesNames[i].ToLower().Contains("chaos")
-                        && !Form1_0.GameStruc_0.AllGamesNames[i].ToLower().Contains("umf")
-                        && !Form1_0.GameStruc_0.AllGamesNames[i].ToLower().Contains("u-mf")
-                        && !Form1_0.GameStruc_0.AllGamesNames[i].ToLower().Contains("u mf")
-                        && !Form1_0.GameStruc_0.AllGamesNames[i].ToLower().Contains("baal")
-                        && !Form1_0.GameStruc_0.AllGamesNames[i].ToLower().Contains("umf")
-                        && !Form1_0.GameStruc_0.AllGamesNames[i].ToLower().Contains("u-mf")
-                        && !Form1_0.GameStruc_0.AllGamesNames[i].ToLower().Contains("u mf")
-                        && !Form1_0.GameStruc_0.AllGamesNames[i].ToLower().Contains("help")
-                        && !Form1_0.GameStruc_0.AllGamesNames[i].ToLower().Contains("walk")
+                        && !Form1_0.GameStruc_0.IsIncludedInListString(CharConfig.ChaosSearchAvoidWords, Form1_0.GameStruc_0.AllGamesNames[i].ToLower())
                         && Form1_0.GameStruc_0.AllGamesNames[i] != LastGameName) //not equal last gamename
                     {
                         if (!Form1_0.GameStruc_0.TriedThisGame(Form1_0.GameStruc_0.AllGamesNames[i]))

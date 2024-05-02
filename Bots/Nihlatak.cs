@@ -104,12 +104,12 @@ public class Nihlatak
             {
                 Form1_0.Potions_0.CanUseSkillForRegen = false;
                 Form1_0.SetGameStatus("KILLING NIHLATAK");
-                Form1_0.MobsStruc_0.DetectThisMob("getSuperUniqueName", "Nihlatak", false, 200, new List<long>());
-                if (Form1_0.MobsStruc_0.GetMobs("getSuperUniqueName", "Nihlatak", false, 200, new List<long>()))
+                Form1_0.MobsStruc_0.DetectThisMob("getBossName", "Nihlathak", false, 200, new List<long>());
+                if (Form1_0.MobsStruc_0.GetMobs("getBossName", "Nihlathak", false, 200, new List<long>()))
                 {
                     if (Form1_0.MobsStruc_0.MobsHP > 0)
                     {
-                        Form1_0.Battle_0.RunBattleScriptOnThisMob("getSuperUniqueName", "Nihlatak", new List<long>());
+                        Form1_0.Battle_0.RunBattleScriptOnThisMob("getBossName", "Nihlathak", new List<long>());
                     }
                     else
                     {
@@ -123,9 +123,9 @@ public class Nihlatak
 
                     //baal not detected...
                     Form1_0.ItemsStruc_0.GetItems(true);
-                    if (Form1_0.MobsStruc_0.GetMobs("getSuperUniqueName", "Nihlatak", false, 200, new List<long>())) return; //redetect baal?
+                    if (Form1_0.MobsStruc_0.GetMobs("getBossName", "Nihlathak", false, 200, new List<long>())) return; //redetect baal?
                     Form1_0.ItemsStruc_0.GrabAllItemsForGold();
-                    if (Form1_0.MobsStruc_0.GetMobs("getSuperUniqueName", "Nihlatak", false, 200, new List<long>())) return; //redetect baal?
+                    if (Form1_0.MobsStruc_0.GetMobs("getBossName", "Nihlathak", false, 200, new List<long>())) return; //redetect baal?
                     Form1_0.Potions_0.CanUseSkillForRegen = true;
 
                     if (Form1_0.Battle_0.EndBossBattle()) ScriptDone = true;

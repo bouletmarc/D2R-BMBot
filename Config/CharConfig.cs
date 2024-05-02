@@ -83,6 +83,11 @@ public static class CharConfig
     public static bool LogNotUsefulErrors = false;
     public static string RunningOnChar = "";
     public static string RushLeecherName = "";
+    public static string SearchLeecherName = "";
+    public static List<string> BaalSearchAvoidWords = new List<string>();
+    public static List<string> ChaosSearchAvoidWords = new List<string>();
+    public static string ChaosLeechSearch = "";
+    public static string BaalLeechSearch = "";
     public static bool ClearAfterBoss = false;
     public static bool ShowOverlay = true;
     public static bool RunWPTaker = false;

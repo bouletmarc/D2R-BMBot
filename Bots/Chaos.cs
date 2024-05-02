@@ -31,6 +31,8 @@ public class Chaos
 
     public bool MovedToTPPos = false;
 
+    public bool CastedAtSeis = false;
+
     public void SetForm1(Form1 form1_1)
     {
         Form1_0 = form1_1;
@@ -45,6 +47,7 @@ public class Chaos
         TryCountWaitingUniqueBoss = 0;
         StartTimeUniqueBossWaiting = DateTime.Now;
         MovedToTPPos = false;
+        CastedAtSeis = false;
     }
 
     public void DetectCurrentStep()
@@ -286,6 +289,11 @@ public class Chaos
                         Form1_0.WaitDelay(10);
                         InteractCount++;
                     }
+                    if (!CastedAtSeis)
+                    {
+                        CastedAtSeis = true;
+                        Form1_0.Battle_0.CastDefense();
+                    }
 
                     //######
                     //KILL LORD DE SEIS
@@ -330,7 +338,7 @@ public class Chaos
 
                         if (!UniqueDetected)
                         {
-                            Form1_0.Battle_0.CastDefense();
+                            //Form1_0.Battle_0.CastDefense();
                             Form1_0.InventoryStruc_0.DumpBadItemsOnGround();
                             TimeSetForWaitingUniqueBoss = false;
                             CurrentStep++;
@@ -347,7 +355,7 @@ public class Chaos
                                 }
                                 else
                                 {
-                                    Form1_0.Battle_0.CastDefense();
+                                    //Form1_0.Battle_0.CastDefense();
                                     Form1_0.InventoryStruc_0.DumpBadItemsOnGround();
                                     TimeSetForWaitingUniqueBoss = false;
                                     CurrentStep++;

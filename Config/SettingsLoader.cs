@@ -59,8 +59,10 @@ public class SettingsLoader
             if (Path.GetFileName(ThisFilePath) == "ItemsSettings.txt") LoadItemsSettings();
             if (Path.GetFileName(ThisFilePath) == "CubingRecipes.txt") LoadCubingSettings();
 
-            if (Path.GetFileName(ThisFilePath) == "PaladinHammer.txt") LoadCurrentCharSettings();
-            if (Path.GetFileName(ThisFilePath) == "SorceressBlizzard.txt") LoadCurrentCharSettings();
+            if (Path.GetFileName(ThisFilePath).Contains("PaladinHammer")) LoadCurrentCharSettings();
+            if (Path.GetFileName(ThisFilePath).Contains("SorceressBlizzard")) LoadCurrentCharSettings();
+
+            if (Path.GetFileName(ThisFilePath) == "Settings.txt") LoadOthersSettings();
         }
         else
         {
@@ -255,6 +257,7 @@ public class SettingsLoader
 
                 if (Splitted[0] == "IsRushing") AllLines[i] = "IsRushing=" + CharConfig.IsRushing;
                 if (Splitted[0] == "RushLeecherName") AllLines[i] = "RushLeecherName=" + CharConfig.RushLeecherName;
+                if (Splitted[0] == "SearchLeecherName") AllLines[i] = "SearchLeecherName=" + CharConfig.SearchLeecherName;
 
                 //#########
                 //SPECIAL BAAL FEATURES
@@ -349,6 +352,29 @@ public class SettingsLoader
                 if (Splitted[0] == "GameName") AllLines[i] = "GameName=" + CharConfig.GameName;
                 if (Splitted[0] == "GameDifficulty") AllLines[i] = "GameDifficulty=" + CharConfig.GameDifficulty;
                 if (Splitted[0] == "GamePass") AllLines[i] = "GamePass=" + CharConfig.GamePass;
+
+                if (Splitted[0] == "ChaosLeechSearch") AllLines[i] = "ChaosLeechSearch=" + CharConfig.ChaosLeechSearch;
+                if (Splitted[0] == "BaalLeechSearch") AllLines[i] = "BaalLeechSearch=" + CharConfig.BaalLeechSearch;
+
+
+                if (Splitted[0] == "BaalSearchAvoidWords")
+                {
+                    AllLines[i] = "BaalSearchAvoidWords=";
+                    for (int p = 0; p < CharConfig.BaalSearchAvoidWords.Count; p++)
+                    {
+                        AllLines[i] += CharConfig.BaalSearchAvoidWords[p];
+                        if (p < CharConfig.BaalSearchAvoidWords.Count - 2) AllLines[i] += ",";
+                    }
+                }
+                if (Splitted[0] == "ChaosSearchAvoidWords")
+                {
+                    AllLines[i] = "ChaosSearchAvoidWords=";
+                    for (int p = 0; p < CharConfig.ChaosSearchAvoidWords.Count; p++)
+                    {
+                        AllLines[i] += CharConfig.ChaosSearchAvoidWords[p];
+                        if (p < CharConfig.ChaosSearchAvoidWords.Count - 2) AllLines[i] += ",";
+                    }
+                }
 
                 if (Splitted[0] == "StartStopKey") AllLines[i] = "StartStopKey=" + CharConfig.StartStopKey;
                 if (Splitted[0] == "PauseResumeKey") AllLines[i] = "PauseResumeKey=" + CharConfig.PauseResumeKey;
@@ -1033,6 +1059,30 @@ public class SettingsLoader
                             {
                                 CharConfig.RushLeecherName = Params[1];
                             }
+                            if (Params[0].Contains("SearchLeecherName"))
+                            {
+                                CharConfig.SearchLeecherName = Params[1];
+                            }
+                            if (Params[0].Contains("BaalSearchAvoidWords"))
+                            {
+                                CharConfig.BaalSearchAvoidWords.Clear();
+                                if (Params[1].Contains(","))
+                                {
+                                    string[] AllNames = Params[1].Split(',');
+                                    for (int p = 0; p < AllNames.Length; p++) CharConfig.BaalSearchAvoidWords.Add(AllNames[p]);
+                                }
+                                else if (Params[1] != "") CharConfig.BaalSearchAvoidWords.Add(Params[1]);
+                            }
+                            if (Params[0].Contains("ChaosSearchAvoidWords"))
+                            {
+                                CharConfig.ChaosSearchAvoidWords.Clear();
+                                if (Params[1].Contains(","))
+                                {
+                                    string[] AllNames = Params[1].Split(',');
+                                    for (int p = 0; p < AllNames.Length; p++) CharConfig.ChaosSearchAvoidWords.Add(AllNames[p]);
+                                }
+                                else if (Params[1] != "") CharConfig.ChaosSearchAvoidWords.Add(Params[1]);
+                            }
 
                             //#########
                             if (Params[0].Contains("KillBaal"))
@@ -1296,6 +1346,14 @@ public class SettingsLoader
                             if (Params[0].Contains("GameDifficulty"))
                             {
                                 CharConfig.GameDifficulty = int.Parse(Params[1]);
+                            }
+                            if (Params[0].Contains("ChaosLeechSearch"))
+                            {
+                                CharConfig.ChaosLeechSearch = Params[1];
+                            }
+                            if (Params[0].Contains("BaalLeechSearch"))
+                            {
+                                CharConfig.BaalLeechSearch = Params[1];
                             }
                             //#####
                             if (Params[0].Contains("StartStopKey"))

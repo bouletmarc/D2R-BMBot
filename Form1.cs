@@ -40,7 +40,7 @@ using static MapAreaStruc;
 public partial class Form1 : Form
 {
 
-    public string BotVersion = "V2.95";
+    public string BotVersion = "V2.96";
 
     public string D2_LOD_113C_Path = "";
 
@@ -448,13 +448,60 @@ public partial class Form1 : Form
 
         if (Form1_0.D2_LOD_113C_Path == "" || !Directory.Exists(Form1_0.D2_LOD_113C_Path))
         {
-            DialogResult result = MessageBox.Show("Diablo2 LOD 1.13C Path is not set correctly!" + Environment.NewLine + Environment.NewLine + "Do you want to select the Path where it's located?", "ERROR", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
-            if (result == DialogResult.Yes)
+            bool LoadedPreSettings = false;
+            if (CharConfig.PlayerCharName == "CHARNAMEHERE")
             {
-                DialogResult result2 = folderBrowserDialog1.ShowDialog();
-                if (result2 == DialogResult.OK)
+                DialogResult result = MessageBox.Show("Do you want to Import all Settings Files from a previous Version?", "ERROR", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+                if (result == DialogResult.Yes)
                 {
-                    Form1_0.D2_LOD_113C_Path = folderBrowserDialog1.SelectedPath;
+                    LoadedPreSettings = true;
+                    folderBrowserDialog1.Description = "Select the Settings folder where your previous bot version is located";
+                    DialogResult result2 = folderBrowserDialog1.ShowDialog();
+                    if (result2 == DialogResult.OK)
+                    {
+                        //Form1_0.D2_LOD_113C_Path = folderBrowserDialog1.SelectedPath;
+
+                        //load char settings
+                        Form1_0.SettingsLoader_0.ReloadCharSettingsFromThisFile(folderBrowserDialog1.SelectedPath + @"\Char\SorceressBlizzard.txt");
+                        Form1_0.SettingsLoader_0.ReloadCharSettingsFromThisFile(folderBrowserDialog1.SelectedPath + @"\Char\PaladinHammer.txt");
+                        Form1_0.SettingsLoader_0.LoadThisFileSettings(folderBrowserDialog1.SelectedPath + @"\ItemsSettings.txt");
+                        Form1_0.SettingsLoader_0.LoadThisFileSettings(folderBrowserDialog1.SelectedPath + @"\CubingRecipes.txt");
+                        Form1_0.SettingsLoader_0.LoadThisFileSettings(folderBrowserDialog1.SelectedPath + @"\BotSettings.txt");
+                        Form1_0.SettingsLoader_0.LoadThisFileSettings(folderBrowserDialog1.SelectedPath + @"\CharSettings.txt");
+
+                        //Reload Sorc Settings
+                        if (CharConfig.RunningOnChar != "PaladinHammer") Form1_0.SettingsLoader_0.ReloadCharSettingsFromThisFile(folderBrowserDialog1.SelectedPath + @"\Char\SorceressBlizzard.txt");
+
+                        //Reload Settings (D2 Path, RunNumber)
+                        Form1_0.SettingsLoader_0.LoadThisFileSettings(folderBrowserDialog1.SelectedPath + @"\Settings.txt");
+
+                        Application.DoEvents();
+                    }
+                    else
+                    {
+                        LoadedPreSettings = false;
+                    }
+                }
+            }
+
+            if (!LoadedPreSettings)
+            {
+                DialogResult result = MessageBox.Show("Diablo2 LOD 1.13C Path is not set correctly!" + Environment.NewLine + Environment.NewLine + "Do you want to select the Path where it's located?", "ERROR", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+                if (result == DialogResult.Yes)
+                {
+                    folderBrowserDialog1.Description = "Select the folder where D2 LOD 1.13C is located";
+                    DialogResult result2 = folderBrowserDialog1.ShowDialog();
+                    if (result2 == DialogResult.OK)
+                    {
+                        Form1_0.D2_LOD_113C_Path = folderBrowserDialog1.SelectedPath;
+                    }
+                    else
+                    {
+                        method_1("ERROR: Diablo2 LOD 1.13C Path NOT SET CORRECTLY!", Color.Red);
+                        method_1("Clic on the settings button and set the path where Diablo2 1.13c (the old legacy diablo2) is located!", Color.Red);
+                        method_1("Make sure the path don't contain any whitespace!", Color.Red);
+                        buttonD2LOD.Visible = true;
+                    }
                 }
                 else
                 {
@@ -463,13 +510,6 @@ public partial class Form1 : Form
                     method_1("Make sure the path don't contain any whitespace!", Color.Red);
                     buttonD2LOD.Visible = true;
                 }
-            }
-            else
-            {
-                method_1("ERROR: Diablo2 LOD 1.13C Path NOT SET CORRECTLY!", Color.Red);
-                method_1("Clic on the settings button and set the path where Diablo2 1.13c (the old legacy diablo2) is located!", Color.Red);
-                method_1("Make sure the path don't contain any whitespace!", Color.Red);
-                buttonD2LOD.Visible = true;
             }
         }
 

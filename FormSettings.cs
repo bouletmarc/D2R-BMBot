@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Button;
 
@@ -21,6 +22,9 @@ public partial class FormSettings : Form
             textBoxStartKey.Items.Add(names[i]);
             comboBoxPauseResume.Items.Add(names[i]);
         }
+
+        groupBoxSearch.Visible = false;
+        groupBoxSearch.Location = new Point(groupBox1.Location.X, groupBox1.Location.Y);
 
         listViewRush.Visible = false;
         listViewRush.Location = new System.Drawing.Point(listViewRunScripts.Location.X, listViewRunScripts.Location.Y);
@@ -178,6 +182,39 @@ public partial class FormSettings : Form
     {
         if (!checkBoxRush.Checked) groupBox1.Enabled = (comboBoxLobby.SelectedIndex == 0);
         else groupBox1.Enabled = false;
+
+        if (comboBoxLobby.SelectedIndex == 1) 
+        {
+            textBoxSearchGame.Text = CharConfig.ChaosLeechSearch;
+            textBoxAvoidWords.Text = "";
+            for (int p = 0; p < CharConfig.ChaosSearchAvoidWords.Count; p++)
+            {
+                textBoxAvoidWords.Text += CharConfig.ChaosSearchAvoidWords[p];
+                if (p < CharConfig.ChaosSearchAvoidWords.Count - 2) textBoxAvoidWords.Text += ",";
+            }
+        }
+        else if(comboBoxLobby.SelectedIndex == 2)
+        {
+            textBoxSearchGame.Text = CharConfig.BaalLeechSearch;
+            textBoxAvoidWords.Text = "";
+            for (int p = 0; p < CharConfig.BaalSearchAvoidWords.Count; p++)
+            {
+                textBoxAvoidWords.Text += CharConfig.BaalSearchAvoidWords[p];
+                if (p < CharConfig.BaalSearchAvoidWords.Count - 2) textBoxAvoidWords.Text += ",";
+            }
+        }
+
+        if (comboBoxLobby.SelectedIndex == 1 || comboBoxLobby.SelectedIndex == 2)
+        {
+            groupBox1.Visible = false;
+            groupBoxSearch.Visible = true;
+            textBox2LeechName.Text = CharConfig.SearchLeecherName;
+        }
+        else
+        {
+            groupBox1.Visible = true;
+            groupBoxSearch.Visible = false;
+        }
     }
 
     public void SaveSettings()
@@ -275,6 +312,32 @@ public partial class FormSettings : Form
         Form1_0.overlayForm.ShowMapHackShowLines = checkBoxOverlayShowMH.Checked;
         Form1_0.overlayForm.ShowUnitsScanCount = checkBoxOverlayShowUnitsCount.Checked;
         //###################
+
+        if (comboBoxLobby.SelectedIndex == 1)
+        {
+            CharConfig.ChaosLeechSearch = textBoxSearchGame.Text;
+
+            CharConfig.ChaosSearchAvoidWords.Clear();
+            if (textBoxAvoidWords.Text.Contains(","))
+            {
+                string[] AllNames = textBoxAvoidWords.Text.Split(',');
+                for (int p = 0; p < AllNames.Length; p++) CharConfig.ChaosSearchAvoidWords.Add(AllNames[p]);
+            }
+            else if (textBoxAvoidWords.Text != "") CharConfig.ChaosSearchAvoidWords.Add(textBoxAvoidWords.Text);
+        }
+        else if (comboBoxLobby.SelectedIndex == 2)
+        {
+            CharConfig.BaalLeechSearch = textBoxSearchGame.Text;
+
+            CharConfig.BaalSearchAvoidWords.Clear();
+            if (textBoxAvoidWords.Text.Contains(","))
+            {
+                string[] AllNames = textBoxAvoidWords.Text.Split(',');
+                for (int p = 0; p < AllNames.Length; p++) CharConfig.BaalSearchAvoidWords.Add(AllNames[p]);
+            }
+            else if (textBoxAvoidWords.Text != "") CharConfig.BaalSearchAvoidWords.Add(textBoxAvoidWords.Text);
+        }
+        CharConfig.SearchLeecherName = textBox2LeechName.Text;
     }
 
     private void button1_Click(object sender, EventArgs e)

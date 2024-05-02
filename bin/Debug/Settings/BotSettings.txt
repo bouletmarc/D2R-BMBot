@@ -11,6 +11,7 @@ MaxGameTime=7
 LogNotUsefulErrors=false
 IsRushing=false
 RushLeecherName=
+SearchLeecherName=
 ShowOverlay=true
 RunWPTaker=false
 RunSinglePlayerScript=false
@@ -65,7 +66,10 @@ RunGameMakerScript=true
 GameName=GAMENAMEHERE
 GamePass=33
 GameDifficulty=2
-
+ChaosLeechSearch=chaos
+BaalLeechSearch=baal
+BaalSearchAvoidWords=umf,u-mf,u mf,chaos,cbaal,help,walk,quest,4 q,baal4q,ancient
+ChaosSearchAvoidWords=umf,u-mf,u mf,baal,help,walk,quest,4 q
 //#######################################
 //SPECIALS BAAL FEATURES
 //#######################################

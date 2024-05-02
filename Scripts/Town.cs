@@ -363,16 +363,18 @@ public class Town
             if (CurrentScript == 3)
             {
                 if (Form1_0.InventoryStruc_0.HasUnidItemInInventory()
-                    && (!FastTowning || (FastTowning && Form1_0.ItemsStruc_0.TriesToPickItemCount < 50))
+                    && (!FastTowning || (FastTowning && Form1_0.ItemsStruc_0.TriesToPickItemCount >= 50))
                     && TriedToCainCount2 < 10
                     && TriedToCainCount < 10)
                 {
                     //return to identify script, still contain unid item
                     CurrentScript = 1;
+                    Form1_0.ItemsStruc_0.TriesToPickItemCount = -1;
+                    return;
                 }
 
                 if ((!Form1_0.InventoryStruc_0.ContainStashItemInInventory() && (Form1_0.PlayerScan_0.PlayerGoldInventory < 35000))
-                            || TriedToStashCount >= 6 || (FastTowning && Form1_0.ItemsStruc_0.TriesToPickItemCount < 50))
+                            || TriedToStashCount >= 6 || (FastTowning && Form1_0.ItemsStruc_0.TriesToPickItemCount < 50 && Form1_0.ItemsStruc_0.TriesToPickItemCount >= 0))
                 {
                     CurrentScript++;
                 }

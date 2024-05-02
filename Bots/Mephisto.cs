@@ -141,7 +141,7 @@ public class Mephisto
                                 }
                             }
 
-                            Form1_0.WaitDelay(700);
+                            Form1_0.WaitDelay(800);
 
                             Form1_0.Town_0.FastTowning = false;
                             Form1_0.Town_0.UseLastTP = false;

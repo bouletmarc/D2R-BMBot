@@ -137,6 +137,13 @@ partial class FormSettings
             this.panelOverlay = new System.Windows.Forms.Panel();
             this.label14 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
+            this.groupBoxSearch = new System.Windows.Forms.GroupBox();
+            this.label19 = new System.Windows.Forms.Label();
+            this.textBoxSearchGame = new System.Windows.Forms.TextBox();
+            this.textBox2LeechName = new System.Windows.Forms.TextBox();
+            this.label16 = new System.Windows.Forms.Label();
+            this.textBoxAvoidWords = new System.Windows.Forms.TextBox();
+            this.label17 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownRunNumber)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMaxTime)).BeginInit();
@@ -146,6 +153,7 @@ partial class FormSettings
             this.panelBaalFeature.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.panelOverlay.SuspendLayout();
+            this.groupBoxSearch.SuspendLayout();
             this.SuspendLayout();
             // 
             // listViewRunScripts
@@ -964,12 +972,79 @@ partial class FormSettings
             this.label15.TabIndex = 26;
             this.label15.Text = "Pause/Resume Shortcut:";
             // 
+            // groupBoxSearch
+            // 
+            this.groupBoxSearch.Controls.Add(this.textBoxAvoidWords);
+            this.groupBoxSearch.Controls.Add(this.label17);
+            this.groupBoxSearch.Controls.Add(this.textBox2LeechName);
+            this.groupBoxSearch.Controls.Add(this.label16);
+            this.groupBoxSearch.Controls.Add(this.label19);
+            this.groupBoxSearch.Controls.Add(this.textBoxSearchGame);
+            this.groupBoxSearch.Location = new System.Drawing.Point(279, 481);
+            this.groupBoxSearch.Name = "groupBoxSearch";
+            this.groupBoxSearch.Size = new System.Drawing.Size(244, 113);
+            this.groupBoxSearch.TabIndex = 9;
+            this.groupBoxSearch.TabStop = false;
+            this.groupBoxSearch.Text = "Game Search Settings";
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(9, 20);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(75, 13);
+            this.label19.TabIndex = 1;
+            this.label19.Text = "Search Name:";
+            // 
+            // textBoxSearchGame
+            // 
+            this.textBoxSearchGame.Location = new System.Drawing.Point(85, 17);
+            this.textBoxSearchGame.Name = "textBoxSearchGame";
+            this.textBoxSearchGame.Size = new System.Drawing.Size(149, 20);
+            this.textBoxSearchGame.TabIndex = 0;
+            this.toolTip1.SetToolTip(this.textBoxSearchGame, "Set your Search for \'Game Name\' here");
+            // 
+            // textBox2LeechName
+            // 
+            this.textBox2LeechName.Location = new System.Drawing.Point(85, 40);
+            this.textBox2LeechName.Name = "textBox2LeechName";
+            this.textBox2LeechName.Size = new System.Drawing.Size(149, 20);
+            this.textBox2LeechName.TabIndex = 29;
+            this.toolTip1.SetToolTip(this.textBox2LeechName, "Set the Player name of who follow you for the Rush");
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(6, 43);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(80, 13);
+            this.label16.TabIndex = 30;
+            this.label16.Text = "Leecher Name:";
+            // 
+            // textBoxAvoidWords
+            // 
+            this.textBoxAvoidWords.Location = new System.Drawing.Point(85, 63);
+            this.textBoxAvoidWords.Name = "textBoxAvoidWords";
+            this.textBoxAvoidWords.Size = new System.Drawing.Size(149, 20);
+            this.textBoxAvoidWords.TabIndex = 31;
+            this.toolTip1.SetToolTip(this.textBoxAvoidWords, "Add the Words you want to avoid entering the game");
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(6, 66);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(71, 13);
+            this.label17.TabIndex = 32;
+            this.label17.Text = "Avoid Words:";
+            // 
             // FormSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.ClientSize = new System.Drawing.Size(250, 691);
+            this.ClientSize = new System.Drawing.Size(252, 691);
+            this.Controls.Add(this.groupBoxSearch);
             this.Controls.Add(this.checkBoxLogOrangeError);
             this.Controls.Add(this.comboBoxPauseResume);
             this.Controls.Add(this.label15);
@@ -1015,6 +1090,8 @@ partial class FormSettings
             this.groupBox2.PerformLayout();
             this.panelOverlay.ResumeLayout(false);
             this.panelOverlay.PerformLayout();
+            this.groupBoxSearch.ResumeLayout(false);
+            this.groupBoxSearch.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1089,4 +1166,11 @@ partial class FormSettings
     private System.Windows.Forms.ComboBox comboBoxPauseResume;
     private System.Windows.Forms.Label label15;
     private System.Windows.Forms.CheckBox checkBoxLogOrangeError;
+    private System.Windows.Forms.GroupBox groupBoxSearch;
+    private System.Windows.Forms.Label label19;
+    private System.Windows.Forms.TextBox textBoxSearchGame;
+    private System.Windows.Forms.TextBox textBox2LeechName;
+    private System.Windows.Forms.Label label16;
+    private System.Windows.Forms.TextBox textBoxAvoidWords;
+    private System.Windows.Forms.Label label17;
 }

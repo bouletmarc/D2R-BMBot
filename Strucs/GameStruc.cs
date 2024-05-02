@@ -149,6 +149,24 @@ public class GameStruc
         SelectGame(0, true);*/
     }
 
+    public bool IsIncludedInListString(List<string> IgnoredIDList, string ThisID)
+    {
+        if (IgnoredIDList != null)
+        {
+            if (IgnoredIDList.Count > 0)
+            {
+                for (int i = 0; i < IgnoredIDList.Count; i++)
+                {
+                    if (IgnoredIDList[i] == ThisID)
+                    {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
     public void GetAllGamesNames()
     {
         AllGamesNames = new List<string>();
@@ -171,8 +189,8 @@ public class GameStruc
             }
             Thread.Sleep(3);
             string GameName = "";
-            if (CharConfig.RunBaalSearchGameScript && !CharConfig.RunItemGrabScriptOnly) GameName = "baal";
-            if (CharConfig.RunChaosSearchGameScript && !CharConfig.RunItemGrabScriptOnly) GameName = "chaos";
+            if (CharConfig.RunBaalSearchGameScript && !CharConfig.RunItemGrabScriptOnly) GameName = CharConfig.BaalLeechSearch;
+            if (CharConfig.RunChaosSearchGameScript && !CharConfig.RunItemGrabScriptOnly) GameName = CharConfig.ChaosLeechSearch;
             for (int i = 0; i < GameName.Length; i++)
             {
                 var helper = new Helper { Value = VkKeyScan(GameName[i]) };

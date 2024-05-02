@@ -100,17 +100,7 @@ public class BaalLeech
                 else
                 {
                     if (Form1_0.GameStruc_0.AllGamesNames[i].ToLower().Contains("baal")
-                        && !Form1_0.GameStruc_0.AllGamesNames[i].ToLower().Contains("umf")
-                        && !Form1_0.GameStruc_0.AllGamesNames[i].ToLower().Contains("u-mf")
-                        && !Form1_0.GameStruc_0.AllGamesNames[i].ToLower().Contains("u mf")
-                        && !Form1_0.GameStruc_0.AllGamesNames[i].ToLower().Contains("chaos")
-                        && !Form1_0.GameStruc_0.AllGamesNames[i].ToLower().Contains("cbaal")
-                        && !Form1_0.GameStruc_0.AllGamesNames[i].ToLower().Contains("help")
-                        && !Form1_0.GameStruc_0.AllGamesNames[i].ToLower().Contains("walk")
-                        && !Form1_0.GameStruc_0.AllGamesNames[i].ToLower().Contains("quest")
-                        && !Form1_0.GameStruc_0.AllGamesNames[i].ToLower().Contains("4 q")
-                        && !Form1_0.GameStruc_0.AllGamesNames[i].ToLower().Contains("baal4q")
-                        && !Form1_0.GameStruc_0.AllGamesNames[i].ToLower().Contains("ancient")
+                        && !Form1_0.GameStruc_0.IsIncludedInListString(CharConfig.BaalSearchAvoidWords, Form1_0.GameStruc_0.AllGamesNames[i].ToLower())
                         && Form1_0.GameStruc_0.AllGamesNames[i] != LastGameName) //not equal last gamename
                     {
                         if (!Form1_0.GameStruc_0.TriedThisGame(Form1_0.GameStruc_0.AllGamesNames[i]))
@@ -544,6 +534,7 @@ public class BaalLeech
 
         bool IsCorrectLocation = false;
         string StartLeechName = Form1_0.GameStruc_0.GameOwnerName;
+        if (CharConfig.SearchLeecherName != "") StartLeechName = CharConfig.SearchLeecherName;
 
         try
         {
@@ -573,6 +564,7 @@ public class BaalLeech
         }
 
         Form1_0.GameStruc_0.GameOwnerName = StartLeechName;
+        if (CharConfig.SearchLeecherName != "") Form1_0.GameStruc_0.GameOwnerName = CharConfig.SearchLeecherName;
 
         return IsCorrectLocation;
     }

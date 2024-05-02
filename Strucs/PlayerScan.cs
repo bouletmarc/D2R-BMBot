@@ -529,6 +529,7 @@ public class PlayerScan
 
         string LeeeechName = Form1_0.GameStruc_0.GameOwnerName;
         if (CharConfig.IsRushing) LeeeechName = CharConfig.RushLeecherName;
+        else if ((CharConfig.RunBaalLeechScript || CharConfig.RunChaosLeechScript) && CharConfig.SearchLeecherName != "") LeeeechName = CharConfig.SearchLeecherName;
 
         if (LeeeechName == "")
         {
