@@ -73,7 +73,7 @@ public class NPCStruc
         }
         catch
         {
-            Form1_0.method_1("Couldn't get All NPC Nearby!", Color.Red);
+            Form1_0.method_1("Couldn't 'GetAllNPCNearby()'", Color.Red);
         }
 
         return npcPositions2;
@@ -98,29 +98,36 @@ public class NPCStruc
 
     public bool GetNPC(string MobName)
     {
-        txtFileNo = 0;
-        Form1_0.PatternsScan_0.scanForUnitsPointer("NPC");
-
-        foreach (var ThisCurrentPointer in Form1_0.PatternsScan_0.AllNPCPointers)
+        try
         {
-            NPCPointerLocation = ThisCurrentPointer.Key;
-            if (NPCPointerLocation > 0)
+            txtFileNo = 0;
+            Form1_0.PatternsScan_0.scanForUnitsPointer("NPC");
+
+            foreach (var ThisCurrentPointer in Form1_0.PatternsScan_0.AllNPCPointers)
             {
-                NPCdatastruc = new byte[144];
-                Form1_0.Mem_0.ReadRawMemory(NPCPointerLocation, ref NPCdatastruc, 144);
-
-                txtFileNo = BitConverter.ToUInt32(NPCdatastruc, 4);
-                GetUnitPathData();
-
-                //Console.WriteLine((int)txtFileNo + " at: " + xPosFinal + ", " + yPosFinal);
-                if (Regex.Replace(((EnumsMobsNPC.MonsterType)((int)txtFileNo)).ToString(), @"[\d-]", string.Empty) == MobName)
+                NPCPointerLocation = ThisCurrentPointer.Key;
+                if (NPCPointerLocation > 0)
                 {
-                    if (xPosFinal != 0 && yPosFinal != 0)
+                    NPCdatastruc = new byte[144];
+                    Form1_0.Mem_0.ReadRawMemory(NPCPointerLocation, ref NPCdatastruc, 144);
+
+                    txtFileNo = BitConverter.ToUInt32(NPCdatastruc, 4);
+                    GetUnitPathData();
+
+                    //Console.WriteLine((int)txtFileNo + " at: " + xPosFinal + ", " + yPosFinal);
+                    if (Regex.Replace(((EnumsMobsNPC.MonsterType)((int)txtFileNo)).ToString(), @"[\d-]", string.Empty) == MobName)
                     {
-                        return true;
+                        if (xPosFinal != 0 && yPosFinal != 0)
+                        {
+                            return true;
+                        }
                     }
                 }
             }
+        }
+        catch
+        {
+            Form1_0.method_1("Couldn't 'GetNPC()'", Color.Red);
         }
 
         return false;

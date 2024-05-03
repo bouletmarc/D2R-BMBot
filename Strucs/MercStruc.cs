@@ -54,72 +54,79 @@ public class MercStruc
 
     public bool GetMercInfos()
     {
-        MercAlive = true;
-        txtFileNo = 0;
-        Form1_0.PatternsScan_0.scanForUnitsPointer("NPC");
-
-        int MercCount = 1;
-
-        foreach (var ThisCurrentPointer in Form1_0.PatternsScan_0.AllNPCPointers)
+        try
         {
-            MercPointerLocation = ThisCurrentPointer.Key;
-            if (MercPointerLocation > 0)
+            MercAlive = true;
+            txtFileNo = 0;
+            Form1_0.PatternsScan_0.scanForUnitsPointer("NPC");
+
+            int MercCount = 1;
+
+            foreach (var ThisCurrentPointer in Form1_0.PatternsScan_0.AllNPCPointers)
             {
-                Mercdatastruc = new byte[144];
-                Form1_0.Mem_0.ReadRawMemory(MercPointerLocation, ref Mercdatastruc, 144);
-
-                txtFileNo = BitConverter.ToUInt32(Mercdatastruc, 4);
-                pUnitData = BitConverter.ToInt64(Mercdatastruc, 0x10);
-                mode = BitConverter.ToUInt32(Mercdatastruc, 0x0c);
-                ushort isUnique = Form1_0.Mem_0.ReadUInt16Raw((IntPtr)pUnitData + 0x18);
-                GetUnitPathData();
-                GetStatsAddr();
-
-                //Console.WriteLine(Form1_0.NPCStruc_0.getNPC_ID((int) txtFileNo));
-                //Console.WriteLine(txtFileNo.ToString() + ", isUnique:" + isUnique + ", isPlayerMinion:" + isPlayerMinion + ", mode:" + mode + ", pos:" + xPosFinal + ", " + yPosFinal);
-
-                //if (IsMerc((int) txtFileNo))
-                if (isUnique == 0 && (txtFileNo == 338) && mode != 0 && mode != 12)
-                //if (isUnique == 0 && (txtFileNo == 338) && mode == 1)
+                MercPointerLocation = ThisCurrentPointer.Key;
+                if (MercPointerLocation > 0)
                 {
-                    if (xPosFinal != 0 && yPosFinal != 0)
+                    Mercdatastruc = new byte[144];
+                    Form1_0.Mem_0.ReadRawMemory(MercPointerLocation, ref Mercdatastruc, 144);
+
+                    txtFileNo = BitConverter.ToUInt32(Mercdatastruc, 4);
+                    pUnitData = BitConverter.ToInt64(Mercdatastruc, 0x10);
+                    mode = BitConverter.ToUInt32(Mercdatastruc, 0x0c);
+                    ushort isUnique = Form1_0.Mem_0.ReadUInt16Raw((IntPtr)pUnitData + 0x18);
+                    GetUnitPathData();
+                    GetStatsAddr();
+
+                    //Console.WriteLine(Form1_0.NPCStruc_0.getNPC_ID((int) txtFileNo));
+                    //Console.WriteLine(txtFileNo.ToString() + ", isUnique:" + isUnique + ", isPlayerMinion:" + isPlayerMinion + ", mode:" + mode + ", pos:" + xPosFinal + ", " + yPosFinal);
+
+                    //if (IsMerc((int) txtFileNo))
+                    if (isUnique == 0 && (txtFileNo == 338) && mode != 0 && mode != 12)
+                    //if (isUnique == 0 && (txtFileNo == 338) && mode == 1)
                     {
-                        Int64 pUnitDataPtr = BitConverter.ToInt64(Mercdatastruc, 0x10);
-                        //uint dwOwnerId = Form1_0.Mem_0.ReadUInt32Raw((IntPtr)(pUnitDataPtr + 0x0c));
-                        //uint dwOwnerId = BitConverter.ToUInt32(Mercdatastruc, 8);
+                        if (xPosFinal != 0 && yPosFinal != 0)
+                        {
+                            Int64 pUnitDataPtr = BitConverter.ToInt64(Mercdatastruc, 0x10);
+                            //uint dwOwnerId = Form1_0.Mem_0.ReadUInt32Raw((IntPtr)(pUnitDataPtr + 0x0c));
+                            //uint dwOwnerId = BitConverter.ToUInt32(Mercdatastruc, 8);
 
-                        if (Form1_0.Mem_0.ReadByteRaw((IntPtr)(pUnitDataPtr + 0x32)) != 0x0e && Form1_0.Mem_0.ReadByteRaw((IntPtr)(pUnitDataPtr + 0x33)) != 0x04)
-                            //if (dwOwnerId == MercOwnerID && MercOwnerID != 0)
-                            //{
-                            //SetHPFromStats();
-                            /*string SavePathh = Form1_0.ThisEndPath + "DumpMercStruc" + MercCount;
-                            File.Create(SavePathh).Dispose();
-                            File.WriteAllBytes(SavePathh, Mercdatastruc);*/
+                            if (Form1_0.Mem_0.ReadByteRaw((IntPtr)(pUnitDataPtr + 0x32)) != 0x0e && Form1_0.Mem_0.ReadByteRaw((IntPtr)(pUnitDataPtr + 0x33)) != 0x04)
+                                //if (dwOwnerId == MercOwnerID && MercOwnerID != 0)
+                                //{
+                                //SetHPFromStats();
+                                /*string SavePathh = Form1_0.ThisEndPath + "DumpMercStruc" + MercCount;
+                                File.Create(SavePathh).Dispose();
+                                File.WriteAllBytes(SavePathh, Mercdatastruc);*/
 
-                            /*byte[] buffff = new byte[144];
-                            long pStatsListExPtr = BitConverter.ToInt64(Mercdatastruc, 0x10);
-                            Form1_0.Mem_0.ReadRawMemory(pStatsListExPtr, ref buffff, 500);
+                                /*byte[] buffff = new byte[144];
+                                long pStatsListExPtr = BitConverter.ToInt64(Mercdatastruc, 0x10);
+                                Form1_0.Mem_0.ReadRawMemory(pStatsListExPtr, ref buffff, 500);
 
-                            //pStatsListExPtr = BitConverter.ToInt64(buffff, 8);
-                            //Form1_0.Mem_0.ReadRawMemory(pStatsListExPtr, ref buffff, 500);
-                            //uint dwOwnerId = BitConverter.ToUInt32(buffff, 0x0c);
-                            //uint flags = BitConverter.ToUInt32(buffff, 0x18);
+                                //pStatsListExPtr = BitConverter.ToInt64(buffff, 8);
+                                //Form1_0.Mem_0.ReadRawMemory(pStatsListExPtr, ref buffff, 500);
+                                //uint dwOwnerId = BitConverter.ToUInt32(buffff, 0x0c);
+                                //uint flags = BitConverter.ToUInt32(buffff, 0x18);
 
-                            string SavePathh2 = Form1_0.ThisEndPath + "DumpMercStrucBuf" + MercCount;
-                            File.Create(SavePathh2).Dispose();
-                            File.WriteAllBytes(SavePathh2, buffff);*/
+                                string SavePathh2 = Form1_0.ThisEndPath + "DumpMercStrucBuf" + MercCount;
+                                File.Create(SavePathh2).Dispose();
+                                File.WriteAllBytes(SavePathh2, buffff);*/
 
-                            //Console.WriteLine(txtFileNo.ToString() + ", isUnique:" + isUnique + ", ownerID:" + dwOwnerId.ToString("X") + ", mode:" + mode + ", pos:" + xPosFinal + ", " + yPosFinal);
-                            //Console.WriteLine(flags);
-                            //MercCount++;
+                                //Console.WriteLine(txtFileNo.ToString() + ", isUnique:" + isUnique + ", ownerID:" + dwOwnerId.ToString("X") + ", mode:" + mode + ", pos:" + xPosFinal + ", " + yPosFinal);
+                                //Console.WriteLine(flags);
+                                //MercCount++;
 
-                            SetHPFromStats();
-                        Form1_0.Grid_SetInfos("Merc", MercHP.ToString() + "/" + MercMaxHP.ToString());
-                        return true;
-                        //}
+                                SetHPFromStats();
+                            Form1_0.Grid_SetInfos("Merc", MercHP.ToString() + "/" + MercMaxHP.ToString());
+                            return true;
+                            //}
+                        }
                     }
                 }
             }
+        }
+        catch
+        {
+            Form1_0.method_1("Couldn't 'GetMercInfos()'", Color.Red);
         }
 
         Form1_0.Grid_SetInfos("Merc", "Not alive/detected");

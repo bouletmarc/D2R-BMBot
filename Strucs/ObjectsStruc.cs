@@ -59,38 +59,46 @@ public class ObjectsStruc
 
     public List<int[]> GetAllObjectsNearby(string ObjectType)
     {
-        //"object", "GoodChest"
-        Form1_0.PatternsScan_0.scanForUnitsPointer("objects");
-
-        List<int[]> objectsPositions2 = new List<int[]>();
-
-        foreach (var ThisCurrentPointer in Form1_0.PatternsScan_0.AllObjectsPointers)
+        try
         {
-            ObjectPointerLocation = ThisCurrentPointer.Key;
-            if (ObjectPointerLocation > 0)
+            //"object", "GoodChest"
+            Form1_0.PatternsScan_0.scanForUnitsPointer("objects");
+
+            List<int[]> objectsPositions2 = new List<int[]>();
+
+            foreach (var ThisCurrentPointer in Form1_0.PatternsScan_0.AllObjectsPointers)
             {
-                //objectdatastruc = new byte[144];
-                objectdatastruc = new byte[64];
-                Form1_0.Mem_0.ReadRawMemory(ObjectPointerLocation, ref objectdatastruc, objectdatastruc.Length);
-
-                txtFileNo = BitConverter.ToUInt32(objectdatastruc, 4);
-                //ObjectUnitID = BitConverter.ToUInt32(objectdatastruc, 0x08);
-                //GetUnitData();
-                GetUnitPathData();
-
-                //Form1_0.method_1("Object: " + getObjectName((int)txtFileNo) + " - " + itemx + ", " + itemy, Color.DarkOrchid);
-                if (itemx != 0 && itemy != 0)
+                ObjectPointerLocation = ThisCurrentPointer.Key;
+                if (ObjectPointerLocation > 0)
                 {
-                    if (getObjectName((int)txtFileNo) == ObjectType)
+                    //objectdatastruc = new byte[144];
+                    objectdatastruc = new byte[64];
+                    Form1_0.Mem_0.ReadRawMemory(ObjectPointerLocation, ref objectdatastruc, objectdatastruc.Length);
+
+                    txtFileNo = BitConverter.ToUInt32(objectdatastruc, 4);
+                    //ObjectUnitID = BitConverter.ToUInt32(objectdatastruc, 0x08);
+                    //GetUnitData();
+                    GetUnitPathData();
+
+                    //Form1_0.method_1("Object: " + getObjectName((int)txtFileNo) + " - " + itemx + ", " + itemy, Color.DarkOrchid);
+                    if (itemx != 0 && itemy != 0)
                     {
-                        //objectsPositions2.Add(Tuple.Create((int)itemx, (int)itemy));
-                        objectsPositions2.Add(new int[2] { (int)itemx, (int)itemy });
+                        if (getObjectName((int)txtFileNo) == ObjectType)
+                        {
+                            //objectsPositions2.Add(Tuple.Create((int)itemx, (int)itemy));
+                            objectsPositions2.Add(new int[2] { (int)itemx, (int)itemy });
+                        }
                     }
                 }
             }
-        }
 
-        return objectsPositions2;
+            return objectsPositions2;
+        }
+        catch
+        {
+            Form1_0.method_1("Couldn't 'GetAllObjectsNearby()'", Color.Red);
+        }
+        return new List<int[]>();
     }
 
     public void DebugObjects()
@@ -105,124 +113,131 @@ public class ObjectsStruc
 
     public bool GetObjects(string ObjectType, bool Nearest, List<uint> IgnoredIDList = null, int MaxDistance = 999, string PortalOwner = "", int PortalArea = 0)
     {
-        txtFileNo = 0;
-        ObjectUnitID = 0;
-        NearestObjectPointer = 0;
-        LastDiffX = 999;
-        LastDiffY = 999;
-        long LastPointer = 0;
-        Form1_0.PatternsScan_0.scanForUnitsPointer("objects");
-
-        foreach (var ThisCurrentPointer in Form1_0.PatternsScan_0.AllObjectsPointers)
+        try
         {
-            ObjectPointerLocation = ThisCurrentPointer.Key;
-            if (ObjectPointerLocation > 0)
+            txtFileNo = 0;
+            ObjectUnitID = 0;
+            NearestObjectPointer = 0;
+            LastDiffX = 999;
+            LastDiffY = 999;
+            long LastPointer = 0;
+            Form1_0.PatternsScan_0.scanForUnitsPointer("objects");
+
+            foreach (var ThisCurrentPointer in Form1_0.PatternsScan_0.AllObjectsPointers)
             {
-                //objectdatastruc = new byte[144];
-                objectdatastruc = new byte[64];
-                Form1_0.Mem_0.ReadRawMemory(ObjectPointerLocation, ref objectdatastruc, objectdatastruc.Length);
-
-                txtFileNo = BitConverter.ToUInt32(objectdatastruc, 4);
-                ObjectUnitID = BitConverter.ToUInt32(objectdatastruc, 0x08);
-                GetUnitData();
-                GetUnitPathData();
-
-                //Form1_0.method_1("Object: " + getObjectName((int)txtFileNo) + " - " + itemx + ", " + itemy, Color.DarkOrchid);
-
-                if (DebuggingObjects)
+                ObjectPointerLocation = ThisCurrentPointer.Key;
+                if (ObjectPointerLocation > 0)
                 {
-                    if ((itemx != 0 && itemy != 0 && Form1_0.checkBoxShowValidObjectOnly.Checked) || !Form1_0.checkBoxShowValidObjectOnly.Checked)
-                    {
-                        Form1_0.AppendTextDebugObjects("ID:" + txtFileNo + "(" + getObjectName((int)txtFileNo) + ") at:" + itemx + ", " + itemy + Environment.NewLine);
-                    }
-                }
+                    //objectdatastruc = new byte[144];
+                    objectdatastruc = new byte[64];
+                    Form1_0.Mem_0.ReadRawMemory(ObjectPointerLocation, ref objectdatastruc, objectdatastruc.Length);
 
-                if (ObjectType == "TownPortal")
-                {
-                    if (isPortal((int)txtFileNo) == 1)
+                    txtFileNo = BitConverter.ToUInt32(objectdatastruc, 4);
+                    ObjectUnitID = BitConverter.ToUInt32(objectdatastruc, 0x08);
+                    GetUnitData();
+                    GetUnitPathData();
+
+                    //Form1_0.method_1("Object: " + getObjectName((int)txtFileNo) + " - " + itemx + ", " + itemy, Color.DarkOrchid);
+
+                    if (DebuggingObjects)
                     {
-                        if (ObjectUnitID != 0 && ObjectUnitID != 4 && !IsIgnoredID(IgnoredIDList) && itemx != 0 && itemy != 0)
+                        if ((itemx != 0 && itemy != 0 && Form1_0.checkBoxShowValidObjectOnly.Checked) || !Form1_0.checkBoxShowValidObjectOnly.Checked)
                         {
-                            //Form1_0.method_1("PortalID: 0x" + ObjectUnitID.ToString("X") + " to Area: " + interactType + " (" + ((Enums.Area)interactType) + ")", System.Drawing.Color.DarkMagenta);
-                            //Form1_0.method_1("Object: " + itemx + ", " + itemy + " - " + getObjectName((int)txtFileNo), Color.DarkOrchid);
+                            Form1_0.AppendTextDebugObjects("ID:" + txtFileNo + "(" + getObjectName((int)txtFileNo) + ") at:" + itemx + ", " + itemy + Environment.NewLine);
+                        }
+                    }
 
-                            //string SavePathh = Form1_0.ThisEndPath + "PortalStrucpPath";
-                            //File.Create(SavePathh).Dispose();
-                            //File.WriteAllBytes(SavePathh, pPath);
-
-                            if ((PortalOwner != "" && ObjectOwnerName == PortalOwner)
-                                || PortalOwner == "")
+                    if (ObjectType == "TownPortal")
+                    {
+                        if (isPortal((int)txtFileNo) == 1)
+                        {
+                            if (ObjectUnitID != 0 && ObjectUnitID != 4 && !IsIgnoredID(IgnoredIDList) && itemx != 0 && itemy != 0)
                             {
-                                if ((PortalArea != 0 && interactType == PortalArea)
-                                    || PortalArea == 0)
+                                //Form1_0.method_1("PortalID: 0x" + ObjectUnitID.ToString("X") + " to Area: " + interactType + " (" + ((Enums.Area)interactType) + ")", System.Drawing.Color.DarkMagenta);
+                                //Form1_0.method_1("Object: " + itemx + ", " + itemy + " - " + getObjectName((int)txtFileNo), Color.DarkOrchid);
+
+                                //string SavePathh = Form1_0.ThisEndPath + "PortalStrucpPath";
+                                //File.Create(SavePathh).Dispose();
+                                //File.WriteAllBytes(SavePathh, pPath);
+
+                                if ((PortalOwner != "" && ObjectOwnerName == PortalOwner)
+                                    || PortalOwner == "")
                                 {
-                                    LastPointer = ObjectPointerLocation;
-                                    SetNearestObject(Nearest);
-                                    //return true;
+                                    if ((PortalArea != 0 && interactType == PortalArea)
+                                        || PortalArea == 0)
+                                    {
+                                        LastPointer = ObjectPointerLocation;
+                                        SetNearestObject(Nearest);
+                                        //return true;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    else if (ObjectType == "AllChests")
+                    {
+                        if (isChest((int)txtFileNo) == 1 && !IsIgnoredID(IgnoredIDList))
+                        {
+                            if (itemx != 0 && itemy != 0)
+                            {
+                                //Form1_0.method_1("Object: " + itemx + ", " + itemy + " - " + getObjectName((int)txtFileNo), Color.DarkOrchid);
+                                SetNearestObject(Nearest);
+                                if (!Nearest)
+                                {
+                                    return true;
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (getObjectName((int)txtFileNo) == ObjectType && !IsIgnoredID(IgnoredIDList))
+                        {
+                            //Form1_0.method_1("Object: " + itemx + ", " + itemy + " - " + getObjectName((int)txtFileNo), Color.DarkOrchid);
+                            if (itemx != 0 && itemy != 0)
+                            {
+                                //Form1_0.method_1("Object: " + itemx + ", " + itemy + " - " + getObjectName((int)txtFileNo), Color.DarkOrchid);
+
+                                SetNearestObject(Nearest);
+                                if (!Nearest)
+                                {
+                                    return true;
                                 }
                             }
                         }
                     }
                 }
-                else if (ObjectType == "AllChests")
-                {
-                    if (isChest((int)txtFileNo) == 1 && !IsIgnoredID(IgnoredIDList))
-                    {
-                        if (itemx != 0 && itemy != 0)
-                        {
-                            //Form1_0.method_1("Object: " + itemx + ", " + itemy + " - " + getObjectName((int)txtFileNo), Color.DarkOrchid);
-                            SetNearestObject(Nearest);
-                            if (!Nearest)
-                            {
-                                return true;
-                            }
-                        }
-                    }
-                }
-                else
-                {
-                    if (getObjectName((int)txtFileNo) == ObjectType && !IsIgnoredID(IgnoredIDList))
-                    {
-                        //Form1_0.method_1("Object: " + itemx + ", " + itemy + " - " + getObjectName((int)txtFileNo), Color.DarkOrchid);
-                        if (itemx != 0 && itemy != 0)
-                        {
-                            //Form1_0.method_1("Object: " + itemx + ", " + itemy + " - " + getObjectName((int)txtFileNo), Color.DarkOrchid);
-
-                            SetNearestObject(Nearest);
-                            if (!Nearest)
-                            {
-                                return true;
-                            }
-                        }
-                    }
-                }
             }
-        }
 
-        //load nearest objects
-        if (Nearest && NearestObjectPointer != 0)
-        {
-            ObjectPointerLocation = NearestObjectPointer;
-            //objectdatastruc = new byte[144];
-            objectdatastruc = new byte[64];
-            Form1_0.Mem_0.ReadRawMemory(ObjectPointerLocation, ref objectdatastruc, objectdatastruc.Length);
-            txtFileNo = BitConverter.ToUInt32(objectdatastruc, 4);
-            ObjectUnitID = BitConverter.ToUInt32(objectdatastruc, 0x08);
-            GetUnitPathData();
-
-            if (MaxDistance != 999)
+            //load nearest objects
+            if (Nearest && NearestObjectPointer != 0)
             {
-                if (itemx != 0 && itemy != 0)
-                {
-                    int DiffXPlayer = itemx - Form1_0.PlayerScan_0.xPosFinal;
-                    int DiffYPlayer = itemy - Form1_0.PlayerScan_0.yPosFinal;
-                    if (DiffXPlayer < 0) DiffXPlayer = -DiffXPlayer;
-                    if (DiffYPlayer < 0) DiffYPlayer = -DiffYPlayer;
+                ObjectPointerLocation = NearestObjectPointer;
+                //objectdatastruc = new byte[144];
+                objectdatastruc = new byte[64];
+                Form1_0.Mem_0.ReadRawMemory(ObjectPointerLocation, ref objectdatastruc, objectdatastruc.Length);
+                txtFileNo = BitConverter.ToUInt32(objectdatastruc, 4);
+                ObjectUnitID = BitConverter.ToUInt32(objectdatastruc, 0x08);
+                GetUnitPathData();
 
-                    if (DiffXPlayer <= MaxDistance
-                        && DiffYPlayer <= MaxDistance)
+                if (MaxDistance != 999)
+                {
+                    if (itemx != 0 && itemy != 0)
                     {
-                        return true;
+                        int DiffXPlayer = itemx - Form1_0.PlayerScan_0.xPosFinal;
+                        int DiffYPlayer = itemy - Form1_0.PlayerScan_0.yPosFinal;
+                        if (DiffXPlayer < 0) DiffXPlayer = -DiffXPlayer;
+                        if (DiffYPlayer < 0) DiffYPlayer = -DiffYPlayer;
+
+                        if (DiffXPlayer <= MaxDistance
+                            && DiffYPlayer <= MaxDistance)
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
                     }
                     else
                     {
@@ -231,29 +246,29 @@ public class ObjectsStruc
                 }
                 else
                 {
-                    return false;
+                    return true;
                 }
             }
-            else
+            if (Nearest && NearestObjectPointer == 0)
             {
+                return false;
+            }
+
+
+            if (ObjectType == "TownPortal" && LastPointer > 0)
+            {
+                //objectdatastruc = new byte[144];
+                objectdatastruc = new byte[64];
+                Form1_0.Mem_0.ReadRawMemory(LastPointer, ref objectdatastruc, objectdatastruc.Length);
+                txtFileNo = BitConverter.ToUInt32(objectdatastruc, 4);
+                ObjectUnitID = BitConverter.ToUInt32(objectdatastruc, 0x08);
+                GetUnitPathData();
                 return true;
             }
         }
-        if (Nearest && NearestObjectPointer == 0)
+        catch
         {
-            return false;
-        }
-
-
-        if (ObjectType == "TownPortal" && LastPointer > 0)
-        {
-            //objectdatastruc = new byte[144];
-            objectdatastruc = new byte[64];
-            Form1_0.Mem_0.ReadRawMemory(LastPointer, ref objectdatastruc, objectdatastruc.Length);
-            txtFileNo = BitConverter.ToUInt32(objectdatastruc, 4);
-            ObjectUnitID = BitConverter.ToUInt32(objectdatastruc, 0x08);
-            GetUnitPathData();
-            return true;
+            Form1_0.method_1("Couldn't 'GetObjects()'", Color.Red);
         }
 
         return false;

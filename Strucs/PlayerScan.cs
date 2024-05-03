@@ -561,233 +561,247 @@ public class PlayerScan
     {
         FoundPlayer = false;
 
-        int SizeArray = 0;
-        int SizeIncrement = 0;
-        byte[] unitTableBufferT = new byte[] { };
-        if (QuickScan)
+        try
         {
-            SizeArray = (128 + 516) * 8;
-            SizeIncrement = 8;
-            unitTableBufferT = new byte[SizeArray];
-            long UnitOffset = (long)Form1_0.BaseAddress + (long)Form1_0.offsets["unitTable"] + Form1_0.UnitStrucOffset;
-            Form1_0.Mem_0.ReadRawMemory(UnitOffset, ref unitTableBufferT, SizeArray);
-
-            PlayerStrucCount = 0;
-            for (int i = 0; i < SizeArray; i += SizeIncrement)
+            int SizeArray = 0;
+            int SizeIncrement = 0;
+            byte[] unitTableBufferT = new byte[] { };
+            if (QuickScan)
             {
-                long UnitPointerLocation = BitConverter.ToInt64(unitTableBufferT, i);
+                SizeArray = (128 + 516) * 8;
+                SizeIncrement = 8;
+                unitTableBufferT = new byte[SizeArray];
+                long UnitOffset = (long)Form1_0.BaseAddress + (long)Form1_0.offsets["unitTable"] + Form1_0.UnitStrucOffset;
+                Form1_0.Mem_0.ReadRawMemory(UnitOffset, ref unitTableBufferT, SizeArray);
 
-                if (UnitPointerLocation > 0)
+                PlayerStrucCount = 0;
+                for (int i = 0; i < SizeArray; i += SizeIncrement)
                 {
-                    byte[] itemdatastruc = new byte[144];
-                    Form1_0.Mem_0.ReadRawMemory(UnitPointerLocation, ref itemdatastruc, 144);
+                    long UnitPointerLocation = BitConverter.ToInt64(unitTableBufferT, i);
 
-                    // Do ONLY UnitType:0 && TxtFileNo:3
-                    //if (BitConverter.ToUInt32(itemdatastruc, 0) == 0 && BitConverter.ToUInt32(itemdatastruc, 4) == 3)
-                    if (BitConverter.ToUInt32(itemdatastruc, 0) == 0)
+                    if (UnitPointerLocation > 0)
                     {
-                        PlayerStrucCount++;
-                        //Form1_0.method_1("PPointerLocation: 0x" + (UnitPointerLocation).ToString("X"));
+                        byte[] itemdatastruc = new byte[144];
+                        Form1_0.Mem_0.ReadRawMemory(UnitPointerLocation, ref itemdatastruc, 144);
 
-                        long pUnitDataPtr = BitConverter.ToInt64(itemdatastruc, 0x10);
-                        byte[] pUnitData = new byte[144];
-                        Form1_0.Mem_0.ReadRawMemory(pUnitDataPtr, ref pUnitData, 144);
-
-                        string name = "";
-                        for (int i2 = 0; i2 < 16; i2++)
+                        // Do ONLY UnitType:0 && TxtFileNo:3
+                        //if (BitConverter.ToUInt32(itemdatastruc, 0) == 0 && BitConverter.ToUInt32(itemdatastruc, 4) == 3)
+                        if (BitConverter.ToUInt32(itemdatastruc, 0) == 0)
                         {
-                            if (pUnitData[i2] != 0x00)
+                            PlayerStrucCount++;
+                            //Form1_0.method_1("PPointerLocation: 0x" + (UnitPointerLocation).ToString("X"));
+
+                            long pUnitDataPtr = BitConverter.ToInt64(itemdatastruc, 0x10);
+                            byte[] pUnitData = new byte[144];
+                            Form1_0.Mem_0.ReadRawMemory(pUnitDataPtr, ref pUnitData, 144);
+
+                            string name = "";
+                            for (int i2 = 0; i2 < 16; i2++)
                             {
-                                name += (char)pUnitData[i2];
+                                if (pUnitData[i2] != 0x00)
+                                {
+                                    name += (char)pUnitData[i2];
+                                }
+                            }
+                            //name = name.Replace("?", "");
+                            //Form1_0.method_1("PNAME: " + name, Color.Red);
+
+                            //Console.WriteLine(BitConverter.ToUInt32(itemdatastruc, 0));
+                            //Console.WriteLine(BitConverter.ToUInt32(itemdatastruc, 4));
+
+                            long ppath = BitConverter.ToInt64(itemdatastruc, 0x38);
+                            byte[] ppathData = new byte[144];
+                            Form1_0.Mem_0.ReadRawMemory(ppath, ref ppathData, 144);
+
+                            //if posX equal not zero
+                            if (BitConverter.ToInt16(ppathData, 2) != 0 && name == CharConfig.PlayerCharName)
+                            {
+                                Form1_0.method_1("------------------------------------------", Color.DarkBlue);
+                                PlayerPointer = UnitPointerLocation;
+                                Form1_0.Grid_SetInfos("Pointer", "0x" + PlayerPointer.ToString("X"));
+                                FoundPlayer = true;
+                                unitId = BitConverter.ToUInt32(itemdatastruc, 0x08);
+                                Form1_0.method_1("Player ID: 0x" + unitId.ToString("X"), Color.DarkBlue);
+
+                                /*string SavePathh = Form1_0.ThisEndPath + "DumpPlayerStruc";
+                                File.Create(SavePathh).Dispose();
+                                File.WriteAllBytes(SavePathh, itemdatastruc);
+                                SavePathh = Form1_0.ThisEndPath + "DumpPlayerUnitData";
+                                File.Create(SavePathh).Dispose();
+                                File.WriteAllBytes(SavePathh, pUnitData);
+                                SavePathh = Form1_0.ThisEndPath + "DumpPlayerPath";
+                                File.Create(SavePathh).Dispose();
+                                File.WriteAllBytes(SavePathh, ppathData);*/
+
+                                return;
                             }
                         }
-                        //name = name.Replace("?", "");
-                        //Form1_0.method_1("PNAME: " + name, Color.Red);
+                    }
+                }
+            }
+            else
+            {
+                Form1_0.PatternsScan_0.scanForUnitsPointer("player");
 
-                        //Console.WriteLine(BitConverter.ToUInt32(itemdatastruc, 0));
-                        //Console.WriteLine(BitConverter.ToUInt32(itemdatastruc, 4));
+                PlayerStrucCount = 0;
+                foreach (var ThisCurrentPointer in Form1_0.PatternsScan_0.AllPlayersPointers)
+                {
+                    long UnitPointerLocation = ThisCurrentPointer.Key;
 
-                        long ppath = BitConverter.ToInt64(itemdatastruc, 0x38);
-                        byte[] ppathData = new byte[144];
-                        Form1_0.Mem_0.ReadRawMemory(ppath, ref ppathData, 144);
+                    if (UnitPointerLocation > 0)
+                    {
+                        byte[] itemdatastruc = new byte[144];
+                        Form1_0.Mem_0.ReadRawMemory(UnitPointerLocation, ref itemdatastruc, 144);
 
-                        //if posX equal not zero
-                        if (BitConverter.ToInt16(ppathData, 2) != 0 && name == CharConfig.PlayerCharName)
+                        // Do ONLY UnitType:0 && TxtFileNo:3
+                        //if (BitConverter.ToUInt32(itemdatastruc, 0) == 0 && BitConverter.ToUInt32(itemdatastruc, 4) == 3)
+                        if (BitConverter.ToUInt32(itemdatastruc, 0) == 0)
                         {
-                            Form1_0.method_1("------------------------------------------", Color.DarkBlue);
-                            PlayerPointer = UnitPointerLocation;
-                            Form1_0.Grid_SetInfos("Pointer", "0x" + PlayerPointer.ToString("X"));
-                            FoundPlayer = true;
-                            unitId = BitConverter.ToUInt32(itemdatastruc, 0x08);
-                            Form1_0.method_1("Player ID: 0x" + unitId.ToString("X"), Color.DarkBlue);
+                            PlayerStrucCount++;
+                            //Form1_0.method_1("PPointerLocation: 0x" + (UnitPointerLocation).ToString("X"));
 
-                            /*string SavePathh = Form1_0.ThisEndPath + "DumpPlayerStruc";
-                            File.Create(SavePathh).Dispose();
-                            File.WriteAllBytes(SavePathh, itemdatastruc);
-                            SavePathh = Form1_0.ThisEndPath + "DumpPlayerUnitData";
-                            File.Create(SavePathh).Dispose();
-                            File.WriteAllBytes(SavePathh, pUnitData);
-                            SavePathh = Form1_0.ThisEndPath + "DumpPlayerPath";
-                            File.Create(SavePathh).Dispose();
-                            File.WriteAllBytes(SavePathh, ppathData);*/
+                            long pUnitDataPtr = BitConverter.ToInt64(itemdatastruc, 0x10);
+                            byte[] pUnitData = new byte[144];
+                            Form1_0.Mem_0.ReadRawMemory(pUnitDataPtr, ref pUnitData, 144);
 
-                            return;
+                            string name = "";
+                            for (int i2 = 0; i2 < 16; i2++)
+                            {
+                                if (pUnitData[i2] != 0x00)
+                                {
+                                    name += (char)pUnitData[i2];
+                                }
+                            }
+                            //name = name.Replace("?", "");
+                            //Form1_0.method_1("PNAME: " + name, Color.Red);
+
+                            //Console.WriteLine(BitConverter.ToUInt32(itemdatastruc, 0));
+                            //Console.WriteLine(BitConverter.ToUInt32(itemdatastruc, 4));
+
+                            long ppath = BitConverter.ToInt64(itemdatastruc, 0x38);
+                            byte[] ppathData = new byte[144];
+                            Form1_0.Mem_0.ReadRawMemory(ppath, ref ppathData, 144);
+
+                            //if posX equal not zero
+                            if (BitConverter.ToInt16(ppathData, 2) != 0 && name == CharConfig.PlayerCharName)
+                            {
+                                Form1_0.method_1("------------------------------------------", Color.DarkBlue);
+                                PlayerPointer = UnitPointerLocation;
+                                Form1_0.Grid_SetInfos("Pointer", "0x" + PlayerPointer.ToString("X"));
+                                FoundPlayer = true;
+                                unitId = BitConverter.ToUInt32(itemdatastruc, 0x08);
+                                Form1_0.method_1("Player ID: 0x" + unitId.ToString("X"), Color.DarkBlue);
+
+                                /*string SavePathh = Form1_0.ThisEndPath + "DumpPlayerStruc";
+                                File.Create(SavePathh).Dispose();
+                                File.WriteAllBytes(SavePathh, itemdatastruc);
+                                SavePathh = Form1_0.ThisEndPath + "DumpPlayerUnitData";
+                                File.Create(SavePathh).Dispose();
+                                File.WriteAllBytes(SavePathh, pUnitData);
+                                SavePathh = Form1_0.ThisEndPath + "DumpPlayerPath";
+                                File.Create(SavePathh).Dispose();
+                                File.WriteAllBytes(SavePathh, ppathData);*/
+
+                                return;
+                            }
                         }
                     }
                 }
             }
         }
-        else
+        catch
         {
-            Form1_0.PatternsScan_0.scanForUnitsPointer("player");
-
-            PlayerStrucCount = 0;
-            foreach (var ThisCurrentPointer in Form1_0.PatternsScan_0.AllPlayersPointers)
-            {
-                long UnitPointerLocation = ThisCurrentPointer.Key;
-
-                if (UnitPointerLocation > 0)
-                {
-                    byte[] itemdatastruc = new byte[144];
-                    Form1_0.Mem_0.ReadRawMemory(UnitPointerLocation, ref itemdatastruc, 144);
-
-                    // Do ONLY UnitType:0 && TxtFileNo:3
-                    //if (BitConverter.ToUInt32(itemdatastruc, 0) == 0 && BitConverter.ToUInt32(itemdatastruc, 4) == 3)
-                    if (BitConverter.ToUInt32(itemdatastruc, 0) == 0)
-                    {
-                        PlayerStrucCount++;
-                        //Form1_0.method_1("PPointerLocation: 0x" + (UnitPointerLocation).ToString("X"));
-
-                        long pUnitDataPtr = BitConverter.ToInt64(itemdatastruc, 0x10);
-                        byte[] pUnitData = new byte[144];
-                        Form1_0.Mem_0.ReadRawMemory(pUnitDataPtr, ref pUnitData, 144);
-
-                        string name = "";
-                        for (int i2 = 0; i2 < 16; i2++)
-                        {
-                            if (pUnitData[i2] != 0x00)
-                            {
-                                name += (char)pUnitData[i2];
-                            }
-                        }
-                        //name = name.Replace("?", "");
-                        //Form1_0.method_1("PNAME: " + name, Color.Red);
-
-                        //Console.WriteLine(BitConverter.ToUInt32(itemdatastruc, 0));
-                        //Console.WriteLine(BitConverter.ToUInt32(itemdatastruc, 4));
-
-                        long ppath = BitConverter.ToInt64(itemdatastruc, 0x38);
-                        byte[] ppathData = new byte[144];
-                        Form1_0.Mem_0.ReadRawMemory(ppath, ref ppathData, 144);
-
-                        //if posX equal not zero
-                        if (BitConverter.ToInt16(ppathData, 2) != 0 && name == CharConfig.PlayerCharName)
-                        {
-                            Form1_0.method_1("------------------------------------------", Color.DarkBlue);
-                            PlayerPointer = UnitPointerLocation;
-                            Form1_0.Grid_SetInfos("Pointer", "0x" + PlayerPointer.ToString("X"));
-                            FoundPlayer = true;
-                            unitId = BitConverter.ToUInt32(itemdatastruc, 0x08);
-                            Form1_0.method_1("Player ID: 0x" + unitId.ToString("X"), Color.DarkBlue);
-
-                            /*string SavePathh = Form1_0.ThisEndPath + "DumpPlayerStruc";
-                            File.Create(SavePathh).Dispose();
-                            File.WriteAllBytes(SavePathh, itemdatastruc);
-                            SavePathh = Form1_0.ThisEndPath + "DumpPlayerUnitData";
-                            File.Create(SavePathh).Dispose();
-                            File.WriteAllBytes(SavePathh, pUnitData);
-                            SavePathh = Form1_0.ThisEndPath + "DumpPlayerPath";
-                            File.Create(SavePathh).Dispose();
-                            File.WriteAllBytes(SavePathh, ppathData);*/
-
-                            return;
-                        }
-                    }
-                }
-            }
+            Form1_0.method_1("Couldn't 'scanForPlayer()'", Color.Red);
         }
     }
 
     public bool ScanForOthersPlayers(long ThisUnitID, string ThisPlayerName, bool GetCorpseOnly)
     {
-        //this can be used to get self corpse??
-
-        Form1_0.PatternsScan_0.scanForUnitsPointer("player");
-
-        foreach (var ThisCurrentPointer in Form1_0.PatternsScan_0.AllPlayersPointers)
+        try
         {
-            long UnitPointerLocation = ThisCurrentPointer.Key;
-            if (UnitPointerLocation > 0)
+            //this can be used to get self corpse??
+
+            Form1_0.PatternsScan_0.scanForUnitsPointer("player");
+
+            foreach (var ThisCurrentPointer in Form1_0.PatternsScan_0.AllPlayersPointers)
             {
-                byte[] itemdatastruc = new byte[0x98];
-                Form1_0.Mem_0.ReadRawMemory(UnitPointerLocation, ref itemdatastruc, itemdatastruc.Length);
-
-
-                long pInventory = BitConverter.ToInt64(itemdatastruc, 0x90);
-                if (pInventory > 0)
+                long UnitPointerLocation = ThisCurrentPointer.Key;
+                if (UnitPointerLocation > 0)
                 {
-                    unitIdOther = BitConverter.ToUInt32(itemdatastruc, 0x08);
+                    byte[] itemdatastruc = new byte[0x98];
+                    Form1_0.Mem_0.ReadRawMemory(UnitPointerLocation, ref itemdatastruc, itemdatastruc.Length);
 
-                    long OtherpathAddress = Form1_0.Mem_0.ReadInt64Raw((IntPtr)(PlayerPointer + 0x38));
-                    long OtherxPos = Form1_0.Mem_0.ReadUInt16Raw((IntPtr)(OtherpathAddress + 0x02));
-                    long OtheryPos = Form1_0.Mem_0.ReadUInt16Raw((IntPtr)(OtherpathAddress + 0x06));
-                    long OtherxPosOffset = Form1_0.Mem_0.ReadUInt16Raw((IntPtr)(OtherpathAddress + 0x00));
-                    long OtheryPosOffset = Form1_0.Mem_0.ReadUInt16Raw((IntPtr)(OtherpathAddress + 0x04));
-                    long OtherxPosOffsetPercent = (OtherxPosOffset / 65536); //get percentage
-                    long OtheryPosOffsetPercent = (OtheryPosOffset / 65536); //get percentage
-                    xPosFinalOtherP = (ushort)(OtherxPos + OtherxPosOffsetPercent);
-                    yPosFinalOtherP = (ushort)(OtheryPos + OtheryPosOffsetPercent);
 
-                    long pUnitDataPtr = BitConverter.ToInt64(itemdatastruc, 0x10);
-                    byte[] pUnitData = new byte[144];
-                    Form1_0.Mem_0.ReadRawMemory(pUnitDataPtr, ref pUnitData, 144);
-
-                    string name = "";
-                    for (int i2 = 0; i2 < 16; i2++)
+                    long pInventory = BitConverter.ToInt64(itemdatastruc, 0x90);
+                    if (pInventory > 0)
                     {
-                        if (pUnitData[i2] != 0x00)
-                        {
-                            name += (char)pUnitData[i2];
-                        }
-                        else
-                        {
-                            break;
-                        }
-                    }
-                    pNameOther = name;
+                        unitIdOther = BitConverter.ToUInt32(itemdatastruc, 0x08);
 
-                    IsCorpse = false;
-                    if (Form1_0.Mem_0.ReadByteRaw((IntPtr)(PlayerPointer + 0x1A6)) == 1)
-                    {
-                        IsCorpse = true;
-                    }
-                    if (xPosFinalOtherP > 1 && yPosFinalOtherP > 1)
-                    {
-                        if (unitIdOther != 0)
+                        long OtherpathAddress = Form1_0.Mem_0.ReadInt64Raw((IntPtr)(PlayerPointer + 0x38));
+                        long OtherxPos = Form1_0.Mem_0.ReadUInt16Raw((IntPtr)(OtherpathAddress + 0x02));
+                        long OtheryPos = Form1_0.Mem_0.ReadUInt16Raw((IntPtr)(OtherpathAddress + 0x06));
+                        long OtherxPosOffset = Form1_0.Mem_0.ReadUInt16Raw((IntPtr)(OtherpathAddress + 0x00));
+                        long OtheryPosOffset = Form1_0.Mem_0.ReadUInt16Raw((IntPtr)(OtherpathAddress + 0x04));
+                        long OtherxPosOffsetPercent = (OtherxPosOffset / 65536); //get percentage
+                        long OtheryPosOffsetPercent = (OtheryPosOffset / 65536); //get percentage
+                        xPosFinalOtherP = (ushort)(OtherxPos + OtherxPosOffsetPercent);
+                        yPosFinalOtherP = (ushort)(OtheryPos + OtheryPosOffsetPercent);
+
+                        long pUnitDataPtr = BitConverter.ToInt64(itemdatastruc, 0x10);
+                        byte[] pUnitData = new byte[144];
+                        Form1_0.Mem_0.ReadRawMemory(pUnitDataPtr, ref pUnitData, 144);
+
+                        string name = "";
+                        for (int i2 = 0; i2 < 16; i2++)
                         {
-                            if (unitIdOther == ThisUnitID)
+                            if (pUnitData[i2] != 0x00)
                             {
-                                if (!GetCorpseOnly || (GetCorpseOnly && IsCorpse))
-                                {
-                                    return true;
-                                }
+                                name += (char)pUnitData[i2];
+                            }
+                            else
+                            {
+                                break;
                             }
                         }
-                        if (ThisPlayerName != "")
-                        {
-                            //Form1_0.method_1("TEST player corpse scan name: " + ThisPlayerName + "|" + IsCorpse, Color.OrangeRed);
+                        pNameOther = name;
 
-                            if (pNameOther == ThisPlayerName)
+                        IsCorpse = false;
+                        if (Form1_0.Mem_0.ReadByteRaw((IntPtr)(PlayerPointer + 0x1A6)) == 1)
+                        {
+                            IsCorpse = true;
+                        }
+                        if (xPosFinalOtherP > 1 && yPosFinalOtherP > 1)
+                        {
+                            if (unitIdOther != 0)
                             {
-                                if (!GetCorpseOnly || (GetCorpseOnly && IsCorpse))
+                                if (unitIdOther == ThisUnitID)
                                 {
-                                    return true;
+                                    if (!GetCorpseOnly || (GetCorpseOnly && IsCorpse))
+                                    {
+                                        return true;
+                                    }
+                                }
+                            }
+                            if (ThisPlayerName != "")
+                            {
+                                //Form1_0.method_1("TEST player corpse scan name: " + ThisPlayerName + "|" + IsCorpse, Color.OrangeRed);
+
+                                if (pNameOther == ThisPlayerName)
+                                {
+                                    if (!GetCorpseOnly || (GetCorpseOnly && IsCorpse))
+                                    {
+                                        return true;
+                                    }
                                 }
                             }
                         }
                     }
                 }
             }
+        }
+        catch
+        {
+            Form1_0.method_1("Couldn't 'ScanForOthersPlayers()'", Color.Red);
         }
 
         return false;

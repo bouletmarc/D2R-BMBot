@@ -108,16 +108,10 @@ public partial class FormItems : Form
         }
         else
         {
-            comboBoxName.Items.Add("helm");
-            comboBoxName.Items.Add("gloves");
-            comboBoxName.Items.Add("boots");
-            comboBoxName.Items.Add("belt");
-            comboBoxName.Items.Add("ring");
-            comboBoxName.Items.Add("amulet");
-            comboBoxName.Items.Add("armor");
-            comboBoxName.Items.Add("circlet");
-            comboBoxName.Items.Add("gold");
-            comboBoxName.Items.Add("jewel");
+            foreach(var ThisDir in Form1_0.ItemsAlert_0.typeMapping)
+            {
+                comboBoxName.Items.Add(ThisDir.Key);
+            }
         }
         comboBoxName.SelectedIndex = 0;
     }

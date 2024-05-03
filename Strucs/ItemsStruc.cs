@@ -252,39 +252,46 @@ public class ItemsStruc
 
     public bool GetShopItem(string ShopItemName, bool GetGambleShopItem = false)
     {
-        Form1_0.PatternsScan_0.scanForUnitsPointer("item");
-        foreach (var ThisCurrentPointer in Form1_0.PatternsScan_0.AllItemsPointers)
+        try
         {
-            ItemPointerLocation = ThisCurrentPointer.Key;
-            if (ItemPointerLocation > 0)
+            Form1_0.PatternsScan_0.scanForUnitsPointer("item");
+            foreach (var ThisCurrentPointer in Form1_0.PatternsScan_0.AllItemsPointers)
             {
-                itemdatastruc = new byte[144];
-                Form1_0.Mem_0.ReadRawMemory(ItemPointerLocation, ref itemdatastruc, 144);
-
-                ItemsScanned++;
-                ItemNAAME = Form1_0.ItemsNames_0.getItemBaseName(BitConverter.ToUInt32(itemdatastruc, 4));
-                txtFileNo = BitConverter.ToUInt32(itemdatastruc, 4);
-                GetUnitData();
-                GetUnitPathData();
-                GetStatsAddr();
-
-                //Form1_0.method_1("ItemType: " + BitConverter.ToUInt32(itemdatastruc, 0).ToString() + ", TxtFileNo: " + BitConverter.ToUInt32(itemdatastruc, 4).ToString() + ", Name: " + ItemNAAME + ", Location: " + GetItemLocation(itemdatastruc[0x0C]));
-                //; itemLoc - 0 in inventory, 1 equipped, 2 in belt, 3 on ground, 4 cursor, 5 dropping, 6 socketed
-                if (itemdatastruc[0x0C] == 0)
+                ItemPointerLocation = ThisCurrentPointer.Key;
+                if (ItemPointerLocation > 0)
                 {
-                    if (dwOwnerId != Form1_0.PlayerScan_0.unitId)
+                    itemdatastruc = new byte[144];
+                    Form1_0.Mem_0.ReadRawMemory(ItemPointerLocation, ref itemdatastruc, 144);
+
+                    ItemsScanned++;
+                    ItemNAAME = Form1_0.ItemsNames_0.getItemBaseName(BitConverter.ToUInt32(itemdatastruc, 4));
+                    txtFileNo = BitConverter.ToUInt32(itemdatastruc, 4);
+                    GetUnitData();
+                    GetUnitPathData();
+                    GetStatsAddr();
+
+                    //Form1_0.method_1("ItemType: " + BitConverter.ToUInt32(itemdatastruc, 0).ToString() + ", TxtFileNo: " + BitConverter.ToUInt32(itemdatastruc, 4).ToString() + ", Name: " + ItemNAAME + ", Location: " + GetItemLocation(itemdatastruc[0x0C]));
+                    //; itemLoc - 0 in inventory, 1 equipped, 2 in belt, 3 on ground, 4 cursor, 5 dropping, 6 socketed
+                    if (itemdatastruc[0x0C] == 0)
                     {
-                        if ((GetGambleShopItem && equiploc == 0)
-                            || (!GetGambleShopItem && equiploc == 3))
+                        if (dwOwnerId != Form1_0.PlayerScan_0.unitId)
                         {
-                            if (ItemNAAME == ShopItemName)
+                            if ((GetGambleShopItem && equiploc == 0)
+                                || (!GetGambleShopItem && equiploc == 3))
                             {
-                                return true;
+                                if (ItemNAAME == ShopItemName)
+                                {
+                                    return true;
+                                }
                             }
                         }
                     }
                 }
             }
+        }
+        catch
+        {
+            Form1_0.method_1("Couldn't 'GetShopItem()'", Color.Red);
         }
 
         return false;
@@ -372,314 +379,289 @@ public class ItemsStruc
 
     public bool GetItems(bool IsPickingItem)
     {
-        if (!Form1_0.GameStruc_0.IsInGame()) return false;
-
-        //dead leave game
-        if (Form1_0.PlayerScan_0.PlayerDead || Form1_0.Potions_0.ForceLeave)
+        try
         {
-            Form1_0.Potions_0.ForceLeave = true;
-            Form1_0.BaalLeech_0.SearchSameGamesAsLastOne = false;
-            Form1_0.LeaveGame(false);
-            Form1_0.IncreaseDeadCount();
-            return false;
-        }
+            if (!Form1_0.GameStruc_0.IsInGame()) return false;
 
-        //Form1_0.SetGameStatus("SCANING ITEMS");
-        ItemsScanned = 0;
-        ItemsOnGround = 0;
-        ItemsEquiped = 0;
-        ItemsInInventory = 0;
-        ItemsInBelt = 0;
-        if (!IsPickingItem)
-        {
-            Form1_0.Repair_0.ShouldRepair = false;
-            Form1_0.BeltStruc_0.BeltHaveItems = new int[16];
-            Form1_0.BeltStruc_0.BeltItemsTypes = new int[16];
-            Form1_0.BeltStruc_0.HPQuantity = 0;
-            Form1_0.BeltStruc_0.ManyQuantity = 0;
-            Form1_0.InventoryStruc_0.ResetInventory();
-            Form1_0.PlayerScan_0.HPFromEquippedItems = 0;
-            Form1_0.PlayerScan_0.ManaFromEquippedItems = 0;
-            Form1_0.PlayerScan_0.VitalityFromEquippedItems = 0;
-            Form1_0.PlayerScan_0.EnergyFromEquippedItems = 0;
-            Form1_0.PlayerScan_0.HPPercentFromEquippedItems = 0;
-            Form1_0.PlayerScan_0.ManaPercentFromEquippedItems = 0;
-            Form1_0.StashStruc_0.ResetStashInventory();
-            Form1_0.Cubing_0.ResetCubeInventory();
-            Form1_0.InventoryStruc_0.HasIDTome = false;
-            ItemOnCursor = false;
-            ItemOnCursorName = "";
-        }
-        else
-        {
-            if (TriesToPickItemCount >= CharConfig.MaxItemGrabTries) return false;
-        }
-
-        Form1_0.PatternsScan_0.scanForUnitsPointer("item");
-
-        foreach (var ThisCurrentPointer in Form1_0.PatternsScan_0.AllItemsPointers)
-        {
-            ItemPointerLocation = ThisCurrentPointer.Key;
-            if (ItemPointerLocation > 0)
+            //dead leave game
+            if (Form1_0.PlayerScan_0.PlayerDead || Form1_0.Potions_0.ForceLeave)
             {
-                itemdatastruc = new byte[144];
-                Form1_0.Mem_0.ReadRawMemory(ItemPointerLocation, ref itemdatastruc, 144);
+                Form1_0.Potions_0.ForceLeave = true;
+                Form1_0.BaalLeech_0.SearchSameGamesAsLastOne = false;
+                Form1_0.LeaveGame(false);
+                Form1_0.IncreaseDeadCount();
+                return false;
+            }
 
-                ItemsScanned++;
-                txtFileNo = BitConverter.ToUInt32(itemdatastruc, 4);
-                uint ItemID = BitConverter.ToUInt32(itemdatastruc, 8);
-                ItemNAAME = Form1_0.ItemsNames_0.getItemBaseName(txtFileNo);
-                GetUnitData();
-                GetUnitPathData();
-                GetStatsAddr();
+            //Form1_0.SetGameStatus("SCANING ITEMS");
+            ItemsScanned = 0;
+            ItemsOnGround = 0;
+            ItemsEquiped = 0;
+            ItemsInInventory = 0;
+            ItemsInBelt = 0;
+            if (!IsPickingItem)
+            {
+                Form1_0.Repair_0.ShouldRepair = false;
+                Form1_0.BeltStruc_0.BeltHaveItems = new int[16];
+                Form1_0.BeltStruc_0.BeltItemsTypes = new int[16];
+                Form1_0.BeltStruc_0.HPQuantity = 0;
+                Form1_0.BeltStruc_0.ManyQuantity = 0;
+                Form1_0.InventoryStruc_0.ResetInventory();
+                Form1_0.PlayerScan_0.HPFromEquippedItems = 0;
+                Form1_0.PlayerScan_0.ManaFromEquippedItems = 0;
+                Form1_0.PlayerScan_0.VitalityFromEquippedItems = 0;
+                Form1_0.PlayerScan_0.EnergyFromEquippedItems = 0;
+                Form1_0.PlayerScan_0.HPPercentFromEquippedItems = 0;
+                Form1_0.PlayerScan_0.ManaPercentFromEquippedItems = 0;
+                Form1_0.StashStruc_0.ResetStashInventory();
+                Form1_0.Cubing_0.ResetCubeInventory();
+                Form1_0.InventoryStruc_0.HasIDTome = false;
+                ItemOnCursor = false;
+                ItemOnCursorName = "";
+            }
+            else
+            {
+                if (TriesToPickItemCount >= CharConfig.MaxItemGrabTries) return false;
+            }
 
-                //Form1_0.method_1("ItemType: " + BitConverter.ToUInt32(itemdatastruc, 0).ToString() + ", TxtFileNo: " + BitConverter.ToUInt32(itemdatastruc, 4).ToString() + ", Name: " + ItemNAAME + ", Location: " + GetItemLocation(itemdatastruc[0x0C]));
-                //; itemLoc - 0 in inventory, 1 equipped, 2 in belt, 3 on ground, 4 cursor, 5 dropping, 6 socketed
+            Form1_0.PatternsScan_0.scanForUnitsPointer("item");
 
-                if (itemdatastruc[0x0C] == 4)
+            foreach (var ThisCurrentPointer in Form1_0.PatternsScan_0.AllItemsPointers)
+            {
+                ItemPointerLocation = ThisCurrentPointer.Key;
+                if (ItemPointerLocation > 0)
                 {
-                    if (!IsPickingItem && !HasGotTheBadItemOnCursor && !IsIncludedInList(BadItemsOnCursorIDList, ItemPointerLocation))
+                    itemdatastruc = new byte[144];
+                    Form1_0.Mem_0.ReadRawMemory(ItemPointerLocation, ref itemdatastruc, 144);
+
+                    ItemsScanned++;
+                    txtFileNo = BitConverter.ToUInt32(itemdatastruc, 4);
+                    uint ItemID = BitConverter.ToUInt32(itemdatastruc, 8);
+                    ItemNAAME = Form1_0.ItemsNames_0.getItemBaseName(txtFileNo);
+                    GetUnitData();
+                    GetUnitPathData();
+                    GetStatsAddr();
+
+                    //Form1_0.method_1("ItemType: " + BitConverter.ToUInt32(itemdatastruc, 0).ToString() + ", TxtFileNo: " + BitConverter.ToUInt32(itemdatastruc, 4).ToString() + ", Name: " + ItemNAAME + ", Location: " + GetItemLocation(itemdatastruc[0x0C]));
+                    //; itemLoc - 0 in inventory, 1 equipped, 2 in belt, 3 on ground, 4 cursor, 5 dropping, 6 socketed
+
+                    if (itemdatastruc[0x0C] == 4)
                     {
-                        if (ItemNAAME != "Horadric Cube")
+                        if (!IsPickingItem && !HasGotTheBadItemOnCursor && !IsIncludedInList(BadItemsOnCursorIDList, ItemPointerLocation))
                         {
-                            Form1_0.method_1("Added bad item 'OnCursor':" + ItemNAAME, Color.OrangeRed);
-                            BadItemsOnCursorIDList.Add(ItemPointerLocation);
-                        }
-                    }
-                    else if (HasGotTheBadItemOnCursor && !IsIncludedInList(BadItemsOnCursorIDList, ItemPointerLocation))
-                    {
-                        ItemOnCursor = true;
-                        ItemOnCursorName = ItemNAAME;
-                        //Form1_0.method_1("cursor: " + ItemNAAME + " - at: " + itemx + "," + itemy, Color.BlueViolet);
-
-                        if (DebuggingItems)
-                        {
-                            AllItemsOnCursor.Add("ID:" + txtFileNo + "(" + ItemNAAME + ") at:" + itemx + ", " + itemy + " - On Cursor - " + Form1_0.ItemsAlert_0.GetItemTypeText() + " && " + GetQualityTextString() + " && " + GetAllFlagsFromItem() + " && " + GetAllValuesFromStats() + GetItemsStashInfosTxt());
-                        }
-                    }
-                }
-
-                if (itemdatastruc[0x0C] == 0)
-                {
-                    if (dwOwnerId == Form1_0.PlayerScan_0.unitId && equiploc == 0)
-                    {
-                        ItemsInInventory++;
-
-                        //Form1_0.method_1("inv: " + ItemNAAME + " - at: " + itemx + "," + itemy, Color.Red);
-                        if (!IsPickingItem)
-                        {
-                            Form1_0.PlayerScan_0.GetHPAndManaOnThisEquippedItem();
-                            Form1_0.InventoryStruc_0.SetInventoryItem();
-                            Form1_0.InventoryStruc_0.SetHUDItem();
-                        }
-
-                        if (DebuggingItems)
-                        {
-                            AllItemsInInventory.Add("ID:" + txtFileNo + "(" + ItemNAAME + ") at:" + itemx + ", " + itemy + " - In Inventory - " + Form1_0.ItemsAlert_0.GetItemTypeText() + " && " + GetQualityTextString() + " && " + GetAllFlagsFromItem() + " && " + GetAllValuesFromStats() + GetItemsStashInfosTxt());
-                        }
-                    }
-
-                    else if (dwOwnerId == Form1_0.PlayerScan_0.unitId && equiploc == 4)
-                    {
-                        //here for items in stash
-                        //Form1_0.method_1("name: " + ItemNAAME + " - at: " + itemx + "," + itemy, Color.DarkGreen);
-                        Form1_0.StashStruc_0.AddStashItem(itemx, itemy, 1);
-
-                        if (DebuggingItems)
-                        {
-                            AllItemsInStash.Add("ID:" + txtFileNo + "(" + ItemNAAME + ") at:" + itemx + ", " + itemy + " - In Stash - " + Form1_0.ItemsAlert_0.GetItemTypeText() + " && " + GetQualityTextString() + " && " + GetAllFlagsFromItem() + " && " + GetAllValuesFromStats() + GetItemsStashInfosTxt());
-                        }
-                    }
-                    else if (dwOwnerId != Form1_0.PlayerScan_0.unitId && equiploc == 4)
-                    {
-                        //here for items in shared stash
-                        //Form1_0.method_1("name: " + ItemNAAME + " - at: " + itemx + "," + itemy + " - " + dwOwnerId, Color.DarkGreen);
-                        SetSharedStashOwner();
-                        if (dwOwnerId_Shared1 != 0 && dwOwnerId_Shared2 != 0 && dwOwnerId_Shared3 != 0)
-                        {
-                            int StashNum = 0;
-                            if (dwOwnerId == dwOwnerId_Shared1) StashNum = 2;
-                            if (dwOwnerId == dwOwnerId_Shared2) StashNum = 3;
-                            if (dwOwnerId == dwOwnerId_Shared3) StashNum = 4;
-                            Form1_0.StashStruc_0.AddStashItem(itemx, itemy, StashNum);
-
-                            if (dwOwnerId == dwOwnerId_Shared1 && DebuggingItems) AllItemsInSharedStash1.Add("ID:" + txtFileNo + "(" + ItemNAAME + ") at:" + itemx + ", " + itemy + " - In Shared Stash1 - " + Form1_0.ItemsAlert_0.GetItemTypeText() + " && " + GetQualityTextString() + " && " + GetAllFlagsFromItem() + " && " + GetAllValuesFromStats() + GetItemsStashInfosTxt());
-                            if (dwOwnerId == dwOwnerId_Shared2 && DebuggingItems) AllItemsInSharedStash2.Add("ID:" + txtFileNo + "(" + ItemNAAME + ") at:" + itemx + ", " + itemy + " - In Shared Stash2 - " + Form1_0.ItemsAlert_0.GetItemTypeText() + " && " + GetQualityTextString() + " && " + GetAllFlagsFromItem() + " && " + GetAllValuesFromStats() + GetItemsStashInfosTxt());
-                            if (dwOwnerId == dwOwnerId_Shared3 && DebuggingItems) AllItemsInSharedStash3.Add("ID:" + txtFileNo + "(" + ItemNAAME + ") at:" + itemx + ", " + itemy + " - In Shared Stash3 - " + Form1_0.ItemsAlert_0.GetItemTypeText() + " && " + GetQualityTextString() + " && " + GetAllFlagsFromItem() + " && " + GetAllValuesFromStats() + GetItemsStashInfosTxt());
-                        }
-                    }
-                    else if (dwOwnerId == Form1_0.PlayerScan_0.unitId && equiploc == 3)
-                    {
-                        //here for items in cube
-                        //Form1_0.method_1("name: " + ItemNAAME + " - at: " + itemx + "," + itemy, Color.DarkGreen);
-                        Form1_0.Cubing_0.AddCubeItem(itemx, itemy);
-
-                        if (DebuggingItems)
-                        {
-                            AllItemsIncube.Add("ID:" + txtFileNo + "(" + ItemNAAME + ") at:" + itemx + ", " + itemy + " - In Cube - " + Form1_0.ItemsAlert_0.GetItemTypeText() + " && " + GetQualityTextString() + " && " + GetAllFlagsFromItem() + " && " + GetAllValuesFromStats() + GetItemsStashInfosTxt());
-                        }
-                    }
-                    else if (dwOwnerId != Form1_0.PlayerScan_0.unitId && equiploc == 3)
-                    {
-                        //Shop Items
-                        if (DebuggingItems)
-                        {
-                            AllItemsInShop.Add("ID:" + txtFileNo + "(" + ItemNAAME + ") at:" + itemx + ", " + itemy + " - In Shop - " + Form1_0.ItemsAlert_0.GetItemTypeText() + " && " + GetQualityTextString() + " && " + GetAllFlagsFromItem() + " && " + GetAllValuesFromStats() + GetItemsStashInfosTxt());
-                        }
-                    }
-                    else if (dwOwnerId != Form1_0.PlayerScan_0.unitId && equiploc == 0)
-                    {
-                        //Shop Gamble Items
-                        if (DebuggingItems)
-                        {
-                            AllItemsInShop.Add("ID:" + txtFileNo + "(" + ItemNAAME + ") at:" + itemx + ", " + itemy + " - In Shop(Gamble) - " + Form1_0.ItemsAlert_0.GetItemTypeText() + " && " + GetQualityTextString() + " && " + GetAllFlagsFromItem() + " && " + GetAllValuesFromStats() + GetItemsStashInfosTxt());
-                        }
-                    }
-                    else
-                    {
-                        AllItemsOthers.Add("ID:" + txtFileNo + "(" + ItemNAAME + ") at:" + itemx + ", " + itemy + " - Others - EquipLocation:" + equiploc + " - SelfOwner:" + (dwOwnerId == Form1_0.PlayerScan_0.unitId) + " - " + Form1_0.ItemsAlert_0.GetItemTypeText() + " && " + GetQualityTextString() + " && " + GetAllFlagsFromItem() + " && " + GetAllValuesFromStats() + GetItemsStashInfosTxt());
-                    }
-                }
-                if (itemdatastruc[0x0C] == 1)
-                {
-                    if (dwOwnerId == Form1_0.PlayerScan_0.unitId && equiploc == 255)
-                    {
-                        //Form1_0.method_1("inv: " + ItemNAAME + " - at: " + itemx + "," + itemy, Color.Red);
-
-                        ItemsEquiped++;
-                        if (!IsPickingItem)
-                        {
-                            Form1_0.PlayerScan_0.GetHPAndManaOnThisEquippedItem();
-                            Form1_0.Repair_0.GetDurabilityOnThisEquippedItem();
-                        }
-                        //Form1_0.method_1("name: " + ItemNAAME + " - at: " + itemx + "," + itemy + " - " + equiploc, Color.DarkGreen);
-
-                        if (DebuggingItems)
-                        {
-                            AllItemsEquipped.Add("ID:" + txtFileNo + "(" + ItemNAAME + ") at:" + itemx + ", " + itemy + " - Equipped - " + Form1_0.ItemsAlert_0.GetItemTypeText() + " && " + GetQualityTextString() + " && " + GetAllFlagsFromItem() + " && " + GetAllValuesFromStats() + GetItemsStashInfosTxt());
-                        }
-
-                        if (ItemNAAME == "Crusader Gauntlets")
-                        {
-                            string SavePathh = Form1_0.ThisEndPath + "DumpItempUnitDataStruc";
-                            File.Create(SavePathh).Dispose();
-                            File.WriteAllBytes(SavePathh, pUnitData);
-                        }
-                    }
-                    else
-                    {
-                        /*if (dwOwnerId != 0 && Form1_0.MercStruc_0.MercOwnerID == 0)
-                        {
-                            //Form1_0.MercStruc_0.MercOwnerID = ItemID;
-                            Form1_0.method_1("owner: " + dwOwnerId.ToString("X") + ", ID: " + ItemID.ToString("X") + ", name: " + ItemNAAME + " - at: " + itemx + "," + itemy + " - " + equiploc, Color.DarkGreen);
-                        }*/
-                    }
-                }
-                if (itemdatastruc[0x0C] == 2)
-                {
-                    if (dwOwnerId == Form1_0.PlayerScan_0.unitId)
-                    {
-                        ItemsInBelt++;
-                        if (!IsPickingItem)
-                        {
-                            Form1_0.BeltStruc_0.AddBeltItem(UsePotionNotInRightSpot);
-                        }
-
-                        if (DebuggingItems)
-                        {
-                            AllItemsInBelt.Add("ID:" + txtFileNo + "(" + ItemNAAME + ") at:" + itemx + ", " + itemy + " - In Belt - " + Form1_0.ItemsAlert_0.GetItemTypeText() + " && " + GetQualityTextString() + " && " + GetAllFlagsFromItem() + " && " + GetAllValuesFromStats() + GetItemsStashInfosTxt());
-                        }
-                    }
-                }
-                //; on ground, dropping
-                if (itemdatastruc[0x0C] == 3 || itemdatastruc[0x0C] == 5)
-                {
-                    ItemsOnGround++;
-
-                    //Form1_0.method_1_Items("Ground: " + ItemNAAME, GetColorFromQuality((int)itemQuality));
-                    if (DebuggingItems)
-                    {
-                        AllItemsOnGround.Add("ID:" + txtFileNo + "(" + ItemNAAME + ") at:" + itemx + ", " + itemy + " - On Ground/Droping - " + Form1_0.ItemsAlert_0.GetItemTypeText() + " && " + GetQualityTextString() + " && " + GetAllFlagsFromItem() + " && " + GetAllValuesFromStats() + GetItemsStashInfosTxt());
-                    }
-
-                    if (!IsPickingItem) continue;
-                    if (BadItemsOnGroundPointerList.ContainsKey(ItemPointerLocation.ToString())) continue;
-                    if (AvoidItemsOnGroundPointerList.ContainsKey(ItemPointerLocation.ToString()))
-                    {
-                        if (!IsItemPickingPotion())
-                        {
-                            continue;
-                        }
-                    }
-
-                    Form1_0.UIScan_0.readUI();
-                    if (Form1_0.UIScan_0.leftMenu || Form1_0.UIScan_0.rightMenu || Form1_0.UIScan_0.fullMenu) continue;
-
-                    if ((Form1_0.ItemsAlert_0.ShouldPickItem(false) || Form1_0.BeltStruc_0.ItemGrabPotion()))
-                    {
-                        /*string SavePathh = Form1_0.ThisEndPath + "DumpItempPathStruc";
-                        File.Create(SavePathh).Dispose();
-                        File.WriteAllBytes(SavePathh, itemdatastruc);*/
-
-                        Position itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, itemx, itemy);
-                        if (ShouldPickPos(itemScreenPos))
-                        {
-                            int DiffXPlayer = itemx - Form1_0.PlayerScan_0.xPosFinal;
-                            int DiffYPlayer = itemy - Form1_0.PlayerScan_0.yPosFinal;
-                            if (DiffXPlayer < 0) DiffXPlayer = -DiffXPlayer;
-                            if (DiffYPlayer < 0) DiffYPlayer = -DiffYPlayer;
-
-                            if (DiffXPlayer > 100 || DiffYPlayer > 100)
+                            if (ItemNAAME != "Horadric Cube")
                             {
+                                Form1_0.method_1("Added bad item 'OnCursor':" + ItemNAAME, Color.OrangeRed);
+                                BadItemsOnCursorIDList.Add(ItemPointerLocation);
+                            }
+                        }
+                        else if (HasGotTheBadItemOnCursor && !IsIncludedInList(BadItemsOnCursorIDList, ItemPointerLocation))
+                        {
+                            if (ItemNAAME == "Short Sword")
+                            {
+                                Form1_0.method_1("Added bad item 'OnCursor':" + ItemNAAME, Color.OrangeRed);
+                                BadItemsOnCursorIDList.Add(ItemPointerLocation);
                                 continue;
                             }
 
-                            //####
-                            if (CharConfig.UseTeleport)
+                            ItemOnCursor = true;
+                            ItemOnCursorName = ItemNAAME;
+                            //Form1_0.method_1("cursor: " + ItemNAAME + " - at: " + itemx + "," + itemy, Color.BlueViolet);
+
+                            if (DebuggingItems)
                             {
-                                if (DiffXPlayer > 4 || DiffYPlayer > 4)
-                                {
-                                    //Form1_0.Mover_0.MoveToLocation(itemx, itemy); //slow move
-                                    Form1_0.Mover_0.MoveToLocationAttack(itemx, itemy); //fast move
-                                    Form1_0.PlayerScan_0.GetPositions();
-                                    GetUnitPathData();
-                                    itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, itemx, itemy);
-                                }
+                                AllItemsOnCursor.Add("ID:" + txtFileNo + "(" + ItemNAAME + ") at:" + itemx + ", " + itemy + " - On Cursor - " + Form1_0.ItemsAlert_0.GetItemTypeText() + " && " + GetQualityTextString() + " && " + GetAllFlagsFromItem() + " && " + GetAllValuesFromStats() + GetItemsStashInfosTxt());
+                            }
+                        }
+                    }
+
+                    if (itemdatastruc[0x0C] == 0)
+                    {
+                        if (dwOwnerId == Form1_0.PlayerScan_0.unitId && equiploc == 0)
+                        {
+                            ItemsInInventory++;
+
+                            //Form1_0.method_1("inv: " + ItemNAAME + " - at: " + itemx + "," + itemy, Color.Red);
+                            if (!IsPickingItem)
+                            {
+                                Form1_0.PlayerScan_0.GetHPAndManaOnThisEquippedItem();
+                                Form1_0.InventoryStruc_0.SetInventoryItem();
+                                Form1_0.InventoryStruc_0.SetHUDItem();
                             }
 
-                            //##############################################
-                            //##############################################
-                            //detect bad items??
-                            if (((itemx <= 0 && itemy <= 0)
-                                || (itemScreenPos.X <= 0 && itemScreenPos.Y <= 0)))
+                            if (DebuggingItems)
                             {
-                                if (!BadItemsOnGroundPointerList.ContainsKey(ItemPointerLocation.ToString()))
+                                AllItemsInInventory.Add("ID:" + txtFileNo + "(" + ItemNAAME + ") at:" + itemx + ", " + itemy + " - In Inventory - " + Form1_0.ItemsAlert_0.GetItemTypeText() + " && " + GetQualityTextString() + " && " + GetAllFlagsFromItem() + " && " + GetAllValuesFromStats() + GetItemsStashInfosTxt());
+                            }
+                        }
+
+                        else if (dwOwnerId == Form1_0.PlayerScan_0.unitId && equiploc == 4)
+                        {
+                            //here for items in stash
+                            //Form1_0.method_1("name: " + ItemNAAME + " - at: " + itemx + "," + itemy, Color.DarkGreen);
+                            Form1_0.StashStruc_0.AddStashItem(itemx, itemy, 1);
+
+                            if (DebuggingItems)
+                            {
+                                AllItemsInStash.Add("ID:" + txtFileNo + "(" + ItemNAAME + ") at:" + itemx + ", " + itemy + " - In Stash - " + Form1_0.ItemsAlert_0.GetItemTypeText() + " && " + GetQualityTextString() + " && " + GetAllFlagsFromItem() + " && " + GetAllValuesFromStats() + GetItemsStashInfosTxt());
+                            }
+                        }
+                        else if (dwOwnerId != Form1_0.PlayerScan_0.unitId && equiploc == 4)
+                        {
+                            //here for items in shared stash
+                            //Form1_0.method_1("name: " + ItemNAAME + " - at: " + itemx + "," + itemy + " - " + dwOwnerId, Color.DarkGreen);
+                            SetSharedStashOwner();
+                            if (dwOwnerId_Shared1 != 0 && dwOwnerId_Shared2 != 0 && dwOwnerId_Shared3 != 0)
+                            {
+                                int StashNum = 0;
+                                if (dwOwnerId == dwOwnerId_Shared1) StashNum = 2;
+                                if (dwOwnerId == dwOwnerId_Shared2) StashNum = 3;
+                                if (dwOwnerId == dwOwnerId_Shared3) StashNum = 4;
+                                Form1_0.StashStruc_0.AddStashItem(itemx, itemy, StashNum);
+
+                                if (dwOwnerId == dwOwnerId_Shared1 && DebuggingItems) AllItemsInSharedStash1.Add("ID:" + txtFileNo + "(" + ItemNAAME + ") at:" + itemx + ", " + itemy + " - In Shared Stash1 - " + Form1_0.ItemsAlert_0.GetItemTypeText() + " && " + GetQualityTextString() + " && " + GetAllFlagsFromItem() + " && " + GetAllValuesFromStats() + GetItemsStashInfosTxt());
+                                if (dwOwnerId == dwOwnerId_Shared2 && DebuggingItems) AllItemsInSharedStash2.Add("ID:" + txtFileNo + "(" + ItemNAAME + ") at:" + itemx + ", " + itemy + " - In Shared Stash2 - " + Form1_0.ItemsAlert_0.GetItemTypeText() + " && " + GetQualityTextString() + " && " + GetAllFlagsFromItem() + " && " + GetAllValuesFromStats() + GetItemsStashInfosTxt());
+                                if (dwOwnerId == dwOwnerId_Shared3 && DebuggingItems) AllItemsInSharedStash3.Add("ID:" + txtFileNo + "(" + ItemNAAME + ") at:" + itemx + ", " + itemy + " - In Shared Stash3 - " + Form1_0.ItemsAlert_0.GetItemTypeText() + " && " + GetQualityTextString() + " && " + GetAllFlagsFromItem() + " && " + GetAllValuesFromStats() + GetItemsStashInfosTxt());
+                            }
+                        }
+                        else if (dwOwnerId == Form1_0.PlayerScan_0.unitId && equiploc == 3)
+                        {
+                            //here for items in cube
+                            //Form1_0.method_1("name: " + ItemNAAME + " - at: " + itemx + "," + itemy, Color.DarkGreen);
+                            Form1_0.Cubing_0.AddCubeItem(itemx, itemy);
+
+                            if (DebuggingItems)
+                            {
+                                AllItemsIncube.Add("ID:" + txtFileNo + "(" + ItemNAAME + ") at:" + itemx + ", " + itemy + " - In Cube - " + Form1_0.ItemsAlert_0.GetItemTypeText() + " && " + GetQualityTextString() + " && " + GetAllFlagsFromItem() + " && " + GetAllValuesFromStats() + GetItemsStashInfosTxt());
+                            }
+                        }
+                        else if (dwOwnerId != Form1_0.PlayerScan_0.unitId && equiploc == 3)
+                        {
+                            //Shop Items
+                            if (DebuggingItems)
+                            {
+                                AllItemsInShop.Add("ID:" + txtFileNo + "(" + ItemNAAME + ") at:" + itemx + ", " + itemy + " - In Shop - " + Form1_0.ItemsAlert_0.GetItemTypeText() + " && " + GetQualityTextString() + " && " + GetAllFlagsFromItem() + " && " + GetAllValuesFromStats() + GetItemsStashInfosTxt());
+                            }
+                        }
+                        else if (dwOwnerId != Form1_0.PlayerScan_0.unitId && equiploc == 0)
+                        {
+                            //Shop Gamble Items
+                            if (DebuggingItems)
+                            {
+                                AllItemsInShop.Add("ID:" + txtFileNo + "(" + ItemNAAME + ") at:" + itemx + ", " + itemy + " - In Shop(Gamble) - " + Form1_0.ItemsAlert_0.GetItemTypeText() + " && " + GetQualityTextString() + " && " + GetAllFlagsFromItem() + " && " + GetAllValuesFromStats() + GetItemsStashInfosTxt());
+                            }
+                        }
+                        else
+                        {
+                            AllItemsOthers.Add("ID:" + txtFileNo + "(" + ItemNAAME + ") at:" + itemx + ", " + itemy + " - Others - EquipLocation:" + equiploc + " - SelfOwner:" + (dwOwnerId == Form1_0.PlayerScan_0.unitId) + " - " + Form1_0.ItemsAlert_0.GetItemTypeText() + " && " + GetQualityTextString() + " && " + GetAllFlagsFromItem() + " && " + GetAllValuesFromStats() + GetItemsStashInfosTxt());
+                        }
+                    }
+                    if (itemdatastruc[0x0C] == 1)
+                    {
+                        if (dwOwnerId == Form1_0.PlayerScan_0.unitId && equiploc == 255)
+                        {
+                            //Form1_0.method_1("inv: " + ItemNAAME + " - at: " + itemx + "," + itemy, Color.Red);
+
+                            ItemsEquiped++;
+                            if (!IsPickingItem)
+                            {
+                                Form1_0.PlayerScan_0.GetHPAndManaOnThisEquippedItem();
+                                Form1_0.Repair_0.GetDurabilityOnThisEquippedItem();
+                            }
+                            //Form1_0.method_1("name: " + ItemNAAME + " - at: " + itemx + "," + itemy + " - " + equiploc, Color.DarkGreen);
+
+                            if (DebuggingItems)
+                            {
+                                AllItemsEquipped.Add("ID:" + txtFileNo + "(" + ItemNAAME + ") at:" + itemx + ", " + itemy + " - Equipped - " + Form1_0.ItemsAlert_0.GetItemTypeText() + " && " + GetQualityTextString() + " && " + GetAllFlagsFromItem() + " && " + GetAllValuesFromStats() + GetItemsStashInfosTxt());
+                            }
+
+                            if (ItemNAAME == "Crusader Gauntlets")
+                            {
+                                string SavePathh = Form1_0.ThisEndPath + "DumpItempUnitDataStruc";
+                                File.Create(SavePathh).Dispose();
+                                File.WriteAllBytes(SavePathh, pUnitData);
+                            }
+                        }
+                        else
+                        {
+                            /*if (dwOwnerId != 0 && Form1_0.MercStruc_0.MercOwnerID == 0)
+                            {
+                                //Form1_0.MercStruc_0.MercOwnerID = ItemID;
+                                Form1_0.method_1("owner: " + dwOwnerId.ToString("X") + ", ID: " + ItemID.ToString("X") + ", name: " + ItemNAAME + " - at: " + itemx + "," + itemy + " - " + equiploc, Color.DarkGreen);
+                            }*/
+                        }
+                    }
+                    if (itemdatastruc[0x0C] == 2)
+                    {
+                        if (dwOwnerId == Form1_0.PlayerScan_0.unitId)
+                        {
+                            ItemsInBelt++;
+                            if (!IsPickingItem)
+                            {
+                                Form1_0.BeltStruc_0.AddBeltItem(UsePotionNotInRightSpot);
+                            }
+
+                            if (DebuggingItems)
+                            {
+                                AllItemsInBelt.Add("ID:" + txtFileNo + "(" + ItemNAAME + ") at:" + itemx + ", " + itemy + " - In Belt - " + Form1_0.ItemsAlert_0.GetItemTypeText() + " && " + GetQualityTextString() + " && " + GetAllFlagsFromItem() + " && " + GetAllValuesFromStats() + GetItemsStashInfosTxt());
+                            }
+                        }
+                    }
+                    //; on ground, dropping
+                    if (itemdatastruc[0x0C] == 3 || itemdatastruc[0x0C] == 5)
+                    {
+                        ItemsOnGround++;
+
+                        //Form1_0.method_1_Items("Ground: " + ItemNAAME, GetColorFromQuality((int)itemQuality));
+                        if (DebuggingItems)
+                        {
+                            AllItemsOnGround.Add("ID:" + txtFileNo + "(" + ItemNAAME + ") at:" + itemx + ", " + itemy + " - On Ground/Droping - " + Form1_0.ItemsAlert_0.GetItemTypeText() + " && " + GetQualityTextString() + " && " + GetAllFlagsFromItem() + " && " + GetAllValuesFromStats() + GetItemsStashInfosTxt());
+                        }
+
+                        if (!IsPickingItem) continue;
+                        if (BadItemsOnGroundPointerList.ContainsKey(ItemPointerLocation.ToString())) continue;
+                        if (AvoidItemsOnGroundPointerList.ContainsKey(ItemPointerLocation.ToString()))
+                        {
+                            if (!IsItemPickingPotion())
+                            {
+                                continue;
+                            }
+                        }
+
+                        Form1_0.UIScan_0.readUI();
+                        if (Form1_0.UIScan_0.leftMenu || Form1_0.UIScan_0.rightMenu || Form1_0.UIScan_0.fullMenu) continue;
+
+                        if ((Form1_0.ItemsAlert_0.ShouldPickItem(false) || Form1_0.BeltStruc_0.ItemGrabPotion()))
+                        {
+                            /*string SavePathh = Form1_0.ThisEndPath + "DumpItempPathStruc";
+                            File.Create(SavePathh).Dispose();
+                            File.WriteAllBytes(SavePathh, itemdatastruc);*/
+
+                            Position itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, itemx, itemy);
+                            if (ShouldPickPos(itemScreenPos))
+                            {
+                                int DiffXPlayer = itemx - Form1_0.PlayerScan_0.xPosFinal;
+                                int DiffYPlayer = itemy - Form1_0.PlayerScan_0.yPosFinal;
+                                if (DiffXPlayer < 0) DiffXPlayer = -DiffXPlayer;
+                                if (DiffYPlayer < 0) DiffYPlayer = -DiffYPlayer;
+
+                                if (DiffXPlayer > 100 || DiffYPlayer > 100)
                                 {
-                                    Form1_0.method_1("Added bad item 'OnGround':" + ItemNAAME, Color.OrangeRed);
-                                    BadItemsOnGroundPointerList.Add(ItemPointerLocation.ToString(), true);
                                     continue;
                                 }
-                            }
-                            if (BadItemsOnGroundPointerList.ContainsKey(ItemPointerLocation.ToString()))
-                            {
-                                //Form1_0.method_1("Avoided bad item 'OnGround':" + ItemNAAME, Color.OrangeRed);
-                                continue;
-                            }
-                            //##############################################
-                            //##############################################
 
-                            //####
-                            TriesToPickItemCount++;
-                            Form1_0.KeyMouse_0.PressKeyHold(CharConfig.KeyForceMovement);
-                            //Form1_0.KeyMouse_0.MouseMoveTo_RealPos(itemScreenPos.X, itemScreenPos.Y);
-                            Form1_0.KeyMouse_0.MouseClicc_RealPos(itemScreenPos.X, itemScreenPos.Y);
-                            Form1_0.KeyMouse_0.MouseClicc_RealPos(itemScreenPos.X, itemScreenPos.Y); //clic twice??
-                            Form1_0.KeyMouse_0.ReleaseKey(CharConfig.KeyForceMovement);
-
-                            if (ItemNAAME != LastPick)
-                            {
-                                LastPick = ItemNAAME;
-                                Form1_0.method_1_Items("Picked: " + ItemNAAME, GetColorFromQuality((int)itemQuality));
+                                //####
+                                if (CharConfig.UseTeleport)
+                                {
+                                    if (DiffXPlayer > 4 || DiffYPlayer > 4)
+                                    {
+                                        //Form1_0.Mover_0.MoveToLocation(itemx, itemy); //slow move
+                                        Form1_0.Mover_0.MoveToLocationAttack(itemx, itemy); //fast move
+                                        Form1_0.PlayerScan_0.GetPositions();
+                                        GetUnitPathData();
+                                        itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, itemx, itemy);
+                                    }
+                                }
 
                                 //##############################################
                                 //##############################################
@@ -694,55 +676,95 @@ public class ItemsStruc
                                         continue;
                                     }
                                 }
-                                //##############################################
-                                //##############################################
-
-                                Form1_0.BeltStruc_0.ItemIsPotion();
-                                if (Form1_0.BeltStruc_0.IsItemHPPotion
-                                    || Form1_0.BeltStruc_0.IsItemManaPotion
-                                    || Form1_0.BeltStruc_0.IsItemRVPotion
-                                    || Form1_0.BeltStruc_0.IsItemFullRVPotion)
+                                if (BadItemsOnGroundPointerList.ContainsKey(ItemPointerLocation.ToString()))
                                 {
-                                    Form1_0.BeltStruc_0.CheckForMissingPotions();
+                                    //Form1_0.method_1("Avoided bad item 'OnGround':" + ItemNAAME, Color.OrangeRed);
+                                    continue;
                                 }
-                            }
+                                //##############################################
+                                //##############################################
 
-                            //after a lot of try picking item, inventory might be full, dump bad item to ground
-                            if (TriesToPickItemCount >= 7)
-                            {
-                                Form1_0.InventoryStruc_0.DumpBadItemsOnGround();
-                            }
+                                //####
+                                TriesToPickItemCount++;
+                                Form1_0.KeyMouse_0.PressKeyHold(CharConfig.KeyForceMovement);
+                                //Form1_0.KeyMouse_0.MouseMoveTo_RealPos(itemScreenPos.X, itemScreenPos.Y);
+                                Form1_0.KeyMouse_0.MouseClicc_RealPos(itemScreenPos.X, itemScreenPos.Y);
+                                Form1_0.KeyMouse_0.MouseClicc_RealPos(itemScreenPos.X, itemScreenPos.Y); //clic twice??
+                                Form1_0.KeyMouse_0.ReleaseKey(CharConfig.KeyForceMovement);
 
-                            //after a lot of try picking item, inventory might be full, go to town
-                            if (TriesToPickItemCount >= CharConfig.MaxItemGrabTries)
-                            {
-                                Form1_0.InventoryStruc_0.DumpBadItemsOnGround();
-                                TriesToPickItemCount = CharConfig.MaxItemGrabTries;
-                                Form1_0.Town_0.GoToTown();
-                                IsGrabbingItemOnGround = false;
-                                return false;
+                                if (ItemNAAME != LastPick)
+                                {
+                                    LastPick = ItemNAAME;
+                                    Form1_0.method_1_Items("Picked: " + ItemNAAME, GetColorFromQuality((int)itemQuality));
+
+                                    //##############################################
+                                    //##############################################
+                                    //detect bad items??
+                                    if (((itemx <= 0 && itemy <= 0)
+                                        || (itemScreenPos.X <= 0 && itemScreenPos.Y <= 0)))
+                                    {
+                                        if (!BadItemsOnGroundPointerList.ContainsKey(ItemPointerLocation.ToString()))
+                                        {
+                                            Form1_0.method_1("Added bad item 'OnGround':" + ItemNAAME, Color.OrangeRed);
+                                            BadItemsOnGroundPointerList.Add(ItemPointerLocation.ToString(), true);
+                                            continue;
+                                        }
+                                    }
+                                    //##############################################
+                                    //##############################################
+
+                                    Form1_0.BeltStruc_0.ItemIsPotion();
+                                    if (Form1_0.BeltStruc_0.IsItemHPPotion
+                                        || Form1_0.BeltStruc_0.IsItemManaPotion
+                                        || Form1_0.BeltStruc_0.IsItemRVPotion
+                                        || Form1_0.BeltStruc_0.IsItemFullRVPotion)
+                                    {
+                                        Form1_0.BeltStruc_0.CheckForMissingPotions();
+                                    }
+                                }
+
+                                //after a lot of try picking item, inventory might be full, dump bad item to ground
+                                if (TriesToPickItemCount >= 7)
+                                {
+                                    Form1_0.InventoryStruc_0.DumpBadItemsOnGround();
+                                }
+
+                                //after a lot of try picking item, inventory might be full, go to town
+                                if (TriesToPickItemCount >= CharConfig.MaxItemGrabTries)
+                                {
+                                    Form1_0.InventoryStruc_0.DumpBadItemsOnGround();
+                                    TriesToPickItemCount = CharConfig.MaxItemGrabTries;
+                                    Form1_0.Town_0.GoToTown();
+                                    IsGrabbingItemOnGround = false;
+                                    return false;
+                                }
+                                IsGrabbingItemOnGround = true;
+                                return true;
                             }
-                            IsGrabbingItemOnGround = true;
-                            return true;
                         }
-                    }
-                    else
-                    {
-                        if (!IsItemPickingPotion() && !AvoidItemsOnGroundPointerList.ContainsKey(ItemPointerLocation.ToString()))
+                        else
                         {
-                            //Form1_0.method_1("Added avoid item 'OnGround':" + ItemNAAME, Color.OrangeRed);
-                            AvoidItemsOnGroundPointerList.Add(ItemPointerLocation.ToString(), true);
+                            if (!IsItemPickingPotion() && !AvoidItemsOnGroundPointerList.ContainsKey(ItemPointerLocation.ToString()))
+                            {
+                                //Form1_0.method_1("Added avoid item 'OnGround':" + ItemNAAME, Color.OrangeRed);
+                                AvoidItemsOnGroundPointerList.Add(ItemPointerLocation.ToString(), true);
+                            }
                         }
                     }
                 }
             }
+
+            if (IsPickingItem) TriesToPickItemCount = 0; //nothing to pick!
+            if (IsPickingItem) IsGrabbingItemOnGround = false;
+            if (IsPickingItem) AlreadyEmptyedInventory = false;
+            //Form1_0.method_1("-----", Color.Black);
+
+            return false;
         }
-
-        if (IsPickingItem) TriesToPickItemCount = 0; //nothing to pick!
-        if (IsPickingItem) IsGrabbingItemOnGround = false;
-        if (IsPickingItem) AlreadyEmptyedInventory = false;
-        //Form1_0.method_1("-----", Color.Black);
-
+        catch
+        {
+            Form1_0.method_1("Couldn't 'GetItems()'", Color.Red);
+        }
         return false;
     }
 
@@ -787,94 +809,101 @@ public class ItemsStruc
 
     public bool PickThisItem(string ThisItemName)
     {
-        if (!Form1_0.GameStruc_0.IsInGame()) return false;
-
-        //dead leave game
-        if (Form1_0.PlayerScan_0.PlayerDead || Form1_0.Potions_0.ForceLeave)
+        try
         {
-            Form1_0.Potions_0.ForceLeave = true;
-            Form1_0.BaalLeech_0.SearchSameGamesAsLastOne = false;
-            Form1_0.LeaveGame(false);
-            Form1_0.IncreaseDeadCount();
-            return false;
-        }
+            if (!Form1_0.GameStruc_0.IsInGame()) return false;
 
-        Form1_0.PlayerScan_0.GetPositions();
-
-        Form1_0.PatternsScan_0.scanForUnitsPointer("item");
-        foreach (var ThisCurrentPointer in Form1_0.PatternsScan_0.AllItemsPointers)
-        {
-            ItemPointerLocation = ThisCurrentPointer.Key;
-            if (ItemPointerLocation > 0)
+            //dead leave game
+            if (Form1_0.PlayerScan_0.PlayerDead || Form1_0.Potions_0.ForceLeave)
             {
-                itemdatastruc = new byte[144];
-                Form1_0.Mem_0.ReadRawMemory(ItemPointerLocation, ref itemdatastruc, 144);
+                Form1_0.Potions_0.ForceLeave = true;
+                Form1_0.BaalLeech_0.SearchSameGamesAsLastOne = false;
+                Form1_0.LeaveGame(false);
+                Form1_0.IncreaseDeadCount();
+                return false;
+            }
 
-                ItemNAAME = Form1_0.ItemsNames_0.getItemBaseName(BitConverter.ToUInt32(itemdatastruc, 4));
-                txtFileNo = BitConverter.ToUInt32(itemdatastruc, 4);
-                GetUnitData();
-                GetUnitPathData();
-                GetStatsAddr();
+            Form1_0.PlayerScan_0.GetPositions();
 
-                //; on ground, dropping
-                if (itemdatastruc[0x0C] == 3 || itemdatastruc[0x0C] == 5)
+            Form1_0.PatternsScan_0.scanForUnitsPointer("item");
+            foreach (var ThisCurrentPointer in Form1_0.PatternsScan_0.AllItemsPointers)
+            {
+                ItemPointerLocation = ThisCurrentPointer.Key;
+                if (ItemPointerLocation > 0)
                 {
-                    Form1_0.UIScan_0.readUI();
-                    if (ItemNAAME == ThisItemName && (!Form1_0.UIScan_0.leftMenu && !Form1_0.UIScan_0.rightMenu && !Form1_0.UIScan_0.fullMenu))
+                    itemdatastruc = new byte[144];
+                    Form1_0.Mem_0.ReadRawMemory(ItemPointerLocation, ref itemdatastruc, 144);
+
+                    ItemNAAME = Form1_0.ItemsNames_0.getItemBaseName(BitConverter.ToUInt32(itemdatastruc, 4));
+                    txtFileNo = BitConverter.ToUInt32(itemdatastruc, 4);
+                    GetUnitData();
+                    GetUnitPathData();
+                    GetStatsAddr();
+
+                    //; on ground, dropping
+                    if (itemdatastruc[0x0C] == 3 || itemdatastruc[0x0C] == 5)
                     {
-                        Position itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, itemx, itemy);
-                        if (ShouldPickPos(itemScreenPos))
+                        Form1_0.UIScan_0.readUI();
+                        if (ItemNAAME == ThisItemName && (!Form1_0.UIScan_0.leftMenu && !Form1_0.UIScan_0.rightMenu && !Form1_0.UIScan_0.fullMenu))
                         {
-                            int DiffXPlayer = itemx - Form1_0.PlayerScan_0.xPosFinal;
-                            int DiffYPlayer = itemy - Form1_0.PlayerScan_0.yPosFinal;
-                            if (DiffXPlayer < 0) DiffXPlayer = -DiffXPlayer;
-                            if (DiffYPlayer < 0) DiffYPlayer = -DiffYPlayer;
-
-                            if (DiffXPlayer > 100 || DiffYPlayer > 100)
+                            Position itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, itemx, itemy);
+                            if (ShouldPickPos(itemScreenPos))
                             {
-                                continue;
-                            }
+                                int DiffXPlayer = itemx - Form1_0.PlayerScan_0.xPosFinal;
+                                int DiffYPlayer = itemy - Form1_0.PlayerScan_0.yPosFinal;
+                                if (DiffXPlayer < 0) DiffXPlayer = -DiffXPlayer;
+                                if (DiffYPlayer < 0) DiffYPlayer = -DiffYPlayer;
 
-                            //####
-                            if (CharConfig.UseTeleport)
-                            {
-
-                                if (DiffXPlayer > 4 || DiffYPlayer > 4)
+                                if (DiffXPlayer > 100 || DiffYPlayer > 100)
                                 {
-                                    Form1_0.Mover_0.MoveToLocation(itemx, itemy);
-                                    Form1_0.PlayerScan_0.GetPositions();
-                                    GetUnitPathData();
-                                    itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, itemx, itemy);
+                                    continue;
                                 }
-                            }
-                            //####
 
-                            TriesToPickItemCount++;
-                            Form1_0.KeyMouse_0.MouseClicc_RealPos(itemScreenPos.X, itemScreenPos.Y);
-                            Form1_0.KeyMouse_0.MouseClicc_RealPos(itemScreenPos.X, itemScreenPos.Y);
+                                //####
+                                if (CharConfig.UseTeleport)
+                                {
 
-                            if (ItemNAAME != LastPick)
-                            {
-                                LastPick = ItemNAAME;
-                                Form1_0.method_1_Items("Picked: " + ItemNAAME, GetColorFromQuality((int)itemQuality));
-                            }
+                                    if (DiffXPlayer > 4 || DiffYPlayer > 4)
+                                    {
+                                        Form1_0.Mover_0.MoveToLocation(itemx, itemy);
+                                        Form1_0.PlayerScan_0.GetPositions();
+                                        GetUnitPathData();
+                                        itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, itemx, itemy);
+                                    }
+                                }
+                                //####
 
-                            //after a lot of try picking item, inventory might be full, go to town
-                            if (TriesToPickItemCount >= CharConfig.MaxItemGrabTries)
-                            {
-                                TriesToPickItemCount = 0;
-                                Form1_0.Town_0.GoToTown();
-                                return false;
+                                TriesToPickItemCount++;
+                                Form1_0.KeyMouse_0.MouseClicc_RealPos(itemScreenPos.X, itemScreenPos.Y);
+                                Form1_0.KeyMouse_0.MouseClicc_RealPos(itemScreenPos.X, itemScreenPos.Y);
+
+                                if (ItemNAAME != LastPick)
+                                {
+                                    LastPick = ItemNAAME;
+                                    Form1_0.method_1_Items("Picked: " + ItemNAAME, GetColorFromQuality((int)itemQuality));
+                                }
+
+                                //after a lot of try picking item, inventory might be full, go to town
+                                if (TriesToPickItemCount >= CharConfig.MaxItemGrabTries)
+                                {
+                                    TriesToPickItemCount = 0;
+                                    Form1_0.Town_0.GoToTown();
+                                    return false;
+                                }
+                                return true;
                             }
-                            return true;
                         }
-                    }
-                    else
-                    {
-                        TriesToPickItemCount = 0; //nothing to pick!
+                        else
+                        {
+                            TriesToPickItemCount = 0; //nothing to pick!
+                        }
                     }
                 }
             }
+        }
+        catch
+        {
+            Form1_0.method_1("Couldn't 'PickThisItem()'", Color.Red);
         }
 
         return false;
@@ -943,62 +972,69 @@ public class ItemsStruc
 
     public bool GrabItemsForGold()
     {
-        Form1_0.PatternsScan_0.scanForUnitsPointer("item");
-
-        foreach (var ThisCurrentPointer in Form1_0.PatternsScan_0.AllItemsPointers)
+        try
         {
-            ItemPointerLocation = ThisCurrentPointer.Key;
-            if (ItemPointerLocation > 0)
+            Form1_0.PatternsScan_0.scanForUnitsPointer("item");
+
+            foreach (var ThisCurrentPointer in Form1_0.PatternsScan_0.AllItemsPointers)
             {
-                itemdatastruc = new byte[144];
-                Form1_0.Mem_0.ReadRawMemory(ItemPointerLocation, ref itemdatastruc, 144);
-                ItemNAAME = Form1_0.ItemsNames_0.getItemBaseName(BitConverter.ToUInt32(itemdatastruc, 4));
-                GetUnitData();
-                GetUnitPathData();
-                GetStatsAddr();
-
-                //; on ground, dropping
-                if (itemdatastruc[0x0C] == 3 || itemdatastruc[0x0C] == 5)
+                ItemPointerLocation = ThisCurrentPointer.Key;
+                if (ItemPointerLocation > 0)
                 {
-                    Form1_0.UIScan_0.readUI();
-                    if (!Form1_0.UIScan_0.leftMenu && !Form1_0.UIScan_0.rightMenu && !Form1_0.UIScan_0.fullMenu)
+                    itemdatastruc = new byte[144];
+                    Form1_0.Mem_0.ReadRawMemory(ItemPointerLocation, ref itemdatastruc, 144);
+                    ItemNAAME = Form1_0.ItemsNames_0.getItemBaseName(BitConverter.ToUInt32(itemdatastruc, 4));
+                    GetUnitData();
+                    GetUnitPathData();
+                    GetStatsAddr();
+
+                    //; on ground, dropping
+                    if (itemdatastruc[0x0C] == 3 || itemdatastruc[0x0C] == 5)
                     {
-                        Position itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, itemx, itemy);
-                        if (ShouldPickPos(itemScreenPos))
+                        Form1_0.UIScan_0.readUI();
+                        if (!Form1_0.UIScan_0.leftMenu && !Form1_0.UIScan_0.rightMenu && !Form1_0.UIScan_0.fullMenu)
                         {
-                            //####
-                            int DiffXPlayer = itemx - Form1_0.PlayerScan_0.xPosFinal;
-                            int DiffYPlayer = itemy - Form1_0.PlayerScan_0.yPosFinal;
-                            if (DiffXPlayer < 0) DiffXPlayer = -DiffXPlayer;
-                            if (DiffYPlayer < 0) DiffYPlayer = -DiffYPlayer;
-
-                            if (DiffXPlayer > 100 || DiffYPlayer > 100)
+                            Position itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, itemx, itemy);
+                            if (ShouldPickPos(itemScreenPos))
                             {
-                                continue;
-                            }
+                                //####
+                                int DiffXPlayer = itemx - Form1_0.PlayerScan_0.xPosFinal;
+                                int DiffYPlayer = itemy - Form1_0.PlayerScan_0.yPosFinal;
+                                if (DiffXPlayer < 0) DiffXPlayer = -DiffXPlayer;
+                                if (DiffYPlayer < 0) DiffYPlayer = -DiffYPlayer;
 
-                            if (DiffXPlayer > 4
-                                || DiffYPlayer > 4)
-                            {
-                                Form1_0.Mover_0.MoveToLocation(itemx, itemy);
-                                Form1_0.PlayerScan_0.GetPositions();
-                                GetUnitPathData();
-                                itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, itemx, itemy);
-                            }
-                            //####
+                                if (DiffXPlayer > 100 || DiffYPlayer > 100)
+                                {
+                                    continue;
+                                }
 
-                            Form1_0.KeyMouse_0.MouseClicc_RealPos(itemScreenPos.X, itemScreenPos.Y);
+                                if (DiffXPlayer > 4
+                                    || DiffYPlayer > 4)
+                                {
+                                    Form1_0.Mover_0.MoveToLocation(itemx, itemy);
+                                    Form1_0.PlayerScan_0.GetPositions();
+                                    GetUnitPathData();
+                                    itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, itemx, itemy);
+                                }
+                                //####
 
-                            if (ItemNAAME != LastPick)
-                            {
-                                LastPick = ItemNAAME;
-                                Form1_0.method_1("Grabbed for gold: " + ItemNAAME, GetColorFromQuality((int)itemQuality));
+                                Form1_0.KeyMouse_0.MouseClicc_RealPos(itemScreenPos.X, itemScreenPos.Y);
+
+                                if (ItemNAAME != LastPick)
+                                {
+                                    LastPick = ItemNAAME;
+                                    Form1_0.method_1("Grabbed for gold: " + ItemNAAME, GetColorFromQuality((int)itemQuality));
+                                }
+                                return true;
                             }
-                            return true;
                         }
                     }
                 }
             }
+        }
+        catch
+        {
+            Form1_0.method_1("Couldn't 'GrabItemsForGold()'", Color.Red);
         }
 
         return false;

@@ -28,6 +28,8 @@ public class BeltStruc
     public int ForceMANAPotionQty = 0;
     public bool HasPotInBadSpot = false;
 
+    public bool GrabBothRV = false;
+
     public void SetForm1(Form1 form1_1)
     {
         Form1_0 = form1_1;
@@ -66,13 +68,22 @@ public class BeltStruc
         //####
 
         //Console.WriteLine("" + MissingHPPot + MissingManaPot + MissingRVPot);
+        GrabBothRV = false;
+        for (int i = 0; i < 4; i++)
+        {
+            if (CharConfig.BeltPotTypeToHave[i] == 2)
+            {
+                GrabBothRV = true;
+                break;
+            }
+        }
 
         if (MissingHPPot || MissingManaPot || MissingRVPot)
         {
             ItemIsPotion();
             if (MissingHPPot && IsItemHPPotion) return true;
             if (MissingManaPot && IsItemManaPotion) return true;
-            //if (MissingRVPot && IsItemRVPotion) return true;
+            if (MissingRVPot && IsItemRVPotion && GrabBothRV) return true;
             if (MissingRVPot && IsItemFullRVPotion) return true;
         }
         return false;
