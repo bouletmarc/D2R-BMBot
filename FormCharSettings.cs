@@ -121,6 +121,9 @@ public partial class FormCharSettings : Form
         textBoxBattleOrder.Text = CharConfig.KeySkillBattleOrder.ToString();
         textBoxBattleCommand.Text = CharConfig.KeySkillBattleCommand.ToString();
         textBoxBattleCry.Text = CharConfig.KeySkillBattleCry.ToString();
+        comboBoxKeyOpenInventory.Text = CharConfig.KeyOpenInventory.ToString();
+        comboBoxKeyForceMovement.Text = CharConfig.KeyForceMovement.ToString();
+        comboBoxKeyWeaponSwap.Text = CharConfig.KeySwapWeapon.ToString();
 
         comboBoxPot1.Text = CharConfig.KeyPotion1.ToString();
         comboBoxPot2.Text = CharConfig.KeyPotion2.ToString();
@@ -181,6 +184,8 @@ public partial class FormCharSettings : Form
         listViewGambleItems.Items.Clear();
         for (int i = 0; i < CharConfig.GambleItems.Count; i++) listViewGambleItems.Items.Add(CharConfig.GambleItems[i]);
 
+        checkBoxKillOnlySuperUnique.Checked = CharConfig.KillOnlySuperUnique;
+
         CanReloadSettings = true;
     }
 
@@ -199,6 +204,9 @@ public partial class FormCharSettings : Form
         Enum.TryParse(textBoxBattleOrder.Text, out CharConfig.KeySkillBattleOrder);
         Enum.TryParse(textBoxBattleCommand.Text, out CharConfig.KeySkillBattleCommand);
         Enum.TryParse(textBoxBattleCry.Text, out CharConfig.KeySkillBattleCry);
+        Enum.TryParse(comboBoxKeyOpenInventory.Text, out CharConfig.KeyOpenInventory);
+        Enum.TryParse(comboBoxKeyForceMovement.Text, out CharConfig.KeyForceMovement);
+        Enum.TryParse(comboBoxKeyWeaponSwap.Text, out CharConfig.KeySwapWeapon);
 
         Enum.TryParse(comboBoxPot1.Text, out CharConfig.KeyPotion1);
         Enum.TryParse(comboBoxPot2.Text, out CharConfig.KeyPotion2);
@@ -294,6 +302,8 @@ public partial class FormCharSettings : Form
 
         CharConfig.GambleItems.Clear();
         for (int i = 0; i < listViewGambleItems.Items.Count; i++) CharConfig.GambleItems.Add(listViewGambleItems.Items[i].Text);
+
+        CharConfig.KillOnlySuperUnique = checkBoxKillOnlySuperUnique.Checked;
     }
 
     public void SetUsingKeys()

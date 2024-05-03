@@ -329,23 +329,23 @@ public class MobsStruc
                 ushort statEnum = BitConverter.ToUInt16(statBuffer, offset + 0x2);
                 int statValue = BitConverter.ToInt32(statBuffer, offset + 0x4);
 
-                if (resist == Enums.StatResist.ColdImmune && (Enums.Attribute)statEnum == Enums.Attribute.ColdResist)
+                if (resist == Enums.StatResist.ColdImmune && (Enums.Attribute)statEnum == Enums.Attribute.ColdResist && statValue > 0)
                 {
                     return true;
                 }
-                if (resist == Enums.StatResist.FireImmune && (Enums.Attribute)statEnum == Enums.Attribute.FireResist)
+                if (resist == Enums.StatResist.FireImmune && (Enums.Attribute)statEnum == Enums.Attribute.FireResist && statValue > 0)
                 {
                     return true;
                 }
-                if (resist == Enums.StatResist.LightImmune && (Enums.Attribute)statEnum == Enums.Attribute.LightningResist)
+                if (resist == Enums.StatResist.LightImmune && (Enums.Attribute)statEnum == Enums.Attribute.LightningResist && statValue > 0)
                 {
                     return true;
                 }
-                if (resist == Enums.StatResist.PoisonImmune && (Enums.Attribute)statEnum == Enums.Attribute.PoisonResist)
+                if (resist == Enums.StatResist.PoisonImmune && (Enums.Attribute)statEnum == Enums.Attribute.PoisonResist && statValue > 0)
                 {
                     return true;
                 }
-                if (resist == Enums.StatResist.MagicImmune && (Enums.Attribute)statEnum == Enums.Attribute.MagicResist)
+                if (resist == Enums.StatResist.MagicImmune && (Enums.Attribute)statEnum == Enums.Attribute.MagicResist && statValue > 0)
                 {
                     return true;
                 }
@@ -421,7 +421,7 @@ public class MobsStruc
     {
         bool FoundMob = GetMobs(MobType, MobName, Nearest, MaxMobDistance, IgnoredListPointers);
         int IncreaseCount = 0;
-        while (!FoundMob && IncreaseCount < 15)
+        while (!FoundMob && IncreaseCount < 10)
         {
             Form1_0.PatternsScan_0.IncreaseV1Scanning();
             IncreaseCount++;
@@ -439,6 +439,12 @@ public class MobsStruc
         int LastDiffX = 999;
         int LastDiffY = 999;
         bool GoodMob = false;
+
+        if (CharConfig.KillOnlySuperUnique && MobType == "" && MobName == "" && Nearest 
+            && (Enums.Area) Form1_0.PlayerScan_0.levelNo != Enums.Area.ThroneOfDestruction)
+        {
+            MobType = "getSuperUniqueName";
+        }
 
         for (int i = 0; i < Form1_0.PatternsScan_0.AllNPCPointers.Count; i++)
         {
@@ -577,7 +583,7 @@ public class MobsStruc
                         }
                         if (MobType == "getSuperUniqueName")
                         {
-                            if (getSuperUniqueName((int)txtFileNo) == MobName)
+                            if ((MobName == "" && getSuperUniqueName((int)txtFileNo) != "") || (MobName != "" && getSuperUniqueName((int)txtFileNo) == MobName))
                             {
                                 if (!Nearest)
                                 {

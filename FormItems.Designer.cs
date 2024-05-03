@@ -118,7 +118,6 @@ partial class FormItems
             this.comboBoxName = new System.Windows.Forms.ComboBox();
             this.buttonResetFlags = new System.Windows.Forms.Button();
             this.comboBoxFlags = new System.Windows.Forms.ComboBox();
-            this.label10 = new System.Windows.Forms.Label();
             this.comboBoxQuality = new System.Windows.Forms.ComboBox();
             this.comboBoxOperatorFlag = new System.Windows.Forms.ComboBox();
             this.comboBoxStats = new System.Windows.Forms.ComboBox();
@@ -127,28 +126,26 @@ partial class FormItems
             this.numericUpDownValue = new System.Windows.Forms.NumericUpDown();
             this.buttonRemoveStat = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
-            this.buttonRemoveFlag = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
             this.buttonAddStat = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
             this.buttonAddFlag = new System.Windows.Forms.Button();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.buttonClose = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
-            this.button3 = new System.Windows.Forms.Button();
             this.buttonCreateNewItem = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.button4 = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.panelItemQty = new System.Windows.Forms.Panel();
+            this.label12 = new System.Windows.Forms.Label();
             this.button5 = new System.Windows.Forms.Button();
             this.labelItemNameEdit = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.numericUpDownItemMaxQty = new System.Windows.Forms.NumericUpDown();
             this.label2 = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
+            this.button4 = new System.Windows.Forms.Button();
+            this.buttonRemoveFlag = new System.Windows.Forms.Button();
+            this.buttonClose = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -781,9 +778,9 @@ partial class FormItems
             this.panel_NewItem.Controls.Add(this.groupBox1);
             this.panel_NewItem.Controls.Add(this.buttonClose);
             this.panel_NewItem.Controls.Add(this.label1);
-            this.panel_NewItem.Location = new System.Drawing.Point(170, 110);
+            this.panel_NewItem.Location = new System.Drawing.Point(254, 52);
             this.panel_NewItem.Name = "panel_NewItem";
-            this.panel_NewItem.Size = new System.Drawing.Size(619, 242);
+            this.panel_NewItem.Size = new System.Drawing.Size(434, 285);
             this.panel_NewItem.TabIndex = 3;
             this.panel_NewItem.Visible = false;
             this.panel_NewItem.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
@@ -792,9 +789,9 @@ partial class FormItems
             // 
             this.groupBox2.Controls.Add(this.button2);
             this.groupBox2.Controls.Add(this.labelCurrentPreview);
-            this.groupBox2.Location = new System.Drawing.Point(3, 170);
+            this.groupBox2.Location = new System.Drawing.Point(3, 197);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(613, 68);
+            this.groupBox2.Size = new System.Drawing.Size(427, 82);
             this.groupBox2.TabIndex = 29;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Preview of the Item created";
@@ -803,9 +800,9 @@ partial class FormItems
             // 
             this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
-            this.button2.Location = new System.Drawing.Point(233, 36);
+            this.button2.Location = new System.Drawing.Point(142, 50);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(157, 26);
+            this.button2.Size = new System.Drawing.Size(154, 26);
             this.button2.TabIndex = 18;
             this.button2.Text = "Add New Item to list";
             this.button2.UseVisualStyleBackColor = true;
@@ -814,13 +811,14 @@ partial class FormItems
             // labelCurrentPreview
             // 
             this.labelCurrentPreview.AutoSize = true;
-            this.labelCurrentPreview.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelCurrentPreview.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelCurrentPreview.ForeColor = System.Drawing.Color.Blue;
-            this.labelCurrentPreview.Location = new System.Drawing.Point(10, 20);
+            this.labelCurrentPreview.Location = new System.Drawing.Point(7, 20);
             this.labelCurrentPreview.Name = "labelCurrentPreview";
-            this.labelCurrentPreview.Size = new System.Drawing.Size(125, 13);
+            this.labelCurrentPreview.Size = new System.Drawing.Size(114, 12);
             this.labelCurrentPreview.TabIndex = 23;
             this.labelCurrentPreview.Text = "Current Item Preview";
+            this.labelCurrentPreview.UseMnemonic = false;
             // 
             // groupBox1
             // 
@@ -831,7 +829,6 @@ partial class FormItems
             this.groupBox1.Controls.Add(this.comboBoxName);
             this.groupBox1.Controls.Add(this.buttonResetFlags);
             this.groupBox1.Controls.Add(this.comboBoxFlags);
-            this.groupBox1.Controls.Add(this.label10);
             this.groupBox1.Controls.Add(this.comboBoxQuality);
             this.groupBox1.Controls.Add(this.comboBoxOperatorFlag);
             this.groupBox1.Controls.Add(this.comboBoxStats);
@@ -845,26 +842,24 @@ partial class FormItems
             this.groupBox1.Controls.Add(this.buttonAddStat);
             this.groupBox1.Controls.Add(this.label6);
             this.groupBox1.Controls.Add(this.buttonAddFlag);
-            this.groupBox1.Controls.Add(this.label7);
-            this.groupBox1.Controls.Add(this.label8);
             this.groupBox1.Location = new System.Drawing.Point(3, 33);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(613, 131);
+            this.groupBox1.Size = new System.Drawing.Size(427, 158);
             this.groupBox1.TabIndex = 28;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Item Creation for Pickit";
             // 
             // textBoxDesc
             // 
-            this.textBoxDesc.Location = new System.Drawing.Point(88, 103);
+            this.textBoxDesc.Location = new System.Drawing.Point(142, 131);
             this.textBoxDesc.Name = "textBoxDesc";
-            this.textBoxDesc.Size = new System.Drawing.Size(185, 20);
+            this.textBoxDesc.Size = new System.Drawing.Size(154, 20);
             this.textBoxDesc.TabIndex = 28;
             // 
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(22, 106);
+            this.label9.Location = new System.Drawing.Point(35, 134);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(60, 13);
             this.label9.TabIndex = 27;
@@ -873,7 +868,7 @@ partial class FormItems
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(22, 16);
+            this.label3.Location = new System.Drawing.Point(35, 29);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(99, 13);
             this.label3.TabIndex = 2;
@@ -885,62 +880,53 @@ partial class FormItems
             this.comboBoxNameOrType.Items.AddRange(new object[] {
             "Sort By Name",
             "Sort By Type"});
-            this.comboBoxNameOrType.Location = new System.Drawing.Point(13, 32);
+            this.comboBoxNameOrType.Location = new System.Drawing.Point(142, 15);
             this.comboBoxNameOrType.Name = "comboBoxNameOrType";
-            this.comboBoxNameOrType.Size = new System.Drawing.Size(121, 21);
+            this.comboBoxNameOrType.Size = new System.Drawing.Size(154, 21);
             this.comboBoxNameOrType.TabIndex = 1;
             this.comboBoxNameOrType.SelectedIndexChanged += new System.EventHandler(this.comboBoxNameOrType_SelectedIndexChanged);
             // 
             // comboBoxName
             // 
             this.comboBoxName.FormattingEnabled = true;
-            this.comboBoxName.Location = new System.Drawing.Point(13, 55);
+            this.comboBoxName.Location = new System.Drawing.Point(142, 38);
             this.comboBoxName.Name = "comboBoxName";
-            this.comboBoxName.Size = new System.Drawing.Size(121, 21);
+            this.comboBoxName.Size = new System.Drawing.Size(154, 21);
             this.comboBoxName.TabIndex = 3;
             this.comboBoxName.SelectedIndexChanged += new System.EventHandler(this.comboBoxName_SelectedIndexChanged);
             // 
             // buttonResetFlags
             // 
             this.buttonResetFlags.ForeColor = System.Drawing.Color.Red;
-            this.buttonResetFlags.Location = new System.Drawing.Point(233, 55);
+            this.buttonResetFlags.Image = global::app.Properties.Resources.Undo;
+            this.buttonResetFlags.Location = new System.Drawing.Point(350, 58);
             this.buttonResetFlags.Name = "buttonResetFlags";
-            this.buttonResetFlags.Size = new System.Drawing.Size(87, 23);
+            this.buttonResetFlags.Size = new System.Drawing.Size(25, 25);
             this.buttonResetFlags.TabIndex = 26;
-            this.buttonResetFlags.Text = "Reset Flags";
             this.buttonResetFlags.UseVisualStyleBackColor = true;
             this.buttonResetFlags.Click += new System.EventHandler(this.buttonResetFlags_Click);
             // 
             // comboBoxFlags
             // 
             this.comboBoxFlags.FormattingEnabled = true;
-            this.comboBoxFlags.Location = new System.Drawing.Point(186, 32);
+            this.comboBoxFlags.Location = new System.Drawing.Point(188, 61);
             this.comboBoxFlags.Name = "comboBoxFlags";
-            this.comboBoxFlags.Size = new System.Drawing.Size(87, 21);
+            this.comboBoxFlags.Size = new System.Drawing.Size(108, 21);
             this.comboBoxFlags.TabIndex = 4;
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(132, 16);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(48, 13);
-            this.label10.TabIndex = 25;
-            this.label10.Text = "Operator";
             // 
             // comboBoxQuality
             // 
             this.comboBoxQuality.FormattingEnabled = true;
-            this.comboBoxQuality.Location = new System.Drawing.Point(279, 32);
+            this.comboBoxQuality.Location = new System.Drawing.Point(142, 84);
             this.comboBoxQuality.Name = "comboBoxQuality";
-            this.comboBoxQuality.Size = new System.Drawing.Size(87, 21);
+            this.comboBoxQuality.Size = new System.Drawing.Size(154, 21);
             this.comboBoxQuality.TabIndex = 5;
             this.comboBoxQuality.SelectedIndexChanged += new System.EventHandler(this.comboBoxQuality_SelectedIndexChanged);
             // 
             // comboBoxOperatorFlag
             // 
             this.comboBoxOperatorFlag.FormattingEnabled = true;
-            this.comboBoxOperatorFlag.Location = new System.Drawing.Point(140, 32);
+            this.comboBoxOperatorFlag.Location = new System.Drawing.Point(142, 61);
             this.comboBoxOperatorFlag.Name = "comboBoxOperatorFlag";
             this.comboBoxOperatorFlag.Size = new System.Drawing.Size(40, 21);
             this.comboBoxOperatorFlag.TabIndex = 24;
@@ -948,7 +934,7 @@ partial class FormItems
             // comboBoxStats
             // 
             this.comboBoxStats.FormattingEnabled = true;
-            this.comboBoxStats.Location = new System.Drawing.Point(371, 32);
+            this.comboBoxStats.Location = new System.Drawing.Point(71, 107);
             this.comboBoxStats.Name = "comboBoxStats";
             this.comboBoxStats.Size = new System.Drawing.Size(121, 21);
             this.comboBoxStats.TabIndex = 6;
@@ -956,7 +942,7 @@ partial class FormItems
             // comboBoxOperator
             // 
             this.comboBoxOperator.FormattingEnabled = true;
-            this.comboBoxOperator.Location = new System.Drawing.Point(498, 32);
+            this.comboBoxOperator.Location = new System.Drawing.Point(193, 107);
             this.comboBoxOperator.Name = "comboBoxOperator";
             this.comboBoxOperator.Size = new System.Drawing.Size(40, 21);
             this.comboBoxOperator.TabIndex = 7;
@@ -964,17 +950,17 @@ partial class FormItems
             // buttonResetStats
             // 
             this.buttonResetStats.ForeColor = System.Drawing.Color.Red;
-            this.buttonResetStats.Location = new System.Drawing.Point(498, 55);
+            this.buttonResetStats.Image = global::app.Properties.Resources.Undo;
+            this.buttonResetStats.Location = new System.Drawing.Point(350, 103);
             this.buttonResetStats.Name = "buttonResetStats";
-            this.buttonResetStats.Size = new System.Drawing.Size(87, 23);
+            this.buttonResetStats.Size = new System.Drawing.Size(25, 25);
             this.buttonResetStats.TabIndex = 22;
-            this.buttonResetStats.Text = "Reset Stats";
             this.buttonResetStats.UseVisualStyleBackColor = true;
             this.buttonResetStats.Click += new System.EventHandler(this.buttonResetStats_Click);
             // 
             // numericUpDownValue
             // 
-            this.numericUpDownValue.Location = new System.Drawing.Point(542, 33);
+            this.numericUpDownValue.Location = new System.Drawing.Point(234, 108);
             this.numericUpDownValue.Maximum = new decimal(new int[] {
             999999,
             0,
@@ -987,38 +973,27 @@ partial class FormItems
             // buttonRemoveStat
             // 
             this.buttonRemoveStat.ForeColor = System.Drawing.Color.Red;
-            this.buttonRemoveStat.Location = new System.Drawing.Point(408, 55);
+            this.buttonRemoveStat.Image = global::app.Properties.Resources.Remove;
+            this.buttonRemoveStat.Location = new System.Drawing.Point(324, 103);
             this.buttonRemoveStat.Name = "buttonRemoveStat";
-            this.buttonRemoveStat.Size = new System.Drawing.Size(87, 23);
+            this.buttonRemoveStat.Size = new System.Drawing.Size(25, 25);
             this.buttonRemoveStat.TabIndex = 21;
-            this.buttonRemoveStat.Text = "Remove Stat";
             this.buttonRemoveStat.UseVisualStyleBackColor = true;
             this.buttonRemoveStat.Click += new System.EventHandler(this.buttonRemoveStat_Click);
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(207, 16);
+            this.label4.Location = new System.Drawing.Point(35, 64);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(32, 13);
             this.label4.TabIndex = 9;
             this.label4.Text = "Flags";
             // 
-            // buttonRemoveFlag
-            // 
-            this.buttonRemoveFlag.ForeColor = System.Drawing.Color.Red;
-            this.buttonRemoveFlag.Location = new System.Drawing.Point(140, 55);
-            this.buttonRemoveFlag.Name = "buttonRemoveFlag";
-            this.buttonRemoveFlag.Size = new System.Drawing.Size(87, 23);
-            this.buttonRemoveFlag.TabIndex = 19;
-            this.buttonRemoveFlag.Text = "Remove Flag";
-            this.buttonRemoveFlag.UseVisualStyleBackColor = true;
-            this.buttonRemoveFlag.Click += new System.EventHandler(this.buttonRemoveFlag_Click);
-            // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(296, 16);
+            this.label5.Location = new System.Drawing.Point(35, 87);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(39, 13);
             this.label5.TabIndex = 10;
@@ -1027,18 +1002,18 @@ partial class FormItems
             // buttonAddStat
             // 
             this.buttonAddStat.ForeColor = System.Drawing.Color.Blue;
-            this.buttonAddStat.Location = new System.Drawing.Point(408, 78);
+            this.buttonAddStat.Image = global::app.Properties.Resources.Apply;
+            this.buttonAddStat.Location = new System.Drawing.Point(298, 104);
             this.buttonAddStat.Name = "buttonAddStat";
-            this.buttonAddStat.Size = new System.Drawing.Size(87, 23);
+            this.buttonAddStat.Size = new System.Drawing.Size(25, 25);
             this.buttonAddStat.TabIndex = 18;
-            this.buttonAddStat.Text = "Add Stat";
             this.buttonAddStat.UseVisualStyleBackColor = true;
             this.buttonAddStat.Click += new System.EventHandler(this.buttonAddStat_Click);
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(410, 16);
+            this.label6.Location = new System.Drawing.Point(35, 110);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(31, 13);
             this.label6.TabIndex = 11;
@@ -1047,66 +1022,23 @@ partial class FormItems
             // buttonAddFlag
             // 
             this.buttonAddFlag.ForeColor = System.Drawing.Color.Blue;
-            this.buttonAddFlag.Location = new System.Drawing.Point(140, 78);
+            this.buttonAddFlag.Image = global::app.Properties.Resources.Apply;
+            this.buttonAddFlag.Location = new System.Drawing.Point(298, 58);
             this.buttonAddFlag.Name = "buttonAddFlag";
-            this.buttonAddFlag.Size = new System.Drawing.Size(87, 23);
+            this.buttonAddFlag.Size = new System.Drawing.Size(25, 25);
             this.buttonAddFlag.TabIndex = 16;
-            this.buttonAddFlag.Text = "Add Flag";
             this.buttonAddFlag.UseVisualStyleBackColor = true;
             this.buttonAddFlag.Click += new System.EventHandler(this.buttonAddFlag_Click);
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(552, 16);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(34, 13);
-            this.label7.TabIndex = 12;
-            this.label7.Text = "Value";
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(490, 16);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(48, 13);
-            this.label8.TabIndex = 13;
-            this.label8.Text = "Operator";
-            // 
-            // buttonClose
-            // 
-            this.buttonClose.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonClose.ForeColor = System.Drawing.Color.Red;
-            this.buttonClose.Image = global::app.Properties.Resources.Delete;
-            this.buttonClose.Location = new System.Drawing.Point(591, 3);
-            this.buttonClose.Name = "buttonClose";
-            this.buttonClose.Size = new System.Drawing.Size(25, 24);
-            this.buttonClose.TabIndex = 27;
-            this.buttonClose.UseVisualStyleBackColor = true;
-            this.buttonClose.Click += new System.EventHandler(this.buttonClose_Click);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(219, 11);
+            this.label1.Location = new System.Drawing.Point(120, 7);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(194, 16);
             this.label1.TabIndex = 0;
             this.label1.Text = "Create a new Item for Pickit";
-            // 
-            // button3
-            // 
-            this.button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button3.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.button3.Image = global::app.Properties.Resources.Save;
-            this.button3.Location = new System.Drawing.Point(897, 2);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(63, 25);
-            this.button3.TabIndex = 16;
-            this.toolTip1.SetToolTip(this.button3, "Save current Settings");
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // buttonCreateNewItem
             // 
@@ -1133,19 +1065,6 @@ partial class FormItems
             this.button1.Visible = false;
             this.button1.Click += new System.EventHandler(this.button1_Click_1);
             // 
-            // button4
-            // 
-            this.button4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button4.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.button4.Image = global::app.Properties.Resources.Load;
-            this.button4.Location = new System.Drawing.Point(857, 2);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(34, 25);
-            this.button4.TabIndex = 19;
-            this.toolTip1.SetToolTip(this.button4, "Load/Import from a previous Settings File");
-            this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
-            // 
             // openFileDialog1
             // 
             this.openFileDialog1.DefaultExt = "*.txt";
@@ -1166,6 +1085,16 @@ partial class FormItems
             this.panelItemQty.Size = new System.Drawing.Size(200, 100);
             this.panelItemQty.TabIndex = 2;
             this.panelItemQty.Visible = false;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.ForeColor = System.Drawing.Color.Red;
+            this.label12.Location = new System.Drawing.Point(12, 54);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(169, 13);
+            this.label12.TabIndex = 5;
+            this.label12.Text = "*Set to 0 for no quantity checking*";
             // 
             // button5
             // 
@@ -1211,15 +1140,54 @@ partial class FormItems
             this.label2.TabIndex = 0;
             this.label2.Text = "Set Max Quantity:";
             // 
-            // label12
+            // button4
             // 
-            this.label12.AutoSize = true;
-            this.label12.ForeColor = System.Drawing.Color.Red;
-            this.label12.Location = new System.Drawing.Point(12, 54);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(169, 13);
-            this.label12.TabIndex = 5;
-            this.label12.Text = "*Set to 0 for no quantity checking*";
+            this.button4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button4.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.button4.Image = global::app.Properties.Resources.Load;
+            this.button4.Location = new System.Drawing.Point(857, 2);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(34, 25);
+            this.button4.TabIndex = 19;
+            this.toolTip1.SetToolTip(this.button4, "Load/Import from a previous Settings File");
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
+            // 
+            // buttonRemoveFlag
+            // 
+            this.buttonRemoveFlag.ForeColor = System.Drawing.Color.Red;
+            this.buttonRemoveFlag.Image = global::app.Properties.Resources.Remove;
+            this.buttonRemoveFlag.Location = new System.Drawing.Point(324, 58);
+            this.buttonRemoveFlag.Name = "buttonRemoveFlag";
+            this.buttonRemoveFlag.Size = new System.Drawing.Size(25, 25);
+            this.buttonRemoveFlag.TabIndex = 19;
+            this.buttonRemoveFlag.UseVisualStyleBackColor = true;
+            this.buttonRemoveFlag.Click += new System.EventHandler(this.buttonRemoveFlag_Click);
+            // 
+            // buttonClose
+            // 
+            this.buttonClose.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonClose.ForeColor = System.Drawing.Color.Red;
+            this.buttonClose.Image = global::app.Properties.Resources.Delete;
+            this.buttonClose.Location = new System.Drawing.Point(406, 3);
+            this.buttonClose.Name = "buttonClose";
+            this.buttonClose.Size = new System.Drawing.Size(25, 24);
+            this.buttonClose.TabIndex = 27;
+            this.buttonClose.UseVisualStyleBackColor = true;
+            this.buttonClose.Click += new System.EventHandler(this.buttonClose_Click);
+            // 
+            // button3
+            // 
+            this.button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button3.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.button3.Image = global::app.Properties.Resources.Save;
+            this.button3.Location = new System.Drawing.Point(897, 2);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(63, 25);
+            this.button3.TabIndex = 16;
+            this.toolTip1.SetToolTip(this.button3, "Save current Settings");
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // FormItems
             // 
@@ -1294,8 +1262,6 @@ partial class FormItems
     private System.Windows.Forms.ColumnHeader columnHeader12;
     private System.Windows.Forms.Button buttonCreateNewItem;
     private System.Windows.Forms.Panel panel_NewItem;
-    private System.Windows.Forms.Label label8;
-    private System.Windows.Forms.Label label7;
     private System.Windows.Forms.Label label6;
     private System.Windows.Forms.Label label5;
     private System.Windows.Forms.Label label4;
@@ -1315,7 +1281,6 @@ partial class FormItems
     private System.Windows.Forms.Button buttonAddFlag;
     private System.Windows.Forms.Label labelCurrentPreview;
     private System.Windows.Forms.Button buttonResetFlags;
-    private System.Windows.Forms.Label label10;
     private System.Windows.Forms.ComboBox comboBoxOperatorFlag;
     private System.Windows.Forms.Button buttonClose;
     private System.Windows.Forms.Button button2;

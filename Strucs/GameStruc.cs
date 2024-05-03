@@ -95,7 +95,7 @@ public class GameStruc
         }
 
         Form1_0.SetGameStatus("CREATING GAME");
-        Form1_0.KeyMouse_0.ReleaseKey(System.Windows.Forms.Keys.E);
+        Form1_0.KeyMouse_0.ReleaseKey(CharConfig.KeyForceMovement);
         Form1_0.KeyMouse_0.MouseClicc(1190, 990); //clic 'salon' if not in server
         Form1_0.KeyMouse_0.MouseClicc(1275, 65);  //clic 'create game' if not in game create area
 
@@ -178,8 +178,8 @@ public class GameStruc
         //#####
         if (!TypedSearchGames)
         {
-            Form1_0.KeyMouse_0.ReleaseKey(System.Windows.Forms.Keys.E);
-            Form1_0.KeyMouse_0.ReleaseKey(System.Windows.Forms.Keys.E);
+            Form1_0.KeyMouse_0.ReleaseKey(CharConfig.KeyForceMovement);
+            Form1_0.KeyMouse_0.ReleaseKey(CharConfig.KeyForceMovement);
             Form1_0.KeyMouse_0.MouseClicc(1450, 210); //clic search bar
                                                       //type 'search' type games
             for (int i = 0; i < 16; i++)
@@ -584,7 +584,7 @@ public class GameStruc
         List<Area> areas = new List<Area>();
         for (int i = 0; i < 7; i++)
         {
-            uint tzArea = Form1_0.Mem_0.ReadUInt32((IntPtr)(0x299E2D8 + (i * 4)));
+            uint tzArea = Form1_0.Mem_0.ReadUInt32Raw((IntPtr) ((long)Form1_0.BaseAddress + (0x299E2D8 + (i * 4))));
             if (tzArea != 0)
             {
                 areas.Add((Area)tzArea);

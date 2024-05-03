@@ -191,7 +191,11 @@ public class WPTaker
                 Form1_0.WaitDelay(15);
 
                 //Act1
-                if (CurrentAct == 1 && CurrentWPIndex == 1) Form1_0.PathFinding_0.MoveToNextArea(Enums.Area.ColdPlains);
+                if (CurrentAct == 1 && CurrentWPIndex == 1)
+                {
+                    Form1_0.PathFinding_0.MoveToNextArea(Enums.Area.BloodMoor);
+                    Form1_0.PathFinding_0.MoveToNextArea(Enums.Area.ColdPlains);
+                }
                 if (CurrentAct == 1 && CurrentWPIndex == 2) Form1_0.PathFinding_0.MoveToNextArea(Enums.Area.StonyField);
                 if (CurrentAct == 1 && CurrentWPIndex == 3)
                 {

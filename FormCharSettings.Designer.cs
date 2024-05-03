@@ -71,6 +71,7 @@ partial class FormCharSettings
             this.textBoxCharName = new System.Windows.Forms.TextBox();
             this.label14 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.buttonGambleSettings = new System.Windows.Forms.Button();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.numericUpDownKeyYPos = new System.Windows.Forms.NumericUpDown();
             this.numericUpDownKeyXPos = new System.Windows.Forms.NumericUpDown();
@@ -107,6 +108,9 @@ partial class FormCharSettings
             this.button4 = new System.Windows.Forms.Button();
             this.buttonGambleClearItems = new System.Windows.Forms.Button();
             this.buttonGambleAddItem = new System.Windows.Forms.Button();
+            this.buttonSaveAsChar = new System.Windows.Forms.Button();
+            this.buttonReload = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.label23 = new System.Windows.Forms.Label();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.panelGamble = new System.Windows.Forms.Panel();
@@ -116,13 +120,16 @@ partial class FormCharSettings
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.label29 = new System.Windows.Forms.Label();
             this.label28 = new System.Windows.Forms.Label();
-            this.buttonSaveAsChar = new System.Windows.Forms.Button();
             this.panelHelpKeys = new System.Windows.Forms.Panel();
             this.button2 = new System.Windows.Forms.Button();
-            this.buttonReload = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
-            this.buttonGambleSettings = new System.Windows.Forms.Button();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.checkBoxKillOnlySuperUnique = new System.Windows.Forms.CheckBox();
+            this.comboBoxKeyOpenInventory = new System.Windows.Forms.ComboBox();
+            this.label30 = new System.Windows.Forms.Label();
+            this.comboBoxKeyForceMovement = new System.Windows.Forms.ComboBox();
+            this.label31 = new System.Windows.Forms.Label();
+            this.comboBoxKeyWeaponSwap = new System.Windows.Forms.ComboBox();
+            this.label32 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -165,6 +172,10 @@ partial class FormCharSettings
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.comboBoxKeyForceMovement);
+            this.groupBox1.Controls.Add(this.label31);
+            this.groupBox1.Controls.Add(this.comboBoxKeyOpenInventory);
+            this.groupBox1.Controls.Add(this.label30);
             this.groupBox1.Controls.Add(this.textBoxBattleCry);
             this.groupBox1.Controls.Add(this.textBoxBattleOrder);
             this.groupBox1.Controls.Add(this.textBoxBattleCommand);
@@ -188,7 +199,7 @@ partial class FormCharSettings
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Location = new System.Drawing.Point(5, 36);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(196, 273);
+            this.groupBox1.Size = new System.Drawing.Size(196, 339);
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Skills Shortcuts Keys";
@@ -592,6 +603,19 @@ partial class FormCharSettings
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Char Parameters";
             // 
+            // buttonGambleSettings
+            // 
+            this.buttonGambleSettings.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonGambleSettings.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.buttonGambleSettings.Image = global::app.Properties.Resources.Application;
+            this.buttonGambleSettings.Location = new System.Drawing.Point(250, 131);
+            this.buttonGambleSettings.Name = "buttonGambleSettings";
+            this.buttonGambleSettings.Size = new System.Drawing.Size(31, 25);
+            this.buttonGambleSettings.TabIndex = 42;
+            this.toolTip1.SetToolTip(this.buttonGambleSettings, "Gamble Settings");
+            this.buttonGambleSettings.UseVisualStyleBackColor = true;
+            this.buttonGambleSettings.Click += new System.EventHandler(this.button3_Click);
+            // 
             // linkLabel1
             // 
             this.linkLabel1.AutoSize = true;
@@ -831,6 +855,7 @@ partial class FormCharSettings
             // 
             // groupBox5
             // 
+            this.groupBox5.Controls.Add(this.checkBoxKillOnlySuperUnique);
             this.groupBox5.Controls.Add(this.checkBoxUseKeys);
             this.groupBox5.Controls.Add(this.checkBoxClearAfterBoss);
             this.groupBox5.Controls.Add(this.comboBoxAvoidImmune);
@@ -841,9 +866,9 @@ partial class FormCharSettings
             this.groupBox5.Controls.Add(this.checkBoxGrabGold);
             this.groupBox5.Controls.Add(this.checkBoxUseTeleport);
             this.groupBox5.Controls.Add(this.checkBoxUseBO);
-            this.groupBox5.Location = new System.Drawing.Point(5, 315);
+            this.groupBox5.Location = new System.Drawing.Point(5, 381);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(196, 227);
+            this.groupBox5.Size = new System.Drawing.Size(196, 212);
             this.groupBox5.TabIndex = 5;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Extras";
@@ -882,7 +907,7 @@ partial class FormCharSettings
             "Light Immune",
             "Poison Immune",
             "Magic Immune"});
-            this.comboBoxAvoidImmune.Location = new System.Drawing.Point(26, 170);
+            this.comboBoxAvoidImmune.Location = new System.Drawing.Point(26, 185);
             this.comboBoxAvoidImmune.Name = "comboBoxAvoidImmune";
             this.comboBoxAvoidImmune.Size = new System.Drawing.Size(139, 21);
             this.comboBoxAvoidImmune.TabIndex = 41;
@@ -890,7 +915,7 @@ partial class FormCharSettings
             // label24
             // 
             this.label24.AutoSize = true;
-            this.label24.Location = new System.Drawing.Point(57, 154);
+            this.label24.Location = new System.Drawing.Point(57, 169);
             this.label24.Name = "label24";
             this.label24.Size = new System.Drawing.Size(77, 13);
             this.label24.TabIndex = 40;
@@ -962,6 +987,45 @@ partial class FormCharSettings
             this.toolTip1.SetToolTip(this.buttonGambleAddItem, "Add the Mob ID and Count to the Checking list");
             this.buttonGambleAddItem.UseVisualStyleBackColor = true;
             this.buttonGambleAddItem.Click += new System.EventHandler(this.buttonGambleAddItem_Click);
+            // 
+            // buttonSaveAsChar
+            // 
+            this.buttonSaveAsChar.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonSaveAsChar.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.buttonSaveAsChar.Image = global::app.Properties.Resources.SaveAs;
+            this.buttonSaveAsChar.Location = new System.Drawing.Point(386, 6);
+            this.buttonSaveAsChar.Name = "buttonSaveAsChar";
+            this.buttonSaveAsChar.Size = new System.Drawing.Size(31, 25);
+            this.buttonSaveAsChar.TabIndex = 43;
+            this.toolTip1.SetToolTip(this.buttonSaveAsChar, "Save as/Save current Settings to a New File");
+            this.buttonSaveAsChar.UseVisualStyleBackColor = true;
+            this.buttonSaveAsChar.Click += new System.EventHandler(this.buttonSaveAsChar_Click);
+            // 
+            // buttonReload
+            // 
+            this.buttonReload.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonReload.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.buttonReload.Image = global::app.Properties.Resources.Load;
+            this.buttonReload.Location = new System.Drawing.Point(5, 6);
+            this.buttonReload.Name = "buttonReload";
+            this.buttonReload.Size = new System.Drawing.Size(31, 25);
+            this.buttonReload.TabIndex = 40;
+            this.toolTip1.SetToolTip(this.buttonReload, "Load/Import from a previous Settings File");
+            this.buttonReload.UseVisualStyleBackColor = true;
+            this.buttonReload.Click += new System.EventHandler(this.buttonReload_Click);
+            // 
+            // button1
+            // 
+            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button1.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.button1.Image = global::app.Properties.Resources.Save;
+            this.button1.Location = new System.Drawing.Point(416, 6);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 25);
+            this.button1.TabIndex = 38;
+            this.toolTip1.SetToolTip(this.button1, "Save current Settings");
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // label23
             // 
@@ -1054,19 +1118,6 @@ partial class FormCharSettings
             this.label28.TabIndex = 12;
             this.label28.Text = "Gamble Items";
             // 
-            // buttonSaveAsChar
-            // 
-            this.buttonSaveAsChar.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonSaveAsChar.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.buttonSaveAsChar.Image = global::app.Properties.Resources.SaveAs;
-            this.buttonSaveAsChar.Location = new System.Drawing.Point(386, 6);
-            this.buttonSaveAsChar.Name = "buttonSaveAsChar";
-            this.buttonSaveAsChar.Size = new System.Drawing.Size(31, 25);
-            this.buttonSaveAsChar.TabIndex = 43;
-            this.toolTip1.SetToolTip(this.buttonSaveAsChar, "Save as/Save current Settings to a New File");
-            this.buttonSaveAsChar.UseVisualStyleBackColor = true;
-            this.buttonSaveAsChar.Click += new System.EventHandler(this.buttonSaveAsChar_Click);
-            // 
             // panelHelpKeys
             // 
             this.panelHelpKeys.BackgroundImage = global::app.Properties.Resources.BMBot10;
@@ -1088,57 +1139,86 @@ partial class FormCharSettings
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
-            // buttonReload
-            // 
-            this.buttonReload.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonReload.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.buttonReload.Image = global::app.Properties.Resources.Load;
-            this.buttonReload.Location = new System.Drawing.Point(5, 6);
-            this.buttonReload.Name = "buttonReload";
-            this.buttonReload.Size = new System.Drawing.Size(31, 25);
-            this.buttonReload.TabIndex = 40;
-            this.toolTip1.SetToolTip(this.buttonReload, "Load/Import from a previous Settings File");
-            this.buttonReload.UseVisualStyleBackColor = true;
-            this.buttonReload.Click += new System.EventHandler(this.buttonReload_Click);
-            // 
-            // button1
-            // 
-            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.button1.Image = global::app.Properties.Resources.Save;
-            this.button1.Location = new System.Drawing.Point(416, 6);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 25);
-            this.button1.TabIndex = 38;
-            this.toolTip1.SetToolTip(this.button1, "Save current Settings");
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // buttonGambleSettings
-            // 
-            this.buttonGambleSettings.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonGambleSettings.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.buttonGambleSettings.Image = global::app.Properties.Resources.Application;
-            this.buttonGambleSettings.Location = new System.Drawing.Point(250, 131);
-            this.buttonGambleSettings.Name = "buttonGambleSettings";
-            this.buttonGambleSettings.Size = new System.Drawing.Size(31, 25);
-            this.buttonGambleSettings.TabIndex = 42;
-            this.toolTip1.SetToolTip(this.buttonGambleSettings, "Gamble Settings");
-            this.buttonGambleSettings.UseVisualStyleBackColor = true;
-            this.buttonGambleSettings.Click += new System.EventHandler(this.button3_Click);
-            // 
             // saveFileDialog1
             // 
             this.saveFileDialog1.DefaultExt = "txt";
             this.saveFileDialog1.Filter = "Char Settings|*.txt";
             this.saveFileDialog1.Title = "Open Current Char Settings to a New File";
             // 
+            // checkBoxKillOnlySuperUnique
+            // 
+            this.checkBoxKillOnlySuperUnique.AutoSize = true;
+            this.checkBoxKillOnlySuperUnique.Location = new System.Drawing.Point(13, 147);
+            this.checkBoxKillOnlySuperUnique.Name = "checkBoxKillOnlySuperUnique";
+            this.checkBoxKillOnlySuperUnique.Size = new System.Drawing.Size(136, 17);
+            this.checkBoxKillOnlySuperUnique.TabIndex = 44;
+            this.checkBoxKillOnlySuperUnique.Text = "Kill only Super Unique\'s";
+            this.toolTip1.SetToolTip(this.checkBoxKillOnlySuperUnique, "Enable this will make the bot Kill only the Super Uniques Mobs while moving Thru " +
+        "Path (Exemple: Chaos, Cows, Etc..)");
+            this.checkBoxKillOnlySuperUnique.UseVisualStyleBackColor = true;
+            // 
+            // comboBoxKeyOpenInventory
+            // 
+            this.comboBoxKeyOpenInventory.FormattingEnabled = true;
+            this.comboBoxKeyOpenInventory.Location = new System.Drawing.Point(121, 266);
+            this.comboBoxKeyOpenInventory.Name = "comboBoxKeyOpenInventory";
+            this.comboBoxKeyOpenInventory.Size = new System.Drawing.Size(67, 21);
+            this.comboBoxKeyOpenInventory.TabIndex = 44;
+            this.toolTip1.SetToolTip(this.comboBoxKeyOpenInventory, "Set the Key to Open the inventory");
+            // 
+            // label30
+            // 
+            this.label30.AutoSize = true;
+            this.label30.Location = new System.Drawing.Point(10, 269);
+            this.label30.Name = "label30";
+            this.label30.Size = new System.Drawing.Size(104, 13);
+            this.label30.TabIndex = 43;
+            this.label30.Text = "Open Inventory Key:";
+            // 
+            // comboBoxKeyForceMovement
+            // 
+            this.comboBoxKeyForceMovement.FormattingEnabled = true;
+            this.comboBoxKeyForceMovement.Location = new System.Drawing.Point(121, 288);
+            this.comboBoxKeyForceMovement.Name = "comboBoxKeyForceMovement";
+            this.comboBoxKeyForceMovement.Size = new System.Drawing.Size(67, 21);
+            this.comboBoxKeyForceMovement.TabIndex = 46;
+            this.toolTip1.SetToolTip(this.comboBoxKeyForceMovement, "Set the Key to Force the Player Movement");
+            // 
+            // label31
+            // 
+            this.label31.AutoSize = true;
+            this.label31.Location = new System.Drawing.Point(10, 291);
+            this.label31.Name = "label31";
+            this.label31.Size = new System.Drawing.Size(111, 13);
+            this.label31.TabIndex = 45;
+            this.label31.Text = "Force Movement Key:";
+            // 
+            // comboBoxKeyWeaponSwap
+            // 
+            this.comboBoxKeyWeaponSwap.FormattingEnabled = true;
+            this.comboBoxKeyWeaponSwap.Location = new System.Drawing.Point(126, 346);
+            this.comboBoxKeyWeaponSwap.Name = "comboBoxKeyWeaponSwap";
+            this.comboBoxKeyWeaponSwap.Size = new System.Drawing.Size(67, 21);
+            this.comboBoxKeyWeaponSwap.TabIndex = 48;
+            this.toolTip1.SetToolTip(this.comboBoxKeyWeaponSwap, "Set the Key to Swap Weapons");
+            // 
+            // label32
+            // 
+            this.label32.AutoSize = true;
+            this.label32.Location = new System.Drawing.Point(15, 349);
+            this.label32.Name = "label32";
+            this.label32.Size = new System.Drawing.Size(107, 13);
+            this.label32.TabIndex = 47;
+            this.label32.Text = "Swap Weapons Key:";
+            // 
             // FormCharSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.ClientSize = new System.Drawing.Size(497, 548);
+            this.ClientSize = new System.Drawing.Size(497, 598);
+            this.Controls.Add(this.comboBoxKeyWeaponSwap);
+            this.Controls.Add(this.label32);
             this.Controls.Add(this.buttonSaveAsChar);
             this.Controls.Add(this.panelGamble);
             this.Controls.Add(this.panelHelpKeys);
@@ -1285,4 +1365,11 @@ partial class FormCharSettings
     private System.Windows.Forms.CheckBox checkBoxTownMercDead;
     private System.Windows.Forms.Button buttonSaveAsChar;
     private System.Windows.Forms.SaveFileDialog saveFileDialog1;
+    private System.Windows.Forms.CheckBox checkBoxKillOnlySuperUnique;
+    private System.Windows.Forms.ComboBox comboBoxKeyForceMovement;
+    private System.Windows.Forms.Label label31;
+    private System.Windows.Forms.ComboBox comboBoxKeyOpenInventory;
+    private System.Windows.Forms.Label label30;
+    private System.Windows.Forms.ComboBox comboBoxKeyWeaponSwap;
+    private System.Windows.Forms.Label label32;
 }

@@ -110,6 +110,7 @@
     <Compile Include="Bots\Act3Sewers.cs" />
     <Compile Include="Bots\Frozenstein.cs" />
     <Compile Include="Bots\Rush\AnyaRush.cs" />
+    <Compile Include="Bots\TerrorZones.cs" />
     <Compile Include="Bots\UpperKurast.cs" />
     <Compile Include="Bots\Rush\ChaosRush.cs" />
     <Compile Include="Bots\Rush\BaalRush.cs" />
@@ -283,6 +284,9 @@
     <None Include="Resources\control-stop-square.png" />
     <None Include="Resources\control-stop-square_green.png" />
     <None Include="Resources\SaveAs.png" />
+    <None Include="Resources\Apply.png" />
+    <None Include="Resources\Remove.png" />
+    <None Include="Resources\Undo.png" />
     <Content Include="Settings\Char\PaladinHammer.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

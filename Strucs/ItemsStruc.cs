@@ -559,12 +559,12 @@ public class ItemsStruc
                             AllItemsEquipped.Add("ID:" + txtFileNo + "(" + ItemNAAME + ") at:" + itemx + ", " + itemy + " - Equipped - " + Form1_0.ItemsAlert_0.GetItemTypeText() + " && " + GetQualityTextString() + " && " + GetAllFlagsFromItem() + " && " + GetAllValuesFromStats() + GetItemsStashInfosTxt());
                         }
 
-                        /*if (ItemNAAME == "Crusader Gauntlets")
+                        if (ItemNAAME == "Crusader Gauntlets")
                         {
                             string SavePathh = Form1_0.ThisEndPath + "DumpItempUnitDataStruc";
                             File.Create(SavePathh).Dispose();
                             File.WriteAllBytes(SavePathh, pUnitData);
-                        }*/
+                        }
                     }
                     else
                     {
@@ -669,11 +669,11 @@ public class ItemsStruc
 
                             //####
                             TriesToPickItemCount++;
-                            Form1_0.KeyMouse_0.PressKeyHold(System.Windows.Forms.Keys.E);
+                            Form1_0.KeyMouse_0.PressKeyHold(CharConfig.KeyForceMovement);
                             //Form1_0.KeyMouse_0.MouseMoveTo_RealPos(itemScreenPos.X, itemScreenPos.Y);
                             Form1_0.KeyMouse_0.MouseClicc_RealPos(itemScreenPos.X, itemScreenPos.Y);
                             Form1_0.KeyMouse_0.MouseClicc_RealPos(itemScreenPos.X, itemScreenPos.Y); //clic twice??
-                            Form1_0.KeyMouse_0.ReleaseKey(System.Windows.Forms.Keys.E);
+                            Form1_0.KeyMouse_0.ReleaseKey(CharConfig.KeyForceMovement);
 
                             if (ItemNAAME != LastPick)
                             {
@@ -1042,7 +1042,7 @@ public class ItemsStruc
                 int statValue = BitConverter.ToInt32(statBuffer, offset + 0x4);
 
                 if (statEnum == 6 || statEnum == 7 || statEnum == 8 || statEnum == 9 || statEnum == 10 || statEnum == 11
-                    || statEnum == 216 || statEnum == 217)
+                    || statEnum == 216 || statEnum == 217 || statEnum == 217)
                 {
                     if (statValue > 1000) statValue = statValue >> 8;
                 }

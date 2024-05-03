@@ -282,6 +282,11 @@ public class SettingsLoader
                 }
                 if (Splitted[0] == "LeaveIfMobsCountIsAbove") AllLines[i] = "LeaveIfMobsCountIsAbove=" + Form1_0.Baal_0.LeaveIfMobsCountIsAbove;
                 if (Splitted[0] == "SafeHealingStrat") AllLines[i] = "SafeHealingStrat=" + Form1_0.Baal_0.SafeYoloStrat;
+
+                //#########
+                //SPECIAL CHAOS FEATURES
+                if (Splitted[0] == "FastChaos") AllLines[i] = "FastChaos=" + Form1_0.Chaos_0.FastChaos;
+
                 //#########
                 //SPECIAL OVERLAY FEATURES
                 if (Splitted[0] == "ShowMobs") AllLines[i] = "ShowMobs=" + Form1_0.overlayForm.ShowMobs;
@@ -340,12 +345,14 @@ public class SettingsLoader
                 if (Splitted[0] == "RunShenkScript") AllLines[i] = "RunShenkScript=" + CharConfig.RunShenkScript;
                 if (Splitted[0] == "RunNihlatakScript") AllLines[i] = "RunNihlatakScript=" + CharConfig.RunNihlatakScript;
                 if (Splitted[0] == "RunFrozensteinScript") AllLines[i] = "RunFrozensteinScript=" + CharConfig.RunFrozensteinScript;
+                if (Splitted[0] == "RunTerrorZonesScript") AllLines[i] = "RunTerrorZonesScript=" + CharConfig.RunTerrorZonesScript;
 
                 if (Splitted[0] == "RunChaosSearchGameScript") AllLines[i] = "RunChaosSearchGameScript=" + CharConfig.RunChaosSearchGameScript;
                 if (Splitted[0] == "RunBaalSearchGameScript") AllLines[i] = "RunBaalSearchGameScript=" + CharConfig.RunBaalSearchGameScript;
                 if (Splitted[0] == "RunGameMakerScript") AllLines[i] = "RunGameMakerScript=" + CharConfig.RunGameMakerScript;
                 if (Splitted[0] == "RunNoLobbyScript") AllLines[i] = "RunNoLobbyScript=" + CharConfig.RunNoLobbyScript;
                 if (Splitted[0] == "RunSinglePlayerScript") AllLines[i] = "RunSinglePlayerScript=" + CharConfig.RunSinglePlayerScript;
+                if (Splitted[0] == "KillOnlySuperUnique") AllLines[i] = "KillOnlySuperUnique=" + CharConfig.KillOnlySuperUnique;
 
                 if (Splitted[0] == "ClearAfterBoss") AllLines[i] = "ClearAfterBoss=" + CharConfig.ClearAfterBoss;
 
@@ -378,6 +385,9 @@ public class SettingsLoader
 
                 if (Splitted[0] == "StartStopKey") AllLines[i] = "StartStopKey=" + CharConfig.StartStopKey;
                 if (Splitted[0] == "PauseResumeKey") AllLines[i] = "PauseResumeKey=" + CharConfig.PauseResumeKey;
+                if (Splitted[0] == "KeyOpenInventory") AllLines[i] = "KeyOpenInventory=" + CharConfig.KeyOpenInventory;
+                if (Splitted[0] == "KeyForceMovement") AllLines[i] = "KeyForceMovement=" + CharConfig.KeyForceMovement;
+                if (Splitted[0] == "KeySwapWeapon") AllLines[i] = "KeySwapWeapon=" + CharConfig.KeySwapWeapon;
             }
         }
 
@@ -921,6 +931,9 @@ public class SettingsLoader
                         }
                         //##########
 
+                        if (ThisItem == "" || ThisItem == " " || ThisItem == "  ") continue;
+                        if (((byte)ThisItem[0]) == 0xff) continue;
+
                         if (DoingKeysRune)
                         {
                             string ModifiedNsameNoQty = ThisItem;
@@ -1123,6 +1136,14 @@ public class SettingsLoader
                             {
                                 Form1_0.Baal_0.SafeYoloStrat = bool.Parse(Params[1].ToLower());
                             }
+
+                            //#########
+                            //SPECIAL CHAOS FEATURES
+                            if (Params[0].Contains("FastChaos"))
+                            {
+                                Form1_0.Chaos_0.FastChaos = bool.Parse(Params[1].ToLower());
+                            }
+
                             //#########
                             //SPECIAL OVERLAY FEATURES
                             if (Params[0].Contains("ShowMobs")) Form1_0.overlayForm.ShowMobs = bool.Parse(Params[1].ToLower());
@@ -1305,6 +1326,10 @@ public class SettingsLoader
                             {
                                 CharConfig.RunFrozensteinScript = bool.Parse(Params[1].ToLower());
                             }
+                            if (Params[0].Contains("RunTerrorZonesScript"))
+                            {
+                                CharConfig.RunTerrorZonesScript = bool.Parse(Params[1].ToLower());
+                            }
                             //########
 
                             if (Params[0].Contains("RunItemGrabScriptOnly"))
@@ -1330,6 +1355,10 @@ public class SettingsLoader
                             if (Params[0].Contains("RunSinglePlayerScript"))
                             {
                                 CharConfig.RunSinglePlayerScript = bool.Parse(Params[1].ToLower());
+                            }
+                            if (Params[0].Contains("KillOnlySuperUnique"))
+                            {
+                                CharConfig.KillOnlySuperUnique = bool.Parse(Params[1].ToLower());
                             }
                             if (Params[0].Contains("ClearAfterBoss"))
                             {
@@ -1363,6 +1392,18 @@ public class SettingsLoader
                             if (Params[0].Contains("PauseResumeKey"))
                             {
                                 Enum.TryParse(Params[1], out CharConfig.PauseResumeKey);
+                            }
+                            if (Params[0].Contains("KeyOpenInventory"))
+                            {
+                                Enum.TryParse(Params[1], out CharConfig.KeyOpenInventory);
+                            }
+                            if (Params[0].Contains("KeyForceMovement"))
+                            {
+                                Enum.TryParse(Params[1], out CharConfig.KeyForceMovement);
+                            }
+                            if (Params[0].Contains("KeySwapWeapon"))
+                            {
+                                Enum.TryParse(Params[1], out CharConfig.KeySwapWeapon);
                             }
                         }
                     }

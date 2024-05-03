@@ -49,7 +49,7 @@ public class Battle
 
     public bool EndBossBattle()
     {
-        Form1_0.KeyMouse_0.ReleaseKey(System.Windows.Forms.Keys.E);
+        Form1_0.KeyMouse_0.ReleaseKey(CharConfig.KeyForceMovement);
         if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
         if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
         if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
@@ -309,7 +309,7 @@ public class Battle
         {
             Form1_0.Potions_0.CheckIfWeUsePotion();
 
-            Form1_0.KeyMouse_0.PressKey(Keys.W);
+            Form1_0.KeyMouse_0.PressKey(CharConfig.KeySwapWeapon);
             Form1_0.WaitDelay(15);
             Form1_0.KeyMouse_0.PressKey(CharConfig.KeySkillBattleOrder);
             Form1_0.WaitDelay(10);
@@ -322,7 +322,7 @@ public class Battle
             //press W again to switch weapon again
             if (Form1_0.PlayerScan_0.RightSkill != Enums.Skill.BattleOrders)
             {
-                Form1_0.KeyMouse_0.PressKey(Keys.W);
+                Form1_0.KeyMouse_0.PressKey(CharConfig.KeySwapWeapon);
                 Form1_0.WaitDelay(15);
                 Form1_0.KeyMouse_0.PressKey(CharConfig.KeySkillBattleOrder);
                 Form1_0.WaitDelay(10);
@@ -357,7 +357,7 @@ public class Battle
             Form1_0.KeyMouse_0.MouseCliccRight_RealPos(Form1_0.CenterX, Form1_0.CenterY);
             Form1_0.WaitDelay(60);
 
-            Form1_0.KeyMouse_0.PressKey(Keys.W);
+            Form1_0.KeyMouse_0.PressKey(CharConfig.KeySwapWeapon);
             Form1_0.WaitDelay(15);
             Form1_0.PlayerScan_0.GetPositions();
         }
@@ -367,7 +367,7 @@ public class Battle
             || Form1_0.PlayerScan_0.RightSkill == Enums.Skill.BattleOrders
             || Form1_0.PlayerScan_0.RightSkill == Enums.Skill.BattleCommand)
         {
-            Form1_0.KeyMouse_0.PressKey(Keys.W);
+            Form1_0.KeyMouse_0.PressKey(CharConfig.KeySwapWeapon);
             Form1_0.WaitDelay(15);
             Form1_0.PlayerScan_0.GetPositions();
         }
@@ -530,7 +530,7 @@ public class Battle
                         TriedToMoveToMobsCount = 0;
                     }
                 }
-                Form1_0.KeyMouse_0.ReleaseKey(System.Windows.Forms.Keys.E);
+                Form1_0.KeyMouse_0.ReleaseKey(CharConfig.KeyForceMovement);
             }
             //Form1_0.Mover_0.MoveToLocationAttack(Form1_0.MobsStruc_0.xPosFinal - 1, Form1_0.MobsStruc_0.yPosFinal + 2);
             Form1_0.Mover_0.MoveAcceptOffset = 4;
@@ -659,7 +659,7 @@ public class Battle
                         TriedToMoveToMobsCount = 0;
                     }
                 }
-                Form1_0.KeyMouse_0.ReleaseKey(System.Windows.Forms.Keys.E);
+                Form1_0.KeyMouse_0.ReleaseKey(CharConfig.KeyForceMovement);
             }
             //Form1_0.Mover_0.MoveToLocationAttack(Form1_0.MobsStruc_0.xPosFinal - 1, Form1_0.MobsStruc_0.yPosFinal + 2);
             Form1_0.Mover_0.MoveAcceptOffset = 4;
@@ -710,7 +710,7 @@ public class Battle
                             TriedToMoveToMobsCount = 0;
                         }
                     }
-                    Form1_0.KeyMouse_0.ReleaseKey(System.Windows.Forms.Keys.E);
+                    Form1_0.KeyMouse_0.ReleaseKey(CharConfig.KeyForceMovement);
                 }
                 //Form1_0.Mover_0.MoveToLocationAttack(Form1_0.MobsStruc_0.xPosFinal - 1, Form1_0.MobsStruc_0.yPosFinal + 2);
                 Form1_0.Mover_0.MoveAcceptOffset = 4;
@@ -855,7 +855,7 @@ public class Battle
 
     public void CastSkills()
     {
-        Form1_0.KeyMouse_0.ReleaseKey(System.Windows.Forms.Keys.E);
+        Form1_0.KeyMouse_0.ReleaseKey(CharConfig.KeyForceMovement);
         if (Form1_0.MobsStruc_0.xPosFinal != 0 && Form1_0.MobsStruc_0.yPosFinal != 0)
         {
             Form1_0.PlayerScan_0.GetPositions();
@@ -880,7 +880,7 @@ public class Battle
                 Form1_0.KeyMouse_0.MouseCliccRightAttackMove(Form1_0.CenterX, Form1_0.CenterY - 1);
             }
         }
-        Form1_0.KeyMouse_0.ReleaseKey(System.Windows.Forms.Keys.E);
+        Form1_0.KeyMouse_0.ReleaseKey(CharConfig.KeyForceMovement);
         //Form1_0.WaitDelay(5);
         //Form1_0.WaitDelay(1);
     }

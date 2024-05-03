@@ -141,7 +141,7 @@ public class Potions
             }
             else
             {
-                if (!Form1_0.Town_0.GetInTown() && CharConfig.TownIfMercDead)
+                if (!Form1_0.Town_0.GetInTown() && CharConfig.TownIfMercDead && (Form1_0.PlayerScan_0.PlayerGoldInventory + Form1_0.PlayerScan_0.PlayerGoldInStash) >= 75000)
                 {
                     Form1_0.Town_0.FastTowning = true;
                     Form1_0.Town_0.GoToTown();

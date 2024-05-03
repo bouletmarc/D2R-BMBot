@@ -13,6 +13,9 @@ public static class CharConfig
     //#######################################
     public static System.Windows.Forms.Keys StartStopKey = Keys.NumPad5;   //numpad5 -> refer to virtual key code (vkcode)
     public static System.Windows.Forms.Keys PauseResumeKey = Keys.NumPad6;   //numpad6 -> refer to virtual key code (vkcode)
+    public static System.Windows.Forms.Keys KeyOpenInventory = Keys.I;
+    public static System.Windows.Forms.Keys KeyForceMovement = Keys.E;
+    public static System.Windows.Forms.Keys KeySwapWeapon = Keys.W;
 
     //#######################################
     //SHORTCUT KEYS SETTINGS (FOR PALADIN)
@@ -81,6 +84,7 @@ public static class CharConfig
     public static int MaxGameTime = 7;                  //9MINS -> TIME IN MINUTES
     public static bool IsRushing = false;
     public static bool LogNotUsefulErrors = false;
+    public static bool KillOnlySuperUnique = false;
     public static string RunningOnChar = "";
     public static string RushLeecherName = "";
     public static string SearchLeecherName = "";
@@ -133,6 +137,7 @@ public static class CharConfig
     public static bool RunA3SewersScript = false;
     public static bool RunBaalScript = true;
     public static bool RunBaalLeechScript = true;       //BAAL LEECH SCRIPT
+    public static bool RunTerrorZonesScript = false;
     public static bool RunItemGrabScriptOnly = false;
     //NOT IN GAME SCRIPT (SEARCH GAMES OR CREATE A NEW GAME)
     public static bool RunChaosSearchGameScript = false; //CHAOS GAMES SEARCHER SCRIPT

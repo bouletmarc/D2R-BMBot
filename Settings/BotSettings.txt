@@ -3,6 +3,9 @@
 //#######################################
 StartStopKey=101
 PauseResumeKey=102
+KeyOpenInventory=I
+KeyForceMovement=E
+KeySwapWeapon=W
 
 //#######################################
 //BOT SETTINGS (USE ONLY CHAOS OR BAAL, NOT BOTH AT SAME TIME) 
@@ -14,6 +17,7 @@ RushLeecherName=
 SearchLeecherName=
 ShowOverlay=true
 RunWPTaker=false
+KillOnlySuperUnique=false
 RunSinglePlayerScript=false
 RunNoLobbyScript=false
 RunMapHackOnly=false
@@ -54,6 +58,7 @@ RunEldritchScript=false
 RunShenkScript=false
 RunNihlatakScript=false
 RunFrozensteinScript=false
+RunTerrorZonesScript=false
 RunItemGrabScriptOnly=false
 ClearAfterBoss=false
 
@@ -70,6 +75,7 @@ ChaosLeechSearch=chaos
 BaalLeechSearch=baal
 BaalSearchAvoidWords=umf,u-mf,u mf,chaos,cbaal,help,walk,quest,4 q,baal4q,ancient
 ChaosSearchAvoidWords=umf,u-mf,u mf,baal,help,walk,quest,4 q
+
 //#######################################
 //SPECIALS BAAL FEATURES
 //#######################################
@@ -77,7 +83,12 @@ KillBaal=true
 LeaveIfMobsIsPresent_ID=
 LeaveIfMobsIsPresent_Count=
 LeaveIfMobsCountIsAbove=0
-SafeHealingStrat=false
+SafeHealingStrat=true
+
+//#######################################
+//SPECIALS CHAOS FEATURES
+//#######################################
+FastChaos=false
 
 
 //#######################################

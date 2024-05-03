@@ -35,6 +35,9 @@ public partial class FormSettings : Form
         panelOverlay.Visible = false;
         panelOverlay.Location = new System.Drawing.Point(23, 197);
 
+        panelChaosFeature.Visible = false;
+        panelChaosFeature.Location = new System.Drawing.Point(23, 197);
+
         LoadSettings();
     }
 
@@ -75,6 +78,7 @@ public partial class FormSettings : Form
         listViewRunScripts.Items[CurrI++].Checked = CharConfig.RunNihlatakScript;
         listViewRunScripts.Items[CurrI++].Checked = CharConfig.RunBaalScript;
         listViewRunScripts.Items[CurrI++].Checked = CharConfig.RunBaalLeechScript;
+        listViewRunScripts.Items[CurrI++].Checked = CharConfig.RunTerrorZonesScript;
         listViewRunScripts.Items[CurrI++].Checked = CharConfig.RunWPTaker;
 
         CurrI = 0;
@@ -124,6 +128,11 @@ public partial class FormSettings : Form
 
             listViewBaalLeaveOnMobs.Items.Add(item);
         }
+
+        //###################
+        //SPECIALS CHAOS FEATURES
+        checkBoxFastChaos.Checked = Form1_0.Chaos_0.FastChaos;
+
         //###################
         //SPECIALS OVERLAY FEATURES
         checkBoxOverlayShowMobs.Checked = Form1_0.overlayForm.ShowMobs;
@@ -253,6 +262,7 @@ public partial class FormSettings : Form
         CharConfig.RunNihlatakScript = listViewRunScripts.Items[CurrI++].Checked;
         CharConfig.RunBaalScript = listViewRunScripts.Items[CurrI++].Checked;
         CharConfig.RunBaalLeechScript = listViewRunScripts.Items[CurrI++].Checked;
+        CharConfig.RunTerrorZonesScript = listViewRunScripts.Items[CurrI++].Checked;
         CharConfig.RunWPTaker = listViewRunScripts.Items[CurrI++].Checked;
 
         CurrI = 0;
@@ -289,6 +299,7 @@ public partial class FormSettings : Form
         Form1_0.CurrentGameNumber = (int)numericUpDownRunNumber.Value;
 
         //###################
+        //SPECIALS BAAL FEATURES
         Form1_0.Baal_0.KillBaal = checkBoxKillBaal.Checked;
         Form1_0.Baal_0.SafeYoloStrat = checkBoxBaalSafeHealing.Checked;
         Form1_0.Baal_0.LeaveIfMobsCountIsAbove = (int)numericUpDownBaalLeaveMobsCount.Value;
@@ -299,6 +310,11 @@ public partial class FormSettings : Form
             Form1_0.Baal_0.LeaveIfMobsIsPresent_ID.Add(uint.Parse(listViewBaalLeaveOnMobs.Items[i].SubItems[0].Text));
             Form1_0.Baal_0.LeaveIfMobsIsPresent_Count.Add(int.Parse(listViewBaalLeaveOnMobs.Items[i].SubItems[1].Text));
         }
+
+        //###################
+        //SPECIALS CHAOS FEATURES
+        Form1_0.Chaos_0.FastChaos = checkBoxFastChaos.Checked;
+
         //###################
         //SPECIALS OVERLAY FEATURES
         Form1_0.overlayForm.ShowMobs = checkBoxOverlayShowMobs.Checked;
@@ -390,7 +406,11 @@ public partial class FormSettings : Form
             checkBoxKillBaal.Checked = Form1_0.Baal_0.KillBaal;
             panelBaalFeature.Visible = true;
         }
-        if (listViewRunScripts.SelectedItems[0].Text == "Maphack ONLY (no script running)")
+        else if (listViewRunScripts.SelectedItems[0].Text == "Chaos")
+        {
+            panelChaosFeature.Visible = true;
+        }
+        else if (listViewRunScripts.SelectedItems[0].Text == "Maphack ONLY (no script running)")
         {
             panelOverlay.Visible = true;
         }
@@ -445,5 +465,10 @@ public partial class FormSettings : Form
     private void buttonOverlaySettings_Click(object sender, EventArgs e)
     {
         panelOverlay.Visible = true;
+    }
+
+    private void button4_Click(object sender, EventArgs e)
+    {
+        panelChaosFeature.Visible = false;
     }
 }

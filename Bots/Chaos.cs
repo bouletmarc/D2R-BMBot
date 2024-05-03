@@ -11,6 +11,13 @@ public class Chaos
 {
     Form1 Form1_0;
 
+    //#####################################################
+    //#####################################################
+    //Special Run Variable
+    public bool FastChaos = false;
+    //#####################################################
+    //#####################################################
+
     public int CurrentStep = 0;
     public bool ScriptDone = false;
     public bool DetectedBoss = false;
@@ -132,14 +139,21 @@ public class Chaos
                 }
                 //####
 
-                if (Form1_0.Mover_0.MoveToLocation(EntrancePos.X, EntrancePos.Y))
+                if (!FastChaos)
                 {
-                    if (Form1_0.PublicGame && !Form1_0.Town_0.TPSpawned) Form1_0.Town_0.SpawnTP();
-                    Form1_0.Town_0.TPSpawned = false;
+                    if (Form1_0.Mover_0.MoveToLocation(EntrancePos.X, EntrancePos.Y))
+                    {
+                        if (Form1_0.PublicGame && !Form1_0.Town_0.TPSpawned) Form1_0.Town_0.SpawnTP();
+                        Form1_0.Town_0.TPSpawned = false;
 
-                    BufferPathFindingMoveSize = Form1_0.PathFinding_0.AcceptMoveOffset;
-                    Form1_0.PathFinding_0.AcceptMoveOffset = 15;
+                        BufferPathFindingMoveSize = Form1_0.PathFinding_0.AcceptMoveOffset;
+                        Form1_0.PathFinding_0.AcceptMoveOffset = 15;
 
+                        CurrentStep++;
+                    }
+                }
+                else
+                {
                     CurrentStep++;
                 }
             }
@@ -179,8 +193,8 @@ public class Chaos
                         if (CurrentSealPos.Y == 5275) SealType = 1;
                         else SealType = 2;
 
-                        if (SealType == 1) Form1_0.PathFinding_0.MoveToThisPos(new Position { X = 7691, Y = 5292 }, 4, true);
-                        else Form1_0.PathFinding_0.MoveToThisPos(new Position { X = 7695, Y = 5316 }, 4, true);
+                        if (SealType == 1) Form1_0.PathFinding_0.MoveToThisPos(new Position { X = 7691, Y = 5292 }, 4, !FastChaos);
+                        else Form1_0.PathFinding_0.MoveToThisPos(new Position { X = 7695, Y = 5316 }, 4, !FastChaos);
 
                         Form1_0.SetGameStatus("WAITING VIZIER " + (TryCountWaitingUniqueBoss + 1) + "/1");
 
@@ -238,12 +252,12 @@ public class Chaos
                         Form1_0.Battle_0.CastDefense();
                         Form1_0.InventoryStruc_0.DumpBadItemsOnGround();
                         MovedToTPPos = true;
-                        Form1_0.PathFinding_0.MoveToObject("DiabloSeal5", 4, true);
+                        Form1_0.PathFinding_0.MoveToObject("DiabloSeal5", 4, !FastChaos);
                     }
                     else
                     {
-                        if (!MovedToTPPos) Form1_0.PathFinding_0.MoveToThisPos(TPPos, 4, true);
-                        else Form1_0.PathFinding_0.MoveToObject("DiabloSeal5", 4, true);
+                        if (!MovedToTPPos) Form1_0.PathFinding_0.MoveToThisPos(TPPos, 4, !FastChaos);
+                        else Form1_0.PathFinding_0.MoveToObject("DiabloSeal5", 4, !FastChaos);
                     }
                 }
             }
@@ -269,7 +283,7 @@ public class Chaos
                 }
                 else
                 {
-                    Form1_0.PathFinding_0.MoveToObject("DiabloSeal4", 4, true);
+                    Form1_0.PathFinding_0.MoveToObject("DiabloSeal4", 4, !FastChaos);
                 }
             }
 
@@ -309,11 +323,11 @@ public class Chaos
 
                         if (SealType == 1)
                         {
-                            Form1_0.PathFinding_0.MoveToThisPos(new Position { X = 7794, Y = 5227 }, 4, true);
+                            Form1_0.PathFinding_0.MoveToThisPos(new Position { X = 7794, Y = 5227 }, 4, !FastChaos);
                             //NTM_MoveTo(108, 7797, 5201);
                             //for (int i = 0; i < 3; i += 1) NTM_TeleportTo(7794, 5227);
                         }
-                        else Form1_0.PathFinding_0.MoveToThisPos(new Position { X = 7798, Y = 5186 }, 4, true);
+                        else Form1_0.PathFinding_0.MoveToThisPos(new Position { X = 7798, Y = 5186 }, 4, !FastChaos);
 
                         Form1_0.SetGameStatus("WAITING LORD DE SEIS " + (TryCountWaitingUniqueBoss + 1) + "/1");
 
@@ -367,7 +381,7 @@ public class Chaos
                 }
                 else
                 {
-                    Form1_0.PathFinding_0.MoveToObject("DiabloSeal3", 4, true);
+                    Form1_0.PathFinding_0.MoveToObject("DiabloSeal3", 4, !FastChaos);
                 }
             }
 
@@ -392,7 +406,7 @@ public class Chaos
                 }
                 else
                 {
-                    Form1_0.PathFinding_0.MoveToObject("DiabloSeal2", 4, true);
+                    Form1_0.PathFinding_0.MoveToObject("DiabloSeal2", 4, !FastChaos);
                 }
             }
 
@@ -426,7 +440,7 @@ public class Chaos
                         else SealType = 2;
 
                         if (SealType == 1) SealType = 1; // temp
-                        else Form1_0.PathFinding_0.MoveToThisPos(new Position { X = 7933, Y = 5299 }, 4, true);
+                        else Form1_0.PathFinding_0.MoveToThisPos(new Position { X = 7933, Y = 5299 }, 4, !FastChaos);
 
                         Form1_0.SetGameStatus("WAITING INFECTOR " + (TryCountWaitingUniqueBoss + 1) + "/1");
 
@@ -484,15 +498,15 @@ public class Chaos
                 }
                 else
                 {
-                    Form1_0.PathFinding_0.MoveToObject("DiabloSeal1", 4, true);
+                    Form1_0.PathFinding_0.MoveToObject("DiabloSeal1", 4, !FastChaos);
                 }
             }
 
             if (CurrentStep == 8)
             {
-                if (Form1_0.PathFinding_0.MoveToThisPos(DiabloSpawnPos, 4, true))
+                if (Form1_0.PathFinding_0.MoveToThisPos(DiabloSpawnPos, 4, !FastChaos))
                 {
-                    //Form1_0.PathFinding_0.MoveToThisPos(DiabloSpawnPos, 4, true);
+                    //Form1_0.PathFinding_0.MoveToThisPos(DiabloSpawnPos, 4, !FastChaos);
                     Form1_0.Battle_0.CastDefense();
                     CurrentStep++;
                 }

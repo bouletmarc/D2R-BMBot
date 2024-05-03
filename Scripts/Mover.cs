@@ -36,13 +36,16 @@ public class Mover
         return false;
     }
 
+    public bool MovingToInteract = false;
+
     //This will move to a direct location -> no pathfinding
     public bool MoveToLocation(int ThisX, int ThisY, bool AllowPickingItem = false, bool AllowMoveSideWay = true)
     {
         if (!Form1_0.Running || !Form1_0.GameStruc_0.IsInGame()) return false;
 
         Form1_0.UIScan_0.readUI();
-        if (Form1_0.UIScan_0.leftMenu || Form1_0.UIScan_0.rightMenu) Form1_0.UIScan_0.CloseAllUIMenu();
+        if (Form1_0.UIScan_0.leftMenu || Form1_0.UIScan_0.rightMenu && !MovingToInteract) Form1_0.UIScan_0.CloseAllUIMenu();
+        //if (Form1_0.UIScan_0.leftMenu || Form1_0.UIScan_0.rightMenu) Form1_0.UIScan_0.CloseAllUIMenu();
         if (Form1_0.UIScan_0.quitMenu) Form1_0.UIScan_0.CloseUIMenu("quitMenu");
 
         Form1_0.PlayerScan_0.GetPositions();
@@ -88,7 +91,7 @@ public class Mover
         {
             Form1_0.KeyMouse_0.MouseMoveTo_RealPos(itemScreenPos.X, itemScreenPos.Y);
             Form1_0.KeyMouse_0.MouseClicHoldWithoutRelease();
-            Form1_0.KeyMouse_0.PressKeyHold(System.Windows.Forms.Keys.E);
+            Form1_0.KeyMouse_0.PressKeyHold(CharConfig.KeyForceMovement);
         }
         while (true)
         {
@@ -159,12 +162,12 @@ public class Mover
             //moving location is way to far away something might be wrong!
             if (!IsPositionNearOf(ThisX, ThisY, 300))
             {
-                Form1_0.KeyMouse_0.ReleaseKey(System.Windows.Forms.Keys.E);
+                Form1_0.KeyMouse_0.ReleaseKey(CharConfig.KeyForceMovement);
                 return false;
             }
             if (ThisX == 0 && ThisY == 0)
             {
-                Form1_0.KeyMouse_0.ReleaseKey(System.Windows.Forms.Keys.E);
+                Form1_0.KeyMouse_0.ReleaseKey(CharConfig.KeyForceMovement);
                 return false;
             }
             //######
@@ -175,7 +178,7 @@ public class Mover
             {
                 Form1_0.overlayForm.ScanningOverlayItems = true; //try rescanning overlay if there was too much lags
                 Form1_0.overlayForm.ResetMoveToLocation();
-                Form1_0.KeyMouse_0.ReleaseKey(System.Windows.Forms.Keys.E);
+                Form1_0.KeyMouse_0.ReleaseKey(CharConfig.KeyForceMovement);
                 return false;
             }
 
@@ -219,14 +222,14 @@ public class Mover
                 {
                     Form1_0.ItemsStruc_0.AvoidItemsOnGroundPointerList.Clear();
                     Form1_0.overlayForm.ResetMoveToLocation();
-                    Form1_0.KeyMouse_0.ReleaseKey(System.Windows.Forms.Keys.E);
+                    Form1_0.KeyMouse_0.ReleaseKey(CharConfig.KeyForceMovement);
                     return false;
                 }
 
                 if (!Form1_0.GameStruc_0.IsInGame() || !Form1_0.Running)
                 {
                     Form1_0.overlayForm.ResetMoveToLocation();
-                    Form1_0.KeyMouse_0.ReleaseKey(System.Windows.Forms.Keys.E);
+                    Form1_0.KeyMouse_0.ReleaseKey(CharConfig.KeyForceMovement);
                     return false;
                 }
                 if (AllowPickingItem) Form1_0.ItemsStruc_0.GetItems(true);      //#############
@@ -238,9 +241,9 @@ public class Mover
                 if (TryMove2 == 4) Form1_0.KeyMouse_0.MouseMoveTo(Form1_0.ScreenX / 2, Form1_0.ScreenY / 2 + 250);*/
 
                 Form1_0.KeyMouse_0.MouseClicRelease();
-                Form1_0.KeyMouse_0.ReleaseKey(System.Windows.Forms.Keys.E);
+                Form1_0.KeyMouse_0.ReleaseKey(CharConfig.KeyForceMovement);
                 Form1_0.KeyMouse_0.MouseClicHoldWithoutRelease();
-                Form1_0.KeyMouse_0.PressKeyHold(System.Windows.Forms.Keys.E);
+                Form1_0.KeyMouse_0.PressKeyHold(CharConfig.KeyForceMovement);
 
                 Form1_0.WaitDelay(4);
 
@@ -262,7 +265,7 @@ public class Mover
         if (!CharConfig.UseTeleport || (CharConfig.UseTeleport && Form1_0.Town_0.GetInTown()))
         {
             Form1_0.KeyMouse_0.MouseClicRelease();
-            Form1_0.KeyMouse_0.ReleaseKey(System.Windows.Forms.Keys.E);
+            Form1_0.KeyMouse_0.ReleaseKey(CharConfig.KeyForceMovement);
         }
         Form1_0.KeyMouse_0.PressKey(CharConfig.KeySkillDefenseAura);
 
@@ -310,7 +313,7 @@ public class Mover
         //{
         Form1_0.KeyMouse_0.MouseMoveTo_RealPos(itemScreenPos.X, itemScreenPos.Y);
         Form1_0.KeyMouse_0.MouseClicHoldWithoutRelease();
-        Form1_0.KeyMouse_0.PressKeyHold(System.Windows.Forms.Keys.E);
+        Form1_0.KeyMouse_0.PressKeyHold(CharConfig.KeyForceMovement);
         //}
         if (Form1_0.Town_0.GetInTown()) Form1_0.KeyMouse_0.PressKey(CharConfig.KeySkillfastMoveAtTown);
         else Form1_0.KeyMouse_0.PressKey(CharConfig.KeySkillfastMoveOutsideTown);
@@ -335,12 +338,12 @@ public class Mover
         //moving location is way to far away something might be wrong!
         if (!IsPositionNearOf(ThisX, ThisY, 300))
         {
-            Form1_0.KeyMouse_0.ReleaseKey(System.Windows.Forms.Keys.E);
+            Form1_0.KeyMouse_0.ReleaseKey(CharConfig.KeyForceMovement);
             return false;
         }
         if (ThisX == 0 && ThisY == 0)
         {
-            Form1_0.KeyMouse_0.ReleaseKey(System.Windows.Forms.Keys.E);
+            Form1_0.KeyMouse_0.ReleaseKey(CharConfig.KeyForceMovement);
             return false;
         }
         //######
@@ -352,7 +355,7 @@ public class Mover
             Form1_0.ItemsStruc_0.AvoidItemsOnGroundPointerList.Clear();
             Form1_0.overlayForm.ScanningOverlayItems = true; //try rescanning overlay if there was too much lags
             Form1_0.overlayForm.ResetMoveToLocation();
-            Form1_0.KeyMouse_0.ReleaseKey(System.Windows.Forms.Keys.E);
+            Form1_0.KeyMouse_0.ReleaseKey(CharConfig.KeyForceMovement);
             return false;
         }
 
@@ -362,7 +365,7 @@ public class Mover
         //if (!CharConfig.UseTeleport || (CharConfig.UseTeleport && Form1_0.Town_0.GetInTown()))
         //{
         Form1_0.KeyMouse_0.MouseClicRelease();
-        Form1_0.KeyMouse_0.ReleaseKey(System.Windows.Forms.Keys.E);
+        Form1_0.KeyMouse_0.ReleaseKey(CharConfig.KeyForceMovement);
         //}
         //Form1_0.KeyMouse_0.PressKey(CharConfig.KeySkillDefenseAura);
 

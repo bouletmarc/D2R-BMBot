@@ -323,7 +323,7 @@ public class Shop
                 if (Form1_0.InventoryStruc_0.HasInventoryItemName(BuyingThisPotion) || Form1_0.BeltStruc_0.HasPotInBadSpot)
                 {
                     int IncreaseCount = 0;
-                    while (Form1_0.BeltStruc_0.HPQuantity != Form1_0.BeltStruc_0.ForceHPPotionQty && IncreaseCount < 5)
+                    while (Form1_0.BeltStruc_0.HPQuantity != Form1_0.BeltStruc_0.ForceHPPotionQty && IncreaseCount < 15)
                     {
                         Form1_0.PatternsScan_0.IncreaseV1Scanning();
                         IncreaseCount++;
@@ -401,7 +401,7 @@ public class Shop
                 if (Form1_0.InventoryStruc_0.HasInventoryItemName(BuyingThisPotion) || Form1_0.BeltStruc_0.HasPotInBadSpot)
                 {
                     int IncreaseCount = 0;
-                    while (Form1_0.BeltStruc_0.ManyQuantity != Form1_0.BeltStruc_0.ForceMANAPotionQty && IncreaseCount < 5)
+                    while (Form1_0.BeltStruc_0.ManyQuantity != Form1_0.BeltStruc_0.ForceMANAPotionQty && IncreaseCount < 10)
                     {
                         Form1_0.PatternsScan_0.IncreaseV1Scanning();
                         IncreaseCount++;

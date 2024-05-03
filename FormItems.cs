@@ -66,6 +66,11 @@ public partial class FormItems : Form
 
         comboBoxStats.Items.Clear();
         foreach (Enums.Attribute ThisV in Enum.GetValues(typeof(Enums.Attribute))) comboBoxStats.Items.Add(ThisV);
+        foreach (Enums.SingleSkill ThisV in Enum.GetValues(typeof(Enums.SingleSkill))) comboBoxStats.Items.Add(ThisV);
+        foreach (Enums.AddClassSkills ThisV in Enum.GetValues(typeof(Enums.AddClassSkills))) comboBoxStats.Items.Add(ThisV);
+        foreach (Enums.NonClassSkill ThisV in Enum.GetValues(typeof(Enums.NonClassSkill))) comboBoxStats.Items.Add(ThisV);
+        foreach (Enums.Aura ThisV in Enum.GetValues(typeof(Enums.Aura))) comboBoxStats.Items.Add(ThisV);
+        foreach (Enums.AddSkillTab ThisV in Enum.GetValues(typeof(Enums.AddSkillTab))) comboBoxStats.Items.Add(ThisV);
 
         comboBoxNameOrType.SelectedIndex = 0;
         SetNameOrType();
@@ -202,6 +207,7 @@ public partial class FormItems : Form
         //###########################
         foreach (var ThisDir in Form1_0.ItemsAlert_0.PickItemsNormal_ByName)
         {
+            string FullItemStr = "[Name] == ";
             string[] arr = new string[6];
             arr[0] = Regex.Replace(ThisDir.Key, @"[\d-]", string.Empty);
             arr[1] = "";
@@ -209,20 +215,7 @@ public partial class FormItems : Form
             arr[3] = "";
             arr[4] = Form1_0.ItemsAlert_0.PickItemsNormal_ByNameDesc[ThisDir.Key];
             arr[5] = ThisDir.Key;
-            if (Form1_0.ItemsAlert_0.PickItemsNormal_ByName_Flags.ContainsKey(ThisDir.Key))
-            {
-                string FlagsTxt = "";
-                foreach (var ThisList in Form1_0.ItemsAlert_0.PickItemsNormal_ByName_Flags[ThisDir.Key])
-                {
-                    if (FlagsTxt != "") FlagsTxt += ", ";
-                    FlagsTxt += ThisList.Value;
-                    if ((0x00000010 & ThisList.Key) != 0) FlagsTxt += "identified";
-                    if ((0x00000800 & ThisList.Key) != 0) FlagsTxt += "socketed";
-                    if ((0x00400000 & ThisList.Key) != 0) FlagsTxt += "ethereal";
-                }
-
-                arr[1] = FlagsTxt;
-            }
+            FullItemStr += arr[0];
             string ThisQ = "";
             if (Form1_0.ItemsAlert_0.PickItemsNormal_ByName_Quality.ContainsKey(ThisDir.Key))
             {
@@ -236,6 +229,21 @@ public partial class FormItems : Form
                 if (Form1_0.ItemsAlert_0.PickItemsNormal_ByName_Quality[ThisDir.Key] == 8) ThisQ = "crafted";
                 if (Form1_0.ItemsAlert_0.PickItemsNormal_ByName_Quality[ThisDir.Key] == 9) ThisQ = "tempered";
                 arr[2] = ThisQ;
+                FullItemStr += " && [Quality] == " + ThisQ;
+            }
+            if (Form1_0.ItemsAlert_0.PickItemsNormal_ByName_Flags.ContainsKey(ThisDir.Key))
+            {
+                string FlagsTxt = "";
+                foreach (var ThisList in Form1_0.ItemsAlert_0.PickItemsNormal_ByName_Flags[ThisDir.Key])
+                {
+                    if (FlagsTxt != "") FlagsTxt += ", ";
+                    FlagsTxt += ThisList.Value;
+                    if ((0x00000010 & ThisList.Key) != 0) { FlagsTxt += "identified"; FullItemStr += " && [Flag] " + ThisList.Value + " identified"; }
+                    if ((0x00000800 & ThisList.Key) != 0) { FlagsTxt += "socketed"; FullItemStr += " && [Flag] " + ThisList.Value + " socketed"; }
+                    if ((0x00400000 & ThisList.Key) != 0) { FlagsTxt += "ethereal"; FullItemStr += " && [Flag] " + ThisList.Value + " ethereal"; }
+                }
+
+                arr[1] = FlagsTxt;
             }
             if (Form1_0.ItemsAlert_0.PickItemsNormal_ByName_Stats.ContainsKey(ThisDir.Key))
             {
@@ -245,63 +253,156 @@ public partial class FormItems : Form
                     arr[3] += Stat.Key + Form1_0.ItemsAlert_0.PickItemsNormal_ByName_Operators[ThisDir.Key][Stat.Key] + Stat.Value;
                 }
             }
-            ListViewItem item = new ListViewItem(arr);
 
+            //Get the Category
+            string[] AllItemsSettingsLines = File.ReadAllLines(Form1_0.SettingsLoader_0.File_ItemsSettings);
+            bool FoundCategory = false;
+            string CurrentCategory = "";
+            for (int i = 0; i < AllItemsSettingsLines.Length; i++)
+            {
+                if (AllItemsSettingsLines[i].Length > 5)
+                {
+                    if (AllItemsSettingsLines[i].Contains("//#####"))
+                    {
+                        CurrentCategory = AllItemsSettingsLines[i].Substring(7);
+                    }
+                }
+                if (AllItemsSettingsLines[i].Contains(FullItemStr))
+                {
+                    FoundCategory = true;
+                    break;
+                }
+            }
+
+            ListViewItem item = new ListViewItem(arr);
             ListViewGroup listViewGroup1 = new ListViewGroup("By Name");
+            if (FoundCategory) listViewGroup1 = new ListViewGroup(CurrentCategory);
+
             if (ThisQ == "normal")
             {
+                ListViewGroup ThisGroup = listViewGroup1;
+                for (int i = 0; i < listViewNormal.Groups.Count; i++)
+                {
+                    if (listViewNormal.Groups[i].Header == listViewGroup1.Header)
+                    {
+                        ThisGroup = listViewNormal.Groups[i];
+                        break;
+                    }
+                }
+
                 listViewNormal.Groups.Add(listViewGroup1);
                 listViewNormal.Items.Add(item);
                 listViewNormal.Items[listViewNormal.Items.Count - 1].Checked = ThisDir.Value;
-                listViewNormal.Items[listViewNormal.Items.Count - 1].Group = listViewNormal.Groups[0];
+                listViewNormal.Items[listViewNormal.Items.Count - 1].Group = ThisGroup;
             }
             else if (ThisQ == "superior")
             {
+                ListViewGroup ThisGroup = listViewGroup1;
+                for (int i = 0; i < listViewSuperior.Groups.Count; i++)
+                {
+                    if (listViewSuperior.Groups[i].Header == listViewGroup1.Header)
+                    {
+                        ThisGroup = listViewSuperior.Groups[i];
+                        break;
+                    }
+                }
+
                 listViewSuperior.Groups.Add(listViewGroup1);
                 listViewSuperior.Items.Add(item);
                 listViewSuperior.Items[listViewSuperior.Items.Count - 1].Checked = ThisDir.Value;
-                listViewSuperior.Items[listViewSuperior.Items.Count - 1].Group = listViewSuperior.Groups[0];
+                listViewSuperior.Items[listViewSuperior.Items.Count - 1].Group = ThisGroup;
             }
             else if (ThisQ == "rare")
             {
+                ListViewGroup ThisGroup = listViewGroup1;
+                for (int i = 0; i < listViewRare.Groups.Count; i++)
+                {
+                    if (listViewRare.Groups[i].Header == listViewGroup1.Header)
+                    {
+                        ThisGroup = listViewRare.Groups[i];
+                        break;
+                    }
+                }
+
                 listViewRare.Groups.Add(listViewGroup1);
                 listViewRare.Items.Add(item);
                 listViewRare.Items[listViewRare.Items.Count - 1].Checked = ThisDir.Value;
-                listViewRare.Items[listViewRare.Items.Count - 1].Group = listViewRare.Groups[0];
+                listViewRare.Items[listViewRare.Items.Count - 1].Group = ThisGroup;
             }
             else if (ThisQ == "magic")
             {
+                ListViewGroup ThisGroup = listViewGroup1;
+                for (int i = 0; i < listViewMagic.Groups.Count; i++)
+                {
+                    if (listViewMagic.Groups[i].Header == listViewGroup1.Header)
+                    {
+                        ThisGroup = listViewMagic.Groups[i];
+                        break;
+                    }
+                }
+
                 listViewMagic.Groups.Add(listViewGroup1);
                 listViewMagic.Items.Add(item);
                 listViewMagic.Items[listViewMagic.Items.Count - 1].Checked = ThisDir.Value;
-                listViewMagic.Items[listViewMagic.Items.Count - 1].Group = listViewMagic.Groups[0];
+                listViewMagic.Items[listViewMagic.Items.Count - 1].Group = ThisGroup;
             }
             else if (ThisQ == "unique")
             {
+                ListViewGroup ThisGroup = listViewGroup1;
+                for (int i = 0; i < listViewUnique.Groups.Count; i++)
+                {
+                    if (listViewUnique.Groups[i].Header == listViewGroup1.Header)
+                    {
+                        ThisGroup = listViewUnique.Groups[i];
+                        break;
+                    }
+                }
+
                 listViewUnique.Groups.Add(listViewGroup1);
                 listViewUnique.Items.Add(item);
                 listViewUnique.Items[listViewUnique.Items.Count - 1].Checked = ThisDir.Value;
-                listViewUnique.Items[listViewUnique.Items.Count - 1].Group = listViewUnique.Groups[0];
+                listViewUnique.Items[listViewUnique.Items.Count - 1].Group = ThisGroup;
             }
             else if (ThisQ == "set")
             {
+                ListViewGroup ThisGroup = listViewGroup1;
+                for (int i = 0; i < listViewSet.Groups.Count; i++)
+                {
+                    if (listViewSet.Groups[i].Header == listViewGroup1.Header)
+                    {
+                        ThisGroup = listViewSet.Groups[i];
+                        break;
+                    }
+                }
+
                 listViewSet.Groups.Add(listViewGroup1);
                 listViewSet.Items.Add(item);
                 listViewSet.Items[listViewSet.Items.Count - 1].Checked = ThisDir.Value;
-                listViewSet.Items[listViewSet.Items.Count - 1].Group = listViewSet.Groups[0];
+                listViewSet.Items[listViewSet.Items.Count - 1].Group = ThisGroup;
             }
             else
             {
+                ListViewGroup ThisGroup = listViewGroup1;
+                for (int i = 0; i < listViewNormal.Groups.Count; i++)
+                {
+                    if (listViewNormal.Groups[i].Header == listViewGroup1.Header)
+                    {
+                        ThisGroup = listViewNormal.Groups[i];
+                        break;
+                    }
+                }
+
                 listViewNormal.Groups.Add(listViewGroup1);
                 listViewNormal.Items.Add(item);
                 listViewNormal.Items[listViewNormal.Items.Count - 1].Checked = ThisDir.Value;
-                listViewNormal.Items[listViewNormal.Items.Count - 1].Group = listViewNormal.Groups[0];
+                listViewNormal.Items[listViewNormal.Items.Count - 1].Group = ThisGroup;
             }
         }
         //###########################
         //###########################
         foreach (var ThisDir in Form1_0.ItemsAlert_0.PickItemsNormal_ByType)
         {
+            string FullItemStr = "[Type] == ";
             string[] arr = new string[6];
             arr[0] = Regex.Replace(ThisDir.Key, @"[\d-]", string.Empty);
             arr[1] = "";
@@ -309,20 +410,7 @@ public partial class FormItems : Form
             arr[3] = "";
             arr[4] = Form1_0.ItemsAlert_0.PickItemsNormal_ByTypeDesc[ThisDir.Key];
             arr[5] = ThisDir.Key;
-            if (Form1_0.ItemsAlert_0.PickItemsNormal_ByType_Flags.ContainsKey(ThisDir.Key))
-            {
-                string FlagsTxt = "";
-                foreach (var ThisList in Form1_0.ItemsAlert_0.PickItemsNormal_ByType_Flags[ThisDir.Key])
-                {
-                    if (FlagsTxt != "") FlagsTxt += ", ";
-                    FlagsTxt += ThisList.Value;
-                    if ((0x00000010 & ThisList.Key) != 0) FlagsTxt += "identified";
-                    if ((0x00000800 & ThisList.Key) != 0) FlagsTxt += "socketed";
-                    if ((0x00400000 & ThisList.Key) != 0) FlagsTxt += "ethereal";
-                }
-
-                arr[1] = FlagsTxt;
-            }
+            FullItemStr += arr[0];
             string ThisQ = "";
             if (Form1_0.ItemsAlert_0.PickItemsNormal_ByType_Quality.ContainsKey(ThisDir.Key))
             {
@@ -336,6 +424,22 @@ public partial class FormItems : Form
                 if (Form1_0.ItemsAlert_0.PickItemsNormal_ByType_Quality[ThisDir.Key] == 8) ThisQ = "crafted";
                 if (Form1_0.ItemsAlert_0.PickItemsNormal_ByType_Quality[ThisDir.Key] == 9) ThisQ = "tempered";
                 arr[2] = ThisQ;
+
+                FullItemStr += " && [Quality] == " + ThisQ;
+            }
+            if (Form1_0.ItemsAlert_0.PickItemsNormal_ByType_Flags.ContainsKey(ThisDir.Key))
+            {
+                string FlagsTxt = "";
+                foreach (var ThisList in Form1_0.ItemsAlert_0.PickItemsNormal_ByType_Flags[ThisDir.Key])
+                {
+                    if (FlagsTxt != "") FlagsTxt += ", ";
+                    FlagsTxt += ThisList.Value;
+                    if ((0x00000010 & ThisList.Key) != 0) { FlagsTxt += "identified"; FullItemStr += " && [Flag] " + ThisList.Value + " identified"; }
+                    if ((0x00000800 & ThisList.Key) != 0) { FlagsTxt += "socketed"; FullItemStr += " && [Flag] " + ThisList.Value + " socketed"; }
+                    if ((0x00400000 & ThisList.Key) != 0) { FlagsTxt += "ethereal"; FullItemStr += " && [Flag] " + ThisList.Value + " ethereal"; }
+                }
+
+                arr[1] = FlagsTxt;
             }
             if (Form1_0.ItemsAlert_0.PickItemsNormal_ByType_Stats.ContainsKey(ThisDir.Key))
             {
@@ -345,57 +449,149 @@ public partial class FormItems : Form
                     arr[3] += Stat.Key + Form1_0.ItemsAlert_0.PickItemsNormal_ByType_Operators[ThisDir.Key][Stat.Key] + Stat.Value;
                 }
             }
-            ListViewItem item = new ListViewItem(arr);
 
+            //Get the Category
+            string[] AllItemsSettingsLines = File.ReadAllLines(Form1_0.SettingsLoader_0.File_ItemsSettings);
+            bool FoundCategory = false;
+            string CurrentCategory = "";
+            for (int i = 0; i < AllItemsSettingsLines.Length; i++)
+            {
+                if (AllItemsSettingsLines[i].Length > 5)
+                {
+                    if (AllItemsSettingsLines[i].Contains("//#####"))
+                    {
+                        CurrentCategory = AllItemsSettingsLines[i].Substring(7);
+                    }
+                }
+                if (AllItemsSettingsLines[i].Contains(FullItemStr))
+                {
+                    FoundCategory = true;
+                    break;
+                }
+            }
+
+            ListViewItem item = new ListViewItem(arr);
             ListViewGroup listViewGroup1 = new ListViewGroup("By Type");
+            if (FoundCategory) listViewGroup1 = new ListViewGroup(CurrentCategory);
+
             if (ThisQ == "normal")
             {
+                ListViewGroup ThisGroup = listViewGroup1;
+                for (int i = 0; i < listViewNormal.Groups.Count; i++)
+                {
+                    if (listViewNormal.Groups[i].Header == listViewGroup1.Header)
+                    {
+                        ThisGroup = listViewNormal.Groups[i];
+                        break;
+                    }
+                }
+
                 listViewNormal.Groups.Add(listViewGroup1);
                 listViewNormal.Items.Add(item);
                 listViewNormal.Items[listViewNormal.Items.Count - 1].Checked = ThisDir.Value;
-                listViewNormal.Items[listViewNormal.Items.Count - 1].Group = listViewNormal.Groups[1];
+                listViewNormal.Items[listViewNormal.Items.Count - 1].Group = ThisGroup;
             }
             else if (ThisQ == "superior")
             {
+                ListViewGroup ThisGroup = listViewGroup1;
+                for (int i = 0; i < listViewSuperior.Groups.Count; i++)
+                {
+                    if (listViewSuperior.Groups[i].Header == listViewGroup1.Header)
+                    {
+                        ThisGroup = listViewSuperior.Groups[i];
+                        break;
+                    }
+                }
+
                 listViewSuperior.Groups.Add(listViewGroup1);
                 listViewSuperior.Items.Add(item);
                 listViewSuperior.Items[listViewSuperior.Items.Count - 1].Checked = ThisDir.Value;
-                listViewSuperior.Items[listViewSuperior.Items.Count - 1].Group = listViewSuperior.Groups[1];
+                listViewSuperior.Items[listViewSuperior.Items.Count - 1].Group = ThisGroup;
             }
             else if (ThisQ == "rare")
             {
+                ListViewGroup ThisGroup = listViewGroup1;
+                for (int i = 0; i < listViewRare.Groups.Count; i++)
+                {
+                    if (listViewRare.Groups[i].Header == listViewGroup1.Header)
+                    {
+                        ThisGroup = listViewRare.Groups[i];
+                        break;
+                    }
+                }
+
                 listViewRare.Groups.Add(listViewGroup1);
                 listViewRare.Items.Add(item);
                 listViewRare.Items[listViewRare.Items.Count - 1].Checked = ThisDir.Value;
-                listViewRare.Items[listViewRare.Items.Count - 1].Group = listViewRare.Groups[1];
+                listViewRare.Items[listViewRare.Items.Count - 1].Group = ThisGroup;
             }
             else if (ThisQ == "magic")
             {
+                ListViewGroup ThisGroup = listViewGroup1;
+                for (int i = 0; i < listViewMagic.Groups.Count; i++)
+                {
+                    if (listViewMagic.Groups[i].Header == listViewGroup1.Header)
+                    {
+                        ThisGroup = listViewMagic.Groups[i];
+                        break;
+                    }
+                }
+
                 listViewMagic.Groups.Add(listViewGroup1);
                 listViewMagic.Items.Add(item);
                 listViewMagic.Items[listViewMagic.Items.Count - 1].Checked = ThisDir.Value;
-                listViewMagic.Items[listViewMagic.Items.Count - 1].Group = listViewMagic.Groups[1];
+                listViewMagic.Items[listViewMagic.Items.Count - 1].Group = ThisGroup;
             }
             else if (ThisQ == "unique")
             {
+                ListViewGroup ThisGroup = listViewGroup1;
+                for (int i = 0; i < listViewUnique.Groups.Count; i++)
+                {
+                    if (listViewUnique.Groups[i].Header == listViewGroup1.Header)
+                    {
+                        ThisGroup = listViewUnique.Groups[i];
+                        break;
+                    }
+                }
+
                 listViewUnique.Groups.Add(listViewGroup1);
                 listViewUnique.Items.Add(item);
                 listViewUnique.Items[listViewUnique.Items.Count - 1].Checked = ThisDir.Value;
-                listViewUnique.Items[listViewUnique.Items.Count - 1].Group = listViewUnique.Groups[1];
+                listViewUnique.Items[listViewUnique.Items.Count - 1].Group = ThisGroup;
             }
             else if (ThisQ == "set")
             {
+                ListViewGroup ThisGroup = listViewGroup1;
+                for (int i = 0; i < listViewSet.Groups.Count; i++)
+                {
+                    if (listViewSet.Groups[i].Header == listViewGroup1.Header)
+                    {
+                        ThisGroup = listViewSet.Groups[i];
+                        break;
+                    }
+                }
+
                 listViewSet.Groups.Add(listViewGroup1);
                 listViewSet.Items.Add(item);
                 listViewSet.Items[listViewSet.Items.Count - 1].Checked = ThisDir.Value;
-                listViewSet.Items[listViewSet.Items.Count - 1].Group = listViewSet.Groups[1];
+                listViewSet.Items[listViewSet.Items.Count - 1].Group = ThisGroup;
             }
             else
             {
+                ListViewGroup ThisGroup = listViewGroup1;
+                for (int i = 0; i < listViewNormal.Groups.Count; i++)
+                {
+                    if (listViewNormal.Groups[i].Header == listViewGroup1.Header)
+                    {
+                        ThisGroup = listViewNormal.Groups[i];
+                        break;
+                    }
+                }
+
                 listViewNormal.Groups.Add(listViewGroup1);
                 listViewNormal.Items.Add(item);
                 listViewNormal.Items[listViewNormal.Items.Count - 1].Checked = ThisDir.Value;
-                listViewNormal.Items[listViewNormal.Items.Count - 1].Group = listViewNormal.Groups[1];
+                listViewNormal.Items[listViewNormal.Items.Count - 1].Group = ThisGroup;
             }
         }
         //###########################

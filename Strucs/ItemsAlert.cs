@@ -20,6 +20,7 @@ using System.Xml.Linq;
 using System.Security.Cryptography;
 using static System.Net.Mime.MediaTypeNames;
 using System.Text.RegularExpressions;
+using System.Security.AccessControl;
 
 public class ItemsAlert
 {
@@ -129,8 +130,10 @@ public class ItemsAlert
         //if (i > 0) ThisNamee = ItemName + (i + 1);
         //foreach (var ThisDir in PickItemsNormal_ByName)
         int ThisIndex = 2;
+        //Console.WriteLine(Form1_0.ItemsStruc_0.ItemNAAME + ":" + ThisNamee);
         while (PickItemsNormal_ByName.ContainsKey(ThisNamee))
         {
+            //Console.WriteLine(Form1_0.ItemsStruc_0.ItemNAAME + ":" + ThisNamee);
             if (PickItemsNormal_ByName[ThisNamee])
             //if (ItemName == Regex.Replace(ThisDir.Key, @"[\d-]", string.Empty) && ThisDir.Value)
             {

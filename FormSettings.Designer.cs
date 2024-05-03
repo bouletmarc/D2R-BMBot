@@ -50,25 +50,26 @@ partial class FormSettings
             System.Windows.Forms.ListViewItem listViewItem20 = new System.Windows.Forms.ListViewItem("Nihlatak");
             System.Windows.Forms.ListViewItem listViewItem21 = new System.Windows.Forms.ListViewItem("Baal");
             System.Windows.Forms.ListViewItem listViewItem22 = new System.Windows.Forms.ListViewItem("Baal Leech");
-            System.Windows.Forms.ListViewItem listViewItem23 = new System.Windows.Forms.ListViewItem("Waypoint Taker");
-            System.Windows.Forms.ListViewItem listViewItem24 = new System.Windows.Forms.ListViewItem("Dark Wood");
-            System.Windows.Forms.ListViewItem listViewItem25 = new System.Windows.Forms.ListViewItem("Tristram");
-            System.Windows.Forms.ListViewItem listViewItem26 = new System.Windows.Forms.ListViewItem("Andariel");
-            System.Windows.Forms.ListViewItem listViewItem27 = new System.Windows.Forms.ListViewItem("Radament");
-            System.Windows.Forms.ListViewItem listViewItem28 = new System.Windows.Forms.ListViewItem("Hall of the Dead (Cube)");
-            System.Windows.Forms.ListViewItem listViewItem29 = new System.Windows.Forms.ListViewItem("Far Oasis (Staff)");
-            System.Windows.Forms.ListViewItem listViewItem30 = new System.Windows.Forms.ListViewItem("Lost City (Ammy)");
-            System.Windows.Forms.ListViewItem listViewItem31 = new System.Windows.Forms.ListViewItem("Summoner");
-            System.Windows.Forms.ListViewItem listViewItem32 = new System.Windows.Forms.ListViewItem("Duriel");
-            System.Windows.Forms.ListViewItem listViewItem33 = new System.Windows.Forms.ListViewItem("Kahlim Eye");
-            System.Windows.Forms.ListViewItem listViewItem34 = new System.Windows.Forms.ListViewItem("Kahlim Brain");
-            System.Windows.Forms.ListViewItem listViewItem35 = new System.Windows.Forms.ListViewItem("Kahlim Heart");
-            System.Windows.Forms.ListViewItem listViewItem36 = new System.Windows.Forms.ListViewItem("Travincal");
-            System.Windows.Forms.ListViewItem listViewItem37 = new System.Windows.Forms.ListViewItem("Mephisto");
-            System.Windows.Forms.ListViewItem listViewItem38 = new System.Windows.Forms.ListViewItem("Chaos");
-            System.Windows.Forms.ListViewItem listViewItem39 = new System.Windows.Forms.ListViewItem("Anya");
-            System.Windows.Forms.ListViewItem listViewItem40 = new System.Windows.Forms.ListViewItem("Ancients");
-            System.Windows.Forms.ListViewItem listViewItem41 = new System.Windows.Forms.ListViewItem("Baal");
+            System.Windows.Forms.ListViewItem listViewItem23 = new System.Windows.Forms.ListViewItem("Terror Zones (NOT WORKING!)");
+            System.Windows.Forms.ListViewItem listViewItem24 = new System.Windows.Forms.ListViewItem("Waypoint Taker");
+            System.Windows.Forms.ListViewItem listViewItem25 = new System.Windows.Forms.ListViewItem("Dark Wood");
+            System.Windows.Forms.ListViewItem listViewItem26 = new System.Windows.Forms.ListViewItem("Tristram");
+            System.Windows.Forms.ListViewItem listViewItem27 = new System.Windows.Forms.ListViewItem("Andariel");
+            System.Windows.Forms.ListViewItem listViewItem28 = new System.Windows.Forms.ListViewItem("Radament");
+            System.Windows.Forms.ListViewItem listViewItem29 = new System.Windows.Forms.ListViewItem("Hall of the Dead (Cube)");
+            System.Windows.Forms.ListViewItem listViewItem30 = new System.Windows.Forms.ListViewItem("Far Oasis (Staff)");
+            System.Windows.Forms.ListViewItem listViewItem31 = new System.Windows.Forms.ListViewItem("Lost City (Ammy)");
+            System.Windows.Forms.ListViewItem listViewItem32 = new System.Windows.Forms.ListViewItem("Summoner");
+            System.Windows.Forms.ListViewItem listViewItem33 = new System.Windows.Forms.ListViewItem("Duriel");
+            System.Windows.Forms.ListViewItem listViewItem34 = new System.Windows.Forms.ListViewItem("Kahlim Eye");
+            System.Windows.Forms.ListViewItem listViewItem35 = new System.Windows.Forms.ListViewItem("Kahlim Brain");
+            System.Windows.Forms.ListViewItem listViewItem36 = new System.Windows.Forms.ListViewItem("Kahlim Heart");
+            System.Windows.Forms.ListViewItem listViewItem37 = new System.Windows.Forms.ListViewItem("Travincal");
+            System.Windows.Forms.ListViewItem listViewItem38 = new System.Windows.Forms.ListViewItem("Mephisto");
+            System.Windows.Forms.ListViewItem listViewItem39 = new System.Windows.Forms.ListViewItem("Chaos");
+            System.Windows.Forms.ListViewItem listViewItem40 = new System.Windows.Forms.ListViewItem("Anya");
+            System.Windows.Forms.ListViewItem listViewItem41 = new System.Windows.Forms.ListViewItem("Ancients");
+            System.Windows.Forms.ListViewItem listViewItem42 = new System.Windows.Forms.ListViewItem("Baal");
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormSettings));
             this.listViewRunScripts = new System.Windows.Forms.ListView();
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -123,6 +124,11 @@ partial class FormSettings
             this.textBoxStartKey = new System.Windows.Forms.ComboBox();
             this.comboBoxPauseResume = new System.Windows.Forms.ComboBox();
             this.checkBoxLogOrangeError = new System.Windows.Forms.CheckBox();
+            this.textBoxSearchGame = new System.Windows.Forms.TextBox();
+            this.textBox2LeechName = new System.Windows.Forms.TextBox();
+            this.textBoxAvoidWords = new System.Windows.Forms.TextBox();
+            this.checkBoxFastChaos = new System.Windows.Forms.CheckBox();
+            this.button4 = new System.Windows.Forms.Button();
             this.panelBaalFeature = new System.Windows.Forms.Panel();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.listViewBaalLeaveOnMobs = new System.Windows.Forms.ListView();
@@ -138,12 +144,11 @@ partial class FormSettings
             this.label14 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
             this.groupBoxSearch = new System.Windows.Forms.GroupBox();
-            this.label19 = new System.Windows.Forms.Label();
-            this.textBoxSearchGame = new System.Windows.Forms.TextBox();
-            this.textBox2LeechName = new System.Windows.Forms.TextBox();
-            this.label16 = new System.Windows.Forms.Label();
-            this.textBoxAvoidWords = new System.Windows.Forms.TextBox();
             this.label17 = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
+            this.label19 = new System.Windows.Forms.Label();
+            this.panelChaosFeature = new System.Windows.Forms.Panel();
+            this.label18 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownRunNumber)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMaxTime)).BeginInit();
@@ -154,6 +159,7 @@ partial class FormSettings
             this.groupBox2.SuspendLayout();
             this.panelOverlay.SuspendLayout();
             this.groupBoxSearch.SuspendLayout();
+            this.panelChaosFeature.SuspendLayout();
             this.SuspendLayout();
             // 
             // listViewRunScripts
@@ -188,6 +194,7 @@ partial class FormSettings
             listViewItem21.StateImageIndex = 0;
             listViewItem22.StateImageIndex = 0;
             listViewItem23.StateImageIndex = 0;
+            listViewItem24.StateImageIndex = 0;
             this.listViewRunScripts.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
             listViewItem1,
             listViewItem2,
@@ -211,7 +218,8 @@ partial class FormSettings
             listViewItem20,
             listViewItem21,
             listViewItem22,
-            listViewItem23});
+            listViewItem23,
+            listViewItem24});
             this.listViewRunScripts.Location = new System.Drawing.Point(12, 168);
             this.listViewRunScripts.Name = "listViewRunScripts";
             this.listViewRunScripts.Size = new System.Drawing.Size(225, 276);
@@ -434,7 +442,6 @@ partial class FormSettings
             this.listViewRush.FullRowSelect = true;
             this.listViewRush.GridLines = true;
             this.listViewRush.HideSelection = false;
-            listViewItem24.StateImageIndex = 0;
             listViewItem25.StateImageIndex = 0;
             listViewItem26.StateImageIndex = 0;
             listViewItem27.StateImageIndex = 0;
@@ -452,8 +459,8 @@ partial class FormSettings
             listViewItem39.StateImageIndex = 0;
             listViewItem40.StateImageIndex = 0;
             listViewItem41.StateImageIndex = 0;
+            listViewItem42.StateImageIndex = 0;
             this.listViewRush.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem24,
             listViewItem25,
             listViewItem26,
             listViewItem27,
@@ -470,7 +477,8 @@ partial class FormSettings
             listViewItem38,
             listViewItem39,
             listViewItem40,
-            listViewItem41});
+            listViewItem41,
+            listViewItem42});
             this.listViewRush.Location = new System.Drawing.Point(279, 168);
             this.listViewRush.Name = "listViewRush";
             this.listViewRush.Size = new System.Drawing.Size(225, 270);
@@ -661,7 +669,7 @@ partial class FormSettings
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(61, 246);
+            this.button3.Location = new System.Drawing.Point(61, 219);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(75, 23);
             this.button3.TabIndex = 12;
@@ -822,6 +830,52 @@ partial class FormSettings
             this.toolTip1.SetToolTip(this.checkBoxLogOrangeError, "Show Graphics Overlay (Maphack, Bot Infos, Etc..)");
             this.checkBoxLogOrangeError.UseVisualStyleBackColor = true;
             // 
+            // textBoxSearchGame
+            // 
+            this.textBoxSearchGame.Location = new System.Drawing.Point(85, 17);
+            this.textBoxSearchGame.Name = "textBoxSearchGame";
+            this.textBoxSearchGame.Size = new System.Drawing.Size(149, 20);
+            this.textBoxSearchGame.TabIndex = 0;
+            this.toolTip1.SetToolTip(this.textBoxSearchGame, "Set your Search for \'Game Name\' here");
+            // 
+            // textBox2LeechName
+            // 
+            this.textBox2LeechName.Location = new System.Drawing.Point(85, 40);
+            this.textBox2LeechName.Name = "textBox2LeechName";
+            this.textBox2LeechName.Size = new System.Drawing.Size(149, 20);
+            this.textBox2LeechName.TabIndex = 29;
+            this.toolTip1.SetToolTip(this.textBox2LeechName, "Set the Player name of who follow you for the Rush");
+            // 
+            // textBoxAvoidWords
+            // 
+            this.textBoxAvoidWords.Location = new System.Drawing.Point(85, 63);
+            this.textBoxAvoidWords.Name = "textBoxAvoidWords";
+            this.textBoxAvoidWords.Size = new System.Drawing.Size(149, 20);
+            this.textBoxAvoidWords.TabIndex = 31;
+            this.toolTip1.SetToolTip(this.textBoxAvoidWords, "Add the Words you want to avoid entering the game");
+            // 
+            // checkBoxFastChaos
+            // 
+            this.checkBoxFastChaos.AutoSize = true;
+            this.checkBoxFastChaos.Location = new System.Drawing.Point(14, 33);
+            this.checkBoxFastChaos.Name = "checkBoxFastChaos";
+            this.checkBoxFastChaos.Size = new System.Drawing.Size(79, 17);
+            this.checkBoxFastChaos.TabIndex = 12;
+            this.checkBoxFastChaos.Text = "Fast Chaos";
+            this.toolTip1.SetToolTip(this.checkBoxFastChaos, "Enable this to perform a Fast Chaos (Only Kill Seals Boss)");
+            this.checkBoxFastChaos.UseVisualStyleBackColor = true;
+            // 
+            // button4
+            // 
+            this.button4.Location = new System.Drawing.Point(61, 82);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(75, 23);
+            this.button4.TabIndex = 12;
+            this.button4.Text = "Apply";
+            this.toolTip1.SetToolTip(this.button4, "Apply and Leave this menu");
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
+            // 
             // panelBaalFeature
             // 
             this.panelBaalFeature.Controls.Add(this.groupBox2);
@@ -949,7 +1003,7 @@ partial class FormSettings
             this.panelOverlay.Controls.Add(this.button3);
             this.panelOverlay.Location = new System.Drawing.Point(523, 12);
             this.panelOverlay.Name = "panelOverlay";
-            this.panelOverlay.Size = new System.Drawing.Size(203, 275);
+            this.panelOverlay.Size = new System.Drawing.Size(203, 250);
             this.panelOverlay.TabIndex = 18;
             // 
             // label14
@@ -987,30 +1041,14 @@ partial class FormSettings
             this.groupBoxSearch.TabStop = false;
             this.groupBoxSearch.Text = "Game Search Settings";
             // 
-            // label19
+            // label17
             // 
-            this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(9, 20);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(75, 13);
-            this.label19.TabIndex = 1;
-            this.label19.Text = "Search Name:";
-            // 
-            // textBoxSearchGame
-            // 
-            this.textBoxSearchGame.Location = new System.Drawing.Point(85, 17);
-            this.textBoxSearchGame.Name = "textBoxSearchGame";
-            this.textBoxSearchGame.Size = new System.Drawing.Size(149, 20);
-            this.textBoxSearchGame.TabIndex = 0;
-            this.toolTip1.SetToolTip(this.textBoxSearchGame, "Set your Search for \'Game Name\' here");
-            // 
-            // textBox2LeechName
-            // 
-            this.textBox2LeechName.Location = new System.Drawing.Point(85, 40);
-            this.textBox2LeechName.Name = "textBox2LeechName";
-            this.textBox2LeechName.Size = new System.Drawing.Size(149, 20);
-            this.textBox2LeechName.TabIndex = 29;
-            this.toolTip1.SetToolTip(this.textBox2LeechName, "Set the Player name of who follow you for the Rush");
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(6, 66);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(71, 13);
+            this.label17.TabIndex = 32;
+            this.label17.Text = "Avoid Words:";
             // 
             // label16
             // 
@@ -1021,29 +1059,44 @@ partial class FormSettings
             this.label16.TabIndex = 30;
             this.label16.Text = "Leecher Name:";
             // 
-            // textBoxAvoidWords
+            // label19
             // 
-            this.textBoxAvoidWords.Location = new System.Drawing.Point(85, 63);
-            this.textBoxAvoidWords.Name = "textBoxAvoidWords";
-            this.textBoxAvoidWords.Size = new System.Drawing.Size(149, 20);
-            this.textBoxAvoidWords.TabIndex = 31;
-            this.toolTip1.SetToolTip(this.textBoxAvoidWords, "Add the Words you want to avoid entering the game");
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(9, 20);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(75, 13);
+            this.label19.TabIndex = 1;
+            this.label19.Text = "Search Name:";
             // 
-            // label17
+            // panelChaosFeature
             // 
-            this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(6, 66);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(71, 13);
-            this.label17.TabIndex = 32;
-            this.label17.Text = "Avoid Words:";
+            this.panelChaosFeature.Controls.Add(this.checkBoxFastChaos);
+            this.panelChaosFeature.Controls.Add(this.label18);
+            this.panelChaosFeature.Controls.Add(this.button4);
+            this.panelChaosFeature.Location = new System.Drawing.Point(523, 293);
+            this.panelChaosFeature.Name = "panelChaosFeature";
+            this.panelChaosFeature.Size = new System.Drawing.Size(203, 114);
+            this.panelChaosFeature.TabIndex = 22;
+            this.panelChaosFeature.Visible = false;
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label18.ForeColor = System.Drawing.Color.Blue;
+            this.label18.Location = new System.Drawing.Point(43, 11);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(122, 13);
+            this.label18.TabIndex = 12;
+            this.label18.Text = "Chaos Run Features";
             // 
             // FormSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.ClientSize = new System.Drawing.Size(252, 691);
+            this.ClientSize = new System.Drawing.Size(251, 691);
+            this.Controls.Add(this.panelChaosFeature);
             this.Controls.Add(this.groupBoxSearch);
             this.Controls.Add(this.checkBoxLogOrangeError);
             this.Controls.Add(this.comboBoxPauseResume);
@@ -1092,6 +1145,8 @@ partial class FormSettings
             this.panelOverlay.PerformLayout();
             this.groupBoxSearch.ResumeLayout(false);
             this.groupBoxSearch.PerformLayout();
+            this.panelChaosFeature.ResumeLayout(false);
+            this.panelChaosFeature.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1173,4 +1228,8 @@ partial class FormSettings
     private System.Windows.Forms.Label label16;
     private System.Windows.Forms.TextBox textBoxAvoidWords;
     private System.Windows.Forms.Label label17;
+    private System.Windows.Forms.Panel panelChaosFeature;
+    private System.Windows.Forms.CheckBox checkBoxFastChaos;
+    private System.Windows.Forms.Label label18;
+    private System.Windows.Forms.Button button4;
 }

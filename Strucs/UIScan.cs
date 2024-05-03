@@ -175,7 +175,7 @@ public class UIScan
     {
         if (UIName == "invMenu")
         {
-            return System.Windows.Forms.Keys.I;
+            return CharConfig.KeyOpenInventory;
         }
         if (UIName == "questsMenu")
         {
@@ -213,7 +213,7 @@ public class UIScan
         {
             return System.Windows.Forms.Keys.Escape; //for quiting menu only
         }
-        return System.Windows.Forms.Keys.D0;
+        return System.Windows.Forms.Keys.Oemcomma;
     }
 
     public bool GetMenuActive(string UIName)

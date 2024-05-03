@@ -146,6 +146,13 @@ public class Town
 
             if (TPSpawned)
             {
+                int IncreaseCount = 0;
+                while (!Form1_0.ObjectsStruc_0.GetObjects("TownPortal", true, IgnoredTPList, 999, CharConfig.PlayerCharName) && IncreaseCount < 10)
+                {
+                    Form1_0.PatternsScan_0.IncreaseV1Scanning();
+                    IncreaseCount++;
+                }
+
                 //select the spawned TP
                 if (Form1_0.ObjectsStruc_0.GetObjects("TownPortal", true, IgnoredTPList, 999, CharConfig.PlayerCharName))
                 //if (Form1_0.ObjectsStruc_0.GetObjects("TownPortal", Form1_0.PlayerScan_0.unitId))
@@ -176,9 +183,9 @@ public class Town
                         CurrentScript = 0;
                         Position itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, Form1_0.ObjectsStruc_0.itemx, Form1_0.ObjectsStruc_0.itemy);
 
-                        Form1_0.KeyMouse_0.PressKeyHold(System.Windows.Forms.Keys.E);
+                        Form1_0.KeyMouse_0.PressKeyHold(CharConfig.KeyForceMovement);
                         Form1_0.KeyMouse_0.MouseClicc_RealPos(itemScreenPos.X, itemScreenPos.Y - 15);
-                        Form1_0.KeyMouse_0.ReleaseKey(System.Windows.Forms.Keys.E);
+                        Form1_0.KeyMouse_0.ReleaseKey(CharConfig.KeyForceMovement);
                         Form1_0.WaitDelay(50);
                         //}
                     }
@@ -198,9 +205,9 @@ public class Town
                         CurrentScript = 0;
                         Position itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, Form1_0.PlayerScan_0.xPosFinal - 2, Form1_0.PlayerScan_0.yPosFinal);
 
-                        Form1_0.KeyMouse_0.PressKeyHold(System.Windows.Forms.Keys.E);
+                        Form1_0.KeyMouse_0.PressKeyHold(CharConfig.KeyForceMovement);
                         Form1_0.KeyMouse_0.MouseClicc_RealPos(itemScreenPos.X, itemScreenPos.Y - 15);
-                        Form1_0.KeyMouse_0.ReleaseKey(System.Windows.Forms.Keys.E);
+                        Form1_0.KeyMouse_0.ReleaseKey(CharConfig.KeyForceMovement);
                         Form1_0.WaitDelay(50);
 
                         TPSpawned = false;
@@ -531,7 +538,9 @@ public class Town
     {
         if (TownAct == 1)
         {
+            Form1_0.Mover_0.MovingToInteract = true;
             Form1_0.PathFinding_0.MoveToObject("WaypointPortal");
+            Form1_0.Mover_0.MovingToInteract = false;
             Position ThisFinalPosition = Form1_0.MapAreaStruc_0.GetPositionOfObject("object", "WaypointPortal", (int)Enums.Area.RogueEncampment, new List<int>() { });
             if (ThisFinalPosition.X != 0 && ThisFinalPosition.Y != 0)
             {
@@ -558,7 +567,9 @@ public class Town
         }
         if (TownAct == 2)
         {
+            Form1_0.Mover_0.MovingToInteract = true;
             Form1_0.PathFinding_0.MoveToObject("Act2Waypoint");
+            Form1_0.Mover_0.MovingToInteract = false;
             Position ThisFinalPosition = Form1_0.MapAreaStruc_0.GetPositionOfObject("object", "Act2Waypoint", (int)Enums.Area.LutGholein, new List<int>() { });
             if (ThisFinalPosition.X != 0 && ThisFinalPosition.Y != 0)
             {
@@ -585,7 +596,9 @@ public class Town
         }
         if (TownAct == 3)
         {
+            Form1_0.Mover_0.MovingToInteract = true;
             Form1_0.PathFinding_0.MoveToObject("Act3TownWaypoint");
+            Form1_0.Mover_0.MovingToInteract = false;
             Position ThisFinalPosition = Form1_0.MapAreaStruc_0.GetPositionOfObject("object", "Act3TownWaypoint", (int)Enums.Area.KurastDocks, new List<int>() { });
             if (ThisFinalPosition.X != 0 && ThisFinalPosition.Y != 0)
             {
@@ -612,7 +625,9 @@ public class Town
         }
         if (TownAct == 4)
         {
+            Form1_0.Mover_0.MovingToInteract = true;
             Form1_0.PathFinding_0.MoveToObject("PandamoniumFortressWaypoint");
+            Form1_0.Mover_0.MovingToInteract = false;
             Position ThisFinalPosition = Form1_0.MapAreaStruc_0.GetPositionOfObject("object", "PandamoniumFortressWaypoint", (int)Enums.Area.ThePandemoniumFortress, new List<int>() { });
             if (ThisFinalPosition.X != 0 && ThisFinalPosition.Y != 0)
             {
@@ -639,7 +654,9 @@ public class Town
         }
         if (TownAct == 5)
         {
+            Form1_0.Mover_0.MovingToInteract = true;
             Form1_0.PathFinding_0.MoveToObject("ExpansionWaypoint");
+            Form1_0.Mover_0.MovingToInteract = false;
             Position ThisFinalPosition = Form1_0.MapAreaStruc_0.GetPositionOfObject("object", "ExpansionWaypoint", (int)Enums.Area.Harrogath, new List<int>() { });
             if (ThisFinalPosition.X != 0 && ThisFinalPosition.Y != 0)
             {
@@ -1332,7 +1349,7 @@ public class Town
         FixBaalNearRedPortal();
 
         int IncreaseCount = 0;
-        while (Form1_0.InventoryStruc_0.HUDItems_tpscrolls == 0 && IncreaseCount < 5)
+        while (Form1_0.InventoryStruc_0.HUDItems_tpscrolls == 0 && IncreaseCount < 10)
         {
             Form1_0.PatternsScan_0.IncreaseV1Scanning();
             IncreaseCount++;
