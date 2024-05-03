@@ -129,6 +129,9 @@ Perfect Diamond
 //#######################################
 //###### NORMAL ITEMS
 //#######################################
+//##### Gold
+//[Name] == Gold && [Quality] == normal && [GoldInPlayer] >= 5000 // Gold
+
 ﻿//##### Helms (Exceptional)
 [Name] == WarHat && [Quality] == superior && [Flag] != ethereal && [Sockets] == 3 && [EnhancedDefense] >= 10 // Delirium or Dream
 [Name] == Sallet && [Quality] == superior && [Flag] != ethereal && [Sockets] == 3 && [EnhancedDefense] >= 10 // Delirium or Dream
@@ -235,79 +238,79 @@ Perfect Diamond
 //##### Belts
 
 //##### Barbarian Helms (Elite)
-//[Name] == CarnageHelm && [Quality] == superior && [Flag] != ethereal && [Sockets] == 3 && [SkillBattleOrders]+[SkillBattleCommand] >= 5 // Delirium
-//[Name] == FuryVisor && [Quality] == superior && [Flag] != ethereal && [Sockets] == 3 && [SkillBattleOrders]+[SkillBattleCommand] >= 5 // Delirium
-//[Name] == DestroyerHelm && [Quality] == superior && [Flag] != ethereal && [Sockets] == 3 && [SkillBattleOrders]+[SkillBattleCommand] >= 5 // Delirium
-//[Name] == ConquerorCrown && [Quality] == superior && [Flag] != ethereal && [Sockets] == 3 && [SkillBattleOrders]+[SkillBattleCommand] >= 5 // Delirium
-//[Name] == GuardianCrown && [Quality] == superior && [Flag] != ethereal && [Sockets] == 3 && [SkillBattleOrders]+[SkillBattleCommand] >= 5 // Delirium
+//[Name] == CarnageHelm && [Quality] == superior && [Flag] != ethereal && [Sockets] == 3 && [Skillbattleorders]+[Skillbattlecommand] >= 5 // Delirium
+//[Name] == FuryVisor && [Quality] == superior && [Flag] != ethereal && [Sockets] == 3 && [Skillbattleorders]+[Skillbattlecommand] >= 5 // Delirium
+//[Name] == DestroyerHelm && [Quality] == superior && [Flag] != ethereal && [Sockets] == 3 && [Skillbattleorders]+[Skillbattlecommand] >= 5 // Delirium
+//[Name] == ConquerorCrown && [Quality] == superior && [Flag] != ethereal && [Sockets] == 3 && [Skillbattleorders]+[Skillbattlecommand] >= 5 // Delirium
+//[Name] == GuardianCrown && [Quality] == superior && [Flag] != ethereal && [Sockets] == 3 && [Skillbattleorders]+[Skillbattlecommand] >= 5 // Delirium
 
-//[Name] == CarnageHelm && [Quality] == superior && [Flag] != ethereal && [Sockets] == 3 && [SkillBattleOrders]+[SkillFindItem] >= 5 // Delirium
-//[Name] == FuryVisor && [Quality] == superior && [Flag] != ethereal && [Sockets] == 3 && [SkillBattleOrders]+[SkillFindItem] >= 5 // Delirium
-//[Name] == DestroyerHelm && [Quality] == superior && [Flag] != ethereal && [Sockets] == 3 && [SkillBattleOrders]+[SkillFindItem] >= 5 // Delirium
-//[Name] == ConquerorCrown && [Quality] == superior && [Flag] != ethereal && [Sockets] == 3 && [SkillBattleOrders]+[SkillFindItem] >= 5 // Delirium
-//[Name] == GuardianCrown && [Quality] == superior && [Flag] != ethereal && [Sockets] == 3 && [SkillBattleOrders]+[SkillFindItem] >= 5 // Delirium
+//[Name] == CarnageHelm && [Quality] == superior && [Flag] != ethereal && [Sockets] == 3 && [Skillbattleorders]+[Skillfinditem] >= 5 // Delirium
+//[Name] == FuryVisor && [Quality] == superior && [Flag] != ethereal && [Sockets] == 3 && [Skillbattleorders]+[Skillfinditem] >= 5 // Delirium
+//[Name] == DestroyerHelm && [Quality] == superior && [Flag] != ethereal && [Sockets] == 3 && [Skillbattleorders]+[Skillfinditem] >= 5 // Delirium
+//[Name] == ConquerorCrown && [Quality] == superior && [Flag] != ethereal && [Sockets] == 3 && [Skillbattleorders]+[Skillfinditem] >= 5 // Delirium
+//[Name] == GuardianCrown && [Quality] == superior && [Flag] != ethereal && [Sockets] == 3 && [Skillbattleorders]+[Skillfinditem] >= 5 // Delirium
 
-//[Name] == CarnageHelm && [Quality] == superior && [Flag] != ethereal && [Sockets] == 3 && [SkillBattleOrders]+[SkillShout] >= 5 // Delirium
-//[Name] == FuryVisor && [Quality] == superior && [Flag] != ethereal && [Sockets] == 3 && [SkillBattleOrders]+[SkillShout] >= 5 // Delirium
-//[Name] == DestroyerHelm && [Quality] == superior && [Flag] != ethereal && [Sockets] == 3 && [SkillBattleOrders]+[SkillShout] >= 5 // Delirium
-//[Name] == ConquerorCrown && [Quality] == superior && [Flag] != ethereal && [Sockets] == 3 && [SkillBattleOrders]+[SkillShout] >= 5 // Delirium
-//[Name] == GuardianCrown && [Quality] == superior && [Flag] != ethereal && [Sockets] == 3 && [SkillBattleOrders]+[SkillShout] >= 5 // Delirium
+//[Name] == CarnageHelm && [Quality] == superior && [Flag] != ethereal && [Sockets] == 3 && [Skillbattleorders]+[Skillshout] >= 5 // Delirium
+//[Name] == FuryVisor && [Quality] == superior && [Flag] != ethereal && [Sockets] == 3 && [Skillbattleorders]+[Skillshout] >= 5 // Delirium
+//[Name] == DestroyerHelm && [Quality] == superior && [Flag] != ethereal && [Sockets] == 3 && [Skillbattleorders]+[Skillshout] >= 5 // Delirium
+//[Name] == ConquerorCrown && [Quality] == superior && [Flag] != ethereal && [Sockets] == 3 && [Skillbattleorders]+[Skillshout] >= 5 // Delirium
+//[Name] == GuardianCrown && [Quality] == superior && [Flag] != ethereal && [Sockets] == 3 && [Skillbattleorders]+[Skillshout] >= 5 // Delirium
 
-//[Name] == CarnageHelm && [Quality] == normal && [Flag] != ethereal && [Sockets] == 3 && [SkillBattleOrders]+[SkillBattleCommand] >= 5 // Delirium
-//[Name] == FuryVisor && [Quality] == normal && [Flag] != ethereal && [Sockets] == 3 && [SkillBattleOrders]+[SkillBattleCommand] >= 5 // Delirium
-//[Name] == DestroyerHelm && [Quality] == normal && [Flag] != ethereal && [Sockets] == 3 && [SkillBattleOrders]+[SkillBattleCommand] >= 5 // Delirium
-//[Name] == ConquerorCrown && [Quality] == normal && [Flag] != ethereal && [Sockets] == 3 && [SkillBattleOrders]+[SkillBattleCommand] >= 5 // Delirium
-//[Name] == GuardianCrown && [Quality] == normal && [Flag] != ethereal && [Sockets] == 3 && [SkillBattleOrders]+[SkillBattleCommand] >= 5 // Delirium
+//[Name] == CarnageHelm && [Quality] == normal && [Flag] != ethereal && [Sockets] == 3 && [Skillbattleorders]+[Skillbattlecommand] >= 5 // Delirium
+//[Name] == FuryVisor && [Quality] == normal && [Flag] != ethereal && [Sockets] == 3 && [Skillbattleorders]+[Skillbattlecommand] >= 5 // Delirium
+//[Name] == DestroyerHelm && [Quality] == normal && [Flag] != ethereal && [Sockets] == 3 && [Skillbattleorders]+[Skillbattlecommand] >= 5 // Delirium
+//[Name] == ConquerorCrown && [Quality] == normal && [Flag] != ethereal && [Sockets] == 3 && [Skillbattleorders]+[Skillbattlecommand] >= 5 // Delirium
+//[Name] == GuardianCrown && [Quality] == normal && [Flag] != ethereal && [Sockets] == 3 && [Skillbattleorders]+[Skillbattlecommand] >= 5 // Delirium
 
-//[Name] == CarnageHelm && [Quality] == normal && [Flag] != ethereal && [Sockets] == 3 && [SkillBattleOrders]+[SkillFindItem] >= 5 // Delirium
-//[Name] == FuryVisor && [Quality] == normal && [Flag] != ethereal && [Sockets] == 3 && [SkillBattleOrders]+[SkillFindItem] >= 5 // Delirium
-//[Name] == DestroyerHelm && [Quality] == normal && [Flag] != ethereal && [Sockets] == 3 && [SkillBattleOrders]+[SkillFindItem] >= 5 // Delirium
-//[Name] == ConquerorCrown && [Quality] == normal && [Flag] != ethereal && [Sockets] == 3 && [SkillBattleOrders]+[SkillFindItem] >= 5 // Delirium
-//[Name] == GuardianCrown && [Quality] == normal && [Flag] != ethereal && [Sockets] == 3 && [SkillBattleOrders]+[SkillFindItem] >= 5 // Delirium
+//[Name] == CarnageHelm && [Quality] == normal && [Flag] != ethereal && [Sockets] == 3 && [Skillbattleorders]+[Skillfinditem] >= 5 // Delirium
+//[Name] == FuryVisor && [Quality] == normal && [Flag] != ethereal && [Sockets] == 3 && [Skillbattleorders]+[Skillfinditem] >= 5 // Delirium
+//[Name] == DestroyerHelm && [Quality] == normal && [Flag] != ethereal && [Sockets] == 3 && [Skillbattleorders]+[Skillfinditem] >= 5 // Delirium
+//[Name] == ConquerorCrown && [Quality] == normal && [Flag] != ethereal && [Sockets] == 3 && [Skillbattleorders]+[Skillfinditem] >= 5 // Delirium
+//[Name] == GuardianCrown && [Quality] == normal && [Flag] != ethereal && [Sockets] == 3 && [Skillbattleorders]+[Skillfinditem] >= 5 // Delirium
 
-//[Name] == CarnageHelm && [Quality] == normal && [Flag] != ethereal && [Sockets] == 3 && [SkillBattleOrders]+[SkillShout] >= 5 // Delirium
-//[Name] == FuryVisor && [Quality] == normal && [Flag] != ethereal && [Sockets] == 3 && [SkillBattleOrders]+[SkillShout] >= 5 // Delirium
-//[Name] == DestroyerHelm && [Quality] == normal && [Flag] != ethereal && [Sockets] == 3 && [SkillBattleOrders]+[SkillShout] >= 5 // Delirium
-//[Name] == ConquerorCrown && [Quality] == normal && [Flag] != ethereal && [Sockets] == 3 && [SkillBattleOrders]+[SkillShout] >= 5 // Delirium
-//[Name] == GuardianCrown && [Quality] == normal && [Flag] != ethereal && [Sockets] == 3 && [SkillBattleOrders]+[SkillShout] >= 5 // Delirium
+//[Name] == CarnageHelm && [Quality] == normal && [Flag] != ethereal && [Sockets] == 3 && [Skillbattleorders]+[Skillshout] >= 5 // Delirium
+//[Name] == FuryVisor && [Quality] == normal && [Flag] != ethereal && [Sockets] == 3 && [Skillbattleorders]+[Skillshout] >= 5 // Delirium
+//[Name] == DestroyerHelm && [Quality] == normal && [Flag] != ethereal && [Sockets] == 3 && [Skillbattleorders]+[Skillshout] >= 5 // Delirium
+//[Name] == ConquerorCrown && [Quality] == normal && [Flag] != ethereal && [Sockets] == 3 && [Skillbattleorders]+[Skillshout] >= 5 // Delirium
+//[Name] == GuardianCrown && [Quality] == normal && [Flag] != ethereal && [Sockets] == 3 && [Skillbattleorders]+[Skillshout] >= 5 // Delirium
 
 //##### Druid Pelts (Elite)
-[Name] == BloodSpirit && [Quality] == superior && [Flag] != ethereal && [Sockets] == 3 && [SkillHurricane]+[SkillTornado] >= 5 // Delirium
-[Name] == SunSpirit && [Quality] == superior && [Flag] != ethereal && [Sockets] == 3 && [SkillHurricane]+[SkillTornado] >= 5 // Delirium
-[Name] == EarthSpirit && [Quality] == superior && [Flag] != ethereal && [Sockets] == 3 && [SkillHurricane]+[SkillTornado] >= 5 // Delirium
-[Name] == SkySpirit && [Quality] == superior && [Flag] != ethereal && [Sockets] == 3 && [SkillHurricane]+[SkillTornado] >= 5 // Delirium
-[Name] == DreamSpirit && [Quality] == superior && [Flag] != ethereal && [Sockets] == 3 && [SkillHurricane]+[SkillTornado] >= 5 // Delirium
+[Name] == BloodSpirit && [Quality] == superior && [Flag] != ethereal && [Sockets] == 3 && [Skillhurricane]+[Skilltornado] >= 5 // Delirium
+[Name] == SunSpirit && [Quality] == superior && [Flag] != ethereal && [Sockets] == 3 && [Skillhurricane]+[Skilltornado] >= 5 // Delirium
+[Name] == EarthSpirit && [Quality] == superior && [Flag] != ethereal && [Sockets] == 3 && [Skillhurricane]+[Skilltornado] >= 5 // Delirium
+[Name] == SkySpirit && [Quality] == superior && [Flag] != ethereal && [Sockets] == 3 && [Skillhurricane]+[Skilltornado] >= 5 // Delirium
+[Name] == DreamSpirit && [Quality] == superior && [Flag] != ethereal && [Sockets] == 3 && [Skillhurricane]+[Skilltornado] >= 5 // Delirium
 
-//[Name] == BloodSpirit && [Quality] == normal && [Flag] != ethereal && [Sockets] == 3 && [SkillHurricane]+[SkillTornado] >= 5 // Delirium
-//[Name] == SunSpirit && [Quality] == normal && [Flag] != ethereal && [Sockets] == 3 && [SkillHurricane]+[SkillTornado] >= 5 // Delirium
-//[Name] == EarthSpirit && [Quality] == normal && [Flag] != ethereal && [Sockets] == 3 && [SkillHurricane]+[SkillTornado] >= 5 // Delirium
-//[Name] == SkySpirit && [Quality] == normal && [Flag] != ethereal && [Sockets] == 3 && [SkillHurricane]+[SkillTornado] >= 5 // Delirium
-//[Name] == DreamSpirit && [Quality] == normal && [Flag] != ethereal && [Sockets] == 3 && [SkillHurricane]+[SkillTornado] >= 5 // Delirium
+//[Name] == BloodSpirit && [Quality] == normal && [Flag] != ethereal && [Sockets] == 3 && [Skillhurricane]+[Skilltornado] >= 5 // Delirium
+//[Name] == SunSpirit && [Quality] == normal && [Flag] != ethereal && [Sockets] == 3 && [Skillhurricane]+[Skilltornado] >= 5 // Delirium
+//[Name] == EarthSpirit && [Quality] == normal && [Flag] != ethereal && [Sockets] == 3 && [Skillhurricane]+[Skilltornado] >= 5 // Delirium
+//[Name] == SkySpirit && [Quality] == normal && [Flag] != ethereal && [Sockets] == 3 && [Skillhurricane]+[Skilltornado] >= 5 // Delirium
+//[Name] == DreamSpirit && [Quality] == normal && [Flag] != ethereal && [Sockets] == 3 && [Skillhurricane]+[Skilltornado] >= 5 // Delirium
 
 //##### Necromancer Shrunken Heads (Elite)
-//[Name] == MinionSkull && [Quality] == superior && [Flag] != ethereal && [Sockets] == 2 && [SkillBoneSpear]+[SkillBoneSpirit] >= 5 // Splender
-//[Name] == HellspawnSkull && [Quality] == superior && [Flag] != ethereal && [Sockets] == 2 && [SkillBoneSpear]+[SkillBoneSpirit] >= 5 // Splender
-//[Name] == OverseerSkull && [Quality] == superior && [Flag] != ethereal && [Sockets] == 2 && [SkillBoneSpear]+[SkillBoneSpirit] >= 5 // Splender
-//[Name] == SuccubusSkull && [Quality] == superior && [Flag] != ethereal && [Sockets] == 2 && [SkillBoneSpear]+[SkillBoneSpirit] >= 5 // Splender
-//[Name] == BloodlordSkull && [Quality] == superior && [Flag] != ethereal && [Sockets] == 2 && [SkillBoneSpear]+[SkillBoneSpirit] >= 5 // Splender
+//[Name] == MinionSkull && [Quality] == superior && [Flag] != ethereal && [Sockets] == 2 && [Skillbonespear]+[Skillbonespirit] >= 5 // Splender
+//[Name] == HellspawnSkull && [Quality] == superior && [Flag] != ethereal && [Sockets] == 2 && [Skillbonespear]+[Skillbonespirit] >= 5 // Splender
+//[Name] == OverseerSkull && [Quality] == superior && [Flag] != ethereal && [Sockets] == 2 && [Skillbonespear]+[Skillbonespirit] >= 5 // Splender
+//[Name] == SuccubusSkull && [Quality] == superior && [Flag] != ethereal && [Sockets] == 2 && [Skillbonespear]+[Skillbonespirit] >= 5 // Splender
+//[Name] == BloodlordSkull && [Quality] == superior && [Flag] != ethereal && [Sockets] == 2 && [Skillbonespear]+[Skillbonespirit] >= 5 // Splender
 
-//[Name] == MinionSkull && [Quality] == superior && [Flag] != ethereal && [Sockets] == 2 && [SkillPoisonExplosion]+[SkillPoisonNova] >= 5 // Splender
-//[Name] == HellspawnSkull && [Quality] == superior && [Flag] != ethereal && [Sockets] == 2 && [SkillPoisonExplosion]+[SkillPoisonNova] >= 5 // Splender
-//[Name] == OverseerSkull && [Quality] == superior && [Flag] != ethereal && [Sockets] == 2 && [SkillPoisonExplosion]+[SkillPoisonNova] >= 5 // Splender
-//[Name] == SuccubusSkull && [Quality] == superior && [Flag] != ethereal && [Sockets] == 2 && [SkillPoisonExplosion]+[SkillPoisonNova] >= 5 // Splender
-//[Name] == BloodlordSkull && [Quality] == superior && [Flag] != ethereal && [Sockets] == 2 && [SkillPoisonExplosion]+[SkillPoisonNova] >= 5 // Splender
+//[Name] == MinionSkull && [Quality] == superior && [Flag] != ethereal && [Sockets] == 2 && [Skillpoisonexplosion]+[Skillpoisonnova] >= 5 // Splender
+//[Name] == HellspawnSkull && [Quality] == superior && [Flag] != ethereal && [Sockets] == 2 && [Skillpoisonexplosion]+[Skillpoisonnova] >= 5 // Splender
+//[Name] == OverseerSkull && [Quality] == superior && [Flag] != ethereal && [Sockets] == 2 && [Skillpoisonexplosion]+[Skillpoisonnova] >= 5 // Splender
+//[Name] == SuccubusSkull && [Quality] == superior && [Flag] != ethereal && [Sockets] == 2 && [Skillpoisonexplosion]+[Skillpoisonnova] >= 5 // Splender
+//[Name] == BloodlordSkull && [Quality] == superior && [Flag] != ethereal && [Sockets] == 2 && [Skillpoisonexplosion]+[Skillpoisonnova] >= 5 // Splender
 
-//[Name] == MinionSkull && [Quality] == normal && [Flag] != ethereal && [Sockets] == 2 && [SkillBoneSpear]+[SkillBoneSpirit] >= 5 // Splender
-//[Name] == HellspawnSkull && [Quality] == normal && [Flag] != ethereal && [Sockets] == 2 && [SkillBoneSpear]+[SkillBoneSpirit] >= 5 // Splender
-//[Name] == OverseerSkull && [Quality] == normal && [Flag] != ethereal && [Sockets] == 2 && [SkillBoneSpear]+[SkillBoneSpirit] >= 5 // Splender
-//[Name] == SuccubusSkull && [Quality] == normal && [Flag] != ethereal && [Sockets] == 2 && [SkillBoneSpear]+[SkillBoneSpirit] >= 5 // Splender
-//[Name] == BloodlordSkull && [Quality] == normal && [Flag] != ethereal && [Sockets] == 2 && [SkillBoneSpear]+[SkillBoneSpirit] >= 5 // Splender
+//[Name] == MinionSkull && [Quality] == normal && [Flag] != ethereal && [Sockets] == 2 && [Skillbonespear]+[Skillbonespirit] >= 5 // Splender
+//[Name] == HellspawnSkull && [Quality] == normal && [Flag] != ethereal && [Sockets] == 2 && [Skillbonespear]+[Skillbonespirit] >= 5 // Splender
+//[Name] == OverseerSkull && [Quality] == normal && [Flag] != ethereal && [Sockets] == 2 && [Skillbonespear]+[Skillbonespirit] >= 5 // Splender
+//[Name] == SuccubusSkull && [Quality] == normal && [Flag] != ethereal && [Sockets] == 2 && [Skillbonespear]+[Skillbonespirit] >= 5 // Splender
+//[Name] == BloodlordSkull && [Quality] == normal && [Flag] != ethereal && [Sockets] == 2 && [Skillbonespear]+[Skillbonespirit] >= 5 // Splender
 
-//[Name] == MinionSkull && [Quality] == normal && [Flag] != ethereal && [Sockets] == 2 && [SkillPoisonExplosion]+[SkillPoisonNova] >= 5 // Splender
-//[Name] == HellspawnSkull && [Quality] == normal && [Flag] != ethereal && [Sockets] == 2 && [SkillPoisonExplosion]+[SkillPoisonNova] >= 5 // Splender
-//[Name] == OverseerSkull && [Quality] == normal && [Flag] != ethereal && [Sockets] == 2 && [SkillPoisonExplosion]+[SkillPoisonNova] >= 5 // Splender
-//[Name] == SuccubusSkull && [Quality] == normal && [Flag] != ethereal && [Sockets] == 2 && [SkillPoisonExplosion]+[SkillPoisonNova] >= 5 // Splender
-//[Name] == BloodlordSkull && [Quality] == normal && [Flag] != ethereal && [Sockets] == 2 && [SkillPoisonExplosion]+[SkillPoisonNova] >= 5 // Splender
+//[Name] == MinionSkull && [Quality] == normal && [Flag] != ethereal && [Sockets] == 2 && [Skillpoisonexplosion]+[Skillpoisonnova] >= 5 // Splender
+//[Name] == HellspawnSkull && [Quality] == normal && [Flag] != ethereal && [Sockets] == 2 && [Skillpoisonexplosion]+[Skillpoisonnova] >= 5 // Splender
+//[Name] == OverseerSkull && [Quality] == normal && [Flag] != ethereal && [Sockets] == 2 && [Skillpoisonexplosion]+[Skillpoisonnova] >= 5 // Splender
+//[Name] == SuccubusSkull && [Quality] == normal && [Flag] != ethereal && [Sockets] == 2 && [Skillpoisonexplosion]+[Skillpoisonnova] >= 5 // Splender
+//[Name] == BloodlordSkull && [Quality] == normal && [Flag] != ethereal && [Sockets] == 2 && [Skillpoisonexplosion]+[Skillpoisonnova] >= 5 // Splender
 
 
 //##### Axes
@@ -382,10 +385,10 @@ Perfect Diamond
 
 
 //##### Scepters
-//[Type] == scepter && [Quality] == superior && [Sockets] == 5 && [SkillBlessedHammer]+[SkillConcentration] >= 5 // Call to Arms
-//[Type] == scepter && [Quality] == normal && [Sockets] == 5 && [SkillBlessedHammer]+[SkillConcentration] >= 5 // Call to Arms
-//[Type] == scepter && [Quality] == superior && [Sockets] == 5 && [SkillFistOfTheHeavens]+[SkillConviction] >= 5 // Call to Arms
-//[Type] == scepter && [Quality] == normal && [Sockets] == 5 && [SkillFistOfTheHeavens]+[SkillConviction] >= 5 // Call to Arms
+//[Type] == scepter && [Quality] == superior && [Sockets] == 5 && [Skillblessedhammer]+[Skillconcentration] >= 5 // Call to Arms
+//[Type] == scepter && [Quality] == normal && [Sockets] == 5 && [Skillblessedhammer]+[Skillconcentration] >= 5 // Call to Arms
+//[Type] == scepter && [Quality] == superior && [Sockets] == 5 && [Skillfistoftheheavens]+[Skillconviction] >= 5 // Call to Arms
+//[Type] == scepter && [Quality] == normal && [Sockets] == 5 && [Skillfistoftheheavens]+[Skillconviction] >= 5 // Call to Arms
 
 //##### Spears (Elite)
 [Name] == HyperionSpear && [Quality] == superior && [Flag] == ethereal && [Sockets] == 6 && [EnhancedDamage] >= 10 // Breath of the Dying
@@ -436,12 +439,12 @@ Perfect Diamond
 //##### Throwing
 
 //##### Wands
-//[Type] == wand && [Quality] == superior && [Sockets] != 1 && [SkillBoneSpear]+[SkillBoneSpirit] >= 5 // White
-//[Type] == wand && [Quality] == normal && [Sockets] != 1 && [SkillBoneSpear]+[SkillBoneSpirit] >= 5 // White
+//[Type] == wand && [Quality] == superior && [Sockets] != 1 && [Skillbonespear]+[Skillbonespirit] >= 5 // White
+//[Type] == wand && [Quality] == normal && [Sockets] != 1 && [Skillbonespear]+[Skillbonespirit] >= 5 // White
 
 //##### Amazon Weapons (Elite)
-[Name] == MatriarchalBow && [Quality] == superior && [Sockets] == 4 && [EnhancedDamage] >= 10 && [BowAndCrossbowSkillTab] >= 2 // Faith
-[Name] == GrandMatronBow && [Quality] == superior && [Sockets] == 4 && [EnhancedDamage] >= 10 && [BowAndCrossbowSkillTab] >= 2 // Faith
+[Name] == MatriarchalBow && [Quality] == superior && [Sockets] == 4 && [EnhancedDamage] >= 10 && [BowandCrossbowSkillTab] >= 2 // Faith
+[Name] == GrandMatronBow && [Quality] == superior && [Sockets] == 4 && [EnhancedDamage] >= 10 && [BowandCrossbowSkillTab] >= 2 // Faith
 
 //##### Assassin Katars
 //[Name] == Suwayyah && [Quality] == superior && [Flag] != ethereal && [Sockets] == 0 && [EnhancedDamage] >= 10 // Chaos
@@ -484,7 +487,7 @@ Perfect Diamond
 //[Name] == DuskShroud && [Quality] == unique && [Flag] != ethereal && [PassiveColdMastery] >= 15 // Ormus' Robes
 [Name] == BalrogSkin && [Quality] == unique && [AllSkills] >= 2 && [EnhancedDefense] >= 165 // Arkaine's Valor
 [Name] == WireFleece && [Quality] == unique && [Flag] == ethereal && [EnhancedDefense] >= 180 // The Gladiator's Bane
-[Name] == KrakenShell && [Quality] == unique && [DamageResist] >= 20 && [Strength] >= 45 // Leviathan
+[Name] == KrakenShell && [Quality] == unique && [DamageReduced] >= 20 && [Strength] >= 45 // Leviathan
 [Name] == SacredArmor && [Quality] == unique && [Strength] >= 25 // Tyrael's Might
 
 //##### Shields
@@ -494,8 +497,8 @@ Perfect Diamond
 //##### Gloves
 [Name] == ChainGloves && [Quality] == unique && [Flag] != ethereal && [EnhancedDefense] >= 25 && [MagicFind] >= 40 // Chance Guards
 //[Name] == LightGauntlets && [Quality] == unique && [Flag] != ethereal && [EnhancedDefense] >= 25 // Magefist
-//[Name] == BattleGauntlets && [Quality] == unique && [Flag] != ethereal && [Defense] >= 64 && [EnhancedDefense] >= 25 && [FCR] >= 20 // Magefist
-//[Name] == CrusaderGauntlets && [Quality] == unique && [Flag] != ethereal && [Defense] >= 90 && [EnhancedDefense] >= 25 && [FCR] >= 20 // Magefist
+//[Name] == BattleGauntlets && [Quality] == unique && [Flag] != ethereal && [Defense] >= 64 && [EnhancedDefense] >= 25 && [FasterCastRate] >= 20 // Magefist
+//[Name] == CrusaderGauntlets && [Quality] == unique && [Flag] != ethereal && [Defense] >= 90 && [EnhancedDefense] >= 25 && [FasterCastRate] >= 20 // Magefist
 [Name] == VampireboneGloves && [Quality] == unique && [Flag] != ethereal && [EnhancedDefense] >= 100 && [Strength] >= 10 && [LifeLeech] >= 8 // Dracul's Grasp
 [Name] == OgreGauntlets && [Quality] == unique && [Flag] != ethereal // Steelrend
 
@@ -508,12 +511,12 @@ Perfect Diamond
 [Name] == MyrmidonGreaves && [Quality] == unique && [Flag] != ethereal // Gore Rider
 //[Name] == ScarabshellBoots && [Quality] == unique && [Flag] != ethereal // Sandstorm Trek
 [Name] == ScarabshellBoots && [Quality] == unique // Sandstorm Trek
-//[Name] == BoneweaveBoots && [Quality] == unique && [Flag] != ethereal && [Strength] >= 15 && [SkillSkeletonMastery] >= 2 // Marrowwalk
+//[Name] == BoneweaveBoots && [Quality] == unique && [Flag] != ethereal && [Strength] >= 15 && [Skillskeletonmastery] >= 2 // Marrowwalk
 //[Name] == MyrmidonGreaves && [Quality] == unique && [Dexterity] >= 20 && [ShadowDisciplinesSkillTab] >= 1 // Shadow Dancer
 
 //##### Belts
 //[Name] == HeavyBelt && [Quality] == unique && [Flag] != ethereal && [EnhancedDefense] >= 50 && [GoldFind] >= 80 // Goldwrap
-//[Name] == DemonhideSash && [Quality] == unique && [Flag] != ethereal && [EnhancedDefense] >= 165 && [DamageResist] >= 12 && [LifeLeech] >= 8 // String of Ears
+//[Name] == DemonhideSash && [Quality] == unique && [Flag] != ethereal && [EnhancedDefense] >= 165 && [DamageReduced] >= 12 && [LifeLeech] >= 8 // String of Ears
 [Name] == WarBelt && [Quality] == unique && [Flag] != ethereal && [EnhancedDefense] >= 180 // Thundergod's Vigor
 [Name] == SpiderwebSash && [Quality] == unique && [Flag] != ethereal // Arachnid Mesh
 [Name] == VampirefangBelt && [Quality] == unique && [Flag] != ethereal && [LifeLeech] >= 7 // Nosferatu's Coil
@@ -534,7 +537,7 @@ Perfect Diamond
 
 //##### Necromancer Shrunken Heads
 //[Name] == HierophantTrophy && [Quality] == unique && [Flag] != ethereal && [EnhancedDefense] >= 180 // Homunculus
-//[Name] == BloodlordSkull && [Quality] == unique && [Flag] != ethereal && [NecromancerSummoningSkillTab]+[PoisonAndBoneSkillTab]+[CursesSkillTab] >= 7 // Darkforce Spawn
+//[Name] == BloodlordSkull && [Quality] == unique && [Flag] != ethereal && [NecromancerSummoningSkillTab]+[PoisonandBoneSkillTab]+[CursesSkillTab] >= 7 // Darkforce Spawn
 
 //##### Axes
 [Name] == EttinAxe && [Quality] == unique && [Flag] == ethereal && [Sockets] >= 4 && [EnhancedDamage] >= 240 // Rune Master
@@ -552,7 +555,7 @@ Perfect Diamond
 //[Name] == BoneKnife && [Quality] == unique // Wizardspike
 
 //##### Maces
-//[Name] == Scourge && [Quality] == unique && [EnhancedDamage] >= 270 && [IAS] == 30 // Stormlash
+//[Name] == Scourge && [Quality] == unique && [EnhancedDamage] >= 270 && [IncreasedAttackSpeed] == 30 // Stormlash
 
 //##### Polearms
 //[Name] == OgreAxe && [Quality] == unique && [Flag] == ethereal && [EnhancedDamage] >= 290 // Bonehew
@@ -560,9 +563,9 @@ Perfect Diamond
 //[Name] == CrypticAxe && [Quality] == unique && [Flag] == ethereal && [Sockets] >= 3 && [EnhancedDamage] >= 230 // Tomb Reaver
 
 //##### Scepters
-//[Name] == MightyScepter && [Quality] == unique && [Sockets] >= 2 && [EnhancedDamage] >= 270 && [AddPaladinSkills] >= 3 && [IAS] >= 20 // Heaven's Light
+//[Name] == MightyScepter && [Quality] == unique && [Sockets] >= 2 && [EnhancedDamage] >= 270 && [AddPaladinSkills] >= 3 && [IncreasedAttackSpeed] >= 20 // Heaven's Light
 //[Name] == MightyScepter && [Quality] == unique && [EnhancedDamage] >= 270 && [NormalDamage] >= 90 && [RequirementPercent] <= -60 // The Redeemer
-//[Name] == Caduceus && [Quality] == unique && [EnhancedDamage] >= 260 && [PalidinCombatSkillTab] >= 3 // Astreon's Iron Ward
+//[Name] == Caduceus && [Quality] == unique && [EnhancedDamage] >= 260 && [PaladinCombatSkillTab] >= 3 // Astreon's Iron Ward
 
 //##### Spears
 //[Name] == Fuscina && [Quality] == unique && [Flag] == ethereal && [EnhancedDamage] >= 180 // Kelpie Snare
@@ -580,8 +583,8 @@ Perfect Diamond
 //[Name] == WingedAxe && [Quality] == unique && [EnhancedDamage] >= 180 // Lacerator
 
 //##### Wands
-//[Name] == LichWand && [Quality] == unique && [SkillBoneSpirit]+[SkillBoneSpear] >= 4 && [SkillBoneWall]+[SkillBoneArmor]+[SkillTeeth] >= 12 // Boneshade
-//[Name] == UnearthedWand && [Quality] == unique && [PassivePoisPierce] >= 45 && [PoisonAndBoneSkillTab] >= 2 // Death's Web
+//[Name] == LichWand && [Quality] == unique && [Skillbonespirit]+[Skillbonespear] >= 4 && [Skillbonewall]+[Skillbonearmor]+[Skillteeth] >= 12 // Boneshade
+//[Name] == UnearthedWand && [Quality] == unique && [PassivePoisPierce] >= 45 && [PoisonandBoneSkillTab] >= 2 // Death's Web
 //[Name] == Burnt Wand && [Quality] == unique // Suicide Branch 
 
 //##### Amazon Weapons
@@ -624,7 +627,7 @@ Perfect Diamond
 [Name] == Amulet && [Quality] == unique && [LifeLeech] >= 6 && [ManaLeech] >= 15 // Crescent Moon
 [Name] == Amulet && [Quality] == unique && [PoisonResist] == 75 // Atma's Scarab
 [Name] == Amulet && [Quality] == unique && [HPRegen] == 10 // The Rising Sun
-//[Name] == Amulet && [Quality] == unique && [LightResist] == 35 // Highlord's Wrath
+//[Name] == Amulet && [Quality] == unique && [LightningResist] == 35 // Highlord's Wrath
 [Name] == Amulet && [Quality] == unique && [Strength] == 5 && [ColdResist] >= 20 // Mara's Kaleidoscope
 //[Name] == Amulet && [Quality] == unique && [DefensiveAurasSkillTab] == 1 // Seraph's Hymn
 [Name] == Amulet && [Quality] == unique && [AttackRating] >= 430 && [ColdResist] >= 30 // Metalgrid
@@ -657,13 +660,19 @@ Perfect Diamond
 //#######################################
 //###### Potions
 //#######################################
+//[Name] == PotionofLife
+//[Name] == MinorHealingPotion
+//[Name] == LightHealingPotion
+//[Name] == HealingPotion
 //[Name] == GreaterHealingPotion
 [Name] == SuperHealingPotion
+//[Name] == MinorManaPotion
+//[Name] == LightManaPotion
+//[Name] == ManaPotion
 //[Name] == GreaterManaPotion
 [Name] == SuperManaPotion
 //[Name] == RejuvenationPotion
 [Name] == FullRejuvenationPotion
-
 
 
 
@@ -674,12 +683,12 @@ Perfect Diamond
 //#######################################
 //##### Angelic Raiment
 //[Name] == RingMail && [Quality] == set // Angelic Mantle
-//[Name] == Sabre && [Quality] == set // Angelic Sickle
+//[Name] == Saber && [Quality] == set // Angelic Sickle
 //[Name] == Ring && [Quality] == set && [LifeMax] == 20 // Angelic Halo
 //[Name] == Amulet && [Quality] == set && [LightRadius] == 3 && [DamageTakenGoesToMana] == 20 // Angelic Wings
 
 //##### Arcanna's Tricks
-//[Name] == Amulet && [Quality] == set && [MaxMana] == 15 // Arcanna's Sign
+//[Name] == Amulet && [Quality] == set && [ManaMax] == 15 // Arcanna's Sign
 //[Name] == SkullCap && [Quality] == set // Arcanna's Head
 //[Name] == LightPlate && [Quality] == set // Arcanna's Flesh
 //[Name] == WarStaff && [Quality] == set // Arcanna's Deathwand
@@ -687,7 +696,7 @@ Perfect Diamond
 //##### Arctic Gear
 //[Name] == QuiltedArmor && [Quality] == set // Arctic Furs
 //[Name] == LightBelt && [Quality] == set // Arctic Binding
-//[Name] == LightGauntlets && [Quality] == set && [LifeMax] == 20 && [IAS] == 10 // Arctic Mitts
+//[Name] == LightGauntlets && [Quality] == set && [LifeMax] == 20 && [IncreasedAttackSpeed] == 10 // Arctic Mitts
 //[Name] == ShortWarBow && [Quality] == set // Arctic Horn
 
 //##### Berseker's Arsenal
@@ -697,7 +706,7 @@ Perfect Diamond
 
 //##### Cathan's Traps
 //[Name] == Ring && [Quality] == set && [LifeLeech] == 6 && [NormalDamageReduction] == 2 // Cathan's Seal
-//[Name] == Amulet && [Quality] == set && [FHR] == 10 && [LightningMaxDamage] == 5 // Cathan's Sigil
+//[Name] == Amulet && [Quality] == set && [FasterHitRecovery] == 10 && [LightningMaxDamage] == 5 // Cathan's Sigil
 //[Name] == ChainMail && [Quality] == set // Cathan's Mesh
 //[Name] == Mask && [Quality] == set // Cathan's Visage
 
@@ -722,13 +731,13 @@ Perfect Diamond
 //[Name] == ChainBoots && [Quality] == set // Hsarus' Iron Heel
 
 //##### Infernal Tools
-//[Name] == Cap && [Quality] == set && [FireResist] == 10 && [LightResist] == 10 && [ColdResist] == 10 && [PoisonResist] == 10 // Infernal Cranium
+//[Name] == Cap && [Quality] == set && [FireResist] == 10 && [LightningResist] == 10 && [ColdResist] == 10 && [PoisonResist] == 10 // Infernal Cranium
 //[Name] == GrimWand && [Quality] == set // Infernal Touch
 //[Name] == HeavyBelt && [Quality] == set && [LifeMax] == 20 && [EnhancedDefense] == 25 // Infernal Sign
 
 //##### Iratha's Finery
 //[Name] == HeavyBelt && [Quality] == set && [MinDamage] == 5 // Iratha's Cord
-//[Name] == Crown && [Quality] == set && [FireResist] == 30 && [LightResist] == 30 // Iratha's Coil
+//[Name] == Crown && [Quality] == set && [FireResist] == 30 && [LightningResist] == 30 // Iratha's Coil
 //[Name] == Amulet && [Quality] == set && [PoisonResist] == 30 && [PoisonLength] == -75 // Iratha's Collar
 //[Name] == LightGauntlets && [Quality] == set && [ColdResist] == 30 // Iratha's Cuff
 
@@ -742,7 +751,7 @@ Perfect Diamond
 //[Name] == KiteShield && [Quality] == set // Milabrega's Orb
 //[Name] == AncientArmor && [Quality] == set // Milabrega's Robe
 //[Name] == WarScepter && [Quality] == set // Milabrega's Rod
-//[Name] == Crown && [Quality] == set && [LifeMax] == 15 && [MaxMana] == 15 // Milabrega's Diadem
+//[Name] == Crown && [Quality] == set && [LifeMax] == 15 && [ManaMax] == 15 // Milabrega's Diadem
 
 //##### Sigon's Steel
 //[Name] == GreatHelm && [Quality] == set // Sigon's Visor
@@ -760,7 +769,7 @@ Perfect Diamond
 //[Name] == Amulet && [Quality] == set && [MagicDamageReduction] == 1 && [NormalDamageReduction] == 2 // Tancred's Weird
 
 //##### Vidala's Rig
-//[Name] == Amulet && [Quality] == set && [ColdResist] == 20 && [MaxMana] == 15 // Vidala's Snare
+//[Name] == Amulet && [Quality] == set && [ColdResist] == 20 && [ManaMax] == 15 // Vidala's Snare
 //[Name] == LongBattleBow && [Quality] == set // Vidala's Barb
 //[Name] == LeatherArmor && [Quality] == set // Vidala's Ambush
 //[Name] == LightPlatedBoots && [Quality] == set // Vidala's Fetlock
@@ -820,7 +829,7 @@ Perfect Diamond
 //[Name] == BattleGauntlets && [Quality] == set // M'avina's Icy Clutch
 //[Name] == SharkskinBelt && [Quality] == set // M'avina's Tenet
 
-//##### Natalya's OdiumMaxHP
+//##### Natalya's OdiumLifeMax
 //[Name] == GrimHelm && [Quality] == set // Natalya's Totem
 //[Name] == ScissorsSuwayyah && [Quality] == set // Natalya's Mark
 //[Name] == LoricatedMail && [Quality] == set // Natalya's Shadow
@@ -912,6 +921,12 @@ Perfect Diamond
 //[Name] == ArchonPlate && [Quality] == magic && [Flag] != ethereal && [Sockets] >= 3 && [PoisonLengthResist] >= 75
 
 //##### Armor
+[Name] == LightPlate && [Quality] == magic && [Sockets] == 3 && [LifeMax] == 80 && [LevelRequire] <= 30 // LLD
+[Name] == MagePlate && [Quality] == magic && [Sockets] == 3 && [LifeMax] == 80 && [LevelRequire] <= 30 // LLD
+[Name] == AncientArmor && [Quality] == magic && [Sockets] == 4 && [LifeMax] >= 95 // 4os/95+ life or 4os/24fhr armor
+[Name] == ArchonPlate && [Quality] == magic && [Sockets] == 4 && [LifeMax] >= 95 // 4os/95+ life or 4os/24fhr armor
+[Name] == AncientArmor && [Quality] == magic && [Sockets] == 4 && [FasterHitRecovery] == 24 // 4os/95+ life or 4os/24fhr armor
+[Name] == ArchonPlate && [Quality] == magic && [Sockets] == 4 && [FasterHitRecovery] == 24 // 4os/95+ life or 4os/24fhr armor
 //[Name] == ArchonPlate && [Quality] == magic && [Sockets] == 4
 //[Name] == ArchonPlate && [Quality] == magic && [LifeMax] >= 80 && [Sockets] == 4
 //[Name] == ArchonPlate && [Quality] == magic && [Strength] >= 20 && [Sockets] == 4
@@ -964,7 +979,28 @@ Perfect Diamond
 //[Name] == DuskShroud && [Quality] == magic && [LifeMax] >= 90 && [Sockets] == 3 
 
 //##### Shields
-//[Name] == Monarch && [Quality] == magic && [Flag] != ethereal && [Sockets] >= 4 && [Defense] >= 140 && [FasterBlockRate5] >= 30
+[Name] == Monarch && [Quality] == magic && [Flag] != ethereal && [Sockets] >= 4 && [Defense] >= 140 && [FasterBlockRate] >= 30
+[Name] == Monarch && [Quality] == Magic && [Sockets] == 4 && [FasterBlockRate] == 30     // Paladin Jmod
+[Name] == Monarch && [Quality] == Magic && [Sockets] == 4 && [FasterHitRecovery] == 17     // Paladin Jmod
+[Name] == Monarch && [Quality] == Magic && [Sockets] == 4 && [LifeMax] >= 60       // Paladin Jmod
+[Name] == Monarch && [Quality] == Magic && [Sockets] == 4 && [RequirementPercent] == -30     // Paladin Jmod
+[Name] == CrownShield && [Quality] == Magic && [Sockets] == 4 && [FasterHitRecovery] == 17  // Paladin Jmod
+[Name] == RoyalShield && [Quality] == Magic && [Sockets] == 4 && [FasterHitRecovery] == 17  // Paladin Jmod
+[Name] == SacredTarge && [Quality] == Magic && [Sockets] == 4 && [FasterHitRecovery] == 17  // Paladin Jmod
+[Name] == SacredRondache && [Quality] == Magic && [Sockets] == 4 && [FasterHitRecovery] == 17  // Paladin Jmod
+[Name] == CrownShield && [Quality] == Magic && [Sockets] == 4 && [FasterBlockRate] == 30  // Paladin Jmod
+[Name] == RoyalShield && [Quality] == Magic && [Sockets] == 4 && [FasterBlockRate] == 30  // Paladin Jmod
+[Name] == SacredTarge && [Quality] == Magic && [Sockets] == 4 && [FasterBlockRate] == 30  // Paladin Jmod
+[Name] == SacredRondache && [Quality] == Magic && [Sockets] == 4 && [FasterBlockRate] == 30  // Paladin Jmod
+[Name] == CrownShield && [Quality] == Magic && [Sockets] == 4 && [LifeMax] >= 60 // Paladin Jmod
+[Name] == RoyalShield && [Quality] == Magic && [Sockets] == 4 && [LifeMax] >= 60 // Paladin Jmod
+[Name] == SacredTarge && [Quality] == Magic && [Sockets] == 4 && [LifeMax] >= 60 // Paladin Jmod
+[Name] == SacredRondache && [Quality] == Magic && [Sockets] == 4 && [LifeMax] >= 60 // Paladin Jmod
+[Name] == CrownShield && [Quality] == Magic && [Sockets] == 4 && [RequirementPercent] == -30 // Paladin Jmod
+[Name] == RoyalShield && [Quality] == Magic && [Sockets] == 4 && [RequirementPercent] == -30 // Paladin Jmod
+[Name] == SacredTarge && [Quality] == Magic && [Sockets] == 4 && [RequirementPercent] == -30 // Paladin Jmod
+[Name] == SacredRondache && [Quality] == Magic && [Sockets] == 4 && [RequirementPercent] == -30 // Paladin Jmod
+[Name] == BarbedShield && [Quality] == magic && [PaladinCombatSkillTab] == 2 && [FasterBlockRate] == 30 // LLD
 
 //##### Shields (Elite)
 //[Name] == Heater && [Quality] == magic && [Flag] != ethereal && [Sockets] == 4 && [FasterBlockRate] == 30
@@ -1039,6 +1075,7 @@ Perfect Diamond
 //[Type] == gloves && [Quality] == rare && [Flag] != ethereal && [IncreasedAttackSpeed] >= 20 && [Strength] >= 10 && [ManaLeech] >= 3
 //[Type] == gloves && [Quality] == rare && [Flag] != ethereal && [IncreasedAttackSpeed] >= 20 && [Dexterity] >= 10 && [ManaLeech] >= 3
 //[Type] == gloves && [Quality] == rare && [Flag] != ethereal && [IncreasedAttackSpeed] >= 20 && [AddSkillTab] >= 2 && [Strength]+[Dexterity] >= 15
+[Type] == gloves && [Quality] == magic && [JavelinandSpearSkillTab] == 3 && [IncreasedAttackSpeed] == 20 // 3/20 gloves
 
 //##### Boots
 //[Type] == boots && [Quality] == rare && [Flag] != ethereal && [FasterRunWalk] >= 30 && [FasterHitRecovery] >= 10 && [FireResist]+[LightningResist]+[ColdResist]+[PoisonResist] >= 80
@@ -1049,17 +1086,17 @@ Perfect Diamond
 //[Type] == belt && [Quality] == rare && [Flag] != ethereal && [FasterHitRecovery] >= 24 && [Strength] >= 20 && [GoldFind] >= 60
 
 //##### Barbarian Helms (Exceptional)
-//[Name] == JawboneVisor && [Quality] == magic && [Flag] != ethereal && [AddBarbarianSkills] >= 2 && [SkillBattleOrders] >= 3
-//[Name] == LionHelm && [Quality] == magic && [Flag] != ethereal && [AddBarbarianSkills] >= 2 && [SkillBattleOrders] >= 3
-//[Name] == RageMask && [Quality] == magic && [Flag] != ethereal && [AddBarbarianSkills] >= 2 && [SkillBattleOrders] >= 3
-//[Name] == SavageHelmet && [Quality] == magic && [Flag] != ethereal && [AddBarbarianSkills] >= 2 && [SkillBattleOrders] >= 3
-//[Name] == SlayerGuard && [Quality] == magic && [Flag] != ethereal && [AddBarbarianSkills] >= 2 && [SkillBattleOrders] >= 3
+//[Name] == JawboneVisor && [Quality] == magic && [Flag] != ethereal && [AddBarbarianSkills] >= 2 && [Skillbattleorders] >= 3
+//[Name] == LionHelm && [Quality] == magic && [Flag] != ethereal && [AddBarbarianSkills] >= 2 && [Skillbattleorders] >= 3
+//[Name] == RageMask && [Quality] == magic && [Flag] != ethereal && [AddBarbarianSkills] >= 2 && [Skillbattleorders] >= 3
+//[Name] == SavageHelmet && [Quality] == magic && [Flag] != ethereal && [AddBarbarianSkills] >= 2 && [Skillbattleorders] >= 3
+//[Name] == SlayerGuard && [Quality] == magic && [Flag] != ethereal && [AddBarbarianSkills] >= 2 && [Skillbattleorders] >= 3
 
-//[Name] == JawboneVisor && [Quality] == magic && [Flag] != ethereal && [WarCriesSkillTab] >= 3 && [SkillBattleOrders] >= 3
-//[Name] == LionHelm && [Quality] == magic && [Flag] != ethereal && [WarCriesSkillTab] >= 3 && [SkillBattleOrders] >= 3
-//[Name] == RageMask && [Quality] == magic && [Flag] != ethereal && [WarCriesSkillTab] >= 3 && [SkillBattleOrders] >= 3
-//[Name] == SavageHelmet && [Quality] == magic && [Flag] != ethereal && [WarCriesSkillTab] >= 3 && [SkillBattleOrders] >= 3
-//[Name] == SlayerGuard && [Quality] == magic && [Flag] != ethereal && [WarCriesSkillTab] >= 3 && [SkillBattleOrders] >= 3
+//[Name] == JawboneVisor && [Quality] == magic && [Flag] != ethereal && [WarCriesSkillTab] >= 3 && [Skillbattleorders] >= 3
+//[Name] == LionHelm && [Quality] == magic && [Flag] != ethereal && [WarCriesSkillTab] >= 3 && [Skillbattleorders] >= 3
+//[Name] == RageMask && [Quality] == magic && [Flag] != ethereal && [WarCriesSkillTab] >= 3 && [Skillbattleorders] >= 3
+//[Name] == SavageHelmet && [Quality] == magic && [Flag] != ethereal && [WarCriesSkillTab] >= 3 && [Skillbattleorders] >= 3
+//[Name] == SlayerGuard && [Quality] == magic && [Flag] != ethereal && [WarCriesSkillTab] >= 3 && [Skillbattleorders] >= 3
 
 //[Name] == JawboneVisor && [Quality] == magic && [Flag] != ethereal && [AddBarbarianSkills] >= 2 && [GoldFind] >= 60
 //[Name] == LionHelm && [Quality] == magic && [Flag] != ethereal && [AddBarbarianSkills] >= 2 && [GoldFind] >= 60
@@ -1074,17 +1111,17 @@ Perfect Diamond
 //[Name] == SlayerGuard && [Quality] == magic && [Flag] != ethereal && [WarCriesSkillTab] >= 3 && [GoldFind] >= 60
 
 //##### Barbarian Helms (Elite)
-//[Name] == CarnageHelm && [Quality] == magic && [Flag] != ethereal && [AddBarbarianSkills] >= 2 && [SkillBattleOrders] >= 3
-//[Name] == FuryVisor && [Quality] == magic && [Flag] != ethereal && [AddBarbarianSkills] >= 2 && [SkillBattleOrders] >= 3
-//[Name] == DestroyerHelm && [Quality] == magic && [Flag] != ethereal && [AddBarbarianSkills] >= 2 && [SkillBattleOrders] >= 3
-//[Name] == ConquerorCrown && [Quality] == magic && [Flag] != ethereal && [AddBarbarianSkills] >= 2 && [SkillBattleOrders] >= 3
-//[Name] == GuardianCrown && [Quality] == magic && [Flag] != ethereal && [AddBarbarianSkills] >= 2 && [SkillBattleOrders] >= 3
+//[Name] == CarnageHelm && [Quality] == magic && [Flag] != ethereal && [AddBarbarianSkills] >= 2 && [Skillbattleorders] >= 3
+//[Name] == FuryVisor && [Quality] == magic && [Flag] != ethereal && [AddBarbarianSkills] >= 2 && [Skillbattleorders] >= 3
+//[Name] == DestroyerHelm && [Quality] == magic && [Flag] != ethereal && [AddBarbarianSkills] >= 2 && [Skillbattleorders] >= 3
+//[Name] == ConquerorCrown && [Quality] == magic && [Flag] != ethereal && [AddBarbarianSkills] >= 2 && [Skillbattleorders] >= 3
+//[Name] == GuardianCrown && [Quality] == magic && [Flag] != ethereal && [AddBarbarianSkills] >= 2 && [Skillbattleorders] >= 3
 
-//[Name] == CarnageHelm && [Quality] == magic && [Flag] != ethereal && [WarCriesSkillTab] >= 3 && [SkillBattleOrders] >= 3
-//[Name] == FuryVisor && [Quality] == magic && [Flag] != ethereal && [WarCriesSkillTab] >= 3 && [SkillBattleOrders] >= 3
-//[Name] == DestroyerHelm && [Quality] == magic && [Flag] != ethereal && [WarCriesSkillTab] >= 3 && [SkillBattleOrders] >= 3
-//[Name] == ConquerorCrown && [Quality] == magic && [Flag] != ethereal && [WarCriesSkillTab] >= 3 && [SkillBattleOrders] >= 3
-//[Name] == GuardianCrown && [Quality] == magic && [Flag] != ethereal && [WarCriesSkillTab] >= 3 && [SkillBattleOrders] >= 3
+//[Name] == CarnageHelm && [Quality] == magic && [Flag] != ethereal && [WarCriesSkillTab] >= 3 && [Skillbattleorders] >= 3
+//[Name] == FuryVisor && [Quality] == magic && [Flag] != ethereal && [WarCriesSkillTab] >= 3 && [Skillbattleorders] >= 3
+//[Name] == DestroyerHelm && [Quality] == magic && [Flag] != ethereal && [WarCriesSkillTab] >= 3 && [Skillbattleorders] >= 3
+//[Name] == ConquerorCrown && [Quality] == magic && [Flag] != ethereal && [WarCriesSkillTab] >= 3 && [Skillbattleorders] >= 3
+//[Name] == GuardianCrown && [Quality] == magic && [Flag] != ethereal && [WarCriesSkillTab] >= 3 && [Skillbattleorders] >= 3
 
 //[Name] == CarnageHelm && [Quality] == magic && [Flag] != ethereal && [AddBarbarianSkills] >= 2 && [GoldFind] >= 60
 //[Name] == FuryVisor && [Quality] == magic && [Flag] != ethereal && [AddBarbarianSkills] >= 2 && [GoldFind] >= 60
@@ -1099,37 +1136,37 @@ Perfect Diamond
 //[Name] == GuardianCrown && [Quality] == magic && [Flag] != ethereal && [WarCriesSkillTab] >= 3 && [GoldFind] >= 60
 
 //##### Barbarian Helms
-//[Type] == primalhelm && [Quality] == rare && [Flag] != ethereal && [Sockets] >= 2 && [AddBarbarianSkills] >= 2 && [SkillBattleOrders] >= 3
+//[Type] == primalhelm && [Quality] == rare && [Flag] != ethereal && [Sockets] >= 2 && [AddBarbarianSkills] >= 2 && [Skillbattleorders] >= 3
 //[Type] == primalhelm && [Quality] == rare && [Flag] != ethereal && [Sockets] >= 2 && [AddBarbarianSkills] >= 2 && [GoldFind] >= 60
 
 //##### Druid Pelts (Exceptional)
-//[Name] == AlphaHelm && [Quality] == magic && [Flag] != ethereal && [AddDruidSkills] >= 2 && [SkillTornado] >= 3
-[Name] == GriffonHeadress && [Quality] == magic && [Flag] != ethereal && [AddDruidSkills] >= 2 && [SkillTornado] >= 3
-//[Name] == Hunter'sGuise && [Quality] == magic && [Flag] != ethereal && [AddDruidSkills] >= 2 && [SkillTornado] >= 3
-//[Name] == SacredFeathers && [Quality] == magic && [Flag] != ethereal && [AddDruidSkills] >= 2 && [SkillTornado] >= 3
-//[Name] == TotemicMask && [Quality] == magic && [Flag] != ethereal && [AddDruidSkills] >= 2 && [SkillTornado] >= 3
+//[Name] == AlphaHelm && [Quality] == magic && [Flag] != ethereal && [AddDruidSkills] >= 2 && [Skilltornado] >= 3
+[Name] == GriffonHeadress && [Quality] == magic && [Flag] != ethereal && [AddDruidSkills] >= 2 && [Skilltornado] >= 3
+//[Name] == Hunter'sGuise && [Quality] == magic && [Flag] != ethereal && [AddDruidSkills] >= 2 && [Skilltornado] >= 3
+//[Name] == SacredFeathers && [Quality] == magic && [Flag] != ethereal && [AddDruidSkills] >= 2 && [Skilltornado] >= 3
+//[Name] == TotemicMask && [Quality] == magic && [Flag] != ethereal && [AddDruidSkills] >= 2 && [Skilltornado] >= 3
 
-//[Name] == AlphaHelm && [Quality] == magic && [Flag] != ethereal && [ElementalSkillTab] >= 3 && [SkillTornado] >= 3
-[Name] == GriffonHeadress && [Quality] == magic && [Flag] != ethereal && [ElementalSkillTab] >= 3 && [SkillTornado] >= 3
-//[Name] == Hunter'sGuise && [Quality] == magic && [Flag] != ethereal && [ElementalSkillTab] >= 3 && [SkillTornado] >= 3
-//[Name] == SacredFeathers && [Quality] == magic && [Flag] != ethereal && [ElementalSkillTab] >= 3 && [SkillTornado] >= 3
-//[Name] == TotemicMask && [Quality] == magic && [Flag] != ethereal && [ElementalSkillTab] >= 3 && [SkillTornado] >= 3
+//[Name] == AlphaHelm && [Quality] == magic && [Flag] != ethereal && [ElementalSkillTab] >= 3 && [Skilltornado] >= 3
+[Name] == GriffonHeadress && [Quality] == magic && [Flag] != ethereal && [ElementalSkillTab] >= 3 && [Skilltornado] >= 3
+//[Name] == Hunter'sGuise && [Quality] == magic && [Flag] != ethereal && [ElementalSkillTab] >= 3 && [Skilltornado] >= 3
+//[Name] == SacredFeathers && [Quality] == magic && [Flag] != ethereal && [ElementalSkillTab] >= 3 && [Skilltornado] >= 3
+//[Name] == TotemicMask && [Quality] == magic && [Flag] != ethereal && [ElementalSkillTab] >= 3 && [Skilltornado] >= 3
 
 //##### Druid Pelts (Elite)
-//[Name] == BloodSpirit && [Quality] == magic && [Flag] != ethereal && [AddDruidSkills] >= 2 && [SkillTornado] >= 3
-//[Name] == SunSpirit && [Quality] == magic && [Flag] != ethereal && [AddDruidSkills] >= 2 && [SkillTornado] >= 3
-//[Name] == EarthSpirit && [Quality] == magic && [Flag] != ethereal && [AddDruidSkills] >= 2 && [SkillTornado] >= 3
-//[Name] == SkySpirit && [Quality] == magic && [Flag] != ethereal && [AddDruidSkills] >= 2 && [SkillTornado] >= 3
-//[Name] == DreamSpirit && [Quality] == magic && [Flag] != ethereal && [AddDruidSkills] >= 2 && [SkillTornado] >= 3
+//[Name] == BloodSpirit && [Quality] == magic && [Flag] != ethereal && [AddDruidSkills] >= 2 && [Skilltornado] >= 3
+//[Name] == SunSpirit && [Quality] == magic && [Flag] != ethereal && [AddDruidSkills] >= 2 && [Skilltornado] >= 3
+//[Name] == EarthSpirit && [Quality] == magic && [Flag] != ethereal && [AddDruidSkills] >= 2 && [Skilltornado] >= 3
+//[Name] == SkySpirit && [Quality] == magic && [Flag] != ethereal && [AddDruidSkills] >= 2 && [Skilltornado] >= 3
+//[Name] == DreamSpirit && [Quality] == magic && [Flag] != ethereal && [AddDruidSkills] >= 2 && [Skilltornado] >= 3
 
-//[Name] == BloodSpirit && [Quality] == magic && [Flag] != ethereal && [ElementalSkillTab] >= 3 && [SkillTornado] >= 3
-//[Name] == SunSpirit && [Quality] == magic && [Flag] != ethereal && [ElementalSkillTab] >= 3 && [SkillTornado] >= 3
-//[Name] == EarthSpirit && [Quality] == magic && [Flag] != ethereal && [ElementalSkillTab] >= 3 && [SkillTornado] >= 3
-//[Name] == SkySpirit && [Quality] == magic && [Flag] != ethereal && [ElementalSkillTab] >= 3 && [SkillTornado] >= 3
-//[Name] == DreamSpirit && [Quality] == magic && [Flag] != ethereal && [ElementalSkillTab] >= 3 && [SkillTornado] >= 3
+//[Name] == BloodSpirit && [Quality] == magic && [Flag] != ethereal && [ElementalSkillTab] >= 3 && [Skilltornado] >= 3
+//[Name] == SunSpirit && [Quality] == magic && [Flag] != ethereal && [ElementalSkillTab] >= 3 && [Skilltornado] >= 3
+//[Name] == EarthSpirit && [Quality] == magic && [Flag] != ethereal && [ElementalSkillTab] >= 3 && [Skilltornado] >= 3
+//[Name] == SkySpirit && [Quality] == magic && [Flag] != ethereal && [ElementalSkillTab] >= 3 && [Skilltornado] >= 3
+//[Name] == DreamSpirit && [Quality] == magic && [Flag] != ethereal && [ElementalSkillTab] >= 3 && [Skilltornado] >= 3
 
 //##### Druid Pelts
-//[Type] == pelt && [Quality] == rare && [Flag] != ethereal && [Sockets] >= 2 && [AddDruidSkills] >= 2 && [SkillTornado] >= 3
+//[Type] == pelt && [Quality] == rare && [Flag] != ethereal && [Sockets] >= 2 && [AddDruidSkills] >= 2 && [Skilltornado] >= 3
 
 //##### Paladin Shields (Elite)
 //[Name] == SacredTarge && [Quality] == magic && [Flag] != ethereal && [AddPaladinSkills] == 2 && [FasterBlockRate] == 30 && [FireResist] >= 30
@@ -1138,11 +1175,11 @@ Perfect Diamond
 //[Name] == ZakarumShield && [Quality] == magic && [Flag] != ethereal && [AddPaladinSkills] == 2 && [FasterBlockRate] == 30 && [FireResist] >= 30
 //[Name] == VortexShield && [Quality] == magic && [Flag] != ethereal && [AddPaladinSkills] == 2 && [FasterBlockRate] == 30 && [FireResist] >= 30
 
-//[Name] == SacredTarge && [Quality] == magic && [Flag] != ethereal && [PalidinCombatSkillTab] == 3 && [FasterBlockRate] == 30 && [FireResist] >= 30
-//[Name] == SacredRondache && [Quality] == magic && [Flag] != ethereal && [PalidinCombatSkillTab] == 3 && [FasterBlockRate] == 30 && [FireResist] >= 30
-//[Name] == KurastShield && [Quality] == magic && [Flag] != ethereal && [PalidinCombatSkillTab] == 3 && [FasterBlockRate] == 30 && [FireResist] >= 30
-//[Name] == ZakarumShield && [Quality] == magic && [Flag] != ethereal && [PalidinCombatSkillTab] == 3 && [FasterBlockRate] == 30 && [FireResist] >= 30
-//[Name] == VortexShield && [Quality] == magic && [Flag] != ethereal && [PalidinCombatSkillTab] == 3 && [FasterBlockRate] == 30 && [FireResist] >= 30
+//[Name] == SacredTarge && [Quality] == magic && [Flag] != ethereal && [PaladinCombatSkillTab] == 3 && [FasterBlockRate] == 30 && [FireResist] >= 30
+//[Name] == SacredRondache && [Quality] == magic && [Flag] != ethereal && [PaladinCombatSkillTab] == 3 && [FasterBlockRate] == 30 && [FireResist] >= 30
+//[Name] == KurastShield && [Quality] == magic && [Flag] != ethereal && [PaladinCombatSkillTab] == 3 && [FasterBlockRate] == 30 && [FireResist] >= 30
+//[Name] == ZakarumShield && [Quality] == magic && [Flag] != ethereal && [PaladinCombatSkillTab] == 3 && [FasterBlockRate] == 30 && [FireResist] >= 30
+//[Name] == VortexShield && [Quality] == magic && [Flag] != ethereal && [PaladinCombatSkillTab] == 3 && [FasterBlockRate] == 30 && [FireResist] >= 30
 
 //[Name] == SacredTarge && [Quality] == magic && [Flag] != ethereal && [Sockets] == 4 && [FasterBlockRate] == 30 && [FireResist] >= 30
 //[Name] == SacredRondache && [Quality] == magic && [Flag] != ethereal && [Sockets] == 4 && [FasterBlockRate] == 30 && [FireResist] >= 30
@@ -1156,11 +1193,11 @@ Perfect Diamond
 //[Name] == ZakarumShield && [Quality] == magic && [Flag] != ethereal && [AddPaladinSkills] == 2 && [FasterBlockRate] == 30 && [EnhancedDamage] >= 60 && [AttackRating] >= 120
 //[Name] == VortexShield && [Quality] == magic && [Flag] != ethereal && [AddPaladinSkills] == 2 && [FasterBlockRate] == 30 && [EnhancedDamage] >= 60 && [AttackRating] >= 120
 
-//[Name] == SacredTarge && [Quality] == magic && [Flag] != ethereal && [PalidinCombatSkillTab] == 3 && [FasterBlockRate] == 30 && [EnhancedDamage] >= 60 && [AttackRating] >= 120
-//[Name] == SacredRondache && [Quality] == magic && [Flag] != ethereal && [PalidinCombatSkillTab] == 3 && [FasterBlockRate] == 30 && [EnhancedDamage] >= 60 && [AttackRating] >= 120
-//[Name] == KurastShield && [Quality] == magic && [Flag] != ethereal && [PalidinCombatSkillTab] == 3 && [FasterBlockRate] == 30 && [EnhancedDamage] >= 60 && [AttackRating] >= 120
-//[Name] == ZakarumShield && [Quality] == magic && [Flag] != ethereal && [PalidinCombatSkillTab] == 3 && [FasterBlockRate] == 30 && [EnhancedDamage] >= 60 && [AttackRating] >= 120
-//[Name] == VortexShield && [Quality] == magic && [Flag] != ethereal && [PalidinCombatSkillTab] == 3 && [FasterBlockRate] == 30 && [EnhancedDamage] >= 60 && [AttackRating] >= 120
+//[Name] == SacredTarge && [Quality] == magic && [Flag] != ethereal && [PaladinCombatSkillTab] == 3 && [FasterBlockRate] == 30 && [EnhancedDamage] >= 60 && [AttackRating] >= 120
+//[Name] == SacredRondache && [Quality] == magic && [Flag] != ethereal && [PaladinCombatSkillTab] == 3 && [FasterBlockRate] == 30 && [EnhancedDamage] >= 60 && [AttackRating] >= 120
+//[Name] == KurastShield && [Quality] == magic && [Flag] != ethereal && [PaladinCombatSkillTab] == 3 && [FasterBlockRate] == 30 && [EnhancedDamage] >= 60 && [AttackRating] >= 120
+//[Name] == ZakarumShield && [Quality] == magic && [Flag] != ethereal && [PaladinCombatSkillTab] == 3 && [FasterBlockRate] == 30 && [EnhancedDamage] >= 60 && [AttackRating] >= 120
+//[Name] == VortexShield && [Quality] == magic && [Flag] != ethereal && [PaladinCombatSkillTab] == 3 && [FasterBlockRate] == 30 && [EnhancedDamage] >= 60 && [AttackRating] >= 120
 
 //[Name] == SacredTarge && [Quality] == magic && [Flag] != ethereal && [Sockets] == 4 && [FasterBlockRate] == 30 && [EnhancedDamage] >= 60 && [AttackRating] >= 120
 //[Name] == SacredRondache && [Quality] == magic && [Flag] != ethereal && [Sockets] == 4 && [FasterBlockRate] == 30 && [EnhancedDamage] >= 60 && [AttackRating] >= 120
@@ -1196,17 +1233,17 @@ Perfect Diamond
 //[Type] == auricshields && [Quality] == rare && [Flag] != ethereal && [Sockets] >= 2 && [AddPaladinSkills] >= 2 && [FasterBlockRate] >= 30
 
 //##### Necromancer Shrunken Heads (Exceptional)
-//[Name] == MummifiedTrophy && [Quality] == magic && [Flag] != ethereal && [AddNecromancerSkillss] >= 2 && [SkillBoneSpear]+[SkillBoneSpirit]+[SkillPoisonNova] >= 4
-//[Name] == FetishTrophy && [Quality] == magic && [Flag] != ethereal && [AddNecromancerSkillss] >= 2 && [SkillBoneSpear]+[SkillBoneSpirit]+[SkillPoisonNova] >= 4
-//[Name] == SextonTrophy && [Quality] == magic && [Flag] != ethereal && [AddNecromancerSkillss] >= 2 && [SkillBoneSpear]+[SkillBoneSpirit]+[SkillPoisonNova] >= 4
-//[Name] == HierophantTrophy && [Quality] == magic && [Flag] != ethereal && [AddNecromancerSkillss] >= 2 && [SkillBoneSpear]+[SkillBoneSpirit]+[SkillPoisonNova] >= 4
-//[Name] == MummifiedTrophy && [Quality] == magic && [Flag] != ethereal && [PoisonAndBoneSkillTab] >= 3 && [SkillBoneSpear]+[SkillBoneSpirit]+[SkillPoisonNova] >= 4
-//[Name] == FetishTrophy && [Quality] == magic && [Flag] != ethereal && [PoisonAndBoneSkillTab] >= 3 && [SkillBoneSpear]+[SkillBoneSpirit]+[SkillPoisonNova] >= 4
-//[Name] == SextonTrophy && [Quality] == magic && [Flag] != ethereal && [PoisonAndBoneSkillTab] >= 3 && [SkillBoneSpear]+[SkillBoneSpirit]+[SkillPoisonNova] >= 4
-//[Name] == HierophantTrophy && [Quality] == magic && [Flag] != ethereal && [PoisonAndBoneSkillTab] >= 3 && [SkillBoneSpear]+[SkillBoneSpirit]+[SkillPoisonNova] >= 4
+//[Name] == MummifiedTrophy && [Quality] == magic && [Flag] != ethereal && [AddNecromancerSkills] >= 2 && [Skillbonespear]+[Skillbonespirit]+[Skillpoisonnova] >= 4
+//[Name] == FetishTrophy && [Quality] == magic && [Flag] != ethereal && [AddNecromancerSkills] >= 2 && [Skillbonespear]+[Skillbonespirit]+[Skillpoisonnova] >= 4
+//[Name] == SextonTrophy && [Quality] == magic && [Flag] != ethereal && [AddNecromancerSkills] >= 2 && [Skillbonespear]+[Skillbonespirit]+[Skillpoisonnova] >= 4
+//[Name] == HierophantTrophy && [Quality] == magic && [Flag] != ethereal && [AddNecromancerSkills] >= 2 && [Skillbonespear]+[Skillbonespirit]+[Skillpoisonnova] >= 4
+//[Name] == MummifiedTrophy && [Quality] == magic && [Flag] != ethereal && [PoisonandBoneSkillTab] >= 3 && [Skillbonespear]+[Skillbonespirit]+[Skillpoisonnova] >= 4
+//[Name] == FetishTrophy && [Quality] == magic && [Flag] != ethereal && [PoisonandBoneSkillTab] >= 3 && [Skillbonespear]+[Skillbonespirit]+[Skillpoisonnova] >= 4
+//[Name] == SextonTrophy && [Quality] == magic && [Flag] != ethereal && [PoisonandBoneSkillTab] >= 3 && [Skillbonespear]+[Skillbonespirit]+[Skillpoisonnova] >= 4
+//[Name] == HierophantTrophy && [Quality] == magic && [Flag] != ethereal && [PoisonandBoneSkillTab] >= 3 && [Skillbonespear]+[Skillbonespirit]+[Skillpoisonnova] >= 4
 
 //##### Necromancer Shrunken Heads
-//[Type] == voodooheads && [Quality] == rare && [Flag] != ethereal && [Sockets] >= 2 && [AddNecromancerSkillss] >= 2 && [SkillBoneSpear]+[SkillBoneSpirit]+[SkillPoisonNova] >= 4
+//[Type] == voodooheads && [Quality] == rare && [Flag] != ethereal && [Sockets] >= 2 && [AddNecromancerSkills] >= 2 && [Skillbonespear]+[Skillbonespirit]+[Skillpoisonnova] >= 4
 
 //##### Axes
 //[Type] == axe && [Quality] == rare && [Flag] == ethereal && [Sockets] >= 2 && [EnhancedDamage] >= 250 && [MaxDamagePerLevel] >= 4 && [AttackRatingPerLevel] >= 33 && [IncreasedAttackSpeed] >= 20
@@ -1269,6 +1306,17 @@ Perfect Diamond
 //[Type] == assassinclaw && [Quality] == rare && [Flag] == ethereal && [Sockets] >= 2 && [EnhancedDamage] >= 250 && [MaxDamagePerLevel] >= 4 && [AttackRatingPerLevel] >= 33 && [IncreasedAttackSpeed] >= 20
 //[Type] == handtohand && [Quality] == rare && [Flag] == ethereal && [Sockets] >= 2 && [EnhancedDamage] >= 400 && [IncreasedAttackSpeed] >= 20
 //[Type] == assassinclaw && [Quality] == rare && [Flag] == ethereal && [Sockets] >= 2 && [EnhancedDamage] >= 400 && [IncreasedAttackSpeed] >= 20
+[Name] == GreaterTalons && [Quality] == magic && [AddAssassinSkills] == 2 && [Skilllightningsentry] == 3 // 5/6LS GT
+[Name] == GreaterTalons && [Quality] == magic && [TrapsSkillTab] == 3 && [Skilllightningsentry] == 3 // 5/6LS GT
+[Name] == GreaterTalons && [Quality] == magic && [AttackRatingPerLevel] > 15 && [IncreasedAttackSpeed] >= 30 && [Skilllightningsentry] == 3 // fool's IncreasedAttackSpeed LS claw
+[Name] == RunicTalons && [Quality] == magic && [AttackRatingPerLevel] > 15 && [IncreasedAttackSpeed] >= 30 && [Skilllightningsentry] == 3 // fool's IncreasedAttackSpeed LS claw
+[Name] == GreaterTalons && [Quality] == magic && [Sockets] == 3 && [IncreasedAttackSpeed] >= 30 // 3os IncreasedAttackSpeed claw
+[Name] == RunicTalons && [Quality] == magic && [Sockets] == 3 && [IncreasedAttackSpeed] >= 30 // 3os IncreasedAttackSpeed claw
+[Type] == handtohand && [Quality] == magic && [AddAssassinSkills] == 2 && [Skilllightningsentry] == 3 // 5/6LS any claw (gt/rt/sq/ss)
+[Type] == handtohand && [Quality] == magic && [TrapsSkillTab] == 3 && [Skilllightningsentry] == 3 // 5/6LS any claw (gt/rt/sq/ss)
+[Type] == handtohand && [Quality] == magic && [ShadowDisciplinesSkillTab] == 3 && [Skillfade] == 3 // prebuff 6 venom or 6 fade claw
+[Type] == handtohand && [Quality] == magic && [ShadowDisciplinesSkillTab] == 3 && [Skillvenom] == 3 // prebuff 6 venom or 6 fade claw
+[Name] == FeralClaws && [Quality] == magic  && [MartialArtsSkillTab] ==3 && [Sockets] == 2
 
 //##### Sorceress Orbs
 
@@ -1288,6 +1336,14 @@ Perfect Diamond
 [Type] == circlet && [Quality] == rare && [Flag] != ethereal && [Sockets] >= 2 && [AddClassSkills] >= 2 && [Dexterity] >= 10 && [FasterRunWalk] >= 30
 [Type] == circlet && [Quality] == rare && [Flag] != ethereal && [Sockets] >= 2 && [AddClassSkills] >= 2 && [Strength] >= 20 && [FasterCastRate] >= 20
 [Type] == circlet && [Quality] == rare && [Flag] != ethereal && [Sockets] >= 2 && [AddClassSkills] >= 2 && [Dexterity] >= 10 && [FasterCastRate] >= 20
+[Type] == circlet && [Quality] == rare && [ItemChargedSkill] == 54        // rare Tele Circlet
+[Type] == circlet && [Quality] == rare && [AddBarbarianSkills] == 2 && [GoldFind] == 70 && [Sockets] >= 0      // Gf Barb
+[Type] == circlet && [Quality] == rare && [AddClassSkills] >= 2 && [FasterCastRate] >= 20 && [Sockets] == 2        // All 2 Class Skills/20/2 FasterCastRate Circlets
+[Type] == circlet && [Quality] == rare && [AddClassSkills] >= 2 && [FasterCastRate] >= 20 && [Sockets] == 2        // All 2 Tree Skills/20/2 FasterCastRate Circlets
+//[Type] == circlet && [Quality] == rare && [Flag] != ethereal
+//[Name] == Tiara && [Quality] == rare && [Flag] != ethereal
+//[Name] == Coronet && [Quality] == rare && [Flag] != ethereal
+//[Name] == Diadem && [Quality] == rare && [Flag] != ethereal
 
 //##### Rings
 [Name] == Ring && [Quality] == magic && [FasterCastRate] >= 10 && [FireResist] >= 14 && [LightningResist] >= 14
@@ -1343,7 +1399,7 @@ Perfect Diamond
 [Name] == Jewel && [Quality] == rare && [EnhancedDamage] >= 26 && [FasterHitRecovery] >= 7 && [MinDamage] >= 6 && [Dexterity] >= 7
 [Name] == Jewel && [Quality] == rare && [EnhancedDamage] >= 26 && [FasterHitRecovery] >= 7 && [MaxDamage] >= 6 && [Dexterity] >= 7
 [Name] == Jewel && [Quality] == rare && [FireResist]+[LightningResist]+[ColdResist]+[PoisonResist] >= 28 && [FasterHitRecovery] >= 7 && [RequirementPercent] <= -15
-[Name] == Jewel && [Quality] == rare && [DamageToMana] >= 10 && [FasterHitRecovery] >= 7 && [RequirementPercent] <= -15
+[Name] == Jewel && [Quality] == rare && [DamageTakenGoesToMana] >= 10 && [FasterHitRecovery] >= 7 && [RequirementPercent] <= -15
 
 //##### Small Charms
 [Name] == SmallCharm && [Quality] == magic && [MaxDamage] >= 3 && [AttackRating] >= 12 && [LifeMax] >= 12
@@ -1432,7 +1488,7 @@ Perfect Diamond
 //[Name] == GrandCharm && [Quality] == magic && [PoisonandBoneSkillTab] == 1
 //[Name] == GrandCharm && [Quality] == magic && [NecromancerSummoningSkillTab] == 1
 //[Name] == GrandCharm && [Quality] == magic && [NecromancerSummoningSkillTab] == 1
-//[Name] == GrandCharm && [Quality] == magic && [PalidinCombatSkillTab] == 1 // paladin combat
+//[Name] == GrandCharm && [Quality] == magic && [PaladinCombatSkillTab] == 1 // paladin combat
 //[Name] == GrandCharm && [Quality] == magic && [BarbarianCombatSkillTab] == 1 // barbarian combat
 //[Name] == GrandCharm && [Quality] == magic && [ElementalSkillTab] == 1 // elemental
 //[Name] == GrandCharm && [Quality] == magic && [TrapsSkillTab] == 1 // trap
@@ -1441,3 +1497,4 @@ Perfect Diamond
 //#######################################
 //###### CUSTOM CREATED ITEMS
 //#######################################
+

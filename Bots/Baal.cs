@@ -342,7 +342,7 @@ public class Baal
                     }
 
                     //START CASTING IN ADVANCE
-                    if ((DateTime.Now - TimeSinceLastWaveDone).TotalSeconds > 6)
+                    if ((DateTime.Now - TimeSinceLastWaveDone).TotalSeconds > CharConfig.BaalWavesCastDelay)
                     {
                         Form1_0.Battle_0.SetSkills();
                         Form1_0.Battle_0.CastSkillsNoMove();

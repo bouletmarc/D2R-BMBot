@@ -42,7 +42,7 @@ public class TerrorZones
             return;
         }
 
-        Form1_0.Town_0.ScriptTownAct = 5; //set to town act 5 when running this script
+        Form1_0.Town_0.ScriptTownAct = Form1_0.AreaScript_0.GetActFromArea(TerrorZonesAreas[CurrentTerrorZonesIndex]); //set to town act 5 when running this script
 
         if (!Form1_0.Running || !Form1_0.GameStruc_0.IsInGame())
         {
@@ -54,6 +54,8 @@ public class TerrorZones
         {
             Form1_0.SetGameStatus("GO TO WP");
             CurrentStep = 0;
+
+            //Console.WriteLine(TerrorZonesAreas[CurrentTerrorZonesIndex]);
 
             if (TerrorZonesAreas[CurrentTerrorZonesIndex] == Area.BloodMoor) Form1_0.PathFinding_0.MoveToNextArea(Enums.Area.BloodMoor);
             else if (TerrorZonesAreas[CurrentTerrorZonesIndex] == Area.SewersLevel1Act2) Form1_0.PathFinding_0.MoveToNextArea(Enums.Area.SewersLevel1Act2);
@@ -147,6 +149,11 @@ public class TerrorZones
                 Form1_0.PathFinding_0.MoveToExit(Enums.Area.TowerCellarLevel3);
                 Form1_0.PathFinding_0.MoveToExit(Enums.Area.TowerCellarLevel4);
                 Form1_0.PathFinding_0.MoveToExit(Enums.Area.TowerCellarLevel5);
+            }
+            else if (TerrorZonesAreas[CurrentTerrorZonesIndex] == Area.Barracks)
+            {
+                Form1_0.Town_0.GoToWPArea(1, 5);
+                Form1_0.PathFinding_0.MoveToNextArea(Enums.Area.Barracks);
             }
             else if (TerrorZonesAreas[CurrentTerrorZonesIndex] == Area.JailLevel1) Form1_0.Town_0.GoToWPArea(1, 6);
             else if (TerrorZonesAreas[CurrentTerrorZonesIndex] == Area.JailLevel2)

@@ -163,5 +163,33 @@ public static class CharConfig
     //public static int ScreenY = 1080;
     //public static int ScreenYMenu = 180;    //REMOVE 180 PIXEL FROM THE BOTTOM SCREEN TO NOT CLIC ANY BOTTOM MENU BUTTONS
 
+    //#######################################
+    //BOT DELAYS/ADVANCED SETTINGS
+    //#######################################
+    public static int MaxDelayNewGame = 250;
+    public static int WaypointEnterDelay = 350;
+    public static int MaxMercReliveTries = 3;
+    public static int MaxItemIDTries = 10;
+    public static int MaxItemGrabTries = 50;
+    public static int MaxItemStashTries = 6;
+    public static int StashFullTries = 15;
+    public static int MaxShopTries = 6;
+    public static int MaxRepairTries = 3;
+    public static int MaxGambleTries = 3;
+    public static int MaxBattleAttackTries = 8;
+    public static int TakeHPPotionDelay = 3500;
+    public static int TakeManaPotionDelay = 2500;
+    public static double OverallDelaysMultiplyer = 1.0;
+    public static int EndBattleGrabDelay = 5; //multiplyed over 10x (50 real Delay)
+    public static int MaxTimeEnterGame = 180;
+    public static int BaalWavesCastDelay = 6;
+    public static int ChaosWaitingSealBossDelay = 2;
+    public static int RecastBODelay = 180;
+    public static int TownSwitchAreaDelay = 2;
+    public static int PublicGameTPRespawnDelay = 180;
+    public static int PlayerMaxHPCheckDelay = 2000;
+    public static int LeechEnterTPDelay = 600;
+    public static int MephistoRedPortalEnterDelay = 800;
+    public static int CubeItemPlaceDelay = 16;
 
 }

@@ -148,9 +148,9 @@ public class MobsStruc
         try
         {
             Form1_0.PatternsScan_0.scanForUnitsPointer("NPC");
-            for (int i = 0; i < Form1_0.PatternsScan_0.AllNPCPointers.Count; i++)
+            foreach (var ThisCurrentPointer in Form1_0.PatternsScan_0.AllNPCPointers)
             {
-                MobsPointerLocation = Form1_0.PatternsScan_0.AllNPCPointers[i];
+                MobsPointerLocation = ThisCurrentPointer.Key;
                 if (MobsPointerLocation > 0)
                 {
                     //mobsdatastruc = new byte[144];
@@ -221,9 +221,9 @@ public class MobsStruc
 
         try
         {
-            for (int i = 0; i < Form1_0.PatternsScan_0.AllNPCPointers.Count; i++)
+            foreach (var ThisCurrentPointer in Form1_0.PatternsScan_0.AllNPCPointers)
             {
-                MobsPointerLocation = Form1_0.PatternsScan_0.AllNPCPointers[i];
+                MobsPointerLocation = ThisCurrentPointer.Key;
                 if (MobsPointerLocation > 0)
                 {
                     //mobsdatastruc = new byte[144];
@@ -269,7 +269,7 @@ public class MobsStruc
                         {
                             if ((xPosFinalAll != 0 && yPosFinalAll != 0 && Form1_0.checkBoxShowOnlyValidMobs.Checked) || !Form1_0.checkBoxShowOnlyValidMobs.Checked)
                             {
-                                Form1_0.AppendTextDebugMobs("ID:" + txtFileNo2 + "(" + (EnumsMobsNPC.MonsterType)((int)txtFileNo2) + ") at:" + xPosFinalAll + ", " + yPosFinalAll + " - HP:" + MobsHPAll + Environment.NewLine);
+                                Form1_0.AppendTextDebugMobs("ID:" + txtFileNo2 + "(" + (EnumsMobsNPC.MonsterType)((int)txtFileNo2) + ") at:" + xPosFinalAll + ", " + yPosFinalAll + " - HP:" + MobsHPAll + ", Type:" + ((Enums.MonsterType) GetMonsterType(flag)) + Environment.NewLine);
                             }
                         }
 
@@ -440,15 +440,23 @@ public class MobsStruc
         int LastDiffY = 999;
         bool GoodMob = false;
 
-        if (CharConfig.KillOnlySuperUnique && MobType == "" && MobName == "" && Nearest 
+        //Set Kill Only the Uniques Mobs
+        if (CharConfig.KillOnlySuperUnique && MobType == "" && MobName == ""
             && (Enums.Area) Form1_0.PlayerScan_0.levelNo != Enums.Area.ThroneOfDestruction)
+        {
+            MobType = "getUniqueName";
+        }
+
+        //Set Fast Chaos Only Super Uniques
+        if (Form1_0.Chaos_0.FastChaos && MobType == "" && MobName == ""
+            && (Enums.Area)Form1_0.PlayerScan_0.levelNo == Enums.Area.ChaosSanctuary)
         {
             MobType = "getSuperUniqueName";
         }
 
-        for (int i = 0; i < Form1_0.PatternsScan_0.AllNPCPointers.Count; i++)
+        foreach (var ThisCurrentPointer in Form1_0.PatternsScan_0.AllNPCPointers)
         {
-            MobsPointerLocation = Form1_0.PatternsScan_0.AllNPCPointers[i];
+            MobsPointerLocation = ThisCurrentPointer.Key;
             if (MobsPointerLocation > 0 && !IsIgnored(IgnoredListPointers))
             {
                 //mobsdatastruc = new byte[144];
@@ -482,6 +490,32 @@ public class MobsStruc
                     GetUnitPathData();
                     GetStatsAddr();
                     int MobHPBuffer = GetHPFromStats();
+
+                    CurrentPointerBytes = new byte[8];
+                    Form1_0.Mem_0.ReadRawMemory(MobsPointerLocation + 0x10, ref CurrentPointerBytes, CurrentPointerBytes.Length);
+                    long unitDataPtr = BitConverter.ToInt64(CurrentPointerBytes, 0);
+                    byte flag = Form1_0.Mem_0.ReadByteRaw((IntPtr)(unitDataPtr + 0x1A));
+
+                    if (MobType == "getBossName"
+                        && (Enums.MonsterType)GetMonsterType(flag) != Enums.MonsterType.Champion)
+                    {
+                        continue;
+                    }
+
+                    if (MobType == "getSuperUniqueName"
+                        && (Enums.MonsterType)GetMonsterType(flag) != Enums.MonsterType.Champion
+                        && (Enums.MonsterType)GetMonsterType(flag) != Enums.MonsterType.SuperUnique)
+                    {
+                        continue;
+                    }
+
+                    if (MobType == "getUniqueName"
+                        && (Enums.MonsterType)GetMonsterType(flag) != Enums.MonsterType.Champion 
+                        && (Enums.MonsterType)GetMonsterType(flag) != Enums.MonsterType.SuperUnique
+                        && (Enums.MonsterType)GetMonsterType(flag) != Enums.MonsterType.Unique)
+                    {
+                        continue;
+                    }
 
                     //Avoid Immunes
                     if (CharConfig.AvoidColdImmune
@@ -581,10 +615,11 @@ public class MobsStruc
                                 }
                             }
                         }
-                        if (MobType == "getSuperUniqueName")
+                        if (MobType == "getSuperUniqueName" || MobType == "getUniqueName")
                         {
                             if ((MobName == "" && getSuperUniqueName((int)txtFileNo) != "") || (MobName != "" && getSuperUniqueName((int)txtFileNo) == MobName))
                             {
+                                //Console.WriteLine(getSuperUniqueName((int)txtFileNo));
                                 if (!Nearest)
                                 {
                                     MobsHP = MobHPBuffer;

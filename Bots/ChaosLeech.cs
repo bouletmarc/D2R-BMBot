@@ -12,7 +12,7 @@ public class ChaosLeech
     Form1 Form1_0;
 
     public int CurrentStep = 0;
-    public int MaxGameTimeToEnter = (4 * 60); //6mins
+    public int MaxGameTimeToEnter = CharConfig.MaxTimeEnterGame; //6mins
     public int MaxTimeWaitedForTP = (2 * 60) * 2; //2mins
     public int TimeWaitedForTP = 0;
     public bool PrintedInfos = false;
@@ -196,7 +196,7 @@ public class ChaosLeech
                 }
                 else
                 {
-                    Form1_0.WaitDelay(450);
+                    Form1_0.WaitDelay(CharConfig.LeechEnterTPDelay);
                     TimeWaitedForTP++;
                 }
             }

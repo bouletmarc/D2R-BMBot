@@ -6,6 +6,7 @@ using System.Text;
 using System.Drawing;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Globalization;
 
 public class SettingsLoader
 {
@@ -388,6 +389,34 @@ public class SettingsLoader
                 if (Splitted[0] == "KeyOpenInventory") AllLines[i] = "KeyOpenInventory=" + CharConfig.KeyOpenInventory;
                 if (Splitted[0] == "KeyForceMovement") AllLines[i] = "KeyForceMovement=" + CharConfig.KeyForceMovement;
                 if (Splitted[0] == "KeySwapWeapon") AllLines[i] = "KeySwapWeapon=" + CharConfig.KeySwapWeapon;
+
+                //###########################################
+                //Advanced Bot Settings
+                if (Splitted[0] == "MaxDelayNewGame") AllLines[i] = "MaxDelayNewGame=" + CharConfig.MaxDelayNewGame;
+                if (Splitted[0] == "WaypointEnterDelay") AllLines[i] = "WaypointEnterDelay=" + CharConfig.WaypointEnterDelay;
+                if (Splitted[0] == "MaxMercReliveTries") AllLines[i] = "MaxMercReliveTries=" + CharConfig.MaxMercReliveTries;
+                if (Splitted[0] == "MaxItemIDTries") AllLines[i] = "MaxItemIDTries=" + CharConfig.MaxItemIDTries;
+                if (Splitted[0] == "MaxItemGrabTries") AllLines[i] = "MaxItemGrabTries=" + CharConfig.MaxItemGrabTries;
+                if (Splitted[0] == "MaxItemStashTries") AllLines[i] = "MaxItemStashTries=" + CharConfig.MaxItemStashTries;
+                if (Splitted[0] == "StashFullTries") AllLines[i] = "StashFullTries=" + CharConfig.StashFullTries;
+                if (Splitted[0] == "MaxShopTries") AllLines[i] = "MaxShopTries=" + CharConfig.MaxShopTries;
+                if (Splitted[0] == "MaxRepairTries") AllLines[i] = "MaxRepairTries=" + CharConfig.MaxRepairTries;
+                if (Splitted[0] == "MaxGambleTries") AllLines[i] = "MaxGambleTries=" + CharConfig.MaxGambleTries;
+                if (Splitted[0] == "MaxBattleAttackTries") AllLines[i] = "MaxBattleAttackTries=" + CharConfig.MaxBattleAttackTries;
+                if (Splitted[0] == "TakeHPPotionDelay") AllLines[i] = "TakeHPPotionDelay=" + CharConfig.TakeHPPotionDelay;
+                if (Splitted[0] == "TakeManaPotionDelay") AllLines[i] = "TakeManaPotionDelay=" + CharConfig.TakeManaPotionDelay;
+                if (Splitted[0] == "EndBattleGrabDelay") AllLines[i] = "EndBattleGrabDelay=" + CharConfig.EndBattleGrabDelay;
+                if (Splitted[0] == "MaxTimeEnterGame") AllLines[i] = "MaxTimeEnterGame=" + CharConfig.MaxTimeEnterGame;
+                if (Splitted[0] == "BaalWavesCastDelay") AllLines[i] = "BaalWavesCastDelay=" + CharConfig.BaalWavesCastDelay;
+                if (Splitted[0] == "ChaosWaitingSealBossDelay") AllLines[i] = "ChaosWaitingSealBossDelay=" + CharConfig.ChaosWaitingSealBossDelay;
+                if (Splitted[0] == "RecastBODelay") AllLines[i] = "RecastBODelay=" + CharConfig.RecastBODelay;
+                if (Splitted[0] == "TownSwitchAreaDelay") AllLines[i] = "TownSwitchAreaDelay=" + CharConfig.TownSwitchAreaDelay;
+                if (Splitted[0] == "PublicGameTPRespawnDelay") AllLines[i] = "PublicGameTPRespawnDelay=" + CharConfig.PublicGameTPRespawnDelay;
+                if (Splitted[0] == "PlayerMaxHPCheckDelay") AllLines[i] = "PlayerMaxHPCheckDelay=" + CharConfig.PlayerMaxHPCheckDelay;
+                if (Splitted[0] == "LeechEnterTPDelay") AllLines[i] = "LeechEnterTPDelay=" + CharConfig.LeechEnterTPDelay;
+                if (Splitted[0] == "MephistoRedPortalEnterDelay") AllLines[i] = "MephistoRedPortalEnterDelay=" + CharConfig.MephistoRedPortalEnterDelay;
+                if (Splitted[0] == "CubeItemPlaceDelay") AllLines[i] = "CubeItemPlaceDelay=" + CharConfig.CubeItemPlaceDelay;
+                if (Splitted[0] == "OverallDelaysMultiplyer") AllLines[i] = "OverallDelaysMultiplyer=" + CharConfig.OverallDelaysMultiplyer;
             }
         }
 
@@ -782,6 +811,8 @@ public class SettingsLoader
 
             //Form1_0.ItemsAlert_0.PickItemsUnique = new string[AllNormal.Count];
             //for (int i = 0; i < AllNormal.Count; i++) Form1_0.ItemsAlert_0.PickItemsUnique[i] = AllNormal[i];
+
+            Form1_0.ItemsAlert_0.CheckItemNames();
         }
         catch
         {
@@ -1405,6 +1436,34 @@ public class SettingsLoader
                             {
                                 Enum.TryParse(Params[1], out CharConfig.KeySwapWeapon);
                             }
+
+                            //###########################################
+                            //Advanced Bot Settings
+                            if (Params[0].Contains("MaxDelayNewGame")) CharConfig.MaxDelayNewGame = int.Parse(Params[1]);
+                            if (Params[0].Contains("WaypointEnterDelay")) CharConfig.WaypointEnterDelay = int.Parse(Params[1]);
+                            if (Params[0].Contains("MaxMercReliveTries")) CharConfig.MaxMercReliveTries = int.Parse(Params[1]);
+                            if (Params[0].Contains("MaxItemIDTries")) CharConfig.MaxItemIDTries = int.Parse(Params[1]);
+                            if (Params[0].Contains("MaxItemGrabTries")) CharConfig.MaxItemGrabTries = int.Parse(Params[1]);
+                            if (Params[0].Contains("MaxItemStashTries")) CharConfig.MaxItemStashTries = int.Parse(Params[1]);
+                            if (Params[0].Contains("StashFullTries")) CharConfig.StashFullTries = int.Parse(Params[1]);
+                            if (Params[0].Contains("MaxShopTries")) CharConfig.MaxShopTries = int.Parse(Params[1]);
+                            if (Params[0].Contains("MaxRepairTries")) CharConfig.MaxRepairTries = int.Parse(Params[1]);
+                            if (Params[0].Contains("MaxGambleTries")) CharConfig.MaxGambleTries = int.Parse(Params[1]);
+                            if (Params[0].Contains("MaxBattleAttackTries")) CharConfig.MaxBattleAttackTries = int.Parse(Params[1]);
+                            if (Params[0].Contains("TakeHPPotionDelay")) CharConfig.TakeHPPotionDelay = int.Parse(Params[1]);
+                            if (Params[0].Contains("TakeManaPotionDelay")) CharConfig.TakeManaPotionDelay = int.Parse(Params[1]);
+                            if (Params[0].Contains("EndBattleGrabDelay")) CharConfig.EndBattleGrabDelay = int.Parse(Params[1]);
+                            if (Params[0].Contains("MaxTimeEnterGame")) CharConfig.MaxTimeEnterGame = int.Parse(Params[1]);
+                            if (Params[0].Contains("BaalWavesCastDelay")) CharConfig.BaalWavesCastDelay = int.Parse(Params[1]);
+                            if (Params[0].Contains("ChaosWaitingSealBossDelay")) CharConfig.ChaosWaitingSealBossDelay = int.Parse(Params[1]);
+                            if (Params[0].Contains("RecastBODelay")) CharConfig.RecastBODelay = int.Parse(Params[1]);
+                            if (Params[0].Contains("TownSwitchAreaDelay")) CharConfig.TownSwitchAreaDelay = int.Parse(Params[1]);
+                            if (Params[0].Contains("PublicGameTPRespawnDelay")) CharConfig.PublicGameTPRespawnDelay = int.Parse(Params[1]);
+                            if (Params[0].Contains("PlayerMaxHPCheckDelay")) CharConfig.PlayerMaxHPCheckDelay = int.Parse(Params[1]);
+                            if (Params[0].Contains("LeechEnterTPDelay")) CharConfig.LeechEnterTPDelay = int.Parse(Params[1]);
+                            if (Params[0].Contains("MephistoRedPortalEnterDelay")) CharConfig.MephistoRedPortalEnterDelay = int.Parse(Params[1]);
+                            if (Params[0].Contains("CubeItemPlaceDelay")) CharConfig.CubeItemPlaceDelay = int.Parse(Params[1]);
+                            if (Params[0].Contains("OverallDelaysMultiplyer")) CharConfig.OverallDelaysMultiplyer = double.Parse(Params[1], System.Globalization.CultureInfo.InvariantCulture);
                         }
                     }
                 }

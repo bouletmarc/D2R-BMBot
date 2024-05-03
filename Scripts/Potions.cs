@@ -157,7 +157,7 @@ public class Potions
         {
             bool UsedPot = false;
             TimeSpan ThisTimeCheck = DateTime.Now - LastTimeSinceUsedHPPot;
-            if (ThisTimeCheck.TotalMilliseconds > 3500)
+            if (ThisTimeCheck.TotalMilliseconds > CharConfig.TakeHPPotionDelay)
             {
                 for (int i = 0; i < CharConfig.BeltPotTypeToHave.Length; i++)
                 {
@@ -191,7 +191,7 @@ public class Potions
         {
             bool UsedPot = false;
             TimeSpan ThisTimeCheck = DateTime.Now - LastTimeSinceUsedManaPot;
-            if (ThisTimeCheck.TotalMilliseconds > 2500)
+            if (ThisTimeCheck.TotalMilliseconds > CharConfig.TakeManaPotionDelay)
             {
                 for (int i = 0; i < CharConfig.BeltPotTypeToHave.Length; i++)
                 {

@@ -24,10 +24,11 @@ public class Town
     public int TriedToStashCount = 0;
     public int TriedToGambleCount = 0;
     public int TriedToShopCount = 0;
+    public int TriedToShopCount2 = 0;
+    public int TriedToRepairCount = 0;
     public int TriedToMercCount = 0;
     public int TriedToUseTPCount = 0;
     public int CurrentScript = 0;
-    public int TriedToShopCount2 = 0;
     public bool TownScriptDone = false;
 
     public uint LastUsedTPID = 0;
@@ -51,6 +52,7 @@ public class Town
         TriedToGambleCount = 0;
         TriedToShopCount = 0;
         TriedToShopCount2 = 0;
+        TriedToRepairCount = 0;
         TriedToMercCount = 0;
         TriedToUseTPCount = 0;
         Towning = false;
@@ -62,7 +64,7 @@ public class Town
         if (Form1_0.PublicGame)
         {
             DateTime StartWaitingChangeArea = DateTime.Now;
-            while (GetInTown() && (DateTime.Now - StartWaitingChangeArea).TotalSeconds < 2)
+            while (GetInTown() && (DateTime.Now - StartWaitingChangeArea).TotalSeconds < CharConfig.TownSwitchAreaDelay)
             {
                 Form1_0.PlayerScan_0.GetPositions();
                 Form1_0.overlayForm.UpdateOverlay();
@@ -70,9 +72,9 @@ public class Town
                 Form1_0.ItemsStruc_0.GetItems(false);
             }
 
-            if ((DateTime.Now - StartWaitingChangeArea).TotalSeconds < 2)
+            if ((DateTime.Now - StartWaitingChangeArea).TotalSeconds < CharConfig.TownSwitchAreaDelay)
             {
-                Form1_0.WaitDelay(300);
+                Form1_0.WaitDelay(CharConfig.PublicGameTPRespawnDelay);
                 Form1_0.Town_0.SpawnTP();
             }
 
@@ -279,53 +281,53 @@ public class Town
             //ID Items
             if (CurrentScript == 1)
             {
-                if (!Form1_0.InventoryStruc_0.HasUnidItemInInventory() || (FastTowning && Form1_0.ItemsStruc_0.TriesToPickItemCount < 50))
+                if (!Form1_0.InventoryStruc_0.HasUnidItemInInventory() || (FastTowning && Form1_0.ItemsStruc_0.TriesToPickItemCount < CharConfig.MaxItemGrabTries))
                 {
                     CurrentScript++;
                 }
 
-                if (TriedToCainCount2 >= 10)
+                if (TriedToCainCount2 >= CharConfig.MaxItemIDTries)
                 {
                     CurrentScript++;
                 }
 
                 //Go see Cain if we cannot ID at shop
-                if (CharConfig.IDAtShop && Form1_0.Shop_0.HasUnidItem && TriedToCainCount2 < 10)
+                if (CharConfig.IDAtShop && Form1_0.Shop_0.HasUnidItem && TriedToCainCount2 < CharConfig.MaxItemIDTries)
                 {
-                    Form1_0.SetGameStatus("TOWN-CAIN");
+                    Form1_0.SetGameStatus("TOWN-CAIN (" + (TriedToCainCount2 + 1) + "/" + CharConfig.MaxItemIDTries + ")");
                     MoveToCain();
                     AlreadyGoneToShop = false;
-                    TriedToCainCount = 10;
+                    TriedToCainCount = CharConfig.MaxItemIDTries;
                     TriedToCainCount2++;
                     return;
                 }
 
                 if (CurrentScript == 1)
                 {
-                    if (TriedToCainCount >= 10)
+                    if (TriedToCainCount >= CharConfig.MaxItemIDTries)
                     {
                         if (CharConfig.IDAtShop) Form1_0.Shop_0.HasUnidItem = true;
                         else
                         {
-                            TriedToCainCount = 10;
-                            TriedToCainCount2 = 10;
+                            TriedToCainCount = CharConfig.MaxItemIDTries;
+                            TriedToCainCount2 = CharConfig.MaxItemIDTries;
                             CurrentScript++;
                         }
                         return;
                     }
 
-                    if (Form1_0.InventoryStruc_0.HasUnidItemInInventory() && TriedToCainCount < 10)
+                    if (Form1_0.InventoryStruc_0.HasUnidItemInInventory() && TriedToCainCount < CharConfig.MaxItemIDTries)
                     {
                         if (!CharConfig.IDAtShop)
                         {
-                            Form1_0.SetGameStatus("TOWN-CAIN");
+                            Form1_0.SetGameStatus("TOWN-CAIN (" + (TriedToCainCount + 1) + "/" + CharConfig.MaxItemIDTries + ")");
                             MoveToCain();
                             TriedToCainCount++;
                         }
                         else
                         {
                             AlreadyGoneToShop = true;
-                            Form1_0.SetGameStatus("TOWN-SHOP (ID)");
+                            Form1_0.SetGameStatus("TOWN-SHOP (IDENTIFY ITEMS) (" + (TriedToCainCount + 1) + "/" + CharConfig.MaxItemIDTries + ")");
                             MoveToStore();
                             TriedToCainCount++;
                         }
@@ -343,7 +345,7 @@ public class Town
                     ShouldReliveMerc = !Form1_0.MercStruc_0.MercAlive;
                 }
 
-                if (!ShouldReliveMerc || TriedToMercCount >= 3
+                if (!ShouldReliveMerc || TriedToMercCount >= CharConfig.MaxMercReliveTries
                     || (Form1_0.PlayerScan_0.PlayerGoldInventory + Form1_0.PlayerScan_0.PlayerGoldInStash) < 75000)
                 {
                     CurrentScript++;
@@ -351,10 +353,10 @@ public class Town
 
                 if (CurrentScript == 2)
                 {
-                    if (ShouldReliveMerc && TriedToMercCount < 3
+                    if (ShouldReliveMerc && TriedToMercCount < CharConfig.MaxMercReliveTries
                         && (Form1_0.PlayerScan_0.PlayerGoldInventory + Form1_0.PlayerScan_0.PlayerGoldInStash) >= 75000)
                     {
-                        Form1_0.SetGameStatus("TOWN-MERC");
+                        Form1_0.SetGameStatus("TOWN-MERC (" + (TriedToMercCount + 1) + "/" + CharConfig.MaxMercReliveTries + ")");
                         MoveToMerc();
                         TriedToMercCount++;
                     }
@@ -370,9 +372,9 @@ public class Town
             if (CurrentScript == 3)
             {
                 if (Form1_0.InventoryStruc_0.HasUnidItemInInventory()
-                    && (!FastTowning || (FastTowning && Form1_0.ItemsStruc_0.TriesToPickItemCount >= 50))
-                    && TriedToCainCount2 < 10
-                    && TriedToCainCount < 10)
+                    && (!FastTowning || (FastTowning && Form1_0.ItemsStruc_0.TriesToPickItemCount >= CharConfig.MaxItemGrabTries))
+                    && TriedToCainCount2 < CharConfig.MaxItemIDTries
+                    && TriedToCainCount < CharConfig.MaxItemIDTries)
                 {
                     //return to identify script, still contain unid item
                     CurrentScript = 1;
@@ -381,19 +383,19 @@ public class Town
                 }
 
                 if ((!Form1_0.InventoryStruc_0.ContainStashItemInInventory() && (Form1_0.PlayerScan_0.PlayerGoldInventory < 35000))
-                            || TriedToStashCount >= 6 || (FastTowning && Form1_0.ItemsStruc_0.TriesToPickItemCount < 50 && Form1_0.ItemsStruc_0.TriesToPickItemCount >= 0))
+                            || TriedToStashCount >= CharConfig.MaxItemStashTries || (FastTowning && Form1_0.ItemsStruc_0.TriesToPickItemCount < CharConfig.MaxItemGrabTries && Form1_0.ItemsStruc_0.TriesToPickItemCount >= 0))
                 {
                     CurrentScript++;
                 }
 
                 if (CurrentScript == 3)
                 {
-                    if ((Form1_0.InventoryStruc_0.ContainStashItemInInventory() || (Form1_0.PlayerScan_0.PlayerGoldInventory >= 35000)) && TriedToStashCount < 6)
+                    if ((Form1_0.InventoryStruc_0.ContainStashItemInInventory() || (Form1_0.PlayerScan_0.PlayerGoldInventory >= 35000)) && TriedToStashCount < CharConfig.MaxItemStashTries)
                     {
                         string DescTxt = "";
                         if (Form1_0.InventoryStruc_0.ContainStashItemInInventory()) DescTxt += " (ITEM)";
                         if ((Form1_0.PlayerScan_0.PlayerGoldInventory >= 35000)) DescTxt += " (GOLD)";
-                        Form1_0.SetGameStatus("TOWN-STASH" + DescTxt + " (" + (TriedToStashCount + 1) + "/" + 6 + ")");
+                        Form1_0.SetGameStatus("TOWN-STASH" + DescTxt + " (" + (TriedToStashCount + 1) + "/" + CharConfig.MaxItemStashTries + ")");
                         MoveToStash(true);
                         TriedToStashCount++;
                     }
@@ -407,17 +409,17 @@ public class Town
                 {
                     CurrentScript++;
                 }
-                if (!Form1_0.Gamble_0.CanGamble() || TriedToGambleCount >= 3 || FastTowning)
+                if (!Form1_0.Gamble_0.CanGamble() || TriedToGambleCount >= CharConfig.MaxGambleTries || FastTowning)
                 {
                     CurrentScript++;
                 }
 
                 if (CurrentScript == 4)
                 {
-                    if (Form1_0.Gamble_0.CanGamble() && TriedToGambleCount < 3 && !FastTowning)
+                    if (Form1_0.Gamble_0.CanGamble() && TriedToGambleCount < CharConfig.MaxGambleTries && !FastTowning)
                     {
                         TriedToStashCount = 0;
-                        Form1_0.SetGameStatus("TOWN-GAMBLE (" + (TriedToGambleCount + 1) + "/" + 3 + ")");
+                        Form1_0.SetGameStatus("TOWN-GAMBLE (" + (TriedToGambleCount + 1) + "/" + CharConfig.MaxGambleTries + ")");
                         MoveToGamble();
                         TriedToGambleCount++;
                     }
@@ -443,7 +445,7 @@ public class Town
                 }
                 else
                 {
-                    if (!Form1_0.Shop_0.ShouldShop() || TriedToShopCount >= 6)
+                    if (!Form1_0.Shop_0.ShouldShop() || TriedToShopCount >= CharConfig.MaxShopTries)
                     {
                         //Console.WriteLine("town shop done");
                         CurrentScript++;
@@ -451,7 +453,7 @@ public class Town
 
                     if (CurrentScript == 5)
                     {
-                        if (Form1_0.Shop_0.ShouldShop() && TriedToShopCount < 6)
+                        if (Form1_0.Shop_0.ShouldShop() && TriedToShopCount < CharConfig.MaxShopTries)
                         {
                             string DescTxt = "";
                             if (Form1_0.Shop_0.ShopForSellingitem) DescTxt += " (SELL)";
@@ -461,7 +463,7 @@ public class Town
                             if (Form1_0.Shop_0.ShopForKey) DescTxt += " (KEYS)";
                             if (Form1_0.Shop_0.ShopForRegainHP) DescTxt += " (REGEN HP)";
 
-                            Form1_0.SetGameStatus("TOWN-SHOP" + DescTxt + " (" + (TriedToShopCount + 1) + "/" + 6 + ")");
+                            Form1_0.SetGameStatus("TOWN-SHOP" + DescTxt + " (" + (TriedToShopCount + 1) + "/" + CharConfig.MaxShopTries + ")");
                             //Console.WriteLine("town moving to shop");
                             MoveToStore();
                             TriedToShopCount++;
@@ -475,18 +477,18 @@ public class Town
             //check for repair
             if (CurrentScript == 6)
             {
-                if (!Form1_0.Repair_0.GetShouldRepair() || TriedToShopCount >= 12 || FastTowning)
+                if (!Form1_0.Repair_0.GetShouldRepair() || TriedToRepairCount >= CharConfig.MaxRepairTries || FastTowning)
                 {
                     CurrentScript++;
                 }
 
                 if (CurrentScript == 6)
                 {
-                    if (Form1_0.Repair_0.GetShouldRepair() && TriedToShopCount < 12 && !FastTowning)
+                    if (Form1_0.Repair_0.GetShouldRepair() && TriedToRepairCount < CharConfig.MaxRepairTries && !FastTowning)
                     {
-                        Form1_0.SetGameStatus("TOWN-REPAIR" + " (" + (TriedToShopCount + 1) + "/" + 12 + ")");
+                        Form1_0.SetGameStatus("TOWN-REPAIR" + " (" + (TriedToRepairCount + 1) + "/" + CharConfig.MaxRepairTries + ")");
                         MoveToRepair();
-                        TriedToShopCount++;
+                        TriedToRepairCount++;
                     }
                 }
             }
@@ -697,7 +699,7 @@ public class Town
         Form1_0.KeyMouse_0.MouseClicc(285, 260 + (ThisIndexx * 60));
         Form1_0.UIScan_0.WaitTilUIClose("waypointMenu");
         Form1_0.UIScan_0.WaitTilUIClose("loading");
-        Form1_0.WaitDelay(350);
+        Form1_0.WaitDelay(CharConfig.WaypointEnterDelay);
     }
 
     public void SelectTownWP()
@@ -713,7 +715,7 @@ public class Town
         Form1_0.KeyMouse_0.MouseClicc(285, 270); //select first wp
         Form1_0.UIScan_0.WaitTilUIClose("waypointMenu");
         Form1_0.UIScan_0.WaitTilUIClose("loading");
-        Form1_0.WaitDelay(350);
+        Form1_0.WaitDelay(CharConfig.WaypointEnterDelay);
     }
 
     public bool ShouldBeInTown()
@@ -724,7 +726,7 @@ public class Town
         bool ShouldBe = false;
         if (Form1_0.InventoryStruc_0.HasUnidItemInInventory() && !FastTowning) ShouldBe = true;
         if (Form1_0.InventoryStruc_0.ContainStashItemInInventory() && !FastTowning) ShouldBe = true;
-        if (Form1_0.ItemsStruc_0.TriesToPickItemCount >= 50)
+        if (Form1_0.ItemsStruc_0.TriesToPickItemCount >= CharConfig.MaxItemGrabTries)
         {
             if (Form1_0.InventoryStruc_0.HasUnidItemInInventory()) ShouldBe = true;
             if (Form1_0.InventoryStruc_0.ContainStashItemInInventory()) ShouldBe = true;
@@ -914,7 +916,7 @@ public class Town
         //MISSING TOWN ACT HERE -> DONT GAMBLE IN OTHER TOWN ACT
         if (TownAct != 5)
         {
-            TriedToGambleCount = 15;
+            TriedToGambleCount = CharConfig.MaxGambleTries + 5;
             return;
         }
 

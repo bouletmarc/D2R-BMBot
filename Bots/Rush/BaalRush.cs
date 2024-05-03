@@ -228,7 +228,7 @@ public class BaalRush
                     }
 
                     //START CASTING IN ADVANCE
-                    if ((DateTime.Now - TimeSinceLastWaveDone).TotalSeconds > 3)
+                    if ((DateTime.Now - TimeSinceLastWaveDone).TotalSeconds > CharConfig.BaalWavesCastDelay)
                     {
                         Form1_0.Battle_0.SetSkills();
                         Form1_0.Battle_0.CastSkillsNoMove();
@@ -339,7 +339,7 @@ public class BaalRush
             {
                 Form1_0.SetGameStatus("MOVING TO BAAL");
                 Form1_0.PathFinding_0.MoveToThisPos(new Position { X = 15134, Y = 5927 });
-                Form1_0.WaitDelay(50); //wait a bit to detect baal
+                //Form1_0.WaitDelay(50); //wait a bit to detect baal
                 CurrentStep++;
             }
 
@@ -357,22 +357,11 @@ public class BaalRush
                     }
                     else
                     {
-                        if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
-                        if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
-                        if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
-                        if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
-                        if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
-                        if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
-                        if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
-                        if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
-                        if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
-                        if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
-                        Form1_0.ItemsStruc_0.GrabAllItemsForGold();
-                        Form1_0.Potions_0.CanUseSkillForRegen = true;
-                        //Form1_0.LeaveGame(true);
-                        Form1_0.Town_0.FastTowning = false;
-                        Form1_0.Town_0.UseLastTP = false;
-                        ScriptDone = true;
+
+                        if (Form1_0.Battle_0.EndBossBattle())
+                        {
+                            ScriptDone = true;
+                        }
                     }
                 }
                 else

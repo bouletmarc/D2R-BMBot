@@ -13,8 +13,13 @@ public class BaalLeech
 
     Form1 Form1_0;
 
+    //##############
+    //EXTRAS FEATURES
+    public bool BaalLeechFight = false;
+    //##############
+
     public int CurrentStep = 0;
-    public int MaxGameTimeToEnter = (3 * 60); //3mins
+    public int MaxGameTimeToEnter = CharConfig.MaxTimeEnterGame; //3mins
     public int MaxTimeWaitedForTP = (2 * 60); //2mins
     public int TimeWaitedForTP = 0;
     public bool PrintedInfos = false;
@@ -196,7 +201,7 @@ public class BaalLeech
                     if (IsPortalAtGoodLocation())
                     {
                         Form1_0.Battle_0.CastDefense();
-                        Form1_0.WaitDelay(600);
+                        Form1_0.WaitDelay(CharConfig.LeechEnterTPDelay);
                         WaitedEnteringPortal = true;
                     }
                     else
@@ -329,7 +334,8 @@ public class BaalLeech
                 else
                 {
                     //Form1_0.Town_0.GetCorpse();
-                    Form1_0.Battle_0.DoBattleScript(10);
+                    if (!BaalLeechFight) Form1_0.Battle_0.DoBattleScript(10);
+                    else Form1_0.Battle_0.DoBattleScript(30);
                 }
 
                 //detect last wave

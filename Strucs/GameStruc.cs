@@ -34,9 +34,9 @@ public class GameStruc
 
     public List<string> AllGamesTriedNames = new List<string>();
     public bool AlreadyChickening = false;
-
-
     public bool TypedSearchGames = false;
+
+    public int CurrentTZAct = 1;
 
     [DllImport("user32.dll")] static extern short VkKeyScan(char ch);
 
@@ -582,12 +582,24 @@ public class GameStruc
     public List<Area> GetTerrorZones()
     {
         List<Area> areas = new List<Area>();
+        bool SetActArea = false;
         for (int i = 0; i < 7; i++)
         {
-            uint tzArea = Form1_0.Mem_0.ReadUInt32Raw((IntPtr) ((long)Form1_0.BaseAddress + (0x299E2D8 + (i * 4))));
+            //uint tzArea = Form1_0.Mem_0.ReadUInt32Raw((IntPtr) ((long)Form1_0.BaseAddress + (0x299E2D8 + (i * 4))));
+            uint tzArea = Form1_0.Mem_0.ReadUInt32Raw((IntPtr)((long)Form1_0.BaseAddress + (0x29E9558 + (i * 4))));
             if (tzArea != 0)
             {
-                areas.Add((Area)tzArea);
+                if (!SetActArea)
+                {
+                    CurrentTZAct = Form1_0.AreaScript_0.GetActFromArea((Area)tzArea);
+                    SetActArea = true;
+                }
+
+                if (Form1_0.AreaScript_0.IsThisTZAreaInSameAct(CurrentTZAct, ((Area)tzArea)))
+                {
+                    //Console.WriteLine("Added TZ: " + ((Area)tzArea));
+                    areas.Add((Area)tzArea);
+                }
             }
         }
 

@@ -41,9 +41,9 @@ public class NPCStruc
 
         try
         {
-            for (int i = 0; i < Form1_0.PatternsScan_0.AllNPCPointers.Count; i++)
+            foreach (var ThisCurrentPointer in Form1_0.PatternsScan_0.AllNPCPointers)
             {
-                NPCPointerLocation = Form1_0.PatternsScan_0.AllNPCPointers[i];
+                NPCPointerLocation = ThisCurrentPointer.Key;
                 if (NPCPointerLocation > 0)
                 {
                     NPCdatastruc = new byte[144];
@@ -101,9 +101,9 @@ public class NPCStruc
         txtFileNo = 0;
         Form1_0.PatternsScan_0.scanForUnitsPointer("NPC");
 
-        for (int i = 0; i < Form1_0.PatternsScan_0.AllNPCPointers.Count; i++)
+        foreach (var ThisCurrentPointer in Form1_0.PatternsScan_0.AllNPCPointers)
         {
-            NPCPointerLocation = Form1_0.PatternsScan_0.AllNPCPointers[i];
+            NPCPointerLocation = ThisCurrentPointer.Key;
             if (NPCPointerLocation > 0)
             {
                 NPCdatastruc = new byte[144];

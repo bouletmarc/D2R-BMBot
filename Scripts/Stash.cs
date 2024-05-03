@@ -120,7 +120,7 @@ public class Stash
                         if (TryStashCount >= 4)
                         {
                             RunningScriptCount++;
-                            if (RunningScriptCount >= 15) StashFull = true;
+                            if (RunningScriptCount >= CharConfig.StashFullTries) StashFull = true;
                             //StashFull = true; //##################################################
                             i = 40; //stash is full, dont try others items to stash
                             break;

@@ -138,7 +138,7 @@ public class AndarielRush
                 if (Form1_0.Mover_0.MoveToLocation(22561, 9553))
                 {
                     DetectedBoss = false;
-                    Form1_0.WaitDelay(100);
+                    //Form1_0.WaitDelay(100);
                     CurrentStep++;
                 }
             }

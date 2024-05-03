@@ -124,6 +124,8 @@ public partial class FormItems : Form
 
     public void LoadSettings()
     {
+        Form1_0.SettingsLoader_0.LoadThisFileSettings(Form1_0.SettingsLoader_0.File_ItemsSettings);
+
         listViewUnique.Items.Clear();
         listViewKeys.Items.Clear();
         listViewGems.Items.Clear();

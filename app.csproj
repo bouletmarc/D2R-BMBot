@@ -150,6 +150,12 @@
     <Compile Include="Config\ScriptsLoader - Copier.cs" />
     <Compile Include="Config\ScriptsLoader.cs" />
     <Compile Include="Config\SettingsLoader.cs" />
+    <Compile Include="FormAdvancedSettings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormAdvancedSettings.Designer.cs">
+      <DependentUpon>FormAdvancedSettings.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormCharSettings.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -181,6 +187,7 @@
       <DependentUpon>OverlayForm.cs</DependentUpon>
     </Compile>
     <Compile Include="PathFinding.cs" />
+    <Compile Include="Scripts\AreaScript.cs" />
     <Compile Include="Scripts\Battle.cs" />
     <Compile Include="Scripts\Cubing.cs" />
     <Compile Include="Scripts\Gamble.cs" />
@@ -223,6 +230,9 @@
     <Compile Include="Strucs\UIScan.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormAdvancedSettings.resx">
+      <DependentUpon>FormAdvancedSettings.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormCharSettings.resx">
       <DependentUpon>FormCharSettings.cs</DependentUpon>

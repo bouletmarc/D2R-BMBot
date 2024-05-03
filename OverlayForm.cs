@@ -460,7 +460,7 @@ public partial class OverlayForm : Form
                     {
                         if (Form1_0.ItemsStruc_0.IsGrabbingItemOnGround)
                         {
-                            string ItemTxt = Form1_0.ItemsStruc_0.ItemNAAME + "(" + Form1_0.ItemsStruc_0.txtFileNo + "), Pos:" + Form1_0.ItemsStruc_0.itemx + ", " + Form1_0.ItemsStruc_0.itemy + " (tries:" + (Form1_0.ItemsStruc_0.TriesToPickItemCount + 1) + "/50)";
+                            string ItemTxt = Form1_0.ItemsStruc_0.ItemNAAME + "(" + Form1_0.ItemsStruc_0.txtFileNo + "), Pos:" + Form1_0.ItemsStruc_0.itemx + ", " + Form1_0.ItemsStruc_0.itemy + " (tries:" + (Form1_0.ItemsStruc_0.TriesToPickItemCount + 1) + "/" + CharConfig.MaxItemGrabTries + ")";
                             DrawString(e, ItemTxt, drawFontBold, drawBrushWhite, 560, 910, true);
                         }
                         else if (Form1_0.Battle_0.DoingBattle || Form1_0.Battle_0.ClearingArea)

@@ -14,10 +14,10 @@ public class PatternsScan
 
     public byte[] UnitBuffer = new byte[] { };
 
-    public List<long> AllItemsPointers = new List<long>();
-    public List<long> AllObjectsPointers = new List<long>(); //->refer to all gameobjects
-    public List<long> AllPlayersPointers = new List<long>();
-    public List<long> AllNPCPointers = new List<long>();
+    public Dictionary<long, bool> AllItemsPointers = new Dictionary<long, bool>();
+    public Dictionary<long, bool> AllObjectsPointers = new Dictionary<long, bool>(); //->refer to all gameobjects
+    public Dictionary<long, bool> AllPlayersPointers = new Dictionary<long, bool>();
+    public Dictionary<long, bool> AllNPCPointers = new Dictionary<long, bool>();
 
     public List<long> AllPossiblePointers = new List<long>();
 
@@ -26,7 +26,7 @@ public class PatternsScan
     public List<long> AllPossibleObjectsPointers = new List<long>();
     public List<long> AllPossibleNPCPointers = new List<long>();
 
-    public List<long> AllScannedPointers = new List<long>();
+    public Dictionary<long, bool> AllScannedPointers = new Dictionary<long, bool>();
 
     //"04 00 00 00 ?? ?? 00 00";
     byte[] ThisCheckbytes = new byte[] { 0x04, 0x00, 0x00, 0x00, 0xff, 0xff, 0x00, 0x00 };
@@ -656,10 +656,10 @@ public class PatternsScan
 
     public void UnitPatternScanV1(string SearchUnitsType)
     {
-        if (SearchUnitsType == "item") AllItemsPointers = new List<long>();
-        if (SearchUnitsType == "player") AllPlayersPointers = new List<long>();
-        if (SearchUnitsType == "objects") AllObjectsPointers = new List<long>();
-        if (SearchUnitsType == "NPC") AllNPCPointers = new List<long>();
+        if (SearchUnitsType == "item") AllItemsPointers = new Dictionary<long, bool>();
+        if (SearchUnitsType == "player") AllPlayersPointers = new Dictionary<long, bool>();
+        if (SearchUnitsType == "objects") AllObjectsPointers = new Dictionary<long, bool>();
+        if (SearchUnitsType == "NPC") AllNPCPointers = new Dictionary<long, bool>();
 
         StartIndexItem = long.MaxValue;
 
@@ -725,13 +725,13 @@ public class PatternsScan
 
         //Console.WriteLine("Unit start: 0x" + CheckThisI.ToString("X"));
         //Console.WriteLine("Unit end: 0x" + (CheckThisI + ((0x48 * ScanUnitsNumber / 2)) + ((0x170 * ScanUnitsNumber / 2))).ToString("X"));
-        AllScannedPointers = new List<long>();
+        AllScannedPointers = new Dictionary<long, bool>();
         for (int i = 0; i < ScanUnitsNumber; i++)
         {
             if ((i % 2) == 1) CheckThisI += 0x48;
             else CheckThisI += 0x170;
 
-            AllScannedPointers.Add(CheckThisI);
+            AllScannedPointers.Add(CheckThisI, true);
 
             if (SearchUnitsType == "item")
             {
@@ -764,11 +764,11 @@ public class PatternsScan
 
         if (SearchUnitsType == "item")
         {
-            for (int i = 0; i < AllItemsPointers.Count; i++)
+            foreach (var ThisCurrentPointer in AllItemsPointers) 
             {
-                CheckThisI = AllItemsPointers[i];
+                CheckThisI = ThisCurrentPointer.Key;
 
-                if (!Form1_0.ItemsStruc_0.IsIncludedInList(AllScannedPointers, CheckThisI))
+                if (!AllScannedPointers.ContainsKey(CheckThisI))
                 {
                     //AllScannedPointers.Add(CheckThisI);
                     //Form1_0.method_1("Missed item pointer: " + CheckThisI.ToString("X"), Color.Red);
@@ -781,11 +781,11 @@ public class PatternsScan
         }
         if (SearchUnitsType == "player")
         {
-            for (int i = 0; i < AllPlayersPointers.Count; i++)
+            foreach (var ThisCurrentPointer in AllPlayersPointers)
             {
-                CheckThisI = AllPlayersPointers[i];
+                CheckThisI = ThisCurrentPointer.Key;
 
-                if (!Form1_0.ItemsStruc_0.IsIncludedInList(AllScannedPointers, CheckThisI))
+                if (!AllScannedPointers.ContainsKey(CheckThisI))
                 {
                     //AllScannedPointers.Add(CheckThisI);
                     //Form1_0.method_1("Missed player pointer: " + CheckThisI.ToString("X"), Color.Red);
@@ -798,11 +798,11 @@ public class PatternsScan
         }
         if (SearchUnitsType == "objects")
         {
-            for (int i = 0; i < AllObjectsPointers.Count; i++)
+            foreach (var ThisCurrentPointer in AllObjectsPointers)
             {
-                CheckThisI = AllObjectsPointers[i];
+                CheckThisI = ThisCurrentPointer.Key;
 
-                if (!Form1_0.ItemsStruc_0.IsIncludedInList(AllScannedPointers, CheckThisI))
+                if (!AllScannedPointers.ContainsKey(CheckThisI))
                 {
                     //AllScannedPointers.Add(CheckThisI);
                     //Form1_0.method_1("Missed object pointer: " + CheckThisI.ToString("X"), Color.Red);
@@ -815,11 +815,11 @@ public class PatternsScan
         }
         if (SearchUnitsType == "NPC")
         {
-            for (int i = 0; i < AllNPCPointers.Count; i++)
+            foreach (var ThisCurrentPointer in AllNPCPointers)
             {
-                CheckThisI = AllNPCPointers[i];
+                CheckThisI = ThisCurrentPointer.Key;
 
-                if (!Form1_0.ItemsStruc_0.IsIncludedInList(AllScannedPointers, CheckThisI))
+                if (!AllScannedPointers.ContainsKey(CheckThisI))
                 {
                     //AllScannedPointers.Add(CheckThisI);
                     //Form1_0.method_1("Missed npc pointer: " + CheckThisI.ToString("X"), Color.Red);
@@ -858,18 +858,12 @@ public class PatternsScan
         {
             if (AllItemsPointers.Count > 0)
             {
-                for (int i = 0; i < AllItemsPointers.Count; i++)
-                {
-                    if (AllItemsPointers[i] == TPoiinter)
-                    {
-                        return;
-                    }
-                }
-                AllItemsPointers.Add(TPoiinter);
+                if (AllItemsPointers.ContainsKey(TPoiinter)) return;
+                AllItemsPointers.Add(TPoiinter, true);
             }
             else
             {
-                AllItemsPointers.Add(TPoiinter);
+                AllItemsPointers.Add(TPoiinter, true);
             }
         }
 
@@ -877,18 +871,12 @@ public class PatternsScan
         {
             if (AllPlayersPointers.Count > 0)
             {
-                for (int i = 0; i < AllPlayersPointers.Count; i++)
-                {
-                    if (AllPlayersPointers[i] == TPoiinter)
-                    {
-                        return;
-                    }
-                }
-                AllPlayersPointers.Add(TPoiinter);
+                if (AllPlayersPointers.ContainsKey(TPoiinter)) return;
+                AllPlayersPointers.Add(TPoiinter, true);
             }
             else
             {
-                AllPlayersPointers.Add(TPoiinter);
+                AllPlayersPointers.Add(TPoiinter, true);
             }
         }
 
@@ -896,18 +884,12 @@ public class PatternsScan
         {
             if (AllObjectsPointers.Count > 0)
             {
-                for (int i = 0; i < AllObjectsPointers.Count; i++)
-                {
-                    if (AllObjectsPointers[i] == TPoiinter)
-                    {
-                        return;
-                    }
-                }
-                AllObjectsPointers.Add(TPoiinter);
+                if (AllObjectsPointers.ContainsKey(TPoiinter)) return;
+                AllObjectsPointers.Add(TPoiinter, true);
             }
             else
             {
-                AllObjectsPointers.Add(TPoiinter);
+                AllObjectsPointers.Add(TPoiinter, true);
             }
         }
 
@@ -915,18 +897,12 @@ public class PatternsScan
         {
             if (AllNPCPointers.Count > 0)
             {
-                for (int i = 0; i < AllNPCPointers.Count; i++)
-                {
-                    if (AllNPCPointers[i] == TPoiinter)
-                    {
-                        return;
-                    }
-                }
-                AllNPCPointers.Add(TPoiinter);
+                if (AllNPCPointers.ContainsKey(TPoiinter)) return;
+                AllNPCPointers.Add(TPoiinter, true);
             }
             else
             {
-                AllNPCPointers.Add(TPoiinter);
+                AllNPCPointers.Add(TPoiinter, true);
             }
         }
     }

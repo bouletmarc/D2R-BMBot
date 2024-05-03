@@ -195,7 +195,7 @@ public class ChaosRush
 
                         bool UniqueDetected = Form1_0.MobsStruc_0.GetMobs("getSuperUniqueName", "Grand Vizier of Chaos", false, 200, new List<long>());
 
-                        while (!UniqueDetected && (DateTime.Now - StartTimeUniqueBossWaiting).TotalSeconds < 5)
+                        while (!UniqueDetected && (DateTime.Now - StartTimeUniqueBossWaiting).TotalSeconds < CharConfig.ChaosWaitingSealBossDelay)
                         {
                             UniqueDetected = Form1_0.MobsStruc_0.GetMobs("getSuperUniqueName", "Grand Vizier of Chaos", false, 200, new List<long>());
 
@@ -301,7 +301,7 @@ public class ChaosRush
 
                         bool UniqueDetected = Form1_0.MobsStruc_0.GetMobs("getSuperUniqueName", "Lord De Seis", false, 200, new List<long>());
 
-                        while (!UniqueDetected && (DateTime.Now - StartTimeUniqueBossWaiting).TotalSeconds < 5)
+                        while (!UniqueDetected && (DateTime.Now - StartTimeUniqueBossWaiting).TotalSeconds < CharConfig.ChaosWaitingSealBossDelay)
                         {
                             UniqueDetected = Form1_0.MobsStruc_0.GetMobs("getSuperUniqueName", "Lord De Seis", false, 200, new List<long>());
 
@@ -410,7 +410,7 @@ public class ChaosRush
 
                         bool UniqueDetected = Form1_0.MobsStruc_0.GetMobs("getSuperUniqueName", "Infector of Souls", false, 200, new List<long>());
 
-                        while (!UniqueDetected && (DateTime.Now - StartTimeUniqueBossWaiting).TotalSeconds < 5)
+                        while (!UniqueDetected && (DateTime.Now - StartTimeUniqueBossWaiting).TotalSeconds < CharConfig.ChaosWaitingSealBossDelay)
                         {
                             UniqueDetected = Form1_0.MobsStruc_0.GetMobs("getSuperUniqueName", "Infector of Souls", false, 200, new List<long>());
 
@@ -538,23 +538,10 @@ public class ChaosRush
                             Form1_0.Battle_0.DoBattleScript(15);
                         }
 
-                        if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
-                        if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
-                        if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
-                        if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
-                        if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
-                        if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
-                        if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
-                        if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
-                        if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
-                        if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
-                        Form1_0.ItemsStruc_0.GrabAllItemsForGold();
-                        Form1_0.Potions_0.CanUseSkillForRegen = true;
-
-                        Form1_0.PathFinding_0.AcceptMoveOffset = BufferPathFindingMoveSize;
-                        Form1_0.Town_0.UseLastTP = false;
-                        Form1_0.Town_0.FastTowning = false;
-                        ScriptDone = true;
+                        if (Form1_0.Battle_0.EndBossBattle())
+                        {
+                            ScriptDone = true;
+                        }
                         return;
                         //Form1_0.LeaveGame(true);
                     }

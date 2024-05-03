@@ -41,3 +41,4 @@ C:\Users\boule\OneDrive\Documents\Visual Studio 2022\Projects\D2R-BMBot-main\obj
 C:\Users\boule\OneDrive\Documents\Visual Studio 2022\Projects\D2R-BMBot-main\obj\Debug\app.csproj.Up2Date
 C:\Users\boule\OneDrive\Documents\Visual Studio 2022\Projects\D2R-BMBot-main\obj\Debug\app.exe
 C:\Users\boule\OneDrive\Documents\Visual Studio 2022\Projects\D2R-BMBot-main\obj\Debug\app.pdb
+C:\Users\boule\OneDrive\Documents\Visual Studio 2022\Projects\D2R-BMBot-main\obj\Debug\FormAdvancedSettings.resources

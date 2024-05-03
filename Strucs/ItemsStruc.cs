@@ -80,8 +80,8 @@ public class ItemsStruc
 
     public List<long> BadItemsOnCursorIDList = new List<long>();
     public bool HasGotTheBadItemOnCursor = false;
-    public List<long> BadItemsOnGroundPointerList = new List<long>();
-    public List<long> AvoidItemsOnGroundPointerList = new List<long>();
+    public Dictionary<string, bool> BadItemsOnGroundPointerList = new Dictionary<string, bool>();
+    public Dictionary<string, bool> AvoidItemsOnGroundPointerList = new Dictionary<string, bool>();
 
     public bool AlreadyEmptyedInventory = false;
 
@@ -253,9 +253,9 @@ public class ItemsStruc
     public bool GetShopItem(string ShopItemName, bool GetGambleShopItem = false)
     {
         Form1_0.PatternsScan_0.scanForUnitsPointer("item");
-        for (int i = 0; i < Form1_0.PatternsScan_0.AllItemsPointers.Count; i++)
+        foreach (var ThisCurrentPointer in Form1_0.PatternsScan_0.AllItemsPointers)
         {
-            ItemPointerLocation = Form1_0.PatternsScan_0.AllItemsPointers[i];
+            ItemPointerLocation = ThisCurrentPointer.Key;
             if (ItemPointerLocation > 0)
             {
                 itemdatastruc = new byte[144];
@@ -412,14 +412,14 @@ public class ItemsStruc
         }
         else
         {
-            if (TriesToPickItemCount >= 50) return false;
+            if (TriesToPickItemCount >= CharConfig.MaxItemGrabTries) return false;
         }
 
         Form1_0.PatternsScan_0.scanForUnitsPointer("item");
 
-        for (int i = 0; i < Form1_0.PatternsScan_0.AllItemsPointers.Count; i++)
+        foreach (var ThisCurrentPointer in Form1_0.PatternsScan_0.AllItemsPointers)
         {
-            ItemPointerLocation = Form1_0.PatternsScan_0.AllItemsPointers[i];
+            ItemPointerLocation = ThisCurrentPointer.Key;
             if (ItemPointerLocation > 0)
             {
                 itemdatastruc = new byte[144];
@@ -603,13 +603,12 @@ public class ItemsStruc
                     }
 
                     if (!IsPickingItem) continue;
-                    if (IsIncludedInList(BadItemsOnGroundPointerList, ItemPointerLocation)) continue;
-                    if (IsIncludedInList(AvoidItemsOnGroundPointerList, ItemPointerLocation))
+                    if (BadItemsOnGroundPointerList.ContainsKey(ItemPointerLocation.ToString())) continue;
+                    if (AvoidItemsOnGroundPointerList.ContainsKey(ItemPointerLocation.ToString()))
                     {
                         if (!IsItemPickingPotion())
                         {
                             continue;
-                            //if (!Form1_0.ItemsAlert_0.ShouldPickItem(false)) continue;
                         }
                     }
 
@@ -652,14 +651,16 @@ public class ItemsStruc
                             //##############################################
                             //detect bad items??
                             if (((itemx <= 0 && itemy <= 0)
-                                || (itemScreenPos.X <= 0 && itemScreenPos.Y <= 0))
-                                && !IsIncludedInList(BadItemsOnGroundPointerList, ItemPointerLocation))
+                                || (itemScreenPos.X <= 0 && itemScreenPos.Y <= 0)))
                             {
-                                Form1_0.method_1("Added bad item 'OnGround':" + ItemNAAME, Color.OrangeRed);
-                                BadItemsOnGroundPointerList.Add(ItemPointerLocation);
-                                continue;
+                                if (!BadItemsOnGroundPointerList.ContainsKey(ItemPointerLocation.ToString()))
+                                {
+                                    Form1_0.method_1("Added bad item 'OnGround':" + ItemNAAME, Color.OrangeRed);
+                                    BadItemsOnGroundPointerList.Add(ItemPointerLocation.ToString(), true);
+                                    continue;
+                                }
                             }
-                            if (IsIncludedInList(BadItemsOnGroundPointerList, ItemPointerLocation))
+                            if (BadItemsOnGroundPointerList.ContainsKey(ItemPointerLocation.ToString()))
                             {
                                 //Form1_0.method_1("Avoided bad item 'OnGround':" + ItemNAAME, Color.OrangeRed);
                                 continue;
@@ -683,14 +684,16 @@ public class ItemsStruc
                                 //##############################################
                                 //##############################################
                                 //detect bad items??
-                                /*if (((itemx <= 0 && itemy <= 0)
-                                    || (itemScreenPos.X <= 0 && itemScreenPos.Y <= 0))
-                                    && !IsIncludedInList(BadItemsOnGroundPointerList, ItemPointerLocation))
+                                if (((itemx <= 0 && itemy <= 0)
+                                    || (itemScreenPos.X <= 0 && itemScreenPos.Y <= 0)))
                                 {
-                                    Form1_0.method_1("Added bad item 'OnGround':" + ItemNAAME, Color.OrangeRed);
-                                    BadItemsOnGroundPointerList.Add(ItemPointerLocation);
-                                    continue;
-                                }*/
+                                    if (!BadItemsOnGroundPointerList.ContainsKey(ItemPointerLocation.ToString()))
+                                    {
+                                        Form1_0.method_1("Added bad item 'OnGround':" + ItemNAAME, Color.OrangeRed);
+                                        BadItemsOnGroundPointerList.Add(ItemPointerLocation.ToString(), true);
+                                        continue;
+                                    }
+                                }
                                 //##############################################
                                 //##############################################
 
@@ -711,10 +714,10 @@ public class ItemsStruc
                             }
 
                             //after a lot of try picking item, inventory might be full, go to town
-                            if (TriesToPickItemCount >= 50)
+                            if (TriesToPickItemCount >= CharConfig.MaxItemGrabTries)
                             {
                                 Form1_0.InventoryStruc_0.DumpBadItemsOnGround();
-                                TriesToPickItemCount = 50;
+                                TriesToPickItemCount = CharConfig.MaxItemGrabTries;
                                 Form1_0.Town_0.GoToTown();
                                 IsGrabbingItemOnGround = false;
                                 return false;
@@ -725,10 +728,10 @@ public class ItemsStruc
                     }
                     else
                     {
-                        if (!IsItemPickingPotion() && !IsIncludedInList(AvoidItemsOnGroundPointerList, ItemPointerLocation))
+                        if (!IsItemPickingPotion() && !AvoidItemsOnGroundPointerList.ContainsKey(ItemPointerLocation.ToString()))
                         {
                             //Form1_0.method_1("Added avoid item 'OnGround':" + ItemNAAME, Color.OrangeRed);
-                            AvoidItemsOnGroundPointerList.Add(ItemPointerLocation);
+                            AvoidItemsOnGroundPointerList.Add(ItemPointerLocation.ToString(), true);
                         }
                     }
                 }
@@ -799,9 +802,9 @@ public class ItemsStruc
         Form1_0.PlayerScan_0.GetPositions();
 
         Form1_0.PatternsScan_0.scanForUnitsPointer("item");
-        for (int i = 0; i < Form1_0.PatternsScan_0.AllItemsPointers.Count; i++)
+        foreach (var ThisCurrentPointer in Form1_0.PatternsScan_0.AllItemsPointers)
         {
-            ItemPointerLocation = Form1_0.PatternsScan_0.AllItemsPointers[i];
+            ItemPointerLocation = ThisCurrentPointer.Key;
             if (ItemPointerLocation > 0)
             {
                 itemdatastruc = new byte[144];
@@ -857,7 +860,7 @@ public class ItemsStruc
                             }
 
                             //after a lot of try picking item, inventory might be full, go to town
-                            if (TriesToPickItemCount >= 45)
+                            if (TriesToPickItemCount >= CharConfig.MaxItemGrabTries)
                             {
                                 TriesToPickItemCount = 0;
                                 Form1_0.Town_0.GoToTown();
@@ -942,9 +945,9 @@ public class ItemsStruc
     {
         Form1_0.PatternsScan_0.scanForUnitsPointer("item");
 
-        for (int i = 0; i < Form1_0.PatternsScan_0.AllItemsPointers.Count; i++)
+        foreach (var ThisCurrentPointer in Form1_0.PatternsScan_0.AllItemsPointers)
         {
-            ItemPointerLocation = Form1_0.PatternsScan_0.AllItemsPointers[i];
+            ItemPointerLocation = ThisCurrentPointer.Key;
             if (ItemPointerLocation > 0)
             {
                 itemdatastruc = new byte[144];

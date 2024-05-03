@@ -21,7 +21,6 @@ public class Battle
     public int AttackNotRegisteredCount = 0;
     public int MoveTryCount = 0;
 
-    public int MaxAttackTry = 8; //edit this after knowing we used attack correctly
     public int MaxMoveTry = 5;
 
     public bool FirstAttackCasted = false;
@@ -50,16 +49,16 @@ public class Battle
     public bool EndBossBattle()
     {
         Form1_0.KeyMouse_0.ReleaseKey(CharConfig.KeyForceMovement);
-        if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
-        if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
-        if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
-        if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
-        if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
-        if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
-        if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
-        if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
-        if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
-        if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(5);
+        if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(CharConfig.EndBattleGrabDelay);
+        if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(CharConfig.EndBattleGrabDelay);
+        if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(CharConfig.EndBattleGrabDelay);
+        if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(CharConfig.EndBattleGrabDelay);
+        if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(CharConfig.EndBattleGrabDelay);
+        if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(CharConfig.EndBattleGrabDelay);
+        if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(CharConfig.EndBattleGrabDelay);
+        if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(CharConfig.EndBattleGrabDelay);
+        if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(CharConfig.EndBattleGrabDelay);
+        if (!Form1_0.ItemsStruc_0.GetItems(true)) Form1_0.WaitDelay(CharConfig.EndBattleGrabDelay);
 
         if (CharConfig.ClearAfterBoss)
         {
@@ -556,7 +555,7 @@ public class Battle
         {
             if (ClearingFullArea && (AllRooms_InArea.Count - IgnoredRooms_InArea.Count) > 0)
             {
-                if ((DateTime.Now - TimeSinceLastCast).TotalMinutes > 3)
+                if ((DateTime.Now - TimeSinceLastCast).TotalSeconds > CharConfig.RecastBODelay)
                 {
                     CastDefense();
                 }
@@ -816,7 +815,7 @@ public class Battle
             AttackNotRegisteredCount++;
             //Form1_0.method_1("Attack not registered! " + AttackNotRegisteredCount + "/" + MaxAttackTry, Color.OrangeRed);
 
-            if (AttackNotRegisteredCount >= MaxAttackTry)
+            if (AttackNotRegisteredCount >= CharConfig.MaxBattleAttackTries)
             {
                 AttackNotRegisteredCount = 0;
                 MoveTryCount++;

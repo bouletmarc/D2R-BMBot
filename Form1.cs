@@ -40,7 +40,7 @@ using static MapAreaStruc;
 public partial class Form1 : Form
 {
 
-    public string BotVersion = "V2.97";
+    public string BotVersion = "V2.98";
 
     public string D2_LOD_113C_Path = "";
 
@@ -188,8 +188,8 @@ public partial class Form1 : Form
 
     public OverlayForm overlayForm;
     public ScriptsLoader ScriptsLoader_0;
-
     public TerrorZones TerrorZones_0;
+    public AreaScript AreaScript_0;
 
     // REQUIRED CONSTS
     const int PROCESS_QUERY_INFORMATION = 0x0400;
@@ -351,6 +351,7 @@ public partial class Form1 : Form
         Nihlatak_0 = new Nihlatak();
         Frozenstein_0 = new Frozenstein();
         TerrorZones_0 = new TerrorZones();
+        AreaScript_0 = new AreaScript();
 
         AndarielRush_0 = new AndarielRush();
         DarkWoodRush_0 = new DarkWoodRush();
@@ -427,6 +428,7 @@ public partial class Form1 : Form
         Nihlatak_0.SetForm1(Form1_0);
         Frozenstein_0.SetForm1(Form1_0);
         TerrorZones_0.SetForm1(Form1_0);
+        AreaScript_0.SetForm1(Form1_0);
 
         AndarielRush_0.SetForm1(Form1_0);
         DarkWoodRush_0.SetForm1(Form1_0);
@@ -932,7 +934,7 @@ public partial class Form1 : Form
         //PatternsScan_0.ScanUnitsNumber = 2600;
         //PatternsScan_0.ScanUnitsNumber = 2400;
         //PatternsScan_0.ScanUnitsNumber = 2048;
-        PatternsScan_0.ResetV1Scanning();
+        //PatternsScan_0.ResetV1Scanning();
         PatternsScan_0.StartIndexItem_V2 = long.MaxValue;     //UNITS SCAN V2
         PatternsScan_0.StartIndexItemLast_V2 = long.MaxValue; //UNITS SCAN V2
         Town_0.TriedToShopCount = 0;
@@ -1015,17 +1017,32 @@ public partial class Form1 : Form
         CurrentGameNumberSinceStart++;
         SettingsLoader_0.SaveOthersSettings();
         ItemsStruc_0.BadItemsOnCursorIDList = new List<long>();
-        ItemsStruc_0.BadItemsOnGroundPointerList = new List<long>();
-        ItemsStruc_0.AvoidItemsOnGroundPointerList = new List<long>();
+        ItemsStruc_0.BadItemsOnGroundPointerList = new Dictionary<string, bool>();
+        ItemsStruc_0.AvoidItemsOnGroundPointerList = new Dictionary<string, bool>();
         SetDeadCount = false;
         GameStruc_0.ChickenTry = 0;
         MercStruc_0.MercOwnerID = 0;
         Battle_0.TimeSinceLastCast = DateTime.MaxValue;
-        ItemsAlert_0.CheckItemNames();
+        //ItemsAlert_0.CheckItemNames();
+        ItemsAlert_0.RemoveNotPickingItems();
 
         //##############################
         MapAreaStruc_0.ScanMapStruc();
+
+
+        //pointer fix???
+        PointerError = false;
+        Form1_0.PatternsScan_0.GetUnitsScannedCount(1);
+        if (Form1_0.PatternsScan_0.ScannedItemsCount < 100)
+        {
+            method_1("Detected Poiters Error, Restarting Bot...", Color.Red);
+            HasPointers = false;
+            PointerError = true;
+            //PatternsScan_0.PatternScan();
+        }
     }
+
+    public bool PointerError = false;
 
     public void IncreaseDeadCount()
     {
@@ -1066,8 +1083,14 @@ public partial class Form1 : Form
                     {
                         GameStruc_0.SetNewGame();
                         SetNewGame();
-                        //if (!CharConfig.IsRushing) WaitDelay(400); //wait here because 'loading' menu is not correct
-                        if (!CharConfig.IsRushing) WaitDelay(250); //wait here because 'loading' menu is not correct
+                        if (PointerError)
+                        {
+                            Startt();
+                            /*SetProcessingTime();
+                            if (Running) LoopTimer.Start();*/
+                            return;
+                        }
+                        if (!CharConfig.IsRushing) WaitDelay(CharConfig.MaxDelayNewGame); //wait here because 'loading' menu is not correct
                         if (CharConfig.IsRushing) PlayerScan_0.ScanForLeecher();
                         //if (PatternsScan_0.StartIndexItem_V2 == long.MaxValue) PatternsScan_0.DetectFirstUnitPointer(); //UNITS SCAN V2
                         Town_0.GetCorpse();
@@ -1082,8 +1105,14 @@ public partial class Form1 : Form
                         {
                             GameStruc_0.SetNewGame();
                             SetNewGame();
-                            //if (!CharConfig.IsRushing) WaitDelay(400); //wait here because 'loading' menu is not correct
-                            if (!CharConfig.IsRushing) WaitDelay(250); //wait here because 'loading' menu is not correct
+                            if (PointerError)
+                            {
+                                Startt();
+                                /*SetProcessingTime();
+                                if (Running) LoopTimer.Start();*/
+                                return;
+                            }
+                            if (!CharConfig.IsRushing) WaitDelay(CharConfig.MaxDelayNewGame); //wait here because 'loading' menu is not correct
                             if (CharConfig.IsRushing) PlayerScan_0.ScanForLeecher();
                             //if (PatternsScan_0.StartIndexItem_V2 == long.MaxValue) PatternsScan_0.DetectFirstUnitPointer(); //UNITS SCAN V2
                             Town_0.GetCorpse();
@@ -1109,7 +1138,6 @@ public partial class Form1 : Form
 
                                 SetProcessingTime();
                                 if (Running) LoopTimer.Start();
-
                                 return;
                             }
                         }
@@ -1129,6 +1157,7 @@ public partial class Form1 : Form
                         //PlayerScan_0.ScanForLeecher();
                         //ItemsStruc_0.GetItems(true);
                         //overlayForm.SetAllOverlay();
+                        //GameStruc_0.GetTerrorZones();
 
                         //Running = false;
                         //if (Running) LoopTimer.Start();
@@ -1516,6 +1545,7 @@ public partial class Form1 : Form
 
                 if (!PrintedGameTime)
                 {
+                    PatternsScan_0.ResetV1Scanning();
                     MapAreaStruc_0.AllMapData.Clear();
                     overlayForm.ClearAllOverlay();
                     GameStruc_0.LogGameTime();
@@ -1825,8 +1855,8 @@ public partial class Form1 : Form
         TimeSpan ThisTime = DateTime.Now - TimeStart;
 
         int CurrentWait = 0;
-        //while (CurrentWait < DelayTime)
-        while (ThisTime.TotalMilliseconds < (DelayTime * 10))
+        int WaitingDelay = (int) ((DelayTime * 10.0) * CharConfig.OverallDelaysMultiplyer);
+        while (ThisTime.TotalMilliseconds < WaitingDelay)
         {
             SetProcessingTime();
             Thread.Sleep(1);
@@ -2024,7 +2054,7 @@ public partial class Form1 : Form
     private void tabControl2_SelectedIndexChanged(object sender, EventArgs e)
     {
         if (tabControl2.SelectedIndex == 0) ItemsStruc_0.DebugItems();
-        if (tabControl2.SelectedIndex == 1) Form1_0.MobsStruc_0.DebuggingMobs = true;
+        if (tabControl2.SelectedIndex == 1) { Form1_0.MobsStruc_0.DebuggingMobs = true; overlayForm.ShowMobs = true; }
         if (tabControl2.SelectedIndex == 2) ObjectsStruc_0.DebugObjects();
         if (tabControl2.SelectedIndex == 3) MapAreaStruc_0.DebugMapData();
         if (tabControl2.SelectedIndex == 4) PathFinding_0.DebugMapCollision();

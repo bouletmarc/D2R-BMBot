@@ -64,9 +64,9 @@ public class ObjectsStruc
 
         List<int[]> objectsPositions2 = new List<int[]>();
 
-        for (int i = 0; i < Form1_0.PatternsScan_0.AllObjectsPointers.Count; i++)
+        foreach (var ThisCurrentPointer in Form1_0.PatternsScan_0.AllObjectsPointers)
         {
-            ObjectPointerLocation = Form1_0.PatternsScan_0.AllObjectsPointers[i];
+            ObjectPointerLocation = ThisCurrentPointer.Key;
             if (ObjectPointerLocation > 0)
             {
                 //objectdatastruc = new byte[144];
@@ -113,9 +113,9 @@ public class ObjectsStruc
         long LastPointer = 0;
         Form1_0.PatternsScan_0.scanForUnitsPointer("objects");
 
-        for (int i = 0; i < Form1_0.PatternsScan_0.AllObjectsPointers.Count; i++)
+        foreach (var ThisCurrentPointer in Form1_0.PatternsScan_0.AllObjectsPointers)
         {
-            ObjectPointerLocation = Form1_0.PatternsScan_0.AllObjectsPointers[i];
+            ObjectPointerLocation = ThisCurrentPointer.Key;
             if (ObjectPointerLocation > 0)
             {
                 //objectdatastruc = new byte[144];

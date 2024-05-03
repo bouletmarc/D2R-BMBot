@@ -32,6 +32,10 @@ partial class FormCharSettings
             this.label1 = new System.Windows.Forms.Label();
             this.comboBoxType = new System.Windows.Forms.ComboBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.comboBoxKeyForceMovement = new System.Windows.Forms.ComboBox();
+            this.label31 = new System.Windows.Forms.Label();
+            this.comboBoxKeyOpenInventory = new System.Windows.Forms.ComboBox();
+            this.label30 = new System.Windows.Forms.Label();
             this.textBoxBattleCry = new System.Windows.Forms.ComboBox();
             this.textBoxBattleOrder = new System.Windows.Forms.ComboBox();
             this.textBoxBattleCommand = new System.Windows.Forms.ComboBox();
@@ -97,6 +101,7 @@ partial class FormCharSettings
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.checkBoxTownMercDead = new System.Windows.Forms.CheckBox();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.checkBoxKillOnlySuperUnique = new System.Windows.Forms.CheckBox();
             this.checkBoxUseKeys = new System.Windows.Forms.CheckBox();
             this.checkBoxClearAfterBoss = new System.Windows.Forms.CheckBox();
             this.comboBoxAvoidImmune = new System.Windows.Forms.ComboBox();
@@ -111,6 +116,7 @@ partial class FormCharSettings
             this.buttonSaveAsChar = new System.Windows.Forms.Button();
             this.buttonReload = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
+            this.comboBoxKeyWeaponSwap = new System.Windows.Forms.ComboBox();
             this.label23 = new System.Windows.Forms.Label();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.panelGamble = new System.Windows.Forms.Panel();
@@ -123,12 +129,6 @@ partial class FormCharSettings
             this.panelHelpKeys = new System.Windows.Forms.Panel();
             this.button2 = new System.Windows.Forms.Button();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
-            this.checkBoxKillOnlySuperUnique = new System.Windows.Forms.CheckBox();
-            this.comboBoxKeyOpenInventory = new System.Windows.Forms.ComboBox();
-            this.label30 = new System.Windows.Forms.Label();
-            this.comboBoxKeyForceMovement = new System.Windows.Forms.ComboBox();
-            this.label31 = new System.Windows.Forms.Label();
-            this.comboBoxKeyWeaponSwap = new System.Windows.Forms.ComboBox();
             this.label32 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -203,6 +203,42 @@ partial class FormCharSettings
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Skills Shortcuts Keys";
+            // 
+            // comboBoxKeyForceMovement
+            // 
+            this.comboBoxKeyForceMovement.FormattingEnabled = true;
+            this.comboBoxKeyForceMovement.Location = new System.Drawing.Point(121, 288);
+            this.comboBoxKeyForceMovement.Name = "comboBoxKeyForceMovement";
+            this.comboBoxKeyForceMovement.Size = new System.Drawing.Size(67, 21);
+            this.comboBoxKeyForceMovement.TabIndex = 46;
+            this.toolTip1.SetToolTip(this.comboBoxKeyForceMovement, "Set the Key to Force the Player Movement");
+            // 
+            // label31
+            // 
+            this.label31.AutoSize = true;
+            this.label31.Location = new System.Drawing.Point(10, 291);
+            this.label31.Name = "label31";
+            this.label31.Size = new System.Drawing.Size(111, 13);
+            this.label31.TabIndex = 45;
+            this.label31.Text = "Force Movement Key:";
+            // 
+            // comboBoxKeyOpenInventory
+            // 
+            this.comboBoxKeyOpenInventory.FormattingEnabled = true;
+            this.comboBoxKeyOpenInventory.Location = new System.Drawing.Point(121, 266);
+            this.comboBoxKeyOpenInventory.Name = "comboBoxKeyOpenInventory";
+            this.comboBoxKeyOpenInventory.Size = new System.Drawing.Size(67, 21);
+            this.comboBoxKeyOpenInventory.TabIndex = 44;
+            this.toolTip1.SetToolTip(this.comboBoxKeyOpenInventory, "Set the Key to Open the inventory");
+            // 
+            // label30
+            // 
+            this.label30.AutoSize = true;
+            this.label30.Location = new System.Drawing.Point(10, 269);
+            this.label30.Name = "label30";
+            this.label30.Size = new System.Drawing.Size(104, 13);
+            this.label30.TabIndex = 43;
+            this.label30.Text = "Open Inventory Key:";
             // 
             // textBoxBattleCry
             // 
@@ -873,6 +909,18 @@ partial class FormCharSettings
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Extras";
             // 
+            // checkBoxKillOnlySuperUnique
+            // 
+            this.checkBoxKillOnlySuperUnique.AutoSize = true;
+            this.checkBoxKillOnlySuperUnique.Location = new System.Drawing.Point(13, 147);
+            this.checkBoxKillOnlySuperUnique.Name = "checkBoxKillOnlySuperUnique";
+            this.checkBoxKillOnlySuperUnique.Size = new System.Drawing.Size(134, 17);
+            this.checkBoxKillOnlySuperUnique.TabIndex = 44;
+            this.checkBoxKillOnlySuperUnique.Text = "Kill only Unique\'s Mobs";
+            this.toolTip1.SetToolTip(this.checkBoxKillOnlySuperUnique, "Enable this will make the bot Kill only the Uniques Mobs while moving Thru Path (" +
+        "Exemple: Chaos, Cows, Etc..)");
+            this.checkBoxKillOnlySuperUnique.UseVisualStyleBackColor = true;
+            // 
             // checkBoxUseKeys
             // 
             this.checkBoxUseKeys.AutoSize = true;
@@ -1027,6 +1075,15 @@ partial class FormCharSettings
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // comboBoxKeyWeaponSwap
+            // 
+            this.comboBoxKeyWeaponSwap.FormattingEnabled = true;
+            this.comboBoxKeyWeaponSwap.Location = new System.Drawing.Point(126, 346);
+            this.comboBoxKeyWeaponSwap.Name = "comboBoxKeyWeaponSwap";
+            this.comboBoxKeyWeaponSwap.Size = new System.Drawing.Size(67, 21);
+            this.comboBoxKeyWeaponSwap.TabIndex = 48;
+            this.toolTip1.SetToolTip(this.comboBoxKeyWeaponSwap, "Set the Key to Swap Weapons");
+            // 
             // label23
             // 
             this.label23.AutoSize = true;
@@ -1144,63 +1201,6 @@ partial class FormCharSettings
             this.saveFileDialog1.DefaultExt = "txt";
             this.saveFileDialog1.Filter = "Char Settings|*.txt";
             this.saveFileDialog1.Title = "Open Current Char Settings to a New File";
-            // 
-            // checkBoxKillOnlySuperUnique
-            // 
-            this.checkBoxKillOnlySuperUnique.AutoSize = true;
-            this.checkBoxKillOnlySuperUnique.Location = new System.Drawing.Point(13, 147);
-            this.checkBoxKillOnlySuperUnique.Name = "checkBoxKillOnlySuperUnique";
-            this.checkBoxKillOnlySuperUnique.Size = new System.Drawing.Size(136, 17);
-            this.checkBoxKillOnlySuperUnique.TabIndex = 44;
-            this.checkBoxKillOnlySuperUnique.Text = "Kill only Super Unique\'s";
-            this.toolTip1.SetToolTip(this.checkBoxKillOnlySuperUnique, "Enable this will make the bot Kill only the Super Uniques Mobs while moving Thru " +
-        "Path (Exemple: Chaos, Cows, Etc..)");
-            this.checkBoxKillOnlySuperUnique.UseVisualStyleBackColor = true;
-            // 
-            // comboBoxKeyOpenInventory
-            // 
-            this.comboBoxKeyOpenInventory.FormattingEnabled = true;
-            this.comboBoxKeyOpenInventory.Location = new System.Drawing.Point(121, 266);
-            this.comboBoxKeyOpenInventory.Name = "comboBoxKeyOpenInventory";
-            this.comboBoxKeyOpenInventory.Size = new System.Drawing.Size(67, 21);
-            this.comboBoxKeyOpenInventory.TabIndex = 44;
-            this.toolTip1.SetToolTip(this.comboBoxKeyOpenInventory, "Set the Key to Open the inventory");
-            // 
-            // label30
-            // 
-            this.label30.AutoSize = true;
-            this.label30.Location = new System.Drawing.Point(10, 269);
-            this.label30.Name = "label30";
-            this.label30.Size = new System.Drawing.Size(104, 13);
-            this.label30.TabIndex = 43;
-            this.label30.Text = "Open Inventory Key:";
-            // 
-            // comboBoxKeyForceMovement
-            // 
-            this.comboBoxKeyForceMovement.FormattingEnabled = true;
-            this.comboBoxKeyForceMovement.Location = new System.Drawing.Point(121, 288);
-            this.comboBoxKeyForceMovement.Name = "comboBoxKeyForceMovement";
-            this.comboBoxKeyForceMovement.Size = new System.Drawing.Size(67, 21);
-            this.comboBoxKeyForceMovement.TabIndex = 46;
-            this.toolTip1.SetToolTip(this.comboBoxKeyForceMovement, "Set the Key to Force the Player Movement");
-            // 
-            // label31
-            // 
-            this.label31.AutoSize = true;
-            this.label31.Location = new System.Drawing.Point(10, 291);
-            this.label31.Name = "label31";
-            this.label31.Size = new System.Drawing.Size(111, 13);
-            this.label31.TabIndex = 45;
-            this.label31.Text = "Force Movement Key:";
-            // 
-            // comboBoxKeyWeaponSwap
-            // 
-            this.comboBoxKeyWeaponSwap.FormattingEnabled = true;
-            this.comboBoxKeyWeaponSwap.Location = new System.Drawing.Point(126, 346);
-            this.comboBoxKeyWeaponSwap.Name = "comboBoxKeyWeaponSwap";
-            this.comboBoxKeyWeaponSwap.Size = new System.Drawing.Size(67, 21);
-            this.comboBoxKeyWeaponSwap.TabIndex = 48;
-            this.toolTip1.SetToolTip(this.comboBoxKeyWeaponSwap, "Set the Key to Swap Weapons");
             // 
             // label32
             // 

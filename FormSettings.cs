@@ -38,6 +38,9 @@ public partial class FormSettings : Form
         panelChaosFeature.Visible = false;
         panelChaosFeature.Location = new System.Drawing.Point(23, 197);
 
+        panelBaalLeech.Visible = false;
+        panelBaalLeech.Location = new System.Drawing.Point(23, 197);
+
         LoadSettings();
     }
 
@@ -128,6 +131,8 @@ public partial class FormSettings : Form
 
             listViewBaalLeaveOnMobs.Items.Add(item);
         }
+
+        checkBoxBaalLeechFightMobs.Checked = Form1_0.BaalLeech_0.BaalLeechFight;
 
         //###################
         //SPECIALS CHAOS FEATURES
@@ -311,6 +316,8 @@ public partial class FormSettings : Form
             Form1_0.Baal_0.LeaveIfMobsIsPresent_Count.Add(int.Parse(listViewBaalLeaveOnMobs.Items[i].SubItems[1].Text));
         }
 
+        Form1_0.BaalLeech_0.BaalLeechFight = checkBoxBaalLeechFightMobs.Checked;
+
         //###################
         //SPECIALS CHAOS FEATURES
         Form1_0.Chaos_0.FastChaos = checkBoxFastChaos.Checked;
@@ -406,6 +413,10 @@ public partial class FormSettings : Form
             checkBoxKillBaal.Checked = Form1_0.Baal_0.KillBaal;
             panelBaalFeature.Visible = true;
         }
+        else if (listViewRunScripts.SelectedItems[0].Text == "Baal Leech")
+        {
+            panelBaalLeech.Visible = true;
+        }
         else if (listViewRunScripts.SelectedItems[0].Text == "Chaos")
         {
             panelChaosFeature.Visible = true;
@@ -470,5 +481,16 @@ public partial class FormSettings : Form
     private void button4_Click(object sender, EventArgs e)
     {
         panelChaosFeature.Visible = false;
+    }
+
+    private void button5_Click(object sender, EventArgs e)
+    {
+        FormAdvancedSettings FormAdvancedSettings_0 = new FormAdvancedSettings(Form1_0);
+        FormAdvancedSettings_0.ShowDialog();
+    }
+
+    private void button6_Click(object sender, EventArgs e)
+    {
+        panelBaalLeech.Visible = false;
     }
 }

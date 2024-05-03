@@ -225,7 +225,7 @@ public class Cubing
             if (CurrentRecipeItemInStashNumber[i] == 2) Form1_0.KeyMouse_0.MouseClicc(340, 200);   //clic shared stash1
             if (CurrentRecipeItemInStashNumber[i] == 3) Form1_0.KeyMouse_0.MouseClicc(450, 200);   //clic shared stash2
             if (CurrentRecipeItemInStashNumber[i] == 4) Form1_0.KeyMouse_0.MouseClicc(600, 200);   //clic shared stash3
-            Form1_0.WaitDelay(16);
+            Form1_0.WaitDelay(CharConfig.CubeItemPlaceDelay);
 
             //select the item
             Dictionary<string, int> itemScreenPos = ConvertIndexToXY(CurrentRecipeItemLocations[i]);
@@ -243,7 +243,7 @@ public class Cubing
             if (Form1_0.StashStruc_0.CubeStashNumber == 2) Form1_0.KeyMouse_0.MouseClicc(340, 200);   //clic shared stash1
             if (Form1_0.StashStruc_0.CubeStashNumber == 3) Form1_0.KeyMouse_0.MouseClicc(450, 200);   //clic shared stash2
             if (Form1_0.StashStruc_0.CubeStashNumber == 4) Form1_0.KeyMouse_0.MouseClicc(600, 200);   //clic shared stash3
-            Form1_0.WaitDelay(16);
+            Form1_0.WaitDelay(CharConfig.CubeItemPlaceDelay);
 
             //clic on cube to send item to cube
             itemScreenPos = ConvertIndexToXY(Form1_0.StashStruc_0.CubeIndex);

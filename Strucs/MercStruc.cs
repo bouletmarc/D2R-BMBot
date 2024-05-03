@@ -60,9 +60,9 @@ public class MercStruc
 
         int MercCount = 1;
 
-        for (int i = 0; i < Form1_0.PatternsScan_0.AllNPCPointers.Count; i++)
+        foreach (var ThisCurrentPointer in Form1_0.PatternsScan_0.AllNPCPointers)
         {
-            MercPointerLocation = Form1_0.PatternsScan_0.AllNPCPointers[i];
+            MercPointerLocation = ThisCurrentPointer.Key;
             if (MercPointerLocation > 0)
             {
                 Mercdatastruc = new byte[144];

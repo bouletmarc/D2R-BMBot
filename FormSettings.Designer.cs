@@ -50,7 +50,7 @@ partial class FormSettings
             System.Windows.Forms.ListViewItem listViewItem20 = new System.Windows.Forms.ListViewItem("Nihlatak");
             System.Windows.Forms.ListViewItem listViewItem21 = new System.Windows.Forms.ListViewItem("Baal");
             System.Windows.Forms.ListViewItem listViewItem22 = new System.Windows.Forms.ListViewItem("Baal Leech");
-            System.Windows.Forms.ListViewItem listViewItem23 = new System.Windows.Forms.ListViewItem("Terror Zones (NOT WORKING!)");
+            System.Windows.Forms.ListViewItem listViewItem23 = new System.Windows.Forms.ListViewItem("Terror Zones");
             System.Windows.Forms.ListViewItem listViewItem24 = new System.Windows.Forms.ListViewItem("Waypoint Taker");
             System.Windows.Forms.ListViewItem listViewItem25 = new System.Windows.Forms.ListViewItem("Dark Wood");
             System.Windows.Forms.ListViewItem listViewItem26 = new System.Windows.Forms.ListViewItem("Tristram");
@@ -96,7 +96,6 @@ partial class FormSettings
             this.label1LeechName = new System.Windows.Forms.Label();
             this.textBox1LeechName = new System.Windows.Forms.TextBox();
             this.checkBoxShowOverlay = new System.Windows.Forms.CheckBox();
-            this.button2 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.buttonBaalApply = new System.Windows.Forms.Button();
@@ -108,7 +107,6 @@ partial class FormSettings
             this.buttonBaalAddMob = new System.Windows.Forms.Button();
             this.buttonBaalClearMob = new System.Windows.Forms.Button();
             this.label13 = new System.Windows.Forms.Label();
-            this.buttonReload = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.checkBoxOverlayShowMobs = new System.Windows.Forms.CheckBox();
             this.checkBoxOverlayShowWP = new System.Windows.Forms.CheckBox();
@@ -120,14 +118,12 @@ partial class FormSettings
             this.checkBoxOverlayShowExits = new System.Windows.Forms.CheckBox();
             this.checkBoxOverlayShowPath = new System.Windows.Forms.CheckBox();
             this.checkBoxOverlayShowNPC = new System.Windows.Forms.CheckBox();
-            this.buttonOverlaySettings = new System.Windows.Forms.Button();
             this.textBoxStartKey = new System.Windows.Forms.ComboBox();
             this.comboBoxPauseResume = new System.Windows.Forms.ComboBox();
             this.checkBoxLogOrangeError = new System.Windows.Forms.CheckBox();
             this.textBoxSearchGame = new System.Windows.Forms.TextBox();
             this.textBox2LeechName = new System.Windows.Forms.TextBox();
             this.textBoxAvoidWords = new System.Windows.Forms.TextBox();
-            this.checkBoxFastChaos = new System.Windows.Forms.CheckBox();
             this.button4 = new System.Windows.Forms.Button();
             this.panelBaalFeature = new System.Windows.Forms.Panel();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
@@ -149,6 +145,15 @@ partial class FormSettings
             this.label19 = new System.Windows.Forms.Label();
             this.panelChaosFeature = new System.Windows.Forms.Panel();
             this.label18 = new System.Windows.Forms.Label();
+            this.checkBoxFastChaos = new System.Windows.Forms.CheckBox();
+            this.buttonOverlaySettings = new System.Windows.Forms.Button();
+            this.buttonReload = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button5 = new System.Windows.Forms.Button();
+            this.panelBaalLeech = new System.Windows.Forms.Panel();
+            this.checkBoxBaalLeechFightMobs = new System.Windows.Forms.CheckBox();
+            this.label20 = new System.Windows.Forms.Label();
+            this.button6 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownRunNumber)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMaxTime)).BeginInit();
@@ -160,6 +165,7 @@ partial class FormSettings
             this.panelOverlay.SuspendLayout();
             this.groupBoxSearch.SuspendLayout();
             this.panelChaosFeature.SuspendLayout();
+            this.panelBaalLeech.SuspendLayout();
             this.SuspendLayout();
             // 
             // listViewRunScripts
@@ -536,19 +542,6 @@ partial class FormSettings
             this.toolTip1.SetToolTip(this.checkBoxShowOverlay, "Show Graphics Overlay (Maphack, Bot Infos, Etc..)");
             this.checkBoxShowOverlay.UseVisualStyleBackColor = true;
             // 
-            // button2
-            // 
-            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button2.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.button2.Image = global::app.Properties.Resources.Save;
-            this.button2.Location = new System.Drawing.Point(189, 6);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(48, 29);
-            this.button2.TabIndex = 13;
-            this.toolTip1.SetToolTip(this.button2, "Save current Settings");
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
-            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -653,19 +646,6 @@ partial class FormSettings
             this.label13.TabIndex = 16;
             this.label13.Text = "!";
             this.toolTip1.SetToolTip(this.label13, "Double Clic on a Run script to edit it\'s features (if there is any)");
-            // 
-            // buttonReload
-            // 
-            this.buttonReload.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonReload.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.buttonReload.Image = global::app.Properties.Resources.Load;
-            this.buttonReload.Location = new System.Drawing.Point(12, 6);
-            this.buttonReload.Name = "buttonReload";
-            this.buttonReload.Size = new System.Drawing.Size(34, 29);
-            this.buttonReload.TabIndex = 17;
-            this.toolTip1.SetToolTip(this.buttonReload, "Load/Import from a previous Settings File");
-            this.buttonReload.UseVisualStyleBackColor = true;
-            this.buttonReload.Click += new System.EventHandler(this.buttonReload_Click);
             // 
             // button3
             // 
@@ -788,17 +768,6 @@ partial class FormSettings
             this.toolTip1.SetToolTip(this.checkBoxOverlayShowNPC, "Enable this to Kill Baal");
             this.checkBoxOverlayShowNPC.UseVisualStyleBackColor = true;
             // 
-            // buttonOverlaySettings
-            // 
-            this.buttonOverlaySettings.Image = global::app.Properties.Resources.Application;
-            this.buttonOverlaySettings.Location = new System.Drawing.Point(172, 595);
-            this.buttonOverlaySettings.Name = "buttonOverlaySettings";
-            this.buttonOverlaySettings.Size = new System.Drawing.Size(31, 25);
-            this.buttonOverlaySettings.TabIndex = 9;
-            this.toolTip1.SetToolTip(this.buttonOverlaySettings, "Edit Overlay Settings");
-            this.buttonOverlaySettings.UseVisualStyleBackColor = true;
-            this.buttonOverlaySettings.Click += new System.EventHandler(this.buttonOverlaySettings_Click);
-            // 
             // textBoxStartKey
             // 
             this.textBoxStartKey.FormattingEnabled = true;
@@ -853,17 +822,6 @@ partial class FormSettings
             this.textBoxAvoidWords.Size = new System.Drawing.Size(149, 20);
             this.textBoxAvoidWords.TabIndex = 31;
             this.toolTip1.SetToolTip(this.textBoxAvoidWords, "Add the Words you want to avoid entering the game");
-            // 
-            // checkBoxFastChaos
-            // 
-            this.checkBoxFastChaos.AutoSize = true;
-            this.checkBoxFastChaos.Location = new System.Drawing.Point(14, 33);
-            this.checkBoxFastChaos.Name = "checkBoxFastChaos";
-            this.checkBoxFastChaos.Size = new System.Drawing.Size(79, 17);
-            this.checkBoxFastChaos.TabIndex = 12;
-            this.checkBoxFastChaos.Text = "Fast Chaos";
-            this.toolTip1.SetToolTip(this.checkBoxFastChaos, "Enable this to perform a Fast Chaos (Only Kill Seals Boss)");
-            this.checkBoxFastChaos.UseVisualStyleBackColor = true;
             // 
             // button4
             // 
@@ -1073,7 +1031,7 @@ partial class FormSettings
             this.panelChaosFeature.Controls.Add(this.checkBoxFastChaos);
             this.panelChaosFeature.Controls.Add(this.label18);
             this.panelChaosFeature.Controls.Add(this.button4);
-            this.panelChaosFeature.Location = new System.Drawing.Point(523, 293);
+            this.panelChaosFeature.Location = new System.Drawing.Point(523, 268);
             this.panelChaosFeature.Name = "panelChaosFeature";
             this.panelChaosFeature.Size = new System.Drawing.Size(203, 114);
             this.panelChaosFeature.TabIndex = 22;
@@ -1090,12 +1048,120 @@ partial class FormSettings
             this.label18.TabIndex = 12;
             this.label18.Text = "Chaos Run Features";
             // 
+            // checkBoxFastChaos
+            // 
+            this.checkBoxFastChaos.AutoSize = true;
+            this.checkBoxFastChaos.Location = new System.Drawing.Point(14, 33);
+            this.checkBoxFastChaos.Name = "checkBoxFastChaos";
+            this.checkBoxFastChaos.Size = new System.Drawing.Size(79, 17);
+            this.checkBoxFastChaos.TabIndex = 12;
+            this.checkBoxFastChaos.Text = "Fast Chaos";
+            this.toolTip1.SetToolTip(this.checkBoxFastChaos, "Enable this to perform a Fast Chaos (Only Kill Seals Boss)");
+            this.checkBoxFastChaos.UseVisualStyleBackColor = true;
+            // 
+            // buttonOverlaySettings
+            // 
+            this.buttonOverlaySettings.Image = global::app.Properties.Resources.Application;
+            this.buttonOverlaySettings.Location = new System.Drawing.Point(172, 595);
+            this.buttonOverlaySettings.Name = "buttonOverlaySettings";
+            this.buttonOverlaySettings.Size = new System.Drawing.Size(31, 25);
+            this.buttonOverlaySettings.TabIndex = 9;
+            this.toolTip1.SetToolTip(this.buttonOverlaySettings, "Edit Overlay Settings");
+            this.buttonOverlaySettings.UseVisualStyleBackColor = true;
+            this.buttonOverlaySettings.Click += new System.EventHandler(this.buttonOverlaySettings_Click);
+            // 
+            // buttonReload
+            // 
+            this.buttonReload.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonReload.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.buttonReload.Image = global::app.Properties.Resources.Load;
+            this.buttonReload.Location = new System.Drawing.Point(12, 6);
+            this.buttonReload.Name = "buttonReload";
+            this.buttonReload.Size = new System.Drawing.Size(34, 29);
+            this.buttonReload.TabIndex = 17;
+            this.toolTip1.SetToolTip(this.buttonReload, "Load/Import from a previous Settings File");
+            this.buttonReload.UseVisualStyleBackColor = true;
+            this.buttonReload.Click += new System.EventHandler(this.buttonReload_Click);
+            // 
+            // button2
+            // 
+            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button2.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.button2.Image = global::app.Properties.Resources.Save;
+            this.button2.Location = new System.Drawing.Point(189, 6);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(48, 29);
+            this.button2.TabIndex = 13;
+            this.toolTip1.SetToolTip(this.button2, "Save current Settings");
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // button5
+            // 
+            this.button5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
+            this.button5.Location = new System.Drawing.Point(53, 6);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(131, 29);
+            this.button5.TabIndex = 29;
+            this.button5.Text = "Advanced Settings";
+            this.toolTip1.SetToolTip(this.button5, "Load/Import from a previous Settings File");
+            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
+            // 
+            // panelBaalLeech
+            // 
+            this.panelBaalLeech.Controls.Add(this.checkBoxBaalLeechFightMobs);
+            this.panelBaalLeech.Controls.Add(this.label20);
+            this.panelBaalLeech.Controls.Add(this.button6);
+            this.panelBaalLeech.Location = new System.Drawing.Point(523, 388);
+            this.panelBaalLeech.Name = "panelBaalLeech";
+            this.panelBaalLeech.Size = new System.Drawing.Size(203, 114);
+            this.panelBaalLeech.TabIndex = 23;
+            this.panelBaalLeech.Visible = false;
+            // 
+            // checkBoxBaalLeechFightMobs
+            // 
+            this.checkBoxBaalLeechFightMobs.AutoSize = true;
+            this.checkBoxBaalLeechFightMobs.Location = new System.Drawing.Point(14, 33);
+            this.checkBoxBaalLeechFightMobs.Name = "checkBoxBaalLeechFightMobs";
+            this.checkBoxBaalLeechFightMobs.Size = new System.Drawing.Size(78, 17);
+            this.checkBoxBaalLeechFightMobs.TabIndex = 12;
+            this.checkBoxBaalLeechFightMobs.Text = "Fight Mobs";
+            this.toolTip1.SetToolTip(this.checkBoxBaalLeechFightMobs, "Enable this to fight mobs during the leech, if set to false it will fight mobs on" +
+        "ly nearby the leech spot\r\n");
+            this.checkBoxBaalLeechFightMobs.UseVisualStyleBackColor = true;
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label20.ForeColor = System.Drawing.Color.Blue;
+            this.label20.Location = new System.Drawing.Point(27, 11);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(151, 13);
+            this.label20.TabIndex = 12;
+            this.label20.Text = "Baal Leech Run Features";
+            // 
+            // button6
+            // 
+            this.button6.Location = new System.Drawing.Point(61, 82);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(75, 23);
+            this.button6.TabIndex = 12;
+            this.button6.Text = "Apply";
+            this.toolTip1.SetToolTip(this.button6, "Apply and Leave this menu");
+            this.button6.UseVisualStyleBackColor = true;
+            this.button6.Click += new System.EventHandler(this.button6_Click);
+            // 
             // FormSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.ClientSize = new System.Drawing.Size(251, 691);
+            this.ClientSize = new System.Drawing.Size(250, 691);
+            this.Controls.Add(this.panelBaalLeech);
+            this.Controls.Add(this.button5);
             this.Controls.Add(this.panelChaosFeature);
             this.Controls.Add(this.groupBoxSearch);
             this.Controls.Add(this.checkBoxLogOrangeError);
@@ -1147,6 +1213,8 @@ partial class FormSettings
             this.groupBoxSearch.PerformLayout();
             this.panelChaosFeature.ResumeLayout(false);
             this.panelChaosFeature.PerformLayout();
+            this.panelBaalLeech.ResumeLayout(false);
+            this.panelBaalLeech.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1229,7 +1297,12 @@ partial class FormSettings
     private System.Windows.Forms.TextBox textBoxAvoidWords;
     private System.Windows.Forms.Label label17;
     private System.Windows.Forms.Panel panelChaosFeature;
-    private System.Windows.Forms.CheckBox checkBoxFastChaos;
     private System.Windows.Forms.Label label18;
     private System.Windows.Forms.Button button4;
+    private System.Windows.Forms.CheckBox checkBoxFastChaos;
+    private System.Windows.Forms.Button button5;
+    private System.Windows.Forms.Panel panelBaalLeech;
+    private System.Windows.Forms.CheckBox checkBoxBaalLeechFightMobs;
+    private System.Windows.Forms.Label label20;
+    private System.Windows.Forms.Button button6;
 }
