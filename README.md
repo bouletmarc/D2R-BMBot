@@ -18,6 +18,9 @@ I accept no responsibility for any outcomes for the usage of this tool.
 ![alt tag](https://raw.githubusercontent.com/bouletmarc/D2R-BMBot/main/BMBot10.png)
 
 
+[JOIN THE DISCORD GROUP][2]
+
+
 # REQUIREMENTS
 
     - Diablo2 Lord of Destruction 1.13C MUST BE INSTALLED for bot path finding (set the path in Settings.txt)
@@ -115,3 +118,4 @@ I accept no responsibility for any outcomes for the usage of this tool.
   - Cubing script
 
 [1]: https://ia903402.us.archive.org/5/items/diablo-ii-lod/diablo-ii-lod_archive.torrent
+[2]: https://discord.gg/vaABgsJU
