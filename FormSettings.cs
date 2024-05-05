@@ -242,6 +242,12 @@ public partial class FormSettings : Form
             groupBox1.Visible = true;
             groupBoxSearch.Visible = false;
         }
+
+        if (comboBoxLobby.SelectedIndex == 4)
+        {
+            groupBox1.Visible = true;
+            groupBoxSearch.Visible = false;
+        }
     }
 
     public void SaveSettings()

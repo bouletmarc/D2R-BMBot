@@ -40,7 +40,7 @@ using static MapAreaStruc;
 public partial class Form1 : Form
 {
 
-    public string BotVersion = "V3.0";
+    public string BotVersion = "V3.01";
 
     public string D2_LOD_113C_Path = "";
 
@@ -582,7 +582,7 @@ public partial class Form1 : Form
                 if (responseBody.Contains("public string BotVersion = "))
                 {
                     string ThisOnlineVString = responseBody.Substring(responseBody.IndexOf('=') + 4, 5);
-                    ThisOnlineVString = ThisOnlineVString.Replace("\"", "");
+                    ThisOnlineVString = ThisOnlineVString.Replace("\"", "").Replace(";", "");
                     double ThisVersionOnline = double.Parse(ThisOnlineVString, System.Globalization.CultureInfo.InvariantCulture);
                     double ThisVersionCurrent = double.Parse(BotVersion.Substring(1).Replace("\"", ""), System.Globalization.CultureInfo.InvariantCulture);
 
@@ -1668,6 +1668,11 @@ public partial class Form1 : Form
                 if (CharConfig.RunSinglePlayerScript)
                 {
                     Form1_0.KeyMouse_0.MouseClicc(970, 970);  //clic 'play'
+                    Form1_0.WaitDelay(100);
+
+                    if (CharConfig.GameDifficulty == 0) Form1_0.KeyMouse_0.MouseClicc(960, 450);  //clic 'normal'
+                    if (CharConfig.GameDifficulty == 0) Form1_0.KeyMouse_0.MouseClicc(960, 520);  //clic 'nm'
+                    if (CharConfig.GameDifficulty == 0) Form1_0.KeyMouse_0.MouseClicc(960, 585);  //clic 'hell'
                     Form1_0.WaitDelay(100);
                 }
                 else
