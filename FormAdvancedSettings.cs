@@ -69,10 +69,10 @@ public partial class FormAdvancedSettings : Form
         dataGridViewAdvanced.Rows[RowsIndex++].HeaderCell.Value = "Overall Delays Multiplyer";
         dataGridViewAdvanced.Rows.Add();
         dataGridViewAdvanced.Rows[dataGridViewAdvanced.Rows.Count - 1].Cells[0].Value = CharConfig.EndBattleGrabDelay;
-        dataGridViewAdvanced.Rows[RowsIndex++].HeaderCell.Value = "End Battle Grab Delay (ms*100)";
+        dataGridViewAdvanced.Rows[RowsIndex++].HeaderCell.Value = "End Battle Item Grab Delay (ms*100)";
         dataGridViewAdvanced.Rows.Add();
         dataGridViewAdvanced.Rows[dataGridViewAdvanced.Rows.Count - 1].Cells[0].Value = CharConfig.MaxTimeEnterGame;
-        dataGridViewAdvanced.Rows[RowsIndex++].HeaderCell.Value = "Max Game Time To Enter (sec)";
+        dataGridViewAdvanced.Rows[RowsIndex++].HeaderCell.Value = "Max Search Game Time To Enter (sec)";
         dataGridViewAdvanced.Rows.Add();
         dataGridViewAdvanced.Rows[dataGridViewAdvanced.Rows.Count - 1].Cells[0].Value = CharConfig.BaalWavesCastDelay;
         dataGridViewAdvanced.Rows[RowsIndex++].HeaderCell.Value = "Baal Waves Cast Delay (sec)";
@@ -81,7 +81,7 @@ public partial class FormAdvancedSettings : Form
         dataGridViewAdvanced.Rows[RowsIndex++].HeaderCell.Value = "Chaos Waiting Seal Boss Delay (sec)";
         dataGridViewAdvanced.Rows.Add();
         dataGridViewAdvanced.Rows[dataGridViewAdvanced.Rows.Count - 1].Cells[0].Value = CharConfig.RecastBODelay;
-        dataGridViewAdvanced.Rows[RowsIndex++].HeaderCell.Value = "Recast BO Delay (sec)";
+        dataGridViewAdvanced.Rows[RowsIndex++].HeaderCell.Value = "Recast BO after Delay (sec)";
         dataGridViewAdvanced.Rows.Add();
         dataGridViewAdvanced.Rows[dataGridViewAdvanced.Rows.Count - 1].Cells[0].Value = CharConfig.TownSwitchAreaDelay;
         dataGridViewAdvanced.Rows[RowsIndex++].HeaderCell.Value = "Town Switch Area Delay (sec)";
@@ -93,13 +93,16 @@ public partial class FormAdvancedSettings : Form
         dataGridViewAdvanced.Rows[RowsIndex++].HeaderCell.Value = "Player MaxHP Check Delay (ms)";
         dataGridViewAdvanced.Rows.Add();
         dataGridViewAdvanced.Rows[dataGridViewAdvanced.Rows.Count - 1].Cells[0].Value = CharConfig.LeechEnterTPDelay;
-        dataGridViewAdvanced.Rows[RowsIndex++].HeaderCell.Value = "Leech Enter TP Delay (ms*10)";
+        dataGridViewAdvanced.Rows[RowsIndex++].HeaderCell.Value = "Leech Games Enter TP Delay (ms*10)";
         dataGridViewAdvanced.Rows.Add();
         dataGridViewAdvanced.Rows[dataGridViewAdvanced.Rows.Count - 1].Cells[0].Value = CharConfig.MephistoRedPortalEnterDelay;
-        dataGridViewAdvanced.Rows[RowsIndex++].HeaderCell.Value = "Mephisto Red Portal Enter Delay (ms*10)";
+        dataGridViewAdvanced.Rows[RowsIndex++].HeaderCell.Value = "Mephisto Ending Red Portal Delay (ms*10)";
         dataGridViewAdvanced.Rows.Add();
         dataGridViewAdvanced.Rows[dataGridViewAdvanced.Rows.Count - 1].Cells[0].Value = CharConfig.CubeItemPlaceDelay;
-        dataGridViewAdvanced.Rows[RowsIndex++].HeaderCell.Value = "Cube Item Place Delay (ms*10)";
+        dataGridViewAdvanced.Rows[RowsIndex++].HeaderCell.Value = "Cube Item Placing Delay (ms*10)";
+        dataGridViewAdvanced.Rows.Add();
+        dataGridViewAdvanced.Rows[dataGridViewAdvanced.Rows.Count - 1].Cells[0].Value = CharConfig.CubeItemPlaceDelay;
+        dataGridViewAdvanced.Rows[RowsIndex++].HeaderCell.Value = "Create New Game Wait Delay (ms*10)";
     }
 
     public void SaveSettings()
@@ -130,6 +133,7 @@ public partial class FormAdvancedSettings : Form
         CharConfig.LeechEnterTPDelay = int.Parse(dataGridViewAdvanced.Rows[RowsIndex++].Cells[0].Value.ToString());
         CharConfig.MephistoRedPortalEnterDelay = int.Parse(dataGridViewAdvanced.Rows[RowsIndex++].Cells[0].Value.ToString());
         CharConfig.CubeItemPlaceDelay = int.Parse(dataGridViewAdvanced.Rows[RowsIndex++].Cells[0].Value.ToString());
+        CharConfig.CreateGameWaitDelay = int.Parse(dataGridViewAdvanced.Rows[RowsIndex++].Cells[0].Value.ToString());
     }
 
     private void FormAdvancedSettings_FormClosing(object sender, FormClosingEventArgs e)

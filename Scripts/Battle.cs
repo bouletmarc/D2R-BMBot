@@ -310,7 +310,8 @@ public class Battle
 
             Form1_0.KeyMouse_0.PressKey(CharConfig.KeySwapWeapon);
             Form1_0.WaitDelay(15);
-            Form1_0.KeyMouse_0.PressKey(CharConfig.KeySkillBattleOrder);
+            //Form1_0.KeyMouse_0.PressKey(CharConfig.KeySkillBattleOrder);
+            Form1_0.KeyMouse_0.PressKey(CharConfig.KeySkillBattleCommand);
             Form1_0.WaitDelay(10);
             /*Form1_0.KeyMouse_0.MouseClicc(1025, 1025);
             Form1_0.WaitDelay(5);
@@ -319,11 +320,13 @@ public class Battle
             Form1_0.PlayerScan_0.GetPositions();
 
             //press W again to switch weapon again
-            if (Form1_0.PlayerScan_0.RightSkill != Enums.Skill.BattleOrders)
+            //if (Form1_0.PlayerScan_0.RightSkill != Enums.Skill.BattleOrders)
+            if (Form1_0.PlayerScan_0.RightSkill != Enums.Skill.BattleCommand)
             {
                 Form1_0.KeyMouse_0.PressKey(CharConfig.KeySwapWeapon);
                 Form1_0.WaitDelay(15);
-                Form1_0.KeyMouse_0.PressKey(CharConfig.KeySkillBattleOrder);
+                //Form1_0.KeyMouse_0.PressKey(CharConfig.KeySkillBattleOrder);
+                Form1_0.KeyMouse_0.PressKey(CharConfig.KeySkillBattleCommand);
                 Form1_0.WaitDelay(10);
                 /*Form1_0.KeyMouse_0.MouseClicc(1025, 1025);
                 Form1_0.WaitDelay(5);
@@ -336,7 +339,8 @@ public class Battle
             Form1_0.WaitDelay(35);
 
             //select battle command
-            Form1_0.KeyMouse_0.PressKey(CharConfig.KeySkillBattleCommand);
+            //Form1_0.KeyMouse_0.PressKey(CharConfig.KeySkillBattleCommand);
+            Form1_0.KeyMouse_0.PressKey(CharConfig.KeySkillBattleOrder);
             Form1_0.WaitDelay(10);
             /*Form1_0.KeyMouse_0.MouseClicc(1025, 1025);
             Form1_0.WaitDelay(5);

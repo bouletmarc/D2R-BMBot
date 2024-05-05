@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Enums;
 
 public class Shop
 {
@@ -69,7 +70,7 @@ public class Shop
         return false;
     }
 
-    public bool PlaceItem(int PosX, int PosY)
+    public bool PlaceItem(int PosX, int PosY, bool ForceBadDetection = false)
     {
         int Tryy = 0;
         Form1_0.ItemsStruc_0.GetItems(false);
@@ -79,6 +80,12 @@ public class Shop
             Form1_0.WaitDelay(10);
             Form1_0.ItemsStruc_0.GetItems(false);   //get inventory again
             Tryy++;
+
+            if (Tryy == 5 && ForceBadDetection)
+            {
+                Form1_0.ItemsStruc_0.GetBadItemsOnCursor();
+                Tryy = 10;
+            }
         }
         if (Tryy >= 15)
         {
@@ -215,6 +222,22 @@ public class Shop
                 if (Form1_0.InventoryStruc_0.InventoryHasStashItem[i] == 0
                     && Form1_0.InventoryStruc_0.InventoryHasUnidItem[i] == 0)
                 {
+                    //################
+                    //GET ITEM SOLD INFOS
+                    string SoldTxt = "";
+                    Color ThisCol = Color.Black;
+                    Dictionary<string, int> itemXYPos = Form1_0.InventoryStruc_0.ConvertIndexToXY(i);
+                    if (Form1_0.ItemsStruc_0.GetSpecificItem(0, Form1_0.InventoryStruc_0.InventoryItemNames[i], itemXYPos["x"], itemXYPos["y"], Form1_0.PlayerScan_0.unitId, 0, true))
+                    {
+                        SoldTxt = "Sold Item:" + Form1_0.ItemsStruc_0.ItemNAAME + " (ID:" + Form1_0.ItemsStruc_0.txtFileNo + ")" + Form1_0.ItemsAlert_0.GetItemTypeText() + " && " + Form1_0.ItemsStruc_0.GetQualityTextString() + " && " + Form1_0.ItemsStruc_0.GetAllFlagsFromItem() + " && " + Form1_0.ItemsStruc_0.GetAllValuesFromStats() + Form1_0.ItemsStruc_0.GetItemsStashInfosTxt();
+                        ThisCol = Form1_0.ItemsStruc_0.GetColorFromQuality((int)Form1_0.ItemsStruc_0.itemQuality);
+                        if (Form1_0.ItemsAlert_0.ShouldKeepItem())
+                        {
+                            continue;
+                        }
+                    }
+                    //################
+
                     Dictionary<string, int> itemScreenPos = Form1_0.InventoryStruc_0.ConvertIndexToXY(i);
                     itemScreenPos = Form1_0.InventoryStruc_0.ConvertInventoryLocToScreenPos(itemScreenPos["x"], itemScreenPos["y"]);
 
@@ -246,6 +269,7 @@ public class Shop
                         }
                         else
                         {
+                            if (SoldTxt != "") Form1_0.method_1_SoldItems(SoldTxt, ThisCol);
                             break;
                         }
                     }
@@ -565,6 +589,12 @@ public class Shop
             }
 
             if (HasTownPortal) ShopForTomeOfPortal = false;
+        }
+
+        //ShopBot
+        if (CharConfig.RunShopBotScript && !Form1_0.ShopBot_0.ScriptDone && Form1_0.ShopBot_0.CurrentStep > 0)
+        {
+            Form1_0.ItemsStruc_0.ShopBotGetPurchaseItems();
         }
     }
 }

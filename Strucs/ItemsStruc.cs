@@ -250,7 +250,7 @@ public class ItemsStruc
         }
     }
 
-    public bool GetShopItem(string ShopItemName, bool GetGambleShopItem = false)
+    public bool GetShopItem(string ShopItemName)
     {
         try
         {
@@ -276,8 +276,7 @@ public class ItemsStruc
                     {
                         if (dwOwnerId != Form1_0.PlayerScan_0.unitId)
                         {
-                            if ((GetGambleShopItem && equiploc == 0)
-                                || (!GetGambleShopItem && equiploc == 3))
+                            if (equiploc <= 3)
                             {
                                 if (ItemNAAME == ShopItemName)
                                 {
@@ -291,7 +290,7 @@ public class ItemsStruc
         }
         catch
         {
-            Form1_0.method_1("Couldn't 'GetShopItem()'", Color.Red);
+            Form1_0.method_1("Couldn't 'GetShopItem()'", Color.OrangeRed);
         }
 
         return false;
@@ -535,7 +534,7 @@ public class ItemsStruc
                                 AllItemsIncube.Add("ID:" + txtFileNo + "(" + ItemNAAME + ") at:" + itemx + ", " + itemy + " - In Cube - " + Form1_0.ItemsAlert_0.GetItemTypeText() + " && " + GetQualityTextString() + " && " + GetAllFlagsFromItem() + " && " + GetAllValuesFromStats() + GetItemsStashInfosTxt());
                             }
                         }
-                        else if (dwOwnerId != Form1_0.PlayerScan_0.unitId && equiploc == 3)
+                        else if (dwOwnerId != Form1_0.PlayerScan_0.unitId && equiploc <= 3)
                         {
                             //Shop Items
                             if (DebuggingItems)
@@ -543,14 +542,14 @@ public class ItemsStruc
                                 AllItemsInShop.Add("ID:" + txtFileNo + "(" + ItemNAAME + ") at:" + itemx + ", " + itemy + " - In Shop - " + Form1_0.ItemsAlert_0.GetItemTypeText() + " && " + GetQualityTextString() + " && " + GetAllFlagsFromItem() + " && " + GetAllValuesFromStats() + GetItemsStashInfosTxt());
                             }
                         }
-                        else if (dwOwnerId != Form1_0.PlayerScan_0.unitId && equiploc == 0)
+                        /*else if (dwOwnerId != Form1_0.PlayerScan_0.unitId && equiploc == 0)
                         {
                             //Shop Gamble Items
                             if (DebuggingItems)
                             {
                                 AllItemsInShop.Add("ID:" + txtFileNo + "(" + ItemNAAME + ") at:" + itemx + ", " + itemy + " - In Shop(Gamble) - " + Form1_0.ItemsAlert_0.GetItemTypeText() + " && " + GetQualityTextString() + " && " + GetAllFlagsFromItem() + " && " + GetAllValuesFromStats() + GetItemsStashInfosTxt());
                             }
-                        }
+                        }*/
                         else
                         {
                             AllItemsOthers.Add("ID:" + txtFileNo + "(" + ItemNAAME + ") at:" + itemx + ", " + itemy + " - Others - EquipLocation:" + equiploc + " - SelfOwner:" + (dwOwnerId == Form1_0.PlayerScan_0.unitId) + " - " + Form1_0.ItemsAlert_0.GetItemTypeText() + " && " + GetQualityTextString() + " && " + GetAllFlagsFromItem() + " && " + GetAllValuesFromStats() + GetItemsStashInfosTxt());
@@ -575,12 +574,12 @@ public class ItemsStruc
                                 AllItemsEquipped.Add("ID:" + txtFileNo + "(" + ItemNAAME + ") at:" + itemx + ", " + itemy + " - Equipped - " + Form1_0.ItemsAlert_0.GetItemTypeText() + " && " + GetQualityTextString() + " && " + GetAllFlagsFromItem() + " && " + GetAllValuesFromStats() + GetItemsStashInfosTxt());
                             }
 
-                            if (ItemNAAME == "Crusader Gauntlets")
+                            /*if (ItemNAAME == "Crusader Gauntlets")
                             {
                                 string SavePathh = Form1_0.ThisEndPath + "DumpItempUnitDataStruc";
                                 File.Create(SavePathh).Dispose();
                                 File.WriteAllBytes(SavePathh, pUnitData);
-                            }
+                            }*/
                         }
                         else
                         {
@@ -763,7 +762,145 @@ public class ItemsStruc
         }
         catch
         {
-            Form1_0.method_1("Couldn't 'GetItems()'", Color.Red);
+            Form1_0.method_1("Couldn't 'GetItems()'", Color.OrangeRed);
+        }
+        return false;
+    }
+
+    public bool GetSpecificItem(int ItemLocation, string ItemName, int PositionX, int PositionY, uint dwOwnerId, int Thisequiploc, bool InventoryItem = true)
+    {
+        try
+        {
+            if (!Form1_0.GameStruc_0.IsInGame()) return false;
+
+            //dead leave game
+            if (Form1_0.PlayerScan_0.PlayerDead || Form1_0.Potions_0.ForceLeave)
+            {
+                Form1_0.Potions_0.ForceLeave = true;
+                Form1_0.BaalLeech_0.SearchSameGamesAsLastOne = false;
+                Form1_0.LeaveGame(false);
+                Form1_0.IncreaseDeadCount();
+                return false;
+            }
+
+            Form1_0.PatternsScan_0.scanForUnitsPointer("item");
+            foreach (var ThisCurrentPointer in Form1_0.PatternsScan_0.AllItemsPointers)
+            {
+                ItemPointerLocation = ThisCurrentPointer.Key;
+                if (ItemPointerLocation > 0)
+                {
+                    itemdatastruc = new byte[144];
+                    Form1_0.Mem_0.ReadRawMemory(ItemPointerLocation, ref itemdatastruc, 144);
+
+                    ItemsScanned++;
+                    txtFileNo = BitConverter.ToUInt32(itemdatastruc, 4);
+                    uint ItemID = BitConverter.ToUInt32(itemdatastruc, 8);
+                    ItemNAAME = Form1_0.ItemsNames_0.getItemBaseName(txtFileNo);
+                    GetUnitData();
+                    GetUnitPathData();
+                    GetStatsAddr();
+
+                    //Form1_0.method_1("ItemType: " + BitConverter.ToUInt32(itemdatastruc, 0).ToString() + ", TxtFileNo: " + BitConverter.ToUInt32(itemdatastruc, 4).ToString() + ", Name: " + ItemNAAME + ", Location: " + GetItemLocation(itemdatastruc[0x0C]));
+                    //; itemLoc - 0 in inventory, 1 equipped, 2 in belt, 3 on ground, 4 cursor, 5 dropping, 6 socketed
+                    if (itemdatastruc[0x0C] == ItemLocation)
+                    {
+                        bool CanGo = true;
+                        if (itemdatastruc[0x0C] == 0)
+                        {
+                            if (dwOwnerId != 0 && dwOwnerId == Form1_0.PlayerScan_0.unitId && Thisequiploc == equiploc)
+                            {
+                                if (!InventoryItem) CanGo = false;
+                            }
+                        }
+
+                        if (InventoryItem && dwOwnerId != Form1_0.PlayerScan_0.unitId) CanGo = false;
+                        if (Thisequiploc != equiploc) CanGo = false;
+
+                        if (((ItemName != "" && ItemNAAME == ItemName) || ItemName == "") && CanGo)
+                        {
+                            if (itemx == PositionX && itemy == PositionY)
+                            {
+                                Console.WriteLine(Form1_0.ItemsStruc_0.ItemNAAME);
+                                return true;
+                            }
+                        }
+                    }
+                }
+            }
+
+            return false;
+        }
+        catch
+        {
+            Form1_0.method_1("Couldn't 'GetSpecificItem()'", Color.OrangeRed);
+        }
+        return false;
+    }
+
+    public bool ShopBotGetPurchaseItems()
+    {
+        try
+        {
+            if (!Form1_0.GameStruc_0.IsInGame()) return false;
+
+            //dead leave game
+            if (Form1_0.PlayerScan_0.PlayerDead || Form1_0.Potions_0.ForceLeave)
+            {
+                Form1_0.Potions_0.ForceLeave = true;
+                Form1_0.BaalLeech_0.SearchSameGamesAsLastOne = false;
+                Form1_0.LeaveGame(false);
+                Form1_0.IncreaseDeadCount();
+                return false;
+            }
+
+            Form1_0.PatternsScan_0.scanForUnitsPointer("item");
+            foreach (var ThisCurrentPointer in Form1_0.PatternsScan_0.AllItemsPointers)
+            {
+                ItemPointerLocation = ThisCurrentPointer.Key;
+                if (ItemPointerLocation > 0)
+                {
+                    itemdatastruc = new byte[144];
+                    Form1_0.Mem_0.ReadRawMemory(ItemPointerLocation, ref itemdatastruc, 144);
+
+                    ItemsScanned++;
+                    txtFileNo = BitConverter.ToUInt32(itemdatastruc, 4);
+                    uint ItemID = BitConverter.ToUInt32(itemdatastruc, 8);
+                    ItemNAAME = Form1_0.ItemsNames_0.getItemBaseName(txtFileNo);
+                    GetUnitData();
+                    GetUnitPathData();
+                    GetStatsAddr();
+
+                    //Form1_0.method_1("ItemType: " + BitConverter.ToUInt32(itemdatastruc, 0).ToString() + ", TxtFileNo: " + BitConverter.ToUInt32(itemdatastruc, 4).ToString() + ", Name: " + ItemNAAME + ", Location: " + GetItemLocation(itemdatastruc[0x0C]));
+                    //; itemLoc - 0 in inventory, 1 equipped, 2 in belt, 3 on ground, 4 cursor, 5 dropping, 6 socketed
+                    if (itemdatastruc[0x0C] == 0)
+                    {
+                        if (dwOwnerId != Form1_0.PlayerScan_0.unitId && equiploc <= 3)
+                        {
+                            //if (Form1_0.ItemsAlert_0.ShouldPickItem(true))
+                            if (Form1_0.ItemsAlert_0.ShouldPickItem(false))
+                            {
+                                if (equiploc == 0) Form1_0.KeyMouse_0.MouseClicc(220, 200);   //clic shop1
+                                if (equiploc == 1) Form1_0.KeyMouse_0.MouseClicc(350, 200);   //clic shop2
+                                if (equiploc == 2) Form1_0.KeyMouse_0.MouseClicc(475, 200);   //clic shop3
+                                if (equiploc == 3) Form1_0.KeyMouse_0.MouseClicc(600, 200);   //clic shop4
+                                Form1_0.WaitDelay(15);
+
+                                Dictionary<string, int> itemScreenPos = Form1_0.Shop_0.ConvertShopLocToScreenPos(Form1_0.ItemsStruc_0.itemx, Form1_0.ItemsStruc_0.itemy);
+                                Form1_0.KeyMouse_0.MouseCliccRight(itemScreenPos["x"], itemScreenPos["y"]);
+                                Form1_0.WaitDelay(15);
+
+                                Form1_0.Town_0.Towning = true;
+                            }
+                        }
+                    }
+                }
+            }
+
+            return false;
+        }
+        catch
+        {
+            Form1_0.method_1("Couldn't 'ShopBotGetPurchaseItems()'", Color.OrangeRed);
         }
         return false;
     }
@@ -903,7 +1040,7 @@ public class ItemsStruc
         }
         catch
         {
-            Form1_0.method_1("Couldn't 'PickThisItem()'", Color.Red);
+            Form1_0.method_1("Couldn't 'PickThisItem()'", Color.OrangeRed);
         }
 
         return false;
@@ -1034,7 +1171,7 @@ public class ItemsStruc
         }
         catch
         {
-            Form1_0.method_1("Couldn't 'GrabItemsForGold()'", Color.Red);
+            Form1_0.method_1("Couldn't 'GrabItemsForGold()'", Color.OrangeRed);
         }
 
         return false;

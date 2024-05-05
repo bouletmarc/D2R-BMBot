@@ -349,7 +349,7 @@ public class Baal
                     }
 
                     //STOP CASTING ERROR DETECTING MOBS/BAAL MOVED
-                    if ((DateTime.Now - TimeSinceLastWaveDone).TotalSeconds > 25)
+                    /*if ((DateTime.Now - TimeSinceLastWaveDone).TotalSeconds > 25)
                     {
                         TimeSinceLastWaveDone = DateTime.MaxValue;
                         TimeSinceLastWaveSet = false;
@@ -369,7 +369,7 @@ public class Baal
                             CheckingThroneBackMode = 0;
                             return;
                         }
-                    }
+                    }*/
 
                     //STOP CASTING
                     if (Form1_0.MobsStruc_0.GetMobs("", "", true, 30, IgnoredMobs))

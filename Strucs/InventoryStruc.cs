@@ -31,10 +31,222 @@ public class InventoryStruc
 
     public bool HasIDTome = false;
 
+    public bool DisabledSpecialItems = false;
+
     public void SetForm1(Form1 form1_1)
     {
         Form1_0 = form1_1;
 
+    }
+
+    public void CheckInventorySpecialUniqueItems()
+    {
+        if (DisabledSpecialItems) return;
+
+        //#######
+        string ThisNamee = "SmallCharm";
+        int ThisIndex = 2;
+        bool PickingAnni = false;
+        while (Form1_0.ItemsAlert_0.PickItemsNormal_ByName.ContainsKey(ThisNamee))
+        {
+            //Console.WriteLine(Form1_0.ItemsStruc_0.ItemNAAME + ":" + ThisNamee);
+            if (Form1_0.ItemsAlert_0.PickItemsNormal_ByName[ThisNamee])
+            {
+                if (Form1_0.ItemsAlert_0.PickItemsNormal_ByName_Quality.ContainsKey(ThisNamee))
+                {
+                    if (Form1_0.ItemsAlert_0.PickItemsNormal_ByName_Quality[ThisNamee] == 7) PickingAnni = true;
+                }
+                break;
+            }
+            ThisNamee = "SmallCharm" + ThisIndex;
+            ThisIndex++;
+        }
+
+        ThisNamee = "LargeCharm";
+        ThisIndex = 2;
+        bool PickingTorch = false;
+        while (Form1_0.ItemsAlert_0.PickItemsNormal_ByName.ContainsKey(ThisNamee))
+        {
+            if (Form1_0.ItemsAlert_0.PickItemsNormal_ByName[ThisNamee])
+            {
+                if (Form1_0.ItemsAlert_0.PickItemsNormal_ByName_Quality.ContainsKey(ThisNamee))
+                {
+                    if (Form1_0.ItemsAlert_0.PickItemsNormal_ByName_Quality[ThisNamee] == 7) PickingTorch = true;
+                }
+                break;
+            }
+            ThisNamee = "LargeCharm" + ThisIndex;
+            ThisIndex++;
+        }
+
+        ThisNamee = "GrandCharm";
+        ThisIndex = 2;
+        bool PickingGC = false;
+        while (Form1_0.ItemsAlert_0.PickItemsNormal_ByName.ContainsKey(ThisNamee))
+        {
+            if (Form1_0.ItemsAlert_0.PickItemsNormal_ByName[ThisNamee])
+            {
+                if (Form1_0.ItemsAlert_0.PickItemsNormal_ByName_Quality.ContainsKey(ThisNamee))
+                {
+                    if (Form1_0.ItemsAlert_0.PickItemsNormal_ByName_Quality[ThisNamee] == 7) PickingGC = true;
+                }
+                break;
+            }
+            ThisNamee = "GrandCharm" + ThisIndex;
+            ThisIndex++;
+        }
+        //#######
+
+        if (PickingAnni || PickingTorch || PickingGC)
+        {
+            Form1_0.ItemsStruc_0.GetItems(false);
+
+            //Check inside Inventory
+            for (int i = 0; i < 40; i++)
+            {
+                if (CharConfig.InventoryDontCheckItem[i] == 1)
+                {
+                    //################
+                    //GET ITEM (UNIQUE GC, GHEED, TORCH, ANNI)
+                    Dictionary<string, int> itemXYPos = Form1_0.InventoryStruc_0.ConvertIndexToXY(i);
+                    if (Form1_0.ItemsStruc_0.GetSpecificItem(0, "", itemXYPos["x"], itemXYPos["y"], Form1_0.PlayerScan_0.unitId, 0))
+                    {
+                        if (Form1_0.ItemsStruc_0.ItemNAAME == "Small Charm" && Form1_0.ItemsStruc_0.itemQuality == 7)
+                        {
+                            Form1_0.method_1("Cannot Pick Anni since you have one in your inventory, disabling Anni from pickit!", Color.OrangeRed);
+
+                            ThisNamee = "SmallCharm";
+                            ThisIndex = 2;
+                            while (Form1_0.ItemsAlert_0.PickItemsNormal_ByName.ContainsKey(ThisNamee))
+                            {
+                                if (Form1_0.ItemsAlert_0.PickItemsNormal_ByName[ThisNamee])
+                                {
+                                    if (Form1_0.ItemsAlert_0.PickItemsNormal_ByName_Quality.ContainsKey(ThisNamee))
+                                    {
+                                        if (Form1_0.ItemsAlert_0.PickItemsNormal_ByName_Quality[ThisNamee] == 7) Form1_0.ItemsAlert_0.PickItemsNormal_ByName[ThisNamee] = false;
+                                    }
+                                }
+                                ThisNamee = "SmallCharm" + ThisIndex;
+                                ThisIndex++;
+                            }
+                        }
+                        else if (Form1_0.ItemsStruc_0.ItemNAAME == "Large Charm" && Form1_0.ItemsStruc_0.itemQuality == 7)
+                        {
+                            Form1_0.method_1("Cannot Pick Torch since you have one in your inventory, disabling Torch from pickit!", Color.OrangeRed);
+                            
+                            ThisNamee = "LargeCharm";
+                            ThisIndex = 2;
+                            while (Form1_0.ItemsAlert_0.PickItemsNormal_ByName.ContainsKey(ThisNamee))
+                            {
+                                if (Form1_0.ItemsAlert_0.PickItemsNormal_ByName[ThisNamee])
+                                {
+                                    if (Form1_0.ItemsAlert_0.PickItemsNormal_ByName_Quality.ContainsKey(ThisNamee))
+                                    {
+                                        if (Form1_0.ItemsAlert_0.PickItemsNormal_ByName_Quality[ThisNamee] == 7) Form1_0.ItemsAlert_0.PickItemsNormal_ByName[ThisNamee] = false;
+                                    }
+                                }
+                                ThisNamee = "LargeCharm" + ThisIndex;
+                                ThisIndex++;
+                            }
+                        }
+                        else if (Form1_0.ItemsStruc_0.ItemNAAME == "Grand Charm" && Form1_0.ItemsStruc_0.itemQuality == 7)
+                        {
+                            Form1_0.method_1("Cannot Pick Unique GC's since you have one in your inventory, disabling Unique GC's from pickit!", Color.OrangeRed);
+
+                            ThisNamee = "GrandCharm";
+                            ThisIndex = 2;
+                            while (Form1_0.ItemsAlert_0.PickItemsNormal_ByName.ContainsKey(ThisNamee))
+                            {
+                                if (Form1_0.ItemsAlert_0.PickItemsNormal_ByName[ThisNamee])
+                                {
+                                    if (Form1_0.ItemsAlert_0.PickItemsNormal_ByName_Quality.ContainsKey(ThisNamee))
+                                    {
+                                        if (Form1_0.ItemsAlert_0.PickItemsNormal_ByName_Quality[ThisNamee] == 7) Form1_0.ItemsAlert_0.PickItemsNormal_ByName[ThisNamee] = false;
+                                    }
+                                }
+                                ThisNamee = "GrandCharm" + ThisIndex;
+                                ThisIndex++;
+                            }
+                        }
+                    }
+                    //################
+                }
+            }
+
+            //Check inside stash
+            for (int i = 0; i < 100; i++)
+            {
+                if (Form1_0.StashStruc_0.Stash1_ItemTxtNoList[i] >= 603 && Form1_0.StashStruc_0.Stash1_ItemTxtNoList[i] <= 605)
+                {
+                    //################
+                    //GET ITEM (UNIQUE GC, GHEED, TORCH, ANNI)
+                    Dictionary<string, int> itemXYPos = Form1_0.InventoryStruc_0.ConvertIndexToXY(i);
+                    if (Form1_0.ItemsStruc_0.GetSpecificItem(0, "", itemXYPos["x"], itemXYPos["y"], Form1_0.PlayerScan_0.unitId, 4))
+                    {
+                        if (Form1_0.ItemsStruc_0.ItemNAAME == "Small Charm" && Form1_0.ItemsStruc_0.itemQuality == 7)
+                        {
+                            Form1_0.method_1("Cannot Pick Anni since you have one in your normal stash, disabling Anni from pickit!", Color.OrangeRed);
+
+                            ThisNamee = "SmallCharm";
+                            ThisIndex = 2;
+                            while (Form1_0.ItemsAlert_0.PickItemsNormal_ByName.ContainsKey(ThisNamee))
+                            {
+                                if (Form1_0.ItemsAlert_0.PickItemsNormal_ByName[ThisNamee])
+                                {
+                                    if (Form1_0.ItemsAlert_0.PickItemsNormal_ByName_Quality.ContainsKey(ThisNamee))
+                                    {
+                                        if (Form1_0.ItemsAlert_0.PickItemsNormal_ByName_Quality[ThisNamee] == 7) Form1_0.ItemsAlert_0.PickItemsNormal_ByName[ThisNamee] = false;
+                                    }
+                                }
+                                ThisNamee = "SmallCharm" + ThisIndex;
+                                ThisIndex++;
+                            }
+                        }
+                        else if (Form1_0.ItemsStruc_0.ItemNAAME == "Large Charm" && Form1_0.ItemsStruc_0.itemQuality == 7)
+                        {
+                            Form1_0.method_1("Cannot Pick Torch since you have one in your normal stash, disabling Torch from pickit!", Color.OrangeRed);
+
+                            ThisNamee = "LargeCharm";
+                            ThisIndex = 2;
+                            while (Form1_0.ItemsAlert_0.PickItemsNormal_ByName.ContainsKey(ThisNamee))
+                            {
+                                if (Form1_0.ItemsAlert_0.PickItemsNormal_ByName[ThisNamee])
+                                {
+                                    if (Form1_0.ItemsAlert_0.PickItemsNormal_ByName_Quality.ContainsKey(ThisNamee))
+                                    {
+                                        if (Form1_0.ItemsAlert_0.PickItemsNormal_ByName_Quality[ThisNamee] == 7) Form1_0.ItemsAlert_0.PickItemsNormal_ByName[ThisNamee] = false;
+                                    }
+                                }
+                                ThisNamee = "LargeCharm" + ThisIndex;
+                                ThisIndex++;
+                            }
+                        }
+                        else if (Form1_0.ItemsStruc_0.ItemNAAME == "Grand Charm" && Form1_0.ItemsStruc_0.itemQuality == 7)
+                        {
+                            Form1_0.method_1("Cannot Pick Unique GC's since you have one in your normal stash, disabling Unique GC's from pickit!", Color.OrangeRed);
+
+                            ThisNamee = "GrandCharm";
+                            ThisIndex = 2;
+                            while (Form1_0.ItemsAlert_0.PickItemsNormal_ByName.ContainsKey(ThisNamee))
+                            {
+                                if (Form1_0.ItemsAlert_0.PickItemsNormal_ByName[ThisNamee])
+                                {
+                                    if (Form1_0.ItemsAlert_0.PickItemsNormal_ByName_Quality.ContainsKey(ThisNamee))
+                                    {
+                                        if (Form1_0.ItemsAlert_0.PickItemsNormal_ByName_Quality[ThisNamee] == 7) Form1_0.ItemsAlert_0.PickItemsNormal_ByName[ThisNamee] = false;
+                                    }
+                                }
+                                ThisNamee = "GrandCharm" + ThisIndex;
+                                ThisIndex++;
+                            }
+                        }
+                    }
+                    //################
+                }
+            }
+        }
+
+        DisabledSpecialItems = true;
     }
 
     public void UseTP()
@@ -229,6 +441,7 @@ public class InventoryStruc
 
     public void DumpBadItemsOnGround()
     {
+        //return;
         //#########################################
         //reset trying to pick item if inventory is free of spots, meaning he try to grab while a mobs is in the way
         bool HasItemItemInInventory = false;
@@ -262,6 +475,61 @@ public class InventoryStruc
             Form1_0.UIScan_0.OpenUIMenu("invMenu");
             Form1_0.ItemsStruc_0.GetBadItemsOnCursor();
             //Form1_0.ItemsStruc_0.GetItems(false);
+
+            //#######################################################
+            //#######################################################
+            //MANUAL ID THE ITEMS WITH TOME ID
+            bool HasTownID = HasInventoryItemName("Tome of Identify");
+            if (HasTownID && HUDItems_idscrolls > 0)
+            {
+                int tries2 = 0;
+                while (Form1_0.InventoryStruc_0.HasUnidItemInInventory() && tries2 < 2)
+                {
+                    //Form1_0.SetGameStatus("INVENTORY-ID ITEMS");
+                    Form1_0.SetProcessingTime();
+                    if (!Form1_0.Running || !Form1_0.GameStruc_0.IsInGame())
+                    {
+                        break;
+                    }
+
+                    bool IdentifiedItem = false;
+                    for (int i = 0; i < 40; i++)
+                    {
+                        if (Form1_0.InventoryStruc_0.InventoryItemNames[i] == "Tome of Identify")
+                        {
+                            Dictionary<string, int> itemScreenPos = Form1_0.InventoryStruc_0.ConvertIndexToXY(i);
+                            itemScreenPos = Form1_0.InventoryStruc_0.ConvertInventoryLocToScreenPos(itemScreenPos["x"], itemScreenPos["y"]);
+                            Form1_0.KeyMouse_0.MouseCliccRight(itemScreenPos["x"], itemScreenPos["y"]);
+                            Form1_0.WaitDelay(20);
+
+                            for (int k = 0; k < 40; k++)
+                            {
+                                if (Form1_0.InventoryStruc_0.InventoryHasUnidItem[k] == 1 && CharConfig.InventoryDontCheckItem[i] == 0)
+                                {
+                                    itemScreenPos = Form1_0.InventoryStruc_0.ConvertIndexToXY(k);
+                                    itemScreenPos = Form1_0.InventoryStruc_0.ConvertInventoryLocToScreenPos(itemScreenPos["x"], itemScreenPos["y"]);
+                                    Form1_0.KeyMouse_0.MouseClicc(itemScreenPos["x"], itemScreenPos["y"]);
+                                    Form1_0.WaitDelay(100);
+                                    Form1_0.Shop_0.PlaceItem(itemScreenPos["x"], itemScreenPos["y"]);
+                                    IdentifiedItem = true;
+                                    Form1_0.ItemsStruc_0.GetItems(false);   //get inventory again
+                                    break;
+                                }
+                            }
+
+                            break;
+                        }
+                    }
+                    Form1_0.ItemsStruc_0.GetItems(false);   //get inventory
+
+                    if (!IdentifiedItem) tries2++;
+                    else tries2 = 0;
+                }
+
+                Form1_0.ItemsStruc_0.GetItems(false);   //get inventory
+            }
+            //#######################################################
+            //#######################################################
 
             //place all bad items on ground
             for (int i = 0; i < 40; i++)

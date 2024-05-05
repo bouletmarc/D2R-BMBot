@@ -376,7 +376,7 @@ public static class EnumsMobsNPC
         NecroMage = 364,
         Griswold = 365,
         compellingorb = 366,
-        tyrael2 = 367,
+        Tyrael = 367,
         youngdiablo = 368,
         atrap7 = 369,
         spiritmummy = 370,

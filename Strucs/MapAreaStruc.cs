@@ -684,6 +684,87 @@ public class MapAreaStruc
             cg[94, 28] = false;
         }
 
+
+        // Frigid
+        if (area == Enums.Area.FrigidHighlands)
+        {
+            cg[285, 731] = false;
+            cg[286, 731] = false;
+            cg[287, 731] = false;
+            cg[288, 731] = false;
+            cg[289, 731] = false;
+            cg[290, 731] = false;
+            cg[291, 731] = false;
+            cg[292, 731] = false;
+            cg[293, 731] = false;
+            cg[294, 731] = false;
+            cg[295, 731] = false;
+            cg[296, 731] = false;
+            cg[297, 731] = false;
+            cg[298, 731] = false;
+            cg[299, 731] = false;
+            //cg[300, 731] = false;
+            cg[301, 731] = false;
+            cg[302, 731] = false;
+            cg[303, 731] = false;
+            cg[304, 731] = false;
+            cg[305, 731] = false;
+            cg[306, 731] = false;
+            cg[307, 731] = false;
+            cg[308, 731] = false;
+            cg[309, 731] = false;
+            cg[310, 731] = false;
+            cg[311, 731] = false;
+            cg[312, 731] = false;
+            cg[313, 731] = false;
+            cg[314, 731] = false;
+            cg[315, 731] = false;
+            cg[316, 731] = false;
+            cg[317, 731] = false;
+            cg[318, 731] = false;
+            cg[319, 731] = false;
+            //cg[320, 731] = false;
+
+            cg[285, 723] = false;
+            cg[285, 724] = false;
+            cg[285, 725] = false;
+            cg[285, 726] = false;
+            cg[285, 727] = false;
+            cg[285, 728] = false;
+            cg[285, 729] = false;
+
+            cg[270, 722] = false;
+            cg[271, 722] = false;
+            cg[272, 722] = false;
+            cg[273, 722] = false;
+            cg[274, 722] = false;
+            cg[275, 722] = false;
+            cg[276, 722] = false;
+            cg[277, 722] = false;
+            cg[278, 722] = false;
+            cg[279, 722] = false;
+            cg[280, 722] = false;
+            cg[281, 722] = false;
+            cg[282, 722] = false;
+            cg[283, 722] = false;
+            cg[284, 722] = false;
+            cg[285, 722] = false;
+
+            cg[270, 719] = false;
+            cg[270, 720] = false;
+
+            cg[265, 718] = false;
+            cg[266, 718] = false;
+            cg[267, 718] = false;
+            cg[268, 718] = false;
+            cg[269, 718] = false;
+            cg[270, 718] = false;
+
+            cg[265, 714] = false;
+            cg[265, 715] = false;
+            cg[265, 716] = false;
+        }
+
         //dump data to txt file
         /*string ColisionMapTxt = "";
         for (int i = 0; i < cg.GetLength(0); i++)

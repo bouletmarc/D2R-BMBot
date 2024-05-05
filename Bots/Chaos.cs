@@ -37,8 +37,9 @@ public class Chaos
     public int SealType = 0;
 
     public bool MovedToTPPos = false;
-
     public bool CastedAtSeis = false;
+
+    public bool FastChaosPopingSeals = false;
 
     public void SetForm1(Form1 form1_1)
     {
@@ -55,6 +56,7 @@ public class Chaos
         StartTimeUniqueBossWaiting = DateTime.Now;
         MovedToTPPos = false;
         CastedAtSeis = false;
+        FastChaosPopingSeals = false;
     }
 
     public void DetectCurrentStep()
@@ -182,56 +184,59 @@ public class Chaos
                         StartTimeUniqueBossWaiting = DateTime.Now;
                         TimeSetForWaitingUniqueBoss = true;
                     }
+
+                    if (CurrentSealPos.Y == 5275) SealType = 1;
+                    else SealType = 2;
+
+                    if (SealType == 1) Form1_0.PathFinding_0.MoveToThisPos(new Position { X = 7691, Y = 5292 }, 4, true);
+                    else Form1_0.PathFinding_0.MoveToThisPos(new Position { X = 7695, Y = 5316 }, 4, true);
+
+                    Form1_0.SetGameStatus("WAITING VIZIER " + (TryCountWaitingUniqueBoss + 1) + "/1");
+
+                    bool UniqueDetected = Form1_0.MobsStruc_0.GetMobs("getSuperUniqueName", "Grand Vizier of Chaos", false, 200, new List<long>());
+
+                    while (!UniqueDetected && (DateTime.Now - StartTimeUniqueBossWaiting).TotalSeconds < CharConfig.ChaosWaitingSealBossDelay)
+                    {
+                        UniqueDetected = Form1_0.MobsStruc_0.GetMobs("getSuperUniqueName", "Grand Vizier of Chaos", false, 200, new List<long>());
+
+                        Form1_0.PlayerScan_0.GetPositions();
+                        Form1_0.overlayForm.UpdateOverlay();
+                        Form1_0.GameStruc_0.CheckChickenGameTime();
+                        Form1_0.ItemsStruc_0.GetItems(true);
+                        Form1_0.Potions_0.CheckIfWeUsePotion();
+                        Form1_0.Battle_0.DoBattleScript(10);
+                        //###
+                        Form1_0.Battle_0.SetSkills();
+                        Form1_0.Battle_0.CastSkillsNoMove();
+                        //###
+                        Application.DoEvents();
+                    }
+
+                    if (!UniqueDetected)
+                    {
+                        TimeSetForWaitingUniqueBoss = false;
+                        CurrentStep++;
+                    }
                     else
                     {
-                        if (CurrentSealPos.Y == 5275) SealType = 1;
-                        else SealType = 2;
+                        Form1_0.SetGameStatus("KILLING VIZIER");
 
-                        if (SealType == 1) Form1_0.PathFinding_0.MoveToThisPos(new Position { X = 7691, Y = 5292 }, 4, true);
-                        else Form1_0.PathFinding_0.MoveToThisPos(new Position { X = 7695, Y = 5316 }, 4, true);
-
-                        Form1_0.SetGameStatus("WAITING VIZIER " + (TryCountWaitingUniqueBoss + 1) + "/1");
-
-                        bool UniqueDetected = Form1_0.MobsStruc_0.GetMobs("getSuperUniqueName", "Grand Vizier of Chaos", false, 200, new List<long>());
-
-                        while (!UniqueDetected && (DateTime.Now - StartTimeUniqueBossWaiting).TotalSeconds < CharConfig.ChaosWaitingSealBossDelay)
+                        if (Form1_0.MobsStruc_0.GetMobs("getSuperUniqueName", "Grand Vizier of Chaos", false, 200, new List<long>()))
                         {
-                            UniqueDetected = Form1_0.MobsStruc_0.GetMobs("getSuperUniqueName", "Grand Vizier of Chaos", false, 200, new List<long>());
-
-                            Form1_0.PlayerScan_0.GetPositions();
-                            Form1_0.overlayForm.UpdateOverlay();
-                            Form1_0.GameStruc_0.CheckChickenGameTime();
-                            Form1_0.ItemsStruc_0.GetItems(true);
-                            Form1_0.Potions_0.CheckIfWeUsePotion();
-                            Form1_0.Battle_0.DoBattleScript(10);
-                            //###
-                            Form1_0.Battle_0.SetSkills();
-                            Form1_0.Battle_0.CastSkillsNoMove();
-                            //###
-                            Application.DoEvents();
-                        }
-
-                        if (!UniqueDetected)
-                        {
-                            TimeSetForWaitingUniqueBoss = false;
-                            CurrentStep++;
+                            if (Form1_0.MobsStruc_0.MobsHP > 0)
+                            {
+                                Form1_0.Battle_0.RunBattleScriptOnThisMob("getSuperUniqueName", "Grand Vizier of Chaos", new List<long>());
+                            }
+                            else
+                            {
+                                TimeSetForWaitingUniqueBoss = false;
+                                CurrentStep++;
+                            }
                         }
                         else
                         {
-                            Form1_0.SetGameStatus("KILLING VIZIER");
-
-                            if (Form1_0.MobsStruc_0.GetMobs("getSuperUniqueName", "Grand Vizier of Chaos", false, 200, new List<long>()))
-                            {
-                                if (Form1_0.MobsStruc_0.MobsHP > 0)
-                                {
-                                    Form1_0.Battle_0.RunBattleScriptOnThisMob("getSuperUniqueName", "Grand Vizier of Chaos", new List<long>());
-                                }
-                                else
-                                {
-                                    TimeSetForWaitingUniqueBoss = false;
-                                    CurrentStep++;
-                                }
-                            }
+                            TimeSetForWaitingUniqueBoss = false;
+                            CurrentStep++;
                         }
                     }
                 }
@@ -243,7 +248,7 @@ public class Chaos
                         && Form1_0.PlayerScan_0.yPosFinal <= (TPPos.Y + 5))
                     {
                         if (Form1_0.PublicGame && !Form1_0.Town_0.TPSpawned) Form1_0.Town_0.SpawnTP();
-                        Form1_0.Battle_0.CastDefense();
+                        if (!FastChaos && !FastChaosPopingSeals) Form1_0.Battle_0.CastDefense();
                         Form1_0.InventoryStruc_0.DumpBadItemsOnGround();
                         MovedToTPPos = true;
                         Form1_0.PathFinding_0.MoveToObject("DiabloSeal5", 4, true);
@@ -310,65 +315,68 @@ public class Chaos
                         StartTimeUniqueBossWaiting = DateTime.Now;
                         TimeSetForWaitingUniqueBoss = true;
                     }
+
+                    if (CurrentSealPos.X == 7773) SealType = 1;
+                    else SealType = 2;
+
+                    if (SealType == 1)
+                    {
+                        Form1_0.PathFinding_0.MoveToThisPos(new Position { X = 7794, Y = 5227 }, 4, true);
+                        //NTM_MoveTo(108, 7797, 5201);
+                        //for (int i = 0; i < 3; i += 1) NTM_TeleportTo(7794, 5227);
+                    }
+                    else Form1_0.PathFinding_0.MoveToThisPos(new Position { X = 7798, Y = 5186 }, 4, true);
+
+                    Form1_0.SetGameStatus("WAITING LORD DE SEIS " + (TryCountWaitingUniqueBoss + 1) + "/1");
+
+                    bool UniqueDetected = Form1_0.MobsStruc_0.GetMobs("getSuperUniqueName", "Lord De Seis", false, 200, new List<long>());
+
+                    while (!UniqueDetected && (DateTime.Now - StartTimeUniqueBossWaiting).TotalSeconds < CharConfig.ChaosWaitingSealBossDelay)
+                    {
+                        UniqueDetected = Form1_0.MobsStruc_0.GetMobs("getSuperUniqueName", "Lord De Seis", false, 200, new List<long>());
+
+                        Form1_0.PlayerScan_0.GetPositions();
+                        Form1_0.overlayForm.UpdateOverlay();
+                        Form1_0.GameStruc_0.CheckChickenGameTime();
+                        Form1_0.ItemsStruc_0.GetItems(true);
+                        Form1_0.Potions_0.CheckIfWeUsePotion();
+                        Form1_0.Battle_0.DoBattleScript(10);
+                        //###
+                        Form1_0.Battle_0.SetSkills();
+                        Form1_0.Battle_0.CastSkillsNoMove();
+                        //###
+                        Application.DoEvents();
+                    }
+
+                    if (!UniqueDetected)
+                    {
+                        //Form1_0.Battle_0.CastDefense();
+                        Form1_0.InventoryStruc_0.DumpBadItemsOnGround();
+                        TimeSetForWaitingUniqueBoss = false;
+                        CurrentStep++;
+                    }
                     else
                     {
-                        if (CurrentSealPos.X == 7773) SealType = 1;
-                        else SealType = 2;
+                        Form1_0.SetGameStatus("KILLING LORD DE SEIS");
 
-                        if (SealType == 1)
+                        if (Form1_0.MobsStruc_0.GetMobs("getSuperUniqueName", "Lord De Seis", false, 200, new List<long>()))
                         {
-                            Form1_0.PathFinding_0.MoveToThisPos(new Position { X = 7794, Y = 5227 }, 4, true);
-                            //NTM_MoveTo(108, 7797, 5201);
-                            //for (int i = 0; i < 3; i += 1) NTM_TeleportTo(7794, 5227);
-                        }
-                        else Form1_0.PathFinding_0.MoveToThisPos(new Position { X = 7798, Y = 5186 }, 4, true);
-
-                        Form1_0.SetGameStatus("WAITING LORD DE SEIS " + (TryCountWaitingUniqueBoss + 1) + "/1");
-
-                        bool UniqueDetected = Form1_0.MobsStruc_0.GetMobs("getSuperUniqueName", "Lord De Seis", false, 200, new List<long>());
-
-                        while (!UniqueDetected && (DateTime.Now - StartTimeUniqueBossWaiting).TotalSeconds < CharConfig.ChaosWaitingSealBossDelay)
-                        {
-                            UniqueDetected = Form1_0.MobsStruc_0.GetMobs("getSuperUniqueName", "Lord De Seis", false, 200, new List<long>());
-
-                            Form1_0.PlayerScan_0.GetPositions();
-                            Form1_0.overlayForm.UpdateOverlay();
-                            Form1_0.GameStruc_0.CheckChickenGameTime();
-                            Form1_0.ItemsStruc_0.GetItems(true);
-                            Form1_0.Potions_0.CheckIfWeUsePotion();
-                            Form1_0.Battle_0.DoBattleScript(10);
-                            //###
-                            Form1_0.Battle_0.SetSkills();
-                            Form1_0.Battle_0.CastSkillsNoMove();
-                            //###
-                            Application.DoEvents();
-                        }
-
-                        if (!UniqueDetected)
-                        {
-                            //Form1_0.Battle_0.CastDefense();
-                            Form1_0.InventoryStruc_0.DumpBadItemsOnGround();
-                            TimeSetForWaitingUniqueBoss = false;
-                            CurrentStep++;
+                            if (Form1_0.MobsStruc_0.MobsHP > 0)
+                            {
+                                Form1_0.Battle_0.RunBattleScriptOnThisMob("getSuperUniqueName", "Lord De Seis", new List<long>());
+                            }
+                            else
+                            {
+                                //Form1_0.Battle_0.CastDefense();
+                                Form1_0.InventoryStruc_0.DumpBadItemsOnGround();
+                                TimeSetForWaitingUniqueBoss = false;
+                                CurrentStep++;
+                            }
                         }
                         else
                         {
-                            Form1_0.SetGameStatus("KILLING LORD DE SEIS");
-
-                            if (Form1_0.MobsStruc_0.GetMobs("getSuperUniqueName", "Lord De Seis", false, 200, new List<long>()))
-                            {
-                                if (Form1_0.MobsStruc_0.MobsHP > 0)
-                                {
-                                    Form1_0.Battle_0.RunBattleScriptOnThisMob("getSuperUniqueName", "Lord De Seis", new List<long>());
-                                }
-                                else
-                                {
-                                    //Form1_0.Battle_0.CastDefense();
-                                    Form1_0.InventoryStruc_0.DumpBadItemsOnGround();
-                                    TimeSetForWaitingUniqueBoss = false;
-                                    CurrentStep++;
-                                }
-                            }
+                            TimeSetForWaitingUniqueBoss = false;
+                            CurrentStep++;
                         }
                     }
                     //######
@@ -428,57 +436,49 @@ public class Chaos
                         StartTimeUniqueBossWaiting = DateTime.Now;
                         TimeSetForWaitingUniqueBoss = true;
                     }
+
+                    if (CurrentSealPos.X == 7893) SealType = 1;
+                    else SealType = 2;
+
+                    if (SealType == 1) SealType = 1; // temp
+                    else Form1_0.PathFinding_0.MoveToThisPos(new Position { X = 7933, Y = 5299 }, 4, true);
+
+                    Form1_0.SetGameStatus("WAITING INFECTOR " + (TryCountWaitingUniqueBoss + 1) + "/1");
+
+                    bool UniqueDetected = Form1_0.MobsStruc_0.GetMobs("getSuperUniqueName", "Winged Death", false, 200, new List<long>());
+
+                    while (!UniqueDetected && (DateTime.Now - StartTimeUniqueBossWaiting).TotalSeconds < CharConfig.ChaosWaitingSealBossDelay)
+                    {
+                        UniqueDetected = Form1_0.MobsStruc_0.GetMobs("getSuperUniqueName", "Winged Death", false, 200, new List<long>());
+
+                        Form1_0.PlayerScan_0.GetPositions();
+                        Form1_0.overlayForm.UpdateOverlay();
+                        Form1_0.GameStruc_0.CheckChickenGameTime();
+                        Form1_0.ItemsStruc_0.GetItems(true);
+                        Form1_0.Potions_0.CheckIfWeUsePotion();
+                        Form1_0.Battle_0.DoBattleScript(10);
+                        //###
+                        Form1_0.Battle_0.SetSkills();
+                        Form1_0.Battle_0.CastSkillsNoMove();
+                        //###
+                        Application.DoEvents();
+                    }
+
+                    if (!UniqueDetected)
+                    {
+                        Form1_0.InventoryStruc_0.DumpBadItemsOnGround();
+                        TimeSetForWaitingUniqueBoss = false;
+                        CurrentStep++;
+                    }
                     else
                     {
-                        if (CurrentSealPos.X == 7893) SealType = 1;
-                        else SealType = 2;
+                        Form1_0.SetGameStatus("KILLING INFECTOR");
 
-                        if (SealType == 1) SealType = 1; // temp
-                        else Form1_0.PathFinding_0.MoveToThisPos(new Position { X = 7933, Y = 5299 }, 4, true);
-
-                        Form1_0.SetGameStatus("WAITING INFECTOR " + (TryCountWaitingUniqueBoss + 1) + "/1");
-
-                        bool UniqueDetected = Form1_0.MobsStruc_0.GetMobs("getSuperUniqueName", "Winged Death", false, 200, new List<long>());
-
-                        while (!UniqueDetected && (DateTime.Now - StartTimeUniqueBossWaiting).TotalSeconds < CharConfig.ChaosWaitingSealBossDelay)
+                        if (Form1_0.MobsStruc_0.GetMobs("getSuperUniqueName", "Winged Death", false, 200, new List<long>()))
                         {
-                            UniqueDetected = Form1_0.MobsStruc_0.GetMobs("getSuperUniqueName", "Winged Death", false, 200, new List<long>());
-
-                            Form1_0.PlayerScan_0.GetPositions();
-                            Form1_0.overlayForm.UpdateOverlay();
-                            Form1_0.GameStruc_0.CheckChickenGameTime();
-                            Form1_0.ItemsStruc_0.GetItems(true);
-                            Form1_0.Potions_0.CheckIfWeUsePotion();
-                            Form1_0.Battle_0.DoBattleScript(10);
-                            //###
-                            Form1_0.Battle_0.SetSkills();
-                            Form1_0.Battle_0.CastSkillsNoMove();
-                            //###
-                            Application.DoEvents();
-                        }
-
-                        if (!UniqueDetected)
-                        {
-                            Form1_0.InventoryStruc_0.DumpBadItemsOnGround();
-                            TimeSetForWaitingUniqueBoss = false;
-                            CurrentStep++;
-                        }
-                        else
-                        {
-                            Form1_0.SetGameStatus("KILLING INFECTOR");
-
-                            if (Form1_0.MobsStruc_0.GetMobs("getSuperUniqueName", "Winged Death", false, 200, new List<long>()))
+                            if (Form1_0.MobsStruc_0.MobsHP > 0)
                             {
-                                if (Form1_0.MobsStruc_0.MobsHP > 0)
-                                {
-                                    Form1_0.Battle_0.RunBattleScriptOnThisMob("getSuperUniqueName", "Winged Death", new List<long>());
-                                }
-                                else
-                                {
-                                    Form1_0.InventoryStruc_0.DumpBadItemsOnGround();
-                                    TimeSetForWaitingUniqueBoss = false;
-                                    CurrentStep++;
-                                }
+                                Form1_0.Battle_0.RunBattleScriptOnThisMob("getSuperUniqueName", "Winged Death", new List<long>());
                             }
                             else
                             {
@@ -486,6 +486,12 @@ public class Chaos
                                 TimeSetForWaitingUniqueBoss = false;
                                 CurrentStep++;
                             }
+                        }
+                        else
+                        {
+                            Form1_0.InventoryStruc_0.DumpBadItemsOnGround();
+                            TimeSetForWaitingUniqueBoss = false;
+                            CurrentStep++;
                         }
                     }
                     //######
@@ -501,7 +507,7 @@ public class Chaos
                 if (Form1_0.PathFinding_0.MoveToThisPos(DiabloSpawnPos, 4, true))
                 {
                     //Form1_0.PathFinding_0.MoveToThisPos(DiabloSpawnPos, 4, true);
-                    Form1_0.Battle_0.CastDefense();
+                    if (!FastChaos) Form1_0.Battle_0.CastDefense();
                     CurrentStep++;
                 }
             }
@@ -515,7 +521,7 @@ public class Chaos
                 bool DetectedDiablo = Form1_0.MobsStruc_0.GetMobs("getBossName", "Diablo", false, 200, new List<long>());
                 DateTime StartTime = DateTime.Now;
                 TimeSpan TimeSinceDetecting = DateTime.Now - StartTime;
-                while (!DetectedDiablo && TimeSinceDetecting.TotalSeconds < 12)
+                while (!DetectedDiablo && TimeSinceDetecting.TotalSeconds < 13)
                 {
                     Form1_0.SetGameStatus("WAITING DETECTING DIABLO");
                     DetectedDiablo = Form1_0.MobsStruc_0.GetMobs("getBossName", "Diablo", false, 200, new List<long>());
@@ -534,10 +540,11 @@ public class Chaos
                     }
                 }
 
-                if (TimeSinceDetecting.TotalSeconds >= 12)
+                if (TimeSinceDetecting.TotalSeconds >= 13)
                 {
                     Form1_0.MobsStruc_0.DetectThisMob("getBossName", "Diablo", false, 200, new List<long>());
                     Form1_0.method_1("Waited too long for Diablo repoping the seals!", Color.OrangeRed);
+                    FastChaosPopingSeals = true;
                     CurrentStep = 3;
                     return;
                 }

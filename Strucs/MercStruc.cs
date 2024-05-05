@@ -126,7 +126,7 @@ public class MercStruc
         }
         catch
         {
-            Form1_0.method_1("Couldn't 'GetMercInfos()'", Color.Red);
+            Form1_0.method_1("Couldn't 'GetMercInfos()'", Color.OrangeRed);
         }
 
         Form1_0.Grid_SetInfos("Merc", "Not alive/detected");

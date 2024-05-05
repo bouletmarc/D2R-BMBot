@@ -61,6 +61,11 @@ RunFrozensteinScript=false
 RunTerrorZonesScript=false
 RunItemGrabScriptOnly=false
 ClearAfterBoss=false
+RunShopBotScript=false
+RunMausoleumScript=false
+RunCryptScript=false
+RunArachnidScript=false
+RunPitScript=false
 
 //#######################################
 //NOT IN GAME SCRIPT (SEARCH GAMES OR CREATE A NEW GAME)

@@ -167,32 +167,34 @@ public class MobsStruc
                     Form1_0.Mem_0.ReadRawMemory(MobsPointerLocation + 0x88, ref CurrentPointerBytes, CurrentPointerBytes.Length);
                     long pStatsListExPtr = BitConverter.ToInt64(CurrentPointerBytes, 0);
 
-                    MobsStatesAll = Form1_0.PlayerScan_0.GetStates(pStatsListExPtr);
-
-                    bool isPlayerMinion = false;
-                    if (getPlayerMinion((int)txtFileNo2) != "") isPlayerMinion = true;
-                    else isPlayerMinion = ((Form1_0.Mem_0.ReadUInt32((IntPtr)(pStatsListExPtr + 0xAC8 + 0xc)) & 31) == 1); //is a revive
-
-                    if ((Form1_0.NPCStruc_0.HideNPC((int)txtFileNo2) == 0
-                        && Form1_0.NPCStruc_0.getTownNPC((int)txtFileNo2) == ""
-                        && !isPlayerMinion
-                        && !Form1_0.PlayerScan_0.HasState(EnumsStates.State.Revive, MobsStatesAll)
-                        && !DebuggingMobs)
-                        || DebuggingMobs)
-                    //&& IsThisMobInBound())
+                    if ((Form1_0.NPCStruc_0.HideNPC((int)txtFileNo2) == 0 && !DebuggingMobs) || DebuggingMobs)
                     //&& !ShouldBeIgnored(txtFileNo2))
                     {
-                        GetUnitPathDataAll();
-                        GetStatsAddrAll();
-                        MobsHPAll = GetHPFromStatsAll();
-
-                        if (xPosFinalAll != 0 && yPosFinalAll != 0)
+                        if (Form1_0.NPCStruc_0.getTownNPC((int)txtFileNo2) == "")
                         {
-                            if (MobsHPAll != 0)
+                            bool isPlayerMinion = false;
+                            if (getPlayerMinion((int)txtFileNo2) != "") isPlayerMinion = true;
+                            else isPlayerMinion = ((Form1_0.Mem_0.ReadUInt32((IntPtr)(pStatsListExPtr + 0xAC8 + 0xc)) & 31) == 1); //is a revive
+
+                            if (!isPlayerMinion)
                             {
-                                if (ThisMobID == 0 || (ThisMobID > 0 && ThisMobID == txtFileNo2))
+                                MobsStatesAll = Form1_0.PlayerScan_0.GetStates(pStatsListExPtr);
+                                if (!Form1_0.PlayerScan_0.HasState(EnumsStates.State.Revive, MobsStatesAll))
                                 {
-                                    Count++;
+                                    GetUnitPathDataAll();
+                                    GetStatsAddrAll();
+                                    MobsHPAll = GetHPFromStatsAll();
+
+                                    if (xPosFinalAll != 0 && yPosFinalAll != 0)
+                                    {
+                                        if (MobsHPAll != 0)
+                                        {
+                                            if (ThisMobID == 0 || (ThisMobID > 0 && ThisMobID == txtFileNo2))
+                                            {
+                                                Count++;
+                                            }
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -202,7 +204,7 @@ public class MobsStruc
         }
         catch
         {
-            Form1_0.method_1("Couldn't 'GetMobsCount()'", Color.Red);
+            Form1_0.method_1("Couldn't 'GetMobsCount()'", Color.OrangeRed);
         }
 
         return Count;
@@ -246,40 +248,43 @@ public class MobsStruc
                     Form1_0.Mem_0.ReadRawMemory(MobsPointerLocation + 0x88, ref CurrentPointerBytes, CurrentPointerBytes.Length);
                     long pStatsListExPtr = BitConverter.ToInt64(CurrentPointerBytes, 0);
 
-                    MobsStatesAll = Form1_0.PlayerScan_0.GetStates(pStatsListExPtr);
-
-                    bool isPlayerMinion = false;
-                    if (getPlayerMinion((int)txtFileNo2) != "") isPlayerMinion = true;
-                    else isPlayerMinion = ((Form1_0.Mem_0.ReadUInt32((IntPtr)(pStatsListExPtr + 0xAC8 + 0xc)) & 31) == 1); //is a revive
-
-                    if ((Form1_0.NPCStruc_0.HideNPC((int)txtFileNo2) == 0
-                        && Form1_0.NPCStruc_0.getTownNPC((int)txtFileNo2) == ""
-                        && !isPlayerMinion
-                        && !Form1_0.PlayerScan_0.HasState(EnumsStates.State.Revive, MobsStatesAll)
-                        && !DebuggingMobs)
-                        || DebuggingMobs)
-                    //&& IsThisMobInBound())
+                    if ((Form1_0.NPCStruc_0.HideNPC((int)txtFileNo2) == 0 && !DebuggingMobs) || DebuggingMobs)
                     //&& !ShouldBeIgnored(txtFileNo2))
                     {
-                        GetUnitPathDataAll();
-                        GetStatsAddrAll();
-                        MobsHPAll = GetHPFromStatsAll();
-
-                        if (DebuggingMobs)
+                        if (Form1_0.NPCStruc_0.getTownNPC((int)txtFileNo2) == "")
                         {
-                            if ((xPosFinalAll != 0 && yPosFinalAll != 0 && Form1_0.checkBoxShowOnlyValidMobs.Checked) || !Form1_0.checkBoxShowOnlyValidMobs.Checked)
-                            {
-                                Form1_0.AppendTextDebugMobs("ID:" + txtFileNo2 + "(" + (EnumsMobsNPC.MonsterType)((int)txtFileNo2) + ") at:" + xPosFinalAll + ", " + yPosFinalAll + " - HP:" + MobsHPAll + ", Type:" + ((Enums.MonsterType) GetMonsterType(flag)) + Environment.NewLine);
-                            }
-                        }
+                            bool isPlayerMinion = false;
+                            if (getPlayerMinion((int)txtFileNo2) != "") isPlayerMinion = true;
+                            else isPlayerMinion = ((Form1_0.Mem_0.ReadUInt32((IntPtr)(pStatsListExPtr + 0xAC8 + 0xc)) & 31) == 1); //is a revive
 
-                        if (xPosFinalAll != 0 && yPosFinalAll != 0)
-                        {
-                            if (MobsHPAll != 0)
+                            if (!isPlayerMinion)
                             {
-                                monsterPositions2.Add(new int[2] { (int)xPosFinalAll, (int)yPosFinalAll });
-                                monsterIDs.Add((int)txtFileNo2);
-                                monsterTypes.Add(GetMonsterType(flag));
+                                MobsStatesAll = Form1_0.PlayerScan_0.GetStates(pStatsListExPtr);
+                                if (!Form1_0.PlayerScan_0.HasState(EnumsStates.State.Revive, MobsStatesAll))
+                                {
+
+                                    GetUnitPathDataAll();
+                                    GetStatsAddrAll();
+                                    MobsHPAll = GetHPFromStatsAll();
+
+                                    if (DebuggingMobs)
+                                    {
+                                        if ((xPosFinalAll != 0 && yPosFinalAll != 0 && Form1_0.checkBoxShowOnlyValidMobs.Checked) || !Form1_0.checkBoxShowOnlyValidMobs.Checked)
+                                        {
+                                            Form1_0.AppendTextDebugMobs("ID:" + txtFileNo2 + "(" + (EnumsMobsNPC.MonsterType)((int)txtFileNo2) + ") at:" + xPosFinalAll + ", " + yPosFinalAll + " - HP:" + MobsHPAll + ", Type:" + ((Enums.MonsterType)GetMonsterType(flag)) + Environment.NewLine);
+                                        }
+                                    }
+
+                                    if (xPosFinalAll != 0 && yPosFinalAll != 0)
+                                    {
+                                        if (MobsHPAll != 0)
+                                        {
+                                            monsterPositions2.Add(new int[2] { (int)xPosFinalAll, (int)yPosFinalAll });
+                                            monsterIDs.Add((int)txtFileNo2);
+                                            monsterTypes.Add(GetMonsterType(flag));
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
@@ -288,7 +293,7 @@ public class MobsStruc
         }
         catch
         {
-            Form1_0.method_1("Couldn't 'GetAllMobsNearby()'", Color.Red);
+            Form1_0.method_1("Couldn't 'GetAllMobsNearby()'", Color.OrangeRed);
         }
 
         return monsterPositions2;
@@ -410,7 +415,7 @@ public class MobsStruc
         }
         catch
         {
-            Form1_0.method_1("Couldn't get Mob HP from Stats!", Color.Red);
+            Form1_0.method_1("Couldn't get Mob HP from Stats!", Color.OrangeRed);
         }
         return 0; // or some other default value
     }
@@ -450,7 +455,8 @@ public class MobsStruc
             }
 
             //Set Fast Chaos Only Super Uniques
-            if (Form1_0.Chaos_0.FastChaos && MobType == "" && MobName == ""
+            if ((Form1_0.Chaos_0.FastChaos || Form1_0.Chaos_0.FastChaosPopingSeals)
+                && MobType == "" && MobName == ""
                 && (Enums.Area)Form1_0.PlayerScan_0.levelNo == Enums.Area.ChaosSanctuary)
             {
                 MobType = "getSuperUniqueName";
@@ -475,165 +481,168 @@ public class MobsStruc
                     Form1_0.Mem_0.ReadRawMemory(MobsPointerLocation + 0x88, ref CurrentPointerBytes, CurrentPointerBytes.Length);
                     long pStatsListExPtr = BitConverter.ToInt64(CurrentPointerBytes, 0);
 
-                    MobsStates = Form1_0.PlayerScan_0.GetStates(pStatsListExPtr);
-
-                    bool isPlayerMinion = false;
-                    if (getPlayerMinion((int)txtFileNo) != "") isPlayerMinion = true;
-                    else isPlayerMinion = ((Form1_0.Mem_0.ReadUInt32((IntPtr)(pStatsListExPtr + 0xAC8 + 0xc)) & 31) == 1); //is a revive
-
-                    //Console.WriteLine("found near mob " + txtFileNo + " at: " + xPosFinal + ", " + yPosFinal);
-
-                    if (Form1_0.NPCStruc_0.HideNPC((int)txtFileNo) == 0
-                        && Form1_0.NPCStruc_0.getTownNPC((int)txtFileNo) == ""
-                        && !isPlayerMinion
-                        && !Form1_0.PlayerScan_0.HasState(EnumsStates.State.Revive, MobsStates))
-                    //&& !ShouldBeIgnored(txtFileNo))
+                    if ((Form1_0.NPCStruc_0.HideNPC((int)txtFileNo) == 0 && !DebuggingMobs) || DebuggingMobs)
+                    //&& !ShouldBeIgnored(txtFileNo2))
                     {
-                        GetUnitPathData();
-                        GetStatsAddr();
-                        int MobHPBuffer = GetHPFromStats();
-
-                        CurrentPointerBytes = new byte[8];
-                        Form1_0.Mem_0.ReadRawMemory(MobsPointerLocation + 0x10, ref CurrentPointerBytes, CurrentPointerBytes.Length);
-                        long unitDataPtr = BitConverter.ToInt64(CurrentPointerBytes, 0);
-                        byte flag = Form1_0.Mem_0.ReadByteRaw((IntPtr)(unitDataPtr + 0x1A));
-
-                        /*if (MobType == "getBossName"
-                            && (Enums.MonsterType)GetMonsterType(flag) != Enums.MonsterType.Champion)
+                        if (Form1_0.NPCStruc_0.getTownNPC((int)txtFileNo) == "")
                         {
-                            continue;
-                        }
+                            bool isPlayerMinion = false;
+                            if (getPlayerMinion((int)txtFileNo) != "") isPlayerMinion = true;
+                            else isPlayerMinion = ((Form1_0.Mem_0.ReadUInt32((IntPtr)(pStatsListExPtr + 0xAC8 + 0xc)) & 31) == 1); //is a revive
 
-                        if (MobType == "getSuperUniqueName"
-                            && (Enums.MonsterType)GetMonsterType(flag) != Enums.MonsterType.Champion
-                            && (Enums.MonsterType)GetMonsterType(flag) != Enums.MonsterType.SuperUnique)
-                        {
-                            continue;
-                        }*/
-
-                        if ((MobType == "getUniqueName" || MobType == "getSuperUniqueName" || MobType == "getBossName")
-                            && (Enums.MonsterType)GetMonsterType(flag) != Enums.MonsterType.Champion
-                            && (Enums.MonsterType)GetMonsterType(flag) != Enums.MonsterType.SuperUnique
-                            && (Enums.MonsterType)GetMonsterType(flag) != Enums.MonsterType.Unique)
-                        {
-                            continue;
-                        }
-
-                        //Avoid Immunes
-                        if (CharConfig.AvoidColdImmune
-                            || CharConfig.AvoidFireImmune
-                            || CharConfig.AvoidLightImmune
-                            || CharConfig.AvoidPoisonImmune
-                            || CharConfig.AvoidMagicImmune)
-                        {
-                            if (IsImmune(Enums.StatResist.ColdImmune) && CharConfig.AvoidColdImmune
-                                || IsImmune(Enums.StatResist.FireImmune) && CharConfig.AvoidFireImmune
-                                || IsImmune(Enums.StatResist.LightImmune) && CharConfig.AvoidLightImmune
-                                || IsImmune(Enums.StatResist.PoisonImmune) && CharConfig.AvoidPoisonImmune
-                                || IsImmune(Enums.StatResist.MagicImmune) && CharConfig.AvoidMagicImmune)
+                            if (!isPlayerMinion)
                             {
-                                //Form1_0.method_1(MobName + ", isImmune", Color.Red);
-                                if (MobType != "getBossName" && MobType != "getSuperUniqueName") continue; //go to next mobs
-                            }
-                        }
-
-                        bool IsMobInBound = true;
-                        if (MobType != "getBossName" && MobType != "getSuperUniqueName") IsMobInBound = IsThisMobInBound();
-
-                        //Form1_0.method_1(MobName + ", isInBound: " + IsMobInBound + ", HP Buffer: " + MobHPBuffer, Color.Red);
-
-                        //Console.WriteLine("found near mob " + txtFileNo + " at: " + xPosFinal + ", " + yPosFinal + " HP:" + MobHPBuffer);
-                        if ((MobHPBuffer > 0 || (MobHPBuffer == 0 && MobName != ""))
-                            && (xPosFinal != 0 && yPosFinal != 0)//)
-                            && IsMobInBound)
-                        {
-                            if (CharConfig.LeaveDiabloClone && (EnumsMobsNPC.MonsterType)txtFileNo == EnumsMobsNPC.MonsterType.Diabloclone)
-                            {
-                                Form1_0.method_1("DClone found near, leaving game!", Color.Red);
-                                Form1_0.LeaveGame(false);
-                                Form1_0.WaitDelay(100);
-                                return false;
-                            }
-
-                            //get nearest mobs in all mobs
-                            if (Nearest)
-                            {
-                                int DiffXPlayer = xPosFinal - Form1_0.PlayerScan_0.xPosFinal;
-                                int DiffYPlayer = yPosFinal - Form1_0.PlayerScan_0.yPosFinal;
-                                if (DiffXPlayer < 0) DiffXPlayer = -DiffXPlayer;
-                                if (DiffYPlayer < 0) DiffYPlayer = -DiffYPlayer;
-
-                                if (DiffXPlayer <= LastDiffX
-                                    && DiffYPlayer <= LastDiffY
-                                    && DiffXPlayer <= MaxMobDistance
-                                    && DiffYPlayer <= MaxMobDistance)
+                                MobsStates = Form1_0.PlayerScan_0.GetStates(pStatsListExPtr);
+                                if (!Form1_0.PlayerScan_0.HasState(EnumsStates.State.Revive, MobsStates))
                                 {
-                                    NearestMobPointer = MobsPointerLocation;
-                                    LastDiffX = DiffXPlayer;
-                                    LastDiffY = DiffYPlayer;
-                                }
-                                xPosFinal = 0;
-                                yPosFinal = 0;
-                            }
+                                    GetUnitPathData();
+                                    GetStatsAddr();
+                                    int MobHPBuffer = GetHPFromStats();
 
-                            if (MobType == "") GoodMob = true;
+                                    CurrentPointerBytes = new byte[8];
+                                    Form1_0.Mem_0.ReadRawMemory(MobsPointerLocation + 0x10, ref CurrentPointerBytes, CurrentPointerBytes.Length);
+                                    long unitDataPtr = BitConverter.ToInt64(CurrentPointerBytes, 0);
+                                    byte flag = Form1_0.Mem_0.ReadByteRaw((IntPtr)(unitDataPtr + 0x1A));
 
-                            //get the mobs by name and type
-                            if (MobType == "getBossName")
-                            {
-                                if (getBossName((int)txtFileNo) == MobName)
-                                {
-                                    if (!Nearest)
+                                    /*if (MobType == "getBossName"
+                                        && (Enums.MonsterType)GetMonsterType(flag) != Enums.MonsterType.Champion)
                                     {
-                                        MobsHP = MobHPBuffer;
-                                        LastMobsPointerLocation = MobsPointerLocation;
-                                        LastMobtxtFileNo = txtFileNo;
-                                        LastMobPos.X = xPosFinal;
-                                        LastMobPos.Y = yPosFinal;
-                                        return true;
+                                        continue;
                                     }
-                                    else
+
+                                    if (MobType == "getSuperUniqueName"
+                                        && (Enums.MonsterType)GetMonsterType(flag) != Enums.MonsterType.Champion
+                                        && (Enums.MonsterType)GetMonsterType(flag) != Enums.MonsterType.SuperUnique)
                                     {
-                                        GoodMob = true;
+                                        continue;
+                                    }*/
+
+                                    if ((MobType == "getUniqueName" || MobType == "getSuperUniqueName" || MobType == "getBossName")
+                                        && (Enums.MonsterType)GetMonsterType(flag) != Enums.MonsterType.Champion
+                                        && (Enums.MonsterType)GetMonsterType(flag) != Enums.MonsterType.SuperUnique
+                                        && (Enums.MonsterType)GetMonsterType(flag) != Enums.MonsterType.Unique)
+                                    {
+                                        continue;
                                     }
-                                }
-                            }
-                            if (MobType == "getPlayerMinion")
-                            {
-                                if (getPlayerMinion((int)txtFileNo) == MobName)
-                                {
-                                    if (!Nearest)
+
+                                    //Avoid Immunes
+                                    if (CharConfig.AvoidColdImmune
+                                        || CharConfig.AvoidFireImmune
+                                        || CharConfig.AvoidLightImmune
+                                        || CharConfig.AvoidPoisonImmune
+                                        || CharConfig.AvoidMagicImmune)
                                     {
-                                        MobsHP = MobHPBuffer;
-                                        LastMobsPointerLocation = MobsPointerLocation;
-                                        LastMobtxtFileNo = txtFileNo;
-                                        LastMobPos.X = xPosFinal;
-                                        LastMobPos.Y = yPosFinal;
-                                        return true;
+                                        if (IsImmune(Enums.StatResist.ColdImmune) && CharConfig.AvoidColdImmune
+                                            || IsImmune(Enums.StatResist.FireImmune) && CharConfig.AvoidFireImmune
+                                            || IsImmune(Enums.StatResist.LightImmune) && CharConfig.AvoidLightImmune
+                                            || IsImmune(Enums.StatResist.PoisonImmune) && CharConfig.AvoidPoisonImmune
+                                            || IsImmune(Enums.StatResist.MagicImmune) && CharConfig.AvoidMagicImmune)
+                                        {
+                                            //Form1_0.method_1(MobName + ", isImmune", Color.Red);
+                                            if (MobType != "getBossName" && MobType != "getSuperUniqueName") continue; //go to next mobs
+                                        }
                                     }
-                                    else
+
+                                    bool IsMobInBound = true;
+                                    if (MobType != "getBossName" && MobType != "getSuperUniqueName") IsMobInBound = IsThisMobInBound();
+
+                                    //Form1_0.method_1(MobName + ", isInBound: " + IsMobInBound + ", HP Buffer: " + MobHPBuffer, Color.Red);
+
+                                    //Console.WriteLine("found near mob " + txtFileNo + " at: " + xPosFinal + ", " + yPosFinal + " HP:" + MobHPBuffer);
+                                    if ((MobHPBuffer > 0 || (MobHPBuffer == 0 && MobName != ""))
+                                        && (xPosFinal != 0 && yPosFinal != 0)//)
+                                        && IsMobInBound)
                                     {
-                                        GoodMob = true;
-                                    }
-                                }
-                            }
-                            if (MobType == "getSuperUniqueName" || MobType == "getUniqueName")
-                            {
-                                if ((MobName == "" && getSuperUniqueName((int)txtFileNo) != "") || (MobName != "" && getSuperUniqueName((int)txtFileNo) == MobName))
-                                {
-                                    //Console.WriteLine(getSuperUniqueName((int)txtFileNo));
-                                    if (!Nearest)
-                                    {
-                                        MobsHP = MobHPBuffer;
-                                        LastMobsPointerLocation = MobsPointerLocation;
-                                        LastMobtxtFileNo = txtFileNo;
-                                        LastMobPos.X = xPosFinal;
-                                        LastMobPos.Y = yPosFinal;
-                                        return true;
-                                    }
-                                    else
-                                    {
-                                        GoodMob = true;
+                                        if (CharConfig.LeaveDiabloClone && (EnumsMobsNPC.MonsterType)txtFileNo == EnumsMobsNPC.MonsterType.Diabloclone)
+                                        {
+                                            Form1_0.method_1("DClone found near, leaving game!", Color.Red);
+                                            Form1_0.LeaveGame(false);
+                                            Form1_0.WaitDelay(100);
+                                            return false;
+                                        }
+
+                                        //get nearest mobs in all mobs
+                                        if (Nearest)
+                                        {
+                                            int DiffXPlayer = xPosFinal - Form1_0.PlayerScan_0.xPosFinal;
+                                            int DiffYPlayer = yPosFinal - Form1_0.PlayerScan_0.yPosFinal;
+                                            if (DiffXPlayer < 0) DiffXPlayer = -DiffXPlayer;
+                                            if (DiffYPlayer < 0) DiffYPlayer = -DiffYPlayer;
+
+                                            if (DiffXPlayer <= LastDiffX
+                                                && DiffYPlayer <= LastDiffY
+                                                && DiffXPlayer <= MaxMobDistance
+                                                && DiffYPlayer <= MaxMobDistance)
+                                            {
+                                                NearestMobPointer = MobsPointerLocation;
+                                                LastDiffX = DiffXPlayer;
+                                                LastDiffY = DiffYPlayer;
+                                            }
+                                            xPosFinal = 0;
+                                            yPosFinal = 0;
+                                        }
+
+                                        if (MobType == "") GoodMob = true;
+
+                                        //get the mobs by name and type
+                                        if (MobType == "getBossName")
+                                        {
+                                            if (getBossName((int)txtFileNo) == MobName)
+                                            {
+                                                if (!Nearest)
+                                                {
+                                                    MobsHP = MobHPBuffer;
+                                                    LastMobsPointerLocation = MobsPointerLocation;
+                                                    LastMobtxtFileNo = txtFileNo;
+                                                    LastMobPos.X = xPosFinal;
+                                                    LastMobPos.Y = yPosFinal;
+                                                    return true;
+                                                }
+                                                else
+                                                {
+                                                    GoodMob = true;
+                                                }
+                                            }
+                                        }
+                                        if (MobType == "getPlayerMinion")
+                                        {
+                                            if (getPlayerMinion((int)txtFileNo) == MobName)
+                                            {
+                                                if (!Nearest)
+                                                {
+                                                    MobsHP = MobHPBuffer;
+                                                    LastMobsPointerLocation = MobsPointerLocation;
+                                                    LastMobtxtFileNo = txtFileNo;
+                                                    LastMobPos.X = xPosFinal;
+                                                    LastMobPos.Y = yPosFinal;
+                                                    return true;
+                                                }
+                                                else
+                                                {
+                                                    GoodMob = true;
+                                                }
+                                            }
+                                        }
+                                        if (MobType == "getSuperUniqueName" || MobType == "getUniqueName")
+                                        {
+                                            if ((MobName == "" && getSuperUniqueName((int)txtFileNo) != "") || (MobName != "" && getSuperUniqueName((int)txtFileNo) == MobName))
+                                            {
+                                                //Console.WriteLine(getSuperUniqueName((int)txtFileNo));
+                                                if (!Nearest)
+                                                {
+                                                    MobsHP = MobHPBuffer;
+                                                    LastMobsPointerLocation = MobsPointerLocation;
+                                                    LastMobtxtFileNo = txtFileNo;
+                                                    LastMobPos.X = xPosFinal;
+                                                    LastMobPos.Y = yPosFinal;
+                                                    return true;
+                                                }
+                                                else
+                                                {
+                                                    GoodMob = true;
+                                                }
+                                            }
+                                        }
                                     }
                                 }
                             }
@@ -670,7 +679,7 @@ public class MobsStruc
         }
         catch
         {
-            Form1_0.method_1("Couldn't 'GetMobs()'", Color.Red);
+            Form1_0.method_1("Couldn't 'GetMobs()'", Color.OrangeRed);
         }
 
         return false;
@@ -791,7 +800,7 @@ public class MobsStruc
         }
         catch
         {
-            Form1_0.method_1("Couldn't get Mob HP from Stats!", Color.Red);
+            Form1_0.method_1("Couldn't get Mob HP from Stats!", Color.OrangeRed);
         }
 
         return 0; // or some other default value

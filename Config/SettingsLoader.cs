@@ -254,7 +254,7 @@ public class SettingsLoader
             {
                 string[] Splitted = AllLines[i].Split('=');
                 if (Splitted[0] == "MaxGameTime") AllLines[i] = "MaxGameTime=" + CharConfig.MaxGameTime;
-                if (Splitted[0] == "LogNotUsefulErrors") AllLines[i] = "LogNotUsefulErrors=" + CharConfig.IsRushing;
+                if (Splitted[0] == "LogNotUsefulErrors") AllLines[i] = "LogNotUsefulErrors=" + CharConfig.LogNotUsefulErrors;
 
                 if (Splitted[0] == "IsRushing") AllLines[i] = "IsRushing=" + CharConfig.IsRushing;
                 if (Splitted[0] == "RushLeecherName") AllLines[i] = "RushLeecherName=" + CharConfig.RushLeecherName;
@@ -347,6 +347,11 @@ public class SettingsLoader
                 if (Splitted[0] == "RunNihlatakScript") AllLines[i] = "RunNihlatakScript=" + CharConfig.RunNihlatakScript;
                 if (Splitted[0] == "RunFrozensteinScript") AllLines[i] = "RunFrozensteinScript=" + CharConfig.RunFrozensteinScript;
                 if (Splitted[0] == "RunTerrorZonesScript") AllLines[i] = "RunTerrorZonesScript=" + CharConfig.RunTerrorZonesScript;
+                if (Splitted[0] == "RunShopBotScript") AllLines[i] = "RunShopBotScript=" + CharConfig.RunShopBotScript;
+                if (Splitted[0] == "RunMausoleumScript") AllLines[i] = "RunMausoleumScript=" + CharConfig.RunMausoleumScript;
+                if (Splitted[0] == "RunCryptScript") AllLines[i] = "RunCryptScript=" + CharConfig.RunCryptScript;
+                if (Splitted[0] == "RunArachnidScript") AllLines[i] = "RunArachnidScript=" + CharConfig.RunArachnidScript;
+                if (Splitted[0] == "RunPitScript") AllLines[i] = "RunPitScript=" + CharConfig.RunPitScript;
 
                 if (Splitted[0] == "RunChaosSearchGameScript") AllLines[i] = "RunChaosSearchGameScript=" + CharConfig.RunChaosSearchGameScript;
                 if (Splitted[0] == "RunBaalSearchGameScript") AllLines[i] = "RunBaalSearchGameScript=" + CharConfig.RunBaalSearchGameScript;
@@ -417,6 +422,7 @@ public class SettingsLoader
                 if (Splitted[0] == "MephistoRedPortalEnterDelay") AllLines[i] = "MephistoRedPortalEnterDelay=" + CharConfig.MephistoRedPortalEnterDelay;
                 if (Splitted[0] == "CubeItemPlaceDelay") AllLines[i] = "CubeItemPlaceDelay=" + CharConfig.CubeItemPlaceDelay;
                 if (Splitted[0] == "OverallDelaysMultiplyer") AllLines[i] = "OverallDelaysMultiplyer=" + CharConfig.OverallDelaysMultiplyer;
+                if (Splitted[0] == "CreateGameWaitDelay") AllLines[i] = "CreateGameWaitDelay=" + CharConfig.CreateGameWaitDelay;
             }
         }
 
@@ -1361,6 +1367,26 @@ public class SettingsLoader
                             {
                                 CharConfig.RunTerrorZonesScript = bool.Parse(Params[1].ToLower());
                             }
+                            if (Params[0].Contains("RunShopBotScript"))
+                            {
+                                CharConfig.RunShopBotScript = bool.Parse(Params[1].ToLower());
+                            }
+                            if (Params[0].Contains("RunMausoleumScript"))
+                            {
+                                CharConfig.RunMausoleumScript = bool.Parse(Params[1].ToLower());
+                            }
+                            if (Params[0].Contains("RunCryptScript"))
+                            {
+                                CharConfig.RunCryptScript = bool.Parse(Params[1].ToLower());
+                            }
+                            if (Params[0].Contains("RunArachnidScript"))
+                            {
+                                CharConfig.RunArachnidScript = bool.Parse(Params[1].ToLower());
+                            }
+                            if (Params[0].Contains("RunPitScript"))
+                            {
+                                CharConfig.RunPitScript = bool.Parse(Params[1].ToLower());
+                            }
                             //########
 
                             if (Params[0].Contains("RunItemGrabScriptOnly"))
@@ -1463,6 +1489,7 @@ public class SettingsLoader
                             if (Params[0].Contains("LeechEnterTPDelay")) CharConfig.LeechEnterTPDelay = int.Parse(Params[1]);
                             if (Params[0].Contains("MephistoRedPortalEnterDelay")) CharConfig.MephistoRedPortalEnterDelay = int.Parse(Params[1]);
                             if (Params[0].Contains("CubeItemPlaceDelay")) CharConfig.CubeItemPlaceDelay = int.Parse(Params[1]);
+                            if (Params[0].Contains("CreateGameWaitDelay")) CharConfig.CreateGameWaitDelay = int.Parse(Params[1]);
                             if (Params[0].Contains("OverallDelaysMultiplyer")) CharConfig.OverallDelaysMultiplyer = double.Parse(Params[1], System.Globalization.CultureInfo.InvariantCulture);
                         }
                     }

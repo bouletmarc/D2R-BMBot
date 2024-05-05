@@ -31,45 +31,50 @@ partial class FormSettings
             System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("Maphack ONLY (no script running)");
             System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("Item Grab ONLY");
             System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem("Maphack & Item Grab ONLY");
-            System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem("Cows");
-            System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem("Countess");
-            System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem("Andariel");
-            System.Windows.Forms.ListViewItem listViewItem7 = new System.Windows.Forms.ListViewItem("Summoner");
-            System.Windows.Forms.ListViewItem listViewItem8 = new System.Windows.Forms.ListViewItem("Duriel");
-            System.Windows.Forms.ListViewItem listViewItem9 = new System.Windows.Forms.ListViewItem("Lower Kurast (Chests)");
-            System.Windows.Forms.ListViewItem listViewItem10 = new System.Windows.Forms.ListViewItem("Act3 Sewers (Chests)");
-            System.Windows.Forms.ListViewItem listViewItem11 = new System.Windows.Forms.ListViewItem("Upper Kurast (Chests)");
-            System.Windows.Forms.ListViewItem listViewItem12 = new System.Windows.Forms.ListViewItem("Travincal");
-            System.Windows.Forms.ListViewItem listViewItem13 = new System.Windows.Forms.ListViewItem("Mephisto");
-            System.Windows.Forms.ListViewItem listViewItem14 = new System.Windows.Forms.ListViewItem("Chaos");
-            System.Windows.Forms.ListViewItem listViewItem15 = new System.Windows.Forms.ListViewItem("Chaos Leech");
-            System.Windows.Forms.ListViewItem listViewItem16 = new System.Windows.Forms.ListViewItem("Eldritch");
-            System.Windows.Forms.ListViewItem listViewItem17 = new System.Windows.Forms.ListViewItem("Shenk");
-            System.Windows.Forms.ListViewItem listViewItem18 = new System.Windows.Forms.ListViewItem("Frozenstein (Anya)");
-            System.Windows.Forms.ListViewItem listViewItem19 = new System.Windows.Forms.ListViewItem("Pindleskin");
-            System.Windows.Forms.ListViewItem listViewItem20 = new System.Windows.Forms.ListViewItem("Nihlatak");
-            System.Windows.Forms.ListViewItem listViewItem21 = new System.Windows.Forms.ListViewItem("Baal");
-            System.Windows.Forms.ListViewItem listViewItem22 = new System.Windows.Forms.ListViewItem("Baal Leech");
-            System.Windows.Forms.ListViewItem listViewItem23 = new System.Windows.Forms.ListViewItem("Terror Zones");
-            System.Windows.Forms.ListViewItem listViewItem24 = new System.Windows.Forms.ListViewItem("Waypoint Taker");
-            System.Windows.Forms.ListViewItem listViewItem25 = new System.Windows.Forms.ListViewItem("Dark Wood");
-            System.Windows.Forms.ListViewItem listViewItem26 = new System.Windows.Forms.ListViewItem("Tristram");
-            System.Windows.Forms.ListViewItem listViewItem27 = new System.Windows.Forms.ListViewItem("Andariel");
-            System.Windows.Forms.ListViewItem listViewItem28 = new System.Windows.Forms.ListViewItem("Radament");
-            System.Windows.Forms.ListViewItem listViewItem29 = new System.Windows.Forms.ListViewItem("Hall of the Dead (Cube)");
-            System.Windows.Forms.ListViewItem listViewItem30 = new System.Windows.Forms.ListViewItem("Far Oasis (Staff)");
-            System.Windows.Forms.ListViewItem listViewItem31 = new System.Windows.Forms.ListViewItem("Lost City (Ammy)");
-            System.Windows.Forms.ListViewItem listViewItem32 = new System.Windows.Forms.ListViewItem("Summoner");
-            System.Windows.Forms.ListViewItem listViewItem33 = new System.Windows.Forms.ListViewItem("Duriel");
-            System.Windows.Forms.ListViewItem listViewItem34 = new System.Windows.Forms.ListViewItem("Kahlim Eye");
-            System.Windows.Forms.ListViewItem listViewItem35 = new System.Windows.Forms.ListViewItem("Kahlim Brain");
-            System.Windows.Forms.ListViewItem listViewItem36 = new System.Windows.Forms.ListViewItem("Kahlim Heart");
-            System.Windows.Forms.ListViewItem listViewItem37 = new System.Windows.Forms.ListViewItem("Travincal");
-            System.Windows.Forms.ListViewItem listViewItem38 = new System.Windows.Forms.ListViewItem("Mephisto");
-            System.Windows.Forms.ListViewItem listViewItem39 = new System.Windows.Forms.ListViewItem("Chaos");
-            System.Windows.Forms.ListViewItem listViewItem40 = new System.Windows.Forms.ListViewItem("Anya");
-            System.Windows.Forms.ListViewItem listViewItem41 = new System.Windows.Forms.ListViewItem("Ancients");
-            System.Windows.Forms.ListViewItem listViewItem42 = new System.Windows.Forms.ListViewItem("Baal");
+            System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem("ShopBot");
+            System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem("Mausoleum");
+            System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem("Crypt");
+            System.Windows.Forms.ListViewItem listViewItem7 = new System.Windows.Forms.ListViewItem("Pit");
+            System.Windows.Forms.ListViewItem listViewItem8 = new System.Windows.Forms.ListViewItem("Cows");
+            System.Windows.Forms.ListViewItem listViewItem9 = new System.Windows.Forms.ListViewItem("Countess");
+            System.Windows.Forms.ListViewItem listViewItem10 = new System.Windows.Forms.ListViewItem("Andariel");
+            System.Windows.Forms.ListViewItem listViewItem11 = new System.Windows.Forms.ListViewItem("Summoner");
+            System.Windows.Forms.ListViewItem listViewItem12 = new System.Windows.Forms.ListViewItem("Duriel");
+            System.Windows.Forms.ListViewItem listViewItem13 = new System.Windows.Forms.ListViewItem("Arachnid Lair");
+            System.Windows.Forms.ListViewItem listViewItem14 = new System.Windows.Forms.ListViewItem("Lower Kurast (Chests)");
+            System.Windows.Forms.ListViewItem listViewItem15 = new System.Windows.Forms.ListViewItem("Act3 Sewers (Chests)");
+            System.Windows.Forms.ListViewItem listViewItem16 = new System.Windows.Forms.ListViewItem("Upper Kurast (Chests)");
+            System.Windows.Forms.ListViewItem listViewItem17 = new System.Windows.Forms.ListViewItem("Travincal");
+            System.Windows.Forms.ListViewItem listViewItem18 = new System.Windows.Forms.ListViewItem("Mephisto");
+            System.Windows.Forms.ListViewItem listViewItem19 = new System.Windows.Forms.ListViewItem("Chaos");
+            System.Windows.Forms.ListViewItem listViewItem20 = new System.Windows.Forms.ListViewItem("Chaos Leech");
+            System.Windows.Forms.ListViewItem listViewItem21 = new System.Windows.Forms.ListViewItem("Eldritch");
+            System.Windows.Forms.ListViewItem listViewItem22 = new System.Windows.Forms.ListViewItem("Shenk");
+            System.Windows.Forms.ListViewItem listViewItem23 = new System.Windows.Forms.ListViewItem("Frozenstein (Anya)");
+            System.Windows.Forms.ListViewItem listViewItem24 = new System.Windows.Forms.ListViewItem("Pindleskin");
+            System.Windows.Forms.ListViewItem listViewItem25 = new System.Windows.Forms.ListViewItem("Nihlatak");
+            System.Windows.Forms.ListViewItem listViewItem26 = new System.Windows.Forms.ListViewItem("Baal");
+            System.Windows.Forms.ListViewItem listViewItem27 = new System.Windows.Forms.ListViewItem("Baal Leech");
+            System.Windows.Forms.ListViewItem listViewItem28 = new System.Windows.Forms.ListViewItem("Terror Zones");
+            System.Windows.Forms.ListViewItem listViewItem29 = new System.Windows.Forms.ListViewItem("Waypoint Taker");
+            System.Windows.Forms.ListViewItem listViewItem30 = new System.Windows.Forms.ListViewItem("Dark Wood");
+            System.Windows.Forms.ListViewItem listViewItem31 = new System.Windows.Forms.ListViewItem("Tristram");
+            System.Windows.Forms.ListViewItem listViewItem32 = new System.Windows.Forms.ListViewItem("Andariel");
+            System.Windows.Forms.ListViewItem listViewItem33 = new System.Windows.Forms.ListViewItem("Radament");
+            System.Windows.Forms.ListViewItem listViewItem34 = new System.Windows.Forms.ListViewItem("Hall of the Dead (Cube)");
+            System.Windows.Forms.ListViewItem listViewItem35 = new System.Windows.Forms.ListViewItem("Far Oasis (Staff)");
+            System.Windows.Forms.ListViewItem listViewItem36 = new System.Windows.Forms.ListViewItem("Lost City (Ammy)");
+            System.Windows.Forms.ListViewItem listViewItem37 = new System.Windows.Forms.ListViewItem("Summoner");
+            System.Windows.Forms.ListViewItem listViewItem38 = new System.Windows.Forms.ListViewItem("Duriel");
+            System.Windows.Forms.ListViewItem listViewItem39 = new System.Windows.Forms.ListViewItem("Kahlim Eye");
+            System.Windows.Forms.ListViewItem listViewItem40 = new System.Windows.Forms.ListViewItem("Kahlim Brain");
+            System.Windows.Forms.ListViewItem listViewItem41 = new System.Windows.Forms.ListViewItem("Kahlim Heart");
+            System.Windows.Forms.ListViewItem listViewItem42 = new System.Windows.Forms.ListViewItem("Travincal");
+            System.Windows.Forms.ListViewItem listViewItem43 = new System.Windows.Forms.ListViewItem("Mephisto");
+            System.Windows.Forms.ListViewItem listViewItem44 = new System.Windows.Forms.ListViewItem("Chaos");
+            System.Windows.Forms.ListViewItem listViewItem45 = new System.Windows.Forms.ListViewItem("Anya");
+            System.Windows.Forms.ListViewItem listViewItem46 = new System.Windows.Forms.ListViewItem("Ancients");
+            System.Windows.Forms.ListViewItem listViewItem47 = new System.Windows.Forms.ListViewItem("Baal");
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormSettings));
             this.listViewRunScripts = new System.Windows.Forms.ListView();
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -125,6 +130,16 @@ partial class FormSettings
             this.textBox2LeechName = new System.Windows.Forms.TextBox();
             this.textBoxAvoidWords = new System.Windows.Forms.TextBox();
             this.button4 = new System.Windows.Forms.Button();
+            this.checkBoxFastChaos = new System.Windows.Forms.CheckBox();
+            this.buttonOverlaySettings = new System.Windows.Forms.Button();
+            this.buttonReload = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button5 = new System.Windows.Forms.Button();
+            this.checkBoxBaalLeechFightMobs = new System.Windows.Forms.CheckBox();
+            this.button6 = new System.Windows.Forms.Button();
+            this.buttonApplyShopBot = new System.Windows.Forms.Button();
+            this.numericUpDownMaxShopCount = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDownShopTownAct = new System.Windows.Forms.NumericUpDown();
             this.panelBaalFeature = new System.Windows.Forms.Panel();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.listViewBaalLeaveOnMobs = new System.Windows.Forms.ListView();
@@ -145,27 +160,27 @@ partial class FormSettings
             this.label19 = new System.Windows.Forms.Label();
             this.panelChaosFeature = new System.Windows.Forms.Panel();
             this.label18 = new System.Windows.Forms.Label();
-            this.checkBoxFastChaos = new System.Windows.Forms.CheckBox();
-            this.buttonOverlaySettings = new System.Windows.Forms.Button();
-            this.buttonReload = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button5 = new System.Windows.Forms.Button();
             this.panelBaalLeech = new System.Windows.Forms.Panel();
-            this.checkBoxBaalLeechFightMobs = new System.Windows.Forms.CheckBox();
             this.label20 = new System.Windows.Forms.Label();
-            this.button6 = new System.Windows.Forms.Button();
+            this.panelShopBot = new System.Windows.Forms.Panel();
+            this.label23 = new System.Windows.Forms.Label();
+            this.label22 = new System.Windows.Forms.Label();
+            this.label21 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownRunNumber)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMaxTime)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownBaalLeaveMobsCount)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownBaalMobID)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownBaalMobCount)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMaxShopCount)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownShopTownAct)).BeginInit();
             this.panelBaalFeature.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.panelOverlay.SuspendLayout();
             this.groupBoxSearch.SuspendLayout();
             this.panelChaosFeature.SuspendLayout();
             this.panelBaalLeech.SuspendLayout();
+            this.panelShopBot.SuspendLayout();
             this.SuspendLayout();
             // 
             // listViewRunScripts
@@ -180,12 +195,12 @@ partial class FormSettings
             listViewItem2.StateImageIndex = 0;
             listViewItem3.StateImageIndex = 0;
             listViewItem4.StateImageIndex = 0;
-            listViewItem5.Checked = true;
-            listViewItem5.StateImageIndex = 1;
+            listViewItem5.StateImageIndex = 0;
             listViewItem6.StateImageIndex = 0;
             listViewItem7.StateImageIndex = 0;
             listViewItem8.StateImageIndex = 0;
-            listViewItem9.StateImageIndex = 0;
+            listViewItem9.Checked = true;
+            listViewItem9.StateImageIndex = 1;
             listViewItem10.StateImageIndex = 0;
             listViewItem11.StateImageIndex = 0;
             listViewItem12.StateImageIndex = 0;
@@ -201,6 +216,11 @@ partial class FormSettings
             listViewItem22.StateImageIndex = 0;
             listViewItem23.StateImageIndex = 0;
             listViewItem24.StateImageIndex = 0;
+            listViewItem25.StateImageIndex = 0;
+            listViewItem26.StateImageIndex = 0;
+            listViewItem27.StateImageIndex = 0;
+            listViewItem28.StateImageIndex = 0;
+            listViewItem29.StateImageIndex = 0;
             this.listViewRunScripts.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
             listViewItem1,
             listViewItem2,
@@ -225,7 +245,12 @@ partial class FormSettings
             listViewItem21,
             listViewItem22,
             listViewItem23,
-            listViewItem24});
+            listViewItem24,
+            listViewItem25,
+            listViewItem26,
+            listViewItem27,
+            listViewItem28,
+            listViewItem29});
             this.listViewRunScripts.Location = new System.Drawing.Point(12, 168);
             this.listViewRunScripts.Name = "listViewRunScripts";
             this.listViewRunScripts.Size = new System.Drawing.Size(225, 276);
@@ -448,11 +473,6 @@ partial class FormSettings
             this.listViewRush.FullRowSelect = true;
             this.listViewRush.GridLines = true;
             this.listViewRush.HideSelection = false;
-            listViewItem25.StateImageIndex = 0;
-            listViewItem26.StateImageIndex = 0;
-            listViewItem27.StateImageIndex = 0;
-            listViewItem28.StateImageIndex = 0;
-            listViewItem29.StateImageIndex = 0;
             listViewItem30.StateImageIndex = 0;
             listViewItem31.StateImageIndex = 0;
             listViewItem32.StateImageIndex = 0;
@@ -466,12 +486,12 @@ partial class FormSettings
             listViewItem40.StateImageIndex = 0;
             listViewItem41.StateImageIndex = 0;
             listViewItem42.StateImageIndex = 0;
+            listViewItem43.StateImageIndex = 0;
+            listViewItem44.StateImageIndex = 0;
+            listViewItem45.StateImageIndex = 0;
+            listViewItem46.StateImageIndex = 0;
+            listViewItem47.StateImageIndex = 0;
             this.listViewRush.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem25,
-            listViewItem26,
-            listViewItem27,
-            listViewItem28,
-            listViewItem29,
             listViewItem30,
             listViewItem31,
             listViewItem32,
@@ -484,7 +504,12 @@ partial class FormSettings
             listViewItem39,
             listViewItem40,
             listViewItem41,
-            listViewItem42});
+            listViewItem42,
+            listViewItem43,
+            listViewItem44,
+            listViewItem45,
+            listViewItem46,
+            listViewItem47});
             this.listViewRush.Location = new System.Drawing.Point(279, 168);
             this.listViewRush.Name = "listViewRush";
             this.listViewRush.Size = new System.Drawing.Size(225, 270);
@@ -834,6 +859,142 @@ partial class FormSettings
             this.button4.UseVisualStyleBackColor = true;
             this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
+            // checkBoxFastChaos
+            // 
+            this.checkBoxFastChaos.AutoSize = true;
+            this.checkBoxFastChaos.Location = new System.Drawing.Point(14, 33);
+            this.checkBoxFastChaos.Name = "checkBoxFastChaos";
+            this.checkBoxFastChaos.Size = new System.Drawing.Size(79, 17);
+            this.checkBoxFastChaos.TabIndex = 12;
+            this.checkBoxFastChaos.Text = "Fast Chaos";
+            this.toolTip1.SetToolTip(this.checkBoxFastChaos, "Enable this to perform a Fast Chaos (Only Kill Seals Boss)");
+            this.checkBoxFastChaos.UseVisualStyleBackColor = true;
+            // 
+            // buttonOverlaySettings
+            // 
+            this.buttonOverlaySettings.Image = global::app.Properties.Resources.Application;
+            this.buttonOverlaySettings.Location = new System.Drawing.Point(172, 595);
+            this.buttonOverlaySettings.Name = "buttonOverlaySettings";
+            this.buttonOverlaySettings.Size = new System.Drawing.Size(31, 25);
+            this.buttonOverlaySettings.TabIndex = 9;
+            this.toolTip1.SetToolTip(this.buttonOverlaySettings, "Edit Overlay Settings");
+            this.buttonOverlaySettings.UseVisualStyleBackColor = true;
+            this.buttonOverlaySettings.Click += new System.EventHandler(this.buttonOverlaySettings_Click);
+            // 
+            // buttonReload
+            // 
+            this.buttonReload.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonReload.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.buttonReload.Image = global::app.Properties.Resources.Load;
+            this.buttonReload.Location = new System.Drawing.Point(12, 6);
+            this.buttonReload.Name = "buttonReload";
+            this.buttonReload.Size = new System.Drawing.Size(34, 29);
+            this.buttonReload.TabIndex = 17;
+            this.toolTip1.SetToolTip(this.buttonReload, "Load/Import from a previous Settings File");
+            this.buttonReload.UseVisualStyleBackColor = true;
+            this.buttonReload.Click += new System.EventHandler(this.buttonReload_Click);
+            // 
+            // button2
+            // 
+            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button2.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.button2.Image = global::app.Properties.Resources.Save;
+            this.button2.Location = new System.Drawing.Point(189, 6);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(48, 29);
+            this.button2.TabIndex = 13;
+            this.toolTip1.SetToolTip(this.button2, "Save current Settings");
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // button5
+            // 
+            this.button5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
+            this.button5.Location = new System.Drawing.Point(53, 6);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(131, 29);
+            this.button5.TabIndex = 29;
+            this.button5.Text = "Advanced Settings";
+            this.toolTip1.SetToolTip(this.button5, "Load/Import from a previous Settings File");
+            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
+            // 
+            // checkBoxBaalLeechFightMobs
+            // 
+            this.checkBoxBaalLeechFightMobs.AutoSize = true;
+            this.checkBoxBaalLeechFightMobs.Location = new System.Drawing.Point(14, 33);
+            this.checkBoxBaalLeechFightMobs.Name = "checkBoxBaalLeechFightMobs";
+            this.checkBoxBaalLeechFightMobs.Size = new System.Drawing.Size(78, 17);
+            this.checkBoxBaalLeechFightMobs.TabIndex = 12;
+            this.checkBoxBaalLeechFightMobs.Text = "Fight Mobs";
+            this.toolTip1.SetToolTip(this.checkBoxBaalLeechFightMobs, "Enable this to fight mobs during the leech, if set to false it will fight mobs on" +
+        "ly nearby the leech spot\r\n");
+            this.checkBoxBaalLeechFightMobs.UseVisualStyleBackColor = true;
+            // 
+            // button6
+            // 
+            this.button6.Location = new System.Drawing.Point(61, 82);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(75, 23);
+            this.button6.TabIndex = 12;
+            this.button6.Text = "Apply";
+            this.toolTip1.SetToolTip(this.button6, "Apply and Leave this menu");
+            this.button6.UseVisualStyleBackColor = true;
+            this.button6.Click += new System.EventHandler(this.button6_Click);
+            // 
+            // buttonApplyShopBot
+            // 
+            this.buttonApplyShopBot.Location = new System.Drawing.Point(61, 82);
+            this.buttonApplyShopBot.Name = "buttonApplyShopBot";
+            this.buttonApplyShopBot.Size = new System.Drawing.Size(75, 23);
+            this.buttonApplyShopBot.TabIndex = 12;
+            this.buttonApplyShopBot.Text = "Apply";
+            this.toolTip1.SetToolTip(this.buttonApplyShopBot, "Apply and Leave this menu");
+            this.buttonApplyShopBot.UseVisualStyleBackColor = true;
+            this.buttonApplyShopBot.Click += new System.EventHandler(this.buttonApplyShopBot_Click);
+            // 
+            // numericUpDownMaxShopCount
+            // 
+            this.numericUpDownMaxShopCount.Location = new System.Drawing.Point(107, 33);
+            this.numericUpDownMaxShopCount.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            this.numericUpDownMaxShopCount.Minimum = new decimal(new int[] {
+            2,
+            0,
+            0,
+            -2147483648});
+            this.numericUpDownMaxShopCount.Name = "numericUpDownMaxShopCount";
+            this.numericUpDownMaxShopCount.Size = new System.Drawing.Size(51, 20);
+            this.numericUpDownMaxShopCount.TabIndex = 13;
+            this.toolTip1.SetToolTip(this.numericUpDownMaxShopCount, "Set the Bot go to Shop Count, if at -1 or 0, It will Shop Infinitly");
+            // 
+            // numericUpDownShopTownAct
+            // 
+            this.numericUpDownShopTownAct.Location = new System.Drawing.Point(107, 56);
+            this.numericUpDownShopTownAct.Maximum = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            this.numericUpDownShopTownAct.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numericUpDownShopTownAct.Name = "numericUpDownShopTownAct";
+            this.numericUpDownShopTownAct.Size = new System.Drawing.Size(51, 20);
+            this.numericUpDownShopTownAct.TabIndex = 15;
+            this.toolTip1.SetToolTip(this.numericUpDownShopTownAct, "Set the Town act of which of want to shop bot to run for");
+            this.numericUpDownShopTownAct.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
             // panelBaalFeature
             // 
             this.panelBaalFeature.Controls.Add(this.groupBox2);
@@ -1048,67 +1209,6 @@ partial class FormSettings
             this.label18.TabIndex = 12;
             this.label18.Text = "Chaos Run Features";
             // 
-            // checkBoxFastChaos
-            // 
-            this.checkBoxFastChaos.AutoSize = true;
-            this.checkBoxFastChaos.Location = new System.Drawing.Point(14, 33);
-            this.checkBoxFastChaos.Name = "checkBoxFastChaos";
-            this.checkBoxFastChaos.Size = new System.Drawing.Size(79, 17);
-            this.checkBoxFastChaos.TabIndex = 12;
-            this.checkBoxFastChaos.Text = "Fast Chaos";
-            this.toolTip1.SetToolTip(this.checkBoxFastChaos, "Enable this to perform a Fast Chaos (Only Kill Seals Boss)");
-            this.checkBoxFastChaos.UseVisualStyleBackColor = true;
-            // 
-            // buttonOverlaySettings
-            // 
-            this.buttonOverlaySettings.Image = global::app.Properties.Resources.Application;
-            this.buttonOverlaySettings.Location = new System.Drawing.Point(172, 595);
-            this.buttonOverlaySettings.Name = "buttonOverlaySettings";
-            this.buttonOverlaySettings.Size = new System.Drawing.Size(31, 25);
-            this.buttonOverlaySettings.TabIndex = 9;
-            this.toolTip1.SetToolTip(this.buttonOverlaySettings, "Edit Overlay Settings");
-            this.buttonOverlaySettings.UseVisualStyleBackColor = true;
-            this.buttonOverlaySettings.Click += new System.EventHandler(this.buttonOverlaySettings_Click);
-            // 
-            // buttonReload
-            // 
-            this.buttonReload.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonReload.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.buttonReload.Image = global::app.Properties.Resources.Load;
-            this.buttonReload.Location = new System.Drawing.Point(12, 6);
-            this.buttonReload.Name = "buttonReload";
-            this.buttonReload.Size = new System.Drawing.Size(34, 29);
-            this.buttonReload.TabIndex = 17;
-            this.toolTip1.SetToolTip(this.buttonReload, "Load/Import from a previous Settings File");
-            this.buttonReload.UseVisualStyleBackColor = true;
-            this.buttonReload.Click += new System.EventHandler(this.buttonReload_Click);
-            // 
-            // button2
-            // 
-            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button2.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.button2.Image = global::app.Properties.Resources.Save;
-            this.button2.Location = new System.Drawing.Point(189, 6);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(48, 29);
-            this.button2.TabIndex = 13;
-            this.toolTip1.SetToolTip(this.button2, "Save current Settings");
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
-            // 
-            // button5
-            // 
-            this.button5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
-            this.button5.Location = new System.Drawing.Point(53, 6);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(131, 29);
-            this.button5.TabIndex = 29;
-            this.button5.Text = "Advanced Settings";
-            this.toolTip1.SetToolTip(this.button5, "Load/Import from a previous Settings File");
-            this.button5.UseVisualStyleBackColor = true;
-            this.button5.Click += new System.EventHandler(this.button5_Click);
-            // 
             // panelBaalLeech
             // 
             this.panelBaalLeech.Controls.Add(this.checkBoxBaalLeechFightMobs);
@@ -1119,18 +1219,6 @@ partial class FormSettings
             this.panelBaalLeech.Size = new System.Drawing.Size(203, 114);
             this.panelBaalLeech.TabIndex = 23;
             this.panelBaalLeech.Visible = false;
-            // 
-            // checkBoxBaalLeechFightMobs
-            // 
-            this.checkBoxBaalLeechFightMobs.AutoSize = true;
-            this.checkBoxBaalLeechFightMobs.Location = new System.Drawing.Point(14, 33);
-            this.checkBoxBaalLeechFightMobs.Name = "checkBoxBaalLeechFightMobs";
-            this.checkBoxBaalLeechFightMobs.Size = new System.Drawing.Size(78, 17);
-            this.checkBoxBaalLeechFightMobs.TabIndex = 12;
-            this.checkBoxBaalLeechFightMobs.Text = "Fight Mobs";
-            this.toolTip1.SetToolTip(this.checkBoxBaalLeechFightMobs, "Enable this to fight mobs during the leech, if set to false it will fight mobs on" +
-        "ly nearby the leech spot\r\n");
-            this.checkBoxBaalLeechFightMobs.UseVisualStyleBackColor = true;
             // 
             // label20
             // 
@@ -1143,23 +1231,56 @@ partial class FormSettings
             this.label20.TabIndex = 12;
             this.label20.Text = "Baal Leech Run Features";
             // 
-            // button6
+            // panelShopBot
             // 
-            this.button6.Location = new System.Drawing.Point(61, 82);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(75, 23);
-            this.button6.TabIndex = 12;
-            this.button6.Text = "Apply";
-            this.toolTip1.SetToolTip(this.button6, "Apply and Leave this menu");
-            this.button6.UseVisualStyleBackColor = true;
-            this.button6.Click += new System.EventHandler(this.button6_Click);
+            this.panelShopBot.Controls.Add(this.numericUpDownShopTownAct);
+            this.panelShopBot.Controls.Add(this.label23);
+            this.panelShopBot.Controls.Add(this.numericUpDownMaxShopCount);
+            this.panelShopBot.Controls.Add(this.label22);
+            this.panelShopBot.Controls.Add(this.label21);
+            this.panelShopBot.Controls.Add(this.buttonApplyShopBot);
+            this.panelShopBot.Location = new System.Drawing.Point(732, 12);
+            this.panelShopBot.Name = "panelShopBot";
+            this.panelShopBot.Size = new System.Drawing.Size(203, 114);
+            this.panelShopBot.TabIndex = 24;
+            this.panelShopBot.Visible = false;
+            // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.Location = new System.Drawing.Point(14, 59);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(56, 13);
+            this.label23.TabIndex = 14;
+            this.label23.Text = "Town Act:";
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Location = new System.Drawing.Point(14, 36);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(89, 13);
+            this.label22.TabIndex = 12;
+            this.label22.Text = "Max Shop Count:";
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label21.ForeColor = System.Drawing.Color.Blue;
+            this.label21.Location = new System.Drawing.Point(34, 11);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(135, 13);
+            this.label21.TabIndex = 12;
+            this.label21.Text = "ShopBot Run Features";
             // 
             // FormSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.ClientSize = new System.Drawing.Size(250, 691);
+            this.ClientSize = new System.Drawing.Size(251, 691);
+            this.Controls.Add(this.panelShopBot);
             this.Controls.Add(this.panelBaalLeech);
             this.Controls.Add(this.button5);
             this.Controls.Add(this.panelChaosFeature);
@@ -1203,6 +1324,8 @@ partial class FormSettings
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownBaalLeaveMobsCount)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownBaalMobID)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownBaalMobCount)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMaxShopCount)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownShopTownAct)).EndInit();
             this.panelBaalFeature.ResumeLayout(false);
             this.panelBaalFeature.PerformLayout();
             this.groupBox2.ResumeLayout(false);
@@ -1215,6 +1338,8 @@ partial class FormSettings
             this.panelChaosFeature.PerformLayout();
             this.panelBaalLeech.ResumeLayout(false);
             this.panelBaalLeech.PerformLayout();
+            this.panelShopBot.ResumeLayout(false);
+            this.panelShopBot.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1305,4 +1430,11 @@ partial class FormSettings
     private System.Windows.Forms.CheckBox checkBoxBaalLeechFightMobs;
     private System.Windows.Forms.Label label20;
     private System.Windows.Forms.Button button6;
+    private System.Windows.Forms.Panel panelShopBot;
+    private System.Windows.Forms.Label label21;
+    private System.Windows.Forms.Button buttonApplyShopBot;
+    private System.Windows.Forms.NumericUpDown numericUpDownShopTownAct;
+    private System.Windows.Forms.Label label23;
+    private System.Windows.Forms.NumericUpDown numericUpDownMaxShopCount;
+    private System.Windows.Forms.Label label22;
 }

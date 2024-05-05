@@ -164,6 +164,8 @@ public class ItemsAlert
 
     public void RemoveNotPickingItems()
     {
+        return;
+
         //Remove all the items that are disabled in the Pickit to improve Pickit performance
         List<string> KeysToRemove = new List<string>();
         foreach (var ThisDir in PickItemsRunesKeyGems)
@@ -313,7 +315,7 @@ public class ItemsAlert
                                 }
                             }
 
-                            return SameStats;
+                            if (SameStats) return true;
                         }
                     }
                     else
@@ -386,7 +388,7 @@ public class ItemsAlert
                                 }
                             }
 
-                            return SameStats;
+                            if (SameStats) return true;
                         }
                     }
                     else

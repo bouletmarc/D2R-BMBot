@@ -77,6 +77,8 @@ partial class Form1
             this.button4 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
+            this.tabPage10 = new System.Windows.Forms.TabPage();
+            this.richTextBoSoldLogs = new System.Windows.Forms.RichTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -90,6 +92,7 @@ partial class Form1
             this.tabPage6.SuspendLayout();
             this.tabPage7.SuspendLayout();
             this.statusStrip1.SuspendLayout();
+            this.tabPage10.SuspendLayout();
             this.SuspendLayout();
             // 
             // button1
@@ -166,6 +169,7 @@ partial class Form1
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage8);
             this.tabControl1.Controls.Add(this.tabPage9);
+            this.tabControl1.Controls.Add(this.tabPage10);
             this.tabControl1.Location = new System.Drawing.Point(5, 31);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -599,6 +603,28 @@ partial class Form1
             // 
             this.folderBrowserDialog1.Description = "Select the folder where D2 LOD 1.13C is located";
             // 
+            // tabPage10
+            // 
+            this.tabPage10.Controls.Add(this.richTextBoSoldLogs);
+            this.tabPage10.Location = new System.Drawing.Point(4, 22);
+            this.tabPage10.Name = "tabPage10";
+            this.tabPage10.Size = new System.Drawing.Size(323, 324);
+            this.tabPage10.TabIndex = 4;
+            this.tabPage10.Text = "Sold Logs";
+            this.tabPage10.UseVisualStyleBackColor = true;
+            // 
+            // richTextBoSoldLogs
+            // 
+            this.richTextBoSoldLogs.DetectUrls = false;
+            this.richTextBoSoldLogs.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.richTextBoSoldLogs.Location = new System.Drawing.Point(0, 0);
+            this.richTextBoSoldLogs.Name = "richTextBoSoldLogs";
+            this.richTextBoSoldLogs.ReadOnly = true;
+            this.richTextBoSoldLogs.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedVertical;
+            this.richTextBoSoldLogs.Size = new System.Drawing.Size(323, 324);
+            this.richTextBoSoldLogs.TabIndex = 6;
+            this.richTextBoSoldLogs.Text = "";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -640,6 +666,7 @@ partial class Form1
             this.tabPage7.ResumeLayout(false);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
+            this.tabPage10.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -695,5 +722,7 @@ partial class Form1
     public System.Windows.Forms.CheckBox checkBoxShowValidObjectOnly;
     private System.Windows.Forms.Button buttonPauseResume;
     private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
+    private System.Windows.Forms.TabPage tabPage10;
+    private System.Windows.Forms.RichTextBox richTextBoSoldLogs;
 }
 

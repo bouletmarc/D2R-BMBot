@@ -139,6 +139,11 @@ public static class CharConfig
     public static bool RunBaalLeechScript = true;       //BAAL LEECH SCRIPT
     public static bool RunTerrorZonesScript = false;
     public static bool RunItemGrabScriptOnly = false;
+    public static bool RunShopBotScript = false;
+    public static bool RunMausoleumScript = false;
+    public static bool RunCryptScript = false;
+    public static bool RunArachnidScript = false;
+    public static bool RunPitScript = false;
     //NOT IN GAME SCRIPT (SEARCH GAMES OR CREATE A NEW GAME)
     public static bool RunChaosSearchGameScript = false; //CHAOS GAMES SEARCHER SCRIPT
     public static bool RunBaalSearchGameScript = true; //BAAL GAMES SEARCHER SCRIPT
@@ -191,5 +196,6 @@ public static class CharConfig
     public static int LeechEnterTPDelay = 600;
     public static int MephistoRedPortalEnterDelay = 800;
     public static int CubeItemPlaceDelay = 16;
+    public static int CreateGameWaitDelay = 1;
 
 }

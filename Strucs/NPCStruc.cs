@@ -73,7 +73,7 @@ public class NPCStruc
         }
         catch
         {
-            Form1_0.method_1("Couldn't 'GetAllNPCNearby()'", Color.Red);
+            Form1_0.method_1("Couldn't 'GetAllNPCNearby()'", Color.OrangeRed);
         }
 
         return npcPositions2;
@@ -127,7 +127,7 @@ public class NPCStruc
         }
         catch
         {
-            Form1_0.method_1("Couldn't 'GetNPC()'", Color.Red);
+            Form1_0.method_1("Couldn't 'GetNPC()'", Color.OrangeRed);
         }
 
         return false;

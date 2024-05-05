@@ -711,7 +711,7 @@ public class PlayerScan
         }
         catch
         {
-            Form1_0.method_1("Couldn't 'scanForPlayer()'", Color.Red);
+            Form1_0.method_1("Couldn't 'scanForPlayer()'", Color.OrangeRed);
         }
     }
 
@@ -801,7 +801,7 @@ public class PlayerScan
         }
         catch
         {
-            Form1_0.method_1("Couldn't 'ScanForOthersPlayers()'", Color.Red);
+            Form1_0.method_1("Couldn't 'ScanForOthersPlayers()'", Color.OrangeRed);
         }
 
         return false;

@@ -40,12 +40,13 @@ using static MapAreaStruc;
 public partial class Form1 : Form
 {
 
-    public string BotVersion = "V2.99";
+    public string BotVersion = "V3.0";
 
     public string D2_LOD_113C_Path = "";
 
     public Process process;
     public string ThisEndPath = Application.StartupPath + @"\Extracted\";
+    public string ThisLogPath = Application.StartupPath + @"\Logs\";
     public Dictionary<string, IntPtr> offsets = new Dictionary<string, IntPtr>();
     public IntPtr BaseAddress = (IntPtr)0;
     public IntPtr processHandle = (IntPtr)0;
@@ -166,6 +167,11 @@ public partial class Form1 : Form
     public Shenk Shenk_0;
     public Nihlatak Nihlatak_0;
     public Frozenstein Frozenstein_0;
+    public ShopBot ShopBot_0;
+    public Mausoleum Mausoleum_0;
+    public Crypt Crypt_0;
+    public ArachnidLair ArachnidLair_0;
+    public Pit Pit_0;
 
     public AndarielRush AndarielRush_0;
     public DarkWoodRush DarkWoodRush_0;
@@ -352,6 +358,11 @@ public partial class Form1 : Form
         Frozenstein_0 = new Frozenstein();
         TerrorZones_0 = new TerrorZones();
         AreaScript_0 = new AreaScript();
+        ShopBot_0 = new ShopBot();
+        Mausoleum_0 = new Mausoleum();
+        Crypt_0 = new Crypt();
+        ArachnidLair_0 = new ArachnidLair();
+        Pit_0 = new Pit();
 
         AndarielRush_0 = new AndarielRush();
         DarkWoodRush_0 = new DarkWoodRush();
@@ -429,6 +440,11 @@ public partial class Form1 : Form
         Frozenstein_0.SetForm1(Form1_0);
         TerrorZones_0.SetForm1(Form1_0);
         AreaScript_0.SetForm1(Form1_0);
+        ShopBot_0.SetForm1(Form1_0);
+        Mausoleum_0.SetForm1(Form1_0);
+        Crypt_0.SetForm1(Form1_0);
+        ArachnidLair_0.SetForm1(Form1_0);
+        Pit_0.SetForm1(Form1_0);
 
         AndarielRush_0.SetForm1(Form1_0);
         DarkWoodRush_0.SetForm1(Form1_0);
@@ -565,12 +581,14 @@ public partial class Form1 : Form
 
                 if (responseBody.Contains("public string BotVersion = "))
                 {
-                    double ThisVersionOnline = double.Parse(responseBody.Substring(responseBody.IndexOf('=') + 4, 3), System.Globalization.CultureInfo.InvariantCulture);
-                    double ThisVersionCurrent = double.Parse(BotVersion.Substring(1, 3), System.Globalization.CultureInfo.InvariantCulture);
+                    string ThisOnlineVString = responseBody.Substring(responseBody.IndexOf('=') + 4, 5);
+                    ThisOnlineVString = ThisOnlineVString.Replace("\"", "");
+                    double ThisVersionOnline = double.Parse(ThisOnlineVString, System.Globalization.CultureInfo.InvariantCulture);
+                    double ThisVersionCurrent = double.Parse(BotVersion.Substring(1).Replace("\"", ""), System.Globalization.CultureInfo.InvariantCulture);
 
                     if (ThisVersionOnline > ThisVersionCurrent)
                     {
-                        method_1("New update V" + ThisVersionOnline + " available on github!", Color.Red);
+                        method_1("New update V" + ThisVersionOnline.ToString().Replace(",", ".") + " available on github!", Color.Red);
                         buttonUpdate.Visible = true;
                     }
                     else if (ThisVersionOnline == ThisVersionCurrent)
@@ -671,6 +689,36 @@ public partial class Form1 : Form
             richTextBox2.SelectionColor = ThisColor;
             richTextBox2.AppendText(LogThis + Environment.NewLine);
             method_1(LogThis, ThisColor, false);
+
+            if (!Directory.Exists(ThisLogPath)) Directory.CreateDirectory(ThisLogPath);
+            if (!File.Exists(ThisLogPath + "ItemsLogs.txt")) File.Create(ThisLogPath + "ItemsLogs.txt").Dispose();
+            File.AppendAllText(ThisLogPath + "ItemsLogs.txt", LogThis + Environment.NewLine);
+            Application.DoEvents();
+        }
+        //}
+        //catch { }
+    }
+
+    public void method_1_SoldItems(string string_3, Color ThisColor)
+    {
+        //try
+        //{
+        if (richTextBoSoldLogs.InvokeRequired)
+        {
+            // Call this same method but append THREAD2 to the text
+            Action safeWrite = delegate { method_1_Items(string_3, ThisColor); };
+            richTextBoSoldLogs.Invoke(safeWrite);
+        }
+        else
+        {
+            string LogThis = string_3 + " " + GameStruc_0.GetTimeNow();
+            richTextBoSoldLogs.SelectionColor = ThisColor;
+            richTextBoSoldLogs.AppendText(LogThis + Environment.NewLine);
+            method_1(LogThis, ThisColor, false);
+
+            if (!Directory.Exists(ThisLogPath)) Directory.CreateDirectory(ThisLogPath);
+            if (!File.Exists(ThisLogPath + "ItemsSoldLogs.txt")) File.Create(ThisLogPath + "ItemsSoldLogs.txt").Dispose();
+            File.AppendAllText(ThisLogPath + "ItemsSoldLogs.txt", LogThis + Environment.NewLine);
             Application.DoEvents();
         }
         //}
@@ -978,6 +1026,11 @@ public partial class Form1 : Form
         Nihlatak_0.ResetVars();
         Frozenstein_0.ResetVars();
         TerrorZones_0.ResetVars();
+        ShopBot_0.ResetVars();
+        Mausoleum_0.ResetVars();
+        Crypt_0.ResetVars();
+        ArachnidLair_0.ResetVars();
+        Pit_0.ResetVars();
 
         AndarielRush_0.ResetVars();
         DarkWoodRush_0.ResetVars();
@@ -1035,9 +1088,26 @@ public partial class Form1 : Form
         Form1_0.PatternsScan_0.GetUnitsScannedCount(1);
         if (Form1_0.PatternsScan_0.ScannedItemsCount < 100)
         {
-            method_1("Detected Poiters Error, Restarting Bot...", Color.Red);
+            method_1("Detected Pointers Error, Restarting Bot...", Color.Red);
+            PatternsScan_0.ResetV1Scanning();
             HasPointers = false;
             PointerError = true;
+
+            PatternsScan_0.AllItemsPointers = new Dictionary<long, bool>();
+            PatternsScan_0.AllObjectsPointers = new Dictionary<long, bool>(); //->refer to all gameobjects
+            PatternsScan_0.AllPlayersPointers = new Dictionary<long, bool>();
+            PatternsScan_0.AllNPCPointers = new Dictionary<long, bool>();
+
+            PatternsScan_0.AllPossiblePointers = new List<long>();
+
+            PatternsScan_0.AllPossibleItemsPointers = new List<long>();
+            PatternsScan_0.AllPossiblePlayerPointers = new List<long>();
+            PatternsScan_0.AllPossibleObjectsPointers = new List<long>();
+            PatternsScan_0.AllPossibleNPCPointers = new List<long>();
+
+            PatternsScan_0.AllScannedPointers = new Dictionary<long, bool>();
+            PatternsScan_0.StartIndexItem = long.MaxValue;
+            PatternsScan_0.StartIndexItemLast = long.MaxValue;
             //PatternsScan_0.PatternScan();
         }
     }
@@ -1095,6 +1165,7 @@ public partial class Form1 : Form
                         //if (PatternsScan_0.StartIndexItem_V2 == long.MaxValue) PatternsScan_0.DetectFirstUnitPointer(); //UNITS SCAN V2
                         Town_0.GetCorpse();
                         ItemsStruc_0.GetBadItemsOnCursor();
+                        InventoryStruc_0.CheckInventorySpecialUniqueItems();
                         HasPointers = true;
                     }
                     else
@@ -1117,6 +1188,7 @@ public partial class Form1 : Form
                             //if (PatternsScan_0.StartIndexItem_V2 == long.MaxValue) PatternsScan_0.DetectFirstUnitPointer(); //UNITS SCAN V2
                             Town_0.GetCorpse();
                             ItemsStruc_0.GetBadItemsOnCursor();
+                            InventoryStruc_0.CheckInventorySpecialUniqueItems();
                             HasPointers = true;
                         }
                         else
@@ -1158,9 +1230,9 @@ public partial class Form1 : Form
                         //ItemsStruc_0.GetItems(true);
                         //overlayForm.SetAllOverlay();
                         //GameStruc_0.GetTerrorZones();
-
                         //Running = false;
                         //if (Running) LoopTimer.Start();
+                        //KeyMouse_0.SetForm1(Form1_0);
                         //return;
 
                         if (CharConfig.RunMapHackOnly)
@@ -1205,13 +1277,18 @@ public partial class Form1 : Form
                                 {
                                     if (Form1_0.Town_0.TownScriptDone)
                                     {
+                                        ItemsStruc_0.TriesToPickItemCount = 0;
                                         Town_0.FastTowning = true;
                                         Town_0.ForcedTowning = false;
                                         //Town_0.FastTowning = false;
                                         Town_0.UseLastTP = false;
                                         Town_0.TPSpawned = false;
                                     }
-                                    if (!Form1_0.Town_0.GetInTown()) Form1_0.Town_0.TownScriptDone = false;
+                                    if (!Form1_0.Town_0.GetInTown())
+                                    {
+                                        Form1_0.Stash_0.DeposingGoldCount = 0;
+                                        Form1_0.Town_0.TownScriptDone = false;
+                                    }
 
                                     if (!Town_0.GetInTown() && Form1_0.ItemsStruc_0.ItemsEquiped <= 2)
                                     {
@@ -1235,127 +1312,162 @@ public partial class Form1 : Form
                                                 }
                                                 else
                                                 {
-                                                    if (CharConfig.RunCowsScript && !Cows_0.ScriptDone)
+                                                    if (CharConfig.RunShopBotScript && !ShopBot_0.ScriptDone)
                                                     {
-                                                        Cows_0.RunScript();
+                                                        ShopBot_0.RunScript();
                                                     }
                                                     else
                                                     {
-                                                        if (CharConfig.RunCountessScript && !Countess_0.ScriptDone)
+                                                        if (CharConfig.RunMausoleumScript && !Mausoleum_0.ScriptDone)
                                                         {
-                                                            Countess_0.RunScript();
+                                                            Mausoleum_0.RunScript();
                                                         }
                                                         else
                                                         {
-                                                            if (CharConfig.RunAndarielScript && !Andariel_0.ScriptDone)
+                                                            if (CharConfig.RunCryptScript && !Crypt_0.ScriptDone)
                                                             {
-                                                                Andariel_0.RunScript();
+                                                                Crypt_0.RunScript();
                                                             }
                                                             else
                                                             {
-                                                                if (CharConfig.RunSummonerScript && !Summoner_0.ScriptDone)
+                                                                if (CharConfig.RunPitScript && !Pit_0.ScriptDone)
                                                                 {
-                                                                    Summoner_0.RunScript();
+                                                                    Pit_0.RunScript();
                                                                 }
                                                                 else
                                                                 {
-                                                                    if (CharConfig.RunDurielScript && !Duriel_0.ScriptDone)
+                                                                    if (CharConfig.RunCowsScript && !Cows_0.ScriptDone)
                                                                     {
-                                                                        Duriel_0.RunScript();
+                                                                        Cows_0.RunScript();
                                                                     }
                                                                     else
                                                                     {
-                                                                        if (CharConfig.RunLowerKurastScript && !LowerKurast_0.ScriptDone)
+                                                                        if (CharConfig.RunCountessScript && !Countess_0.ScriptDone)
                                                                         {
-                                                                            LowerKurast_0.RunScript();
+                                                                            Countess_0.RunScript();
                                                                         }
                                                                         else
                                                                         {
-                                                                            if (CharConfig.RunA3SewersScript && !Act3Sewers_0.ScriptDone)
+                                                                            if (CharConfig.RunAndarielScript && !Andariel_0.ScriptDone)
                                                                             {
-                                                                                Act3Sewers_0.RunScript();
+                                                                                Andariel_0.RunScript();
                                                                             }
                                                                             else
                                                                             {
-                                                                                if (CharConfig.RunUpperKurastScript && !UpperKurast_0.ScriptDone)
+                                                                                if (CharConfig.RunSummonerScript && !Summoner_0.ScriptDone)
                                                                                 {
-                                                                                    UpperKurast_0.RunScript();
+                                                                                    Summoner_0.RunScript();
                                                                                 }
                                                                                 else
                                                                                 {
-                                                                                    if (CharConfig.RunTravincalScript && !Travincal_0.ScriptDone)
+                                                                                    if (CharConfig.RunDurielScript && !Duriel_0.ScriptDone)
                                                                                     {
-                                                                                        Travincal_0.RunScript();
+                                                                                        Duriel_0.RunScript();
                                                                                     }
                                                                                     else
                                                                                     {
-                                                                                        if (CharConfig.RunMephistoScript && !Mephisto_0.ScriptDone)
+                                                                                        if (CharConfig.RunArachnidScript && !ArachnidLair_0.ScriptDone)
                                                                                         {
-                                                                                            Mephisto_0.RunScript();
+                                                                                            ArachnidLair_0.RunScript();
                                                                                         }
                                                                                         else
                                                                                         {
-                                                                                            if (CharConfig.RunChaosScript && !Chaos_0.ScriptDone)
+                                                                                            if (CharConfig.RunLowerKurastScript && !LowerKurast_0.ScriptDone)
                                                                                             {
-                                                                                                Chaos_0.RunScript();
+                                                                                                LowerKurast_0.RunScript();
                                                                                             }
                                                                                             else
                                                                                             {
-                                                                                                if (CharConfig.RunChaosLeechScript && !ChaosLeech_0.ScriptDone)
+                                                                                                if (CharConfig.RunA3SewersScript && !Act3Sewers_0.ScriptDone)
                                                                                                 {
-                                                                                                    ChaosLeech_0.RunScript();
+                                                                                                    Act3Sewers_0.RunScript();
                                                                                                 }
                                                                                                 else
                                                                                                 {
-                                                                                                    if (CharConfig.RunEldritchScript && !Eldritch_0.ScriptDone)
+                                                                                                    if (CharConfig.RunUpperKurastScript && !UpperKurast_0.ScriptDone)
                                                                                                     {
-                                                                                                        Eldritch_0.RunScript();
+                                                                                                        UpperKurast_0.RunScript();
                                                                                                     }
                                                                                                     else
                                                                                                     {
-                                                                                                        if (CharConfig.RunShenkScript && !Shenk_0.ScriptDone)
+                                                                                                        if (CharConfig.RunTravincalScript && !Travincal_0.ScriptDone)
                                                                                                         {
-                                                                                                            Shenk_0.RunScript();
+                                                                                                            Travincal_0.RunScript();
                                                                                                         }
                                                                                                         else
                                                                                                         {
-                                                                                                            if (CharConfig.RunFrozensteinScript && !Frozenstein_0.ScriptDone)
+                                                                                                            if (CharConfig.RunMephistoScript && !Mephisto_0.ScriptDone)
                                                                                                             {
-                                                                                                                Frozenstein_0.RunScript();
+                                                                                                                Mephisto_0.RunScript();
                                                                                                             }
                                                                                                             else
                                                                                                             {
-                                                                                                                if (CharConfig.RunPindleskinScript && !Pindleskin_0.ScriptDone)
+                                                                                                                if (CharConfig.RunChaosScript && !Chaos_0.ScriptDone)
                                                                                                                 {
-                                                                                                                    Pindleskin_0.RunScript();
+                                                                                                                    Chaos_0.RunScript();
                                                                                                                 }
                                                                                                                 else
                                                                                                                 {
-                                                                                                                    if (CharConfig.RunNihlatakScript && !Nihlatak_0.ScriptDone)
+                                                                                                                    if (CharConfig.RunChaosLeechScript && !ChaosLeech_0.ScriptDone)
                                                                                                                     {
-                                                                                                                        Nihlatak_0.RunScript();
+                                                                                                                        ChaosLeech_0.RunScript();
                                                                                                                     }
                                                                                                                     else
                                                                                                                     {
-                                                                                                                        if (CharConfig.RunBaalScript && !Baal_0.ScriptDone)
+                                                                                                                        if (CharConfig.RunEldritchScript && !Eldritch_0.ScriptDone)
                                                                                                                         {
-                                                                                                                            Baal_0.RunScript();
+                                                                                                                            Eldritch_0.RunScript();
                                                                                                                         }
                                                                                                                         else
                                                                                                                         {
-                                                                                                                            if (CharConfig.RunBaalLeechScript && !BaalLeech_0.ScriptDone)
+                                                                                                                            if (CharConfig.RunShenkScript && !Shenk_0.ScriptDone)
                                                                                                                             {
-                                                                                                                                BaalLeech_0.RunScript();
+                                                                                                                                Shenk_0.RunScript();
                                                                                                                             }
                                                                                                                             else
                                                                                                                             {
-                                                                                                                                if (CharConfig.RunTerrorZonesScript && !TerrorZones_0.ScriptDone)
+                                                                                                                                if (CharConfig.RunFrozensteinScript && !Frozenstein_0.ScriptDone)
                                                                                                                                 {
-                                                                                                                                    TerrorZones_0.RunScript();
+                                                                                                                                    Frozenstein_0.RunScript();
                                                                                                                                 }
                                                                                                                                 else
                                                                                                                                 {
-                                                                                                                                    Form1_0.LeaveGame(true);
+                                                                                                                                    if (CharConfig.RunPindleskinScript && !Pindleskin_0.ScriptDone)
+                                                                                                                                    {
+                                                                                                                                        Pindleskin_0.RunScript();
+                                                                                                                                    }
+                                                                                                                                    else
+                                                                                                                                    {
+                                                                                                                                        if (CharConfig.RunNihlatakScript && !Nihlatak_0.ScriptDone)
+                                                                                                                                        {
+                                                                                                                                            Nihlatak_0.RunScript();
+                                                                                                                                        }
+                                                                                                                                        else
+                                                                                                                                        {
+                                                                                                                                            if (CharConfig.RunBaalScript && !Baal_0.ScriptDone)
+                                                                                                                                            {
+                                                                                                                                                Baal_0.RunScript();
+                                                                                                                                            }
+                                                                                                                                            else
+                                                                                                                                            {
+                                                                                                                                                if (CharConfig.RunBaalLeechScript && !BaalLeech_0.ScriptDone)
+                                                                                                                                                {
+                                                                                                                                                    BaalLeech_0.RunScript();
+                                                                                                                                                }
+                                                                                                                                                else
+                                                                                                                                                {
+                                                                                                                                                    if (CharConfig.RunTerrorZonesScript && !TerrorZones_0.ScriptDone)
+                                                                                                                                                    {
+                                                                                                                                                        TerrorZones_0.RunScript();
+                                                                                                                                                    }
+                                                                                                                                                    else
+                                                                                                                                                    {
+                                                                                                                                                        Form1_0.LeaveGame(true);
+                                                                                                                                                    }
+                                                                                                                                                }
+                                                                                                                                            }
+                                                                                                                                        }
+                                                                                                                                    }
                                                                                                                                 }
                                                                                                                             }
                                                                                                                         }
@@ -1969,6 +2081,8 @@ public partial class Form1 : Form
         //SetPlayButtonText("STOP");
         Running = true;
         BotJustStarted = true;
+        Form1_0.GameStartedTime = DateTime.Now;
+        Form1_0.InventoryStruc_0.DisabledSpecialItems = false;
         Startt();
     }
 

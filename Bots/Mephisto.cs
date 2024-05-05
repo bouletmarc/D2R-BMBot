@@ -125,9 +125,13 @@ public class Mephisto
                     {
                         if (Form1_0.Battle_0.EndBossBattle())
                         {
+                            Form1_0.Town_0.FastTowning = false;
+                            Form1_0.Town_0.UseLastTP = false;
+                            ScriptDone = true;
+
                             //Position ThisFinalPosition = Form1_0.MapAreaStruc_0.GetPositionOfObject("object", "portal", 102 - 1, new List<int>() { });
                             //if (Form1_0.Mover_0.MoveToLocation(ThisFinalPosition.X, ThisFinalPosition.Y))
-                            while (Form1_0.PlayerScan_0.levelNo == (int)Enums.Area.DuranceOfHateLevel3)
+                            /*while (Form1_0.PlayerScan_0.levelNo == (int)Enums.Area.DuranceOfHateLevel3)
                             {
                                 Form1_0.ItemsStruc_0.GetItems(true);
                                 if (Form1_0.Mover_0.MoveToLocation(17601, 8070))
@@ -145,7 +149,7 @@ public class Mephisto
 
                             Form1_0.Town_0.FastTowning = false;
                             Form1_0.Town_0.UseLastTP = false;
-                            ScriptDone = true;
+                            ScriptDone = true;*/
                             return;
                             //Form1_0.LeaveGame(true);
                         }

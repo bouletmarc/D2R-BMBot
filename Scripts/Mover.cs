@@ -289,6 +289,7 @@ public class Mover
 
         //######
         //moving location is way to far away something might be wrong!
+        Form1_0.KeyMouse_0.ReleaseKey(CharConfig.KeyForceMovement);
         if (!IsPositionNearOf(ThisX, ThisY, 300)) return false;
         if (ThisX == 0 && ThisY == 0) return false;
         //######
@@ -297,12 +298,14 @@ public class Mover
         if (IsPositionNearOf(ThisX, ThisY, MoveAcceptOffset))
         {
             Form1_0.overlayForm.ResetMoveToLocation();
+            Form1_0.KeyMouse_0.ReleaseKey(CharConfig.KeyForceMovement);
             return true;
         }
 
         if (!Form1_0.GameStruc_0.IsInGame() || !Form1_0.Running)
         {
             Form1_0.overlayForm.ResetMoveToLocation();
+            Form1_0.KeyMouse_0.ReleaseKey(CharConfig.KeyForceMovement);
             return false;
         }
 

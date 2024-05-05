@@ -83,7 +83,6 @@ public class Town
 
     public void RunTownScript()
     {
-        Form1_0.ItemsStruc_0.TriesToPickItemCount = 0;
         //Console.WriteLine("Fast town: " + FastTowning);
         if (!ShouldBeInTown())
         {
@@ -1099,7 +1098,7 @@ public class Town
                 Form1_0.UIScan_0.CloseUIMenu("npcInteract");
                 Form1_0.UIScan_0.CloseUIMenu("npcShop");
 
-                Form1_0.Shop_0.PlaceItem(Form1_0.CenterX, Form1_0.CenterY);
+                Form1_0.Shop_0.PlaceItem(Form1_0.CenterX, Form1_0.CenterY, true);
             }
         }
     }

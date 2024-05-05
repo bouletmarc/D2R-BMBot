@@ -15,6 +15,7 @@ public class Stash
     public int RunningScriptCount = 0;
 
     public bool MakingCowPortal = false;
+    public int DeposingGoldCount = 0;
 
     public void SetForm1(Form1 form1_1)
     {
@@ -43,6 +44,21 @@ public class Stash
             if ((CharConfig.InventoryDontCheckItem[i] == 0 && Form1_0.InventoryStruc_0.InventoryHasStashItem[i] >= 1)
                 || (MakingCowPortal && Form1_0.InventoryStruc_0.InventoryItemNames[i] == "Tome of Town Portal"))
             {
+                //################
+                //GET ITEM (UNIQUE GC, GHEED, TORCH, ANNI)
+                bool IsUniqueSpecial = false;
+                Dictionary<string, int> itemXYPos = Form1_0.InventoryStruc_0.ConvertIndexToXY(i);
+                if (Form1_0.ItemsStruc_0.GetSpecificItem(0, Form1_0.InventoryStruc_0.InventoryItemNames[i], itemXYPos["x"], itemXYPos["y"], Form1_0.PlayerScan_0.unitId, 0))
+                {
+                    if ((Form1_0.ItemsStruc_0.ItemNAAME == "Small Charm"
+                        || Form1_0.ItemsStruc_0.ItemNAAME == "Large Charm"
+                        || Form1_0.ItemsStruc_0.ItemNAAME == "Grand Charm")
+                        && Form1_0.ItemsStruc_0.itemQuality == 7) //Unique
+                    {
+                        IsUniqueSpecial = true;
+                    }
+                }
+                //################
                 Form1_0.SetGameStatus("TOWN-STASH-ITEM:" + Form1_0.InventoryStruc_0.InventoryItemNames[i]);
                 Form1_0.method_1_Items("Stashed: " + Form1_0.InventoryStruc_0.InventoryItemNames[i], Form1_0.ItemsStruc_0.GetColorFromQuality(Form1_0.InventoryStruc_0.InventoryItemQuality[i]));
 
@@ -50,6 +66,11 @@ public class Stash
                 itemScreenPos = Form1_0.InventoryStruc_0.ConvertInventoryLocToScreenPos(itemScreenPos["x"], itemScreenPos["y"]);
 
                 int TryStashCount = 0;
+                if (IsUniqueSpecial)
+                {
+                    TryStashCount = 1;
+                    Form1_0.KeyMouse_0.MouseClicc(340, 200);   //clic shared stash1
+                }
                 while (true)
                 {
                     int Tries = 0;
@@ -147,7 +168,12 @@ public class Stash
         if (!Form1_0.UIScan_0.leftMenu && !Form1_0.UIScan_0.rightMenu) return;
 
         //deposit gold
-        Form1_0.KeyMouse_0.MouseClicc(200, 200);   //clic stash1
+        if (DeposingGoldCount == 0) Form1_0.KeyMouse_0.MouseClicc(200, 200);   //clic stash1
+        if (DeposingGoldCount == 1) Form1_0.KeyMouse_0.MouseClicc(340, 200);   //clic shared stash1
+        if (DeposingGoldCount == 2) Form1_0.KeyMouse_0.MouseClicc(450, 200);   //clic shared stash2
+        if (DeposingGoldCount == 3) Form1_0.KeyMouse_0.MouseClicc(600, 200);   //clic shared stash3
+        DeposingGoldCount++;
+        if (DeposingGoldCount > 3) DeposingGoldCount = 0;
 
         if (Form1_0.PlayerScan_0.PlayerGoldInventory > 0)
         {

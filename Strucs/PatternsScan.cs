@@ -49,6 +49,8 @@ public class PatternsScan
     public long StartIndexItem_V3 = 0x231818140B0;
 
     public int UnitsScanVersion = 1;
+    public int MaxUnitsIncreaseCount = 5;
+    public int CurrentUnitsIncreaseCount = 0;
 
     public void SetForm1(Form1 form1_1)
     {
@@ -582,15 +584,20 @@ public class PatternsScan
     //VERSION 1 UNITS SCAN
     public void IncreaseV1Scanning()
     {
-        ScanUnitsNumber += 100;
-        ScanUnitsNegativeOffset += 25;
-        Form1_0.method_1("Units Scan have increased trying to detect more Units, but glitch may happend too!", Color.OrangeRed);
+        if (CurrentUnitsIncreaseCount < MaxUnitsIncreaseCount)
+        {
+            ScanUnitsNumber += 100;
+            ScanUnitsNegativeOffset += 25;
+            Form1_0.method_1("Units Scan have increased trying to detect more Units, but glitch may happend too!", Color.OrangeRed);
+            CurrentUnitsIncreaseCount++;
+        }
     }
 
     public void ResetV1Scanning()
     {
         ScanUnitsNumber = 2600;
         ScanUnitsNegativeOffset = 150;
+        CurrentUnitsIncreaseCount = 0;
     }
 
     public void scanForUnitsPointerV1(string SearchUnitsType)

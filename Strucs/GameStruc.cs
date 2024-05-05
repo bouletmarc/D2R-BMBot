@@ -143,6 +143,8 @@ public class GameStruc
 
         Form1_0.SetGameStatus("LOADING GAME");
 
+        Form1_0.WaitDelay(CharConfig.CreateGameWaitDelay);
+
         //###############
         /*GetAllGamesNames();
         SelectGame(0, false);

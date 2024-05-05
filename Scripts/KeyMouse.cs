@@ -17,6 +17,7 @@ public class KeyMouse
     public int ProcessingDelay = 1;
 
     private const int WH_KEYBOARD_LL = 13;
+    private const int WH_MOUSE_LL = 14;
     public LowLevelKeyboardProc proc;
     public IntPtr hookID = IntPtr.Zero;
 
@@ -31,8 +32,27 @@ public class KeyMouse
     public const int WM_KEYDOWN = 256;
     public const int WM_KEYUP = 257;
 
+    [StructLayout(LayoutKind.Sequential)]
+    private struct POINT
+    {
+        public int x;
+        public int y;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    private struct MSLLHOOKSTRUCT
+    {
+        public POINT pt;
+        public uint mouseData;
+        public uint flags;
+        public uint time;
+        public IntPtr dwExtraInfo;
+    }
+
     //###############################################
     //###############################################
+    private delegate IntPtr LowLevelMouseProc(int nCode, IntPtr wParam, IntPtr lParam);
+    public delegate IntPtr LowLevelKeyboardProc(int nCode, IntPtr wParam, IntPtr lParam);
 
     [DllImport("User32.dll")]
     static extern Int32 SendMessage(int hWnd, int Msg, int wParam, IntPtr lParam);
@@ -51,23 +71,56 @@ public class KeyMouse
     [return: MarshalAs(UnmanagedType.Bool)]
     private static extern bool SetCursorPos(int x, int y);
 
-
     [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-    private static extern IntPtr SetWindowsHookEx(int idHook,
-    LowLevelKeyboardProc lpfn, IntPtr hMod, uint dwThreadId);
+    private static extern IntPtr SetWindowsHookEx(int idHook, LowLevelKeyboardProc lpfn, IntPtr hMod, uint dwThreadId);
 
     [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
     [return: MarshalAs(UnmanagedType.Bool)]
     public static extern bool UnhookWindowsHookEx(IntPtr hhk);
 
     [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-    private static extern IntPtr CallNextHookEx(IntPtr hhk, int nCode,
-        IntPtr wParam, IntPtr lParam);
+    private static extern IntPtr CallNextHookEx(IntPtr hhk, int nCode, IntPtr wParam, IntPtr lParam);
 
     [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
     private static extern IntPtr GetModuleHandle(string lpModuleName);
 
+    [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+    private static extern IntPtr SetWindowsHookEx(int idHook, LowLevelMouseProc lpfn, IntPtr hMod, uint dwThreadId);
+
+    [DllImport("user32.dll", SetLastError = true)]
+    private static extern uint GetWindowThreadProcessId(IntPtr hWnd, out uint processId);
+
+    [DllImport("user32.dll")]
+    private static extern IntPtr GetForegroundWindow();
+
     InputSimulator sim;
+
+    /*[DllImport("kernel32.dll", SetLastError = true)]
+    static extern IntPtr OpenProcess(uint processAccess, bool bInheritHandle, int processId);
+
+    [DllImport("kernel32.dll", SetLastError = true)]
+    static extern IntPtr GetProcAddress(IntPtr hModule, string procName);
+
+    [DllImport("kernel32.dll", SetLastError = true)]
+    static extern IntPtr VirtualAllocEx(IntPtr hProcess, IntPtr lpAddress, uint dwSize, uint flAllocationType, uint flProtect);
+
+    [DllImport("kernel32.dll", SetLastError = true)]
+    static extern bool WriteProcessMemory(IntPtr hProcess, IntPtr lpBaseAddress, byte[] buffer, uint size, out int lpNumberOfBytesWritten);
+
+    [DllImport("kernel32.dll")]
+    static extern IntPtr CreateRemoteThread(IntPtr hProcess, IntPtr lpThreadAttributes, uint dwStackSize, IntPtr lpStartAddress, IntPtr lpParameter, uint dwCreationFlags, out IntPtr lpThreadId);
+
+    [DllImport("kernel32.dll")]
+    static extern bool CloseHandle(IntPtr hObject);
+
+    const uint PROCESS_CREATE_THREAD = 0x0002;
+    const uint PROCESS_QUERY_INFORMATION = 0x0400;
+    const uint PROCESS_VM_OPERATION = 0x0008;
+    const uint PROCESS_VM_WRITE = 0x0020;
+    const uint PROCESS_VM_READ = 0x0010;
+    const uint MEM_COMMIT = 0x1000;
+    const uint MEM_RESERVE = 0x2000;
+    const uint PAGE_READWRITE = 0x04;*/
 
     //###############################################
     //###############################################
@@ -77,7 +130,71 @@ public class KeyMouse
         Form1_0 = form1_1;
 
         sim = new InputSimulator();
+
+        // Get the process ID of the target process
+        /*Process targetProcess = Process.GetProcessesByName("D2R")[0];
+        int processId = targetProcess.Id;
+
+        // Open the target process
+        IntPtr processHandle = OpenProcess(PROCESS_CREATE_THREAD | PROCESS_QUERY_INFORMATION | PROCESS_VM_OPERATION | PROCESS_VM_WRITE | PROCESS_VM_READ, false, processId);
+
+        // Get the address of the SetCursorPos function
+        IntPtr setCursorPosAddr = GetProcAddress(GetModuleHandle("user32.dll"), "SetCursorPos");
+
+        // Allocate memory in the target process for the buffer
+        IntPtr remoteBuffer = VirtualAllocEx(processHandle, IntPtr.Zero, 4096, MEM_RESERVE | MEM_COMMIT, PAGE_READWRITE);
+
+        // Write the code to change the mouse position to the buffer
+        byte[] buffer = WriteMousePositionChangeCode(1, 100); // Example: Move mouse to (100, 100)
+        int bytesWritten;
+        WriteProcessMemory(processHandle, remoteBuffer, buffer, (uint)buffer.Length, out bytesWritten);
+
+        // Create a remote thread to execute the code
+        IntPtr threadId;
+        IntPtr threadHandle = CreateRemoteThread(processHandle, IntPtr.Zero, 0, setCursorPosAddr, remoteBuffer, 0, out threadId);
+
+        // Clean up
+        CloseHandle(threadHandle);
+        CloseHandle(processHandle);*/
     }
+
+    /*static byte[] WriteMousePositionChangeCode(int x, int y)
+    {
+        // Example code to change mouse position to (x, y)
+        byte[] code = new byte[]
+        {
+            0x68, (byte)x, (byte)(x >> 8), (byte)(x >> 16), (byte)(x >> 24), // push x
+            0x68, (byte)y, (byte)(y >> 8), (byte)(y >> 16), (byte)(y >> 24), // push y
+            0xC3 // ret
+        };
+        return code;
+    }*/
+
+
+    /*private static IntPtr MouseHookCallback(int nCode, IntPtr wParam, IntPtr lParam)
+    {
+        if (nCode >= 0 && wParam == (IntPtr)WM_LBUTTONDOWN)
+        {
+            // Extract mouse coordinates from the hook event
+            MSLLHOOKSTRUCT hookStruct = (MSLLHOOKSTRUCT)Marshal.PtrToStructure(lParam, typeof(MSLLHOOKSTRUCT));
+            int x = hookStruct.pt.x;
+            int y = hookStruct.pt.y;
+
+            // Check if the mouse click is within the target process window
+            IntPtr windowHandle = GetForegroundWindow();
+            uint processId;
+            GetWindowThreadProcessId(windowHandle, out processId);
+            if (processId == targetProcessId)
+            {
+                // Perform your custom mouse actions here
+                // For example, send mouse clicks or move the mouse
+                // SimulateMouseClick(x, y);
+                // SimulateMouseMove(x, y);
+            }
+        }
+
+        return CallNextHookEx(hookID, nCode, wParam, lParam);
+    }*/
 
     private static IntPtr CreateLParam(int LoWord, int HiWord)
     {
@@ -172,6 +289,7 @@ public class KeyMouse
     {
         PostMessage((int)Form1_0.hWnd, WM_SYSKEYUP, (ushort)ThisK, (IntPtr)0);
         SendMessage((int)Form1_0.hWnd, WM_SYSKEYUP, (ushort)ThisK, (IntPtr)0);
+        sim.Keyboard.KeyUp((WindowsInput.Native.VirtualKeyCode)ThisK);
     }
 
     public void SendCTRL_CLICK(int ThX, int ThY)
@@ -339,7 +457,14 @@ public class KeyMouse
         }
     }
 
-    public delegate IntPtr LowLevelKeyboardProc(int nCode, IntPtr wParam, IntPtr lParam);
+    private static IntPtr SetHookMouse(LowLevelMouseProc proc)
+    {
+        using (Process curProcess = Process.GetCurrentProcess())
+        using (ProcessModule curModule = curProcess.MainModule)
+        {
+            return SetWindowsHookEx(WH_MOUSE_LL, proc, GetModuleHandle(curModule.ModuleName), 0);
+        }
+    }
 
     public IntPtr HookCallback(int nCode, IntPtr wParam, IntPtr lParam)
     {

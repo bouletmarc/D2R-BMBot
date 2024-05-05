@@ -108,6 +108,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bots\Act3Sewers.cs" />
+    <Compile Include="Bots\ArachnidLair.cs" />
+    <Compile Include="Bots\Pit.cs" />
+    <Compile Include="Bots\Crypt.cs" />
+    <Compile Include="Bots\Mausoleum.cs" />
+    <Compile Include="Bots\ShopBot.cs" />
     <Compile Include="Bots\Frozenstein.cs" />
     <Compile Include="Bots\Rush\AnyaRush.cs" />
     <Compile Include="Bots\TerrorZones.cs" />

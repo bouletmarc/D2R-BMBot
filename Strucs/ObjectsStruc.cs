@@ -96,7 +96,7 @@ public class ObjectsStruc
         }
         catch
         {
-            Form1_0.method_1("Couldn't 'GetAllObjectsNearby()'", Color.Red);
+            Form1_0.method_1("Couldn't 'GetAllObjectsNearby()'", Color.OrangeRed);
         }
         return new List<int[]>();
     }
@@ -268,7 +268,7 @@ public class ObjectsStruc
         }
         catch
         {
-            Form1_0.method_1("Couldn't 'GetObjects()'", Color.Red);
+            Form1_0.method_1("Couldn't 'GetObjects()'", Color.OrangeRed);
         }
 
         return false;

@@ -41,6 +41,9 @@ public partial class FormSettings : Form
         panelBaalLeech.Visible = false;
         panelBaalLeech.Location = new System.Drawing.Point(23, 197);
 
+        panelShopBot.Visible = false;
+        panelShopBot.Location = new System.Drawing.Point(23, 197);
+
         LoadSettings();
     }
 
@@ -62,11 +65,16 @@ public partial class FormSettings : Form
         listViewRunScripts.Items[CurrI++].Checked = CharConfig.RunMapHackOnly;
         listViewRunScripts.Items[CurrI++].Checked = CharConfig.RunItemGrabScriptOnly;
         listViewRunScripts.Items[CurrI++].Checked = CharConfig.RunMapHackPickitOnly;
+        listViewRunScripts.Items[CurrI++].Checked = CharConfig.RunShopBotScript;
+        listViewRunScripts.Items[CurrI++].Checked = CharConfig.RunMausoleumScript;
+        listViewRunScripts.Items[CurrI++].Checked = CharConfig.RunCryptScript;
+        listViewRunScripts.Items[CurrI++].Checked = CharConfig.RunPitScript;
         listViewRunScripts.Items[CurrI++].Checked = CharConfig.RunCowsScript;
         listViewRunScripts.Items[CurrI++].Checked = CharConfig.RunCountessScript;
         listViewRunScripts.Items[CurrI++].Checked = CharConfig.RunAndarielScript;
         listViewRunScripts.Items[CurrI++].Checked = CharConfig.RunSummonerScript;
         listViewRunScripts.Items[CurrI++].Checked = CharConfig.RunDurielScript;
+        listViewRunScripts.Items[CurrI++].Checked = CharConfig.RunArachnidScript;
         listViewRunScripts.Items[CurrI++].Checked = CharConfig.RunLowerKurastScript;
         listViewRunScripts.Items[CurrI++].Checked = CharConfig.RunA3SewersScript;
         listViewRunScripts.Items[CurrI++].Checked = CharConfig.RunUpperKurastScript;
@@ -115,6 +123,7 @@ public partial class FormSettings : Form
 
         comboBoxDifficulty.SelectedIndex = CharConfig.GameDifficulty;
 
+        if (Form1_0.CurrentGameNumber <= 0) Form1_0.CurrentGameNumber = 1;
         numericUpDownRunNumber.Value = Form1_0.CurrentGameNumber;
 
         //###################
@@ -150,6 +159,10 @@ public partial class FormSettings : Form
         checkBoxOverlayShowExits.Checked = Form1_0.overlayForm.ShowExits;
         checkBoxOverlayShowMH.Checked = Form1_0.overlayForm.ShowMapHackShowLines;
         checkBoxOverlayShowUnitsCount.Checked = Form1_0.overlayForm.ShowUnitsScanCount;
+        //###################
+        //SHOP BOT
+        numericUpDownMaxShopCount.Value = Form1_0.ShopBot_0.MaxShopCount;
+        numericUpDownShopTownAct.Value = Form1_0.ShopBot_0.ShopBotTownAct;
         //###################
 
         SetCreateGameGroupbox();
@@ -248,11 +261,16 @@ public partial class FormSettings : Form
         CharConfig.RunMapHackOnly = listViewRunScripts.Items[CurrI++].Checked;
         CharConfig.RunItemGrabScriptOnly = listViewRunScripts.Items[CurrI++].Checked;
         CharConfig.RunMapHackPickitOnly = listViewRunScripts.Items[CurrI++].Checked;
+        CharConfig.RunShopBotScript = listViewRunScripts.Items[CurrI++].Checked;
+        CharConfig.RunMausoleumScript = listViewRunScripts.Items[CurrI++].Checked;
+        CharConfig.RunCryptScript = listViewRunScripts.Items[CurrI++].Checked;
+        CharConfig.RunPitScript = listViewRunScripts.Items[CurrI++].Checked;
         CharConfig.RunCowsScript = listViewRunScripts.Items[CurrI++].Checked;
         CharConfig.RunCountessScript = listViewRunScripts.Items[CurrI++].Checked;
         CharConfig.RunAndarielScript = listViewRunScripts.Items[CurrI++].Checked;
         CharConfig.RunSummonerScript = listViewRunScripts.Items[CurrI++].Checked;
         CharConfig.RunDurielScript = listViewRunScripts.Items[CurrI++].Checked;
+        CharConfig.RunArachnidScript = listViewRunScripts.Items[CurrI++].Checked;
         CharConfig.RunLowerKurastScript = listViewRunScripts.Items[CurrI++].Checked;
         CharConfig.RunA3SewersScript = listViewRunScripts.Items[CurrI++].Checked;
         CharConfig.RunUpperKurastScript = listViewRunScripts.Items[CurrI++].Checked;
@@ -361,6 +379,12 @@ public partial class FormSettings : Form
             else if (textBoxAvoidWords.Text != "") CharConfig.BaalSearchAvoidWords.Add(textBoxAvoidWords.Text);
         }
         CharConfig.SearchLeecherName = textBox2LeechName.Text;
+
+        //###################
+        //SHOP BOT
+        Form1_0.ShopBot_0.MaxShopCount = int.Parse(numericUpDownMaxShopCount.Value.ToString());
+        Form1_0.ShopBot_0.ShopBotTownAct = int.Parse(numericUpDownShopTownAct.Value.ToString());
+        //###################
     }
 
     private void button1_Click(object sender, EventArgs e)
@@ -420,6 +444,10 @@ public partial class FormSettings : Form
         else if (listViewRunScripts.SelectedItems[0].Text == "Chaos")
         {
             panelChaosFeature.Visible = true;
+        }
+        else if (listViewRunScripts.SelectedItems[0].Text == "ShopBot")
+        {
+            panelShopBot.Visible = true;
         }
         else if (listViewRunScripts.SelectedItems[0].Text == "Maphack ONLY (no script running)")
         {
@@ -492,5 +520,10 @@ public partial class FormSettings : Form
     private void button6_Click(object sender, EventArgs e)
     {
         panelBaalLeech.Visible = false;
+    }
+
+    private void buttonApplyShopBot_Click(object sender, EventArgs e)
+    {
+        panelShopBot.Visible = false;
     }
 }
