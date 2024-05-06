@@ -40,7 +40,7 @@ using static MapAreaStruc;
 public partial class Form1 : Form
 {
 
-    public string BotVersion = "V3.01";
+    public string BotVersion = "V3.02";
 
     public string D2_LOD_113C_Path = "";
 
@@ -196,6 +196,8 @@ public partial class Form1 : Form
     public ScriptsLoader ScriptsLoader_0;
     public TerrorZones TerrorZones_0;
     public AreaScript AreaScript_0;
+
+    public ItemsViewer ItemsViewer_0;
 
     // REQUIRED CONSTS
     const int PROCESS_QUERY_INFORMATION = 0x0400;
@@ -382,6 +384,7 @@ public partial class Form1 : Form
         AnyaRush_0 = new AnyaRush();
         ChaosRush_0 = new ChaosRush();
         BaalRush_0 = new BaalRush();
+        ItemsViewer_0 = new ItemsViewer();
 
         AllClassInstances = new List<object>();
         //ScriptsLoader_0 = new ScriptsLoader();
@@ -464,6 +467,7 @@ public partial class Form1 : Form
         AnyaRush_0.SetForm1(Form1_0);
         ChaosRush_0.SetForm1(Form1_0);
         BaalRush_0.SetForm1(Form1_0);
+        ItemsViewer_0.SetForm1(Form1_0);
 
         SettingsLoader_0.LoadSettings();
 
@@ -563,6 +567,9 @@ public partial class Form1 : Form
         dataGridView1.Rows.Add("Full Open", "Unknown");
 
         CheckForUpdates();
+
+        comboBoxCollisionArea.Items.Clear();
+        for (int i = 0; i < 136; i++) comboBoxCollisionArea.Items.Add(((Enums.Area) i + 1).ToString());
 
         LoadingBot = false;
     }
@@ -706,7 +713,7 @@ public partial class Form1 : Form
         if (richTextBoSoldLogs.InvokeRequired)
         {
             // Call this same method but append THREAD2 to the text
-            Action safeWrite = delegate { method_1_Items(string_3, ThisColor); };
+            Action safeWrite = delegate { method_1_SoldItems(string_3, ThisColor); };
             richTextBoSoldLogs.Invoke(safeWrite);
         }
         else
@@ -714,7 +721,7 @@ public partial class Form1 : Form
             string LogThis = string_3 + " " + GameStruc_0.GetTimeNow();
             richTextBoSoldLogs.SelectionColor = ThisColor;
             richTextBoSoldLogs.AppendText(LogThis + Environment.NewLine);
-            method_1(LogThis, ThisColor, false);
+            //method_1(LogThis, ThisColor, false);
 
             if (!Directory.Exists(ThisLogPath)) Directory.CreateDirectory(ThisLogPath);
             if (!File.Exists(ThisLogPath + "ItemsSoldLogs.txt")) File.Create(ThisLogPath + "ItemsSoldLogs.txt").Dispose();
@@ -1233,6 +1240,7 @@ public partial class Form1 : Form
                         //Running = false;
                         //if (Running) LoopTimer.Start();
                         //KeyMouse_0.SetForm1(Form1_0);
+                        //ItemsViewer_0.ItemViewerDebug();
                         //return;
 
                         if (CharConfig.RunMapHackOnly)
@@ -1780,14 +1788,18 @@ public partial class Form1 : Form
             if (!CharConfig.IsRushing && !Town_0.GetInTown())
             {
                 if (CharConfig.RunWPTaker && !WPTaker_0.ScriptDone) WPTaker_0.ScriptDone = true;
+                else if (CharConfig.RunShopBotScript && !ShopBot_0.ScriptDone) ShopBot_0.ScriptDone = true;
+                else if (CharConfig.RunMausoleumScript && !Mausoleum_0.ScriptDone) Mausoleum_0.ScriptDone = true;
+                else if (CharConfig.RunCryptScript && !Crypt_0.ScriptDone) Crypt_0.ScriptDone = true;
                 else if (CharConfig.RunCowsScript && !Cows_0.ScriptDone) Cows_0.ScriptDone = true;
                 else if (CharConfig.RunAndarielScript && !Andariel_0.ScriptDone) Andariel_0.ScriptDone = true;
                 else if (CharConfig.RunCountessScript && !Countess_0.ScriptDone) Countess_0.ScriptDone = true;
                 else if (CharConfig.RunSummonerScript && !Summoner_0.ScriptDone) Summoner_0.ScriptDone = true;
                 else if (CharConfig.RunDurielScript && !Duriel_0.ScriptDone) Duriel_0.ScriptDone = true;
+                else if (CharConfig.RunArachnidScript && !ArachnidLair_0.ScriptDone) ArachnidLair_0.ScriptDone = true;
                 else if (CharConfig.RunLowerKurastScript && !LowerKurast_0.ScriptDone) LowerKurast_0.ScriptDone = true;
-                else if (CharConfig.RunLowerKurastScript && !Act3Sewers_0.ScriptDone) Act3Sewers_0.ScriptDone = true;
-                else if (CharConfig.RunLowerKurastScript && !UpperKurast_0.ScriptDone) UpperKurast_0.ScriptDone = true;
+                else if (CharConfig.RunA3SewersScript && !Act3Sewers_0.ScriptDone) Act3Sewers_0.ScriptDone = true;
+                else if (CharConfig.RunUpperKurastScript && !UpperKurast_0.ScriptDone) UpperKurast_0.ScriptDone = true;
                 else if (CharConfig.RunTravincalScript && !Travincal_0.ScriptDone) Travincal_0.ScriptDone = true;
                 else if (CharConfig.RunMephistoScript && !Mephisto_0.ScriptDone) Mephisto_0.ScriptDone = true;
                 else if (CharConfig.RunChaosScript && !Chaos_0.ScriptDone) Chaos_0.ScriptDone = true;
@@ -2170,13 +2182,20 @@ public partial class Form1 : Form
         FormCharSettings_0.ShowDialog();
     }
 
+    public bool CanReloadCollision = true;
     private void tabControl2_SelectedIndexChanged(object sender, EventArgs e)
     {
         if (tabControl2.SelectedIndex == 0) ItemsStruc_0.DebugItems();
         if (tabControl2.SelectedIndex == 1) { Form1_0.MobsStruc_0.DebuggingMobs = true; overlayForm.ShowMobs = true; }
         if (tabControl2.SelectedIndex == 2) ObjectsStruc_0.DebugObjects();
         if (tabControl2.SelectedIndex == 3) MapAreaStruc_0.DebugMapData();
-        if (tabControl2.SelectedIndex == 4) PathFinding_0.DebugMapCollision();
+        if (tabControl2.SelectedIndex == 4)
+        {
+            CanReloadCollision = false;
+            comboBoxCollisionArea.SelectedIndex = (int)PlayerScan_0.levelNo - 1;
+            PathFinding_0.DebugMapCollision();
+            CanReloadCollision = true;
+        }
 
         if (tabControl2.SelectedIndex != 1) Form1_0.MobsStruc_0.DebuggingMobs = false;
     }
@@ -2487,5 +2506,37 @@ public partial class Form1 : Form
     private void comboBoxItemsCategory_SelectedIndexChanged(object sender, EventArgs e)
     {
         if (!LoadingBot) ItemsStruc_0.DebugItems();
+    }
+
+    private void richTextBoSoldLogs_MouseMove(object sender, MouseEventArgs e)
+    {
+        RichTextBox richTextBox = (RichTextBox)sender;
+
+        // Get the character index and line index from the mouse position
+        int charIndex = richTextBox.GetCharIndexFromPosition(e.Location);
+        int lineIndex = richTextBox.GetLineFromCharIndex(charIndex);
+
+        // Get the start and end positions of the line
+        int lineStartIndex = richTextBox.GetFirstCharIndexFromLine(lineIndex);
+        int lineEndIndex = richTextBox.GetFirstCharIndexFromLine(lineIndex + 1);
+        if (lineEndIndex == -1) lineEndIndex = richTextBox.Text.Length;
+
+        // Get the text of the hovered line
+        string lineText = richTextBox.Text.Substring(lineStartIndex, lineEndIndex - lineStartIndex).Trim();
+
+        ItemsViewer_0.ShowItemScreenshot(lineIndex, "Sold");
+        // Display the line number and text in the console (or any other desired action)
+        //Console.WriteLine("Line Number: " + (lineIndex + 1));
+        //Console.WriteLine("Line Text: " + lineText);
+    }
+
+    private void richTextBoSoldLogs_MouseLeave(object sender, EventArgs e)
+    {
+        ItemsViewer_0.UnshowItem();
+    }
+
+    private void comboBoxCollisionArea_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        if (CanReloadCollision) PathFinding_0.DebugMapCollision();
     }
 }

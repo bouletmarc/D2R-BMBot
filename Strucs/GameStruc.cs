@@ -599,7 +599,7 @@ public class GameStruc
 
                 if (Form1_0.AreaScript_0.IsThisTZAreaInSameAct(CurrentTZAct, ((Area)tzArea)))
                 {
-                    //Console.WriteLine("Added TZ: " + ((Area)tzArea));
+                    Console.WriteLine("Added TZ: " + ((Area)tzArea));
                     areas.Add((Area)tzArea);
                 }
             }

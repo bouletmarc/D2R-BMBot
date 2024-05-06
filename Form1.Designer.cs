@@ -43,6 +43,8 @@ partial class Form1
             this.richTextBoxErrorLogs = new System.Windows.Forms.RichTextBox();
             this.tabPage9 = new System.Windows.Forms.TabPage();
             this.richTextBoxGamesLogs = new System.Windows.Forms.RichTextBox();
+            this.tabPage10 = new System.Windows.Forms.TabPage();
+            this.richTextBoSoldLogs = new System.Windows.Forms.RichTextBox();
             this.button2 = new System.Windows.Forms.Button();
             this.tabControl2 = new System.Windows.Forms.TabControl();
             this.tabPage3 = new System.Windows.Forms.TabPage();
@@ -77,14 +79,15 @@ partial class Form1
             this.button4 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
-            this.tabPage10 = new System.Windows.Forms.TabPage();
-            this.richTextBoSoldLogs = new System.Windows.Forms.RichTextBox();
+            this.comboBoxCollisionArea = new System.Windows.Forms.ComboBox();
+            this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tabPage8.SuspendLayout();
             this.tabPage9.SuspendLayout();
+            this.tabPage10.SuspendLayout();
             this.tabControl2.SuspendLayout();
             this.tabPage3.SuspendLayout();
             this.tabPage4.SuspendLayout();
@@ -92,7 +95,6 @@ partial class Form1
             this.tabPage6.SuspendLayout();
             this.tabPage7.SuspendLayout();
             this.statusStrip1.SuspendLayout();
-            this.tabPage10.SuspendLayout();
             this.SuspendLayout();
             // 
             // button1
@@ -241,6 +243,31 @@ partial class Form1
             this.richTextBoxGamesLogs.Size = new System.Drawing.Size(323, 324);
             this.richTextBoxGamesLogs.TabIndex = 8;
             this.richTextBoxGamesLogs.Text = "";
+            // 
+            // tabPage10
+            // 
+            this.tabPage10.Controls.Add(this.richTextBoSoldLogs);
+            this.tabPage10.Location = new System.Drawing.Point(4, 22);
+            this.tabPage10.Name = "tabPage10";
+            this.tabPage10.Size = new System.Drawing.Size(323, 324);
+            this.tabPage10.TabIndex = 4;
+            this.tabPage10.Text = "Sold Logs";
+            this.tabPage10.UseVisualStyleBackColor = true;
+            // 
+            // richTextBoSoldLogs
+            // 
+            this.richTextBoSoldLogs.DetectUrls = false;
+            this.richTextBoSoldLogs.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.richTextBoSoldLogs.Location = new System.Drawing.Point(0, 0);
+            this.richTextBoSoldLogs.Name = "richTextBoSoldLogs";
+            this.richTextBoSoldLogs.ReadOnly = true;
+            this.richTextBoSoldLogs.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedVertical;
+            this.richTextBoSoldLogs.Size = new System.Drawing.Size(323, 324);
+            this.richTextBoSoldLogs.TabIndex = 6;
+            this.richTextBoSoldLogs.Text = "";
+            this.richTextBoSoldLogs.WordWrap = false;
+            this.richTextBoSoldLogs.MouseLeave += new System.EventHandler(this.richTextBoSoldLogs_MouseLeave);
+            this.richTextBoSoldLogs.MouseMove += new System.Windows.Forms.MouseEventHandler(this.richTextBoSoldLogs_MouseMove);
             // 
             // button2
             // 
@@ -419,23 +446,24 @@ partial class Form1
             // 
             // tabPage7
             // 
+            this.tabPage7.BackColor = System.Drawing.Color.LightGray;
+            this.tabPage7.Controls.Add(this.comboBoxCollisionArea);
+            this.tabPage7.Controls.Add(this.label2);
             this.tabPage7.Controls.Add(this.richTextBoxDebugMapCollision);
             this.tabPage7.Location = new System.Drawing.Point(4, 22);
             this.tabPage7.Name = "tabPage7";
             this.tabPage7.Size = new System.Drawing.Size(536, 202);
             this.tabPage7.TabIndex = 4;
             this.tabPage7.Text = "Map Collisions";
-            this.tabPage7.UseVisualStyleBackColor = true;
             // 
             // richTextBoxDebugMapCollision
             // 
             this.richTextBoxDebugMapCollision.DetectUrls = false;
-            this.richTextBoxDebugMapCollision.Dock = System.Windows.Forms.DockStyle.Fill;
             this.richTextBoxDebugMapCollision.Font = new System.Drawing.Font("Courier New", 1.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.richTextBoxDebugMapCollision.Location = new System.Drawing.Point(0, 0);
+            this.richTextBoxDebugMapCollision.Location = new System.Drawing.Point(0, 28);
             this.richTextBoxDebugMapCollision.Name = "richTextBoxDebugMapCollision";
             this.richTextBoxDebugMapCollision.ReadOnly = true;
-            this.richTextBoxDebugMapCollision.Size = new System.Drawing.Size(536, 202);
+            this.richTextBoxDebugMapCollision.Size = new System.Drawing.Size(536, 174);
             this.richTextBoxDebugMapCollision.TabIndex = 21;
             this.richTextBoxDebugMapCollision.Text = "";
             this.richTextBoxDebugMapCollision.WordWrap = false;
@@ -603,27 +631,37 @@ partial class Form1
             // 
             this.folderBrowserDialog1.Description = "Select the folder where D2 LOD 1.13C is located";
             // 
-            // tabPage10
+            // comboBoxCollisionArea
             // 
-            this.tabPage10.Controls.Add(this.richTextBoSoldLogs);
-            this.tabPage10.Location = new System.Drawing.Point(4, 22);
-            this.tabPage10.Name = "tabPage10";
-            this.tabPage10.Size = new System.Drawing.Size(323, 324);
-            this.tabPage10.TabIndex = 4;
-            this.tabPage10.Text = "Sold Logs";
-            this.tabPage10.UseVisualStyleBackColor = true;
+            this.comboBoxCollisionArea.FormattingEnabled = true;
+            this.comboBoxCollisionArea.Items.AddRange(new object[] {
+            "All Items",
+            "On Cursor",
+            "In Inventory",
+            "In Stash",
+            "In Shared Stash1",
+            "In Shared Stash2",
+            "In Shared Stash3",
+            "In Cube",
+            "Equipped",
+            "In Belt",
+            "On Ground",
+            "In Shop",
+            "Others"});
+            this.comboBoxCollisionArea.Location = new System.Drawing.Point(64, 3);
+            this.comboBoxCollisionArea.Name = "comboBoxCollisionArea";
+            this.comboBoxCollisionArea.Size = new System.Drawing.Size(121, 21);
+            this.comboBoxCollisionArea.TabIndex = 24;
+            this.comboBoxCollisionArea.SelectedIndexChanged += new System.EventHandler(this.comboBoxCollisionArea_SelectedIndexChanged);
             // 
-            // richTextBoSoldLogs
+            // label2
             // 
-            this.richTextBoSoldLogs.DetectUrls = false;
-            this.richTextBoSoldLogs.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.richTextBoSoldLogs.Location = new System.Drawing.Point(0, 0);
-            this.richTextBoSoldLogs.Name = "richTextBoSoldLogs";
-            this.richTextBoSoldLogs.ReadOnly = true;
-            this.richTextBoSoldLogs.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedVertical;
-            this.richTextBoSoldLogs.Size = new System.Drawing.Size(323, 324);
-            this.richTextBoSoldLogs.TabIndex = 6;
-            this.richTextBoSoldLogs.Text = "";
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(6, 6);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(32, 13);
+            this.label2.TabIndex = 23;
+            this.label2.Text = "Area:";
             // 
             // Form1
             // 
@@ -655,6 +693,7 @@ partial class Form1
             this.tabPage2.ResumeLayout(false);
             this.tabPage8.ResumeLayout(false);
             this.tabPage9.ResumeLayout(false);
+            this.tabPage10.ResumeLayout(false);
             this.tabControl2.ResumeLayout(false);
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
@@ -664,9 +703,9 @@ partial class Form1
             this.tabPage5.PerformLayout();
             this.tabPage6.ResumeLayout(false);
             this.tabPage7.ResumeLayout(false);
+            this.tabPage7.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
-            this.tabPage10.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -724,5 +763,7 @@ partial class Form1
     private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
     private System.Windows.Forms.TabPage tabPage10;
     private System.Windows.Forms.RichTextBox richTextBoSoldLogs;
+    public System.Windows.Forms.ComboBox comboBoxCollisionArea;
+    private System.Windows.Forms.Label label2;
 }
 

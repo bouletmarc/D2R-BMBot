@@ -236,6 +236,7 @@ public class Shop
                             continue;
                         }
                     }
+                    //Form1_0.ItemsViewer_0.TakeItemPicture();
                     //################
 
                     Dictionary<string, int> itemScreenPos = Form1_0.InventoryStruc_0.ConvertIndexToXY(i);
@@ -253,6 +254,8 @@ public class Shop
                         Form1_0.ItemsStruc_0.GetItems(false);   //get inventory again
 
                         //CTRL+Clic to send item into stash
+                        //Form1_0.KeyMouse_0.MouseMoveTo(itemScreenPos["x"], itemScreenPos["y"]);
+                        //Form1_0.ItemsViewer_0.TakeItemPicture();
                         Form1_0.KeyMouse_0.SendCTRL_CLICK(itemScreenPos["x"], itemScreenPos["y"]);
                         Form1_0.WaitDelay(5);
                         Form1_0.ItemsStruc_0.GetItems(false);   //get inventory again
@@ -269,7 +272,11 @@ public class Shop
                         }
                         else
                         {
-                            if (SoldTxt != "") Form1_0.method_1_SoldItems(SoldTxt, ThisCol);
+                            if (SoldTxt != "")
+                            {
+                                Form1_0.method_1_SoldItems(SoldTxt, ThisCol);
+                                //Form1_0.ItemsViewer_0.AddBufferPicture("Sold");
+                            }
                             break;
                         }
                     }
@@ -592,9 +599,10 @@ public class Shop
         }
 
         //ShopBot
-        if (CharConfig.RunShopBotScript && !Form1_0.ShopBot_0.ScriptDone && Form1_0.ShopBot_0.CurrentStep > 0)
+        /*if (CharConfig.RunShopBotScript && !Form1_0.ShopBot_0.ScriptDone && Form1_0.ShopBot_0.CurrentStep > 0)
         {
             Form1_0.ItemsStruc_0.ShopBotGetPurchaseItems();
-        }
+        }*/
+        Form1_0.ItemsStruc_0.ShopBotGetPurchaseItems();
     }
 }

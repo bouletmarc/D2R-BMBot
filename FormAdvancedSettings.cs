@@ -89,6 +89,9 @@ public partial class FormAdvancedSettings : Form
         dataGridViewAdvanced.Rows[dataGridViewAdvanced.Rows.Count - 1].Cells[0].Value = CharConfig.PublicGameTPRespawnDelay;
         dataGridViewAdvanced.Rows[RowsIndex++].HeaderCell.Value = "Public Game TP Respawn Delay (ms*10)";
         dataGridViewAdvanced.Rows.Add();
+        dataGridViewAdvanced.Rows[dataGridViewAdvanced.Rows.Count - 1].Cells[0].Value = CharConfig.TPRespawnDelay;
+        dataGridViewAdvanced.Rows[RowsIndex++].HeaderCell.Value = "TP Respawn Delay (ms*10)";
+        dataGridViewAdvanced.Rows.Add();
         dataGridViewAdvanced.Rows[dataGridViewAdvanced.Rows.Count - 1].Cells[0].Value = CharConfig.PlayerMaxHPCheckDelay;
         dataGridViewAdvanced.Rows[RowsIndex++].HeaderCell.Value = "Player MaxHP Check Delay (ms)";
         dataGridViewAdvanced.Rows.Add();
@@ -129,6 +132,7 @@ public partial class FormAdvancedSettings : Form
         CharConfig.RecastBODelay = int.Parse(dataGridViewAdvanced.Rows[RowsIndex++].Cells[0].Value.ToString());
         CharConfig.TownSwitchAreaDelay = int.Parse(dataGridViewAdvanced.Rows[RowsIndex++].Cells[0].Value.ToString());
         CharConfig.PublicGameTPRespawnDelay = int.Parse(dataGridViewAdvanced.Rows[RowsIndex++].Cells[0].Value.ToString());
+        CharConfig.TPRespawnDelay = int.Parse(dataGridViewAdvanced.Rows[RowsIndex++].Cells[0].Value.ToString());
         CharConfig.PlayerMaxHPCheckDelay = int.Parse(dataGridViewAdvanced.Rows[RowsIndex++].Cells[0].Value.ToString());
         CharConfig.LeechEnterTPDelay = int.Parse(dataGridViewAdvanced.Rows[RowsIndex++].Cells[0].Value.ToString());
         CharConfig.MephistoRedPortalEnterDelay = int.Parse(dataGridViewAdvanced.Rows[RowsIndex++].Cells[0].Value.ToString());

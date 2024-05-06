@@ -820,7 +820,7 @@ public class ItemsStruc
                         {
                             if (itemx == PositionX && itemy == PositionY)
                             {
-                                Console.WriteLine(Form1_0.ItemsStruc_0.ItemNAAME);
+                                //Console.WriteLine(Form1_0.ItemsStruc_0.ItemNAAME);
                                 return true;
                             }
                         }

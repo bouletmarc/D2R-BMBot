@@ -339,7 +339,7 @@ public class BaalLeech
                 }
 
                 //detect last wave
-                if (Form1_0.MobsStruc_0.GetMobs("getSuperUniqueName", "Baal Subject 4", false, 99, IgnoredMobs))
+                /*if (Form1_0.MobsStruc_0.GetMobs("getSuperUniqueName", "Baal Subject 4", false, 99, IgnoredMobs))
                 {
                     if (Form1_0.MobsStruc_0.MobsHP > 0)
                     {
@@ -347,7 +347,7 @@ public class BaalLeech
                         LastWave4Pointer = Form1_0.MobsStruc_0.MobsPointerLocation;
                         CurrentStep++;
                     }
-                }
+                }*/
                 if (Form1_0.MobsStruc_0.GetMobs("getSuperUniqueName", "Baal Subject 5", false, 99, IgnoredMobs))
                 {
                     if (Form1_0.MobsStruc_0.MobsHP > 0)

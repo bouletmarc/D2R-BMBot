@@ -15,8 +15,12 @@ public class TerrorZones
     public bool ScriptDone = false;
 
     public List<Area> TerrorZonesAreas = new List<Area>();
-
     public int CurrentTerrorZonesIndex = 0;
+
+    public List<int> IgnoredChestList = new List<int>();
+    public bool HasTakenAnyChest = false;
+
+    public bool DoneChestsStep = false;
 
 
     public void SetForm1(Form1 form1_1)
@@ -30,6 +34,9 @@ public class TerrorZones
         ScriptDone = false;
         TerrorZonesAreas = new List<Area>();
         CurrentTerrorZonesIndex = 0;
+        IgnoredChestList = new List<int>();
+        HasTakenAnyChest = false;
+        DoneChestsStep = false;
     }
 
     public void RunScript()
@@ -54,6 +61,7 @@ public class TerrorZones
         {
             Form1_0.SetGameStatus("GO TO WP");
             CurrentStep = 0;
+            DoneChestsStep = false;
 
             //Console.WriteLine(TerrorZonesAreas[CurrentTerrorZonesIndex]);
 
@@ -278,6 +286,7 @@ public class TerrorZones
                 Form1_0.PathFinding_0.MoveToExit(Enums.Area.FlayerDungeonLevel3);
             }
             else if (TerrorZonesAreas[CurrentTerrorZonesIndex] == Area.FlayerJungle) Form1_0.Town_0.GoToWPArea(3, 5);
+            else if (TerrorZonesAreas[CurrentTerrorZonesIndex] == Area.KurastBazaar) Form1_0.Town_0.GoToWPArea(3, 5);
             else if (TerrorZonesAreas[CurrentTerrorZonesIndex] == Area.RuinedTemple)
             {
                 Form1_0.Town_0.GoToWPArea(3, 5);
@@ -358,6 +367,11 @@ public class TerrorZones
 
             if (CurrentStep == 1)
             {
+                if (!DoneChestsStep)
+                {
+                    TakeChest((int) Form1_0.PlayerScan_0.levelNo);
+                    DoneChestsStep = true;
+                }
                 if ((Enums.Area)Form1_0.Battle_0.AreaIDFullyCleared != TerrorZonesAreas[CurrentTerrorZonesIndex])
                 {
                     Form1_0.Battle_0.ClearFullAreaOfMobs();
@@ -373,7 +387,10 @@ public class TerrorZones
                         }
                         else
                         {
-                            Form1_0.PathFinding_0.MoveToExit(TerrorZonesAreas[CurrentTerrorZonesIndex], 4, true);
+                            CurrentStep = 0;
+                            Form1_0.Town_0.FastTowning = false;
+                            Form1_0.Town_0.GoToTown();
+                            //Form1_0.PathFinding_0.MoveToExit(TerrorZonesAreas[CurrentTerrorZonesIndex], 4, true);
                         }
                     }
                 }
@@ -388,7 +405,10 @@ public class TerrorZones
                     }
                     else
                     {
-                        Form1_0.PathFinding_0.MoveToExit(TerrorZonesAreas[CurrentTerrorZonesIndex], 4, true);
+                        CurrentStep = 0;
+                        Form1_0.Town_0.FastTowning = false;
+                        Form1_0.Town_0.GoToTown();
+                        //Form1_0.PathFinding_0.MoveToExit(TerrorZonesAreas[CurrentTerrorZonesIndex], 4, true);
                     }
                 }
             }
@@ -397,7 +417,62 @@ public class TerrorZones
     }
 
 
+    public void TakeChest(int ThisAreaa)
+    {
+        //JungleStashObject2
+        //JungleStashObject3
+        //GoodChest
+        //NotSoGoodChest
+        //DeadVillager1
+        //DeadVillager2
+        //NotSoGoodChest
+        //HollowLog
 
+        //JungleMediumChestLeft ####
+
+        MapAreaStruc.Position ThisChestPos = Form1_0.MapAreaStruc_0.GetPositionOfObject("object", "GoodChest", ThisAreaa, IgnoredChestList);
+        int ChestObject = Form1_0.MapAreaStruc_0.CurrentObjectIndex;
+        int Tryy = 0;
+        while (ThisChestPos.X != 0 && ThisChestPos.Y != 0 && Tryy < 30)
+        {
+            if (!Form1_0.Running || !Form1_0.GameStruc_0.IsInGame())
+            {
+                ScriptDone = true;
+                return;
+            }
+
+            if (Form1_0.Mover_0.MoveToLocation(ThisChestPos.X, ThisChestPos.Y))
+            {
+                HasTakenAnyChest = true;
+
+                Position itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, ThisChestPos.X, ThisChestPos.Y);
+
+                Form1_0.KeyMouse_0.MouseClicc_RealPos(itemScreenPos.X, itemScreenPos.Y - 15);
+                Form1_0.WaitDelay(10);
+                Form1_0.KeyMouse_0.MouseClicc_RealPos(itemScreenPos.X, itemScreenPos.Y - 15);
+                Form1_0.WaitDelay(10);
+                Form1_0.KeyMouse_0.MouseClicc_RealPos(itemScreenPos.X, itemScreenPos.Y - 15);
+                Form1_0.WaitDelay(10);
+
+                int tryy2 = 0;
+                while (Form1_0.ItemsStruc_0.GetItems(true) && tryy2 < 20)
+                {
+                    Form1_0.PlayerScan_0.GetPositions();
+                    Form1_0.ItemsStruc_0.GetItems(false);
+                    Form1_0.Potions_0.CheckIfWeUsePotion();
+                    tryy2++;
+                }
+                IgnoredChestList.Add(ChestObject);
+            }
+
+            ThisChestPos = Form1_0.MapAreaStruc_0.GetPositionOfObject("object", "GoodChest", ThisAreaa, IgnoredChestList);
+            ChestObject = Form1_0.MapAreaStruc_0.CurrentObjectIndex;
+
+            Tryy++;
+        }
+
+        if (!HasTakenAnyChest) Form1_0.MapAreaStruc_0.DumpMap();
+    }
 
 
 
@@ -469,4 +544,4 @@ public class TerrorZones
 
         return new List<List<Area>>();
     }*/
-        }
+}

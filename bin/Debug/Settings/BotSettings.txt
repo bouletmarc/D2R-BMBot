@@ -134,6 +134,7 @@ ChaosWaitingSealBossDelay=2
 RecastBODelay=180
 TownSwitchAreaDelay=2
 PublicGameTPRespawnDelay=180
+TPRespawnDelay=20
 PlayerMaxHPCheckDelay=2000
 LeechEnterTPDelay=600
 MephistoRedPortalEnterDelay=800

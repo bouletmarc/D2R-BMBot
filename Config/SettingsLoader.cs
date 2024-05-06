@@ -417,6 +417,7 @@ public class SettingsLoader
                 if (Splitted[0] == "RecastBODelay") AllLines[i] = "RecastBODelay=" + CharConfig.RecastBODelay;
                 if (Splitted[0] == "TownSwitchAreaDelay") AllLines[i] = "TownSwitchAreaDelay=" + CharConfig.TownSwitchAreaDelay;
                 if (Splitted[0] == "PublicGameTPRespawnDelay") AllLines[i] = "PublicGameTPRespawnDelay=" + CharConfig.PublicGameTPRespawnDelay;
+                if (Splitted[0] == "TPRespawnDelay") AllLines[i] = "TPRespawnDelay=" + CharConfig.TPRespawnDelay;
                 if (Splitted[0] == "PlayerMaxHPCheckDelay") AllLines[i] = "PlayerMaxHPCheckDelay=" + CharConfig.PlayerMaxHPCheckDelay;
                 if (Splitted[0] == "LeechEnterTPDelay") AllLines[i] = "LeechEnterTPDelay=" + CharConfig.LeechEnterTPDelay;
                 if (Splitted[0] == "MephistoRedPortalEnterDelay") AllLines[i] = "MephistoRedPortalEnterDelay=" + CharConfig.MephistoRedPortalEnterDelay;
@@ -1485,6 +1486,7 @@ public class SettingsLoader
                             if (Params[0].Contains("RecastBODelay")) CharConfig.RecastBODelay = int.Parse(Params[1]);
                             if (Params[0].Contains("TownSwitchAreaDelay")) CharConfig.TownSwitchAreaDelay = int.Parse(Params[1]);
                             if (Params[0].Contains("PublicGameTPRespawnDelay")) CharConfig.PublicGameTPRespawnDelay = int.Parse(Params[1]);
+                            if (Params[0].Contains("TPRespawnDelay")) CharConfig.TPRespawnDelay = int.Parse(Params[1]);
                             if (Params[0].Contains("PlayerMaxHPCheckDelay")) CharConfig.PlayerMaxHPCheckDelay = int.Parse(Params[1]);
                             if (Params[0].Contains("LeechEnterTPDelay")) CharConfig.LeechEnterTPDelay = int.Parse(Params[1]);
                             if (Params[0].Contains("MephistoRedPortalEnterDelay")) CharConfig.MephistoRedPortalEnterDelay = int.Parse(Params[1]);

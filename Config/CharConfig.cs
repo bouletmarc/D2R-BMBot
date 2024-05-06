@@ -192,6 +192,7 @@ public static class CharConfig
     public static int RecastBODelay = 180;
     public static int TownSwitchAreaDelay = 2;
     public static int PublicGameTPRespawnDelay = 180;
+    public static int TPRespawnDelay = 20;
     public static int PlayerMaxHPCheckDelay = 2000;
     public static int LeechEnterTPDelay = 600;
     public static int MephistoRedPortalEnterDelay = 800;

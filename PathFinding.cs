@@ -54,7 +54,7 @@ public class PathFinding
     {
         Form1_0.ClearDebugCollision();
 
-        ThisCollisionGrid = Form1_0.MapAreaStruc_0.CollisionGrid((Enums.Area)Form1_0.PlayerScan_0.levelNo);
+        ThisCollisionGrid = Form1_0.MapAreaStruc_0.CollisionGrid((Enums.Area)Form1_0.comboBoxCollisionArea.SelectedIndex + 1);
         for (int i = 0; i < ThisCollisionGrid.GetLength(1); i++)
         {
             for (int k = 0; k < ThisCollisionGrid.GetLength(0); k++)
@@ -72,8 +72,24 @@ public class PathFinding
         IsMovingToNextArea = true;
         ThisNextAreaID = (int)ThisID;
         ThisPlayerAreaID = (int)Form1_0.PlayerScan_0.levelNo;
-        ThisCollisionGrid = ExpandGrid(ThisID);
+        //ThisCollisionGrid = ExpandGrid(ThisID);
+        ThisCollisionGrid = MergeCollisionGrids(ThisID);
         CheckingForCloseToTargetPos = true;
+
+        //dump data to txt file
+        /*string ColisionMapTxt = "";
+        //ThisCollisionGrid = Form1_0.MapAreaStruc_0.CollisionGrid((Enums.Area)Form1_0.PlayerScan_0.levelNo);
+        for (int i = 0; i < ThisCollisionGrid.GetLength(1); i++)
+        {
+            for (int k = 0; k < ThisCollisionGrid.GetLength(0); k++)
+            {
+                if (ThisCollisionGrid[k, i]) ColisionMapTxt += "-";
+                if (!ThisCollisionGrid[k, i]) ColisionMapTxt += "X";
+            }
+            ColisionMapTxt += Environment.NewLine;
+        }
+        File.Create(Form1_0.ThisEndPath + "CollisionMap.txt").Dispose();
+        File.WriteAllText(Form1_0.ThisEndPath + "CollisionMap.txt", ColisionMapTxt);*/
 
         try
         {
@@ -212,6 +228,10 @@ public class PathFinding
     {
         bool MovedCorrectly = false;
 
+        //Console.WriteLine("player: " + Form1_0.PlayerScan_0.xPos + ", " + Form1_0.PlayerScan_0.yPos);
+        //Console.WriteLine("offset: " + ThisOffsetPosition.X + ", " + ThisOffsetPosition.Y);
+        //Console.WriteLine("final: " + ThisFinalPosition.X + ", " + ThisFinalPosition.Y);
+
         Point startPos = new Point(Form1_0.PlayerScan_0.xPos - ThisOffsetPosition.X, Form1_0.PlayerScan_0.yPos - ThisOffsetPosition.Y);
         Point targetPos = new Point(ThisFinalPosition.X - ThisOffsetPosition.X, ThisFinalPosition.Y - ThisOffsetPosition.Y);
         //Point startPos = new Point(115, 579);
@@ -222,13 +242,6 @@ public class PathFinding
 
         targetPos.X += TargetOffsetInCollisiongrid.X;
         targetPos.Y += TargetOffsetInCollisiongrid.Y;
-
-        /*if (targetPos.X < 0 || targetPos.Y < 0)
-        {
-            Form1_0.method_1("ERROR Target pos: " + targetPos.X + ", " + targetPos.Y, Color.Red);
-            ThisFinalPosition = new Position { X = ThisFinalPosition.X + ThisOffsetPosition.X, Y = ThisFinalPosition.Y + ThisOffsetPosition.Y };
-            targetPos = new Point(ThisFinalPosition.X - ThisOffsetPosition.X, ThisFinalPosition.Y - ThisOffsetPosition.Y);
-        }*/
 
         //no need to move we are close already!
         if (CheckingForCloseToTargetPos)
@@ -258,20 +271,6 @@ public class PathFinding
         path = FindPath(startPos, targetPos);
         if (path == null)
         {
-            //dump data to txt file
-            /*string ColisionMapTxt = "";
-            for (int i = 0; i < ThisCollisionGrid.GetLength(1); i++)
-            {
-                for (int k = 0; k < ThisCollisionGrid.GetLength(0); k++)
-                {
-                    if (ThisCollisionGrid[k, i]) ColisionMapTxt += "-";
-                    if (!ThisCollisionGrid[k, i]) ColisionMapTxt += "X";
-                }
-                ColisionMapTxt += Environment.NewLine;
-            }
-            File.Create(Form1_0.ThisEndPath + "CollisionMap.txt").Dispose();
-            File.WriteAllText(Form1_0.ThisEndPath + "CollisionMap.txt", ColisionMapTxt);*/
-
             Form1_0.method_1("No path found.", Color.Red);
             //Form1_0.MapAreaStruc_0.DumpMap();
             Form1_0.GoToNextScript();
@@ -460,244 +459,131 @@ public class PathFinding
         }
     }
 
-    public bool[,] ExpandGrid(Enums.Area ThisNewArea)
+    public bool[,] MergeCollisionGrids(Enums.Area ThisNewArea)
     {
         bool[,] CurrentAreaGrid = Form1_0.MapAreaStruc_0.CollisionGrid((Enums.Area)Form1_0.PlayerScan_0.levelNo);
         bool[,] NextAreaGrid = Form1_0.MapAreaStruc_0.CollisionGrid(ThisNewArea);
-        bool[,] ExpendedGrid = new bool[0, 0];
+        PlayerOffsetInCollisiongrid = new Position { X = 0, Y = 0 };
+        TargetOffsetInCollisiongrid = new Position { X = 0, Y = 0 };
 
-        //Console.WriteLine("CurrentArea: " + CurrentAreaGrid.GetLength(0) + ", " + CurrentAreaGrid.GetLength(1));
-        //Console.WriteLine("NextArea: " + NextAreaGrid.GetLength(0) + ", " + NextAreaGrid.GetLength(1));
+        // Calculate the size of the merged grid
+        int minX = Math.Min(Form1_0.MapAreaStruc_0.AllMapData[ThisPlayerAreaID - 1].Offset.X, Form1_0.MapAreaStruc_0.AllMapData[(int)ThisNewArea - 1].Offset.X);
+        int minY = Math.Min(Form1_0.MapAreaStruc_0.AllMapData[ThisPlayerAreaID - 1].Offset.Y, Form1_0.MapAreaStruc_0.AllMapData[(int)ThisNewArea - 1].Offset.Y);
+        int maxX = Math.Max(Form1_0.MapAreaStruc_0.AllMapData[ThisPlayerAreaID - 1].Offset.X + Form1_0.MapAreaStruc_0.AllMapData[ThisPlayerAreaID - 1].Size.Width, Form1_0.MapAreaStruc_0.AllMapData[(int)ThisNewArea - 1].Offset.X + Form1_0.MapAreaStruc_0.AllMapData[(int)ThisNewArea - 1].Size.Width);
+        int maxY = Math.Max(Form1_0.MapAreaStruc_0.AllMapData[ThisPlayerAreaID - 1].Offset.Y + Form1_0.MapAreaStruc_0.AllMapData[ThisPlayerAreaID - 1].Size.Height, Form1_0.MapAreaStruc_0.AllMapData[(int)ThisNewArea - 1].Offset.Y + Form1_0.MapAreaStruc_0.AllMapData[(int)ThisNewArea - 1].Size.Height);
+        int width = maxX - minX;
+        int height = maxY - minY;
+
+        // Create the merged grid
+        bool[,] mergedGrid = new bool[width, height];
+
+        // Copy collision data from map1 to the merged grid
+        for (int y = 0; y < Form1_0.MapAreaStruc_0.AllMapData[ThisPlayerAreaID - 1].Size.Height; y++)
+        {
+            for (int x = 0; x < Form1_0.MapAreaStruc_0.AllMapData[ThisPlayerAreaID - 1].Size.Width; x++)
+            {
+                mergedGrid[x - minX + Form1_0.MapAreaStruc_0.AllMapData[ThisPlayerAreaID - 1].Offset.X, y - minY + Form1_0.MapAreaStruc_0.AllMapData[ThisPlayerAreaID - 1].Offset.Y] = CurrentAreaGrid[x, y];
+            }
+        }
+
+        // Copy collision data from map2 to the merged grid
+        for (int y = 0; y < Form1_0.MapAreaStruc_0.AllMapData[(int)ThisNewArea - 1].Size.Height; y++)
+        {
+            for (int x = 0; x < Form1_0.MapAreaStruc_0.AllMapData[(int)ThisNewArea - 1].Size.Width; x++)
+            {
+                mergedGrid[x - minX + Form1_0.MapAreaStruc_0.AllMapData[(int)ThisNewArea - 1].Offset.X, y - minY + Form1_0.MapAreaStruc_0.AllMapData[(int)ThisNewArea - 1].Offset.Y] = NextAreaGrid[x, y];
+            }
+        }
+
+        SetOffsets(ThisNewArea);
+
+        return mergedGrid;
+    }
+
+    public void SetOffsets(Enums.Area ThisNewArea)
+    {
+        /*Point startPos = new Point(Form1_0.PlayerScan_0.xPos - ThisOffsetPosition.X, Form1_0.PlayerScan_0.yPos - ThisOffsetPosition.Y);
+        Point targetPos = new Point(ThisFinalPosition.X - ThisOffsetPosition.X, ThisFinalPosition.Y - ThisOffsetPosition.Y);
+
+        startPos.X += PlayerOffsetInCollisiongrid.X;
+        startPos.Y += PlayerOffsetInCollisiongrid.Y;
+        targetPos.X += TargetOffsetInCollisiongrid.X;
+        targetPos.Y += TargetOffsetInCollisiongrid.Y;*/
+
         PlayerOffsetInCollisiongrid = new Position { X = 0, Y = 0 };
         TargetOffsetInCollisiongrid = new Position { X = 0, Y = 0 };
 
         if (Form1_0.MapAreaStruc_0.AllMapData[(int)ThisNewArea - 1].Offset.Y == Form1_0.MapAreaStruc_0.AllMapData[ThisPlayerAreaID - 1].Offset.Y + Form1_0.MapAreaStruc_0.AllMapData[ThisPlayerAreaID - 1].Size.Height)
         {
             //Expend Bottom
-            int NewSizeX = 0;
-            int NewOffsetXUp = 0;
-            int NewOffsetXBottom = 0;
-            if (Form1_0.MapAreaStruc_0.AllMapData[(int)ThisNewArea - 1].Size.Width > Form1_0.MapAreaStruc_0.AllMapData[ThisPlayerAreaID - 1].Size.Width) NewSizeX = Form1_0.MapAreaStruc_0.AllMapData[(int)ThisNewArea - 1].Size.Width;
-            else if (Form1_0.MapAreaStruc_0.AllMapData[ThisPlayerAreaID - 1].Size.Width >= Form1_0.MapAreaStruc_0.AllMapData[(int)ThisNewArea - 1].Size.Width) NewSizeX = Form1_0.MapAreaStruc_0.AllMapData[ThisPlayerAreaID - 1].Size.Width;
             //#####
-            if (Form1_0.MapAreaStruc_0.AllMapData[ThisPlayerAreaID - 1].Offset.X > Form1_0.MapAreaStruc_0.AllMapData[(int)ThisNewArea - 1].Offset.X)
+            /*if (Form1_0.MapAreaStruc_0.AllMapData[ThisPlayerAreaID - 1].Offset.X > Form1_0.MapAreaStruc_0.AllMapData[(int)ThisNewArea - 1].Offset.X)
             {
-                NewOffsetXUp = 0;
-                NewOffsetXBottom = Form1_0.MapAreaStruc_0.AllMapData[ThisPlayerAreaID - 1].Offset.X - Form1_0.MapAreaStruc_0.AllMapData[(int)ThisNewArea - 1].Offset.X;
-                NewSizeX += NewOffsetXBottom;
-                PlayerOffsetInCollisiongrid.X = NewOffsetXBottom;
-                TargetOffsetInCollisiongrid.X = NewOffsetXBottom;
+                PlayerOffsetInCollisiongrid.X = Form1_0.MapAreaStruc_0.AllMapData[ThisPlayerAreaID - 1].Offset.X - Form1_0.MapAreaStruc_0.AllMapData[(int)ThisNewArea - 1].Offset.X;
+                TargetOffsetInCollisiongrid.X = Form1_0.MapAreaStruc_0.AllMapData[ThisPlayerAreaID - 1].Offset.X - Form1_0.MapAreaStruc_0.AllMapData[(int)ThisNewArea - 1].Offset.X;
 
             }
             if (Form1_0.MapAreaStruc_0.AllMapData[ThisPlayerAreaID - 1].Offset.X < Form1_0.MapAreaStruc_0.AllMapData[(int)ThisNewArea - 1].Offset.X)
             {
-                NewOffsetXUp = Form1_0.MapAreaStruc_0.AllMapData[(int)ThisNewArea - 1].Offset.X - Form1_0.MapAreaStruc_0.AllMapData[ThisPlayerAreaID - 1].Offset.X;
-                NewOffsetXBottom = 0;
-                NewSizeX += NewOffsetXUp;
-                PlayerOffsetInCollisiongrid.X = NewOffsetXUp;
-                TargetOffsetInCollisiongrid.X = NewOffsetXUp;
-            }
+                PlayerOffsetInCollisiongrid.X = Form1_0.MapAreaStruc_0.AllMapData[(int)ThisNewArea - 1].Offset.X - Form1_0.MapAreaStruc_0.AllMapData[ThisPlayerAreaID - 1].Offset.X;
+                TargetOffsetInCollisiongrid.X = Form1_0.MapAreaStruc_0.AllMapData[(int)ThisNewArea - 1].Offset.X - Form1_0.MapAreaStruc_0.AllMapData[ThisPlayerAreaID - 1].Offset.X;
+            }*/
             //#####
-
-            int NewSizeY = Form1_0.MapAreaStruc_0.AllMapData[(int)ThisNewArea - 1].Size.Height + Form1_0.MapAreaStruc_0.AllMapData[ThisPlayerAreaID - 1].Size.Height;
-
-            ExpendedGrid = new bool[NewSizeX, NewSizeY];
-            //Console.WriteLine("ExpendedSize: " + NewSizeX + ", " + NewSizeY);
-
-            //Merge Both CollisionGrid into one
-            for (int i = 0; i < CurrentAreaGrid.GetLength(0); i++)
-            {
-                for (int k = 0; k < CurrentAreaGrid.GetLength(1); k++)
-                {
-                    ExpendedGrid[i + NewOffsetXUp, k] = CurrentAreaGrid[i, k];
-                }
-            }
-
-            for (int i = 0; i < NextAreaGrid.GetLength(0); i++)
-            {
-                for (int k = 0; k < NextAreaGrid.GetLength(1); k++)
-                {
-                    ExpendedGrid[i + NewOffsetXBottom, k + Form1_0.MapAreaStruc_0.AllMapData[ThisPlayerAreaID - 1].Size.Height] = NextAreaGrid[i, k];
-                }
-            }
-
-            //Set New OffsetPosition
             ThisOffsetPosition = new Position { X = Form1_0.MapAreaStruc_0.AllMapData[ThisPlayerAreaID - 1].Offset.X, Y = Form1_0.MapAreaStruc_0.AllMapData[ThisPlayerAreaID - 1].Offset.Y };
         }
         if (Form1_0.MapAreaStruc_0.AllMapData[(int)ThisNewArea - 1].Offset.Y == Form1_0.MapAreaStruc_0.AllMapData[ThisPlayerAreaID - 1].Offset.Y - Form1_0.MapAreaStruc_0.AllMapData[(int)ThisNewArea - 1].Size.Height)
         {
             //Expend Up
-            int NewSizeX = 0;
-            int NewOffsetXUp = 0;
-            int NewOffsetXBottom = 0;
-            if (Form1_0.MapAreaStruc_0.AllMapData[(int)ThisNewArea - 1].Size.Width > Form1_0.MapAreaStruc_0.AllMapData[ThisPlayerAreaID - 1].Size.Width) NewSizeX = Form1_0.MapAreaStruc_0.AllMapData[(int)ThisNewArea - 1].Size.Width;
-            else if (Form1_0.MapAreaStruc_0.AllMapData[ThisPlayerAreaID - 1].Size.Width >= Form1_0.MapAreaStruc_0.AllMapData[(int)ThisNewArea - 1].Size.Width) NewSizeX = Form1_0.MapAreaStruc_0.AllMapData[ThisPlayerAreaID - 1].Size.Width;
             //#####
-            if (Form1_0.MapAreaStruc_0.AllMapData[ThisPlayerAreaID - 1].Offset.X > Form1_0.MapAreaStruc_0.AllMapData[(int)ThisNewArea - 1].Offset.X)
+            /*if (Form1_0.MapAreaStruc_0.AllMapData[ThisPlayerAreaID - 1].Offset.X > Form1_0.MapAreaStruc_0.AllMapData[(int)ThisNewArea - 1].Offset.X)
             {
-                NewOffsetXUp = 0;
-                NewOffsetXBottom = Form1_0.MapAreaStruc_0.AllMapData[ThisPlayerAreaID - 1].Offset.X - Form1_0.MapAreaStruc_0.AllMapData[(int)ThisNewArea - 1].Offset.X;
-                NewSizeX += NewOffsetXBottom;
-                PlayerOffsetInCollisiongrid.X = NewOffsetXBottom;
-                TargetOffsetInCollisiongrid.X = NewOffsetXBottom;
+                PlayerOffsetInCollisiongrid.X = Form1_0.MapAreaStruc_0.AllMapData[ThisPlayerAreaID - 1].Offset.X - Form1_0.MapAreaStruc_0.AllMapData[(int)ThisNewArea - 1].Offset.X;
+                TargetOffsetInCollisiongrid.X = Form1_0.MapAreaStruc_0.AllMapData[ThisPlayerAreaID - 1].Offset.X - Form1_0.MapAreaStruc_0.AllMapData[(int)ThisNewArea - 1].Offset.X;
             }
             if (Form1_0.MapAreaStruc_0.AllMapData[ThisPlayerAreaID - 1].Offset.X < Form1_0.MapAreaStruc_0.AllMapData[(int)ThisNewArea - 1].Offset.X)
             {
-                NewOffsetXUp = Form1_0.MapAreaStruc_0.AllMapData[(int)ThisNewArea - 1].Offset.X - Form1_0.MapAreaStruc_0.AllMapData[ThisPlayerAreaID - 1].Offset.X;
-                NewOffsetXBottom = 0;
-                NewSizeX += NewOffsetXUp;
-                PlayerOffsetInCollisiongrid.X = NewOffsetXUp;
-                TargetOffsetInCollisiongrid.X = NewOffsetXUp;
-            }
+                PlayerOffsetInCollisiongrid.X = Form1_0.MapAreaStruc_0.AllMapData[(int)ThisNewArea - 1].Offset.X - Form1_0.MapAreaStruc_0.AllMapData[ThisPlayerAreaID - 1].Offset.X;
+                TargetOffsetInCollisiongrid.X = Form1_0.MapAreaStruc_0.AllMapData[(int)ThisNewArea - 1].Offset.X - Form1_0.MapAreaStruc_0.AllMapData[ThisPlayerAreaID - 1].Offset.X;
+            }*/
             //#####
-
-            int NewSizeY = Form1_0.MapAreaStruc_0.AllMapData[(int)ThisNewArea - 1].Size.Height + Form1_0.MapAreaStruc_0.AllMapData[ThisPlayerAreaID - 1].Size.Height;
-
-            ExpendedGrid = new bool[NewSizeX, NewSizeY];
-            //Console.WriteLine("ExpendedSize: " + NewSizeX + ", " + NewSizeY);
-
-            //Merge Both CollisionGrid into one
-            for (int i = 0; i < CurrentAreaGrid.GetLength(0); i++)
-            {
-                for (int k = 0; k < CurrentAreaGrid.GetLength(1); k++)
-                {
-                    ExpendedGrid[i + NewOffsetXBottom, k + Form1_0.MapAreaStruc_0.AllMapData[(int)ThisNewArea - 1].Size.Height] = CurrentAreaGrid[i, k];
-                }
-            }
-
-            for (int i = 0; i < NextAreaGrid.GetLength(0); i++)
-            {
-                for (int k = 0; k < NextAreaGrid.GetLength(1); k++)
-                {
-                    ExpendedGrid[i + NewOffsetXUp, k] = NextAreaGrid[i, k];
-                }
-            }
-
-            //Set New OffsetPosition
             ThisOffsetPosition = new Position { X = Form1_0.MapAreaStruc_0.AllMapData[(int)ThisNewArea - 1].Offset.X, Y = Form1_0.MapAreaStruc_0.AllMapData[(int)ThisNewArea - 1].Offset.Y };
         }
         if (Form1_0.MapAreaStruc_0.AllMapData[(int)ThisNewArea - 1].Offset.X == Form1_0.MapAreaStruc_0.AllMapData[ThisPlayerAreaID - 1].Offset.X + Form1_0.MapAreaStruc_0.AllMapData[ThisPlayerAreaID - 1].Size.Width)
         {
             //Expend Right
-            int NewSizeX = Form1_0.MapAreaStruc_0.AllMapData[(int)ThisNewArea - 1].Size.Width + Form1_0.MapAreaStruc_0.AllMapData[ThisPlayerAreaID - 1].Size.Width;
-
-            int NewSizeY = 0;
-            int NewOffsetYLeft = 0;
-            int NewOffsetYRight = 0;
-            if (Form1_0.MapAreaStruc_0.AllMapData[(int)ThisNewArea - 1].Size.Height > Form1_0.MapAreaStruc_0.AllMapData[ThisPlayerAreaID - 1].Size.Height) NewSizeY = Form1_0.MapAreaStruc_0.AllMapData[(int)ThisNewArea - 1].Size.Height;
-            else if (Form1_0.MapAreaStruc_0.AllMapData[ThisPlayerAreaID - 1].Size.Height >= Form1_0.MapAreaStruc_0.AllMapData[(int)ThisNewArea - 1].Size.Height) NewSizeY = Form1_0.MapAreaStruc_0.AllMapData[ThisPlayerAreaID - 1].Size.Height;
             //#####
-            if (Form1_0.MapAreaStruc_0.AllMapData[ThisPlayerAreaID - 1].Offset.Y > Form1_0.MapAreaStruc_0.AllMapData[(int)ThisNewArea - 1].Offset.Y)
+            /*if (Form1_0.MapAreaStruc_0.AllMapData[ThisPlayerAreaID - 1].Offset.Y > Form1_0.MapAreaStruc_0.AllMapData[(int)ThisNewArea - 1].Offset.Y)
             {
-                NewOffsetYLeft = 0;
-                NewOffsetYRight = Form1_0.MapAreaStruc_0.AllMapData[ThisPlayerAreaID - 1].Offset.Y - Form1_0.MapAreaStruc_0.AllMapData[(int)ThisNewArea - 1].Offset.Y;
-                NewSizeY += NewOffsetYRight;
-                PlayerOffsetInCollisiongrid.Y = NewOffsetYRight;
-                TargetOffsetInCollisiongrid.Y = NewOffsetYRight;
+                PlayerOffsetInCollisiongrid.Y = Form1_0.MapAreaStruc_0.AllMapData[ThisPlayerAreaID - 1].Offset.Y - Form1_0.MapAreaStruc_0.AllMapData[(int)ThisNewArea - 1].Offset.Y;
+                //TargetOffsetInCollisiongrid.Y = Form1_0.MapAreaStruc_0.AllMapData[ThisPlayerAreaID - 1].Offset.Y - Form1_0.MapAreaStruc_0.AllMapData[(int)ThisNewArea - 1].Offset.Y;
 
             }
             if (Form1_0.MapAreaStruc_0.AllMapData[ThisPlayerAreaID - 1].Offset.Y < Form1_0.MapAreaStruc_0.AllMapData[(int)ThisNewArea - 1].Offset.Y)
             {
-                NewOffsetYLeft = Form1_0.MapAreaStruc_0.AllMapData[(int)ThisNewArea - 1].Offset.Y - Form1_0.MapAreaStruc_0.AllMapData[ThisPlayerAreaID - 1].Offset.Y;
-                NewOffsetYRight = 0;
-                NewSizeY += NewOffsetYLeft;
-                PlayerOffsetInCollisiongrid.Y = NewOffsetYLeft;
-                TargetOffsetInCollisiongrid.Y = NewOffsetYLeft;
-            }
+                //PlayerOffsetInCollisiongrid.Y = Form1_0.MapAreaStruc_0.AllMapData[(int)ThisNewArea - 1].Offset.Y - Form1_0.MapAreaStruc_0.AllMapData[ThisPlayerAreaID - 1].Offset.Y;
+                TargetOffsetInCollisiongrid.Y = Form1_0.MapAreaStruc_0.AllMapData[(int)ThisNewArea - 1].Offset.Y - Form1_0.MapAreaStruc_0.AllMapData[ThisPlayerAreaID - 1].Offset.Y;
+            }*/
             //#####
-
-            ExpendedGrid = new bool[NewSizeX, NewSizeY];
-            //Console.WriteLine("ExpendedSize: " + NewSizeX + ", " + NewSizeY);
-
-            //Merge Both CollisionGrid into one
-            for (int i = 0; i < CurrentAreaGrid.GetLength(0); i++)
-            {
-                for (int k = 0; k < CurrentAreaGrid.GetLength(1); k++)
-                {
-                    ExpendedGrid[i, k + NewOffsetYLeft] = CurrentAreaGrid[i, k];
-                }
-            }
-
-            for (int i = 0; i < NextAreaGrid.GetLength(0); i++)
-            {
-                for (int k = 0; k < NextAreaGrid.GetLength(1); k++)
-                {
-                    ExpendedGrid[i + Form1_0.MapAreaStruc_0.AllMapData[ThisPlayerAreaID - 1].Size.Width, k + NewOffsetYRight] = NextAreaGrid[i, k];
-                }
-            }
-
-            //Set New OffsetPosition
             ThisOffsetPosition = new Position { X = Form1_0.MapAreaStruc_0.AllMapData[ThisPlayerAreaID - 1].Offset.X, Y = Form1_0.MapAreaStruc_0.AllMapData[ThisPlayerAreaID - 1].Offset.Y };
         }
         if (Form1_0.MapAreaStruc_0.AllMapData[(int)ThisNewArea - 1].Offset.X == Form1_0.MapAreaStruc_0.AllMapData[ThisPlayerAreaID - 1].Offset.X - Form1_0.MapAreaStruc_0.AllMapData[(int)ThisNewArea - 1].Size.Width)
         {
             //Expend Left
-            int NewSizeX = Form1_0.MapAreaStruc_0.AllMapData[(int)ThisNewArea - 1].Size.Width + Form1_0.MapAreaStruc_0.AllMapData[ThisPlayerAreaID - 1].Size.Width;
-
-            int NewSizeY = 0;
-            int NewOffsetYLeft = 0;
-            int NewOffsetYRight = 0;
-            if (Form1_0.MapAreaStruc_0.AllMapData[(int)ThisNewArea - 1].Size.Height > Form1_0.MapAreaStruc_0.AllMapData[ThisPlayerAreaID - 1].Size.Height) NewSizeY = Form1_0.MapAreaStruc_0.AllMapData[(int)ThisNewArea - 1].Size.Height;
-            else if (Form1_0.MapAreaStruc_0.AllMapData[ThisPlayerAreaID - 1].Size.Height >= Form1_0.MapAreaStruc_0.AllMapData[(int)ThisNewArea - 1].Size.Height) NewSizeY = Form1_0.MapAreaStruc_0.AllMapData[ThisPlayerAreaID - 1].Size.Height;
             //#####
-            if (Form1_0.MapAreaStruc_0.AllMapData[ThisPlayerAreaID - 1].Offset.Y > Form1_0.MapAreaStruc_0.AllMapData[(int)ThisNewArea - 1].Offset.Y)
+            /*if (Form1_0.MapAreaStruc_0.AllMapData[ThisPlayerAreaID - 1].Offset.Y > Form1_0.MapAreaStruc_0.AllMapData[(int)ThisNewArea - 1].Offset.Y)
             {
-                NewOffsetYLeft = 0;
-                NewOffsetYRight = Form1_0.MapAreaStruc_0.AllMapData[ThisPlayerAreaID - 1].Offset.Y - Form1_0.MapAreaStruc_0.AllMapData[(int)ThisNewArea - 1].Offset.Y;
-                NewSizeY += NewOffsetYRight;
-                PlayerOffsetInCollisiongrid.Y = NewOffsetYRight;
-                TargetOffsetInCollisiongrid.Y = NewOffsetYRight;
+                PlayerOffsetInCollisiongrid.Y = Form1_0.MapAreaStruc_0.AllMapData[ThisPlayerAreaID - 1].Offset.Y - Form1_0.MapAreaStruc_0.AllMapData[(int)ThisNewArea - 1].Offset.Y;
+                //TargetOffsetInCollisiongrid.Y = Form1_0.MapAreaStruc_0.AllMapData[ThisPlayerAreaID - 1].Offset.Y - Form1_0.MapAreaStruc_0.AllMapData[(int)ThisNewArea - 1].Offset.Y;
 
             }
             if (Form1_0.MapAreaStruc_0.AllMapData[ThisPlayerAreaID - 1].Offset.Y < Form1_0.MapAreaStruc_0.AllMapData[(int)ThisNewArea - 1].Offset.Y)
             {
-                NewOffsetYLeft = Form1_0.MapAreaStruc_0.AllMapData[(int)ThisNewArea - 1].Offset.Y - Form1_0.MapAreaStruc_0.AllMapData[ThisPlayerAreaID - 1].Offset.Y;
-                NewOffsetYRight = 0;
-                NewSizeY += NewOffsetYLeft;
-                PlayerOffsetInCollisiongrid.Y = NewOffsetYLeft;
-                TargetOffsetInCollisiongrid.Y = NewOffsetYLeft;
-            }
+                //PlayerOffsetInCollisiongrid.Y = Form1_0.MapAreaStruc_0.AllMapData[(int)ThisNewArea - 1].Offset.Y - Form1_0.MapAreaStruc_0.AllMapData[ThisPlayerAreaID - 1].Offset.Y;
+                TargetOffsetInCollisiongrid.Y = Form1_0.MapAreaStruc_0.AllMapData[(int)ThisNewArea - 1].Offset.Y - Form1_0.MapAreaStruc_0.AllMapData[ThisPlayerAreaID - 1].Offset.Y;
+            }*/
             //#####
-
-            ExpendedGrid = new bool[NewSizeX, NewSizeY];
-            //Console.WriteLine("ExpendedSize: " + NewSizeX + ", " + NewSizeY);
-
-            //Merge Both CollisionGrid into one
-            for (int i = 0; i < CurrentAreaGrid.GetLength(0); i++)
-            {
-                for (int k = 0; k < CurrentAreaGrid.GetLength(1); k++)
-                {
-                    ExpendedGrid[i + Form1_0.MapAreaStruc_0.AllMapData[(int)ThisNewArea - 1].Size.Width, k + NewOffsetYRight] = CurrentAreaGrid[i, k];
-                }
-            }
-
-            for (int i = 0; i < NextAreaGrid.GetLength(0); i++)
-            {
-                for (int k = 0; k < NextAreaGrid.GetLength(1); k++)
-                {
-                    ExpendedGrid[i, k + NewOffsetYLeft] = NextAreaGrid[i, k];
-                }
-            }
-
-            //Set New OffsetPosition
             ThisOffsetPosition = new Position { X = Form1_0.MapAreaStruc_0.AllMapData[(int)ThisNewArea - 1].Offset.X, Y = Form1_0.MapAreaStruc_0.AllMapData[(int)ThisNewArea - 1].Offset.Y };
         }
-
-        //dump data to txt file
-        /*string ColisionMapTxt = "";
-        for (int i = 0; i < ExpendedGrid.GetLength(1); i++)
-        {
-            for (int k = 0; k < ExpendedGrid.GetLength(0); k++)
-            {
-                if (ExpendedGrid[k, i]) ColisionMapTxt += "-";
-                if (!ExpendedGrid[k, i]) ColisionMapTxt += "X";
-            }
-            ColisionMapTxt += Environment.NewLine;
-        }
-        File.Create(Form1_0.ThisEndPath + "CollisionMap.txt").Dispose();
-        File.WriteAllText(Form1_0.ThisEndPath + "CollisionMap.txt", ColisionMapTxt);*/
-
-        return ExpendedGrid;
     }
 
     public List<Point> FindPath(Point startPos, Point targetPos)
@@ -822,34 +708,6 @@ public class PathFinding
     }
 
     public Point TeleportPoint = new Point(0, 0);
-
-    /*private List<Node> GetNeighbors(Node node, int teleportDistance)
-    {
-        List<Node> neighbors = new List<Node>();
-
-        // Assuming a 2D grid, iterate over all nodes and check if they are within the teleport distance
-        foreach (Node otherNode in allNodes)
-        {
-            if (otherNode != node && IsWithinTeleportDistance(node, otherNode, teleportDistance))
-            {
-                neighbors.Add(otherNode);
-            }
-        }
-
-        return neighbors;
-    }
-
-    private bool IsWithinTeleportDistance(Node nodeA, Node nodeB, int teleportDistance)
-    {
-        int distanceX = Math.Abs(nodeA.x - nodeB.x);
-        int distanceY = Math.Abs(nodeA.y - nodeB.y);
-
-        // Calculate the Euclidean distance between the two nodes
-        double distance = Math.Sqrt(distanceX * distanceX + distanceY * distanceY);
-
-        // Return true if the distance is within the teleport distance limit
-        return distance <= teleportDistance;
-    }*/
 
     private bool IsWalkable(Point point)
     {

@@ -80,7 +80,7 @@ public class ArachnidLair
                     return;
                 }
 
-                Form1_0.PathFinding_0.MoveToNextArea(Enums.Area.SpiderCavern);
+                Form1_0.PathFinding_0.MoveToExit(Enums.Area.SpiderCavern);
                 CurrentStep++;
             }
 

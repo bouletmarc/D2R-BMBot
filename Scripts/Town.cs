@@ -226,7 +226,7 @@ public class Town
             else
             {
                 SpawnTP(true);
-                Form1_0.WaitDelay(20);
+                Form1_0.WaitDelay(CharConfig.TPRespawnDelay);
             }
         }
         else

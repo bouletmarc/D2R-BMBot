@@ -765,6 +765,28 @@ public class MapAreaStruc
             cg[265, 716] = false;
         }
 
+        //Burial Ground (Crypt Door)
+        if (area == Enums.Area.BurialGrounds)
+        {
+            Position ThisDoorPosition = Form1_0.MapAreaStruc_0.GetPositionOfObject("exit", Form1_0.Town_0.getAreaName((int)Enums.Area.Crypt), (int) Enums.Area.BurialGrounds, new List<int>() { });
+            if (ThisDoorPosition.X > 0 && ThisDoorPosition.Y > 0)
+            {
+                ThisDoorPosition.X -= Form1_0.MapAreaStruc_0.AllMapData[((int)(Enums.Area.BurialGrounds) - 1)].Offset.X;
+                ThisDoorPosition.Y -= Form1_0.MapAreaStruc_0.AllMapData[((int)(Enums.Area.BurialGrounds) - 1)].Offset.Y;
+                cg[ThisDoorPosition.X, ThisDoorPosition.Y] = true;
+                cg[ThisDoorPosition.X + 1, ThisDoorPosition.Y] = true;
+                cg[ThisDoorPosition.X - 1, ThisDoorPosition.Y] = true;
+
+                cg[ThisDoorPosition.X, ThisDoorPosition.Y - 1] = true;
+                cg[ThisDoorPosition.X + 1, ThisDoorPosition.Y - 1] = true;
+                cg[ThisDoorPosition.X - 1, ThisDoorPosition.Y - 1] = true;
+
+                cg[ThisDoorPosition.X, ThisDoorPosition.Y + 1] = true;
+                cg[ThisDoorPosition.X + 1, ThisDoorPosition.Y + 1] = true;
+                cg[ThisDoorPosition.X - 1, ThisDoorPosition.Y + 1] = true;
+            }
+        }
+
         //dump data to txt file
         /*string ColisionMapTxt = "";
         for (int i = 0; i < cg.GetLength(0); i++)

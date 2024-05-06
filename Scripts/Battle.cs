@@ -510,6 +510,7 @@ public class Battle
                 if (!ClearingFullArea) Form1_0.PathFinding_0.MoveToThisPos(new Position { X = AreaX, Y = AreaY });
                 //Form1_0.Mover_0.MoveToLocation(AreaX, AreaY);
                 ClearingArea = false;
+                Form1_0.KeyMouse_0.ReleaseKey(CharConfig.KeyForceMovement);
                 return;
             }
         }
@@ -580,6 +581,7 @@ public class Battle
                 //if (DoingRoomIndex > AllRooms_InArea.Count - 1) DoingRoomIndex = AllRooms_InArea.Count - 1;
                 if (DoingRoomIndex > AllRooms_InArea.Count - 1)
                 {
+                    Form1_0.KeyMouse_0.ReleaseKey(CharConfig.KeyForceMovement);
                     Form1_0.MobsStruc_0.xPosFinal = 0;
                     Form1_0.MobsStruc_0.yPosFinal = 0;
                     //if (CharConfig.RunBaalScript && !Form1_0.Baal_0.ScriptDone && Form1_0.Baal_0.Wave5Detected) Form1_0.Baal_0.Wave5Cleared = true;
@@ -628,6 +630,7 @@ public class Battle
             }
             else
             {
+                Form1_0.KeyMouse_0.ReleaseKey(CharConfig.KeyForceMovement);
                 Form1_0.MobsStruc_0.xPosFinal = 0;
                 Form1_0.MobsStruc_0.yPosFinal = 0;
                 //if (CharConfig.RunBaalScript && !Form1_0.Baal_0.ScriptDone && Form1_0.Baal_0.Wave5Detected) Form1_0.Baal_0.Wave5Cleared = true;
@@ -683,6 +686,7 @@ public class Battle
             return true;
         }
 
+        Form1_0.KeyMouse_0.ReleaseKey(CharConfig.KeyForceMovement);
         Form1_0.MobsStruc_0.xPosFinal = 0;
         Form1_0.MobsStruc_0.yPosFinal = 0;
         //if (CharConfig.RunBaalScript && !Form1_0.Baal_0.ScriptDone && Form1_0.Baal_0.Wave5Detected) Form1_0.Baal_0.Wave5Cleared = true;
@@ -744,6 +748,7 @@ public class Battle
                 TriedToMoveToMobsCount = 0;
                 DoingBattle = false;
                 FirstAttackCasted = false;
+                Form1_0.KeyMouse_0.ReleaseKey(CharConfig.KeyForceMovement);
             }
         }
         else
@@ -756,6 +761,7 @@ public class Battle
             TriedToMoveToMobsCount = 0;
             DoingBattle = false;
             FirstAttackCasted = false;
+            Form1_0.KeyMouse_0.ReleaseKey(CharConfig.KeyForceMovement);
         }
     }
 
