@@ -40,7 +40,7 @@ using static MapAreaStruc;
 public partial class Form1 : Form
 {
 
-    public string BotVersion = "V3.02";
+    public string BotVersion = "V3.03";
 
     public string D2_LOD_113C_Path = "";
 

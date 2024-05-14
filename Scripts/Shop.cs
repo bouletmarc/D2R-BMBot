@@ -229,7 +229,9 @@ public class Shop
                     Dictionary<string, int> itemXYPos = Form1_0.InventoryStruc_0.ConvertIndexToXY(i);
                     if (Form1_0.ItemsStruc_0.GetSpecificItem(0, Form1_0.InventoryStruc_0.InventoryItemNames[i], itemXYPos["x"], itemXYPos["y"], Form1_0.PlayerScan_0.unitId, 0, true))
                     {
-                        SoldTxt = "Sold Item:" + Form1_0.ItemsStruc_0.ItemNAAME + " (ID:" + Form1_0.ItemsStruc_0.txtFileNo + ")" + Form1_0.ItemsAlert_0.GetItemTypeText() + " && " + Form1_0.ItemsStruc_0.GetQualityTextString() + " && " + Form1_0.ItemsStruc_0.GetAllFlagsFromItem() + " && " + Form1_0.ItemsStruc_0.GetAllValuesFromStats() + Form1_0.ItemsStruc_0.GetItemsStashInfosTxt();
+                        string ItemT = "";// Form1_0.ItemsAlert_0.GetItemTypeText();
+                        if (Form1_0.ItemsAlert_0.GetItemTypeText() != "") ItemT = " && " + Form1_0.ItemsAlert_0.GetItemTypeText();
+                        SoldTxt = "Sold Item:" + Form1_0.ItemsStruc_0.ItemNAAME + " (ID:" + Form1_0.ItemsStruc_0.txtFileNo + ")" + ItemT + " && " + Form1_0.ItemsStruc_0.GetQualityTextString() + " && " + Form1_0.ItemsStruc_0.GetAllFlagsFromItem() + " && " + Form1_0.ItemsStruc_0.GetAllValuesFromStats() + Form1_0.ItemsStruc_0.GetItemsStashInfosTxt();
                         ThisCol = Form1_0.ItemsStruc_0.GetColorFromQuality((int)Form1_0.ItemsStruc_0.itemQuality);
                         if (Form1_0.ItemsAlert_0.ShouldKeepItem())
                         {
@@ -599,10 +601,10 @@ public class Shop
         }
 
         //ShopBot
-        /*if (CharConfig.RunShopBotScript && !Form1_0.ShopBot_0.ScriptDone && Form1_0.ShopBot_0.CurrentStep > 0)
+        if (CharConfig.RunShopBotScript && !Form1_0.ShopBot_0.ScriptDone && Form1_0.ShopBot_0.CurrentStep > 0)
         {
             Form1_0.ItemsStruc_0.ShopBotGetPurchaseItems();
-        }*/
-        Form1_0.ItemsStruc_0.ShopBotGetPurchaseItems();
+        }
+        //Form1_0.ItemsStruc_0.ShopBotGetPurchaseItems();
     }
 }

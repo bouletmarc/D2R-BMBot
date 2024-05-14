@@ -21,27 +21,27 @@ public class ItemsFlags
         bool Checking_identified = false;
         bool Checking_isSocketed = false;
         bool Checking_ethereal = false;
-        if ((0x00000010 & FlagsToCheck) != 0) Checking_identified = true;
+        //if ((0x00000010 & FlagsToCheck) != 0) Checking_identified = true;
         if ((0x00000800 & FlagsToCheck) != 0) Checking_isSocketed = true;
         if ((0x00400000 & FlagsToCheck) != 0) Checking_ethereal = true;
 
         bool item_identified = false;
         bool item_isSocketed = false;
         bool item_ethereal = false;
-        if ((0x00000010 & ItemFlags) != 0) item_identified = true;
+        //if ((0x00000010 & ItemFlags) != 0) item_identified = true;
         if ((0x00000800 & ItemFlags) != 0) item_isSocketed = true;
         if ((0x00400000 & ItemFlags) != 0) item_ethereal = true;
 
         bool SameFlags = true;
         if (ComparatorMethod == "==")
         {
-            if (Checking_identified && !item_identified) SameFlags = false;
+            //if (Checking_identified && !item_identified) SameFlags = false;
             if (Checking_isSocketed && !item_isSocketed) SameFlags = false;
             if (Checking_ethereal && !item_ethereal) SameFlags = false;
         }
         if (ComparatorMethod == "!=")
         {
-            if (Checking_identified && item_identified) SameFlags = false;
+            //if (Checking_identified && item_identified) SameFlags = false;
             if (Checking_isSocketed && item_isSocketed) SameFlags = false;
             if (Checking_ethereal && item_ethereal) SameFlags = false;
         }

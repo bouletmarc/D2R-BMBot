@@ -208,7 +208,7 @@ public class ItemsStruc
         if (Form1_0.ItemsStruc_0.isSocketed)
         {
             if (AllFlags != "") AllFlags += " && ";
-            AllFlags += "[Flag] == sockted";
+            AllFlags += "[Flag] == socketed";
         }
         if (Form1_0.ItemsStruc_0.ethereal)
         {
@@ -712,14 +712,15 @@ public class ItemsStruc
                                     //##############################################
                                     //##############################################
 
-                                    Form1_0.BeltStruc_0.ItemIsPotion();
+                                    Form1_0.BeltStruc_0.CheckForMissingPotions();
+                                    /*Form1_0.BeltStruc_0.ItemIsPotion();
                                     if (Form1_0.BeltStruc_0.IsItemHPPotion
                                         || Form1_0.BeltStruc_0.IsItemManaPotion
                                         || Form1_0.BeltStruc_0.IsItemRVPotion
                                         || Form1_0.BeltStruc_0.IsItemFullRVPotion)
                                     {
                                         Form1_0.BeltStruc_0.CheckForMissingPotions();
-                                    }
+                                    }*/
                                 }
 
                                 //after a lot of try picking item, inventory might be full, dump bad item to ground
@@ -1407,7 +1408,7 @@ public class ItemsStruc
             case 6:
                 return Color.DarkGoldenrod;
             case 7:
-                return System.Drawing.ColorTranslator.FromHtml("#9c6d2a");
+                return System.Drawing.Color.FromArgb(255, 235, 187, 30);
             case 8:
                 return System.Drawing.ColorTranslator.FromHtml("#fa5304");
             case 9:

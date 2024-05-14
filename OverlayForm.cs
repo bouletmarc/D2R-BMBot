@@ -540,6 +540,18 @@ public partial class OverlayForm : Form
                         UnitsStr += ")";
                         DrawString(e, UnitsStr, drawFontBold10, drawBrushGreen, 560, 810, true);
                     }
+
+                    //Print Pressed Keys
+                    /*string UnitsStr2 = "CTRL Key:" + Form1_0.KeyMouse_0.HoldingCTRL.ToString();
+                    DrawString(e, UnitsStr2, drawFontBold10, drawBrushGreen, 560, 860, true);
+
+                    //Show values of the V2 Units Scan
+                    UnitsStr2 = "Shift Key:" + Form1_0.KeyMouse_0.HoldingShift.ToString();
+                    DrawString(e, UnitsStr2, drawFontBold10, drawBrushGreen, 560, 835, true);
+
+                    //Show values of the V1 Units Scan
+                    UnitsStr2 = "ForceMove Key:" + Form1_0.KeyMouse_0.HoldingForceMove.ToString();
+                    DrawString(e, UnitsStr2, drawFontBold10, drawBrushGreen, 560, 810, true);*/
                 }
 
                 if (CanDisplayOverlay)
@@ -666,6 +678,8 @@ public partial class OverlayForm : Form
                         DrawString(e, "Cyan: Previous Area Exit (Special)", drawFontBold10, drawBrushCyan, 1400, 105, true);
                     }
 
+                    //DrawItemDesc(e);
+
                     if (ShowExits)
                     {
                         for (int i = 0; i < ExitPoints.Count; i++)
@@ -731,6 +745,104 @@ public partial class OverlayForm : Form
                 }
             }
         }
+    }
+
+    public void DrawItemDesc(PaintEventArgs e)
+    {
+        string FullString ="Sold Item:Giant Axe (ID:9) && [Type] == axe && [Quality] == Rare && [Flag] == identified && [SecondMinDamage] == 22 && [SecMaxDamage] == 45 && [AttackRate] == -10 && [Durability] == 47 && [MaxDurability] == 50 && [AttackRating] == 93 && [SecondMinDamage] == 29 && [SecMaxDamage] == 59 && [ColdMinDamage] == 1 && [ColdMaxDamage] == 3 && [ColdLength] == 3 && [AttackRate] == -10 && [Durability] == 47 && [MaxDurability] == 50, StashItem:false, ItemToID:false  (07:21:49)";
+        string ItemName = "";
+        string ItemQuality = "";
+        string ItemText = "";
+        string ItemDesc = "";
+
+        bool Identified = false;
+        bool Socketed = false;
+        bool Etheral = false;
+
+        //string FullString = "";
+        FullString = FullString.Replace(" ", "");
+        FullString = FullString.Replace("&&", "&");
+        if (FullString.Contains("&"))
+        {
+            string[] CmdSplitted = FullString.Split('&');
+            for (int i = 0; i < CmdSplitted.Length; i++)
+            {
+                //Name
+                if (CmdSplitted[i].Contains(":"))
+                {
+                    ItemName = CmdSplitted[i].Substring(CmdSplitted[i].IndexOf(":") + 1);
+                }
+                //Quality
+                else if (CmdSplitted[i].ToLower().Contains("[quality]"))
+                {
+                    ItemQuality = CmdSplitted[i].Substring(CmdSplitted[i].LastIndexOf("=") + 1);
+                }
+                //Flag
+                else if (CmdSplitted[i].ToLower().Contains("[flag]==identified")) Identified = true;
+                else if (CmdSplitted[i].ToLower().Contains("[flag]==socketed")) Socketed = true;
+                else if (CmdSplitted[i].ToLower().Contains("[flag]==etheral")) Etheral = true;
+                //Stats (Normals)
+                //defense
+                else if (CmdSplitted[i].ToLower().Contains("[defense]"))
+                {
+                    if (ItemText != "") ItemText += Environment.NewLine;
+                    ItemText += "Defense : " + CmdSplitted[i].Substring(CmdSplitted[i].LastIndexOf("=") + 1);
+                }
+                //attack damage
+                else if (CmdSplitted[i].ToLower().Contains("[secondmindamage]"))
+                {
+                    if (ItemText != "") ItemText += Environment.NewLine;
+                    ItemText += "Damage : " + CmdSplitted[i].Substring(CmdSplitted[i].LastIndexOf("=") + 1);
+                }
+                else if (CmdSplitted[i].ToLower().Contains("[secmaxdamage]"))
+                {
+                    if (ItemText != "") ItemText += "-";
+                    ItemText += CmdSplitted[i].Substring(CmdSplitted[i].LastIndexOf("=") + 1);
+                }
+                //durability
+                else if (CmdSplitted[i].ToLower().Contains("[durability]"))
+                {
+                    if (ItemText != "") ItemText += Environment.NewLine;
+                    ItemText += "Durability : " + CmdSplitted[i].Substring(CmdSplitted[i].LastIndexOf("=") + 1);
+                }
+                //max durability
+                else if (CmdSplitted[i].ToLower().Contains("[maxdurability]"))
+                {
+                    if (ItemText != "") ItemText += "/";
+                    ItemText += CmdSplitted[i].Substring(CmdSplitted[i].LastIndexOf("=") + 1);
+                }
+                //strenght required
+                //dexterity required
+                //lvl required
+                else if (CmdSplitted[i].ToLower().Contains("[levelrequire]"))
+                {
+                    if (ItemText != "") ItemText += Environment.NewLine;
+                    ItemText += "Level required : " + CmdSplitted[i].Substring(CmdSplitted[i].LastIndexOf("=") + 1);
+                }
+                //block rate
+                //shield damage
+                else
+                {
+                    if (ItemDesc != "") ItemDesc += Environment.NewLine;
+                    ItemDesc += CmdSplitted[i].Replace("[", "").Replace("]", "").Replace("==", " : ");
+                }
+            }
+        }
+
+        SizeF ThisS2 = e.Graphics.MeasureString(ItemName, drawFontBold);
+        SizeF ThisS3 = e.Graphics.MeasureString(ItemText, drawFontBold);
+        SizeF ThisS4 = e.Graphics.MeasureString(ItemDesc, drawFontBold);
+        int ThisWidht = (int) ThisS2.Width;
+        if (ThisS3.Width > ThisWidht) ThisWidht = (int)ThisS3.Width;
+        if (ThisS4.Width > ThisWidht) ThisWidht = (int)ThisS4.Width;
+        int ThisHeigh = (int)ThisS2.Height;
+        ThisHeigh += (int)ThisS3.Height;
+        ThisHeigh += (int)ThisS4.Height;
+
+        FillRectangle(e, drawBrushDark, Cursor.Position.X + 1, Cursor.Position.Y - (ThisHeigh / 2), ThisWidht, ThisHeigh, true);
+        DrawString(e, ItemName, drawFontBold, drawBrushBlue, Cursor.Position.X + (ThisWidht) - ((ThisS2.Width / 2) * ScaleScreenSizeInverted), Cursor.Position.Y - (ThisHeigh / 2), true);
+        DrawString(e, ItemText, drawFontBold, drawBrushBlue, Cursor.Position.X + (ThisWidht) - ((ThisS3.Width / 2) * ScaleScreenSizeInverted), Cursor.Position.Y + ThisS2.Height - (ThisHeigh / 2), true);
+        DrawString(e, ItemDesc, drawFontBold, drawBrushBlue, Cursor.Position.X + (ThisWidht) - ((ThisS4.Width / 2) * ScaleScreenSizeInverted), Cursor.Position.Y + ThisS2.Height + ThisS3.Height - (ThisHeigh / 2), true);
     }
 
     public void DrawString(PaintEventArgs e, string ThisTxt, Font ThisFont, Brush ThisBrush, float PosX, float PosY, bool FixPos)

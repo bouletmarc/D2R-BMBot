@@ -9,6 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WindowsInput;
+using System.Reflection.Emit;
 
 public class KeyMouse
 {
@@ -466,12 +467,15 @@ public class KeyMouse
         }
     }
 
+    public bool HoldingCTRL = false;
+    public bool HoldingShift = false;
+    public bool HoldingForceMove = false;
+
     public IntPtr HookCallback(int nCode, IntPtr wParam, IntPtr lParam)
     {
         if (nCode >= 0 && wParam == (IntPtr)WM_KEYDOWN)
         {
             int vkCode = Marshal.ReadInt32(lParam);
-
             if (vkCode == (int)CharConfig.StartStopKey) //numpad5
             {
                 Form1_0.button1_Click(null, null);
@@ -479,6 +483,42 @@ public class KeyMouse
             else if (vkCode == (int)CharConfig.PauseResumeKey) //numpad6
             {
                 Form1_0.buttonPauseResume_Click(null, null);
+            }
+            else if (vkCode == (int)CharConfig.KeyForceMovement)
+            {
+                HoldingForceMove = true;
+            }
+        }
+        if (nCode >= 0 && wParam == (IntPtr)WM_KEYUP)
+        {
+            int vkCode = Marshal.ReadInt32(lParam);
+            if (vkCode == (int)CharConfig.KeyForceMovement)
+            {
+                HoldingForceMove = false;
+            }
+        }
+        if (nCode >= 0 && wParam == (IntPtr)WM_SYSKEYDOWN)
+        {
+            int vkCode = Marshal.ReadInt32(lParam);
+            if (vkCode == (int)Keys.LControlKey)
+            {
+                HoldingCTRL = true;
+            }
+            else if (vkCode == (int)Keys.LShiftKey)
+            {
+                HoldingShift = true;
+            }
+        }
+        if (nCode >= 0 && wParam == (IntPtr)WM_SYSKEYUP)
+        {
+            int vkCode = Marshal.ReadInt32(lParam);
+            if (vkCode == (int)Keys.LControlKey)
+            {
+                HoldingCTRL = false;
+            }
+            else if (vkCode == (int)Keys.LShiftKey)
+            {
+                HoldingShift = false;
             }
         }
         return CallNextHookEx(hookID, nCode, wParam, lParam);

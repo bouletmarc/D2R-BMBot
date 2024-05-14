@@ -263,6 +263,7 @@ public class Town
 
                     GetCorpse();
                     CurrentScript++;
+                    return;
                 }
 
                 if (CurrentScript == 0)
@@ -283,11 +284,13 @@ public class Town
                 if (!Form1_0.InventoryStruc_0.HasUnidItemInInventory() || (FastTowning && Form1_0.ItemsStruc_0.TriesToPickItemCount < CharConfig.MaxItemGrabTries))
                 {
                     CurrentScript++;
+                    return;
                 }
 
                 if (TriedToCainCount2 >= CharConfig.MaxItemIDTries)
                 {
                     CurrentScript++;
+                    return;
                 }
 
                 //Go see Cain if we cannot ID at shop
@@ -348,6 +351,7 @@ public class Town
                     || (Form1_0.PlayerScan_0.PlayerGoldInventory + Form1_0.PlayerScan_0.PlayerGoldInStash) < 75000)
                 {
                     CurrentScript++;
+                    return;
                 }
 
                 if (CurrentScript == 2)
@@ -385,6 +389,7 @@ public class Town
                             || TriedToStashCount >= CharConfig.MaxItemStashTries || (FastTowning && Form1_0.ItemsStruc_0.TriesToPickItemCount < CharConfig.MaxItemGrabTries && Form1_0.ItemsStruc_0.TriesToPickItemCount >= 0))
                 {
                     CurrentScript++;
+                    return;
                 }
 
                 if (CurrentScript == 3)
@@ -407,10 +412,12 @@ public class Town
                 if (!CharConfig.GambleGold)
                 {
                     CurrentScript++;
+                    return;
                 }
                 if (!Form1_0.Gamble_0.CanGamble() || TriedToGambleCount >= CharConfig.MaxGambleTries || FastTowning)
                 {
                     CurrentScript++;
+                    return;
                 }
 
                 if (CurrentScript == 4)
@@ -448,6 +455,7 @@ public class Town
                     {
                         //Console.WriteLine("town shop done");
                         CurrentScript++;
+                        return;
                     }
 
                     if (CurrentScript == 5)
@@ -479,6 +487,7 @@ public class Town
                 if (!Form1_0.Repair_0.GetShouldRepair() || TriedToRepairCount >= CharConfig.MaxRepairTries || FastTowning)
                 {
                     CurrentScript++;
+                    return;
                 }
 
                 if (CurrentScript == 6)
