@@ -118,4 +118,4 @@ I accept no responsibility for any outcomes for the usage of this tool.
   - Cubing script
 
 [1]: https://ia903402.us.archive.org/5/items/diablo-ii-lod/diablo-ii-lod_archive.torrent
-[2]: https://discord.gg/vaABgsJU
+[2]: https://discord.gg/f9Z2sXyJ
