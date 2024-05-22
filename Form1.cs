@@ -40,7 +40,7 @@ using static MapAreaStruc;
 public partial class Form1 : Form
 {
 
-    public string BotVersion = "V3.03";
+    public string BotVersion = "V3.04";
 
     public string D2_LOD_113C_Path = "";
 
@@ -1850,6 +1850,7 @@ public partial class Form1 : Form
                 name += (char)buffer[i2];
             }
         }
+        //Form1_0.method_1("PNAME: " + name, Color.Red);
 
         if (!name.Contains(CharConfig.PlayerCharName) || ForceSwitch2ndPlayer)
         {

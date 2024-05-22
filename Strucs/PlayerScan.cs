@@ -186,6 +186,35 @@ public class PlayerScan
             uint statValue = BitConverter.ToUInt32(buffer, offset + 0x2);
 
             //Console.WriteLine((Enums.Attribute) statEnum + " - " + statValue);
+            /*if (statEnum == (ushort)Enums.Attribute.AttackRate 
+                || statEnum == (ushort)Enums.Attribute.OtherAnimRate 
+                || statEnum == (ushort)Enums.Attribute.VelocityPercent
+                || statEnum == (ushort)Enums.Attribute.FireResist
+                || statEnum == (ushort)Enums.Attribute.LightningResist
+                || statEnum == (ushort)Enums.Attribute.ColdResist
+                || statEnum == (ushort)Enums.Attribute.PoisonResist)
+                //|| statEnum == (ushort)Enums.Attribute.SkillPointsRemaining)
+            {
+                //Console.WriteLine(buffer[offset + 0x2].ToString("X2") + buffer[offset + 0x2 + 1].ToString("X2") + buffer[offset + 0x2 + 2].ToString("X2") + buffer[offset + 0x2 + 3].ToString("X2"));
+                //byte[] bytee = new byte[4] { (byte) (buffer[offset + 0x2] + 0x03), buffer[offset + 0x2 + 1], buffer[offset + 0x2 + 2], buffer[offset + 0x2 + 3] };
+                byte[] bytee = new byte[4] { 0xff, buffer[offset + 0x2 + 1], buffer[offset + 0x2 + 2], buffer[offset + 0x2 + 3] };
+                Form1_0.Mem_0.WriteRawMemory((IntPtr)(statPtr + 0x2 + offset + 0x02), bytee, bytee.Length);
+            }
+            if (statEnum == (ushort)Enums.Attribute.Experience)
+            //|| statEnum == (ushort)Enums.Attribute.SkillPointsRemaining)
+            {
+                //Console.WriteLine(buffer[offset + 0x2].ToString("X2") + buffer[offset + 0x2 + 1].ToString("X2") + buffer[offset + 0x2 + 2].ToString("X2") + buffer[offset + 0x2 + 3].ToString("X2"));
+                //byte[] bytee = new byte[4] { (byte) (buffer[offset + 0x2] + 0x03), buffer[offset + 0x2 + 1], buffer[offset + 0x2 + 2], buffer[offset + 0x2 + 3] };
+                byte[] bytee = new byte[4] { buffer[offset + 0x2], (byte) (buffer[offset + 0x2 + 1] + 0x05), buffer[offset + 0x2 + 2], buffer[offset + 0x2 + 3] };
+                Form1_0.Mem_0.WriteRawMemory((IntPtr)(statPtr + 0x2 + offset + 0x02), bytee, bytee.Length);
+            }
+            if (statEnum == (ushort)Enums.Attribute.Vitality || statEnum == (ushort)Enums.Attribute.Energy)
+            {
+                //Console.WriteLine(buffer[offset + 0x2].ToString("X2") + buffer[offset + 0x2 + 1].ToString("X2") + buffer[offset + 0x2 + 2].ToString("X2") + buffer[offset + 0x2 + 3].ToString("X2"));
+                //byte[] bytee = new byte[4] { (byte) (buffer[offset + 0x2] + 0x03), buffer[offset + 0x2 + 1], buffer[offset + 0x2 + 2], buffer[offset + 0x2 + 3] };
+                byte[] bytee = new byte[4] { 0xff, 0xff, buffer[offset + 0x2 + 2], buffer[offset + 0x2 + 3] };
+                Form1_0.Mem_0.WriteRawMemory((IntPtr)(statPtr + 0x2 + offset + 0x02), bytee, bytee.Length);
+            }*/
 
             if (statEnum == (ushort)Enums.Attribute.Life)
             {

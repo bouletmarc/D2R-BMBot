@@ -566,7 +566,7 @@ public class GameStruc
     {
         try
         {
-            long baseAddress = (long)Form1_0.BaseAddress + (long)Form1_0.offsets["unitTable"] - 64;
+            long baseAddress = (long)Form1_0.BaseAddress + (long)Form1_0.offsets["unitTable"] - 56;
             byte[] unitTableBuffer = new byte[1];
             Form1_0.Mem_0.ReadRawMemory(baseAddress, ref unitTableBuffer, 1);
 
