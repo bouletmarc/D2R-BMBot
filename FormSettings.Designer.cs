@@ -32,30 +32,30 @@ partial class FormSettings
             System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("Item Grab ONLY");
             System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem("Maphack & Item Grab ONLY");
             System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem("ShopBot");
-            System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem("Mausoleum");
-            System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem("Crypt");
-            System.Windows.Forms.ListViewItem listViewItem7 = new System.Windows.Forms.ListViewItem("Pit");
-            System.Windows.Forms.ListViewItem listViewItem8 = new System.Windows.Forms.ListViewItem("Cows");
+            //System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem("Mausoleum");
+            //System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem("Crypt");
+            //System.Windows.Forms.ListViewItem listViewItem7 = new System.Windows.Forms.ListViewItem("Pit");
+            //System.Windows.Forms.ListViewItem listViewItem8 = new System.Windows.Forms.ListViewItem("Cows");
             System.Windows.Forms.ListViewItem listViewItem9 = new System.Windows.Forms.ListViewItem("Countess");
             System.Windows.Forms.ListViewItem listViewItem10 = new System.Windows.Forms.ListViewItem("Andariel");
             System.Windows.Forms.ListViewItem listViewItem11 = new System.Windows.Forms.ListViewItem("Summoner");
             System.Windows.Forms.ListViewItem listViewItem12 = new System.Windows.Forms.ListViewItem("Duriel");
-            System.Windows.Forms.ListViewItem listViewItem13 = new System.Windows.Forms.ListViewItem("Arachnid Lair");
+            //System.Windows.Forms.ListViewItem listViewItem13 = new System.Windows.Forms.ListViewItem("Arachnid Lair");
             System.Windows.Forms.ListViewItem listViewItem14 = new System.Windows.Forms.ListViewItem("Lower Kurast (Chests)");
-            System.Windows.Forms.ListViewItem listViewItem15 = new System.Windows.Forms.ListViewItem("Act3 Sewers (Chests)");
+            //System.Windows.Forms.ListViewItem listViewItem15 = new System.Windows.Forms.ListViewItem("Act3 Sewers (Chests)");
             System.Windows.Forms.ListViewItem listViewItem16 = new System.Windows.Forms.ListViewItem("Upper Kurast (Chests)");
-            System.Windows.Forms.ListViewItem listViewItem17 = new System.Windows.Forms.ListViewItem("Travincal");
+            //System.Windows.Forms.ListViewItem listViewItem17 = new System.Windows.Forms.ListViewItem("Travincal");
             System.Windows.Forms.ListViewItem listViewItem18 = new System.Windows.Forms.ListViewItem("Mephisto");
             System.Windows.Forms.ListViewItem listViewItem19 = new System.Windows.Forms.ListViewItem("Chaos");
-            System.Windows.Forms.ListViewItem listViewItem20 = new System.Windows.Forms.ListViewItem("Chaos Leech");
-            System.Windows.Forms.ListViewItem listViewItem21 = new System.Windows.Forms.ListViewItem("Eldritch");
+            //System.Windows.Forms.ListViewItem listViewItem20 = new System.Windows.Forms.ListViewItem("Chaos Leech");
+            //System.Windows.Forms.ListViewItem listViewItem21 = new System.Windows.Forms.ListViewItem("Eldritch");
             System.Windows.Forms.ListViewItem listViewItem22 = new System.Windows.Forms.ListViewItem("Shenk");
             System.Windows.Forms.ListViewItem listViewItem23 = new System.Windows.Forms.ListViewItem("Frozenstein (Anya)");
             System.Windows.Forms.ListViewItem listViewItem24 = new System.Windows.Forms.ListViewItem("Pindleskin");
             System.Windows.Forms.ListViewItem listViewItem25 = new System.Windows.Forms.ListViewItem("Nihlatak");
             System.Windows.Forms.ListViewItem listViewItem26 = new System.Windows.Forms.ListViewItem("Baal");
-            System.Windows.Forms.ListViewItem listViewItem27 = new System.Windows.Forms.ListViewItem("Baal Leech");
-            System.Windows.Forms.ListViewItem listViewItem28 = new System.Windows.Forms.ListViewItem("Terror Zones");
+            //System.Windows.Forms.ListViewItem listViewItem27 = new System.Windows.Forms.ListViewItem("Baal Leech");
+            //System.Windows.Forms.ListViewItem listViewItem28 = new System.Windows.Forms.ListViewItem("Terror Zones");
             System.Windows.Forms.ListViewItem listViewItem29 = new System.Windows.Forms.ListViewItem("Waypoint Taker");
             System.Windows.Forms.ListViewItem listViewItem30 = new System.Windows.Forms.ListViewItem("Dark Wood");
             System.Windows.Forms.ListViewItem listViewItem31 = new System.Windows.Forms.ListViewItem("Tristram");
@@ -195,61 +195,61 @@ partial class FormSettings
             listViewItem2.StateImageIndex = 0;
             listViewItem3.StateImageIndex = 0;
             listViewItem4.StateImageIndex = 0;
-            listViewItem5.StateImageIndex = 0;
-            listViewItem6.StateImageIndex = 0;
-            listViewItem7.StateImageIndex = 0;
-            listViewItem8.StateImageIndex = 0;
+            //listViewItem5.StateImageIndex = 0;
+            //listViewItem6.StateImageIndex = 0;
+            //listViewItem7.StateImageIndex = 0;
+            //listViewItem8.StateImageIndex = 0;
             listViewItem9.Checked = true;
             listViewItem9.StateImageIndex = 1;
             listViewItem10.StateImageIndex = 0;
             listViewItem11.StateImageIndex = 0;
             listViewItem12.StateImageIndex = 0;
-            listViewItem13.StateImageIndex = 0;
+            //listViewItem13.StateImageIndex = 0;
             listViewItem14.StateImageIndex = 0;
-            listViewItem15.StateImageIndex = 0;
+            //listViewItem15.StateImageIndex = 0;
             listViewItem16.StateImageIndex = 0;
-            listViewItem17.StateImageIndex = 0;
+            //listViewItem17.StateImageIndex = 0;
             listViewItem18.StateImageIndex = 0;
             listViewItem19.StateImageIndex = 0;
-            listViewItem20.StateImageIndex = 0;
-            listViewItem21.StateImageIndex = 0;
+            //listViewItem20.StateImageIndex = 0;
+            //listViewItem21.StateImageIndex = 0;
             listViewItem22.StateImageIndex = 0;
             listViewItem23.StateImageIndex = 0;
             listViewItem24.StateImageIndex = 0;
             listViewItem25.StateImageIndex = 0;
             listViewItem26.StateImageIndex = 0;
-            listViewItem27.StateImageIndex = 0;
-            listViewItem28.StateImageIndex = 0;
+            //listViewItem27.StateImageIndex = 0;
+            //listViewItem28.StateImageIndex = 0;
             listViewItem29.StateImageIndex = 0;
             this.listViewRunScripts.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
             listViewItem1,
             listViewItem2,
             listViewItem3,
             listViewItem4,
-            listViewItem5,
-            listViewItem6,
-            listViewItem7,
-            listViewItem8,
+            //listViewItem5,
+            //listViewItem6,
+            //listViewItem7,
+            //listViewItem8,
             listViewItem9,
             listViewItem10,
             listViewItem11,
             listViewItem12,
-            listViewItem13,
+            //listViewItem13,
             listViewItem14,
-            listViewItem15,
+            //listViewItem15,
             listViewItem16,
-            listViewItem17,
+            //listViewItem17,
             listViewItem18,
             listViewItem19,
-            listViewItem20,
-            listViewItem21,
+            //listViewItem20,
+            //listViewItem21,
             listViewItem22,
             listViewItem23,
             listViewItem24,
             listViewItem25,
             listViewItem26,
-            listViewItem27,
-            listViewItem28,
+            //listViewItem27,
+            //listViewItem28,
             listViewItem29});
             this.listViewRunScripts.Location = new System.Drawing.Point(12, 168);
             this.listViewRunScripts.Name = "listViewRunScripts";

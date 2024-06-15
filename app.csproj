@@ -303,6 +303,12 @@
     <None Include="Resources\Apply.png" />
     <None Include="Resources\Remove.png" />
     <None Include="Resources\Undo.png" />
+    <Content Include="handle64.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="map.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Settings\Char\PaladinHammer.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

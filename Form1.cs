@@ -40,7 +40,7 @@ using static MapAreaStruc;
 public partial class Form1 : Form
 {
 
-    public string BotVersion = "V3.04";
+    public string BotVersion = "V3.05B";
 
     public string D2_LOD_113C_Path = "";
 
@@ -269,7 +269,7 @@ public partial class Form1 : Form
     public Form1()
     {
         InitializeComponent();
-
+        this.TopMost = true;
         this.Text = "D2R - BMBot (" + BotVersion + ")";
         labelGames.Text = "";//CurrentGameNumber.ToString();
         SetGameStatus("STOPPED");
