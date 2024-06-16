@@ -17,6 +17,7 @@ public partial class FormAdvancedSettings : Form
         Form1_0 = form1_1;
 
         InitializeComponent();
+        this.TopMost = true;
 
         LoadSettings();
     }
@@ -148,5 +149,15 @@ public partial class FormAdvancedSettings : Form
     private void button2_Click(object sender, EventArgs e)
     {
         SaveSettings();
+    }
+
+    private void dataGridViewAdvanced_CellContentClick(object sender, DataGridViewCellEventArgs e)
+    {
+
+    }
+
+    private void label20_Click(object sender, EventArgs e)
+    {
+
     }
 }

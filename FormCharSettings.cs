@@ -19,6 +19,7 @@ public partial class FormCharSettings : Form
     {
         Form1_0 = form1_1;
         InitializeComponent();
+        this.TopMost = true;
 
         panelHelpKeys.Location = new Point(4, 248);
         panelHelpKeys.Visible = false;
@@ -425,5 +426,10 @@ public partial class FormCharSettings : Form
             if (CharConfig.RunningOnChar == "PaladinHammer") File.WriteAllBytes(saveFileDialog1.FileName, File.ReadAllBytes(Form1_0.SettingsLoader_0.File_PaladinHammer));
             else if (CharConfig.RunningOnChar == "SorceressBlizzard") File.WriteAllBytes(saveFileDialog1.FileName, File.ReadAllBytes(Form1_0.SettingsLoader_0.File_SorceressBlizzard));
         }
+    }
+
+    private void groupBoxInventory_Enter(object sender, EventArgs e)
+    {
+
     }
 }

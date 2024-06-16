@@ -30,6 +30,7 @@ public partial class FormItems : Form
         Form1_0 = form1_1;
 
         InitializeComponent();
+        this.TopMost = true;
 
         LoadSettings();
 
@@ -1025,5 +1026,10 @@ public partial class FormItems : Form
 
             panelItemQty.Visible = true;
         }
+    }
+
+    private void listViewUnique_SelectedIndexChanged(object sender, EventArgs e)
+    {
+
     }
 }
