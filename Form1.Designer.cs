@@ -60,6 +60,8 @@ partial class Form1
             this.tabPage6 = new System.Windows.Forms.TabPage();
             this.richTextBoxDebugMapData = new System.Windows.Forms.RichTextBox();
             this.tabPage7 = new System.Windows.Forms.TabPage();
+            this.comboBoxCollisionArea = new System.Windows.Forms.ComboBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.richTextBoxDebugMapCollision = new System.Windows.Forms.RichTextBox();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.labelGameName = new System.Windows.Forms.ToolStripStatusLabel();
@@ -79,8 +81,6 @@ partial class Form1
             this.button4 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
-            this.comboBoxCollisionArea = new System.Windows.Forms.ComboBox();
-            this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -126,6 +126,7 @@ partial class Form1
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             this.dataGridView1.Size = new System.Drawing.Size(207, 376);
             this.dataGridView1.TabIndex = 2;
+            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
             // Column1
             // 
@@ -456,6 +457,38 @@ partial class Form1
             this.tabPage7.TabIndex = 4;
             this.tabPage7.Text = "Map Collisions";
             // 
+            // comboBoxCollisionArea
+            // 
+            this.comboBoxCollisionArea.FormattingEnabled = true;
+            this.comboBoxCollisionArea.Items.AddRange(new object[] {
+            "All Items",
+            "On Cursor",
+            "In Inventory",
+            "In Stash",
+            "In Shared Stash1",
+            "In Shared Stash2",
+            "In Shared Stash3",
+            "In Cube",
+            "Equipped",
+            "In Belt",
+            "On Ground",
+            "In Shop",
+            "Others"});
+            this.comboBoxCollisionArea.Location = new System.Drawing.Point(64, 3);
+            this.comboBoxCollisionArea.Name = "comboBoxCollisionArea";
+            this.comboBoxCollisionArea.Size = new System.Drawing.Size(121, 21);
+            this.comboBoxCollisionArea.TabIndex = 24;
+            this.comboBoxCollisionArea.SelectedIndexChanged += new System.EventHandler(this.comboBoxCollisionArea_SelectedIndexChanged);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(6, 6);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(32, 13);
+            this.label2.TabIndex = 23;
+            this.label2.Text = "Area:";
+            // 
             // richTextBoxDebugMapCollision
             // 
             this.richTextBoxDebugMapCollision.DetectUrls = false;
@@ -630,38 +663,6 @@ partial class Form1
             // folderBrowserDialog1
             // 
             this.folderBrowserDialog1.Description = "Select the folder where D2 LOD 1.13C is located";
-            // 
-            // comboBoxCollisionArea
-            // 
-            this.comboBoxCollisionArea.FormattingEnabled = true;
-            this.comboBoxCollisionArea.Items.AddRange(new object[] {
-            "All Items",
-            "On Cursor",
-            "In Inventory",
-            "In Stash",
-            "In Shared Stash1",
-            "In Shared Stash2",
-            "In Shared Stash3",
-            "In Cube",
-            "Equipped",
-            "In Belt",
-            "On Ground",
-            "In Shop",
-            "Others"});
-            this.comboBoxCollisionArea.Location = new System.Drawing.Point(64, 3);
-            this.comboBoxCollisionArea.Name = "comboBoxCollisionArea";
-            this.comboBoxCollisionArea.Size = new System.Drawing.Size(121, 21);
-            this.comboBoxCollisionArea.TabIndex = 24;
-            this.comboBoxCollisionArea.SelectedIndexChanged += new System.EventHandler(this.comboBoxCollisionArea_SelectedIndexChanged);
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(6, 6);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(32, 13);
-            this.label2.TabIndex = 23;
-            this.label2.Text = "Area:";
             // 
             // Form1
             // 

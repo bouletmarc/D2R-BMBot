@@ -1,2 +1,0 @@
-RunNumber=1
-D2_LOD_113C_Path=

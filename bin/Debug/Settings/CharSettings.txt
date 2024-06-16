@@ -1,8 +1,0 @@
-//#######################################
-//SET THE CHAR TO RUN WITH
-//#######################################
-//AVAILABLE CHAR ARE:
-//PaladinHammer
-//SorceressBlizzard
-//#######################################
-RunOnChar=PaladinHammer
