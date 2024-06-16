@@ -18,7 +18,7 @@ public static class CharConfig
     public static System.Windows.Forms.Keys KeySwapWeapon = Keys.W;
 
     //#######################################
-    //SHORTCUT KEYS SETTINGS (FOR PALADIN)
+    //SHORTCUT KEYS SETTINGS
     //#######################################
     public static System.Windows.Forms.Keys KeySkillAttack = Keys.F1;               //hammer
     public static System.Windows.Forms.Keys KeySkillAura = Keys.F2;                 //concentration

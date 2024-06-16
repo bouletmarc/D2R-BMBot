@@ -1,0 +1,2 @@
+RunNumber=39
+D2_LOD_113C_Path=C:\DiabloII

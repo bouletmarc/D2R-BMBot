@@ -1,8 +1,8 @@
 //#######################################
 //SHORTCUT KEY TO START/STOP BOT
 //#######################################
-StartStopKey=101
-PauseResumeKey=102
+StartStopKey=NumPad5
+PauseResumeKey=NumPad6
 KeyOpenInventory=I
 KeyForceMovement=E
 KeySwapWeapon=W
@@ -11,104 +11,104 @@ KeySwapWeapon=W
 //BOT SETTINGS (USE ONLY CHAOS OR BAAL, NOT BOTH AT SAME TIME) 
 //#######################################
 MaxGameTime=7
-LogNotUsefulErrors=false
-IsRushing=false
+LogNotUsefulErrors=False
+IsRushing=False
 RushLeecherName=
 SearchLeecherName=
-ShowOverlay=true
-RunWPTaker=false
-KillOnlySuperUnique=false
-RunSinglePlayerScript=false
-RunNoLobbyScript=false
-RunMapHackOnly=false
-RunMapHackPickitOnly=false
-RunAnyaRush=false
-RunDarkWoodRush=false
-RunTristramRush=false
-RunAndarielRush=false
-RunRadamentRush=false
-RunHallOfDeadRush=false
-RunFarOasisRush=false
-RunLostCityRush=false
-RunSummonerRush=false
-RunDurielRush=false
-RunKahlimEyeRush=false
-RunKahlimBrainRush=false
-RunKahlimHeartRush=false
-RunTravincalRush=false
-RunMephistoRush=false
-RunChaosRush=false
-RunAncientsRush=false
-RunBaalRush=false
-RunPindleskinScript=false
-RunMephistoScript=false
-RunAndarielScript=false
-RunCountessScript=false
-RunSummonerScript=false
-RunDurielScript=false
-RunChaosScript=false
-RunChaosLeechScript=false
-RunLowerKurastScript=true
-RunUpperKurastScript=false
-RunA3SewersScript=false
-RunBaalScript=false
-RunBaalLeechScript=false
-RunCowsScript=false
-RunEldritchScript=false
-RunShenkScript=false
-RunNihlatakScript=false
-RunFrozensteinScript=false
-RunTerrorZonesScript=false
-RunItemGrabScriptOnly=false
-ClearAfterBoss=false
-RunShopBotScript=false
-RunMausoleumScript=false
-RunCryptScript=false
-RunArachnidScript=false
-RunPitScript=false
+ShowOverlay=True
+RunWPTaker=False
+KillOnlySuperUnique=False
+RunSinglePlayerScript=False
+RunNoLobbyScript=False
+RunMapHackOnly=False
+RunMapHackPickitOnly=False
+RunAnyaRush=False
+RunDarkWoodRush=False
+RunTristramRush=False
+RunAndarielRush=False
+RunRadamentRush=False
+RunHallOfDeadRush=False
+RunFarOasisRush=False
+RunLostCityRush=False
+RunSummonerRush=False
+RunDurielRush=False
+RunKahlimEyeRush=False
+RunKahlimBrainRush=False
+RunKahlimHeartRush=False
+RunTravincalRush=False
+RunMephistoRush=False
+RunChaosRush=False
+RunAncientsRush=False
+RunBaalRush=False
+RunPindleskinScript=False
+RunMephistoScript=False
+RunAndarielScript=False
+RunCountessScript=False
+RunSummonerScript=False
+RunDurielScript=False
+RunChaosScript=False
+RunChaosLeechScript=False
+RunLowerKurastScript=True
+RunUpperKurastScript=False
+RunA3SewersScript=False
+RunBaalScript=False
+RunBaalLeechScript=False
+RunCowsScript=False
+RunEldritchScript=False
+RunShenkScript=False
+RunNihlatakScript=False
+RunFrozensteinScript=False
+RunTerrorZonesScript=False
+RunItemGrabScriptOnly=False
+ClearAfterBoss=False
+RunShopBotScript=False
+RunMausoleumScript=False
+RunCryptScript=False
+RunArachnidScript=False
+RunPitScript=False
 
 //#######################################
 //NOT IN GAME SCRIPT (SEARCH GAMES OR CREATE A NEW GAME)
 //#######################################
-RunChaosSearchGameScript=false
-RunBaalSearchGameScript=false
-RunGameMakerScript=true
+RunChaosSearchGameScript=False
+RunBaalSearchGameScript=False
+RunGameMakerScript=True
 GameName=GAMENAMEHERE
 GamePass=33
 GameDifficulty=2
 ChaosLeechSearch=chaos
 BaalLeechSearch=baal
-BaalSearchAvoidWords=umf,u-mf,u mf,chaos,cbaal,help,walk,quest,4 q,baal4q,ancient
-ChaosSearchAvoidWords=umf,u-mf,u mf,baal,help,walk,quest,4 q
+BaalSearchAvoidWords=umf,u-mf,u mf,chaos,cbaal,help,walk,quest,4 qbaal4qancient
+ChaosSearchAvoidWords=umf,u-mf,u mf,baal,help,walkquest4 q
 
 //#######################################
 //SPECIALS BAAL FEATURES
 //#######################################
-KillBaal=true
+KillBaal=True
 LeaveIfMobsIsPresent_ID=
 LeaveIfMobsIsPresent_Count=
 LeaveIfMobsCountIsAbove=0
-SafeHealingStrat=true
+SafeHealingStrat=True
 
 //#######################################
 //SPECIALS CHAOS FEATURES
 //#######################################
-FastChaos=false
+FastChaos=False
 
 
 //#######################################
 //SPECIALS OVERLAY FEATURES
 //#######################################
-ShowMobs=true
-ShowWPs=true
-ShowGoodChests=true
-ShowLogs=true
-ShowBotInfos=true
-ShowNPC=true
-ShowPathFinding=true
-ShowExits=true
-ShowMapHackShowLines=true
-ShowUnitsScanCount=false
+ShowMobs=True
+ShowWPs=True
+ShowGoodChests=True
+ShowLogs=True
+ShowBotInfos=True
+ShowNPC=True
+ShowPathFinding=True
+ShowExits=True
+ShowMapHackShowLines=True
+ShowUnitsScanCount=False
 
 //#######################################
 //BOT DELAYS/ADVANCED SETTINGS
@@ -126,7 +126,7 @@ MaxGambleTries=3
 MaxBattleAttackTries=8
 TakeHPPotionDelay=3500
 TakeManaPotionDelay=2500
-OverallDelaysMultiplyer=1.0
+OverallDelaysMultiplyer=1
 EndBattleGrabDelay=5
 MaxTimeEnterGame=180
 BaalWavesCastDelay=6

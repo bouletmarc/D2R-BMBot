@@ -583,6 +583,7 @@ partial class FormCharSettings
             this.groupBoxInventory.TabIndex = 4;
             this.groupBoxInventory.TabStop = false;
             this.groupBoxInventory.Text = "Inventory Slots (Checked mean this slot is NOT FREE)";
+            this.groupBoxInventory.Enter += new System.EventHandler(this.groupBoxInventory_Enter);
             // 
             // label13
             // 

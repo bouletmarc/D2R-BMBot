@@ -61,6 +61,7 @@ partial class FormAdvancedSettings
             this.dataGridViewAdvanced.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             this.dataGridViewAdvanced.Size = new System.Drawing.Size(329, 212);
             this.dataGridViewAdvanced.TabIndex = 15;
+            this.dataGridViewAdvanced.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewAdvanced_CellContentClick);
             // 
             // Column2
             // 
@@ -77,6 +78,7 @@ partial class FormAdvancedSettings
             this.label20.Size = new System.Drawing.Size(193, 20);
             this.label20.TabIndex = 14;
             this.label20.Text = "Advanced Bot Settings";
+            this.label20.Click += new System.EventHandler(this.label20_Click);
             // 
             // button2
             // 

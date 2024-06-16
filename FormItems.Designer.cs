@@ -126,14 +126,18 @@ partial class FormItems
             this.numericUpDownValue = new System.Windows.Forms.NumericUpDown();
             this.buttonRemoveStat = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
+            this.buttonRemoveFlag = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
             this.buttonAddStat = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
             this.buttonAddFlag = new System.Windows.Forms.Button();
+            this.buttonClose = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.buttonCreateNewItem = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.button4 = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.panelItemQty = new System.Windows.Forms.Panel();
             this.label12 = new System.Windows.Forms.Label();
@@ -142,10 +146,6 @@ partial class FormItems
             this.label11 = new System.Windows.Forms.Label();
             this.numericUpDownItemMaxQty = new System.Windows.Forms.NumericUpDown();
             this.label2 = new System.Windows.Forms.Label();
-            this.button4 = new System.Windows.Forms.Button();
-            this.buttonRemoveFlag = new System.Windows.Forms.Button();
-            this.buttonClose = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -223,6 +223,7 @@ partial class FormItems
             this.listViewUnique.TabIndex = 3;
             this.listViewUnique.UseCompatibleStateImageBehavior = false;
             this.listViewUnique.View = System.Windows.Forms.View.Details;
+            this.listViewUnique.SelectedIndexChanged += new System.EventHandler(this.listViewUnique_SelectedIndexChanged);
             this.listViewUnique.Click += new System.EventHandler(this.listViewUnique_Click);
             // 
             // columnHeader1
@@ -990,6 +991,17 @@ partial class FormItems
             this.label4.TabIndex = 9;
             this.label4.Text = "Flags";
             // 
+            // buttonRemoveFlag
+            // 
+            this.buttonRemoveFlag.ForeColor = System.Drawing.Color.Red;
+            this.buttonRemoveFlag.Image = global::app.Properties.Resources.Remove;
+            this.buttonRemoveFlag.Location = new System.Drawing.Point(324, 58);
+            this.buttonRemoveFlag.Name = "buttonRemoveFlag";
+            this.buttonRemoveFlag.Size = new System.Drawing.Size(25, 25);
+            this.buttonRemoveFlag.TabIndex = 19;
+            this.buttonRemoveFlag.UseVisualStyleBackColor = true;
+            this.buttonRemoveFlag.Click += new System.EventHandler(this.buttonRemoveFlag_Click);
+            // 
             // label5
             // 
             this.label5.AutoSize = true;
@@ -1030,6 +1042,18 @@ partial class FormItems
             this.buttonAddFlag.UseVisualStyleBackColor = true;
             this.buttonAddFlag.Click += new System.EventHandler(this.buttonAddFlag_Click);
             // 
+            // buttonClose
+            // 
+            this.buttonClose.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonClose.ForeColor = System.Drawing.Color.Red;
+            this.buttonClose.Image = global::app.Properties.Resources.Delete;
+            this.buttonClose.Location = new System.Drawing.Point(406, 3);
+            this.buttonClose.Name = "buttonClose";
+            this.buttonClose.Size = new System.Drawing.Size(25, 24);
+            this.buttonClose.TabIndex = 27;
+            this.buttonClose.UseVisualStyleBackColor = true;
+            this.buttonClose.Click += new System.EventHandler(this.buttonClose_Click);
+            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -1064,6 +1088,32 @@ partial class FormItems
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Visible = false;
             this.button1.Click += new System.EventHandler(this.button1_Click_1);
+            // 
+            // button4
+            // 
+            this.button4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button4.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.button4.Image = global::app.Properties.Resources.Load;
+            this.button4.Location = new System.Drawing.Point(857, 2);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(34, 25);
+            this.button4.TabIndex = 19;
+            this.toolTip1.SetToolTip(this.button4, "Load/Import from a previous Settings File");
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
+            // 
+            // button3
+            // 
+            this.button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button3.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.button3.Image = global::app.Properties.Resources.Save;
+            this.button3.Location = new System.Drawing.Point(897, 2);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(63, 25);
+            this.button3.TabIndex = 16;
+            this.toolTip1.SetToolTip(this.button3, "Save current Settings");
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // openFileDialog1
             // 
@@ -1139,55 +1189,6 @@ partial class FormItems
             this.label2.Size = new System.Drawing.Size(91, 13);
             this.label2.TabIndex = 0;
             this.label2.Text = "Set Max Quantity:";
-            // 
-            // button4
-            // 
-            this.button4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button4.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.button4.Image = global::app.Properties.Resources.Load;
-            this.button4.Location = new System.Drawing.Point(857, 2);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(34, 25);
-            this.button4.TabIndex = 19;
-            this.toolTip1.SetToolTip(this.button4, "Load/Import from a previous Settings File");
-            this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
-            // 
-            // buttonRemoveFlag
-            // 
-            this.buttonRemoveFlag.ForeColor = System.Drawing.Color.Red;
-            this.buttonRemoveFlag.Image = global::app.Properties.Resources.Remove;
-            this.buttonRemoveFlag.Location = new System.Drawing.Point(324, 58);
-            this.buttonRemoveFlag.Name = "buttonRemoveFlag";
-            this.buttonRemoveFlag.Size = new System.Drawing.Size(25, 25);
-            this.buttonRemoveFlag.TabIndex = 19;
-            this.buttonRemoveFlag.UseVisualStyleBackColor = true;
-            this.buttonRemoveFlag.Click += new System.EventHandler(this.buttonRemoveFlag_Click);
-            // 
-            // buttonClose
-            // 
-            this.buttonClose.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonClose.ForeColor = System.Drawing.Color.Red;
-            this.buttonClose.Image = global::app.Properties.Resources.Delete;
-            this.buttonClose.Location = new System.Drawing.Point(406, 3);
-            this.buttonClose.Name = "buttonClose";
-            this.buttonClose.Size = new System.Drawing.Size(25, 24);
-            this.buttonClose.TabIndex = 27;
-            this.buttonClose.UseVisualStyleBackColor = true;
-            this.buttonClose.Click += new System.EventHandler(this.buttonClose_Click);
-            // 
-            // button3
-            // 
-            this.button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button3.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.button3.Image = global::app.Properties.Resources.Save;
-            this.button3.Location = new System.Drawing.Point(897, 2);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(63, 25);
-            this.button3.TabIndex = 16;
-            this.toolTip1.SetToolTip(this.button3, "Save current Settings");
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // FormItems
             // 
