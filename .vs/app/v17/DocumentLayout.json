@@ -1,0 +1,37 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\nseni\\OneDrive\\Documents\\D2R-BMBot\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{9F07A94F-EFC7-4E4B-807A-83F884EE0B44}|app.csproj|c:\\users\\nseni\\onedrive\\documents\\d2r-bmbot\\strucs\\mercstruc.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9F07A94F-EFC7-4E4B-807A-83F884EE0B44}|app.csproj|solutionrelative:strucs\\mercstruc.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "MercStruc.cs",
+              "DocumentMoniker": "C:\\Users\\nseni\\OneDrive\\Documents\\D2R-BMBot\\Strucs\\MercStruc.cs",
+              "RelativeDocumentMoniker": "Strucs\\MercStruc.cs",
+              "ToolTip": "C:\\Users\\nseni\\OneDrive\\Documents\\D2R-BMBot\\Strucs\\MercStruc.cs",
+              "RelativeToolTip": "Strucs\\MercStruc.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-15T02:16:08.38Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
