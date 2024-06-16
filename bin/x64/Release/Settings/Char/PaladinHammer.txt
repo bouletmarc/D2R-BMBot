@@ -23,7 +23,7 @@ KeySkillBattleOrder=D5
 KeySkillBattleCommand=D6
 KeySkillBattleCry=D7
 
-PlayerAttackWithRightHand=False
+PlayerAttackWithRightHand=false
 
 //#######################################
 //BELT SETTINGS   HP-HP-MANA-FULL RV -> 0=HP,1=MANA,2=RV,3=FULL RV
@@ -39,9 +39,9 @@ KeyPotion4=D4
 //#######################################
 InventoryDontCheckItem=
 {
-0,0,0,0,1,1,1,1,1,1
-0,0,0,0,1,1,1,1,1,1
-0,0,0,0,1,1,1,1,1,1
+0,0,0,0,1,1,1,1,1,1,
+0,0,0,0,1,1,1,1,1,1,
+0,0,0,0,1,1,1,1,1,1,
 0,0,0,0,1,1,1,1,1,1
 }
 
@@ -56,8 +56,8 @@ DummyItemSharedStash3=Scroll of Town Portal
 //PLAYER SETTINGS
 //#######################################
 PlayerCharName=CHARNAMEHERE
-UseTeleport=True
-UseBO=True
+UseTeleport=true
+UseBO=true
 ChickenHP=22
 TakeHPPotUnder=85
 TakeRVPotUnder=35
@@ -65,25 +65,25 @@ TakeManaPotUnder=15
 GambleAboveGoldAmount=500000
 GambleUntilGoldAmount=100000
 KeysLocationInInventory=8,0
-GrabForGold=True
-IDAtShop=True
-LeaveDiabloClone=True
-GambleGold=True
-UseKeys=True
+GrabForGold=true
+IDAtShop=true
+LeaveDiabloClone=true
+GambleGold=true
+UseKeys=true
 GambleItems=Amulet,Ring
 
 //#######################################
 //MERC SETTINGS
 //#######################################
-UsingMerc=True
-TownIfMercDead=False
+UsingMerc=true
+TownIfMercDead=false
 MercTakeHPPotUnder=40
 
 //#######################################
 //AVOID IMMUNE SETTINGS
 //#######################################
-AvoidColdImmune=False
-AvoidFireImmune=False
-AvoidLightImmune=False
-AvoidPoisonImmune=False
-AvoidMagicImmune=False
+AvoidColdImmune=false
+AvoidFireImmune=false
+AvoidLightImmune=false
+AvoidPoisonImmune=false
+AvoidMagicImmune=false

@@ -1,17 +1,17 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\nseni\\OneDrive\\Desktop\\X_z\\BMBot- X_z v3.05BETA\\",
+  "WorkspaceRootPath": "C:\\Users\\nseni\\OneDrive\\Documents\\D2R-BMBot\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{9F07A94F-EFC7-4E4B-807A-83F884EE0B44}|app.csproj|c:\\users\\nseni\\onedrive\\desktop\\x_z\\bmbot- x_z v3.05beta\\scripts\\mover.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{9F07A94F-EFC7-4E4B-807A-83F884EE0B44}|app.csproj|c:\\users\\nseni\\onedrive\\documents\\d2r-bmbot\\scripts\\mover.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{9F07A94F-EFC7-4E4B-807A-83F884EE0B44}|app.csproj|solutionrelative:scripts\\mover.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9F07A94F-EFC7-4E4B-807A-83F884EE0B44}|app.csproj|C:\\Users\\nseni\\OneDrive\\Desktop\\X_z\\BMBot- X_z v3.05BETA\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{9F07A94F-EFC7-4E4B-807A-83F884EE0B44}|app.csproj|C:\\Users\\nseni\\OneDrive\\Documents\\D2R-BMBot\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{9F07A94F-EFC7-4E4B-807A-83F884EE0B44}|app.csproj|solutionrelative:form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9F07A94F-EFC7-4E4B-807A-83F884EE0B44}|app.csproj|C:\\Users\\nseni\\OneDrive\\Desktop\\X_z\\BMBot- X_z v3.05BETA\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "AbsoluteMoniker": "D:0:0:{9F07A94F-EFC7-4E4B-807A-83F884EE0B44}|app.csproj|C:\\Users\\nseni\\OneDrive\\Documents\\D2R-BMBot\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{9F07A94F-EFC7-4E4B-807A-83F884EE0B44}|app.csproj|solutionrelative:form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     }
   ],
@@ -28,9 +28,9 @@
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "Mover.cs",
-              "DocumentMoniker": "C:\\Users\\nseni\\OneDrive\\Desktop\\X_z\\BMBot- X_z v3.05BETA\\Scripts\\Mover.cs",
+              "DocumentMoniker": "C:\\Users\\nseni\\OneDrive\\Documents\\D2R-BMBot\\Scripts\\Mover.cs",
               "RelativeDocumentMoniker": "Scripts\\Mover.cs",
-              "ToolTip": "C:\\Users\\nseni\\OneDrive\\Desktop\\X_z\\BMBot- X_z v3.05BETA\\Scripts\\Mover.cs",
+              "ToolTip": "C:\\Users\\nseni\\OneDrive\\Documents\\D2R-BMBot\\Scripts\\Mover.cs",
               "RelativeToolTip": "Scripts\\Mover.cs",
               "ViewState": "AQIAAAsAAAAAAAAAAAAQwB0AAABBAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -41,9 +41,9 @@
               "$type": "Document",
               "DocumentIndex": 1,
               "Title": "Form1.cs",
-              "DocumentMoniker": "C:\\Users\\nseni\\OneDrive\\Desktop\\X_z\\BMBot- X_z v3.05BETA\\Form1.cs",
+              "DocumentMoniker": "C:\\Users\\nseni\\OneDrive\\Documents\\D2R-BMBot\\Form1.cs",
               "RelativeDocumentMoniker": "Form1.cs",
-              "ToolTip": "C:\\Users\\nseni\\OneDrive\\Desktop\\X_z\\BMBot- X_z v3.05BETA\\Form1.cs",
+              "ToolTip": "C:\\Users\\nseni\\OneDrive\\Documents\\D2R-BMBot\\Form1.cs",
               "RelativeToolTip": "Form1.cs",
               "ViewState": "AQIAAFwAAAAAAAAAAAAIwDgCAAAKAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -53,10 +53,10 @@
               "$type": "Document",
               "DocumentIndex": 2,
               "Title": "Form1.cs [Design]",
-              "DocumentMoniker": "C:\\Users\\nseni\\OneDrive\\Desktop\\X_z\\BMBot- X_z v3.05BETA\\Form1.cs",
+              "DocumentMoniker": "C:\\Users\\nseni\\OneDrive\\Documents\\D2R-BMBot\\Form1.cs",
               "RelativeDocumentMoniker": "Form1.cs",
               "ToolTip": "C:\\Users\\nseni\\OneDrive\\Desktop\\X_z\\BMBot- X_z v3.05BETA\\Form1.cs [Design]",
-              "RelativeToolTip": "Form1.cs [Design]",
+              "RelativeToolTip": "..\\..\\Desktop\\X_z\\BMBot- X_z v3.05BETA\\Form1.cs [Design]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-06-16T18:01:02.228Z"
             }
