@@ -13,6 +13,7 @@ public partial class FormSettings : Form
         Form1_0 = form1_1;
 
         InitializeComponent();
+        this.TopMost = true;
 
         textBoxStartKey.Items.Clear();
         comboBoxPauseResume.Items.Clear();

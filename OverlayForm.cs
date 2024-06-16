@@ -94,6 +94,7 @@ public partial class OverlayForm : Form
         Form1_0 = form1_1;
 
         InitializeComponent();
+        this.TopMost = true;
 
         DoubleBuffered = true;
 
@@ -898,5 +899,10 @@ public partial class OverlayForm : Form
         ThisssPoint.Y = ((ThisssPoint.Y - Form1_0.CenterY) / Scale) + Form1_0.CenterY;
 
         return ThisssPoint;
+    }
+
+    private void OverlayForm_Load(object sender, EventArgs e)
+    {
+
     }
 }

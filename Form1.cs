@@ -40,7 +40,7 @@ using static MapAreaStruc;
 public partial class Form1 : Form
 {
 
-    public string BotVersion = "V3.05B";
+    public string BotVersion = "V3.05BETA";
 
     public string D2_LOD_113C_Path = "";
 
@@ -566,7 +566,7 @@ public partial class Form1 : Form
         dataGridView1.Rows.Add("Right Open", "Unknown");
         dataGridView1.Rows.Add("Full Open", "Unknown");
 
-        CheckForUpdates();
+        //CheckForUpdates();
 
         comboBoxCollisionArea.Items.Clear();
         for (int i = 0; i < 136; i++) comboBoxCollisionArea.Items.Add(((Enums.Area) i + 1).ToString());
@@ -2539,5 +2539,10 @@ public partial class Form1 : Form
     private void comboBoxCollisionArea_SelectedIndexChanged(object sender, EventArgs e)
     {
         if (CanReloadCollision) PathFinding_0.DebugMapCollision();
+    }
+
+    private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+    {
+
     }
 }
