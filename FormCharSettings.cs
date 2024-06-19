@@ -109,8 +109,13 @@ public partial class FormCharSettings : Form
     {
         CanReloadSettings = false;
 
-        if (CharConfig.RunningOnChar == "PaladinHammer") comboBoxType.SelectedIndex = 0;
-        if (CharConfig.RunningOnChar == "SorceressBlizzard") comboBoxType.SelectedIndex = 1;
+        if (CharConfig.RunningOnChar == "Paladin") comboBoxType.SelectedIndex = 0;
+        if (CharConfig.RunningOnChar == "Sorceress") comboBoxType.SelectedIndex = 1;
+        if (CharConfig.RunningOnChar == "Amazon") comboBoxType.SelectedIndex = 2;
+        if (CharConfig.RunningOnChar == "Assassin") comboBoxType.SelectedIndex = 3;
+        if (CharConfig.RunningOnChar == "Druid") comboBoxType.SelectedIndex = 4;
+        if (CharConfig.RunningOnChar == "Barbarian") comboBoxType.SelectedIndex = 5;
+        if (CharConfig.RunningOnChar == "Necromancer") comboBoxType.SelectedIndex = 6;
 
         textBoxLeftSkill.Text = CharConfig.KeySkillAttack.ToString();
         textBoxRightSkill.Text = CharConfig.KeySkillAura.ToString();
@@ -192,8 +197,14 @@ public partial class FormCharSettings : Form
 
     public void SaveSettings()
     {
-        if (comboBoxType.SelectedIndex == 0) CharConfig.RunningOnChar = "PaladinHammer";
-        if (comboBoxType.SelectedIndex == 1) CharConfig.RunningOnChar = "SorceressBlizzard";
+        if (comboBoxType.SelectedIndex == 0) CharConfig.RunningOnChar = "Paladin";
+        if (comboBoxType.SelectedIndex == 1) CharConfig.RunningOnChar = "Sorceress";
+        if (comboBoxType.SelectedIndex == 2) CharConfig.RunningOnChar = "Amazon";
+        if (comboBoxType.SelectedIndex == 3) CharConfig.RunningOnChar = "Assassin";
+        if (comboBoxType.SelectedIndex == 4) CharConfig.RunningOnChar = "Druid";
+        if (comboBoxType.SelectedIndex == 5) CharConfig.RunningOnChar = "Barbarian";
+        if (comboBoxType.SelectedIndex == 6) CharConfig.RunningOnChar = "Necromancer";
+
 
         Enum.TryParse(textBoxLeftSkill.Text, out CharConfig.KeySkillAttack);
         Enum.TryParse(textBoxRightSkill.Text, out CharConfig.KeySkillAura);
@@ -333,8 +344,13 @@ public partial class FormCharSettings : Form
     {
         if (CanReloadSettings)
         {
-            if (comboBoxType.SelectedIndex == 0) CharConfig.RunningOnChar = "PaladinHammer";
-            if (comboBoxType.SelectedIndex == 1) CharConfig.RunningOnChar = "SorceressBlizzard";
+            if (comboBoxType.SelectedIndex == 0) CharConfig.RunningOnChar = "Paladin";
+            if (comboBoxType.SelectedIndex == 1) CharConfig.RunningOnChar = "Sorceress";
+            if (comboBoxType.SelectedIndex == 2) CharConfig.RunningOnChar = "Amazon";
+            if (comboBoxType.SelectedIndex == 3) CharConfig.RunningOnChar = "Assassin";
+            if (comboBoxType.SelectedIndex == 4) CharConfig.RunningOnChar = "Druid";
+            if (comboBoxType.SelectedIndex == 5) CharConfig.RunningOnChar = "Barbarian";
+            if (comboBoxType.SelectedIndex == 6) CharConfig.RunningOnChar = "Necromancer";
 
             Form1_0.SettingsLoader_0.ReloadCharSettings();
             LoadSettings();
@@ -415,20 +431,40 @@ public partial class FormCharSettings : Form
         Form1_0.SettingsLoader_0.SaveCharSettings();
 
         string Fname = "";
-        if (CharConfig.RunningOnChar == "PaladinHammer") Fname = "PaladinHammer_" + CharConfig.PlayerCharName + ".txt";
-        if (CharConfig.RunningOnChar == "SorceressBlizzard") Fname = "SorceressBlizzard_" + CharConfig.PlayerCharName + ".txt";
+        if (CharConfig.RunningOnChar == "Paladin") Fname = "Paladin_" + CharConfig.PlayerCharName + ".txt";
+        if (CharConfig.RunningOnChar == "Sorceress") Fname = "Sorceress_" + CharConfig.PlayerCharName + ".txt";
+        if(CharConfig.RunningOnChar == "Amazon") Fname = "Amazon_" + CharConfig.PlayerCharName + ".txt";
+        if(CharConfig.RunningOnChar == "Assassin") Fname = "Assassin_" + CharConfig.PlayerCharName + ".txt";
+        if(CharConfig.RunningOnChar == "Druid") Fname = "Druid_" + CharConfig.PlayerCharName + ".txt";
+        if(CharConfig.RunningOnChar == "Barbarian") Fname = "Barbarian_" + CharConfig.PlayerCharName + ".txt";
+        if(CharConfig.RunningOnChar == "Necromancer") Fname = "Necromancer_" + CharConfig.PlayerCharName + ".txt";
         saveFileDialog1.FileName = Fname;
 
         DialogResult result = saveFileDialog1.ShowDialog();
         if (result == DialogResult.OK)
         {
             File.Create(saveFileDialog1.FileName).Dispose();
-            if (CharConfig.RunningOnChar == "PaladinHammer") File.WriteAllBytes(saveFileDialog1.FileName, File.ReadAllBytes(Form1_0.SettingsLoader_0.File_PaladinHammer));
-            else if (CharConfig.RunningOnChar == "SorceressBlizzard") File.WriteAllBytes(saveFileDialog1.FileName, File.ReadAllBytes(Form1_0.SettingsLoader_0.File_SorceressBlizzard));
+            if (CharConfig.RunningOnChar == "Paladin") File.WriteAllBytes(saveFileDialog1.FileName, File.ReadAllBytes(Form1_0.SettingsLoader_0.File_Paladin));
+            else if (CharConfig.RunningOnChar == "Sorceress") File.WriteAllBytes(saveFileDialog1.FileName, File.ReadAllBytes(Form1_0.SettingsLoader_0.File_Sorceress));
+            else if (CharConfig.RunningOnChar == "Amazon") File.WriteAllBytes(saveFileDialog1.FileName, File.ReadAllBytes(Form1_0.SettingsLoader_0.File_Amazon));
+            else if (CharConfig.RunningOnChar == "Assassin") File.WriteAllBytes(saveFileDialog1.FileName, File.ReadAllBytes(Form1_0.SettingsLoader_0.File_Assassin));
+            else if (CharConfig.RunningOnChar == "Druid") File.WriteAllBytes(saveFileDialog1.FileName, File.ReadAllBytes(Form1_0.SettingsLoader_0.File_Druid));
+            else if (CharConfig.RunningOnChar == "Barbarian") File.WriteAllBytes(saveFileDialog1.FileName, File.ReadAllBytes(Form1_0.SettingsLoader_0.File_Barbarian));
+            else if (CharConfig.RunningOnChar == "Necromancer") File.WriteAllBytes(saveFileDialog1.FileName, File.ReadAllBytes(Form1_0.SettingsLoader_0.File_Necromancer));
         }
     }
 
     private void groupBoxInventory_Enter(object sender, EventArgs e)
+    {
+
+    }
+
+    private void groupBox3_Enter(object sender, EventArgs e)
+    {
+
+    }
+
+    private void textBoxLeftSkill_SelectedIndexChanged(object sender, EventArgs e)
     {
 
     }

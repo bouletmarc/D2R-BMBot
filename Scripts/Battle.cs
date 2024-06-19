@@ -545,7 +545,7 @@ public class Battle
             FirstAttackCasting();
             SetSkills();
             CastSkills();
-            if (CharConfig.RunningOnChar == "PaladinHammer")
+            if (CharConfig.RunningOnChar == "Paladin")
             {
                 CastSkills();
                 CastSkills();
@@ -677,7 +677,7 @@ public class Battle
             FirstAttackCasting();
             SetSkills();
             CastSkills();
-            if (CharConfig.RunningOnChar == "PaladinHammer")
+            if (CharConfig.RunningOnChar == "Paladin")
             {
                 CastSkills();
                 CastSkills();
@@ -731,7 +731,7 @@ public class Battle
                 FirstAttackCasting();
                 SetSkills();
                 CastSkills();
-                if (CharConfig.RunningOnChar == "PaladinHammer")
+                if (CharConfig.RunningOnChar == "Paladin")
                 {
                     CastSkills();
                     CastSkills();
@@ -932,9 +932,74 @@ public class Battle
 
     public void FirstAttackCasting()
     {
+        if (CharConfig.RunningOnChar == "Necromancer")
+        {
+            Form1_0.KeyMouse_0.PressKey(CharConfig.KeySkillAttack); //select teeth
+
+            int tryes = 0;
+            while (tryes < 6)
+            {
+                CastSkills();
+                Form1_0.WaitDelay(35);
+                tryes++;
+            }
+        }
+
+        if (CharConfig.RunningOnChar == "Druid")
+        {
+            Form1_0.KeyMouse_0.PressKey(CharConfig.KeySkillAttack); //select twister
+
+            int tryes = 0;
+            while (tryes < 6)
+            {
+                CastSkills();
+                Form1_0.WaitDelay(35);
+                tryes++;
+            }
+        }
+
         if (!FirstAttackCasted)
         {
-            if (CharConfig.RunningOnChar == "SorceressBlizzard")
+            if (CharConfig.RunningOnChar == "Barbarian")
+            {
+                Form1_0.KeyMouse_0.PressKey(CharConfig.KeySkillAttack); //select leap
+
+                int tryes = 0;
+                while (tryes < 6)
+                {
+                    CastSkills();
+                    Form1_0.WaitDelay(35);
+                    tryes++;
+                }
+            }
+
+            if (CharConfig.RunningOnChar == "Assassin")
+            {
+                Form1_0.KeyMouse_0.PressKey(CharConfig.KeySkillAttack); //select shock web
+
+                int tryes = 0;
+                while (tryes < 6)
+                {
+                    CastSkills();
+                    Form1_0.WaitDelay(35);
+                    tryes++;
+                }
+            }
+
+            if (CharConfig.RunningOnChar == "Amazon")
+            {
+                Form1_0.KeyMouse_0.PressKey(CharConfig.KeySkillAttack); //select charged strike
+
+                int tryes = 0;
+                while (tryes < 6)
+                {
+                    CastSkills();
+                    Form1_0.WaitDelay(35);
+                    tryes++;
+                }
+            }
+
+            if (CharConfig.RunningOnChar == "Sorceress")
             {
                 Form1_0.KeyMouse_0.PressKey(CharConfig.KeySkillAttack); //select static
 

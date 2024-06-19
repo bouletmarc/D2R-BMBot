@@ -14,7 +14,8 @@ using System.Reflection.Emit;
 public class KeyMouse
 {
     Form1 Form1_0;
-
+    private const int OriginalWidth = 1920;
+    private const int OriginalHeight = 1080;
     public int ProcessingDelay = 1;
 
     private const int WH_KEYBOARD_LL = 13;
@@ -205,7 +206,6 @@ public class KeyMouse
     public void MouseClicc_RealPos(int ThX, int ThY)
     {
         //Thread.Sleep(ProcessingDelay);
-
         MouseMoveTo_RealPos(ThX, ThY);
         SendMessage((int)Form1_0.hWnd, WM_LBUTTONUP, 0x00000000, CreateLParam(150, 150));
         Thread.Sleep(1);
@@ -222,12 +222,24 @@ public class KeyMouse
         Thread.Sleep(ProcessingDelay);
         SendMessage((int)Form1_0.hWnd, WM_RBUTTONUP, 0x00000000, CreateLParam(150, 150));
     }
+    public static (int x, int y) ConvertToCurrentResolution(int x, int y)
+    {
+        int targetWidth = Screen.PrimaryScreen.Bounds.Width;
+        int targetHeight = Screen.PrimaryScreen.Bounds.Height;
 
+        double scaleX = (double)targetWidth / OriginalWidth;
+        double scaleY = (double)targetHeight / OriginalHeight;
+
+        int newX = (int)(x * scaleX);
+        int newY = (int)(y * scaleY);
+
+        return (newX, newY);
+    }
     public void MouseClicc(int ThX, int ThY)
     {
         //Thread.Sleep(ProcessingDelay);
-
-        MouseMoveTo(ThX, ThY);
+        var (x, y) = ConvertToCurrentResolution(ThX, ThY);
+        MouseMoveTo(x, y);
         SendMessage((int)Form1_0.hWnd, WM_LBUTTONUP, 0x00000000, CreateLParam(150, 150));
         Thread.Sleep(1);
         SendMessage((int)Form1_0.hWnd, WM_LBUTTONDOWN, 0x00000001, CreateLParam(150, 150));
@@ -237,7 +249,8 @@ public class KeyMouse
 
     public void MouseCliccRight(int ThX, int ThY)
     {
-        MouseMoveTo(ThX, ThY);
+        var (x, y) = ConvertToCurrentResolution(ThX, ThY);
+        MouseMoveTo(x, y);
         SendMessage((int)Form1_0.hWnd, WM_RBUTTONUP, 0x00000000, CreateLParam(150, 150));
         Thread.Sleep(1);
         SendMessage((int)Form1_0.hWnd, WM_RBUTTONDOWN, 0x00000001, CreateLParam(150, 150));

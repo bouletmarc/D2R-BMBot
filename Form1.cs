@@ -36,6 +36,7 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Button;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.ToolBar;
 using static MapAreaStruc;
+using System.Linq.Expressions;
 
 public partial class Form1 : Form
 {
@@ -70,8 +71,23 @@ public partial class Form1 : Form
     public DateTime TimeSinceSearchingForGames = new DateTime();
 
     public Rectangle D2Rect = new Rectangle();
-    public int ScreenX = 1920;
-    public int ScreenY = 1080;
+    [DllImport("user32.dll", SetLastError = true)]
+    private static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
+    [DllImport("user32.dll", SetLastError = true)]
+    private static extern IntPtr FindWindowEx(IntPtr hwndParent, IntPtr hwndChildAfter, string lpszClass, string lpszWindow);
+    [DllImport("user32.dll", SetLastError = true)]
+    private static extern bool GetWindowRect(IntPtr hWnd, out RECT lpRect);
+    [StructLayout(LayoutKind.Sequential)]
+    private struct RECT
+    {
+        public int Left;
+        public int Top;
+        public int Right;
+        public int Bottom;
+    }
+    public int ScreenX = Screen.PrimaryScreen.Bounds.Width;
+    public int ScreenY = Screen.PrimaryScreen.Bounds.Height;
+    //var (ScreenX, ScreenY) = GetWindowResolutionByExe("d2r.exe");
     public int CenterX = 0;
     public int CenterY = 0;
     public int D2Widht = 0;
@@ -214,8 +230,8 @@ public partial class Form1 : Form
     [DllImport("kernel32.dll")]
     static extern void GetSystemInfo(out SYSTEM_INFO lpSystemInfo);
 
-    [DllImport("user32.dll")]
-    private static extern int FindWindow(string ClassName, string WindowName);
+    //[DllImport("user32.dll")]
+    //private static extern int FindWindow(string ClassName, string WindowName);
 
     [DllImport("user32.dll")]
     private static extern int GetWindowRect(int hwnd, out Rectangle rect);
@@ -269,11 +285,13 @@ public partial class Form1 : Form
     public Form1()
     {
         InitializeComponent();
+        Form1_0 = this;
+        (Form1_0.ScreenX, Form1_0.ScreenY) = GetWindowResolutionByExe("d2r.exe");
         this.TopMost = true;
         this.Text = "D2R - BMBot (" + BotVersion + ")";
         labelGames.Text = "";//CurrentGameNumber.ToString();
         SetGameStatus("STOPPED");
-        Form1_0 = this;
+
         richTextBox1.HideSelection = false;//Hide selection so that AppendText will auto scroll to the end
         richTextBox2.HideSelection = false;//Hide selection so that AppendText will auto scroll to the end
                                            //richTextBox2.Visible = false;
@@ -487,15 +505,50 @@ public partial class Form1 : Form
                         //Form1_0.D2_LOD_113C_Path = folderBrowserDialog1.SelectedPath;
 
                         //load char settings
-                        Form1_0.SettingsLoader_0.ReloadCharSettingsFromThisFile(folderBrowserDialog1.SelectedPath + @"\Char\SorceressBlizzard.txt");
-                        Form1_0.SettingsLoader_0.ReloadCharSettingsFromThisFile(folderBrowserDialog1.SelectedPath + @"\Char\PaladinHammer.txt");
+                        Form1_0.SettingsLoader_0.ReloadCharSettingsFromThisFile(folderBrowserDialog1.SelectedPath + @"\Char\Sorceress.txt");
+                        Form1_0.SettingsLoader_0.ReloadCharSettingsFromThisFile(folderBrowserDialog1.SelectedPath + @"\Char\Paladin.txt");
+                        Form1_0.SettingsLoader_0.ReloadCharSettingsFromThisFile(folderBrowserDialog1.SelectedPath + @"\Char\Assassin.txt");
+                        Form1_0.SettingsLoader_0.ReloadCharSettingsFromThisFile(folderBrowserDialog1.SelectedPath + @"\Char\Druid.txt");
+                        Form1_0.SettingsLoader_0.ReloadCharSettingsFromThisFile(folderBrowserDialog1.SelectedPath + @"\Char\Necromancer.txt");
+                        Form1_0.SettingsLoader_0.ReloadCharSettingsFromThisFile(folderBrowserDialog1.SelectedPath + @"\Char\Amazon.txt");
+                        Form1_0.SettingsLoader_0.ReloadCharSettingsFromThisFile(folderBrowserDialog1.SelectedPath + @"\Char\Barbarian.txt");
                         Form1_0.SettingsLoader_0.LoadThisFileSettings(folderBrowserDialog1.SelectedPath + @"\ItemsSettings.txt");
                         Form1_0.SettingsLoader_0.LoadThisFileSettings(folderBrowserDialog1.SelectedPath + @"\CubingRecipes.txt");
                         Form1_0.SettingsLoader_0.LoadThisFileSettings(folderBrowserDialog1.SelectedPath + @"\BotSettings.txt");
                         Form1_0.SettingsLoader_0.LoadThisFileSettings(folderBrowserDialog1.SelectedPath + @"\CharSettings.txt");
 
-                        //Reload Sorc Settings
-                        if (CharConfig.RunningOnChar != "PaladinHammer") Form1_0.SettingsLoader_0.ReloadCharSettingsFromThisFile(folderBrowserDialog1.SelectedPath + @"\Char\SorceressBlizzard.txt");
+                        //Load correct character
+                        switch (CharConfig.RunningOnChar)
+                        {
+                            case "Sorceress":
+                                Form1_0.SettingsLoader_0.ReloadCharSettingsFromThisFile(folderBrowserDialog1.SelectedPath + @"\Char\Sorceress.txt");
+                                // Load Sorceress
+                                break;
+                            case "Amazon":
+                                Form1_0.SettingsLoader_0.ReloadCharSettingsFromThisFile(folderBrowserDialog1.SelectedPath + @"\Char\Amazon.txt");
+                                // Load Amazon
+                                break;
+                            case "Assassin":
+                                Form1_0.SettingsLoader_0.ReloadCharSettingsFromThisFile(folderBrowserDialog1.SelectedPath + @"\Char\Assassin.txt");
+                                // Load Sorceress
+                                break;
+                            case "Druid":
+                                Form1_0.SettingsLoader_0.ReloadCharSettingsFromThisFile(folderBrowserDialog1.SelectedPath + @"\Char\Druid.txt");
+                                // Load Amazon
+                                break;
+                            case "Barbarian":
+                                Form1_0.SettingsLoader_0.ReloadCharSettingsFromThisFile(folderBrowserDialog1.SelectedPath + @"\Char\Barbarian.txt");
+                                // Load Sorceress
+                                break;
+                            case "Necromancer":
+                                Form1_0.SettingsLoader_0.ReloadCharSettingsFromThisFile(folderBrowserDialog1.SelectedPath + @"\Char\Necromancer.txt");
+                                // Load Amazon
+                                break;
+                            case "Paladin":
+                                Form1_0.SettingsLoader_0.ReloadCharSettingsFromThisFile(folderBrowserDialog1.SelectedPath + @"\Char\Paladin.txt");
+                                // Load Paladin
+                                break;
+                        }
 
                         //Reload Settings (D2 Path, RunNumber)
                         Form1_0.SettingsLoader_0.LoadThisFileSettings(folderBrowserDialog1.SelectedPath + @"\Settings.txt");
@@ -569,10 +622,40 @@ public partial class Form1 : Form
         //CheckForUpdates();
 
         comboBoxCollisionArea.Items.Clear();
-        for (int i = 0; i < 136; i++) comboBoxCollisionArea.Items.Add(((Enums.Area) i + 1).ToString());
+        for (int i = 0; i < 136; i++) comboBoxCollisionArea.Items.Add(((Enums.Area)i + 1).ToString());
 
         LoadingBot = false;
     }
+
+    public (int width, int height) GetWindowResolutionByExe(string exeName)
+    {
+        var process = Process.GetProcessesByName(exeName);
+        if (process.Length == 0)
+        {
+            Console.WriteLine("Process not found!");
+            return (0, 0);
+        }
+
+        IntPtr windowHandle = process[0].MainWindowHandle;
+        if (windowHandle == IntPtr.Zero)
+        {
+            Console.WriteLine("Main window not found!");
+            return (0, 0);
+        }
+
+        if (GetWindowRect(windowHandle, out RECT rect))
+        {
+            int width = rect.Right - rect.Left;
+            int height = rect.Bottom - rect.Top;
+            return (width, height);
+        }
+        else
+        {
+            Console.WriteLine("Failed to get window rectangle!");
+            return (0, 0);
+        }
+    }
+
 
     public void CheckForUpdates()
     {
@@ -839,7 +922,7 @@ public partial class Form1 : Form
                 SetGameStatus("LOADING");
                 method_1("D2R is running...", Color.DarkGreen);
 
-                hWnd = FindWindow(null, "Diablo II: Resurrected");
+                hWnd = (int)FindWindow(null, "Diablo II: Resurrected");
                 //GetWindowRect(hWnd, out D2Rect);
                 GetClientRect(hWnd, out D2Rect);
                 Point thiP = new Point();
@@ -1985,7 +2068,7 @@ public partial class Form1 : Form
         TimeSpan ThisTime = DateTime.Now - TimeStart;
 
         int CurrentWait = 0;
-        int WaitingDelay = (int) ((DelayTime * 10.0) * CharConfig.OverallDelaysMultiplyer);
+        int WaitingDelay = (int)((DelayTime * 10.0) * CharConfig.OverallDelaysMultiplyer);
         while (ThisTime.TotalMilliseconds < WaitingDelay)
         {
             SetProcessingTime();
@@ -2174,6 +2257,7 @@ public partial class Form1 : Form
     private void button3_Click(object sender, EventArgs e)
     {
         FormSettings FormSettings_0 = new FormSettings(Form1_0);
+        FormSettings_0.Location = new Point(this.Location.X + this.Width, this.Location.Y);
         FormSettings_0.ShowDialog();
     }
 
@@ -2380,6 +2464,8 @@ public partial class Form1 : Form
     private void button3_Click_1(object sender, EventArgs e)
     {
         FormSettings FormSettings_0 = new FormSettings(Form1_0);
+        FormSettings_0.StartPosition = FormStartPosition.Manual;
+        FormSettings_0.Location = new Point(this.Location.X + this.Width, this.Location.Y);
         FormSettings_0.ShowDialog();
     }
 
@@ -2433,12 +2519,17 @@ public partial class Form1 : Form
     private void button4_Click(object sender, EventArgs e)
     {
         FormItems FormItems_0 = new FormItems(Form1_0);
+        FormItems_0.StartPosition = FormStartPosition.Manual;
+        FormItems_0.Location = new Point(this.Location.X + this.Width, this.Location.Y);
         FormItems_0.ShowDialog();
+
     }
 
     private void button5_Click(object sender, EventArgs e)
     {
         FormCharSettings FormCharSettings_0 = new FormCharSettings(Form1_0);
+        FormCharSettings_0.StartPosition = FormStartPosition.Manual;
+        FormCharSettings_0.Location = new Point(this.Location.X + this.Width, this.Location.Y);
         FormCharSettings_0.ShowDialog();
     }
 
@@ -2541,7 +2632,7 @@ public partial class Form1 : Form
         if (CanReloadCollision) PathFinding_0.DebugMapCollision();
     }
 
-    private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+    private void richTextBox1_TextChanged(object sender, EventArgs e)
     {
 
     }

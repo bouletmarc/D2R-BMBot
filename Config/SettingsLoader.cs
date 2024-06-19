@@ -12,8 +12,13 @@ public class SettingsLoader
 {
     Form1 Form1_0;
 
-    public string File_PaladinHammer = Application.StartupPath + @"\Settings\Char\PaladinHammer.txt";
-    public string File_SorceressBlizzard = Application.StartupPath + @"\Settings\Char\SorceressBlizzard.txt";
+    public string File_Paladin = Application.StartupPath + @"\Settings\Char\Paladin.txt";
+    public string File_Sorceress = Application.StartupPath + @"\Settings\Char\Sorceress.txt";
+    public string File_Amazon = Application.StartupPath + @"\Settings\Char\Amazon.txt";
+    public string File_Assassin = Application.StartupPath + @"\Settings\Char\Assassin.txt";
+    public string File_Druid = Application.StartupPath + @"\Settings\Char\Druid.txt";
+    public string File_Barbarian = Application.StartupPath + @"\Settings\Char\Barbarian.txt";
+    public string File_Necromancer = Application.StartupPath + @"\Settings\Char\Necromancer.txt";
 
     public string File_CharSettings = Application.StartupPath + @"\Settings\CharSettings.txt";
     public string File_BotSettings = Application.StartupPath + @"\Settings\BotSettings.txt";
@@ -60,8 +65,13 @@ public class SettingsLoader
             if (Path.GetFileName(ThisFilePath) == "ItemsSettings.txt") LoadItemsSettings();
             if (Path.GetFileName(ThisFilePath) == "CubingRecipes.txt") LoadCubingSettings();
 
-            if (Path.GetFileName(ThisFilePath).Contains("PaladinHammer")) LoadCurrentCharSettings();
-            if (Path.GetFileName(ThisFilePath).Contains("SorceressBlizzard")) LoadCurrentCharSettings();
+            if (Path.GetFileName(ThisFilePath).Contains("Paladin")) LoadCurrentCharSettings();
+            if (Path.GetFileName(ThisFilePath).Contains("Sorceress")) LoadCurrentCharSettings();
+            if (Path.GetFileName(ThisFilePath).Contains("Amazon")) LoadCurrentCharSettings();
+            if (Path.GetFileName(ThisFilePath).Contains("Assassin")) LoadCurrentCharSettings();
+            if (Path.GetFileName(ThisFilePath).Contains("Druid")) LoadCurrentCharSettings();
+            if (Path.GetFileName(ThisFilePath).Contains("Barbarian")) LoadCurrentCharSettings();
+            if (Path.GetFileName(ThisFilePath).Contains("Necromancer")) LoadCurrentCharSettings();
 
             if (Path.GetFileName(ThisFilePath) == "Settings.txt") LoadOthersSettings();
         }
@@ -106,8 +116,13 @@ public class SettingsLoader
 
     public void ReloadCharSettings()
     {
-        if (CharConfig.RunningOnChar == "PaladinHammer") LoadThisFileSettings(File_PaladinHammer);
-        else if (CharConfig.RunningOnChar == "SorceressBlizzard") LoadThisFileSettings(File_SorceressBlizzard);
+        if (CharConfig.RunningOnChar == "Paladin") LoadThisFileSettings(File_Paladin);
+        else if (CharConfig.RunningOnChar == "Sorceress") LoadThisFileSettings(File_Sorceress);
+        else if (CharConfig.RunningOnChar == "Amazon") LoadThisFileSettings(File_Amazon);
+        else if (CharConfig.RunningOnChar == "Assassin") LoadThisFileSettings(File_Assassin);
+        else if (CharConfig.RunningOnChar == "Druid") LoadThisFileSettings(File_Druid);
+        else if (CharConfig.RunningOnChar == "Barbarian") LoadThisFileSettings(File_Barbarian);
+        else if (CharConfig.RunningOnChar == "Necromancer") LoadThisFileSettings(File_Necromancer);
     }
 
     public void ReloadCharSettingsFromThisFile(string ThisFilePath)
@@ -118,8 +133,13 @@ public class SettingsLoader
     public void SaveCharSettings()
     {
         string ThisFilePath = "";
-        if (CharConfig.RunningOnChar == "PaladinHammer") ThisFilePath = File_PaladinHammer;
-        if (CharConfig.RunningOnChar == "SorceressBlizzard") ThisFilePath = File_SorceressBlizzard;
+        if (CharConfig.RunningOnChar == "Paladin") ThisFilePath = File_Paladin;
+        if (CharConfig.RunningOnChar == "Sorceress") ThisFilePath = File_Sorceress;
+        if (CharConfig.RunningOnChar == "Amazon") ThisFilePath = File_Amazon;
+        if (CharConfig.RunningOnChar == "Assassin") ThisFilePath = File_Assassin;
+        if (CharConfig.RunningOnChar == "Druid") ThisFilePath = File_Druid;
+        if (CharConfig.RunningOnChar == "Barbarian") ThisFilePath = File_Barbarian;
+        if (CharConfig.RunningOnChar == "Necromancer") ThisFilePath = File_Necromancer;
 
         string[] AllLines = File.ReadAllLines(ThisFilePath);
         for (int i = 0; i < AllLines.Length; i++)

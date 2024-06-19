@@ -347,7 +347,7 @@ public static class EnumsMobsNPC
         FeederNest = 335,
         BloodHookNest = 336,
         BloodWingNest = 337,
-        DeadCorpse = 338, //OR Guard
+        Guard = 338, //OR DeadCorpse
         minispider = 339,
         boneprison1 = 340,
         boneprison2 = 341,

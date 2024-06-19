@@ -12,6 +12,7 @@ public partial class FormSettings : Form
     {
         Form1_0 = form1_1;
 
+        //this.Location = new Point(Form1_0.Location.X + Form1_0.Width, Form1_0.Location.Y);
         InitializeComponent();
         this.TopMost = true;
 
@@ -50,6 +51,7 @@ public partial class FormSettings : Form
 
     public void LoadSettings()
     {
+        this.Location = new Point(Form1_0.Location.X + Form1_0.Width, Form1_0.Location.Y);
         checkBoxShowOverlay.Checked = CharConfig.ShowOverlay;
 
         textBoxD2Path.Text = Form1_0.D2_LOD_113C_Path;
@@ -211,7 +213,7 @@ public partial class FormSettings : Form
         if (!checkBoxRush.Checked) groupBox1.Enabled = (comboBoxLobby.SelectedIndex == 0);
         else groupBox1.Enabled = false;
 
-        if (comboBoxLobby.SelectedIndex == 1) 
+        if (comboBoxLobby.SelectedIndex == 1)
         {
             textBoxSearchGame.Text = CharConfig.ChaosLeechSearch;
             textBoxAvoidWords.Text = "";
@@ -221,7 +223,7 @@ public partial class FormSettings : Form
                 if (p < CharConfig.ChaosSearchAvoidWords.Count - 2) textBoxAvoidWords.Text += ",";
             }
         }
-        else if(comboBoxLobby.SelectedIndex == 2)
+        else if (comboBoxLobby.SelectedIndex == 2)
         {
             textBoxSearchGame.Text = CharConfig.BaalLeechSearch;
             textBoxAvoidWords.Text = "";
@@ -521,6 +523,8 @@ public partial class FormSettings : Form
     private void button5_Click(object sender, EventArgs e)
     {
         FormAdvancedSettings FormAdvancedSettings_0 = new FormAdvancedSettings(Form1_0);
+        FormAdvancedSettings_0.StartPosition = FormStartPosition.Manual;
+        FormAdvancedSettings_0.Location = new Point(this.Location.X + this.Width, this.Location.Y);
         FormAdvancedSettings_0.ShowDialog();
     }
 
