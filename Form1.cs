@@ -1312,7 +1312,7 @@ public partial class Form1 : Form
                     if (!UIScan_0.loading)
                     {
                         //MobsStruc_0.GetMobs("", "", true, 200, new List<long>());
-                        //MercStruc_0.GetMercInfos();
+                        MercStruc_0.GetMercInfos();
                         //Battle_0.SetSkills();
                         //Battle_0.CastSkills();
                         //ItemsStruc_0.GetItems(false);
