@@ -162,8 +162,13 @@ partial class FormCharSettings
             // 
             this.comboBoxType.FormattingEnabled = true;
             this.comboBoxType.Items.AddRange(new object[] {
-            "Paladin Hammer",
-            "Sorceress Blizzard"});
+            "Paladin",
+            "Sorceress",
+            "Amazon",
+            "Assassin",
+            "Druid",
+            "Barbarian",
+            "Necromancer"});
             this.comboBoxType.Location = new System.Drawing.Point(116, 9);
             this.comboBoxType.Name = "comboBoxType";
             this.comboBoxType.Size = new System.Drawing.Size(199, 21);
@@ -274,7 +279,8 @@ partial class FormCharSettings
             this.textBoxLifeSkill.Name = "textBoxLifeSkill";
             this.textBoxLifeSkill.Size = new System.Drawing.Size(67, 21);
             this.textBoxLifeSkill.TabIndex = 30;
-            this.toolTip1.SetToolTip(this.textBoxLifeSkill, "Paladin=Prayer, Sorceress=Energy Shield");
+            this.toolTip1.SetToolTip(this.textBoxLifeSkill, "Paladin=Prayer, Sorceress=Energy Shield, Amazon=, Assassin=, Druid=Oak Sage, Barb" +
+        "arian=, Necromancer=");
             // 
             // textBoxCastDefenseSkill
             // 
@@ -329,6 +335,7 @@ partial class FormCharSettings
             this.textBoxLeftSkill.Size = new System.Drawing.Size(67, 21);
             this.textBoxLeftSkill.TabIndex = 24;
             this.toolTip1.SetToolTip(this.textBoxLeftSkill, "Paladin=Hammer, Sorceress=Static");
+            this.textBoxLeftSkill.SelectedIndexChanged += new System.EventHandler(this.textBoxLeftSkill_SelectedIndexChanged);
             // 
             // label27
             // 
@@ -639,6 +646,7 @@ partial class FormCharSettings
             this.groupBox3.TabIndex = 20;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Char Parameters";
+            this.groupBox3.Enter += new System.EventHandler(this.groupBox3_Enter);
             // 
             // buttonGambleSettings
             // 
@@ -1100,7 +1108,8 @@ partial class FormCharSettings
             // 
             this.openFileDialog1.DefaultExt = "*.txt";
             this.openFileDialog1.Filter = "\'Char\' Settings|*.txt";
-            this.openFileDialog1.Title = "Open \'PaladinHammer.txt\' or \'SorceressBlizzard.txt\'";
+            this.openFileDialog1.Title = "Open \'Paladin.txt\' or \'Sorceress.txt\' or \'Amazon.txt\' or \'Assassin.txt\' or \'Amazo" +
+    "n.txt\' or \'Druid.txt\' or \'Barbarian.txt\' or \'Necromancer.txt\'";
             // 
             // panelGamble
             // 

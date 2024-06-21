@@ -2,7 +2,12 @@
 //SET THE CHAR TO RUN WITH
 //#######################################
 //AVAILABLE CHAR ARE:
-//PaladinHammer
-//SorceressBlizzard
+//Paladin
+//Sorceress
+//Amazon
+//Assassin
+//Druid
+//Barbarian
+//Necromancer
 //#######################################
-RunOnChar=PaladinHammer
+RunOnChar=Paladin

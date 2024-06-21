@@ -14,7 +14,7 @@ public class Baal
     //#####################################################
     //#####################################################
     //Special Run Variable
-    public bool KillBaal = true;
+    public bool KillBaal = false;
     public List<uint> LeaveIfMobsIsPresent_ID = new List<uint>();
     public List<int> LeaveIfMobsIsPresent_Count = new List<int>();
     public int LeaveIfMobsCountIsAbove = 0;
@@ -430,6 +430,7 @@ public class Baal
                     Form1_0.Town_0.FastTowning = false;
                     Form1_0.Town_0.UseLastTP = false;
                     ScriptDone = true;
+                    KillBaal = true;
                     return;
                 }
 

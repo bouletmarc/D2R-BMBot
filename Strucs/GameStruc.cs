@@ -494,7 +494,7 @@ public class GameStruc
         long xdiff = targetx - playerX;
         long ydiff = targety - playerY;
 
-        double ThisScales = (double)Form1_0.D2Widht / 1920.0;
+        double ThisScales = (double)Form1_0.D2Widht / Form1_0.ScreenX;
         //double ThisScalesInv = 1920.0 / (double)Form1_0.D2Widht;
         //if (ThisScales != 1) scale = scale / (ThisScales * 2);
         if (ThisScales != 1) scale = scale * ThisScales;
@@ -518,7 +518,7 @@ public class GameStruc
         long xdiff = targetx - playerX;
         long ydiff = targety - playerY;
 
-        double ThisScales = (double)Form1_0.D2Widht / 1920.0;
+        double ThisScales = (double)Form1_0.D2Widht / Form1_0.ScreenX;
         //double ThisScalesInv = 1920.0 / (double)Form1_0.D2Widht;
         if (ThisScales != 1) scale = scale / (ThisScales * 2);
         //if (ThisScales != 1) scale = scale * ThisScales;

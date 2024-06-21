@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Drawing;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
+using System.Diagnostics;
 
 public class Mem
 {
@@ -146,6 +144,47 @@ public class Mem
         return 0;
     }
 
+    public unsafe UInt64 ReadUInt64(UIntPtr address)
+
+    {
+        int bytesRead = 0;
+        byte[] buffer = new byte[8];
+        IntPtr baseAddress = (IntPtr)address.ToPointer();
+        ReadProcessMemory((int)Form1_0.processHandle, baseAddress, buffer, buffer.Length, ref bytesRead);
+
+        if (bytesRead > 0)
+        {
+            return BitConverter.ToUInt64(buffer, 0);
+        }
+        return 0;
+    }
+
+    public uint ReadUIntFromBuffer(byte[] bytes, uint offset, int size)
+    {
+        if (bytes == null)
+        {
+            throw new ArgumentNullException(nameof(bytes));
+        }
+
+        if (offset + size > bytes.Length)
+        {
+            throw new ArgumentOutOfRangeException(nameof(offset), "Offset and size exceed the length of the byte array.");
+        }
+
+        return BytesToUint(bytes, offset, size);
+    }
+
+    private static uint BytesToUint(byte[] bytes, uint offset, int size)
+    {
+        uint result = 0;
+
+        for (int i = 0; i < size; i++)
+        {
+            result |= (uint)bytes[offset + i] << (8 * i);
+        }
+
+        return result;
+    }
     public char ReadUChar(IntPtr ThisAd)
     {
         int bytesRead = 0;
@@ -270,5 +309,48 @@ public class Mem
             return (char)Form1_0.bufferRead[0];
         }
         return '\0';
+    }
+
+    public byte[] ReadBytesFromMemory(IntPtr address, int size)
+    {
+        byte[] buffer = new byte[size];
+        int bytesRead = 0;
+        ReadProcessMemory((int)Form1_0.processHandle, address, buffer, size, ref bytesRead);
+        return buffer;
+    }
+
+    public unsafe byte[] ReadBytesFromMemory(UIntPtr address, uint size)
+    {
+        byte[] buffer = new byte[size];
+        int bytesRead = 0;
+        IntPtr baseAddress = (IntPtr)address.ToPointer();
+
+        ReadProcessMemory((int)Form1_0.processHandle, baseAddress, buffer, (int)size, ref bytesRead);
+        return buffer;
+    }
+
+
+    public Dictionary<Enums.Attribute, int> GetMonsterStats(uint statCount, UIntPtr statPtr)
+    {
+        Dictionary<Enums.Attribute, int> stats = new Dictionary<Enums.Attribute, int>();
+
+        if (statCount > 0)
+        {
+            byte[] statBuffer = ReadBytesFromMemory(statPtr + 0x2, (statCount * 8));
+
+            for (int i = 0; i < statCount; i++)
+            {
+                uint offset = (uint)(i * 8);
+                ushort statEnum = (ushort)ReadUIntFromBuffer(statBuffer, offset, 2); // Uint16 in Go
+                uint statValue = ReadUIntFromBuffer(statBuffer, offset + 0x2, 4); // Uint32 in Go
+
+                if (Enum.IsDefined(typeof(Enums.Attribute), (int)statEnum))
+                {
+                    stats[(Enums.Attribute)(int)statEnum] = (int)statValue;
+                }
+            }
+        }
+
+        return stats;
     }
 }
