@@ -180,7 +180,7 @@ public class NPCStruc
             case 146: return "DeckardCain";
             case 154: return "Charsi";
             case 147: return "Gheed";
-            case 150: return "Kashya";
+            //case 150: return "Kashya";
             case 155: return "Warriv";
             case 148: return "Akara";
             case 244: return "DeckardCain";
@@ -235,6 +235,7 @@ public class NPCStruc
             case 3: return 1; //UNKOWN
                               //case 23: return 1; //WarpedFallen
             case 149: return 1; //Chicken
+            case 150: return 1; //Kashya
             case 151: return 1; //Rat
             case 152: return 1; //Rogue
             case 153: return 1; //HellMeteor

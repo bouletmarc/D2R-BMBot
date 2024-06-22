@@ -247,6 +247,15 @@ public class Baal
                     PortalYOffset -= 6;
                 }
 
+                if (!Form1_0.Town_0.TPSpawned)
+                {
+                    Form1_0.PathFinding_0.MoveToThisPos(PortalPos);
+                    Form1_0.PathFinding_0.MoveToThisPos(PortalPos);
+                    Form1_0.Town_0.SpawnTP();
+
+                    PortalYOffset -= 6;
+                }
+
                 if (LeaveOnMobs()) return;
 
                 Form1_0.PathFinding_0.MoveToThisPos(ThronePos);
