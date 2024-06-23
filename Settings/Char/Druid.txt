@@ -14,6 +14,7 @@
 //#######################################
 KeySkillAttack=F1
 KeySkillAura=F2
+KeySkillfastMoveAtTown=F8
 KeySkillfastMoveOutsideTown=F7
 KeySkillDefenseAura=F6
 KeySkillCastDefense=F5
