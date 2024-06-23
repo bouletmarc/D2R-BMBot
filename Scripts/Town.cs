@@ -140,7 +140,7 @@ public class Town
             }
 
             //fix for cows script
-            if ((Enums.Area) Form1_0.PlayerScan_0.levelNo == Enums.Area.MooMooFarm)
+            if ((Enums.Area)Form1_0.PlayerScan_0.levelNo == Enums.Area.MooMooFarm)
             {
                 Form1_0.Cows_0.HadWirtsLeg = true;
             }
@@ -1281,13 +1281,13 @@ public class Town
     {
         bool MovedCorrectly = false;
 
-        if (TownAct == 1)
-        {
+        //if (TownAct == 1)
+        /*{
             CheckForNPCValidPos("Kashya");
             Form1_0.PathFinding_0.MoveToNPC("Kashya");
             Form1_0.NPCStruc_0.GetNPC("Kashya");
             MovedCorrectly = true;
-        }
+        }*/
         if (TownAct == 2)
         {
             CheckForNPCValidPos("Greiz");
