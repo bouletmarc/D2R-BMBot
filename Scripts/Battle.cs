@@ -932,7 +932,7 @@ public class Battle
 
     public void FirstAttackCasting()
     {
-        if (CharConfig.RunningOnChar == "Necromancer")
+        /*if (CharConfig.RunningOnChar == "Necromancer")
         {
             Form1_0.KeyMouse_0.PressKey(CharConfig.KeySkillAttack); //select teeth
 
@@ -1013,6 +1013,6 @@ public class Battle
             }
 
             FirstAttackCasted = true;
-        }
+        }*/
     }
 }
