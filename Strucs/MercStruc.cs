@@ -90,21 +90,23 @@ public class MercStruc
                         // Read statCount
                         UInt64 statCount = Form1_0.Mem_0.ReadUInt64(statsListExPtr + 0x38);
                         Dictionary<Enums.Attribute, int> mercStats = Form1_0.Mem_0.GetMonsterStats((uint)statCount, statPtr);
-                        if (mercStats[Enums.Attribute.Life] > 0) // so not match deadcorpse
-                        {
-                            int maxLife = mercStats[Enums.Attribute.LifeMax] >> 8;
-                            double life = mercStats[Enums.Attribute.Life] >> 8;
-                            if (life > 0) MercAlive = true;
-                            if (mercStats[Enums.Attribute.Life] <= 32768)
+                        if (mercStats.ContainsKey(Enums.Attribute.Life)){
+                            if (mercStats[Enums.Attribute.Life] > 0) // so not match deadcorpse
                             {
-                                life = (double)mercStats[Enums.Attribute.Life] / 32768.0 * maxLife;
+                                int maxLife = mercStats[Enums.Attribute.LifeMax] >> 8;
+                                double life = mercStats[Enums.Attribute.Life] >> 8;
+                                if (life > 0) MercAlive = true;
+                                if (mercStats[Enums.Attribute.Life] <= 32768)
+                                {
+                                    life = (double)mercStats[Enums.Attribute.Life] / 32768.0 * maxLife;
+                                }
+                                MercHP = (int)life;
+                                MercMaxHP = (int)maxLife;
+                                MercCount++;
+                                // show % until we figure out how to show merc life + bonus life, not just base life
+                                Form1_0.Grid_SetInfos("Merc", $"{100 * life / maxLife}% HP");
+                                return true;
                             }
-                            MercHP = (int)life;
-                            MercMaxHP = (int)maxLife;
-                            MercCount++;
-                            // show % until we figure out how to show merc life + bonus life, not just base life
-                            Form1_0.Grid_SetInfos("Merc", $"{100 * life / maxLife}% HP");
-                            return true;
                         }
                     }
                     else
@@ -116,10 +118,12 @@ public class MercStruc
                 }
             }
         }
-        catch
+        catch (Exception e)
         {
-            Form1_0.method_1("Couldn't 'GetMercInfos()'", Color.OrangeRed);
-        }
+            Form1_0.method_1($"mercerror is {e}", Color.Black);
+            Form1_0.WaitDelay(150);
+        // couldnt get mercinfo
+}
 
         Form1_0.Grid_SetInfos("Merc", "Not alive/detected");
         if (MercCount == 0) MercAlive = false;

@@ -132,7 +132,7 @@ public class Town
                 return;
             }
 
-            if (TriedToUseTPCount >= 5)
+            if (TriedToUseTPCount >= 3)
             {
                 Form1_0.method_1("No TP found nearby when trying to Town", Color.Red);
                 Form1_0.LeaveGame(false);
@@ -183,7 +183,7 @@ public class Town
                         GetCorpse();
                         CurrentScript = 0;
                         Position itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, Form1_0.ObjectsStruc_0.itemx, Form1_0.ObjectsStruc_0.itemy);
-
+                        Form1_0.WaitDelay(50);
                         Form1_0.KeyMouse_0.PressKeyHold(CharConfig.KeyForceMovement);
                         Form1_0.KeyMouse_0.MouseClicc_RealPos(itemScreenPos.X, itemScreenPos.Y - 15);
                         Form1_0.KeyMouse_0.ReleaseKey(CharConfig.KeyForceMovement);
@@ -250,7 +250,7 @@ public class Town
                         //{
                         //Console.WriteLine("Corpse found method2");
                         Form1_0.method_1("Grab corpse #3", Color.Red);
-                        Form1_0.WaitDelay(100);
+                        Form1_0.WaitDelay(150);
                         //Clic corpse
                         FirstTown = false;
                         Position itemScreenPos = Form1_0.GameStruc_0.World2Screen(Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal, Form1_0.PlayerScan_0.xPosFinal, Form1_0.PlayerScan_0.yPosFinal);
@@ -1050,10 +1050,10 @@ public class Town
                 && !Form1_0.Shop_0.ShopForKey
                 && Form1_0.Shop_0.ShopForRegainHP)
             {
-                //Act2 Drognan doesn't regen HP, if we are going to shop only for regen HP, then go see Atma in Act2
-                CheckForNPCValidPos("Atma");
-                Form1_0.PathFinding_0.MoveToNPC("Atma");
-                Form1_0.NPCStruc_0.GetNPC("Atma");
+                //Act2 Drognan doesn't regen HP, if we are going to shop only for regen HP, then go see Fara in Act2
+                CheckForNPCValidPos("Fara");
+                Form1_0.PathFinding_0.MoveToNPC("Fara");
+                Form1_0.NPCStruc_0.GetNPC("Fara");
                 MovedCorrectly = true;
             }
             else
@@ -1281,8 +1281,8 @@ public class Town
     {
         bool MovedCorrectly = false;
 
-        //if (TownAct == 1)
-        /*{
+        /*if (TownAct == 1)
+        {
             CheckForNPCValidPos("Kashya");
             Form1_0.PathFinding_0.MoveToNPC("Kashya");
             Form1_0.NPCStruc_0.GetNPC("Kashya");

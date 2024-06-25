@@ -192,7 +192,7 @@ public class NPCStruc
             case 178: return "Fara";
             case 201: return "Jerhyn";
             case 202: return "Lysander";
-            case 176: return "Atma";
+            //case 176: return "Atma";
             case 200: return "Geglash";
             case 331: return "Kaelan";
             case 245: return "DeckardCain";
@@ -242,6 +242,7 @@ public class NPCStruc
             case 157: return 1; //Bird
             case 158: return 1; //Bird2
             case 159: return 1; //Bat
+            case 176: return 1; //Atma
             case 194: return 1; //Hadriel
             case 195: return 1; //Act2Male
             case 196: return 1; //Act2Female
