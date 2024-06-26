@@ -224,8 +224,8 @@ public class PatternsScan
         Form1_0.offsets["AllGamesOffset"] = ((IntPtr)0x2A19F10);
         Form1_0.method_1("All games available offset: 0x" + 0x2A19F10.ToString("X"), Color.Black);
 
-        Form1_0.offsets["GameSelectedOffset"] = ((IntPtr)0x29DBD10);
-        Form1_0.method_1("Selected game offset: 0x" + 0x29DBD10.ToString("X"), Color.Black);
+        Form1_0.offsets["GameSelectedOffset"] = ((IntPtr)0x2A28420);
+        Form1_0.method_1("Selected game offset: 0x" + 0x2A28420.ToString("X"), Color.Black);
 
         Form1_0.offsets["SelectedChar"] = ((IntPtr)0x1E1EEF8);
         Form1_0.method_1("Selected Char offset: 0x" + 0x1E1EEF8.ToString("X"), Color.Black);

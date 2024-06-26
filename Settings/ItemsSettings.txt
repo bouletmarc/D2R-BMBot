@@ -121,7 +121,7 @@
 //###### NORMAL ITEMS
 //#######################################
 //##### Gold
-[Name] == Gold && [Quality] == normal && [GoldInPlayer] >= 1 // Gold
+[Name] == Gold && [Quality] == normal && [GoldInPlayer] >= 5000 // Gold
 
 ﻿//##### Helms (Exceptional)
 //[Name] == WarHat && [Quality] == superior && [Flag] != ethereal && [Sockets] == 3 && [EnhancedDefense] >= 10 // Delirium or Dream
@@ -1501,7 +1501,7 @@
 //[Name] == SmallCharm && [Quality] == magic && [PoisonMaxDamage] >= 18
 //[Name] == SmallCharm && [Quality] == magic && [LifeMax] >= 18
 //[Name] == SmallCharm && [Quality] == magic && [LifeMax] >= 19
-//[Name] == SmallCharm && [Quality] == magic && [MagicFind] == 4
+//[Name] == SmallCharm && [Quality] == magic && [MagicFind] >= 4
 //[Name] == SmallCharm && [Quality] == magic && [ManaMax] >= 12
 //[Name] == SmallCharm && [Quality] == magic && [FasterHitRecovery] >= 5
 //[Name] == SmallCharm && [Quality] == magic && [LifeMax]+[ManaMax] >= 12

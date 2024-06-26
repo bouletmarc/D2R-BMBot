@@ -765,6 +765,24 @@ public class MapAreaStruc
             cg[265, 716] = false;
         }
 
+        //Forgotten Tower (Countess)
+        if (area == Enums.Area.TowerCellarLevel1 || area == Enums.Area.TowerCellarLevel2 || area == Enums.Area.TowerCellarLevel3 || area == Enums.Area.TowerCellarLevel4)
+        {
+            cg[179, 143] = false;
+            cg[180, 143] = false;
+            cg[181, 143] = false;
+            cg[182, 143] = false;
+            cg[183, 143] = false;
+            cg[184, 143] = false;
+
+            cg[178, 142] = false;
+            cg[179, 142] = false;
+            cg[180, 142] = false;
+            cg[181, 142] = false;
+            cg[182, 142] = false;
+            cg[183, 142] = false;
+        }
+
         //Burial Ground (Crypt Door)
         if (area == Enums.Area.BurialGrounds)
         {
