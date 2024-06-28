@@ -84,14 +84,14 @@ public partial class FormSettings : Form
         //listViewRunScripts.Items[CurrI++].Checked = CharConfig.RunTravincalScript;
         listViewRunScripts.Items[CurrI++].Checked = CharConfig.RunMephistoScript;
         listViewRunScripts.Items[CurrI++].Checked = CharConfig.RunChaosScript;
-        //listViewRunScripts.Items[CurrI++].Checked = CharConfig.RunChaosLeechScript;
+        listViewRunScripts.Items[CurrI++].Checked = CharConfig.RunChaosLeechScript;
         //listViewRunScripts.Items[CurrI++].Checked = CharConfig.RunEldritchScript;
         listViewRunScripts.Items[CurrI++].Checked = CharConfig.RunShenkScript;
         listViewRunScripts.Items[CurrI++].Checked = CharConfig.RunFrozensteinScript;
         listViewRunScripts.Items[CurrI++].Checked = CharConfig.RunPindleskinScript;
         listViewRunScripts.Items[CurrI++].Checked = CharConfig.RunNihlatakScript;
         listViewRunScripts.Items[CurrI++].Checked = CharConfig.RunBaalScript;
-        //listViewRunScripts.Items[CurrI++].Checked = CharConfig.RunBaalLeechScript;
+        listViewRunScripts.Items[CurrI++].Checked = CharConfig.RunBaalLeechScript;
         //listViewRunScripts.Items[CurrI++].Checked = CharConfig.RunTerrorZonesScript;
         listViewRunScripts.Items[CurrI++].Checked = CharConfig.RunWPTaker;
 
@@ -286,14 +286,14 @@ public partial class FormSettings : Form
         //CharConfig.RunTravincalScript = listViewRunScripts.Items[CurrI++].Checked;
         CharConfig.RunMephistoScript = listViewRunScripts.Items[CurrI++].Checked;
         CharConfig.RunChaosScript = listViewRunScripts.Items[CurrI++].Checked;
-        //CharConfig.RunChaosLeechScript = listViewRunScripts.Items[CurrI++].Checked;
+        CharConfig.RunChaosLeechScript = listViewRunScripts.Items[CurrI++].Checked;
         //CharConfig.RunEldritchScript = listViewRunScripts.Items[CurrI++].Checked;
         CharConfig.RunShenkScript = listViewRunScripts.Items[CurrI++].Checked;
         CharConfig.RunFrozensteinScript = listViewRunScripts.Items[CurrI++].Checked;
         CharConfig.RunPindleskinScript = listViewRunScripts.Items[CurrI++].Checked;
         CharConfig.RunNihlatakScript = listViewRunScripts.Items[CurrI++].Checked;
         CharConfig.RunBaalScript = listViewRunScripts.Items[CurrI++].Checked;
-        //CharConfig.RunBaalLeechScript = listViewRunScripts.Items[CurrI++].Checked;
+        CharConfig.RunBaalLeechScript = listViewRunScripts.Items[CurrI++].Checked;
         //CharConfig.RunTerrorZonesScript = listViewRunScripts.Items[CurrI++].Checked;
         CharConfig.RunWPTaker = listViewRunScripts.Items[CurrI++].Checked;
 
